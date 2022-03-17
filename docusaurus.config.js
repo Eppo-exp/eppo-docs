@@ -6,15 +6,15 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: 'My Site',
-  tagline: 'Dinosaurs are cool',
-  url: 'https://your-docusaurus-test-site.com',
+  title: 'The Eppo Docs',
+  tagline: "Documentation for Eppo's experimentation platform.",
+  url: 'https://geteppo.com',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
   favicon: 'img/favicon.ico',
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  organizationName: 'eppo', // Usually your GitHub org/user name.
+  projectName: 'eppo', // Usually your repo name.
 
   presets: [
     [
@@ -43,24 +43,31 @@ const config = {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
       navbar: {
-        title: 'My Site',
+        // title: 'Eppo',
         logo: {
-          alt: 'My Site Logo',
-          src: 'img/logo.svg',
+          alt: 'eppo logo',
+          src: 'img/eppo_logo.svg',
         },
         items: [
           {
             type: 'doc',
-            docId: 'intro',
+            docId: 'quickstart',
             position: 'left',
-            label: 'Tutorial',
+            label: 'Quickstart',
           },
-          {to: '/blog', label: 'Blog', position: 'left'},
           {
-            href: 'https://github.com/facebook/docusaurus',
-            label: 'GitHub',
-            position: 'right',
+            type: 'doc',
+            docId: 'connecting-data/connecting-data-to-eppo',
+            position: 'left',
+            label: 'Connecting Data',
           },
+          {
+            type: 'doc',
+            docId: 'faq',
+            position: 'left',
+            label: 'FAQ',
+          },
+          {to: 'https://www.geteppo.com/blog', label: 'Blog', position: 'left'},
         ],
       },
       footer: {
@@ -76,37 +83,16 @@ const config = {
             ],
           },
           {
-            title: 'Community',
-            items: [
-              {
-                label: 'Stack Overflow',
-                href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-              },
-              {
-                label: 'Discord',
-                href: 'https://discordapp.com/invite/docusaurus',
-              },
-              {
-                label: 'Twitter',
-                href: 'https://twitter.com/docusaurus',
-              },
-            ],
-          },
-          {
             title: 'More',
             items: [
               {
                 label: 'Blog',
                 to: '/blog',
               },
-              {
-                label: 'GitHub',
-                href: 'https://github.com/facebook/docusaurus',
-              },
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Eppo, Inc.`,
       },
       prism: {
         theme: lightCodeTheme,
