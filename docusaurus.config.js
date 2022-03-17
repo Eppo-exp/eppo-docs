@@ -8,7 +8,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 const config = {
   title: 'The Eppo Docs',
   tagline: "Documentation for Eppo's experimentation platform.",
-  url: 'adoring-yonath-6ecb9d.netlify.app',
+  url: 'https://adoring-yonath-6ecb9d.netlify.app',
   baseUrl: '/',
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
