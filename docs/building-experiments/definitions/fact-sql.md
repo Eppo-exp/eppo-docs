@@ -1,5 +1,40 @@
 # Fact SQL
 
+Fact SQL queries are queries that correspond to events. A food delivery app might have events such as “Customer X placed an order worth $23.44 from Restaurant Y at time T”. These events are then aggregated to form the metrics which you use to evaluate experiments:
+
+```sql
+SELECT
+ts,
+customer_id,
+restaurant_id,
+order_value,
+promo_amount
+FROM mydb.myschema.restaurant_orders
+```
+
+- From the above event, you can construct metrics such as:
+  - Total order volume -- the sum of order values across all customers
+  - Number of orders -- the number of orders placed by all customers
+  - Distinct ordering customers -- the number of customers who have placed an order
+- Within Eppo, when you provide us with the above event, you must annotate the following columns:
+
+  - Timestamp - when the event occurred
+  - In the example above, the “ts” column is the timestamp that the order was placed
+  - Entities - who was involved in the event
+  - In the example above, “customer” and “restaurant” are the two entities that were involved in the event.
+
+- In the Fact configuration interface, associate `customer_id` with the `customer` entity, and `restaurant_id` with the `restaurant`
+  entity.
+
+- Facts - what are the numeric quantities associated with this event?
+- In the example above, `order_value` and `promo_amount` are the numeric values that you select as your facts.
+  - These are typically the columns that are aggregated to produce
+    metrics, such as “Total order volume”
+  - With this setup, you can construct many different types of metrics from a single event. For example:
+  - Total revenue by customer (entity = customer, fact = order_value)
+  - Total revenue by restaurant (entity = restaurant, fact = order_value) ○ Total promos received by restaurant (entity = customer, fact =
+    promo_amount)
+
 When you write Fact SQL's, you're pulling data from the data warehouse that correspond to specific events that serve as input to metrics. For example, signups, activations, net subscriptions, etc.
 
 ## Creating a Fact SQL
