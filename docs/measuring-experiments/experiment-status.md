@@ -1,5 +1,5 @@
 # Experiment Status
-You can navigate to the Experiments page by clicking on the Experiments icon from the left tab. Each experiment has an associated status which indicates the current condition of the experiment. An experiment can have one of 5 different statuses:
+You can navigate to the **Experiments** page by clicking on the **Experiments** icon from the left tab. Each experiment has an associated status which indicates the current condition of the experiment. An experiment can have one of 5 different statuses:
 1. Draft - this is the initial state when you are actually creating the experiment
 2. Scheduled - once you connect the feature flag the experiment moves into the scheduled state
 3. Running - the experiment moves to this state as soon as the start date has passed
