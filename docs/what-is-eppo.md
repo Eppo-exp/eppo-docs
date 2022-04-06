@@ -12,7 +12,8 @@ There are four pieces to Eppo:
 
 1. Using your feature flagging tool of choice
 
-2. Connect your data source.
+2. Connect your data source
+
    Currently Eppo supports:
 
 - Snowflake
@@ -29,5 +30,5 @@ There are four pieces to Eppo:
 
 # Getting Started Resources
 
-- 15 minute quickstart to getting up and running with Eppo
+- 10 minute quickstart to getting up and running with Eppo
 - Connect your data to Eppo
