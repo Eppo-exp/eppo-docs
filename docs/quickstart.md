@@ -238,9 +238,11 @@ The default is an even split between all the variants (including control), but y
 
 1. Navigate to **Experiments** and click the **Overview** tab
 
+
+
 You should have already configured your feature flag above, if you haven't, go do that first.
 
-Under **Decision metrics**, you will see that [guardmail metrics](../measuring-experiments/guardrail-metrics.md) have already been included automatically.
+Under **Decision metrics**, you will see that [guardmail metrics](./building-experiments/experiments/guardrail-metrics.md) have already been included automatically.
 
 4. Click **+Add metric** button
 
