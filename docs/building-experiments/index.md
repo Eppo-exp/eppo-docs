@@ -6,8 +6,8 @@ In Eppo, you can build your experiments using a few core building blocks:
 - [Definitions](./definitions/)
     - [Assignments](./definitions/assignment-sql)
     - [Facts](./definitions/fact-sql)
-- [Metrics](./metrics/)
-- [Experiments](./experiments/)
+- [Metrics](./metrics/creating-metrics)
+- [Experiments](./experiments/creating-experiments)
 
 ## Overview
 

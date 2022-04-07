@@ -34,4 +34,4 @@ There are four pieces to Eppo:
 
 - [10 minute quickstart to getting up and running with Eppo](./quickstart.md)
 - [From Feature Flag to Data Warehouse](../docs/connecting-data/feature-flagging/)
-- [Connect your data warehouse to Eppo](../docs/connecting-data/data-warehouses/)
+- [Connect your data warehouse to Eppo](../docs/connecting-data/data-warehouses/connecting-to-bigquery)
