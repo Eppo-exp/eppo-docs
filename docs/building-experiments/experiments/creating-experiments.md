@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Creating an experiment
+# Creating experiments
 
 Experiments are a set of metrics that correspond to users being shown different feature sets that you would like to track over time.
 

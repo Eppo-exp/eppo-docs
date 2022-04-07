@@ -1,4 +1,4 @@
-# Creating a Metric
+# Creating metrics
 
 Metrics are statistics like Revenue or Signups that you are interested in tracking in your experiment
 

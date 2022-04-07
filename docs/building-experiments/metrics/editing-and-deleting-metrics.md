@@ -1,4 +1,4 @@
-# Editing a metric
+# Editing metrics
 
 ![Editing a metric](../../../static/img/building-experiments/edit-metric.gif)
 
@@ -11,7 +11,7 @@
 4. Select **Edit Metric** from the dropdown
 
 
-# Deleting a metric
+# Deleting metrics
 
 ![Deleting a metric](../../../static/img/building-experiments/delete-metric.gif)
 
@@ -24,7 +24,7 @@
 Note that if you delete a metric that is being used in an active experiment, that may affect the experiment currently being run.
 
 
-# Set metric as Guardrail metric
+# Setting metrics as Guardrail metrics
 
 ![Create guardrail metric](../../../static/img/building-experiments/set-as-guardrail.gif)
 
