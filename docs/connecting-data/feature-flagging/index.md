@@ -16,6 +16,6 @@ Data from both the feature flagging solution and the events logging solution sho
 
 We provide guides for how you can get a few of the top feature flagging tools to play nice with Eppo:
 
-- [LaunchDarkly](./launch-darkly.md)
-- [Optimizely](./optimizely.md)
+- [LaunchDarkly](./launch-darkly)
+- [Optimizely](./optimizely)
 <!-- - [Unleash]() -->

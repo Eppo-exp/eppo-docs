@@ -8,7 +8,7 @@ Follow this quickstart to get your first experiment set up on Eppo.
 
 ## 1. Set up feature flagging
 
-Eppo assumes that you are already using a third party feature flagging tool like LaunchDarkly or Optimizely and are exporting experiment data into a data warehouse. In particular, Eppo requires that you have the following tables in your data warehouse:
+Eppo assumes that you are already using a third party feature flagging tool like [LaunchDarkly](https://launchdarkly.com/) or [Optimizely](https://www.optimizely.com/) and are exporting experiment data into a data warehouse. In particular, Eppo requires that you have the following tables in your data warehouse:
 
 - an assignment table that indicates which experiment subjects were assigned to which experiments and variants at which time. It should contain columns that roughly correspond to:
 
@@ -22,6 +22,8 @@ For example, the first few row of the table might look like this:
 
 | timestamp | user_id | experiment | variation | device_id |
 | --------- | ------- | ---------- | --------- | --------- |
+| 2021-06-22T17:35:12.000Z | 165740867980881574 | adding_BNPL_experiment | affirm | 2k3l2k2 |
+
 
 You can refer here for [more information](./connecting-data/feature-flagging/required-data.md) on what the column types should be.
 
@@ -34,8 +36,12 @@ You can refer here for [more information](./connecting-data/feature-flagging/req
 
 For example, the first few rows of the table might look like this:
 
-| timestamp | user_id | revenue | revenue_amount |
+| timestamp | user_id | event_type | event_value |
 | --------- | ------- | ------- | -------------- |
+| 2021-07-17T18:57:13.000Z	 | 49980400511307080 | Revenue | 45.5695	|
+| 2021-07-17T18:57:13.000Z	 | 2281323415877132491 | Subscription | 1 |
+
+
 
 If you do not already have these tables set up, please refer to the [feature flagging](./connecting-data/feature-flagging/) section for more instructions.
 
@@ -47,11 +53,15 @@ Once you log in, you will see the Eppo home page.
 
 ## 3. Connect your data warehouse
 
-Eppo currently supports the following data warehouses
+Eppo currently supports the following data warehouses:
+
+- Snowflake
+- BigQuery
+- RedShift
 
 ## 4. Create an Assignment SQL
 
-Now that Eppo is connected to your data warehouse, the first thing we are going to do is create an assignment SQL. Assignment SQL's define which experiment subjects will be assigned to which experiment and variation, and at what time. They're basically just pulling data from your assignment table.
+Now that Eppo is connected to your data warehouse, the first thing we are going to do is create an assignment SQL. Assignment SQLs define which experiment subjects will be assigned to which experiment and variation, and at what time. They're basically just pulling data from your assignment table.
 
 1. Navigate to **Definitions** and click **Create Definition SQL**
 

@@ -4,54 +4,48 @@ sidebar_position: 1
 
 # Creating an experiment
 
-1. Navigate to **Experiments**
+Experiments are a set of metrics that correspond to users being shown different feature sets that you would like to track over time.
 
-2. Click **+Experiment**
+1. Navigate to **Experiments** in the left-hand menu and click **+Experiment**
 
-3. Fill out the **Create Experiment** Form
+![Create experiment](../../../static/img/building-experiments/create-experiment.png)
+
+2. Fill out the **Create Experiment** Form
+
+![Fill experiment form](../../../static/img/building-experiments/fill-create-experiment-form.png)
 
 Give your experiment a name, start and end date.
 
-4. Click on the **Set Up** tab
+3. Navigate to the **Set Up** tab and click the **Configure the Experiment** button
 
-5. Click the **Configure the Experiment** button
+![Configure experiment](../../../static/img/building-experiments/set-up-and-configure-experiment.png)
 
 6. Select an assignment SQL from the definitions you created
 
-7. Input a feature flag name
+![Choose assignment SQL](../../../static/img/building-experiments/choose-assignment-sql-in-experiment.png)
 
-You may need to refer back to your **Definitions** for the relevant feature flag name:
+7. Input feature flag name
 
-a) Navigate to **Definitions** and **Assignments**
+When you created your assignment SQL, you should have made note of your feature flag name. In our case it's `new_user_onboarding`.
 
-b) Click on the three dots next to the Assignment SQL you want and then click **Edit Details**
-
-c) Click **Run**
-
-d) Look at the value of the column that you annotated as **feature flag**
-
-e) The feature flag name you will want to input in experiments setup is one of these values.
+![Configure experiment](../../../static/img/building-experiments/choose-feature-flag-in-experiment.png)
 
 8. Input what percentage of traffic you want randomized into the experiment.
 
-Traffic refers to the experiment subjects, so if you input 100%, 100% of the relevant entities will be included in the experiment.
+If you input 100%, 100% of the relevant entities (users in this case) will be included in the experiment.
 
-9. Select the traffic allocation you would like
+![Percent Traffic](../../../static/img/building-experiments/name-variants.png)
 
-10. Add the variants
+9. Add the variants
 
-Again, you may need to refer back to your **Definitions** for you relevant variant names.
+![Add variants](../../../static/img/building-experiments/name-variants.png)
 
-a) Navigate to **Definitions** and **Assignments**
+When you created your assignment SQL, you should have made note of your variant names. In our case here it's `control` and `variant`.
 
-b) Click on the three dots next to the Assignment SQL you want and then click **Edit Details**
+You can go ahead and add each variant into the experiment here.
 
-c) Click **Run**
+10. Select the traffic allocation you would like
 
-d) Look at the value of the column that you annotated as **VARIANT**
+The default is an even split between all the variants (including control), but you can also customize the allocation for unequal splits.
 
-e) The variant names you will want to add to experiments setup is one of these values.
-
-11. Determine whether you want to split traffic evenly among variants
-
-12. Click **Save Changes**
+11. Click **Save Changes**

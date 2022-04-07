@@ -8,11 +8,15 @@ Entities are the subjects (aka randomization unit) of your experiments. For exam
 
 Assignment, Dimension, and Fact SQL's can be attached to entities -- for example, an assignment SQL attached to a user would pull the assignments of users into different experiment groups.
 
-## Creating an Entity
+## Creating a custom Entity
 
-To create an entity, navigate to **Definitions** in the left menu bar from the Eppo homepage, then click **Manage Entities**.
+To create a custom Entity, navigate to **Definitions** in the left menu bar from the Eppo homepage, then click **Manage Entities**.
+
+![Manage Entities](../../static/img/building-experiments/manage-entities.png)
 
 A modal should pop up showing all the existing entities and their attached SQL's. Click **+ Create Entity** to create a new entity.
+
+![Create Entities](../../static/img/building-experiments/create-entity.png)
 
 In the example above, we created a new entity called Company
 
