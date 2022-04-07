@@ -8,12 +8,12 @@ For example:
 
 ```sql
 SELECT
-ts_assigned,
-experiment_name,
-variant_name,
-user_id,
-browser,
-device_type
+    ts_assigned,
+    experiment_name,
+    variant_name,
+    user_id,
+    browser,
+    device_type
 FROM mydb.myschema.assignments
 ```
 

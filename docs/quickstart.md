@@ -4,40 +4,56 @@ sidebar_position: 2
 
 # Quickstart
 
-Follow this quickstart to get your first experiment setup on Eppo in under 10 minutes
+Follow this quickstart to get your first experiment set up on Eppo.
 
-## Prep your data warehouse
+## 1. Set up feature flagging
 
-This is also a good opportunity to think about
+Eppo assumes that you are already using a third party feature flagging tool like LaunchDarkly or Optimizely and are exporting experiment data into a data warehouse. In particular, Eppo requires that you have the following tables in your data warehouse:
 
-## Set up feature flagging
+- an assignment table that indicates which experiment subjects were assigned to which experiments and variants at which time. It should contain columns that roughly correspond to:
 
-## Create Eppo account
+  - **timestamp**
+  - **user_id**
+  - **experiment**
+  - **variation**
+  - **device_id**
 
-## Connect your data warehouse
+For example, the first few row of the table might look like this:
 
-<!-- - [Connect to Snowflake]()
-- [Connect to BigQuery]() -->
+| timestamp | user_id | experiment | variation | device_id |
+| --------- | ------- | ---------- | --------- | --------- |
 
-## Create Entity
+You can refer here for [more information](./connecting-data/feature-flagging/required-data.md) on what the column types should be.
 
-1. Navigate to **Definitions**
+- event table whose rows are logs of specific events that occurred at specific times. It should contain columns that roughly correspond to:
 
-![Navigate to Definitions](../static/img/building-experiments/navigate-definitions.png)
+  - timestamp
+  - user_id
+  - event type
+  - event value
 
-2. Create a new entity
+For example, the first few rows of the table might look like this:
 
-Click on **Manage Entities**
+| timestamp | user_id | revenue | revenue_amount |
+| --------- | ------- | ------- | -------------- |
 
-![Manage Entity](../static/img/building-experiments/manage-entities.png)
+If you do not already have these tables set up, please refer to the [feature flagging](./connecting-data/feature-flagging/) section for more instructions.
 
-Then click on **+Create Entity** and give it a name
+## 2. Create Eppo account
 
-![Create entity](../static/img/building-experiments/create-entity.png)
+Create a new account at https://eppo.cloud/. Eppo implements Auth0 and you should be able to sign in with any of the providers that Auth0 supports, including Google.
 
-## Create an Assignment SQL
+Once you log in, you will see the Eppo home page.
 
-1. Click **Create Definition SQL**
+## 3. Connect your data warehouse
+
+Eppo currently supports the following data warehouses
+
+## 4. Create an Assignment SQL
+
+Now that Eppo is connected to your data warehouse, the first thing we are going to do is create an assignment SQL. Assignment SQL's define which experiment subjects will be assigned to which experiment and variation, and at what time. They're basically just pulling data from your assignment table.
+
+1. Navigate to **Definitions** and click **Create Definition SQL**
 
 ![Create Definition SQL](../static/img/building-experiments/create-definition-sql.png)
 
@@ -47,54 +63,53 @@ Then click on **+Create Entity** and give it a name
 
 4. Select the subject of the Assignment SQL
 
-This should one of the entities you created.
-
-In this case we are assigning users into different groups, so we choose **Users**
-
 ![Select user as entity](../static/img/building-experiments/select-user-as-entity.png)
+
+Entities are the randomization units of your experiment. By default, entities in Eppo are **User**, but you can also [create your own customized entities](./building-experiments/entities.md) and attach Assignment SQL's to them.
 
 4. Name your Assignment SQL
 
-![Select user as entity](../static/img/building-experiments/name-assignment-sql.png)
+5. Write SQL in the SQL editor to pull assignments from data warehouse and click **Run**
 
-5. Write SQL in the SQL editor to pull assignments from data warehouse
+Recall in the [Set up Feature Flagging](#1-set-up-feature-flagging) section that you should have an assignment table in your data warehouse with certain column types.
+
+In this step, you're going to write SQL to pull that data.
 
 ![Write Assignment SQL Query](../static/img/building-experiments/add-assignment-sql-query.png)
 
-6. Click run
+Then click **Run**, and the rows from that assignment table should appear in the bottom left.
 
 7. Annotate the columns that you've selected from the data warehouse
 
-Eppo needs to know which columns correspond to experiment subject, timestamp of assignment, feature flag, and variant.
+In case there's any ambiguity as to which properties the columns correspond to, we annotate them here.
 
 ![Annotate assignment SQL columns](../static/img/building-experiments/annotate-assignment-sql-columns.png)
 
 8. Make note of your feature flag name and variant names
 
-Look at the value of the column you annotated as **FEATURE FLAG** and the values of the column that you annotated as **VARIANT**
-
 Note the value of the **FEATURE FLAG** column; in this example it's `new_user_onboarding` - this is your feature flag name.
 
 Note the values of the **VARIANT** column; in this example it's `control` and `treatment` - these are the names of your variants.
 
-You will need these names further down in this quickstart so be sure to jot them down.
+You will need these names later.
 
 9. Adding optional dimensions
 
 ![Add Assignment SQL Dimensions](../static/img/building-experiments/add-assignment-sql-dimensions.png)
 
+Your feature flag tooling may have logged additional data about the user, like what country they're from or which browser they're using. You can annotate these additional dimensions here, and they will show up under the **Dimension SQL** tab.
+
+<!-- <img src="https://firebasestorage.googleapis.com/v0/b/eppo-documentation-images.appspot.com/o/add-assignment-sql-dimensions.png?alt=media&token=dfd583db-4ea7-4013-b5fc-d90612118738" width="500" height="200"/> -->
+
 9. Save & Close
 
+You've now created your first Assignment SQL!
 
-## Create a Fact SQL
+## 5. Create a Fact SQL
 
-Fact SQL's correspond to events that actually occurred.
+Next, we want to create Fact SQLs. Fact SQL's define events, like sign-ups, activations, or orders. Together, the Assignment SQL and Fact SQLs give us a picture of _what happened_ to different segments of users shown different variants of the experiment.
 
-1. Navigate to **Definitions**
-
-![Navigate to Definitions](../static/img/building-experiments/navigate-definitions.png)
-
-2. Click **Create Definition SQL**
+1. Navigate to **Definitions** and click **Create Definition SQL**
 
 ![Create Definition SQL](../static/img/building-experiments/create-definition-sql.png)
 
@@ -102,13 +117,9 @@ Fact SQL's correspond to events that actually occurred.
 
 ![Create Fact SQL](../static/img/building-experiments/create-fact-sql.png)
 
-4. Select the subject of the Fact SQL
+4. Select **User**
 
-
-
-This should one of the entities you created.
-
-In this case we are assigning users into different groups, so we choose **Users**
+**User** is the default entity in Eppo but you can also create your own custom entity and select that here.
 
 5. Name your Fact SQL
 
@@ -116,47 +127,45 @@ In this case we are assigning users into different groups, so we choose **Users*
 
 6. Write SQL in the SQL editor to pull events data from the data warehouse
 
+Recall in the [Set up Feature Flagging](#1-set-up-feature-flagging) section that you should have (potentially multiple) event tables in your data warehouse with certain column types.
+
+In this step, you're going to write SQL to pull that data.
+
 ![Name Fact SQL](../static/img/building-experiments/name-fact-sql.png)
 
 7. Annotate the columns that you've selected from the data warehouse
 
 ![Annotate Fact SQL](../static/img/building-experiments/annotate-fact-sql-columns.png)
 
-In the example above, Eppo has already automatically determined that the `timestamp of creation` column is `ts` and the relevant `entity id` column is `USER_ID`.
+In the example above, Eppo has already automatically determined that the `timestamp of creation` column is `TS` and the relevant `entity id` column is `USER_ID`.
 
 8. Add Facts
 
-You'll want to add facts, one fact per column.
+For every event that you want to track, you should add its corresponding column in the data warehouse as a fact.
 
 ![Add Facts](../static/img/building-experiments/add-fact-sql-fact.png)
 
-In the example above, we would like to measure the effect of the experiment on revenue.
+In the example above, we would like to measure the effect of the experiment on `revenue`.
 
-In the data warehouse, every time there is a revenue event (that might be someone purchasing something,), that event is logged as a row in the data warehouse.
+In the data warehouse, every time there is a `revenue` event (that might be someone purchasing something,), that event is logged as a row in the data warehouse.
 
-This event is translated into an integer value, which is the revenue amount, that can then be used as an Eppo fact and tracked in an experiment.
+This event is translated into an integer value, which is the `revenue amount`, that can then be used as an Eppo fact and tracked in an experiment.
 
 10. Save & Close
 
-## Create metrics
+You've now created your first Fact SQL. If you have more events that you would like to track in your experiment, you can repeat the steps in this section to create additional Fact SQLs.
 
-1. Navigate to **Metrics**
+## 6. Create metrics
 
-![Add Facts](../static/img/building-experiments/navigate-to-metrics.png)
-
-
-2. Click **+Metric**
+1. Navigate to **Metrics** and Click **+Metric**
 
 ![Add Facts](../static/img/building-experiments/add-metric.png)
 
-
-3. Select the subject of the User SQL
+2. Select the subject of the User SQL
 
 ![Select User as entity for metric](../static/img/building-experiments/select-user-as-entity-for-metric.png)
 
-This should one of the entities you created.
-
-In this case we are assigning users into different groups, so we choose **Users**
+**User** is the default entity in Eppo, but you can also create a custom entity and select it here.
 
 4. Select a fact
 
@@ -182,13 +191,17 @@ Eppo supports the following aggregations:
 
 When you created an assignment SQL above, you may have also created additional dimensions, i.e. country or browser. These dimensions are now available under the **Definitions** > **Dimensions SQL**.
 
-You can select any of the dimensions that you created in the dimensions definitions. In the example above, we just want to focus on upgrades from Canada.
+![Select filter](../static/img/building-experiments/select-user-as-entity-for-metric.png)
+
+Here, you can filter on any of those dimensions. In the example above, we just want to focus on upgrades from Canada.
 
 7. Select a minimum detectable effect
 
 The minimum detectable effect refers to the smallest effect you want to reliably detect in experiments. The higher the minimum detectable effect you set, the longer the experiment will take to reach conclusive results.
 
-## Create an experiment
+![Select minimum detectable effect](../static/img/building-experiments/select-user-as-entity-for-metric.png)
+
+## 7. Create an experiment
 
 ### Configure the experiment
 
@@ -198,7 +211,7 @@ The minimum detectable effect refers to the smallest effect you want to reliably
 
 2. Fill out the **Create Experiment** Form
 
-![Create experiment](../static/img/building-experiments/fill-create-experiment-form.png)
+![Fill experiment form](../static/img/building-experiments/fill-create-experiment-form.png)
 
 Give your experiment a name, start and end date.
 
@@ -208,7 +221,7 @@ Give your experiment a name, start and end date.
 
 6. Select an assignment SQL from the definitions you created
 
-![Configure experiment](../static/img/building-experiments/choose-assignment-sql-in-experiment.png)
+![Choose assignment SQL](../static/img/building-experiments/choose-assignment-sql-in-experiment.png)
 
 7. Input feature flag name
 
@@ -220,9 +233,11 @@ When you created your assignment SQL, you should have made note of your feature 
 
 If you input 100%, 100% of the relevant entities (users in this case) will be included in the experiment.
 
+![Percent Traffic](../static/img/building-experiments/name-variants.png)
+
 9. Add the variants
 
-![Configure experiment](../static/img/building-experiments/name-variants.png)
+![Add variants](../static/img/building-experiments/name-variants.png)
 
 When you created your assignment SQL, you should have made note of your variant names. In our case here it's `control` and `variant`.
 
@@ -234,11 +249,9 @@ The default is an even split between all the variants (including control), but y
 
 11. Click **Save Changes**
 
-### Add metrics to experiment
+### 8. Add metrics to experiment
 
 1. Navigate to **Experiments** and click the **Overview** tab
-
-
 
 You should have already configured your feature flag above, if you haven't, go do that first.
 
@@ -257,4 +270,3 @@ You can select one of them to add to the experiment
 ## Your experiment is now in progress!
 
 Your experiment will likely take a few days to start outputing results.
-

@@ -8,27 +8,30 @@ Eppo is a next-generation experimentation platform build right on top of your da
 
 # How Eppo Works
 
+![How Eppo Works](../static/img/building-experiments/how-eppo-works.png)
+
 There are four pieces to Eppo:
 
-1. Using your feature flagging tool of choice
+1. **Use your feature flagging tool of choice to segment experiment subjects**
 
-2. Connect your data source
+Experiment data generated in this fashion should then be exported to your data warehouse
+
+2. **Connect your data warehouse**
 
    Currently Eppo supports:
 
-- Snowflake
+- [Snowflake](./connecting-data/data-warehouses/connecting-to-snowflake.md)
 - Redshift
-- BigQuery
+- [BigQuery](./connecting-data/data-warehouses/connecting-to-bigquery.md)
 
-3. Build your experiment assignments and metrics by writing SQL
+3. **Build your experiment metrics by writing SQL**
 
-4. Set up experiments using experiment assignments and metrics
+4. **Monitor your experiments' progress**
 
-5. Monitor your experiments' progress
-
-6. Share experiment results with Eppo dashboards
+5. **Share experiment results with Eppo dashboards**
 
 # Getting Started Resources
 
-- 10 minute quickstart to getting up and running with Eppo
-- Connect your data to Eppo
+- [10 minute quickstart to getting up and running with Eppo](./quickstart.md)
+- From Feature Flag to Data Warehouse
+- Connect your data warehouse to Eppo
