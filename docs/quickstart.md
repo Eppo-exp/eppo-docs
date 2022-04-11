@@ -6,6 +6,17 @@ sidebar_position: 2
 
 Follow this quickstart to get your first experiment set up on Eppo.
 
+## Overview
+
+1. [Set up feature flagging](#1-set-up-feature-flagging)
+2. [Create an Eppo account](#2-create-eppo-account)
+3. [Connect your data warehouse](#3-connect-your-data-warehouse)
+4. [Create an Assignment SQL](#4-create-an-assignment-sql)
+5. [Create Fact SQLs](#5-create-a-fact-sql)
+6. [Create metrics](#6-create-metrics)
+7. [Create an experiment](#7-create-an-experiment)
+8. [Add metrics to experiment](#8-add-metrics-to-experiment)
+
 ## 1. Set up feature flagging
 
 Eppo assumes that you are already using a third party feature flagging tool like [LaunchDarkly](https://launchdarkly.com/) or [Optimizely](https://www.optimizely.com/) and are exporting experiment data into a data warehouse. In particular, Eppo requires that you have the following tables in your data warehouse:
