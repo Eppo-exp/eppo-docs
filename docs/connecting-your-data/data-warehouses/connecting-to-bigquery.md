@@ -46,4 +46,4 @@ If you would like to provide more granular access, you can provide us with read-
 1. Open the JSON file created in Step 10 under _Create a Service Account_
 2. Enter the values into the form fill as shown below, then click **Test and Save Connection**
    ![Bigquery warehouse connection](../../../static/img/connecting-data/bigquery-warehouse-connection.png)
-3. Eppo users [Google Secret Manager](https://cloud.google.com/secret-manager) to store and manage your credentials. Credentials are never stored in plaintext, and Secret Manager can only be accessed via authorized roles in GCP, where all usage is monitored and logged.
+3. Eppo uses [Google Secret Manager](https://cloud.google.com/secret-manager) to store and manage your credentials. Credentials are never stored in plaintext, and Secret Manager can only be accessed via authorized roles in GCP, where all usage is monitored and logged.

@@ -47,4 +47,4 @@ GRANT ALL PRIVILEGES ON WAREHOUSE eppo_wh TO ROLE eppo_role;
 ## Enter credentials into Eppo
 1. Log in to your Eppo account at [eppo.cloud](https://eppo.cloud/)
 2. Enter the values into the form, then click **Test and Save Connection**. For **Database** and **Schema**, enter the values used for the `eppo_output` database/schema
-3. Eppo users [Google Secret Manager](https://cloud.google.com/secret-manager) to store and manage your credentials. Credentials are never stored in plaintext, and Secret Manager can only be accessed via authorized roles in GCP, where all usage is monitored and logged.
+3. Eppo uses [Google Secret Manager](https://cloud.google.com/secret-manager) to store and manage your credentials. Credentials are never stored in plaintext, and Secret Manager can only be accessed via authorized roles in GCP, where all usage is monitored and logged.

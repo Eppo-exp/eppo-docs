@@ -10,27 +10,27 @@ When you write Fact SQL's, you're pulling data from the data warehouse that corr
 
 ![Create Definition SQL](../../../static//img/building-experiments/create-definition-sql.png)
 
-3. Click **Fact SQL**
+2. Click **Fact SQL**
 
 ![Create Fact SQL](../../../static//img/building-experiments/create-fact-sql.png)
 
-4. Select **User**
+3. Select **User**
 
 **User** is the default entity in Eppo but you can also create your own custom entity and select that here.
 
-5. Name your Fact SQL
+4. Name your Fact SQL
 
 ![Name Fact SQL](../../../static//img/building-experiments/name-fact-sql.png)
 
-6. Write SQL in the SQL editor to pull events data from the data warehouse
+5. Write SQL in the SQL editor to pull events data from the data warehouse
 
-Recall in the [Set up Feature Flagging](#1-set-up-feature-flagging) section that you should have (potentially multiple) event tables in your data warehouse with certain column types.
+Recall that that you should have (potentially multiple) event tables in your data warehouse with certain column types.
 
 In this step, you're going to write SQL to pull that data.
 
-![Name Fact SQL](../../../static//img/building-experiments/name-fact-sql.png)
+![Name Fact SQL](../../../static//img/building-experiments/add-fact-sql-query.png)
 
-7. Annotate the columns that you've selected from the data warehouse
+6. Annotate the columns that you've selected from the data warehouse
 
 ![Annotate Fact SQL](../../../static//img/building-experiments/annotate-fact-sql-columns.png)
 
@@ -42,12 +42,12 @@ Facts are the numeric quantities associated with the event. For every event that
 
 ![Add Facts](../../../static//img/building-experiments/add-fact-sql-fact.png)
 
-In the example above, we would like to measure the effect of the experiment on `revenue`.
+In the example above, we would like to measure the effect of the experiment on revenue.
 
-In the data warehouse, every time there is a `revenue` event (that might be someone purchasing something,), that event is logged as a row in the data warehouse.
+In the data warehouse, every time there is a revenue event (that might be someone purchasing something,), that event is logged as a row in the data warehouse.
 
-This event is translated into an integer value, which is the `revenue amount`, that can then be used as an Eppo fact and tracked in an experiment.
+This event is translated into an integer value, which is the revenue amount, that can then be used as an Eppo fact and tracked in an experiment.
 
 10. Save & Close
 
-You've now created your first Fact SQL. If you have more events that you would like to track in your experiment, you can repeat the steps in this section to create additional Fact SQLs.
+You've now created your a Fact SQL. If you have more events that you would like to track in your experiment, you can repeat the steps in this section to create additional Fact SQLs.

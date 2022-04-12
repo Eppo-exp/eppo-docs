@@ -1,4 +1,4 @@
-# Running a successful experiment
+# Running successful experiments
 
 Running a successful experiment isn't just about tracking metrics and looking at statistical significance. It's also about choosing the right metrics, the right duration, and any number of other small choices in experimental design and interpretation. While many of these decisions will be context-dependent, here are some best practices:
 
