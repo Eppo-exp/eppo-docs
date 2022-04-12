@@ -1,6 +1,8 @@
 # Running a successful experiment
 
-How to run experiments well that goes beyond using the Eppo tool. Getting this stuff right really means the difference to running successful experiments on Eppo versus wasting your time and not getting any value out of Eppo.
+Running a successful experiment isn't just about tracking metrics and looking at statistical significance. It's also about choosing the right metrics to track for the right duration, and any number of other small choices in experimental design.
+
+Here are some best practices for running a successful experiment:
 
 ## Know what you want
 
@@ -10,8 +12,6 @@ How to run experiments well that goes beyond using the Eppo tool. Getting this s
     - In this case, you aren’t necessarily looking for an improvement in metrics, but rather want to make sure there aren’t any unforeseen negative consequences
 - Running an experiment to understand user behavior better
     - In this case, you want to run an experiment for a longer period of time so you get tighter confidence intervals: even if one variant is clearly better than another, there may be reason to continue to gather more data
-
-## Choose the right metrics
 
 ## Traffic balances
 
