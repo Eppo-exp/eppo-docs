@@ -21,14 +21,7 @@ Follow this quickstart to get your first experiment set up on Eppo.
 
 Eppo assumes that you are already using a third party feature flagging tool like [LaunchDarkly](https://launchdarkly.com/) or [Optimizely](https://www.optimizely.com/) and are exporting experiment data into a data warehouse. In particular, Eppo requires that you have the following tables in your data warehouse:
 
-- an assignment table that indicates which experiment subjects were assigned to which experiments and variants at which time. It should contain columns that roughly correspond to:
-
-  - **timestamp**
-  - **user_id**
-  - **experiment**
-  - **variation**
-
-    For example, the first few rows of the table might look like this. You can refer [here](./connecting-your-data/feature-flagging/required-data) for more information on what the column types should be.
+- an assignment table that indicates which experiment subjects were assigned to which experiments and variants at which time. It should [contain columns](./connecting-your-data/assignment-tables/required-data)  that roughly correspond to:
 
     | timestamp | user_id | experiment | variation |
     | --------- | ------- | ---------- | --------- |
@@ -36,19 +29,14 @@ Eppo assumes that you are already using a third party feature flagging tool like
 
 - an event table whose rows are logs of specific events that occurred at specific times. It should contain columns that roughly correspond to:
 
-  - timestamp
-  - user_id
-  - event type
-  - event value
-
-    For example, the first few rows of the table might look like this:
-
     | timestamp | user_id | event_type | event_value |
     | --------- | ------- | ------- | -------------- |
     | 2021-07-17T18:57:13.000Z	 | 49980400511307080 | Revenue | 45.5695	|
     | 2021-07-17T18:57:13.000Z	 | 2281323415877132491 | Subscription | 1 |
 
-If you do not already have these tables set up, please refer to the [feature flagging](./connecting-your-data/feature-flagging/index.md) section for more instructions.
+If you do not have a feature flagging tool integrated, please refer to the [feature flagging](./connecting-your-data/feature-flagging/) section for more instructions.
+
+If you have a feature flagging tool integrated but do not have an assignment table set up in your data warehouse, please follow the instructions [here](./connecting-your-data/assignment-tables/) to log your assignment data.
 
 ## 1. Create Eppo account
 
@@ -58,9 +46,9 @@ Create a new account at https://eppo.cloud/. Eppo implements Auth0 and you shoul
 
 Once you log in, you will see a fill form where you can input your data warehouse connection details.
 
-![connect your data warehouse form fill](../static/img/building-experiments/form-fill-connect-your-warehouse.png)
+![connect your data warehouse form fill](../static/img/building-experiments/form-fill-connect-data.png)
 
-Eppo currently supports the following data warehouses. Follow the linked warehouse-specific guides to connect Eppo to your data warehouse.
+Follow the linked warehouse-specific guides to connect Eppo to your data warehouse.
 
 - [Snowflake](./connecting-your-data/data-warehouses/connecting-to-snowflake)
 - [BigQuery](./connecting-your-data/data-warehouses/connecting-to-bigquery)
