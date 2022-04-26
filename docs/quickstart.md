@@ -1,6 +1,7 @@
 ---
+id: quickstart
 sidebar_position: 2
-slug: /quickstart
+slug: /
 ---
 
 # Quickstart

@@ -1,7 +1,6 @@
 ---
 sidebar_position: 1
 id: what-is-eppo
-slug: /
 ---
 
 # What is Eppo
