@@ -22,6 +22,7 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
+          routeBasePath: '/',
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
           editUrl:
@@ -55,13 +56,6 @@ const config = {
             docId: "quickstart",
             position: "left",
             label: "Quickstart",
-          },
-
-          {
-            type: "doc",
-            docId: "faq",
-            position: "left",
-            label: "FAQ",
           },
           {
             to: "https://www.geteppo.com/blog",
