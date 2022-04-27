@@ -22,17 +22,13 @@ const config = {
       /** @type {import('@docusaurus/preset-classic').Options} */
       ({
         docs: {
+          routeBasePath: '/',
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
           editUrl:
             "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
         },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
-          editUrl:
-            "https://github.com/facebook/docusaurus/tree/main/packages/create-docusaurus/templates/shared/",
-        },
+        blog: false,
         theme: {
           customCss: require.resolve("./src/css/custom.css"),
         },
@@ -55,19 +51,7 @@ const config = {
             docId: "quickstart",
             position: "left",
             label: "Quickstart",
-          },
-
-          {
-            type: "doc",
-            docId: "faq",
-            position: "left",
-            label: "FAQ",
-          },
-          {
-            to: "https://www.geteppo.com/blog",
-            label: "Blog",
-            position: "left",
-          },
+          }
         ],
       },
       footer: {
@@ -78,23 +62,14 @@ const config = {
             items: [
               {
                 label: "Quickstart",
-                to: "/docs/quickstart",
+                to: "/",
               },
               {
                 label: "FAQ",
-                to: "/docs/faq",
+                to: "/faq",
               },
             ],
-          },
-          {
-            title: "More",
-            items: [
-              {
-                label: "Blog",
-                to: "/blog",
-              },
-            ],
-          },
+          }
         ],
         copyright: `Copyright © ${new Date().getFullYear()} Eppo, Inc.`,
       },
