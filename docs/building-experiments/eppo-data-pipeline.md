@@ -2,9 +2,9 @@
 
 At a high level, the Eppo data pipeline performs three major steps when processing your data for experiment analysis:
 
-1. Join assignment and event data
-2. Summarize metrics at the subject level
-3. Summarize metrics at the experiment variant level
+1. [Join assignment and event data](#join-assignment-and-event-data)
+2. [Summarize metrics at the subject level](#summarize-metrics-at-the-subject-level)
+3. [Summarize metrics at the experiment variant level](#summarize-metrics-at-the-experiment-variant-level)
 
 ## Join assignment and event data
 
@@ -35,12 +35,9 @@ After the Assignment/Event join, Eppo aggregates data at the subject level. For 
 
 The output of this step has the following schema:
 
-- Experiment
-- Variant
-- Subject ID
-- Assigned Timestamp
-- Aggregation Name
-- Aggregation Value
+| Experiment      | Variant | Subject ID | Assigned Timestamp | Aggregation Name | Aggregation Value |
+| ----------- | ----------- | ----------- | ----------- | ----------- | ----------- |
+
 
 ## Summarize Metrics at the Experiment Variant Level
 
@@ -48,11 +45,5 @@ The final step is to aggregate data to the experiment variant level. After this 
 
 The output of this step has the following schema:
 
-- Experiment
-- Variant
-- Dimension Name
-- Dimension Value
-- Assigned Count
-- Aggregation Name
-- Aggregation First Moment (sum)
-- Aggregation Second Moment (sum of squares)
+| Experiment      | Variant | Dimension Name | Dimension Value | Assigned Count | Aggregation Name | Aggregation First Moment (Sum) | Aggregation Second Moment (Sum of Squares)|
+| ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- |
