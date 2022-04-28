@@ -9,6 +9,8 @@ In Eppo, you can build your experiments using a few core building blocks:
 - [Metrics](./metrics/creating-metrics)
 - [Experiments](./experiments/creating-experiments)
 
+These building blocks are combined in the [Eppo Data Pipeline](eppo-data-pipeline)
+
 ## Overview
 
 Let's suppose that you're a food delivery app that wants to track the effect of a new push notification on customer ordering habits.
