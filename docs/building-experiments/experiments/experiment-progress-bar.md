@@ -21,4 +21,4 @@ You can also see the progress bar on the details page for each experiment.
 #### How we calculate the progress
 Because we use sequential analysis to produce confidence intervals, this is not straightforward and we resort to the following heuristic: the current detectable effect (CDE) is computed by multiplying the confidence bound by $\frac{z_{1-\alpha/2} + z_{\text{power}}}{z_{1-\alpha/2}}$, where $z_x = \Phi^{-1}(x)$ corresponds to the inverse CDF evaluated at $x$, where we use 80% power by default. This bound is exact when running a Z-test with 80% power [reference](http://www.stat.columbia.edu/~gelman/stuff_for_blog/chap20.pdf).
 
-We then define progress as $\text{Progress} = \left(\frac{\text{CDE}}{\text{MDE}}\right)^2$. The square comes from the fact that if we want to detect an effect twice as small, we need roughly 4 times more data.
+We then define progress as $\text{Progress} = \left(\frac{\text{MDE}}{\text{CDE}}\right)^2$. The square comes from the fact that if we want to detect an effect twice as small, we need roughly 4 times more data.
