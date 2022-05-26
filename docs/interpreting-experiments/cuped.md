@@ -1,6 +1,8 @@
 # Controlled-experiment Using Pre-Existing Data (CUPED)
 CUPED is a statistical tool that leverages pre-existing data to reduce the variance of an A/B experiment. If data is music, CUPED is a pair of noise canceling headphones, allowing you to notice a more pronounced pattern in the data despite a lower volume or strong external noise.
 
+Eppo uses CUPED to get more accurate estimates of treatment effect, which should lead to narrower confidence intervals.
+
 ## Inner workings
 If you're looking for specific details on the math involved [this paper goes into depth](http://robotics.stanford.edu/~ronnyk/2013-02CUPEDImprovingSensitivityOfControlledExperiments.pdf).
 
