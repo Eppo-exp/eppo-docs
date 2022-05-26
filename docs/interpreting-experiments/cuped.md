@@ -13,7 +13,7 @@ Eppo uses a ridge regression model to predict subject level outcomes across all 
 
 ## Using CUPED on Eppo
 
-The predictions of this model are used to get more accurate estimates of treatment effect, which should lead to narrower confidence intervals. You can switch between CUPED and non-CUPED results from the CUPED dropdown.
+You can switch between CUPED and non-CUPED results from the CUPED dropdown. 
 
 ![Switch to non CUPED](../../static/img/measuring-experiments/cuped-switch-to-non-cuped.png)
 
