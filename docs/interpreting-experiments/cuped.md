@@ -9,7 +9,7 @@ If you're looking for specific details on the math involved [this paper goes int
 ## Overview
 When utilizing CUPED, Eppo automatically ingests event data of subjects in the 30 days prior to experiment start across specified metrics. CUPED works best for experiments with long-time users for whom many pre-experiment data points exist. It is less effective for newer users.
 
-Eppo uses a ridge regression model to predict subject level outcomes across all metrics. Relationships between every metric are taken into account to make predictions for other metrics. This allows you leverage variables with rich datasets to reduce variance for sparser data where pre-experiment datapoints might be lacking (for example, retention).
+Eppo uses a ridge regression model to predict subject level outcomes across all metrics. Relationships between every metric are taken into account to make predictions for other metrics. This allows you to leverage variables with rich datasets to reduce variance for sparser data where pre-experiment datapoints might be lacking (for example, retention).
 
 ## Using CUPED on Eppo
 
