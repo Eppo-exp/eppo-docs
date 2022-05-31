@@ -30,9 +30,19 @@ Eppo’s SDK handles the variation assignment for you. Given a user subject and 
 
 You will need to generate an API token that allows your application to communicate with Eppo’s experiments API. Do not share your API token with anyone outside your organization.
 
-(I linked the loom video here, but in the docs website we should have step-by-step guide with screenshots.)
+### 1. Navigate to the **Admin** tab in the Eppo homepage and click **Create Key**
+![generating-api-token-1](../../../static/img/connecting-data/api-key-1.png)
 
-Loom: [https://www.notion.so/eppo/WIP-SDK-Developer-Documentation-7969949576a0432ab1db43887f0dd623#bb4fb2a82ea04691951835de094fc61e](https://www.notion.so/DRAFT-SDK-Developer-Documentation-7969949576a0432ab1db43887f0dd623)
+### 2. Fill in a unique name for the key and give it read access
+![generating-api-token-2](../../../static/img/connecting-data/api-key-2.png)
+
+### 3. Click **Create**
+
+A modal will pop up with the API key -- download it or copy it somewhere else for safe-keeping.
+![generating-api-token-3](../../../static/img/connecting-data/api-key-3.png)
+
+### 4. Close your modal to see your API token
+![generating-api-token-4](../../../static/img/connecting-data/api-key-4.png)
 
 ## Install the SDK package in your preferred language
 
