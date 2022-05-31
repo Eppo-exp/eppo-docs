@@ -3,13 +3,13 @@ CUPED is a statistical tool that leverages pre-existing data to reduce the varia
 
 Eppo uses CUPED to get more accurate estimates of treatment effect, which should lead to narrower confidence intervals.
 
-## Inner workings
-If you're looking for specific details on the math involved [this paper goes into depth](http://robotics.stanford.edu/~ronnyk/2013-02CUPEDImprovingSensitivityOfControlledExperiments.pdf).
-
 ## Overview
 When utilizing CUPED, Eppo automatically ingests event data of subjects in the 30 days prior to experiment start across specified metrics. CUPED works best for experiments with long-time users for whom many pre-experiment data points exist. It is less effective for newer users.
 
 Eppo uses a ridge regression model to predict subject level outcomes across all metrics. Relationships between every metric are taken into account to make predictions for other metrics. This allows you to leverage variables with rich datasets to reduce variance for sparser data where pre-experiment datapoints might be lacking (for example, retention).
+
+## Inner workings
+If you're looking for specific details on the math involved [this paper goes into depth](http://robotics.stanford.edu/~ronnyk/2013-02CUPEDImprovingSensitivityOfControlledExperiments.pdf).
 
 ## Using CUPED on Eppo
 
@@ -24,5 +24,4 @@ CUPED can be turned on in the admin panel, and in the overview page of an experi
 ![Turn CUPED on](../../static/img/measuring-experiments/cuped-turn-on-cuped.png)
 
 ## Notes
-  - Currently, we do not support ratio metrics.
-  - We will continue improving CUPED models on Eppo as we gather more data
+We will continue improving CUPED models on Eppo as we gather more data
