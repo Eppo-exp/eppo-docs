@@ -12,5 +12,11 @@ Click on the link for your feature flagging tool for instructions on how to crea
 - [Optimizely](./assignment-table-optimizely)
 - [Unleash](./assignment-table-unleash)
 
+Alternatively, you can use the Eppo Randomization SDK to assign subjects into different experiment variants.
+
+- [Eppo Randomization API](./randomization-sdk)
+
+
+
 
 
