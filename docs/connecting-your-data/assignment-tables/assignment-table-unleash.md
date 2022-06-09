@@ -28,9 +28,6 @@ const unleash = initialize({
 unleash.on('synchronized', () => {
   // Unleash is ready to serve updated feature toggles.
 
-  // Check a feature flag
-  const isEnabled = unleash.isEnabled('button-color-experiment');
-
   // Check the variant
   const variant = unleash.getVariant('button-color-experiment');
 

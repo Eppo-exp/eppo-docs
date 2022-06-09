@@ -14,7 +14,9 @@ To _generate_ these two kinds of experiment data, you need to implement, respect
 
 Data from both the feature flagging solution and the events logging solution should eventually flow to your data warehouse.
 
-We provide guides for how you can get a few of the top feature flagging tools to play nice with Eppo:
+To generate the assignment data and randomly assign users into variants, we encourage you to use Eppo's homegrown [Randomization SDK](./randomization-sdk.md).
+
+If you are already using a 3rd party feature flagging tool, we also provide guides to make them play nice with Eppo:
 
 - [LaunchDarkly](./launch-darkly)
 - [Optimizely](./optimizely)
