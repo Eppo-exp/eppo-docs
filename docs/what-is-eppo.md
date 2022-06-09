@@ -34,6 +34,6 @@ There are five pieces to Eppo:
 # Getting started resources
 
 - [10 minute quickstart to getting up and running with Eppo](./quickstart.md)
-- [From feature flag to data warehouse](./connecting-your-data/feature-flagging/index.md)
+- [From feature flag to data warehouse](./feature-flagging/index.md)
 - [Connect your data warehouse to Eppo](./connecting-your-data/data-warehouses/connecting-to-bigquery)
 - [How the Eppo data pipeline works](./building-experiments/eppo-data-pipeline)
