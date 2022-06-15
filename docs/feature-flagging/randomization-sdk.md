@@ -65,10 +65,10 @@ The client must be a singleton. The client instance stores assignment configurat
 <Tabs>
 <TabItem value="node" label="Node">
 
-```tsx
+```ts
 import * as EppoSdk from '@eppo/node-server-sdk';
 
-const eppoClient = EppoSdk.init({ apiKey: 'YOUR_API_KEY' });
+const eppoClient = await EppoSdk.init({ apiKey: 'YOUR_API_KEY' });
 ```
 
 </TabItem>
@@ -91,7 +91,7 @@ client = eppo_client.init(client_config)
 Each SDK client exposes a variation assignment function. This function takes 2 inputs:
 
 - `experimentKey` - this is the value from the “Feature Flag” input on the Experiment “Setup” tab as seen in the below screenshots
-- `subject` - the user or entity that is being experimented on, typically represented by a uuid.
+- `subjectKey` - the entity ID that is being experimented on, typically represented by a uuid.
 
 ![Screen Shot 2022-05-04 at 4.51.42 PM.png](../../static/img/connecting-data/experiment-key.png)
 
@@ -105,9 +105,10 @@ See the below language-specific examples for how to invoke the assignment functi
 <TabItem value="node" label="Node">
 
 
-```tsx
-// assumes 'client' is stored by your app as a singleton or global variable
+```ts
+import * as EppoSdk from '@eppo/node-server-sdk';
 
+const client = EppoSdk.getInstance();
 const variation = client.getAssignment("user-1", "my-experiment")
 ```
 
@@ -118,7 +119,7 @@ const variation = client.getAssignment("user-1", "my-experiment")
 import eppo_client
 
 client = eppo_client.get_instance()
-variation = client.assign("user-1", "my-experiment")
+variation = client.get_assignment("user-1", "my-experiment")
 ```
 
 </TabItem>
