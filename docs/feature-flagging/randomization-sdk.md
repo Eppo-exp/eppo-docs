@@ -126,7 +126,7 @@ variation = client.assign("user-1", "my-experiment")
 
 ## Logging
 
-At the moment, you will still need to log assignments if you use Eppo randomization.
+At the moment, you will still need to log assignments manually to create your assignment table. You can find instructions on how to do so [here](../connecting-your-data/assignment-tables/assignment-table-eppo-randomization-sdk).
 
 
 
