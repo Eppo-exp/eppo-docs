@@ -5,7 +5,7 @@ sidebar_position: 1
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Create assignment table with Eppo Randomization SDK
+# Eppo Randomization SDK
 
 # Overview
 
@@ -123,5 +123,13 @@ variation = client.assign("user-1", "my-experiment")
 
 </TabItem>
 </Tabs>
+
+## Logging
+
+At the moment, you will still need to log assignments if you use Eppo randomization.
+
+
+
+
 
 
