@@ -34,7 +34,7 @@ A modal will pop up with the API key -- download it or copy it somewhere else fo
 ## Install the SDK package in your preferred language
 
 :::note
-Eppo’s JavaScript SDK is meant for use in server applications only. It is not compatible with browser or client JS applications.
+Eppo’s Node SDK is meant for use in server applications only. It is not compatible with browser or client JS applications.
 :::
 
 <Tabs>
@@ -187,6 +187,8 @@ variation = client.get_assignment("user-1", "my-experiment")
 </Tabs>
 
 ## Logging
+
+In order to capture assignment data, you need to log which variations the experiment subjects are exposed to. The Eppo SDK integrates with your event logging system to log this information. The below code examples shows how to integrate the SDK with [Segment](https://segment.com/docs/) for logging events, but you could also use any other logging system. The SDK will use the provided logging implementation to automatically log assignments.
 
 
 ### Client SDKs
