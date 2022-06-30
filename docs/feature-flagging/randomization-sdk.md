@@ -174,7 +174,7 @@ variation = client.get_assignment("user-1", "my-experiment")
 
 ## Logging
 
-In order to capture assignment data, you need to log which variations the experiment subjects are exposed to. The Eppo SDK integrates with your event logging system to log this information. The below code examples shows how to integrate the SDK with [Segment](https://segment.com/docs/) for logging events, but you could also use any other logging system. The SDK will use the provided logging implementation to automatically log assignments.
+In order to capture assignment data, you need to log which variations the experiment subjects are exposed to. The Eppo SDK integrates with your event logging system to log this information whenever the `getAssignment` function is invoked. The below code examples shows how to integrate the SDK with [Segment](https://segment.com/docs/) for logging events, but you could also use any other logging system. The SDK will use the provided logging implementation to log assignments.
 
 
 ### Client SDKs
