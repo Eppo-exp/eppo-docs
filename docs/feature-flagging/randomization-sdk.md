@@ -38,7 +38,7 @@ Eppo’s Node SDK is meant for use in server applications only. It is not compat
 :::
 
 <Tabs>
-<TabItem value="javascript" label="Javascript">
+<TabItem value="javascript" label="Javascript (Client)">
 
 ```bash
 yarn add @eppo/js-client-sdk
@@ -66,11 +66,7 @@ pip install eppo-server-sdk
 
 ## Initialize the Eppo SDK in your application code
 
-Initialize the SDK once when your application starts up to generate a shared client instance.
-
-:::note
-The client must be a singleton. The client instance stores assignment configurations in memory. The same client instance should be reused for the lifetime of your application. Do not generate a new instance on every request.
-:::
+Initialize the SDK once when your application starts up to generate a singleton client instance. The initialize method should be called once per application lifecycle; do not initialize the SDK on every request.
 
 ### Client SDKs
 
@@ -93,9 +89,7 @@ const eppoClient = await EppoSdk.init({ apiKey: 'YOUR_API_KEY' });
 
 ### Server SDKs
 
-:::note
-Upon initialization, the SDK will begin polling Eppo’s API at regular intervals to retrieve your experiment configurations.
-:::
+Upon initialization, server-side SDKs will begin polling Eppo’s API at regular intervals to retrieve your experiment configurations.
 
 <Tabs>
 <TabItem value="node" label="Node">
@@ -138,10 +132,6 @@ See the below language-specific examples for how to invoke the assignment functi
 
 ### Client SDKs
 
-:::note
-API Keys used with Client SDKs should have only ‘Randomization READ’ permissions
-:::
-
 <Tabs>
 <TabItem value="javascript" label="JavaScript">
 
@@ -157,10 +147,6 @@ const variation = client.getAssignment("user-1", "my-experiment")
 </Tabs>
 
 ### Server SDKs
-
-:::note
-Upon initialization, the SDK will begin polling Eppo’s API at regular intervals to retrieve your experiment configurations.
-:::
 
 <Tabs>
 <TabItem value="node" label="Node">
@@ -188,7 +174,7 @@ variation = client.get_assignment("user-1", "my-experiment")
 
 ## Logging
 
-In order to capture assignment data, you need to log which variations the experiment subjects are exposed to. The Eppo SDK integrates with your event logging system to log this information. The below code examples shows how to integrate the SDK with [Segment](https://segment.com/docs/) for logging events, but you could also use any other logging system. The SDK will use the provided logging implementation to automatically log assignments.
+In order to capture assignment data, you need to log which variations the experiment subjects are exposed to. The Eppo SDK integrates with your event logging system to log this information whenever the `getAssignment` function is invoked. The below code examples shows how to integrate the SDK with [Segment](https://segment.com/docs/) for logging events, but you could also use any other logging system. The SDK will use the provided logging implementation to log assignments.
 
 
 ### Client SDKs
@@ -229,10 +215,6 @@ init({
 
 ### Server SDKs
 
-:::note
-Upon initialization, the SDK will begin polling Eppo’s API at regular intervals to retrieve your experiment configurations.
-:::
-
 <Tabs>
 <TabItem value="node" label="Node">
 
@@ -246,7 +228,7 @@ const logger: IAssignmentLogger = {
   logAssignment(assignment: IAssignmentEvent) {
     analytics.track({
       userId: assignment.subject,
-      event: assignment.name,
+      event: "Eppo Randomization Assignment",
       properties: assignment,
     });
   },
