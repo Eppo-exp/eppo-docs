@@ -4,6 +4,7 @@ The precision of experiment results (the width of confidence intervals) depends 
 However, there are options beyond waiting to gather more data, and all these options address reducing the variance in the metrics we are measuring directly. One particular flexible and powerful method is known as CUPED. CUPED is a statistical tool that leverages pre-existing data to reduce the variance of an A/B experiment. You can think of CUPED as a pair of noise cancelling headphones: it uses data gathered prior to the experiment to understand the ambient noise, allowing you to notice a more pronounced pattern in the data.
 
 ![CUPED variance reduction explained](../../static/img/measuring-experiments/cuped-variance-plot.png)
+An illustration of how CUPED helps reduce the variance in an effect estimate, leading to a much tighter confidence interval.
 
 Eppo uses CUPED to get more accurate estimates of treatment effect, which should lead to narrower confidence intervals.
 
