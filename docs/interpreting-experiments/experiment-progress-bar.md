@@ -29,8 +29,14 @@ Before starting with any experiment, we have to set the minimum detectable effec
 - What effect sizes are you able to detect in a reasonable amount of time given the data volume. It's important to keep in mind that, as a rule of thumb, detecting an effect twice as small takes 4 times as long. Thus if based on your data volume it takes a month to detect a 10% lift, then it would take 4 months to detect a 5% lift. A constraint on the maximum time you are comfortable running an experiment often limits what MDE you can aim for.
 
 Keeping the above points in mind, we have set the MDE to a reasonable value, for illustrative purposes let's say at 5%, and we started our experiment. Now how do we use the progress bar? In two ways:
+
 1. If the progress bar is reaching 100% progress and is still grey, or you do not see any significant effects, then you can reasonably stop the experiment and conclude the new variants are not materially different from the control variant.
+![Example when to stop with neutral result](../../static/img/measuring-experiments/progress-bar-neutral-result.png)
+In the above example, we have set the minimum detectable effect at 10%, and we have gathered enough data to detect a much smaller effect of 5.88%. However, the results indicate that the primary metric hardly moved. We can conclude this experiment.
+
 2. Whenever you see the progress bar turn blue, or see significant effects in your experiment results (the former only consider primary metrics and takes more time) then you can reasonably make a decision based on observed data, even if the progress bar is not filled up at all. For example, if you see a lift of 20%, we know that we can detect such big lift about 4x sooner than the 5% lift we set as minimum detectable effect; we would see a positive result even though the progress bar is only at 25%. 
+![Example when to stop with positive result](../../static/img/measuring-experiments/progress-bar-positive-result.png)
+In this example, we see a roughly 13% increase in the primary metric, and we have gathered enough data to be powered to detect an 11% effect; even though we only see 20% progress towards detecting a 5% lift, we can stop this experiment early and conclude that the new variant improves upon the control.
 
 In short: do not be afraid to conclude an experiment (long) before reaching 100% progress when you see significant results. 
 
