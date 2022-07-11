@@ -1,6 +1,6 @@
 # Connecting to Redshift
 
-## 1. Whitelist Eppo IP Address
+## 1. Allowlist Eppo IP Address
 
 For Eppo to connect to your Redshift database, you’ll need to allow our inbound IP addresses ( `35.226.89.62`, `34.133.196.109` ) in your Cluster’s Security Group settings:
 
