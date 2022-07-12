@@ -130,8 +130,8 @@ After the SDK is initialized, you may assign variations from any component in yo
 function MyComponent({ subjectKey, experimentKey }): JSX.Element {
   const assignedVariation = useMemo(() => {
     const eppoClient = getInstance();
-    return eppoClient.getAssignment('user-1', 'experiment_5');
-  }, [])
+    return eppoClient.getAssignment(subjectKey, experimentKey);
+  }, [subjectKey, experimentKey])
 
   return (
     <div>
