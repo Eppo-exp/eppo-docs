@@ -58,6 +58,18 @@ const config = {
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
+
+      algolia: {
+        // The application ID provided by Algolia
+        appId: 'EXQ9PHVP0I',
+
+        // Public API key: it is safe to commit it
+        apiKey: '539c8ab62aa7929c33b9898cf2d3dbc7',
+
+        indexName: 'Eppo',
+
+        //... other Algolia params
+      },
       navbar: {
         // title: 'Eppo',
         logo: {
