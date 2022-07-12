@@ -8,12 +8,14 @@ The SDK respects the experiment traffic allocation. You may choose to dialup the
 
 You may also use the SDK to test an experiment before launch. Each variation in Eppo has an allow-list of subjects who should always be assigned to the variation for testing purposes. The SDK downloads this allow-list from Eppo's servers to give assignments.
 
+To get started with the Randomization SDK, [create an API Key](./api-keys.md) and choose an SDK to use.
+
 ## Choosing an SDK
 
 Eppo has two types of SDKs:
 - [Client SDKs](./client-sdks/)
 - [Server SDKs](./server-sdks/)
 
-Client SDKs are intended to run on a user device such as a web browser. These SDKs usually assign variations for one subject, for example the user ID. Server SDKs are meant for use by a web server that runs on your own application infrastructure. Server SDKs may assign variations for multiple subjects and experiments.
+Client SDKs are intended to run on a user device such as a web browser. These SDKs usually assign variations for one subject - the device user. Server SDKs are meant for use by a web server that may serve multiple user requests at a time.
 
 
