@@ -46,7 +46,10 @@ Initialize the SDK once when your application starts up to generate a singleton 
 The below code example shows how to initialize the SDK with the event logger from the previous section and your API key:
 
 ```python
-client_config = Config(api_key="<YOUR_API_KEY>", assignment_logger=SegmentAssignmentLogger())
+import eppo_client
+from eppo_client.config import Config
+
+client_config = Config(api_key="<YOUR_API_KEY>", assignment_logger=AssignmentLogger())
 eppo_client.init(client_config)
 ```
 
