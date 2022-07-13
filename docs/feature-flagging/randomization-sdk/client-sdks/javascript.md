@@ -7,6 +7,11 @@ import TabItem from '@theme/TabItem';
 This documentation is for our client-side SDK intended for use by browser applications. For use in server applications, refer to our [Node JS SDK](../server-sdks/node.md).
 :::
 
+Eppo's JavaScript SDK is open source:
+- [GitHub repository](https://github.com/Eppo-exp/js-client-sdk)
+- [API Reference](https://eppo-exp.github.io/js-client-sdk/js-client-sdk.html)
+- [NPM package](https://www.npmjs.com/package/@eppo/js-client-sdk)
+
 ### 1. Install the SDK
 You can install the SDK with Yarn or NPM:
 
@@ -149,8 +154,3 @@ The SDK is supported on all modern browsers. It relies on JavaScript promises, w
 ### Local Storage
 
 The SDK uses browser local storage to store experiment configurations downloaded from Eppo. This allows for quick lookup by the `getAssignment` function. The configuration data stored contains the experiment key, experiment variation values, traffic allocation, and any allow-list overrides.
-
-### Links
-- [GitHub repository](https://github.com/Eppo-exp/js-client-sdk)
-- [API Reference](https://eppo-exp.github.io/js-client-sdk/js-client-sdk.html)
-- [NPM package](https://www.npmjs.com/package/@eppo/js-client-sdk)

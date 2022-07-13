@@ -3,6 +3,10 @@ import TabItem from '@theme/TabItem';
 
 # Python
 
+Eppo's Python SDK is open source:
+- [GitHub repository](https://github.com/Eppo-exp/python-sdk)
+- [PyPI package](https://pypi.org/project/eppo-server-sdk/)
+
 ### 1. Install the SDK
 
 Install the SDK with PIP:
@@ -25,8 +29,8 @@ import analytics
 analytics.write_key = "<SEGMENT_WRITE_KEY>"
 
 class SegmentAssignmentLogger(AssignmentLogger):
-		def log_assignment(self, assignment):
-			analytics.track(assignment["subject"], "Eppo Randomization Assignment", assignment)
+	def log_assignment(self, assignment):
+		analytics.track(assignment["subject"], "Eppo Randomization Assignment", assignment)
 ```
 
 The SDK will invoke the `log_assignment` function with an `assignment` object that contains the following fields:
@@ -41,7 +45,7 @@ The SDK will invoke the `log_assignment` function with an `assignment` object th
 
 ### 3. Initialize the SDK
 
-Initialize the SDK once when your application starts up to generate a singleton client instance. The initialize method should be called once per application lifecycle; do not initialize the SDK on every request.
+Initialize the SDK once when your application starts up to generate a singleton client instance. During initialization, the SDK does a network request to fetch experiment configurations, which it stores in memory. It's only necessary to initialize the SDK once per application lifecycle.
 
 The below code example shows how to initialize the SDK with the event logger from the previous section and your API key:
 
@@ -73,8 +77,3 @@ variation = client.get_assignment("<SUBJECT-KEY>", "<EXPERIMENT-KEY>")
 ```
 
 The experiment **Traffic Allocation** setting determines the percentage of subjects the SDK will assign to experiment variations. For example, if the traffic allocation is 25%, the assignment function will return a variation for 25% of subjects and `null` for the remaining 75%. If the **Traffic Allocation** is zero but subjects have been added to a variation **Allow List**, the SDK will return the variation for the allow-listed subjects.
-
-### Links
-
-- [GitHub repository](https://github.com/Eppo-exp/python-sdk)
-- [Published python package](https://pypi.org/project/eppo-server-sdk/)

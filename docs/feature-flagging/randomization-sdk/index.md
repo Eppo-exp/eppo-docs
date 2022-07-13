@@ -4,7 +4,7 @@
 
 You can use Eppo's SDK to randomly assign subjects to your experiment variations. The SDK integrates with your existing event tracking system to log assignment events for later analysis in Eppo.
 
-The SDK assigns variations according to your experiment traffic allocation. You may choose to dialup the traffic allocation over a period of time. If the traffic allocation changes, the SDK never reassigns subjects who were already assigned to a variation. You may also use the SDK to test an experiment before launch. Each variation in Eppo has an allow-list override for test subjects. The SDK downloads this allow-list from Eppo's servers to give assignments.
+The SDK assigns variations according to the experiment traffic allocations you set in Eppo's user interface. You may choose to dial up the traffic allocation over a period of time. If the traffic allocation changes, the SDK never reassigns subjects who were already assigned to a variation. You may also use the SDK to test an experiment before launch. Each variation in Eppo has an allow-list override for test subjects. The SDK downloads this allow-list from Eppo's servers to give assignments.
 
 To get started with the Randomization SDK, [create an API Key](./api-keys.md) and choose an SDK to use.
 

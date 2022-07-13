@@ -3,6 +3,11 @@ import TabItem from '@theme/TabItem';
 
 # Node
 
+Eppo's Node SDK is open source:
+- [GitHub repository](https://github.com/Eppo-exp/node-server-sdk)
+- [API Reference](https://eppo-exp.github.io/node-server-sdk/node-server-sdk.html)
+- [NPM package](https://www.npmjs.com/package/@eppo/node-server-sdk)
+
 ### 1. Install the SDK
 You can install the SDK with Yarn or NPM:
 
@@ -61,7 +66,7 @@ The SDK will invoke the `logAssignment` function with an `assignment` object tha
 
 ### 3. Initialize the SDK
 
-Initialize the SDK once when your application starts up to generate a singleton client instance. The initialize method should be called once per application lifecycle; do not initialize the SDK on every request.
+Initialize the SDK once when your application starts up to generate a singleton client instance. During initialization, the SDK does a network request to fetch experiment configurations, which it stores in memory. It's only necessary to initialize the SDK once per application lifecycle.
 
 The below code example shows how to initialize the SDK with the event logger from the previous section and your API key:
 
@@ -94,8 +99,3 @@ const variation = eppoClient.getAssignment("<SUBJECT-KEY>", "<EXPERIMENT-KEY>");
 ```
 
 The experiment **Traffic Allocation** setting determines the percentage of subjects the SDK will assign to experiment variations. For example, if the traffic allocation is 25%, the assignment function will return a variation for 25% of subjects and `null` for the remaining 75%. If the **Traffic Allocation** is zero but subjects have been added to a variation **Allow List**, the SDK will return the variation for the allow-listed subjects.
-
-### Links
-- [GitHub repository](https://github.com/Eppo-exp/node-server-sdk)
-- [API Reference](https://eppo-exp.github.io/node-server-sdk/node-server-sdk.html)
-- [NPM package](https://www.npmjs.com/package/@eppo/node-server-sdk)

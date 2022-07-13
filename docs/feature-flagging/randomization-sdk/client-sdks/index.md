@@ -6,7 +6,7 @@ Eppo's client SDK integrates with client-side applications that run on a user de
 
 2. **Assignment**: Once the SDK is initialized, your application code invokes the SDK to assign a variation to an experiment subject. This step does not involve any network request.
 
-3. **Logging**: The SDK logs assignment events to whichever event tracking system you use, for example Segment. The assignment data includes information about the assigned variation and subject. 
+3. **Logging**: The SDK logs assignment events to whichever event tracking system you use (for example [Segment](https://segment.com/docs/)) using a callback function you provide on SDK initialization. The assignment data includes information about the assigned variation and subject.
 
 ![client-sdk-diagram](../../../../static/img/connecting-data/client-sdk-diagram.png)
 
