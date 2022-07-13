@@ -29,11 +29,11 @@ npm install @eppo/js-client-sdk
 </TabItem>
 </Tabs>
 
-### 2. Define an Event Logger
+### 2. Define an Assignment Logger
 
-The SDK requires an assignment logging callback to be passed on initialization. The SDK uses the logging callback to capture assignment data whenever a variation is assigned. The below code examples shows how to integrate the SDK with [Segment](https://segment.com/docs/) for logging events, but you could also use any other logging system.
+The SDK requires an assignment logger to be passed on initialization. The SDK invokes the logger to capture assignment data whenever a variation is assigned. The below code example shows how to integrate the SDK with [Segment](https://segment.com/docs/) for logging events. You could also use your own logging system; the only requirement is that the SDK receives a `logAssignment` function.
 
-Define an implementation of the Eppo `AssignmentLogger` interface:
+Define an implementation of the Eppo `AssignmentLogger` interface. This interface has one function: `logAssignment`.
 
 ```javascript
 import { IAssignmentLogger } from '@eppo/js-client-sdk';
@@ -54,7 +54,7 @@ const assignmentLogger: IAssignmentLogger = {
 };
 ```
 
-The SDK will invoke the `logAssignment` function from the above example every time a variation is assigned. The below table shows the information contained in the `assignment` object passed to this function:
+The SDK will invoke the `logAssignment` function with an `assignment` object that contains the following fields:
 
 | Field | Description | Example |
 | --------- | ------- | ---------- |
