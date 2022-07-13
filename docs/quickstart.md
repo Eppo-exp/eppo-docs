@@ -23,13 +23,13 @@ Follow this quickstart to get your first experiment set up on Eppo.
 
 Eppo assumes that you are already using a third party feature flagging tool like [LaunchDarkly](https://launchdarkly.com/) or [Optimizely](https://www.optimizely.com/) and are exporting experiment data into a data warehouse. In particular, Eppo requires that you have the following tables in your data warehouse:
 
-- an assignment table that indicates which experiment subjects were assigned to which experiments and variants at which time. It should [contain columns](./connecting-your-data/assignment-tables/required-data)  that roughly correspond to:
+- An assignment table that indicates which experiment subjects were assigned to which experiments and variants at which time. It should [contain columns](./connecting-your-data/assignment-tables/required-data)  that roughly correspond to:
 
     | timestamp | user_id | experiment | variation |
     | --------- | ------- | ---------- | --------- |
     | 2021-06-22T17:35:12.000Z | 165740867980881574 | adding_BNPL_experiment | affirm |
 
-- an event table whose rows are logs of specific events that occurred at specific times. It should contain columns that roughly correspond to:
+- An event table whose rows are logs of specific events that occurred at specific times. It should contain columns that roughly correspond to:
 
     | timestamp | user_id | event_type | event_value |
     | --------- | ------- | ------- | -------------- |
