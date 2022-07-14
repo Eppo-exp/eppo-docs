@@ -14,7 +14,7 @@ Experiments are a set of metrics that correspond to users being shown different 
 
 ![Fill experiment form](../../../static/img/building-experiments/fill-create-experiment-form.png)
 
-Give your experiment a name, start and end date.
+Give your experiment a name, start and end date. You can also choose to set an analysis period that is different from your assignment period. This is useful if you want to analyze the impact of an experiment on long-term metrics.
 
 3. Navigate to the **Set Up** tab and click the **Configure the Experiment** button
 
