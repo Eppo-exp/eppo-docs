@@ -1,42 +1,19 @@
-# Website
+# Eppo Docs
 
-This website is built using [Docusaurus 2](https://docusaurus.io/), a modern static website generator.
+https://docs.geteppo.com/
 
-### Installation
+Eppo docs were built using [Docusaurus 2](https://docusaurus.io/).
 
-```
-$ yarn
-```
+# Setup
 
-### Local Development
-
-```
-$ yarn start
+```sh
+$ yarn          # Install dependencies.
+$ yarn start    # Start a development server and open browser window. Most changes are reflected live without having to restart the server.
+$ yarn build    # Generates static content into the `build` directory and can be served using any static contents hosting service.
 ```
 
-This command starts a local development server and opens up a browser window. Most changes are reflected live without having to restart the server.
+# Deploying
 
-### Build
-
+```sh
+$ USE_SSH=true yarn deploy    # Deploy using docusaurus.
 ```
-$ yarn build
-```
-
-This command generates static content into the `build` directory and can be served using any static contents hosting service.
-
-### Deployment
-
-Using SSH:
-
-```
-$ USE_SSH=true yarn deploy
-```
-
-Not using SSH:
-
-```
-$ GIT_USER=<Your GitHub username> yarn deploy
-```
-
-If you are using GitHub pages for hosting, this command is a convenient way to build the website and push to the `gh-pages` branch.
-# eppo-docs
