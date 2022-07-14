@@ -16,7 +16,7 @@ This should be one of the facts that you created in the step above, and should c
 
 ![Select Aggregation](../../../static/img/building-experiments/select-aggregation-for-metric.png)
 
-The aggregation will aggregate over whatever the fact is measuring on a per-entity basis. So for example, if you select a `Revenue` fact and the `SUM` aggregation, the metric will be "total revenue per user;" if you select a `Name of Article Viewed` fact and the `COUNT DISTINCT` aggregation, the metric will be "Unique articles viewed per user."
+The aggregation will aggregate over whatever the fact is measuring on a per-entity basis. So for example, if you select a `Revenue` fact and the `SUM` aggregation, the metric will be "average revenue per user;" if you select a `Name of Article Viewed` fact and the `COUNT DISTINCT` aggregation, the metric will be "Unique articles viewed per user."
 
 Eppo supports the following aggregations:
 
@@ -44,7 +44,7 @@ The minimum detectable effect refers to the smallest effect you want to reliably
 
 Sum computes metrics that are typically interpreted as averages per entity. If the fact value is NULL, it is discarded.
 
-$\frac{\text{SUM of fact value}}{\text{Number of unique entities}}$
+$\frac{\text{SUM of fact value}}{\text{Number of unique entities assigned}}$
 
 Examples: average revenue per user, sign-up rate, minutes streamed per user, average order value.
 
@@ -52,7 +52,7 @@ Examples: average revenue per user, sign-up rate, minutes streamed per user, ave
 
 Count Distinct leverages SQL's ``COUNT DISTINCT`` to compute a unique average per entity. If the fact value is NULL, it is discarded.
 
-$\frac{\text{Sum of (COUNT DISTINCT of fact value for each unique entity)}}{\text{Number of unique entities}}$
+$\frac{\text{Sum of (COUNT DISTINCT of fact value for each unique entity)}}{\text{Number of unique entities assigned}}$
 
 Examples: unique videos watched per user, unique articles viewed per visitor, unique products viewed per user.
 
@@ -61,15 +61,15 @@ Examples: unique videos watched per user, unique articles viewed per visitor, un
 
 Count leverages SQL's ``COUNT`` to compute a total count of events per entity. If the fact value is NULL, it is discarded.
 
-$\frac{\text{Sum of (COUNT of fact value for each unique entity)}}{\text{Number of unique entities}}$
+$\frac{\text{Sum of (COUNT of fact value for each unique entity)}}{\text{Number of unique entities assigned}}$
 
 Examples: videos watched per user, articles viewed per visitor, orders per user.
 
 ### Retention
 
-Retention metrics measure the proportion of entities who have at least one fact value appear after a fixed number of days (X) from experiment assignment. For example, a 7-day retention metric might measure the proportion of users who re-visit a website at least 7 days after being assigned to the experiment. 
+Retention metrics measure the proportion of entities who have at least one fact value appear after a fixed number of days (X) from experiment assignment. For example, a 7-day retention metric on the website visits fact might measure the proportion of users who rvisit a website at least 7 days after being assigned to the experiment. 
 
-$\frac{\text{Sum of \{1 if a non-null fact value is present X days after the assignment time, else 0, for each unique entity\}}}{\text{Number of unique entities}}$
+$\frac{\text{Sum of \{1 if a non-null fact value is present X days after the assignment time, else 0, for each unique entity\}}}{\text{Number of unique entities assigned}}$
 
 For example, if $X = 7 \text{ days}$, Eppo records a retention event for an entity when
 
@@ -80,7 +80,7 @@ $(\text{timestamp of event}) - (\text{timestamp of assignment}) >= 7 \text{ days
 
 Conversion metrics measure the proportion of entities who have at least one fact value appear within a fixed number of days (X) from experiment assignment. For example, a 7-day conversion metric might measure the proportion of users who sign up for a free trial within 7 days of being assigned to the experiment. 
 
-$\frac{\text{Sum of \{1 if fact value is non-null within X days of the assignment time, else 0, for each unique entity\}}}{\text{Number of unique entities}}$
+$\frac{\text{Sum of \{1 if fact value is non-null within X days of the assignment time, else 0, for each unique entity\}}}{\text{Number of unique entities assigned}}$
 
 For example, if $X = 7 \text{ days}$, Eppo records a conversion event for an entity when 
 
