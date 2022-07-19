@@ -1,6 +1,6 @@
 # Creating metrics
 
-Metrics are statistics like Revenue or Signups that you are interested in tracking in your experiment
+Metrics are statistics like "Revenue per User" or "Signup Rate" that Eppo will calculate for you. In order to create a metric, you first need to have set up a [Fact SQL Definition](/building-experiments/definitions/fact-sql) to point to the underlying data for your metric in your data warehouse.
 
 1. Navigate to **Metrics**, click **+Metric**, then select **User** as the subject of the metric
 
@@ -16,15 +16,15 @@ This should be one of the facts that you created in the step above, and should c
 
 ![Select Aggregation](../../../static/img/building-experiments/select-aggregation-for-metric.png)
 
-The aggregation will aggregate over whatever the fact is measuring on a per-entity basis. So for example, if you select the `Revenue` fact and the `SUM` aggregation, the metric will be the total revenue for each user;, if you select the `Upgrades` fact and the `SUM` aggregation, the metric will be the total number of upgrades for each user, which should only be 1 across the board.
+The aggregation will aggregate over whatever the fact is measuring on a per-entity basis. So for example, if you select a `Revenue` fact and the `SUM` aggregation, the metric will be "average revenue per user;" if you select a `Name of Article Viewed` fact and the `COUNT DISTINCT` aggregation, the metric will be "Unique articles viewed per user."
 
 Eppo supports the following aggregations:
 
-- SUM
-- COUNT DISTINCT
-- COUNT
-- RETENTION
-- CONVERSION
+- [SUM](#sum)
+- [COUNT DISTINCT](#count-distinct)
+- [COUNT](#count)
+- [RETENTION](#retention)
+- [CONVERSION](#conversion)
 
 4. (Optional) Create a denominator for your metric
 
@@ -34,14 +34,57 @@ You may actually want to create a metric that is a ratio of two facts. To do thi
 
 In the example above, we're creating a metric that corresponds to the revenue per user per purchase.
 
-5. (Optional) Select a filter
+5. Select a minimum detectable effect
 
-When you created an assignment SQL above, you may have also created additional dimensions, i.e. country or browser. These dimensions are now available under the **Definitions** > **Dimensions SQL**.
+The minimum detectable effect refers to the smallest effect you want to reliably detect in experiments. The lower the minimum detectable effect you set, the more samples you'll need for the experiment to reach conclusive results.
 
-![Select filter](../../../static/img/building-experiments/filter-on-dimensions-create-metric.gif)
+## Metric aggregation types
 
-Here, you can filter on any of those dimensions. In the example above, we want to track the revenue metric by country.
+### Sum
 
-6. Select a minimum detectable effect
+Sum computes metrics that are typically interpreted as averages per entity. If the fact value is NULL, it is discarded.
 
-The minimum detectable effect refers to the smallest effect you want to reliably detect in experiments. The higher the minimum detectable effect you set, the longer the experiment will take to reach conclusive results.
+$\frac{\text{SUM of fact value}}{\text{Number of unique entities assigned}}$
+
+Examples: average revenue per user, sign-up rate, minutes streamed per user, average order value.
+
+### Count Distinct
+
+Count Distinct computes the number of unique entities with a non-null event. If the fact value is NULL, it is discarded.
+
+$\frac{\text{Number of unique entities with an event}{\text{Number of unique entities assigned}}$
+
+Examples: % of users with a video watch, % of visitors who viewed an article, % of users who entered checkout.
+
+
+### Count
+
+Count leverages SQL's ``COUNT`` to compute a total count of events per entity. If the fact value is NULL, it is discarded.
+
+$\frac{\text{Sum of (COUNT of fact value for each unique entity)}}{\text{Number of unique entities assigned}}$
+
+Examples: videos watched per user, articles viewed per visitor, orders per user.
+
+### Retention
+
+Retention metrics measure the proportion of entities who have at least one fact value appear after a fixed number of days (X) from experiment assignment. For example, a 7-day retention metric on the website visits fact might measure the proportion of users who visit a website at least 7 days after being assigned to the experiment. 
+
+$\frac{\text{Sum of \{1 if a non-null fact value is present X days after the assignment time, else 0, for each unique entity\}}}{\text{Number of unique entities assigned}}$
+
+For example, if $X = 7 \text{ days}$, Eppo records a retention event for an entity when
+
+$(\text{timestamp of event}) - (\text{timestamp of assignment}) >= 7 \text{ days}$. 
+
+
+### Conversion
+
+Conversion metrics measure the proportion of entities who have at least one fact value appear within a fixed number of days (X) from experiment assignment. For example, a 7-day conversion metric might measure the proportion of users who sign up for a free trial within 7 days of being assigned to the experiment. 
+
+$\frac{\text{Sum of \{1 if fact value is non-null within X days of the assignment time, else 0, for each unique entity\}}}{\text{Number of unique entities assigned}}$
+
+For example, if $X = 7 \text{ days}$, Eppo records a conversion event for an entity when 
+
+$(\text{timestamp of event}) - (\text{timestamp of assignment}) < 7 \text{ days}$. 
+
+
+
