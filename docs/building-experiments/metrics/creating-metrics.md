@@ -52,7 +52,7 @@ Examples: average revenue per user, sign-up rate, minutes streamed per user, ave
 
 Count Distinct computes the number of unique entities with a non-null event. If the fact value is NULL, it is discarded.
 
-$\frac{\text{Number of unique entities with an event}{\text{Number of unique entities assigned}}$
+$\frac{\text{Number of unique entities with an event}}{\text{Number of unique entities assigned}}$
 
 Examples: % of users with a video watch, % of visitors who viewed an article, % of users who entered checkout.
 
@@ -61,7 +61,7 @@ Examples: % of users with a video watch, % of visitors who viewed an article, % 
 
 Count leverages SQL's ``COUNT`` to compute a total count of events per entity. If the fact value is NULL, it is discarded.
 
-$\frac{\text{Sum of (COUNT of fact value for each unique entity)}}{\text{Number of unique entities assigned}}$
+$\frac{\text{COUNT of fact values}}{\text{Number of unique entities assigned}}$
 
 Examples: videos watched per user, articles viewed per visitor, orders per user.
 
