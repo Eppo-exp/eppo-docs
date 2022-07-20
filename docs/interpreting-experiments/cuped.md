@@ -8,8 +8,6 @@ However, there are options beyond waiting to gather more data, and all these opt
 
 An illustration of how CUPED helps reduce the variance in an effect estimate, leading to a much tighter confidence interval.
 
-Eppo uses CUPED to get more accurate estimates of treatment effect, which should lead to narrower confidence intervals.
-
 ## Overview
 When CUPED is enabled, Eppo automatically ingests aggregated data about each subjects' events across metrics that are added to your experiment for the 30 days before they joined the experiment. Eppo then uses a ridge regression model to predict subject-level outcomes for each metric. For each metric, we predict outcomes using every available metric. These predictions are then used to get more accurate effect estimates, reducing the variance and hence leading to better confidence intervals. 
 
