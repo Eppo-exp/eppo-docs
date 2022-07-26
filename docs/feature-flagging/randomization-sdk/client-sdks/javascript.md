@@ -32,7 +32,20 @@ npm install @eppo/js-client-sdk
 ```
 
 </TabItem>
+
+<TabItem value="script" label="Script">
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@eppo/js-client-sdk@latest/dist/eppo-sdk.min.js"></script>
+```
+</TabItem>
 </Tabs>
+
+If you install via a `<script>` tag, include a version in the URL to install a specific version of the SDK (or use `latest` as the version to install the latest SDK version):
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@eppo/js-client-sdk@{version}/dist/eppo-sdk.min.js"></script>
+```
 
 ### 2. Define an Assignment Logger
 
