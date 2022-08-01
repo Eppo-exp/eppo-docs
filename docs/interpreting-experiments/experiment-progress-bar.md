@@ -39,11 +39,12 @@ _Example_
 In the above example, we have set the minimum detectable effect at 10%, and we have gathered enough data to detect a much smaller effect of 5.88%. However, the results indicate that the primary metric hardly moved. We can stop this experiment due to a lack of any signs of a positive impact of the treatment over the control variant.
 
 3. If the progress bar is blue, it means that our primary metric is better in the treatment variant, and that the difference is statistically significant. Because of the sequential analysis methods we use, it is safe to stop the experiment and ship it, even if the progress bar is not close to full. For example, if we see a lift of 20%, we know that we can detect such big lift about 4x sooner than the 5% lift we set as minimum detectable effect; we would see a positive result even though the progress bar is only at 25%. 
+
 _Example_
 ![Example when to stop with positive result](../../static/img/measuring-experiments/progress-bar-positive-result.png)
 In this example, we see a roughly 13% increase in the primary metric, and we have gathered enough data to be powered to detect an 11% effect; even though we only see 20% progress towards detecting a 5% lift, we can stop this experiment early and conclude that the new variant improves upon the control.
 
-In short: do not be afraid to conclude an experiment (long) before reaching 100% progress when we see significant results. 
+*In short: do not be afraid to conclude an experiment (long) before reaching 100% progress when we see significant results.*
 
 Finally, keep in mind that the results we show are based on the period the data was collected. It is not uncommon to see strong weekly effects (users behave differently on Monday morning versuse Friday night), or novelty effects. Think about how reasonable it is to extrapolate results for the experiment period to a full roll-out, and when we see strong weekly effects, consider running the experiment for at least a week, and in increments of a week, no matter what the results tell we.
 
