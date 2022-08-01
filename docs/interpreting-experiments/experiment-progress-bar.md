@@ -44,7 +44,7 @@ _Example_
 ![Example when to stop with positive result](../../static/img/measuring-experiments/progress-bar-positive-result.png)
 In this example, we see a roughly 13% increase in the primary metric, and we have gathered enough data to be powered to detect an 11% effect; even though we only see 20% progress towards detecting a 5% lift, we can stop this experiment early and conclude that the new variant improves upon the control.
 
-In short: do not be afraid to conclude an experiment (long) before reaching 100% progress when we see significant results. 
+*In short: do not be afraid to conclude an experiment (long) before reaching 100% progress when we see significant results.*
 
 Finally, keep in mind that the results we show are based on the period the data was collected. It is not uncommon to see strong weekly effects (users behave differently on Monday morning versuse Friday night), or novelty effects. Think about how reasonable it is to extrapolate results for the experiment period to a full roll-out, and when we see strong weekly effects, consider running the experiment for at least a week, and in increments of a week, no matter what the results tell we.
 
