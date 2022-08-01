@@ -33,7 +33,6 @@ Suppose, given the above considerations, we decide to set our MDE at 5%. We star
 1. The _color_ of the progress bar indicates whether or not the primary metric is significant and positive. Blue indicates it is, gray indicates it is not.
 
 2. The progress bar is an indicator of when it is safe to conclude there was no effect. If it is reaching 100% progress, and still grey, it is likely that there is no lift in our primary metric of at least the configured MDE size. Other metrics might show significant results, and might warrant shipping the treatment even though the primary metric is flat, however.
-
 _Example_
 ![Example when to stop with neutral result](../../static/img/measuring-experiments/progress-bar-neutral-result.png)
 In the above example, we have set the minimum detectable effect at 10%, and we have gathered enough data to detect a much smaller effect of 5.88%. However, the results indicate that the primary metric hardly moved. We can stop this experiment due to a lack of any signs of a positive impact of the treatment over the control variant.
