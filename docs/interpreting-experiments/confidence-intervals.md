@@ -17,7 +17,7 @@ $\hat \mu \pm \sqrt{\sigma (t + \rho) \log \left( \frac{t+\rho}{\rho\alpha^2} \r
 
 where $\hat \mu$ is the estimate for the relevant parameter we are interesting in estimating, $t$ is the number of observations, $\alpha$ is the significance level, and $\rho$ is set using
 
-$\rho = \frac{10000}{\log{\log{e \alpha^{-2}}}-2\log{ \alpha }}$.
+$\rho = \frac{10000}{\log( \log ( e \alpha^{-2} ) )-2\log{ \alpha }}$.
 
 **Note:** The theoretical guarantees for this method require sub-Gaussian data; which means we have to rely on the central limit theorem and confidence intervals are not accurate in very small sample sizes. We run extensive simulations to validate that this method of generating confidence intervals satisfies the coverage guarantees.
 
