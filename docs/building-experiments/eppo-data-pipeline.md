@@ -1,14 +1,22 @@
 # Eppo Data Pipeline
 
-At a high level, the Eppo data pipeline performs three major steps when processing your data for experiment analysis:
+At a high level, the Eppo data pipeline performs four major steps when processing your data for experiment analysis:
 
-1. [Join assignment and event data](#join-assignment-and-event-data)
-2. [Summarize metrics at the subject level](#summarize-metrics-at-the-subject-level)
-3. [Summarize metrics at the experiment variant level](#summarize-metrics-at-the-experiment-variant-level)
+1. [Clean up assignment data](#clean-up-assignment-data)
+2. [Join assignment and event data](#join-assignment-and-event-data)
+3. [Summarize metrics at the subject level](#summarize-metrics-at-the-subject-level)
+4. [Summarize metrics at the experiment variant level](#summarize-metrics-at-the-experiment-variant-level)
+
+Each experiment configured in Eppo will generate it's own set of tables in the Eppo-scratch schema in your data warehouse.
+
+## Clean up assignment data
+The first step in the Eppo data pipeline is to clean up the data contained in the AssignmentSource SQL. In this step, we remove duplicate assignment events and "dirty" users who have been assigned to more than one variant of your experiment. These “mixed-group” users have likely been exposed to both variants, and cannot be used as part otef the analysis.
+
+This will generate a table in the Eppo-scratch schema of your data warehouse named something like `g_assignment_source_*`
 
 ## Join assignment and event data
 
-The first step in the Eppo data pipeline is to determine which events occurred during the experiment period. To do this, Eppo does a left join from your Assignment SQL to your Fact SQLs on two conditions:
+Next, we determine which events occurred during the experiment period. To do this, Eppo does a `left join` from the Assignments computed above to your Fact SQLs on two conditions:
 
 ```sql
 assignment.entity_id = fact.entity_id
@@ -16,15 +24,9 @@ AND
 assignment.timestamp <= fact.timestamp
 ```
 
-This generates a table that includes the variant that each entity was assigned to, and all metric events that the entity generated that occurred after they were assigned to the experiment.
+This generates a table, `g_experiment_enriched_metric_events_*` that includes the variant that each entity was assigned to, and all metric events that the entity generated that occurred after they were assigned to the experiment.
 
 This ensures that we are restricting our calculations to the time period for which we are certain the experiment had an effect.
-
-Eppo applies the following transformations to ensure the integrity of results:
-
-- De-duplicate rows in the Assignment SQL. If an entity has many rows in the Assignment SQL for the same variant, then we only consider the earliest instance.
-- Discard any entities that appear in more than one variant of an experiment. These “mixed-group” users have likely been exposed to both variants, and cannot be used as part of the analysis.
-- Restrict the time range of both Assignment SQL and Fact SQLs to within the Experiment start and end date
 
 ## Summarize Metrics at the Subject Level
 
@@ -38,6 +40,7 @@ The output of this step has the following schema:
 | Experiment      | Variant | Subject ID | Assigned Timestamp | Aggregation Name | Aggregation Value |
 | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- |
 
+We calculate the cumulative experiment results of your experiment on each day the experiment has been running, so the final output table, `g_experiment_subject_summaries_*` contains a row like the above for each subject on each day for which that subject was in the experiment.
 
 ## Summarize Metrics at the Experiment Variant Level
 
@@ -45,5 +48,7 @@ The final step is to aggregate data to the experiment variant level. After this 
 
 The output of this step has the following schema:
 
-| Experiment      | Variant | Dimension Name | Dimension Value | Assigned Count | Aggregation Name | Aggregation First Moment (Sum) | Aggregation Second Moment (Sum of Squares)|
+| Experiment      | Variant | Dimension Name | Dimension Value | Assigned Count | Aggregation Name | Aggregation Sum | Aggregation Sum of Squares|
 | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- | ----------- |
+
+The above table can be found in the Eppo-scratch dataset with the name `g_experiment_dimensionalized_summaries_*`
