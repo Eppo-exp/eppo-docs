@@ -61,12 +61,12 @@ const config = {
 
       algolia: {
         // The application ID provided by Algolia
-        appId: 'EXQ9PHVP0I',
+        appId: 'XFI8PX63MB',
 
         // Public API key: it is safe to commit it
-        apiKey: '539c8ab62aa7929c33b9898cf2d3dbc7',
+        apiKey: '6ac33fd9492c00c1b395088df31bb46f',
 
-        indexName: 'Eppo',
+        indexName: 'geteppo',
 
         //... other Algolia params
       },
