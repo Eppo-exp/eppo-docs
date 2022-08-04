@@ -44,7 +44,7 @@ If you would like to provide more granular access, you can provide us with read-
 ## Enter credentials into Eppo
 
 1. Open the JSON file created in Step 10 under _Create a Service Account_
-2. Log in to your Eppo account at [eppo.cloud](eppo.cloud), enter the values into the form fill as shown below, and click **Test and Save Connection**
+2. Log in to your Eppo account at [eppo.cloud](https://eppo.cloud/), enter the values into the form fill as shown below, and click **Test and Save Connection**
  - **Connection type** - BigQuery
  - **Service Account JSON** - From step 10 above
  - **BigQuery Dataset** - `eppo_output`
