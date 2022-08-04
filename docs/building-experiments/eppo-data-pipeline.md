@@ -9,6 +9,8 @@ At a high level, the Eppo data pipeline performs four major steps when processin
 
 Each experiment configured in Eppo will generate it's own set of tables in the Eppo-scratch schema in your data warehouse.
 
+![Pipeline visualization](../../static/img/building-experiments/pipeline.svg)
+
 ## Clean up assignment data
 The first step in the Eppo data pipeline is to clean up the data contained in the AssignmentSource SQL. In this step, we remove duplicate assignment events and "dirty" users who have been assigned to more than one variant of your experiment. These “mixed-group” users have likely been exposed to both variants, and cannot be used as part of the analysis.
 
