@@ -11,11 +11,13 @@ The conventional way of calculating confidence intervals are based on the Z-test
 However, this approach assumes that the sample size is fixed up front, and if this assumption is violated the guarantees for the confidence intervals become invalid.
 
 #### Sequential Analysis
-Eppo uses [sequential analysis](https://arxiv.org/abs/1810.08240) which allows us to compute confidence intervals that are valid across time. More precisely, the probability that the random confidence interval does not contain the unknown mean at any point in time is bounded by $\alpha$. We use the bound in equation (1) of the [reference](https://arxiv.org/abs/1810.08240), and generate confidence intervals by computing
+Eppo uses [sequential analysis](https://arxiv.org/abs/1810.08240) which allows us to compute confidence intervals that are valid across time. More precisely, the probability that the random confidence interval does not contain the unknown mean at any point in time is bounded by $\alpha$. We use the bound in equation (14) of the [reference](https://arxiv.org/abs/1810.08240), and generate confidence intervals by computing
 
-$\hat \mu \pm 1.7 \hat\sigma\sqrt{\frac{\log\log(2t) + 0.72 \log(10.4/\alpha)}{t}}$
+$\hat \mu \pm \sqrt{\sigma (t + \rho) \log \left( \frac{t+\rho}{\rho\alpha^2} \right)}$
 
-where $\hat \mu$ is the estimate for the relevant parameter we are interesting in estimating, $t$ is the number of observations, and $\alpha$ is the significance level.
+where $\hat \mu$ is the estimate for the relevant parameter we are interesting in estimating, $t$ is the number of observations, $\alpha$ is the significance level, and $\rho$ is set using
+
+$\rho = \frac{10000}{\log( \log ( e \alpha^{-2} ) )-2\log{ \alpha }}$.
 
 **Note:** The theoretical guarantees for this method require sub-Gaussian data; which means we have to rely on the central limit theorem and confidence intervals are not accurate in very small sample sizes. We run extensive simulations to validate that this method of generating confidence intervals satisfies the coverage guarantees.
 
