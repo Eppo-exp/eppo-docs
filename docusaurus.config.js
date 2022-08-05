@@ -94,11 +94,7 @@ const config = {
               {
                 label: "Quickstart",
                 to: "/",
-              },
-              {
-                label: "FAQ",
-                to: "/faq",
-              },
+              }
             ],
           }
         ],
