@@ -10,7 +10,8 @@ You can navigate to the **Experiments** page by clicking on the **Experiments** 
 
 If you go on to the details page for an experiment and hover over the status tag, you can view more details about the status.
 
-![Status details](../../../static/img/measuring-experiments/status-details.png)
+![image](https://user-images.githubusercontent.com/90637953/183762436-684332cc-aae0-41b6-8db5-ef340a47cbbe.png)
+
 
 ## Requirements to Move to the Next Experiment Status
 | Status | Non-Eppo Randomized Experiment | Eppo Randomized Experiment |
