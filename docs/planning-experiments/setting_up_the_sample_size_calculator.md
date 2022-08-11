@@ -6,7 +6,32 @@ In the past, you may have performed an MDE calculation by manually providing the
 
 ## Creating Entry Points
 
-To create your first **[Entry Point](./entry_points)**, first ensure that you have one or more Entities set up in Eppo. Visit the Definitions tab, and click the *Create Definition SQL* button. From the modal dialog, choose *Entry Point SQL*, and select the entity that you would like to run simulated experiments on.
+### What is an Entry Point?
+
+Entry Points are Eppo’s way of determining how much traffic a potential experiment will receive.
+
+An Entry Point is a simulated experiment assignment; in other words, it is an event that normally triggers assignment into one or more experiments. Examples of Entry Points might include:
+
+- User logs into website
+- Users enters checkout flow
+- User starts playback
+- Company creates account
+
+Every Entry Point event must include two key pieces of data:
+
+- An entity identifier (such as User ID or Visitor Cookie)
+- A timestamp
+
+Eppo uses these Entry Point events in order to simulate experiments using historical data in your company’s data warehouse. These simulated experiments use 1-10 weeks of historical data; for each time period, Eppo calculates:
+
+- The number of unique entities IDs (that is, total number of subjects "enrolled" in the simulated experiment)
+- For each metric associated with the Entry Point's entity, the mean and variance of that metric
+
+A common issue with traditional sample-size calculators is that the mean and variance of metrics can change over time. Entry Points solve this problem by calculating these values over multiple time periods, so that the inputs to the sample size calculation dynamically adjust to the experiment run-time. Eppo performs these calculations in the background, approximately once a week, using the most recent data available. (A simulated one-week experiment will use the most recent week of data, a simulated two-week experiment will use the most recent two weeks of data, etc.)
+
+### Defining an Entry Point
+
+To create your first Entry Point, first ensure that you have one or more Entities set up in Eppo. Visit the Definitions tab, and click the *Create Definition SQL* button. From the modal dialog, choose *Entry Point SQL*, and select the entity that you would like to run simulated experiments on.
 
 Now you will see a page where you can enter SQL. Each row of your returned SQL should correspond to an "entry" or simulated assignment. The returned data needs to include a timestamp as well as an entity ID, which should be configured on the right-hand side of the page. It is not necessary to de-duplicate this entry data (for example, if the same user logs in twice); Eppo will perform the de-duplication for you, using the first event for each entity ID as the simulated assignment.
 
@@ -14,7 +39,7 @@ Once you have configured the SQL and named the Entry Point, click *Save & Close*
 
 You will only need to perform the above steps when adding a new Entry Point into the system. The rest of the time, you will be able to use the Sample Size Calculator without doing any manual work in advance.
 
-## Refreshing simulated experiment data
+## Refreshing Entry Point data
 
 Once your first Entry Point is configured, Eppo will use it to run simulated experiments approximately once a week. If you'd like to perform a sample-size calculation before the scheduled simulation is run, you will need to perform a manual refresh of the entry point data.
 
