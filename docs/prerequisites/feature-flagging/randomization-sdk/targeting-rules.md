@@ -32,7 +32,7 @@ The rule attributes described in the previous section (e.g. "device") must be pa
 import * as EppoSdk from '@eppo/js-client-sdk';
 
 const subjectAttributes = { device: "iOS" }
-const variation = EppoSdk.getInstance().getAssignment("<SUBJECT-ID>", "<EXPERIMENT-KEY>", subjectAttributes);
+const variation = EppoSdk.getInstance().getAssignment("<SUBJECT-KEY>", "<EXPERIMENT-KEY>", subjectAttributes);
 ```
 </TabItem>
 
