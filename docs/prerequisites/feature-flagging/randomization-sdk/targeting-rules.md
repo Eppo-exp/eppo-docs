@@ -20,7 +20,7 @@ Each rule may have multiple conditions. The rule is only satisfied if all the co
 
 ## Pass subject attributes to the Eppo SDK
 
-The rule attributes described in the previous section (e.g. "device") must be passed to the SDK. This is only necessary if your experiment has targeting rules. The below code examples show how to pass a value for the "device" attribute described in the previous section.
+The rule attributes described in the previous section (e.g. "device") must be passed to the SDK. This is only necessary if your experiment has targeting rules. The below code examples show how to pass a value for the "device" attribute described in the previous section. The subject attributes are a free-form map, so you may also pass any other attribute names.
 
 <Tabs>
 <TabItem value="javascript" label="JavaScript (Client)">
