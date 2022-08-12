@@ -167,7 +167,7 @@ export default function EppoRandomizationProvider({
 
 ```
 
-Here is an example of how to use the above component:
+After the SDK is initialized, you may assign variations from any child component of `EppoRandomizationProvider`. We recommend wrapping the SDK code in a [useMemo hook](https://reactjs.org/docs/hooks-reference.html#usememo) to avoid invoking the assignment logic on every render:
 
 ```tsx
 <EppoRandomizationProvider>
@@ -175,14 +175,12 @@ Here is an example of how to use the above component:
 </EppoRandomizationProvider>
 ```
 
-After the SDK is initialized, you may assign variations from any child component of `EppoRandomizationProvider`. We recommend wrapping the SDK code in a [useMemo hook](https://reactjs.org/docs/hooks-reference.html#usememo) to avoid invoking the assignment logic on every render:
-
 ```tsx
-function MyComponent({ subjectKey, experimentKey }): JSX.Element {
+function MyComponent(): JSX.Element {
   const assignedVariation = useMemo(() => {
     const eppoClient = getInstance();
-    return eppoClient.getAssignment(subjectKey, experimentKey);
-  }, [subjectKey, experimentKey])
+    return eppoClient.getAssignment("<SUBJECT-KEY>", "<EXPERIMENT-KEY>");
+  }, [])
 
   return (
     <div>
