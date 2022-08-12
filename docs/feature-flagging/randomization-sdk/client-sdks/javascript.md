@@ -123,38 +123,63 @@ If `getAssignment` is invoked before the SDK has initialized, the SDK may not ha
 
 ### Usage in React
 
-For usage in React, we recommend initializing the SDK in a [useEffect hook](https://reactjs.org/docs/hooks-effect.html) at the root of your component tree:
+For usage in React, we recommend using the below `EppoRandomizationProvider` at the root of your component tree. By default, this component waits for initialization of the SDK before rendering its children. If `waitForInitialization` is set to false, the SDK `getAssignment` function will return `null` assignments while initializing and will only start assigning subjects when a new browser session is started.
 
 ```tsx
-import { IAssignmentLogger, init } from '@eppo/js-client-sdk';
+import { useEffect, useState } from 'react';
 
-function RootComponent(): JSX.Element {
+import { init } from '@eppo/js-client-sdk';
+
+interface IEppoRandomizationProvider {
+  waitForInitialization?: boolean;
+  children: JSX.Element;
+  loadingComponent?: JSX.Element;
+}
+
+export default function EppoRandomizationProvider({
+  waitForInitialization = true,
+  children,
+  loadingComponent = <div>Loading...</div>,
+}: IEppoRandomizationProvider): JSX.Element {
+  const [isInitialized, setIsInitialized] = useState(false);
   useEffect(() => {
-    const assignmentLogger: IAssignmentLogger = {
-      logAssignment(assignment) {
-        // logging implementation
+    init({
+      apiKey: "<YOUR-API-KEY>",
+      assignmentLogger: {
+        logAssignment(assignment) {
+          // logging implementation
+        },
       },
-    }
-    init({ apiKey: '<API-KEY>', assignmentLogger });
+    }).then(() => {
+      return setIsInitialized(true);
+    })
   }, []);
 
-  // your react code
+  if (!waitForInitialization || isInitialized) {
+    return children;
+  }
+  return loadingComponent;
 }
 ```
 
-After the SDK is initialized, you may assign variations from any component in your React application. We recommend wrapping the SDK code in a [useMemo hook](https://reactjs.org/docs/hooks-reference.html#usememo) to avoid invoking the assignment logic on every render:
+After the SDK is initialized, you may assign variations from any child component of `EppoRandomizationProvider`. We recommend wrapping the SDK code in a [useMemo hook](https://reactjs.org/docs/hooks-reference.html#usememo) to avoid invoking the assignment logic on every render:
 
 ```tsx
-function MyComponent({ subjectKey, experimentKey }): JSX.Element {
+<EppoRandomizationProvider>
+  <MyComponent />
+</EppoRandomizationProvider>
+```
+
+```tsx
+function MyComponent(): JSX.Element {
   const assignedVariation = useMemo(() => {
     const eppoClient = getInstance();
-    return eppoClient.getAssignment(subjectKey, experimentKey);
-  }, [subjectKey, experimentKey])
+    return eppoClient.getAssignment("<SUBJECT-KEY>", "<EXPERIMENT-KEY>");
+  }, [])
 
   return (
     <div>
-      { assignedVariation === 'control' && <p>Assigned control</p>}
-      { assignedVariation === 'treatment' && <p>Assigned treatment</p>}
+      { assignedVariation === '<VARIATION-KEY>' && <p>Assigned control</p>}
     </div>
   );
 }
