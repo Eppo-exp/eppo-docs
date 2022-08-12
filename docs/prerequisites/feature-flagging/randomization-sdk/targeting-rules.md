@@ -36,7 +36,7 @@ const variation = EppoSdk.getInstance().getAssignment("<SUBJECT-ID>", "<EXPERIME
 ```
 </TabItem>
 
-<TabItem value="javascript" label="Node">
+<TabItem value="node" label="Node">
 
 ```javascript
 import * as EppoSdk from '@eppo/node-server-sdk';
