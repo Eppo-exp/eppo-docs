@@ -179,8 +179,7 @@ function MyComponent(): JSX.Element {
 
   return (
     <div>
-      { assignedVariation === 'control' && <p>Assigned control</p>}
-      { assignedVariation === 'treatment' && <p>Assigned treatment</p>}
+      { assignedVariation === '<VARIATION-KEY>' && <p>Assigned control</p>}
     </div>
   );
 }
