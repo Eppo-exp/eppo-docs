@@ -10,6 +10,14 @@ Eppo's server-side SDKs may be used to run experiments in your application serve
 
 ![server-sdk-diagram](../../../../static/img/connecting-data/server-sdk-diagram.png)
 
+### Globally Distributed Experiment Configurations
+
+The SDK retrieves experiment data from a CDN that is globally distributed to over 100 edge locations. Each CDN location maintains a cache experiment data. 90% of requests are served by the CDN cache, while the remaining are handled by Eppo’s servers in the us-central GCP region. If there is a change to an experiment, such as an increase in traffic allocation, cached experiment configurations are updated within 10 minutes.
+
+The SDK uses a background process to fetch and store the experiment data. The p75 latency of these requests is 50ms. This latency does not affect variation assignments, which use locally stored experiment data.
+
+![CDN-architecture](../../../../static/img/connecting-data/CDN-architecture.png)
+
 ### Language-specific Documentation
 - [Node](./node.md)
 - [Python](./python.md)
