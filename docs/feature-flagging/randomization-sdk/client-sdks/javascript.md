@@ -123,7 +123,7 @@ If `getAssignment` is invoked before the SDK has initialized, the SDK may not ha
 
 ### Usage in React
 
-For usage in React, we recommend using the below `EppoRandomizationProvider` at the root of your component tree. By default, this component waits for initialization of the SDK before rendering its children. If `waitForInitialization` is set to false, the SDK may return `null` assignments for the duration of the browser session and only start assigning subjects when a new session is started.
+For usage in React, we recommend using the below `EppoRandomizationProvider` at the root of your component tree. By default, this component waits for initialization of the SDK before rendering its children. If `waitForInitialization` is set to false, the SDK `getAssignment` function will return `null` assignments while initializing and will only start assigning subjects when a new browser session is started.
 
 ```tsx
 import { useEffect, useState } from 'react';
