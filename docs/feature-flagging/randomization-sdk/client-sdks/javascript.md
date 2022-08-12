@@ -150,13 +150,9 @@ export default function EppoRandomizationProvider({
           // logging implementation
         },
       },
+    }).then(() => {
+      return setIsInitialized(true);
     })
-      .then(() => {
-        return setIsInitialized(true);
-      })
-      .catch(() => {
-        return setIsInitialized(false);
-      });
   }, []);
 
   if (!waitForInitialization || isInitialized) {
@@ -164,7 +160,6 @@ export default function EppoRandomizationProvider({
   }
   return loadingComponent;
 }
-
 ```
 
 After the SDK is initialized, you may assign variations from any child component of `EppoRandomizationProvider`. We recommend wrapping the SDK code in a [useMemo hook](https://reactjs.org/docs/hooks-reference.html#usememo) to avoid invoking the assignment logic on every render:
