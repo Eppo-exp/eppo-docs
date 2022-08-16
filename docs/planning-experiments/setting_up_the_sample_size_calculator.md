@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # Setting up the Sample Size Calculator
 
 How long should you plan for a particular experiment to run? Eppo includes tools for estimating in advance when a metric’s Minimum Detectable Effect (MDE) is likely to be achieved. The Minimum Detectable Effect is the smallest lift that can be detected by an experiment a certain percent of the time.
@@ -31,7 +35,14 @@ A common issue with traditional sample-size calculators is that the mean and var
 
 ### Defining an Entry Point
 
-To create your first Entry Point, first ensure that you have one or more Entities set up in Eppo. Visit the Definitions tab, and click the *Create Definition SQL* button. From the modal dialog, choose *Entry Point SQL*, and select the entity that you would like to run simulated experiments on.
+To create your first Entry Point, first ensure that you have one or more Entities set up in Eppo. Visit the Definitions tab, and click the *Create Definition SQL* button. 
+
+![Select create definition](../../static/img/planning-experiments/select-create-definition.png)
+
+From the modal dialog, choose *Entry Point SQL*, and select the entity that you would like to run simulated experiments on.
+
+![Select entry point](../../static/img/planning-experiments/select-entry-point.png)
+
 
 Now you will see a page where you can enter SQL. Each row of your returned SQL should correspond to an "entry" or simulated assignment. The returned data needs to include a timestamp as well as an entity ID, which should be configured on the right-hand side of the page. It is not necessary to de-duplicate this entry data (for example, if the same user logs in twice); Eppo will perform the de-duplication for you, using the first event for each entity ID as the simulated assignment.
 

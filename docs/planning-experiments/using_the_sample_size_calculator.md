@@ -1,3 +1,7 @@
+---
+sidebar_position: 2
+---
+
 # Using the Sample Size Calculator
 
 An experiment’s statistical power, or ability to detect treatment effects in a particular metric, is determined the number of subjects in the experiment, as well as that metric’s mean and variance. Eppo provides a dedicated interface for computing [Minimum Detectable Effects](./minimum_detectable_effects) for various experiment runtimes using historical data in your data warehouse. To use Eppo’s **Sample Size Calculator**, you or someone at your company will first need to [set up one or more Entry Points](./setting_up_the_sample_size_calculator#creating-entry-points). The rest of this article assumes that an Entry Point has been configured, and that you are ready to perform a sample-size calculation.

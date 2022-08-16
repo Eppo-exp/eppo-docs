@@ -1,3 +1,7 @@
+---
+sidebar_position: 4
+---
+
 # Minimum Detectable Effects
 
 ## What is a Minimum Detectable Effect (MDE)?
