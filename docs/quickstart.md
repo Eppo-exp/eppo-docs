@@ -10,7 +10,7 @@ Follow this quickstart to get your first experiment set up on Eppo.
 
 ## Overview
 
-![Eppo Product Relationship Map](https://user-images.githubusercontent.com/111296875/186039257-d2d9f8db-e42a-45e7-af5f-19c899d54339.jpg)
+<img src="https://user-images.githubusercontent.com/111296875/186039257-d2d9f8db-e42a-45e7-af5f-19c899d54339.jpg" width="650" height="780" />
 
 0. [Prep your data warehouse and set up feature flagging](#0-prep-your-data-warehouse-and-set-up-feature-flagging)
 1. [Create an Eppo account](#1-create-eppo-account)
