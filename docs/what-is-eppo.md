@@ -3,7 +3,7 @@ sidebar_position: 1
 id: what-is-eppo
 ---
 
-# What is Eppo
+# What is Eppo?
 
 Eppo is a next-generation experimentation platform build right on top of your data warehouse.
 
