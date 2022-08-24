@@ -24,8 +24,8 @@ It's ok for this table to contain duplicate rows for the same subject, however f
 
 Refer to our tool specific guides to understand how to log assignments to your warehouse:
 
-- [Logging assignment data using Eppo's Randomization SDKs](#)
-- [Exporting assignment data from Launch Darkly](#)
-- [Exporting assignment data from Optimizely](#)
+- [Logging assignment data using Eppo's Randomization SDKs](./randomization-sdk/)
+- [Exporting assignment data from Launch Darkly](./launch-darkly)
+- [Exporting assignment data from Optimizely](./optimizely)
 
 For all other systems, email us at feature-flagging@geteppo.com and we'll happily walk you through the process.
