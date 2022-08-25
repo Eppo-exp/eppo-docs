@@ -82,10 +82,22 @@ await init({
 After initialization, the SDK will begin polling Eppo’s API at regular intervals to retrieve the most recent experiment configurations such as variation values and traffic allocation. The Node SDK stores these configurations in memory for fast lookup by the assignment logic.
 
 ### 4. Assign Experiment Variations
-The SDK returns an assignment based on the experiments you configure in Eppo. It may take up to 10 minutes for changes to Eppo experiments to be reflected by the SDK assignments.
+
+Before using the SDK to assign a variation, make sure your experiment is setup as follows:
+1. The experiment must be configured to use Eppo's randomization:
+![use-eppo-randomization](../../../../../static/img/connecting-data/UseEpposRandomization.png)
+2. The experiment must be started **OR** the `subjectKey` passed to the SDK must be added to one of its variation allow lists
+![start-experiment](../../../../../static/img/connecting-data/StartExperiment.png)
+
+If the above conditions are not met, the SDK will return `null` as the assignment.
+
+:::note
+It may take up to 5 minutes for changes to Eppo experiments to be reflected by the SDK assignments.
+:::
+
+The experiment **Traffic Allocation** setting determines the percentage of subjects the SDK will assign to experiment variations. For example, if the traffic allocation is 25%, the SDK will assign a variation for 25% of subjects and `null` for the remaining 75% (unless the subject is part of an allow list).
 
 The SDK requires two inputs to assign a variation:
-
 - `experimentKey` - this should be the same as the “Experiment Key” field of an Eppo experiment
 - `subjectKey` - the entity ID that is being experimented on, typically represented by a uuid.
 
@@ -97,5 +109,3 @@ import * as EppoSdk from '@eppo/node-server-sdk';
 const eppoClient = EppoSdk.getInstance();
 const variation = eppoClient.getAssignment("<SUBJECT-KEY>", "<EXPERIMENT-KEY>");
 ```
-
-The experiment **Traffic Allocation** setting determines the percentage of subjects the SDK will assign to experiment variations. For example, if the traffic allocation is 25%, the assignment function will return a variation for 25% of subjects and `null` for the remaining 75%. If the **Traffic Allocation** is zero but subjects have been added to a variation **Allow List**, the SDK will return the variation for the allow-listed subjects.

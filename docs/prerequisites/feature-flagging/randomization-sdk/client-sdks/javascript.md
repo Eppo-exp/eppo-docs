@@ -38,14 +38,15 @@ npm install @eppo/js-client-sdk
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@eppo/js-client-sdk@latest/dist/eppo-sdk.min.js"></script>
 ```
-</TabItem>
-</Tabs>
 
 If you install via a `<script>` tag, include a version in the URL to install a specific version of the SDK (or use `latest` as the version to install the latest SDK version):
 
 ```html
 <script src="https://cdn.jsdelivr.net/npm/@eppo/js-client-sdk@{version}/dist/eppo-sdk.min.js"></script>
 ```
+</TabItem>
+</Tabs>
+
 
 ### 2. Define an Assignment Logger
 
@@ -101,8 +102,21 @@ The `init` method downloads your Eppo experiment configurations once per browser
 API Keys used with Client SDKs should have only ‘Randomization READ’ permissions
 :::
 
-### 4. Assign Experiment Variations 
-The SDK returns an assignment based on the experiments you configure in Eppo. It may take up to 10 minutes for changes to Eppo experiments to be reflected by the SDK assignments.
+### 4. Assign Experiment Variations
+
+Before using the SDK to assign a variation, make sure your experiment is setup as follows:
+1. The experiment must be configured to use Eppo's randomization:
+![use-eppo-randomization](../../../../../static/img/connecting-data/UseEpposRandomization.png)
+2. The experiment must be started **OR** the `subjectKey` passed to the SDK must be added to one of its variation allow lists
+![start-experiment](../../../../../static/img/connecting-data/StartExperiment.png)
+
+If the above conditions are not met, the SDK will return `null` as the assignment.
+
+:::note
+It may take up to 5 minutes for changes to Eppo experiments to be reflected by the SDK assignments.
+:::
+
+The experiment **Traffic Allocation** setting determines the percentage of subjects the SDK will assign to experiment variations. For example, if the traffic allocation is 25%, the SDK will assign a variation for 25% of subjects and `null` for the remaining 75% (unless the subject is part of an allow list).
 
 The SDK requires two inputs to assign a variation:
 - `experimentKey` - this should be the same as the “Experiment Key” field of an Eppo experiment
@@ -114,12 +128,10 @@ The below code example shows how to assign a subject to an experiment variation:
 import * as EppoSdk from '@eppo/js-client-sdk';
 
 const eppoClient = EppoSdk.getInstance();
-const variation = eppoClient.getAssignment("<SUBJECT-ID>", "<EXPERIMENT-KEY>");
+const variation = eppoClient.getAssignment("<SUBJECT-KEY>", "<EXPERIMENT-KEY>");
 ```
 
-The experiment **Traffic Allocation** setting determines the percentage of subjects the SDK will assign to experiment variations. For example, if the traffic allocation is 25%, the assignment function will return a variation for 25% of subjects and `null` for the remaining 75%. If the **Traffic Allocation** is zero but subjects have been added to a variation **Allow List**, the SDK will return the variation for the allow-listed subjects.
-
-If `getAssignment` is invoked before the SDK has initialized, the SDK may not have access to the most recent experiment configurations. In this case, the SDK will assign a variation based on any previously downloaded experiment configurations stored in local storage, or return null if no configurations have been downloaded. The `getAssignment` function returns the same variation for the duration of the browser session; if experiment settings are updated, they will only take effect when a new browser session is started.
+If `getAssignment` is invoked before the SDK has finished initializing, the SDK may not have access to the most recent experiment configurations. In this case, the SDK will assign a variation based on any previously downloaded experiment configurations stored in local storage, or return null if no configurations have been downloaded.
 
 ### Usage in React
 
