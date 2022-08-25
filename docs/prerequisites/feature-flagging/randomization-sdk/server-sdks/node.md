@@ -86,10 +86,10 @@ After initialization, the SDK will begin polling Eppo’s API at regular interva
 Before using the SDK to assign a variation, make sure your experiment is setup as follows:
 1. The experiment must be configured to use Eppo's randomization:
 
-![use-eppo-randomization](../../../../static/img/connecting-data/UseEpposRandomization.png)
+![use-eppo-randomization](../../../../../static/img/connecting-data/UseEpposRandomization.png)
 2. The experiment must be started **OR** the `subjectKey` passed to the SDK must be added to one of its variation allow lists
 
-![start-experiment](../../../../static/img/connecting-data/StartExperiment.png)
+![start-experiment](../../../../../static/img/connecting-data/StartExperiment.png)
 
 If the above conditions are not met, the SDK will return `null` as the assignment.
 

@@ -107,10 +107,10 @@ API Keys used with Client SDKs should have only ‘Randomization READ’ permiss
 Before using the SDK to assign a variation, make sure your experiment is setup as follows:
 1. The experiment must be configured to use Eppo's randomization:
 
-![use-eppo-randomization](../../../../static/img/connecting-data/UseEpposRandomization.png)
+![use-eppo-randomization](../../../../../static/img/connecting-data/UseEpposRandomization.png)
 2. The experiment must be started **OR** the `subjectKey` passed to the SDK must be added to one of its variation allow lists
 
-![start-experiment](../../../../static/img/connecting-data/StartExperiment.png)
+![start-experiment](../../../../../static/img/connecting-data/StartExperiment.png)
 
 If the above conditions are not met, the SDK will return `null` as the assignment.
 
@@ -130,7 +130,7 @@ The below code example shows how to assign a subject to an experiment variation:
 import * as EppoSdk from '@eppo/js-client-sdk';
 
 const eppoClient = EppoSdk.getInstance();
-const variation = eppoClient.getAssignment("<SUBJECT-ID>", "<EXPERIMENT-KEY>");
+const variation = eppoClient.getAssignment("<SUBJECT-KEY>", "<EXPERIMENT-KEY>");
 ```
 
 If `getAssignment` is invoked before the SDK has finished initializing, the SDK may not have access to the most recent experiment configurations. In this case, the SDK will assign a variation based on any previously downloaded experiment configurations stored in local storage, or return null if no configurations have been downloaded.
