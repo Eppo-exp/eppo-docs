@@ -15,7 +15,7 @@ In order to perform its analyses, Eppo needs access to an assignment table in yo
 By default, Optimizely does not make accessible the data which allows Eppo to determine which users were assigned/exposed to any given feature/experiment. To access this data, you have a couple of options:
 
 - [Pay to Export data from Optimizely to Snowflake](https://docs.developers.optimizely.com/optimizely-data/docs/snowflake-integration)
-- [Log assignments manually with wrapper code](../connecting-your-data/assignment-tables/assignment-table-optimizely)
+- [Log assignments manually with wrapper code](../../connecting-your-data/assignment-tables/assignment-table-optimizely)
 
 In order to perform its analyses, Eppo needs access to an assignment table in your data warehouse that lists each user that comes through the system and which variant they saw at which time.
 

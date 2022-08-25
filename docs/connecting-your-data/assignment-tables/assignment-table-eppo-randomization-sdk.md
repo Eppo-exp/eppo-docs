@@ -3,7 +3,7 @@ import TabItem from '@theme/TabItem';
 
 # Create assignment table from Eppo Randomization SDK
 
-_Note:_ this guide assumes that you have are using the [Eppo Randomization SDK](../../feature-flagging/randomization-sdk) to feature flag your code.
+_Note:_ this guide assumes that you have are using the [Eppo Randomization SDK](../../prerequisites/feature-flagging/randomization-sdk) to feature flag your code.
 
 1. Find all places in your code where your feature flags are being invoked.
 
@@ -13,20 +13,20 @@ _Note:_ this guide assumes that you have are using the [Eppo Randomization SDK](
 
 ```js
 // Fetch enabled state for the "product_sort" flag.
-// Then use flag variations to expose different sorting methods and pagination. 
+// Then use flag variations to expose different sorting methods and pagination.
 
 // Define flag variable defaults (if the flag is disabled, you fall back to these values)
 let colorOfButton = 'red';
- 
+
 // Is the flag enabled for the user?
 var user = optimizely.createUserContext(userId);
 var decision = user.decide('button_color_experiment');
 var enabled = decision.enabled;
 
-                                                        
+
 //In the online Optimizely app, go define flag variations using
-// colorOfButton variables. 
-  
+// colorOfButton variables.
+
 if (enabled) {
   // get flag variable values depending on the variation the user bucketed into
   colorOfButton = decision.variables['color'];

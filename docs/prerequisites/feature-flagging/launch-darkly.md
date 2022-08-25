@@ -18,4 +18,4 @@ To access this data, you have a couple of options:
 
 - [Pay to export data from LaunchDarkly to PubSub Systems](https://docs.launchdarkly.com/home/getting-started)
   - If you go this route, you will subsequently then need to move the data from the pubsub system to the data warehouse.
-- [Log assignments manually with wrapper code](../connecting-your-data/assignment-tables/assignment-table-launchdarkly)
+- [Log assignments manually with wrapper code](../../connecting-your-data/assignment-tables/assignment-table-launchdarkly)

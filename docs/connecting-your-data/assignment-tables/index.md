@@ -14,7 +14,7 @@ Click on the link for your feature flagging tool for instructions on how to crea
 
 Alternatively, you can use the Eppo Randomization SDK to assign subjects into different experiment variants.
 
-- [Eppo Randomization API](../../feature-flagging/randomization-sdk)
+- [Eppo Randomization API](../../prerequisites/feature-flagging/randomization-sdk)
 
 
 

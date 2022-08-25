@@ -1,6 +1,6 @@
 ---
 id: quickstart
-sidebar_position: 2
+sidebar_position: 3
 slug: /
 ---
 
@@ -12,16 +12,16 @@ Follow this quickstart to get your first experiment set up on Eppo.
 
 <img src="https://user-images.githubusercontent.com/111296875/186039257-d2d9f8db-e42a-45e7-af5f-19c899d54339.jpg" width="650" height="780" />
 
-0. [Prep your data warehouse and set up feature flagging](#0-prep-your-data-warehouse-and-set-up-feature-flagging)
-1. [Create an Eppo account](#1-create-eppo-account)
-2. [Connect your data warehouse](#2-connect-your-data-warehouse)
-3. [Create an Assignment SQL](#3-create-an-assignment-sql)
-4. [Create Fact SQLs](#4-create-a-fact-sql)
-5. [Create metrics](#5-create-metrics)
-6. [Create an experiment](#6-create-an-experiment)
-7. [Add metrics to experiment](#7-add-metrics-to-experiment)
+1. [Prep your data warehouse and set up feature flagging](#0-prep-your-data-warehouse-and-set-up-feature-flagging)
+2. [Create an Eppo account](#1-create-eppo-account)
+3. [Connect your data warehouse](#2-connect-your-data-warehouse)
+4. [Create an Assignment SQL](#3-create-an-assignment-sql)
+5. [Create Fact SQLs](#4-create-a-fact-sql)
+6. [Create metrics](#5-create-metrics)
+7. [Create an experiment](#6-create-an-experiment)
+8. [Add metrics to experiment](#7-add-metrics-to-experiment)
 
-## 0. Prep your data warehouse and set up feature flagging
+## 1. Prep your data warehouse and set up feature flagging
 
 Eppo assumes that you are already using a third party feature flagging tool like [LaunchDarkly](https://launchdarkly.com/) or [Optimizely](https://www.optimizely.com/) and are exporting experiment data into a data warehouse. In particular, Eppo requires that you have the following tables in your data warehouse:
 
@@ -38,15 +38,15 @@ Eppo assumes that you are already using a third party feature flagging tool like
     | 2021-07-17T18:57:13.000Z	 | 49980400511307080 | Revenue | 45.5695	|
     | 2021-07-17T18:57:13.000Z	 | 2281323415877132491 | Subscription | 1 |
 
-If you do not have a feature flagging tool integrated, please refer to the [feature flagging](./feature-flagging/) section for more instructions.
+If you do not have a feature flagging tool integrated, please refer to the [feature flagging](./prerequisites/feature-flagging/) section for more instructions.
 
 If you have a feature flagging tool integrated but do not have an assignment table set up in your data warehouse, please follow the instructions [here](./connecting-your-data/assignment-tables/) to log your assignment data.
 
-## 1. Create Eppo account
+## 2. Create Eppo account
 
 Create a new account at https://eppo.cloud/. Eppo implements Auth0 and you should be able to sign in with any of the providers that Auth0 supports, including Google.
 
-## 2. Connect your data warehouse
+## 3. Connect your data warehouse
 
 Once you log in, you will see a fill form where you can input your data warehouse connection details.
 
@@ -58,7 +58,7 @@ Follow the linked warehouse-specific guides to connect Eppo to your data warehou
 - [BigQuery](./connecting-your-data/data-warehouses/connecting-to-bigquery)
 - [RedShift](./connecting-your-data/data-warehouses/connecting-to-redshift)
 
-## 3. Create an Assignment SQL
+## 4. Create an Assignment SQL
 
 Now that Eppo is connected to your data warehouse, the first thing we are going to do is create an Assignment SQL. Assignment SQLs define which experiment subjects will be assigned to which experiment and variation, and at what time. They're basically just pulling data from your assignment table.
 
