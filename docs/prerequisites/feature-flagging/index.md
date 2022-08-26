@@ -4,7 +4,7 @@
 
 The first step to running experiments is setting up randomization. Randomization refers to a function in your code that can assign subjects (e.g users) to variants (e.g `control`, `treatment`) given an experiment configuration. If you don't already have a way to randomize users in your app, you'll need to setup one of the following options:
 
-- [Eppo's Randomization SDKs](./randomization-sdk)
+- [Eppo's Randomization SDKs](./randomization-sdk/)
 - A third party tool such as [Launch Darkly](./launch-darkly) or [Optimizely](./optimizely)
 - An internal tool that you build yourself
 
