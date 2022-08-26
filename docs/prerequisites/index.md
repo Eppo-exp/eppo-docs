@@ -9,5 +9,5 @@ To analyze experiments on Eppo you must first:
 
 ![Data inputs](../../static/img/feature-flagging/data-inputs.png)
 
-If your infastructure lines up with this diagram, you're ready to go! If you are new to experimentation or need help understanding best practices, read further into our guides on [feature flagging](./feature-flagging) and [event logging](./event-logging).
+If your infastructure lines up with this diagram, you're ready to go! If you are new to experimentation or need help understanding best practices, read further into our guides on [feature flagging](./feature-flagging/) and [event logging](./event-logging/).
 
