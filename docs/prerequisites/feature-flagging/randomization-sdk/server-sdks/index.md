@@ -16,8 +16,6 @@ The SDK retrieves experiment data from a CDN that is globally distributed to ove
 
 The SDK uses a background process to fetch and store the experiment data. The p75 latency of these requests is 50ms. This latency does not affect variation assignments, which use locally stored experiment data.
 
-![CDN-architecture](../../../../../static/img/connecting-data/CDN-architecture.png)
-
 ### Language-specific Documentation
 - [Node](./node.md)
 - [Python](./python.md)
