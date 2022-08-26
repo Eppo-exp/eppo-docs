@@ -7,15 +7,10 @@ import TabItem from '@theme/TabItem';
 
 # Targeting Rules
 
-Targeting rules allow you to define which subjects should belong to your experiment population. For example, you can define a rule to target mobile users in North America.
+Targeting rules allow you to define which subjects should belong to your experiment population. For example, you might define a rule to target mobile device users.
 
 ## Add Targeting Rules to an Experiment
-Targeting rules are supported for experiments that use Eppo's randomization. Navigate to the Experiment Setup tab to configure targeting rules:
-
-![generating-api-token-1](../../../../static/img/connecting-data/exposure-targeting.png)
-
-
-Enter a title for your rules such as "Mobile Users". You may enter any attribute names that you use in your code, but the same attributes must be passed to the SDK during assignment.
+Targeting rules are supported for experiments that use Eppo's randomization SDK. Navigate to the Experiment Setup tab to configure targeting rules. You may target any attribute names that you use in your code, but the same attributes must be passed to the SDK during assignment.
 
 ![generating-api-token-1](../../../../static/img/connecting-data/targeting-rules.png)
 
