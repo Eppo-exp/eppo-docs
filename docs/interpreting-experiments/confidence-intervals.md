@@ -13,7 +13,7 @@ However, this approach assumes that the sample size is fixed up front, and if th
 #### Sequential Analysis
 Eppo uses [sequential analysis](https://arxiv.org/abs/1810.08240) which allows us to compute confidence intervals that are valid across time. More precisely, the probability that the random confidence interval does not contain the unknown mean at any point in time is bounded by $\alpha$. We use the bound in equation (14) of the [reference](https://arxiv.org/abs/1810.08240), and generate confidence intervals by computing
 
-$\hat \mu \pm \sqrt{\sigma (t + \rho) \log \left( \frac{t+\rho}{\rho\alpha^2} \right)}$
+$\hat \mu \pm \frac{\sigma}{t} \sqrt{ (t + \rho) \log \left( \frac{t+\rho}{\rho\alpha^2} \right)}$
 
 where $\hat \mu$ is the estimate for the relevant parameter we are interesting in estimating, $t$ is the number of observations, $\alpha$ is the significance level, and $\rho$ is set using
 
