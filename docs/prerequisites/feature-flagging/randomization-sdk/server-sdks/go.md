@@ -92,7 +92,7 @@ Before using the SDK to assign a variation, make sure your experiment is setup a
 2. The experiment must be started **OR** the `subjectKey` passed to the SDK must be added to one of its variation allow lists
 ![start-experiment](../../../../../static/img/connecting-data/StartExperiment.png)
 
-If the above conditions are not met, the SDK will return `null` as the assignment.
+If the above conditions are not met, the SDK will return `""` as the assignment.
 
 :::note
 It may take up to 5 minutes for changes to Eppo experiments to be reflected by the SDK assignments.
