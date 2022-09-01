@@ -98,7 +98,7 @@ If the above conditions are not met, the SDK will return `""` as the assignment.
 It may take up to 5 minutes for changes to Eppo experiments to be reflected by the SDK assignments.
 :::
 
-The experiment **Traffic Allocation** setting determines the percentage of subjects the SDK will assign to experiment variations. For example, if the traffic allocation is 25%, the SDK will assign a variation for 25% of subjects and `null` for the remaining 75% (unless the subject is part of an allow list).
+The experiment **Traffic Allocation** setting determines the percentage of subjects the SDK will assign to experiment variations. For example, if the traffic allocation is 25%, the SDK will assign a variation for 25% of subjects and no assignment for the remaining 75% (unless the subject is part of an allow list).
 
 The SDK requires two inputs to assign a variation:
 - `experimentKey` - this should be the same as the “Experiment Key” field of an Eppo experiment
