@@ -8,9 +8,17 @@ Eppo's Node SDK is open source:
 - [Package](https://pkg.go.dev/github.com/Eppo-exp/golang-sdk)
 
 ### 1. Install the SDK
-You can install the SDK with:
+In your go.mod, add the SDK package as a dependency:
 
-```bash
+```
+require (
+	github.com/Eppo-exp/golang-sdk latest
+)
+```
+
+Or you can install the SDK from the command line with:
+
+```
 go get github.com/Eppo-exp/go-server-sdk@latest
 ```
 
