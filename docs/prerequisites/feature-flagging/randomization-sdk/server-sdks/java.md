@@ -1,70 +1,49 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Go
+# JAVA
 
-Eppo's Go SDK is open source:
-- [GitHub repository](https://github.com/Eppo-exp/go-server-sdk)
-- [Package](https://pkg.go.dev/github.com/Eppo-exp/golang-sdk)
+Eppo's JAVA SDK is open source:
+- [GitHub repository](https://github.com/Eppo-exp/java-server-sdk)
+- [Package](https://s01.oss.sonatype.org/#nexus-search;quick~eppo-server-sdk)
 
 ### 1. Install the SDK
-In your go.mod, add the SDK package as a dependency:
+In your pom.xml, add the SDK package as a dependency:
 
 ```
-require (
-	github.com/Eppo-exp/golang-sdk latest
-)
-```
-
-Or you can install the SDK from the command line with:
-
-```
-go get github.com/Eppo-exp/go-server-sdk@latest
+<dependency>
+  <groupId>cloud.eppo</groupId>
+  <artifactId>eppo-server-sdk</artifactId>
+  <version>1.0.0</version>
+</dependency>
 ```
 
 ### 2. Define an Assignment Logger
 
 The SDK requires an assignment logger to be passed on initialization. The SDK invokes the logger to capture assignment data whenever a variation is assigned. The below code example shows how to integrate the SDK with [Segment](https://segment.com/docs/) for logging events. You could also use your own logging system; the only requirement is that the SDK receives a `logAssignment` function.
 
-Define an implementation of the Eppo `IAssignmentLogger` interface. This interface has one function: `LogAssignment`.
+Define an implementation of the Eppo `IAssignmentLogger` interface. This interface has one function: `logAssignment`.
 
-```go
-import (
-	"github.com/Eppo-exp/golang-sdk/eppoclient"
-  "gopkg.in/segmentio/analytics-go.v3"
-)
+```java
+from com.eppo.sdk.dto.IAssignmentLogger;
+from com.eppo.sdk.dto.AssignmentLogData;
 
-func main() {
-  // Connect to Segment (or your own event-tracking system)
-  client := analytics.New("YOUR_WRITE_KEY")
-  defer client.Close()
-
-  type ExampleAssignmentLogger struct {
-  }
-
-  func NewExampleAssignmentLogger() *ExampleAssignmentLogger {
-    return &ExampleAssignmentLogger{}
-  }
-
-  func (al *ExampleAssignmentLogger) LogAssignment(event eppoclient.AssignmentEvent) {
-    client.Enqueue(analytics.Track{
-      UserId: event.Subject,
-      Event:  "Eppo Randomization Event",
-      Properties: event
-    })
+public AssignmentLoggerImpl implements IAssignmentLogger {
+  public void logAssignment(AssignmentLogData event) {
+    ...
   }
 }
 ```
 
-The SDK will invoke the `LogAssignment` function with an `event` object that contains the following fields:
+The SDK will invoke the `logAssignment` function with an `event` object that contains the following fields:
 
 | Field | Description | Example |
 | --------- | ------- | ---------- |
 | `experiment` (string) | An Eppo experiment key | "recommendation_algo" |
 | `subject` (string) | An identifier of the subject or user assigned to the experiment variation | UUID |
 | `variation` (string) | The experiment variation the subject was assigned to | "control" |
-| `timestamp` (string) | The time when the subject was assigned to the variation | 2021-06-22T17:35:12.000Z |
-| `subjectAttributes` (map) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `{ "country": "US" }` |
+| `timestamp` (Date) | The time when the subject was assigned to the variation | 2021-06-22T17:35:12.000Z |
+| `subjectAttributes` (Map<String, String>) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `{ "country": "US" }` |
 
 ### 3. Initialize the SDK
 
@@ -72,25 +51,26 @@ Initialize the SDK once when your application starts up to generate a singleton 
 
 The below code example shows how to initialize the SDK with the event logger from the previous section and your API key:
 
-```go
+```java
 
-import (
-	"github.com/Eppo-exp/golang-sdk/eppoclient"
-)
+package org.example;
 
-var eppoClient = &eppoclient.EppoClient{}
+import com.eppo.sdk.EppoClient;
+import com.eppo.sdk.dto.EppoClientConfig;
 
-func main() {
-	assignmentLogger := NewExampleAssignmentLogger()
-
-	eppoClient = eppoclient.InitClient(eppoclient.Config{
-		ApiKey:           "<your_api_key>",
-		AssignmentLogger: assignmentLogger,
-	})
+public class App 
+{
+    public static void main( String[] args ) throws Exception {
+        EppoClientConfig config = EppoClientConfig.builder()
+                .apiKey("<api-key>")
+                .assignmentLogger((data) -> System.out.println(data.toString()))
+                .build();
+        EppoClient eppoClient = EppoClient.init(config);
+    }
 }
 ```
 
-After initialization, the SDK will begin polling Eppo’s API at regular intervals to retrieve the most recent experiment configurations such as variation values and traffic allocation. The Node SDK stores these configurations in memory for fast lookup by the assignment logic.
+After initialization, the SDK will begin polling Eppo’s API at regular intervals to retrieve the most recent experiment configurations such as variation values and traffic allocation. The JAVA SDK stores these configurations in memory for fast lookup by the assignment logic.
 
 ### 4. Assign Experiment Variations
 
@@ -114,12 +94,6 @@ The SDK requires two inputs to assign a variation:
 
 The below code example shows how to assign a subject to an experiment variation:
 
-```go
-import (
-	"github.com/Eppo-exp/golang-sdk/eppoclient"
-)
-
-
-var eppoClient = &eppoclient.EppoClient{} // in global scope
-variation := eppoClient.GetAssignment("<SUBJECT-KEY>", "<EXPERIMENT-KEY>");
+```java
+System.out.println(eppoClient.getAssignment("<subject-id>", "<experiment-name>").get());
 ```
