@@ -20,7 +20,7 @@ In your pom.xml, add the SDK package as a dependency:
 
 ### 2. Define an Assignment Logger
 
-The SDK requires an assignment logger to be passed on initialization. The SDK invokes the logger to capture assignment data whenever a variation is assigned. The below code example shows how to integrate the SDK with [Segment](https://segment.com/docs/) for logging events. You could also use your own logging system; the only requirement is that the SDK receives a `logAssignment` function.
+The SDK requires an assignment logger to be passed on initialization. The SDK invokes the logger to capture assignment data whenever a variation is assigned. The below code example shows how to create your own assignment logger.
 
 Define an implementation of the Eppo `IAssignmentLogger` interface. This interface has one function: `logAssignment`.
 
@@ -52,22 +52,11 @@ Initialize the SDK once when your application starts up to generate a singleton 
 The below code example shows how to initialize the SDK with the event logger from the previous section and your API key:
 
 ```java
-
-package org.example;
-
-import com.eppo.sdk.EppoClient;
-import com.eppo.sdk.dto.EppoClientConfig;
-
-public class App 
-{
-    public static void main( String[] args ) throws Exception {
-        EppoClientConfig config = EppoClientConfig.builder()
-                .apiKey("<api-key>")
-                .assignmentLogger((data) -> System.out.println(data.toString()))
-                .build();
-        EppoClient eppoClient = EppoClient.init(config);
-    }
-}
+EppoClientConfig config = EppoClientConfig.builder()
+        .apiKey("<api-key>")
+        .assignmentLogger((data) -> System.out.println(data.toString()))
+        .build();
+EppoClient eppoClient = EppoClient.init(config);
 ```
 
 After initialization, the SDK will begin polling Eppo’s API at regular intervals to retrieve the most recent experiment configurations such as variation values and traffic allocation. The JAVA SDK stores these configurations in memory for fast lookup by the assignment logic.
@@ -80,7 +69,7 @@ Before using the SDK to assign a variation, make sure your experiment is setup a
 2. The experiment must be started **OR** the `subjectKey` passed to the SDK must be added to one of its variation allow lists
 ![start-experiment](../../../../../static/img/connecting-data/StartExperiment.png)
 
-If the above conditions are not met, the SDK will return `""` as the assignment.
+If the above conditions are not met, the SDK will return `Optional.empty()` as the assignment.
 
 :::note
 It may take up to 5 minutes for changes to Eppo experiments to be reflected by the SDK assignments.
@@ -95,5 +84,5 @@ The SDK requires two inputs to assign a variation:
 The below code example shows how to assign a subject to an experiment variation:
 
 ```java
-System.out.println(eppoClient.getAssignment("<subject-id>", "<experiment-name>").get());
+Optional<String> assignedVariation = eppoClient.getAssignment("<SUBJECT-KEY>", "<EXPERIMENT-KEY>");
 ```
