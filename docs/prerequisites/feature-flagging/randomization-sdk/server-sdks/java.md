@@ -1,7 +1,7 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# JAVA
+# Java
 
 Eppo's Java SDK is open source:
 - [GitHub repository](https://github.com/Eppo-exp/java-server-sdk)
