@@ -3,7 +3,7 @@ import TabItem from '@theme/TabItem';
 
 # JAVA
 
-Eppo's JAVA SDK is open source:
+Eppo's Java SDK is open source:
 - [GitHub repository](https://github.com/Eppo-exp/java-server-sdk)
 - [Package](https://s01.oss.sonatype.org/#nexus-search;quick~eppo-server-sdk)
 
