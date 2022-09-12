@@ -43,7 +43,7 @@ The SDK will invoke the `logAssignment` function with an `event` object that con
 | `subject` (string) | An identifier of the subject or user assigned to the experiment variation | UUID |
 | `variation` (string) | The experiment variation the subject was assigned to | "control" |
 | `timestamp` (Date) | The time when the subject was assigned to the variation | 2021-06-22T17:35:12.000Z |
-| `subjectAttributes` (Map<String, String>) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `{ "country": "US" }` |
+| `subjectAttributes` (Map<String, EppoValue>) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `Map.of("device", EppoValue.valueOf("iOS") |
 
 ### 3. Initialize the SDK
 
