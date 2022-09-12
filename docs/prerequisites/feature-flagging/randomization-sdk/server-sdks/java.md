@@ -25,7 +25,7 @@ The SDK requires an assignment logger to be passed on initialization. The SDK in
 Define an implementation of the Eppo `IAssignmentLogger` interface. This interface has one function: `logAssignment`.
 
 ```java
-from com.eppo.sdk.dto.IAssignmentLogger;
+import com.eppo.sdk.dto.IAssignmentLogger;
 from com.eppo.sdk.dto.AssignmentLogData;
 
 public class AssignmentLoggerImpl implements IAssignmentLogger {
