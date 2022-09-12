@@ -3,7 +3,7 @@ import TabItem from '@theme/TabItem';
 
 # Go
 
-Eppo's Node SDK is open source:
+Eppo's Go SDK is open source:
 - [GitHub repository](https://github.com/Eppo-exp/go-server-sdk)
 - [Package](https://pkg.go.dev/github.com/Eppo-exp/golang-sdk)
 
