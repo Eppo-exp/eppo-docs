@@ -26,7 +26,7 @@ Define an implementation of the Eppo `IAssignmentLogger` interface. This interfa
 
 ```java
 import com.eppo.sdk.dto.IAssignmentLogger;
-from com.eppo.sdk.dto.AssignmentLogData;
+import com.eppo.sdk.dto.AssignmentLogData;
 
 public class AssignmentLoggerImpl implements IAssignmentLogger {
   public void logAssignment(AssignmentLogData event) {
