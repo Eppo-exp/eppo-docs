@@ -51,7 +51,7 @@ _**NOTE**: The AWS Redshift query editor will not run multi-statement queries; i
 4. Create a schema for Eppo to write intermediate results and temporary tables.
 ```sql
 CREATE SCHEMA IF NOT EXISTS eppo_output;
-GRANT ALL ON SCHEMA TO eppo_user;
+GRANT ALL ON SCHEMA eppo_output TO eppo_user;
 ```
 
 ## Gather Redshift connection details
