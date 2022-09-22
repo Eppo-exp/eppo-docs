@@ -11,7 +11,7 @@ In general, a positive lift will be *good* (colored green) and a negative lift w
 
 ![Confidence intervals](../../static/img/measuring-experiments/confidence.png)
 
-[^1]: This is the [frequentist](https://en.wikipedia.org/wiki/Frequentist_inference) interpretation of the significance level. See [below](TK) for a discussion of what the significance level means if you are using our [Bayesian](https://en.wikipedia.org/wiki/Bayesian_inference) method.
+[^1]: This is the [frequentist](https://en.wikipedia.org/wiki/Frequentist_inference) interpretation of the significance level. See [below](#bayesian-analysis) for a discussion of what the significance level means if you are using our [Bayesian](https://en.wikipedia.org/wiki/Bayesian_inference) method.
 [^2]: That is, a higher *false positive* or *Type I error* rate.
 
 ## How we calculate the lift estimates and confidence intervals
