@@ -6,9 +6,7 @@ Before you connect Eppo to your data warehouse, it is recommended that you creat
 
 Additionally, you will need to create a schema for Eppo to write intermediary tables to, as well as grant the Service User read access to tables you'd like Eppo to query SQL definitions from.
 
-Instructions for all of the above are immediately below.
-
-### Create a Service User for Eppo
+### 1. Create a Service User for Eppo
 1. Log into Snowflake with a user that has `ACCOUNTADMIN` privileges.
 2. Create a user with the following command, replacing `<password>` with a unique, secure password:
 
@@ -34,13 +32,15 @@ GRANT SELECT ON TABLE <schema>.<table2> TO ROLE eppo_role;
 GRANT SELECT ON TABLE <schema>.<tableN> TO ROLE eppo_role;
 ```
 
-4. Create a schema for Eppo to write intermediate results and temporary tables.
+### 2. Create schema for Eppo to write results to
+
+1. Create a schema for Eppo to write intermediate results and temporary tables.
 ```sql
 CREATE SCHEMA IF NOT EXISTS eppo_output;
 GRANT ALL ON SCHEMA eppo_output TO ROLE eppo_role;
 ```
 
-5. (Optional) Create a warehouse for Eppo to use
+2. (Optional) Create a warehouse for Eppo to use
 ```sql
 CREATE WAREHOUSE IF NOT EXISTS eppo_wh
 WAREHOUSE_SIZE = <wh_size>
@@ -49,7 +49,7 @@ INITIALLY_SUSPENDED = true;
 GRANT ALL PRIVILEGES ON WAREHOUSE eppo_wh TO ROLE eppo_role;
 ```
 
-6. (Optional) Add Eppo’s static IP addresses to your [Network Policy](https://docs.snowflake.com/en/user-guide/network-policies.html) if you have one:
+3. (Optional) Add Eppo’s static IP addresses to your [Network Policy](https://docs.snowflake.com/en/user-guide/network-policies.html) if you have one:
 `35.226.89.62`, `34.133.196.109`
 
 ## Connecting your Warehouse to Eppo

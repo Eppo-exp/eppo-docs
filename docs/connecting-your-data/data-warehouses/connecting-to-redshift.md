@@ -5,7 +5,7 @@
 Before you connect Eppo to your data warehouse, it is recommended that you create a User for Eppo. This User  should then be used to connect Eppo to your warehouse. Instructions for creating a proper User and connecting it to Eppo are immediately below.
 
 
-### 1. Allowlist Eppo IP Address
+### 1. Add Eppo IP Address to Allowlist
 
 For Eppo to connect to your Redshift database, you’ll need to allow our inbound IP addresses ( `35.226.89.62`, `34.133.196.109` ) in your Cluster’s Security Group settings:
 
@@ -59,7 +59,7 @@ CREATE SCHEMA IF NOT EXISTS eppo_output;
 GRANT ALL ON SCHEMA eppo_output TO eppo_user;
 ```
 
-### Gather Redshift connection details
+### 3. Gather Redshift connection details
 
 You'll want to gather the following connection details from Redshift:
 
