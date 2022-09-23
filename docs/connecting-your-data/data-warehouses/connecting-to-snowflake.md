@@ -1,4 +1,6 @@
-# Connecting to Snowflake
+# Preparing your Warehouse for Eppo
+
+Before you connect Eppo to your data warehouse, it is recommended that you create a Service User for Eppo. This Service User should then be used to connect Eppo to your warehouse.
 
 ## Create a Service User for Eppo
 1. Log into Snowflake with a user that has `ACCOUNTADMIN` privileges.
@@ -44,6 +46,10 @@ GRANT ALL PRIVILEGES ON WAREHOUSE eppo_wh TO ROLE eppo_role;
 6. (Optional) Add Eppo’s static IP addresses to your [Network Policy](https://docs.snowflake.com/en/user-guide/network-policies.html) if you have one:
 `35.226.89.62`, `34.133.196.109`
 
+# Connecting your Warehouse to Eppo
+
+Now that you have a proper Service User created for Eppo, you can use it to connect Eppo to your warehouse.
+
 ## Enter credentials into Eppo
 1. Log in to your Eppo account at [eppo.cloud](https://eppo.cloud/)
 2. To connect Snowflake, you will need to input the following information:
@@ -58,3 +64,5 @@ GRANT ALL PRIVILEGES ON WAREHOUSE eppo_wh TO ROLE eppo_role;
 
 Enter the values into the form, then click **Test and Save Connection**.
 3. Eppo uses [Google Secret Manager](https://cloud.google.com/secret-manager) to store and manage your credentials. Credentials are never stored in plaintext, and Secret Manager can only be accessed via authorized roles in GCP, where all usage is monitored and logged.
+
+## Editing your credentials within Eppo

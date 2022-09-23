@@ -1,4 +1,6 @@
-# Connecting to Redshift
+# Preparing your Warehouse for Eppo
+
+Before you connect Eppo to your data warehouse, it is recommended that you create a User for Eppo. This User  should then be used to connect Eppo to your warehouse.
 
 ## 1. Allowlist Eppo IP Address
 
@@ -89,6 +91,10 @@ Connect with a username & password combination or public key option.
 * username
 * public key
 
+# Connecting your Warehouse to Eppo
+
+Now that you have a proper User created for Eppo with adequate privileges, you can use it to connect Eppo to your warehouse.
+
 ## Enter credentials into Eppo
 
 1. Log in to your Eppo account at [eppo.cloud](https://eppo.cloud/)
@@ -96,7 +102,7 @@ Connect with a username & password combination or public key option.
 
 - **Connection type** - Redshift
 - **User** - `eppo_user`
-- **Password** - the `<password>` you chose 
+- **Password** - the `<password>` you chose
 - **Host Url** - **Endpoint** from [previous section](#gather-redshift-connection-details)
 - **Database name** - **Database name** from [previous section](#gather-redshift-connection-details)
 - **Schema name** - `eppo_output`
@@ -105,3 +111,5 @@ Connect with a username & password combination or public key option.
 Enter the values into the form, then click **Test and Save Connection**. For **Database** and **Schema**, enter the values used for the `eppo_output` database/schema
 
 3. Eppo uses [Google Secret Manager](https://cloud.google.com/secret-manager) to store and manage your credentials. Credentials are never stored in plaintext, and Secret Manager can only be accessed via authorized roles in GCP, where all usage is monitored and logged.
+
+## Editing your credentials within Eppo
