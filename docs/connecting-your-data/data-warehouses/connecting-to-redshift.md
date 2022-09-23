@@ -58,7 +58,7 @@ CREATE SCHEMA IF NOT EXISTS eppo_output;
 GRANT ALL ON SCHEMA eppo_output TO eppo_user;
 ```
 
-### 3. Gather Redshift connection details
+### 3. Gather Redshift Connection Details
 
 You'll want to gather the following connection details from Redshift:
 

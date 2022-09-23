@@ -1,6 +1,6 @@
 # BigQuery
 
-## Preparing your warehouse for Eppo
+## Preparing your Warehouse for Eppo
 
 Before you connect Eppo to your data warehouse, it is recommended that you create a Service Account for Eppo. This Service Account should then be used to connect Eppo to your warehouse.
 
