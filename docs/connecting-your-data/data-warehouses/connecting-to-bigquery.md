@@ -1,6 +1,6 @@
 # BigQuery
 
-## Preparing warehouse for Eppo
+## Preparing your warehouse for Eppo
 
 Before you connect Eppo to your data warehouse, it is recommended that you create a Service Account for Eppo. This Service Account should then be used to connect Eppo to your warehouse.
 
@@ -8,7 +8,7 @@ Additionally, creating a data environment for Eppo to write and read intermediat
 
 To do all of the above, follow the instructions immediately below.
 
-### Create a Service Account
+### 1. Create a Service Account
 
 1. Log into your GCP console.
 2. Open the Navigation menu.
@@ -23,7 +23,7 @@ To do all of the above, follow the instructions immediately below.
     A file will be downloaded to your computer, which you will later use when connecting to
     Eppo.
 
-### Create Sandbox Dataset for Eppo
+### 2. Create Sandbox Dataset for Eppo
 
 1. In the BigQuery SQL Editor, create a new dataset in the appropriate project:
 

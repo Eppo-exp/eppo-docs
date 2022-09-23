@@ -1,6 +1,6 @@
 # Redshift
 
-## Preparing Your Warehouse for Eppo
+## Preparing your Warehouse for Eppo
 
 Before you connect Eppo to your data warehouse, it is recommended that you create a User for Eppo. This User  should then be used to connect Eppo to your warehouse.
 
