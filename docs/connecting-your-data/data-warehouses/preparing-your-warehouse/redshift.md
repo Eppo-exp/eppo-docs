@@ -1,4 +1,6 @@
-# Connecting to Redshift
+# Preparing Your Redshift Warehouse
+
+Before connecting your warehouse to Eppo, it is recommended to create a dedicated user within Redshift. This user and their credentials should then be used to connect your warehouse to Eppo.
 
 ## 1. Allowlist Eppo IP Address
 
@@ -96,7 +98,7 @@ Connect with a username & password combination or public key option.
 
 - **Connection type** - Redshift
 - **User** - `eppo_user`
-- **Password** - the `<password>` you chose 
+- **Password** - the `<password>` you chose
 - **Host Url** - **Endpoint** from [previous section](#gather-redshift-connection-details)
 - **Database name** - **Database name** from [previous section](#gather-redshift-connection-details)
 - **Schema name** - `eppo_output`
