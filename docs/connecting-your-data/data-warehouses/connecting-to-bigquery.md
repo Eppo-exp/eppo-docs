@@ -65,7 +65,7 @@ Now that you have a proper Service Account created for Eppo with adequate privil
  - **BigQuery Project** - Name of the BQ project to which `eppo_output` belongs
  - **BigQuery Region** - The region in which you created the `eppo_output` dataset
 
-5. Enter the values into the form (which should look like the screenshot below), then click **Test Connection**. Once this test succeeds, save your settings.
+5. Enter the values into the form (which should look like the screenshot below), then click `Test Connection`. Once this test succeeds, save your settings by clicking `Test and Save Connection`.
 
 ![Bigquery warehouse connection](../../../static/img/connecting-data/bigquery_connection.png)
 

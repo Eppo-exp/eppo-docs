@@ -67,7 +67,7 @@ Now that you have a proper Service User created for Eppo, you can use it to conn
 - **Username** - `eppo_user`
 - **Password** - the `<password>` you chose
 
-4. Enter the values into the form (which should look like the screenshot below), then click **Test Connection**. Once this test succeeds, save your settings.
+4. Enter the values into the form (which should look like the screenshot below), then click `Test Connection`. Once this test succeeds, save your settings by clicking `Test and Save Connection`.
 
 ![Snowflake warehouse connection](../../../static/img/connecting-data/snowflake-connection.png)
 

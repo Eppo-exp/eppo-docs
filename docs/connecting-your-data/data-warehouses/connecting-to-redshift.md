@@ -111,7 +111,7 @@ Now that you have a proper User created for Eppo with adequate privileges, you c
 - **Schema name** - `eppo_output`
 - **Port** - **Database port** from [previous section](#gather-redshift-connection-details)
 
-4. Enter the values into the form (which should look like the screenshot below), then click **Test Connection**. Once this test succeeds, save your settings.
+4. Enter the values into the form (which should look like the screenshot below), then click `Test Connection`. Once this test succeeds, save your settings by clicking `Test and Save Connection`.
 
 ![redshift warehouse connection](../../../static/img/connecting-data/redshift_connection.png)
 
