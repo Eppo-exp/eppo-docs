@@ -2,7 +2,7 @@
 
 ## Preparing warehouse for Eppo
 
-Before you connect Eppo to your data warehouse, it is recommended that you create a Service Account for Eppo. This Service Account should then be used to connect Eppo to your warehouse.
+Before you connect Eppo to your data warehouse, it is recommended that you create a Service Account for Eppo. This Service Account should then be used to connect Eppo to your warehouse. Additionally, creating a sandbox data environment for Eppo to read and write results from is also necessary. To do this, follow the instructions immediately below.
 
 ### Create a Service Account
 

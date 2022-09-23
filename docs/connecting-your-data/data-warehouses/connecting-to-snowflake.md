@@ -2,7 +2,9 @@
 
 ## Preparing warehouse for Eppo
 
-Before you connect Eppo to your data warehouse, it is recommended that you create a Service User for Eppo. This Service User should then be used to connect Eppo to your warehouse.
+Before you connect Eppo to your data warehouse, it is recommended that you create a Service User for Eppo. This Service User should then be used to connect Eppo to your warehouse. Additionally, you will need to grant this Service User access to read from tables you want Eppo to create metrics from as well as create a schema for Eppo to write intermediate results and temporary tables to.
+
+Instructions for all of the above are immediately below.
 
 ### Create a Service User for Eppo
 1. Log into Snowflake with a user that has `ACCOUNTADMIN` privileges.
@@ -52,9 +54,11 @@ GRANT ALL PRIVILEGES ON WAREHOUSE eppo_wh TO ROLE eppo_role;
 
 Now that you have a proper Service User created for Eppo, you can use it to connect Eppo to your warehouse.
 
-### Enter credentials into Eppo
+### Initial Configuration of Credentials
+
 1. Log in to your Eppo account at [eppo.cloud](https://eppo.cloud/)
-2. To connect Snowflake, you will need to input the following information:
+2. Click the 'Getting Started' button in the top-right corner. Once on that screen, and within the 'Connect your Warehouse' tab, click the 'Connect your data warehouse to Eppo' button in the bottom right-hand corner of the screen.
+3. Once on the data warehouse connection screen, click the 'Snowflake' tab. From there, you should be prompted to enter all of the necessary information for doing so. This information includes:
 
 - **Connection type** - Snowflake
 - **Server** - everything before the `.snowflakecomputing.com` in the customer's snowflake URL. For example, if your Snowflake account URL is `my-company.us-east-1.snowflakecomputing.com` then the value to enter is `my-company.us-east-1`.
@@ -64,7 +68,12 @@ Now that you have a proper Service User created for Eppo, you can use it to conn
 - **Username** - `eppo_user`
 - **Password** - the `<password>` you chose
 
-Enter the values into the form, then click **Test and Save Connection**.
-3. Eppo uses [Google Secret Manager](https://cloud.google.com/secret-manager) to store and manage your credentials. Credentials are never stored in plaintext, and Secret Manager can only be accessed via authorized roles in GCP, where all usage is monitored and logged.
+4. Enter the values into the form, then click **Test Connection**. Once this test succeeds, save your settings.
+
+![Snowflake warehouse connection](../../../static/img/connecting-data/snowflake-connection.png)
+
+Note: Eppo uses [Google Secret Manager](https://cloud.google.com/secret-manager) to store and manage your credentials. Credentials are never stored in plaintext, and Secret Manager can only be accessed via authorized roles in GCP, where all usage is monitored and logged.
 
 ### Updating Credentials
+
+Credential can be updated at any time within the Admin panel of the app.
