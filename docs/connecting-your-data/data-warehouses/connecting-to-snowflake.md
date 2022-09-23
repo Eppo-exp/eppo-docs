@@ -1,6 +1,6 @@
 # Snowflake
 
-## Preparing your warehouse for Eppo
+## Preparing your Warehouse for Eppo
 
 Before you connect Eppo to your data warehouse, it is recommended that you create a service User for Eppo. This service User should then be used to connect Eppo to your warehouse.
 
@@ -32,7 +32,7 @@ GRANT SELECT ON TABLE <schema>.<table2> TO ROLE eppo_role;
 GRANT SELECT ON TABLE <schema>.<tableN> TO ROLE eppo_role;
 ```
 
-### 2. Create schema for Eppo to write results to
+### 2. Create Schema for Eppo to Write Results to
 
 1. Create a schema for Eppo to write intermediate results and temporary tables.
 ```sql
