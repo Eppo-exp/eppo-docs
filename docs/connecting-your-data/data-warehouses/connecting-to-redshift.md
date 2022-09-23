@@ -1,8 +1,10 @@
-# Preparing your Warehouse for Eppo
+# BigQuery
+
+## Preparing Warehouse for Eppo
 
 Before you connect Eppo to your data warehouse, it is recommended that you create a User for Eppo. This User  should then be used to connect Eppo to your warehouse.
 
-## 1. Allowlist Eppo IP Address
+### 1. Allowlist Eppo IP Address
 
 For Eppo to connect to your Redshift database, you’ll need to allow our inbound IP addresses ( `35.226.89.62`, `34.133.196.109` ) in your Cluster’s Security Group settings:
 
@@ -17,7 +19,7 @@ For Eppo to connect to your Redshift database, you’ll need to allow our inboun
     c. Enter the following into the Source field: `35.226.89.62`, `34.133.196.109`
 7. Click **Save**.
 
-## 2. Create Dedicated User for Eppo
+### 2. Create Dedicated User for Eppo
 
 You should create a new user and grant SELECT permissions to the tables the user (i.e., Eppo) will access.
 
@@ -56,7 +58,7 @@ CREATE SCHEMA IF NOT EXISTS eppo_output;
 GRANT ALL ON SCHEMA eppo_output TO eppo_user;
 ```
 
-## Gather Redshift connection details
+### Gather Redshift connection details
 
 You'll want to gather the following connection details from Redshift:
 
@@ -74,7 +76,7 @@ You'll want to gather the following connection details from Redshift:
 
     You can also find your **Database Name** under the **Database configurations** section of the Properties tab.
 
-### (Optional) SSH Tunnel
+#### (Optional) SSH Tunnel
 
 Eppo supports connecting to a Redshift cluster over an SSH tunnel.
 
@@ -91,11 +93,11 @@ Connect with a username & password combination or public key option.
 * username
 * public key
 
-# Connecting your Warehouse to Eppo
+## Connecting your Warehouse to Eppo
 
 Now that you have a proper User created for Eppo with adequate privileges, you can use it to connect Eppo to your warehouse.
 
-## Enter credentials into Eppo
+### Initial Configuration of Credentials
 
 1. Log in to your Eppo account at [eppo.cloud](https://eppo.cloud/)
 2. To connect Redshift, you will need to input the following information:
@@ -112,4 +114,4 @@ Enter the values into the form, then click **Test and Save Connection**. For **D
 
 3. Eppo uses [Google Secret Manager](https://cloud.google.com/secret-manager) to store and manage your credentials. Credentials are never stored in plaintext, and Secret Manager can only be accessed via authorized roles in GCP, where all usage is monitored and logged.
 
-## Editing your credentials within Eppo
+### Updating Credentials

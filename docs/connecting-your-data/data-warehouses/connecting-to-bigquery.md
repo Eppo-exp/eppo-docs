@@ -1,8 +1,10 @@
-# Preparing your Warehouse for Eppo
+# BigQuery
+
+## Preparing warehouse for Eppo
 
 Before you connect Eppo to your data warehouse, it is recommended that you create a Service Account for Eppo. This Service Account should then be used to connect Eppo to your warehouse.
 
-## Create a Service Account
+### Create a Service Account
 
 1. Log into your GCP console.
 2. Open the Navigation menu.
@@ -17,7 +19,7 @@ Before you connect Eppo to your data warehouse, it is recommended that you creat
     A file will be downloaded to your computer, which you will later use when connecting to
     Eppo.
 
-## Create Sandbox Dataset for Eppo
+### Create Sandbox Dataset for Eppo
 
 1. In BigQuery SQL Editor, create a new dataset in the appropriate project:
 
@@ -43,11 +45,11 @@ TO "serviceAccount:<service_account_name>@<project>.iam.gserviceaccount.com";
 
 If you would like to provide more granular access, you can provide us with read-only access to specific tables or views by following to instructions [here](https://cloud.google.com/bigquery/docs/table-access-controls-intro).
 
-# Connecting your Warehouse to Eppo
+## Connecting your Warehouse to Eppo
 
 Now that you have a proper Service Account created for Eppo with adequate privileges, you can use it to connect Eppo to your warehouse.
 
-## Enter credentials into Eppo
+### Initial Configuration of Credentials
 
 1. Open the JSON file created in Step 10 under _Create a Service Account_
 2. Log in to your Eppo account at [eppo.cloud](https://eppo.cloud/), enter the values into the form fill as shown below, and click **Test and Save Connection**
@@ -59,4 +61,4 @@ Now that you have a proper Service Account created for Eppo with adequate privil
    ![Bigquery warehouse connection](../../../static/img/connecting-data/BigQuery-Connection-UI_V2.png)
 3. Eppo uses [Google Secret Manager](https://cloud.google.com/secret-manager) to store and manage your credentials. Credentials are never stored in plaintext, and Secret Manager can only be accessed via authorized roles in GCP, where all usage is monitored and logged.
 
-## Editing your credentials within Eppo
+### Updating Credentials
