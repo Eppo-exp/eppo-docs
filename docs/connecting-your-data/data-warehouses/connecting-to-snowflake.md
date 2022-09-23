@@ -1,4 +1,4 @@
-# BigQuery
+# Snowflake
 
 ## Preparing warehouse for Eppo
 
