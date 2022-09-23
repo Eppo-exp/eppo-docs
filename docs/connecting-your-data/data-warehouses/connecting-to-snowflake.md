@@ -60,7 +60,6 @@ Now that you have a proper Service User created for Eppo, you can use it to conn
 2. Click the 'Getting Started' button in the top-right corner. Once on that screen, and within the 'Connect your Warehouse' tab, click the 'Connect your data warehouse to Eppo' button in the bottom right-hand corner of the screen.
 3. Once on the data warehouse connection screen, click the 'Snowflake' tab. From there, you should be prompted to enter all of the necessary information for doing so. This information includes:
 
-- **Connection type** - Snowflake
 - **Server** - everything before the `.snowflakecomputing.com` in the customer's snowflake URL. For example, if your Snowflake account URL is `my-company.us-east-1.snowflakecomputing.com` then the value to enter is `my-company.us-east-1`.
 - **Warehouse** - from inside your Snowflake instance, click the **Warehouses** item from the menu -- choose from among the listed warehouses
 - **Database** - **Database name** from step 3 in the previous section
@@ -68,12 +67,12 @@ Now that you have a proper Service User created for Eppo, you can use it to conn
 - **Username** - `eppo_user`
 - **Password** - the `<password>` you chose
 
-4. Enter the values into the form, then click **Test Connection**. Once this test succeeds, save your settings.
+4. Enter the values into the form (which should look like the screenshot below), then click **Test Connection**. Once this test succeeds, save your settings.
 
 ![Snowflake warehouse connection](../../../static/img/connecting-data/snowflake-connection.png)
 
-Note: Eppo uses [Google Secret Manager](https://cloud.google.com/secret-manager) to store and manage your credentials. Credentials are never stored in plaintext, and Secret Manager can only be accessed via authorized roles in GCP, where all usage is monitored and logged.
+**Note**: Eppo uses [Google Secret Manager](https://cloud.google.com/secret-manager) to store and manage your credentials. Credentials are never stored in plaintext, and Secret Manager can only be accessed via authorized roles in GCP, where all usage is monitored and logged.
 
 ### Updating Credentials
 
-Credential can be updated at any time within the Admin panel of the app.
+Credentials can be updated at any time within the Admin panel of the app.

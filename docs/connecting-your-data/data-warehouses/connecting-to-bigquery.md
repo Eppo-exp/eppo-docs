@@ -2,7 +2,11 @@
 
 ## Preparing warehouse for Eppo
 
-Before you connect Eppo to your data warehouse, it is recommended that you create a Service Account for Eppo. This Service Account should then be used to connect Eppo to your warehouse. Additionally, creating a sandbox data environment for Eppo to read and write results from is also necessary. To do this, follow the instructions immediately below.
+Before you connect Eppo to your data warehouse, it is recommended that you create a Service Account for Eppo. This Service Account should then be used to connect Eppo to your warehouse.
+
+Additionally, creating a data environment for Eppo to write and read intermediate tables to and from is also necessary. You will also need to grant the Eppo Service Account read access to all of the tables you'd like Eppo to create metrics from.
+
+To do all of the above, follow the instructions immediately below.
 
 ### Create a Service Account
 
@@ -21,7 +25,7 @@ Before you connect Eppo to your data warehouse, it is recommended that you creat
 
 ### Create Sandbox Dataset for Eppo
 
-1. In BigQuery SQL Editor, create a new dataset in the appropriate project:
+1. In the BigQuery SQL Editor, create a new dataset in the appropriate project:
 
 ```sql
 CREATE SCHEMA IF NOT EXISTS `<project>.eppo_output`;
@@ -43,7 +47,7 @@ ON SCHEMA `<your-project>`.`<your-dataset>`
 TO "serviceAccount:<service_account_name>@<project>.iam.gserviceaccount.com";
 ```
 
-If you would like to provide more granular access, you can provide us with read-only access to specific tables or views by following to instructions [here](https://cloud.google.com/bigquery/docs/table-access-controls-intro).
+If you would like to provide more granular access, you can provide us with read-only access to specific tables or views by following the instructions [here](https://cloud.google.com/bigquery/docs/table-access-controls-intro).
 
 ## Connecting your Warehouse to Eppo
 
@@ -52,13 +56,21 @@ Now that you have a proper Service Account created for Eppo with adequate privil
 ### Initial Configuration of Credentials
 
 1. Open the JSON file created in Step 10 under _Create a Service Account_
-2. Log in to your Eppo account at [eppo.cloud](https://eppo.cloud/), enter the values into the form fill as shown below, and click **Test and Save Connection**
- - **Connection type** - BigQuery
+2. Log in to your Eppo account at [eppo.cloud](https://eppo.cloud/)
+3. Click the 'Getting Started' button in the top-right corner. Once on that screen, and within the 'Connect your Warehouse' tab, click the 'Connect your data warehouse to Eppo' button in the bottom right-hand corner of the screen.
+4. Once on the data warehouse connection screen, click the 'BigQuery' tab. From there, you should be prompted to enter all of the necessary information for doing so. This information includes:
+
  - **Service Account JSON** - From step 10 above
  - **BigQuery Dataset** - `eppo_output`
  - **BigQuery Project** - Name of the BQ project to which `eppo_output` belongs
  - **BigQuery Region** - The region in which you created the `eppo_output` dataset
-   ![Bigquery warehouse connection](../../../static/img/connecting-data/BigQuery-Connection-UI_V2.png)
-3. Eppo uses [Google Secret Manager](https://cloud.google.com/secret-manager) to store and manage your credentials. Credentials are never stored in plaintext, and Secret Manager can only be accessed via authorized roles in GCP, where all usage is monitored and logged.
+
+5. Enter the values into the form (which should look like the screenshot below), then click **Test Connection**. Once this test succeeds, save your settings.
+
+![Bigquery warehouse connection](../../../static/img/connecting-data/bigquery_connection.png)
+
+**Note**: Eppo uses [Google Secret Manager](https://cloud.google.com/secret-manager) to store and manage your credentials. Credentials are never stored in plaintext, and Secret Manager can only be accessed via authorized roles in GCP, where all usage is monitored and logged.
 
 ### Updating Credentials
+
+Credentials can be updated at any time within the Admin panel of the app.

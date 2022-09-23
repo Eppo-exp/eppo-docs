@@ -1,6 +1,6 @@
 # Redshift
 
-## Preparing Warehouse for Eppo
+## Preparing Your Warehouse for Eppo
 
 Before you connect Eppo to your data warehouse, it is recommended that you create a User for Eppo. This User  should then be used to connect Eppo to your warehouse.
 
@@ -100,7 +100,9 @@ Now that you have a proper User created for Eppo with adequate privileges, you c
 ### Initial Configuration of Credentials
 
 1. Log in to your Eppo account at [eppo.cloud](https://eppo.cloud/)
-2. To connect Redshift, you will need to input the following information:
+2. Click the 'Getting Started' button in the top-right corner. Once on that screen, and within the 'Connect your Warehouse' tab, click the 'Connect your data warehouse to Eppo' button in the bottom right-hand corner of the screen.
+3. Once on the data warehouse connection screen, click the 'Redshift' tab. From there, you should be prompted to enter all of the necessary information for doing so. This information includes:
+
 
 - **Connection type** - Redshift
 - **User** - `eppo_user`
@@ -110,8 +112,12 @@ Now that you have a proper User created for Eppo with adequate privileges, you c
 - **Schema name** - `eppo_output`
 - **Port** - **Database port** from [previous section](#gather-redshift-connection-details)
 
-Enter the values into the form, then click **Test and Save Connection**. For **Database** and **Schema**, enter the values used for the `eppo_output` database/schema
+4. Enter the values into the form (which should look like the screenshot below), then click **Test Connection**. Once this test succeeds, save your settings.
 
-3. Eppo uses [Google Secret Manager](https://cloud.google.com/secret-manager) to store and manage your credentials. Credentials are never stored in plaintext, and Secret Manager can only be accessed via authorized roles in GCP, where all usage is monitored and logged.
+![redshift warehouse connection](../../../static/img/connecting-data/redshift_connection.png)
+
+**Note**: Eppo uses [Google Secret Manager](https://cloud.google.com/secret-manager) to store and manage your credentials. Credentials are never stored in plaintext, and Secret Manager can only be accessed via authorized roles in GCP, where all usage is monitored and logged.
 
 ### Updating Credentials
+
+Credentials can be updated at any time within the Admin panel of the app.
