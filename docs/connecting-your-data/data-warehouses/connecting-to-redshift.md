@@ -100,9 +100,8 @@ Now that you have a proper User created for Eppo with adequate privileges, you c
 ### Initial Configuration of Credentials
 
 1. Log in to your Eppo account at [eppo.cloud](https://eppo.cloud/)
-2. Click the 'Getting Started' button in the top-right corner. Once on that screen, and within the 'Connect your Warehouse' tab, click the 'Connect your data warehouse to Eppo' button in the bottom right-hand corner of the screen.
-3. Once on the data warehouse connection screen, click the 'Redshift' tab. From there, you should be prompted to enter all of the necessary information for doing so. This information includes:
-
+2. Click the `Getting Started` button in the top-right corner. Once on that screen, and within the `Connect your Warehouse` tab, click the `Connect your data warehouse to Eppo` button in the bottom right-hand corner of the screen.
+3. Once on the data warehouse connection screen, click the `Redshift` tab. From there, you should be prompted to enter all of the necessary information for doing so. This information includes:
 
 - **Connection type** - Redshift
 - **User** - `eppo_user`

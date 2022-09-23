@@ -57,8 +57,8 @@ Now that you have a proper Service Account created for Eppo with adequate privil
 
 1. Open the JSON file created in Step 10 under _Create a Service Account_
 2. Log in to your Eppo account at [eppo.cloud](https://eppo.cloud/)
-3. Click the 'Getting Started' button in the top-right corner. Once on that screen, and within the 'Connect your Warehouse' tab, click the 'Connect your data warehouse to Eppo' button in the bottom right-hand corner of the screen.
-4. Once on the data warehouse connection screen, click the 'BigQuery' tab. From there, you should be prompted to enter all of the necessary information for doing so. This information includes:
+3. Click the `Getting Started` button in the top-right corner. Once on that screen, and within the `Connect your Warehouse` tab, click the `Connect your data warehouse to Eppo` button in the bottom right-hand corner of the screen.
+4. Once on the data warehouse connection screen, click the `BigQuery` tab. From there, you should be prompted to enter all of the necessary information for doing so. This information includes:
 
  - **Service Account JSON** - From step 10 above
  - **BigQuery Dataset** - `eppo_output`

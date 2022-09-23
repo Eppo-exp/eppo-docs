@@ -57,8 +57,8 @@ Now that you have a proper Service User created for Eppo, you can use it to conn
 ### Initial Configuration of Credentials
 
 1. Log in to your Eppo account at [eppo.cloud](https://eppo.cloud/)
-2. Click the 'Getting Started' button in the top-right corner. Once on that screen, and within the 'Connect your Warehouse' tab, click the 'Connect your data warehouse to Eppo' button in the bottom right-hand corner of the screen.
-3. Once on the data warehouse connection screen, click the 'Snowflake' tab. From there, you should be prompted to enter all of the necessary information for doing so. This information includes:
+2. Click the `Getting Started` button in the top-right corner. Once on that screen, and within the `Connect your Warehouse` tab, click the `Connect your data warehouse to Eppo` button in the bottom right-hand corner of the screen.
+3. Once on the data warehouse connection screen, click the `Snowflake` tab. From there, you should be prompted to enter all of the necessary information for doing so. This information includes:
 
 - **Server** - everything before the `.snowflakecomputing.com` in the customer's snowflake URL. For example, if your Snowflake account URL is `my-company.us-east-1.snowflakecomputing.com` then the value to enter is `my-company.us-east-1`.
 - **Warehouse** - from inside your Snowflake instance, click the **Warehouses** item from the menu -- choose from among the listed warehouses
