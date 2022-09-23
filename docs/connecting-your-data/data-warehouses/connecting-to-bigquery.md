@@ -4,9 +4,9 @@
 
 Before you connect Eppo to your data warehouse, it is recommended that you create a Service Account for Eppo. This Service Account should then be used to connect Eppo to your warehouse.
 
-Additionally, creating a data environment for Eppo to write and read intermediate tables to and from is also necessary. You will also need to grant the Eppo Service Account read access to all of the tables you'd like Eppo to create metrics from.
+Additionally, you will need to create a data environment for Eppo to write intermediary tables to, as well as grant the Service Account read access to tables you'd like Eppo to query SQL definitions from.
 
-To do all of the above, follow the instructions immediately below.
+Instructions for all of the above are immediately below.
 
 ### 1. Create a Service Account
 

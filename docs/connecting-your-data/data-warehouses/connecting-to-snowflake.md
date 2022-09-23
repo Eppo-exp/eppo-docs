@@ -2,7 +2,9 @@
 
 ## Preparing your warehouse for Eppo
 
-Before you connect Eppo to your data warehouse, it is recommended that you create a Service User for Eppo. This Service User should then be used to connect Eppo to your warehouse. Additionally, you will need to grant this Service User access to read from tables you want Eppo to create metrics from as well as create a schema for Eppo to write intermediate results and temporary tables to.
+Before you connect Eppo to your data warehouse, it is recommended that you create a Service User for Eppo. This Service User should then be used to connect Eppo to your warehouse.
+
+Additionally, you will need to create a schema for Eppo to write intermediary tables to, as well as grant the Service User read access to tables you'd like Eppo to query SQL definitions from.
 
 Instructions for all of the above are immediately below.
 
