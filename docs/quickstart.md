@@ -48,10 +48,6 @@ Create a new account at https://eppo.cloud/. Eppo implements Auth0 and you shoul
 
 ## 3. Connect your data warehouse
 
-Once you log in, you will see a fill form where you can input your data warehouse connection details.
-
-![connect your data warehouse form fill](../static/img/building-experiments/form-fill-connect-data.png)
-
 Follow the linked warehouse-specific guides to connect Eppo to your data warehouse.
 
 - [Snowflake](./connecting-your-data/data-warehouses/connecting-to-snowflake)

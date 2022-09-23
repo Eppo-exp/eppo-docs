@@ -2,8 +2,7 @@
 
 ## Preparing your Warehouse for Eppo
 
-Before you connect Eppo to your data warehouse, it is recommended that you create a User for Eppo. This User  should then be used to connect Eppo to your warehouse. Instructions for creating a proper User and connecting it to Eppo are immediately below.
-
+Before you connect Eppo to your data warehouse, it is recommended that you create a User for Eppo. This User  should then be used to connect Eppo to your warehouse. Additionally, this User will need to be granted read access to tables from which assignments and metrics will be calculated.
 
 ### 1. Add Eppo IP Address to Allowlist
 

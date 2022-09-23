@@ -6,8 +6,6 @@ Before you connect Eppo to your data warehouse, it is recommended that you creat
 
 Additionally, you will need to create a data environment for Eppo to write intermediary tables to, as well as grant the Service Account read access to tables you'd like Eppo to query SQL definitions from.
 
-Instructions for all of the above are immediately below.
-
 ### 1. Create a Service Account
 
 1. Log into your GCP console.
