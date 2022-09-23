@@ -1,6 +1,10 @@
-# Connecting to Redshift
+# Redshift
 
-## 1. Allowlist Eppo IP Address
+## Preparing your Warehouse for Eppo
+
+Before you connect Eppo to your data warehouse, it is recommended that you create a User for Eppo. This User  should then be used to connect Eppo to your warehouse. Additionally, this User will need to be granted read access to tables from which you'd like Eppo to query SQL definitions from.
+
+### 1. Add Eppo IP Address to Allowlist
 
 For Eppo to connect to your Redshift database, you’ll need to allow our inbound IP addresses ( `35.226.89.62`, `34.133.196.109` ) in your Cluster’s Security Group settings:
 
@@ -15,7 +19,7 @@ For Eppo to connect to your Redshift database, you’ll need to allow our inboun
     c. Enter the following into the Source field: `35.226.89.62`, `34.133.196.109`
 7. Click **Save**.
 
-## 2. Create Dedicated User for Eppo
+### 2. Create Dedicated User for Eppo
 
 You should create a new user and grant SELECT permissions to the tables the user (i.e., Eppo) will access.
 
@@ -54,7 +58,7 @@ CREATE SCHEMA IF NOT EXISTS eppo_output;
 GRANT ALL ON SCHEMA eppo_output TO eppo_user;
 ```
 
-## Gather Redshift connection details
+### 3. Gather Redshift connection details
 
 You'll want to gather the following connection details from Redshift:
 
@@ -72,7 +76,7 @@ You'll want to gather the following connection details from Redshift:
 
     You can also find your **Database Name** under the **Database configurations** section of the Properties tab.
 
-### (Optional) SSH Tunnel
+#### (Optional) SSH Tunnel
 
 Eppo supports connecting to a Redshift cluster over an SSH tunnel.
 
@@ -89,19 +93,30 @@ Connect with a username & password combination or public key option.
 * username
 * public key
 
-## Enter credentials into Eppo
+## Connecting your Warehouse to Eppo
+
+Now that you have a proper User created for Eppo with adequate privileges, you can use it to connect Eppo to your warehouse.
+
+### Initial Configuration of Credentials
 
 1. Log in to your Eppo account at [eppo.cloud](https://eppo.cloud/)
-2. To connect Redshift, you will need to input the following information:
+2. Click the `Getting Started` button in the top-right corner. Once on that screen, and within the `Connect your Warehouse` tab, click the `Connect your data warehouse to Eppo` button in the bottom right-hand corner of the screen.
+3. Once on the data warehouse connection screen, click the `Redshift` tab. From there, you should be prompted to enter all of the necessary information for doing so. This information includes:
 
 - **Connection type** - Redshift
 - **User** - `eppo_user`
-- **Password** - the `<password>` you chose 
+- **Password** - the `<password>` you chose
 - **Host Url** - **Endpoint** from [previous section](#gather-redshift-connection-details)
 - **Database name** - **Database name** from [previous section](#gather-redshift-connection-details)
 - **Schema name** - `eppo_output`
 - **Port** - **Database port** from [previous section](#gather-redshift-connection-details)
 
-Enter the values into the form, then click **Test and Save Connection**. For **Database** and **Schema**, enter the values used for the `eppo_output` database/schema
+4. Enter the values into the form (which should look like the screenshot below), then click `Test Connection`. Once this test succeeds, save your settings by clicking `Test and Save Connection`.
 
-3. Eppo uses [Google Secret Manager](https://cloud.google.com/secret-manager) to store and manage your credentials. Credentials are never stored in plaintext, and Secret Manager can only be accessed via authorized roles in GCP, where all usage is monitored and logged.
+![redshift warehouse connection](../../../static/img/connecting-data/redshift_connection.png)
+
+**Note**: Eppo uses [Google Secret Manager](https://cloud.google.com/secret-manager) to store and manage your credentials. Credentials are never stored in plaintext, and Secret Manager can only be accessed via authorized roles in GCP, where all usage is monitored and logged.
+
+### Updating Credentials
+
+Credentials can be updated at any time within the Admin panel of the app.
