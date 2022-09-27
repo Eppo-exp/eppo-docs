@@ -23,7 +23,9 @@ Follow this quickstart to get your first experiment set up on Eppo.
 
 ## 1. Prep your data warehouse and set up feature flagging
 
-Eppo assumes that you are already using a third party feature flagging tool like [LaunchDarkly](https://launchdarkly.com/) or [Optimizely](https://www.optimizely.com/) and are exporting experiment data into a data warehouse. In particular, Eppo requires that you have the following tables in your data warehouse:
+This quickstart guide assumes that you already have experiment assignment data in your data warehouse. If you are planning to use Eppo's randomization SDK, please refer to our [SDK docs](./prerequisites/feature-flagging/randomization-sdk/). If you have a feature flagging tool such as  [LaunchDarkly](https://launchdarkly.com/) or [Optimizely](https://www.optimizely.com/) integrated but do not have an assignment table set up in your data warehouse, please follow the instructions [here](./connecting-your-data/assignment-tables/) to start logging your assignment data.
+
+To get started, you'll need the following tables in your data warehouse:
 
 - An assignment table that indicates which experiment subjects were assigned to which experiments and variants at which time. It should [contain columns](./connecting-your-data/assignment-tables/required-data)  that roughly correspond to:
 
@@ -38,9 +40,6 @@ Eppo assumes that you are already using a third party feature flagging tool like
     | 2021-07-17T18:57:13.000Z	 | 49980400511307080 | Revenue | 45.5695	|
     | 2021-07-17T18:57:13.000Z	 | 2281323415877132491 | Subscription | 1 |
 
-If you do not have a feature flagging tool integrated, please refer to the [feature flagging](./prerequisites/feature-flagging/) section for more instructions.
-
-If you have a feature flagging tool integrated but do not have an assignment table set up in your data warehouse, please follow the instructions [here](./connecting-your-data/assignment-tables/) to log your assignment data.
 
 ## 2. Create Eppo account
 
