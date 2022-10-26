@@ -34,17 +34,3 @@ To remove the slack channel from this experiment, click on "Configure" and turn 
 Go to a metric and click on the bell icon in the upper right of the page. Select a slack channel to receive notifications.
 
 To remove the slack channel from this metirc, click on "Configure" and turn off the channel. 
-
-
-## Notification Triggers
-### A data problem on an experiment
-* When there is a traffic imbalance detected
-* When there is an error and the experiment results cannot be refreshed
-
-### A status change on an experiment
-* When an experiment changes status from `DRAFT` &rarr; `RUNNING` &rarr; `WRAP UP` &rarr; `COMPLETED` 
-
-See more on <a href="https://docs.geteppo.com/building-experiments/experiments/experiment-status" target="_blank">experiment statuses</a>.
-
-### A primary or guardrail metric reached statistical significance on this experiment
-* When a primary metric or a guardrail metric on an experiment reaches statistical significance for Sequential experiments ONLY
