@@ -47,4 +47,4 @@ To remove the slack channel from this metirc, click on "Configure" and turn off 
 See more on <a href="https://docs.geteppo.com/building-experiments/experiments/experiment-status" target="_blank">experiment statuses</a>.
 
 ### A primary or guardrail metric reached statistical significance on this experiment
-* When a primary metric or a guardrail metric on an experiment reaches statistical significance for Sequential experiments ONLY
+* When a primary metric or a guardrail metric on an experiment reaches statistical significance for **Sequential experiments ONLY**
