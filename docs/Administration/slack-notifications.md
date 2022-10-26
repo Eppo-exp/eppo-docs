@@ -1,21 +1,20 @@
 # Slack Notifications
+1. [Allow Permissions to a Slack Workspace](https://docs.geteppo.com/Administration/slack-notifications#allow-permissions-to-a-slack-workspace)
+2. [Configure System Wide Slack Notifications](https://docs.geteppo.com/Administration/slack-notifications#configure-slack-notifications-for-a-specific-experiment)
+3. [Configure Slack Notifications for a Specific Experiment](https://docs.geteppo.com/Administration/slack-notifications#configure-slack-notifications-for-a-specific-experiment)
+4. [Configure Slack Notifications for a Specific Metric](https://docs.geteppo.com/Administration/slack-notifications#configure-slack-notifications-for-a-specific-metric)
+5. [Notification Triggers](https://docs.geteppo.com/Administration/slack-notifications#notification-triggers)
 
-1. [Allow Permissions to a Slack Workspace](https://github.com/Eppo-exp/eppo-docs/edit/main/docs/Administration/slack-notifications.md#allow-permissions-to-a-slack-workspace)
-2. [Configure System Wide Slack Notifications](https://github.com/Eppo-exp/eppo-docs/edit/main/docs/Administration/slack-notifications.md#configure-slack-notifications-for-a-specific-experiment)
-3. [Configure Slack Notifications for a Specific Experiment](https://github.com/Eppo-exp/eppo-docs/edit/main/docs/Administration/slack-notifications.md#configure-slack-notifications-for-a-specific-experiment)
-4. [Configure Slack Notifications for a Specific Metric]
-5. [Notification Triggers]
-
-### Allow Permissions to a Slack Workspace
+## Allow Permissions to a Slack Workspace
 ![Enable Slack Notifications](https://user-images.githubusercontent.com/90637953/197907443-9c3d3db1-65fa-405f-b808-bac63d4d09f8.gif)
 
 Go to Admin > Notifications to allow permissions to a Slack workspace. This is required before you can select slack channels to recieve system wide notifications as well as for any user to add slack channels for specific experiments and metrics.
 
-### Configure System Wide Slack Notifications
+## Configure System Wide Slack Notifications
 You can select specific Slack channels to receive notifications for **ANY** experiment running in Eppo.
 <img width="1386" alt="image" src="https://user-images.githubusercontent.com/90637953/197908102-3f9f5ec4-98ce-427c-8888-079f89b8ec0c.png">
 
-### Configure Slack Notifications for a Specific Experiment
+## Configure Slack Notifications for a Specific Experiment
 ![experiment-slack-notifications](https://user-images.githubusercontent.com/90637953/197909040-bb01590c-d329-4d50-8aba-505ba0c60cdc.gif)
 
 Go to an experiment and click on the bell icon in the upper right of the page. Select a slack channel to receive notifications. 
@@ -33,5 +32,15 @@ Go to a metric and click on the bell icon in the upper right of the page. Select
 To remove the slack channel from this metirc, click on "Configure" and turn off the channel. 
 
 
-### Notification Triggers
-#### A data problem on this experiment
+## Notification Triggers
+### A data problem on an experiment
+* When there is a traffic imbalance detected
+* When there is an error and the experiment results cannot be refreshed
+
+### A status change on an experiment
+* When an experiment changes status from `DRAFT` &rarr; `RUNNING` &rarr; `WRAP UP` &rarr; `COMPLETED` 
+
+See more on [experiment statuses](https://docs.geteppo.com/building-experiments/experiments/experiment-status).
+
+### A primary or guardrail metric reached statistical significance on this experiment
+* When a primary metric or a guardrail metric on an experiment reaches statistical significance for **Sequential experiments ONLY**
