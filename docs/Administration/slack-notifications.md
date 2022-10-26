@@ -1,9 +1,9 @@
 # Slack Notifications
-1. [Allow Permissions to a Slack Workspace](https://docs.geteppo.com/Administration/slack-notifications#allow-permissions-to-a-slack-workspace)
-2. [Configure System Wide Slack Notifications](https://docs.geteppo.com/Administration/slack-notifications#configure-slack-notifications-for-a-specific-experiment)
-3. [Configure Slack Notifications for a Specific Experiment](https://docs.geteppo.com/Administration/slack-notifications#configure-slack-notifications-for-a-specific-experiment)
-4. [Configure Slack Notifications for a Specific Metric](https://docs.geteppo.com/Administration/slack-notifications#configure-slack-notifications-for-a-specific-metric)
-5. [Notification Triggers](https://docs.geteppo.com/Administration/slack-notifications#notification-triggers)
+1. [Allow Permissions to a Slack Workspace](#allow-permissions-to-a-slack-workspace)
+2. [Configure System Wide Slack Notifications](#configure-slack-notifications-for-a-specific-experiment)
+3. [Configure Slack Notifications for a Specific Experiment](#configure-slack-notifications-for-a-specific-experiment)
+4. [Configure Slack Notifications for a Specific Metric](#configure-slack-notifications-for-a-specific-metric)
+5. [Notification Triggers](#notification-triggers)
 
 ## Allow Permissions to a Slack Workspace
 ![Enable Slack Notifications](https://user-images.githubusercontent.com/90637953/197907443-9c3d3db1-65fa-405f-b808-bac63d4d09f8.gif)
@@ -39,7 +39,7 @@ To remove the slack channel from this metirc, click on "Configure" and turn off 
 ### A status change on an experiment
 * When an experiment changes status from `DRAFT` &rarr; `RUNNING` &rarr; `WRAP UP` &rarr; `COMPLETED` 
 
-See more on [experiment statuses](https://docs.geteppo.com/building-experiments/experiments/experiment-status).
+See more on <a href="https://docs.geteppo.com/building-experiments/experiments/experiment-status" target="_blank">experiment statuses</a>.
 
 ### A primary or guardrail metric reached statistical significance on this experiment
 * When a primary metric or a guardrail metric on an experiment reaches statistical significance for **Sequential experiments ONLY**
