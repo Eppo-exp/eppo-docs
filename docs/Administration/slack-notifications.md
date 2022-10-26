@@ -24,7 +24,7 @@ To configure which types of notifications this channel will recieve, click on "C
 To remove the slack channel from this experiment, click on "Configure" and turn off the channel. 
 
 
-### Configure Slack Notifications for a Specific Metric
+## Configure Slack Notifications for a Specific Metric
 ![metric-slack-notifications](https://user-images.githubusercontent.com/90637953/197909642-14ed977c-8ce0-4cad-b512-9c40d7ae20a5.gif)
 
 Go to a metric and click on the bell icon in the upper right of the page. Select a slack channel to receive notifications.
