@@ -1,6 +1,12 @@
 # Traffic and Traffic Imbalances
 
-Navigate to the **Experiments** page by clicking on the **Experiments** icon from the left tab and then from the list, click on the experiment that you are interested in.
+Validity of experimental results crucially relies on proper randomization of subjects.
+The traffic tab shows how many subjects are randomized into the experiment, and how they are divided across variants.
+Furthermore, we use the sample ratio mismatch test to verify that subjects are divided across variants as expected.
+
+## Traffic diagnostics
+
+To check traffic diagnoistics, navigate to the **Experiments** page by clicking on the **Experiments** icon from the left tab and then from the list, click on the experiment that you are interested in.
 The details page for each experiment contains a **Set Up** tab where you can configure the % of traffic you want to randomize into the experiment.
 
 ![Status](../../../static/img/measuring-experiments/traffic-setup.png)
@@ -22,3 +28,15 @@ using the assignment weights for each variant (default is equal split across var
 This is also known as the sample ratio mismatch test (SRM).
 We run the test at the more conservative $\alpha=0.001$ level because this test is not sequentially valid;
 the more conservative significance level helps us avoid false positives.
+
+## Traffic alerts
+
+When we detect a mismatch between expected traffic allocation and observed allocations in the data, a traffic alert goes of.
+While it is not always easy to track down what caused the alert, it is important to track it down and understand its source.
+Traffic imbalance often indicates that the results of an experiment cannot be trusted.
+
+Issues with the traffic allocations can come from many sources; here are some common ones we have seen:
+
+- There is an issue with logging assignments (note this could be introduced through latency)
+- Traffic allocations are updated in the middle of an experiments; in general avoid changing the traffic allocations during an experiment
+
