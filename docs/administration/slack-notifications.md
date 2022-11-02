@@ -15,17 +15,17 @@ Go to Admin > Notifications to allow permissions to a Slack workspace. This is r
 
 ## Configure System Wide Slack Notifications
 You can select specific Slack channels to receive notifications for **ANY** experiment running in Eppo.
-<img width="1386" alt="image" src="https://user-images.githubusercontent.com/90637953/197908102-3f9f5ec4-98ce-427c-8888-079f89b8ec0c.png">
+<img width="1386" alt="image" src="https://user-images.githubusercontent.com/90637953/197908102-3f9f5ec4-98ce-427c-8888-079f89b8ec0c.png"/>
 
 
 ## Configure Slack Notifications for a Specific Experiment
 ![experiment-slack-notifications](https://user-images.githubusercontent.com/90637953/197909040-bb01590c-d329-4d50-8aba-505ba0c60cdc.gif)
 
-Go to an experiment and click on the bell icon in the upper right of the page. Select a slack channel to receive notifications. 
+Go to an experiment and click on the bell icon in the upper right of the page. Select a slack channel to receive notifications.
 
-To configure which types of notifications this channel will recieve, click on "Configure" next to the channel name and update preferences. 
+To configure which types of notifications this channel will recieve, click on "Configure" next to the channel name and update preferences.
 
-To remove the slack channel from this experiment, click on "Configure" and turn off the channel. 
+To remove the slack channel from this experiment, click on "Configure" and turn off the channel.
 
 
 ## Configure Slack Notifications for a Specific Metric
@@ -33,7 +33,7 @@ To remove the slack channel from this experiment, click on "Configure" and turn 
 
 Go to a metric and click on the bell icon in the upper right of the page. Select a slack channel to receive notifications.
 
-To remove the slack channel from this metirc, click on "Configure" and turn off the channel. 
+To remove the slack channel from this metirc, click on "Configure" and turn off the channel.
 
 
 ## Notification Triggers
@@ -42,7 +42,7 @@ To remove the slack channel from this metirc, click on "Configure" and turn off 
 * When there is an error and the experiment results cannot be refreshed
 
 ### A status change on an experiment
-* When an experiment changes status from `DRAFT` &rarr; `RUNNING` &rarr; `WRAP UP` &rarr; `COMPLETED` 
+* When an experiment changes status from `DRAFT` &rarr; `RUNNING` &rarr; `WRAP UP` &rarr; `COMPLETED`
 
 See more on <a href="https://docs.geteppo.com/building-experiments/experiments/experiment-status" target="_blank">experiment statuses</a>.
 
