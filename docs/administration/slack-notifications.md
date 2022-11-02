@@ -1,4 +1,4 @@
-# Slack Notifications
+# Slack notifications
 
 1. [Allow Permissions to a Slack Workspace](#allow-permissions-to-a-slack-workspace)
 2. [Configure System Wide Slack Notifications](#configure-system-wide-slack-notifications)
