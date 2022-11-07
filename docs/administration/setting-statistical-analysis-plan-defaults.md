@@ -1,4 +1,4 @@
-# Setting Statical Analysis Plan Defaults for Experiments
+# Setting Statistical Analysis Plan Defaults for Experiments
 
 ## What is the Statistical Analysis Plan?
 The Statistical Analysis Plan determines the statistical methods used to analyze your experiments.
