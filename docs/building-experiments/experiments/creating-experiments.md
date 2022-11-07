@@ -54,4 +54,8 @@ You can go ahead and add each variant into the experiment here.
 
 The default is an even split between all the variants (including control), but you can also customize the allocation for unequal splits.
 
-10. Click **Save Changes**
+10. [Optional] The Statistical Analysis Plan 
+If you want to set custom statistical methodologies for this experiment, uncheck the "use company default" checkbox next to the applicable fields. Otherwise, you can stay opted in to using the defaults set by your company.
+
+
+11. Click **Save Changes**
