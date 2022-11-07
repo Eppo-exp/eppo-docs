@@ -1,7 +1,7 @@
 # Slack Notifications
 
 1. [Allow Permissions to a Slack Workspace](#allow-permissions-to-a-slack-workspace)
-2. [Configure System Wide Slack Notifications](#configure-slack-notifications-for-a-specific-experiment)
+2. [Configure System Wide Slack Notifications](#configure-system-wide-slack-notifications)
 3. [Configure Slack Notifications for a Specific Experiment](#configure-slack-notifications-for-a-specific-experiment)
 4. [Configure Slack Notifications for a Specific Metric](#configure-slack-notifications-for-a-specific-metric)
 5. [Notification Triggers](#notification-triggers)
