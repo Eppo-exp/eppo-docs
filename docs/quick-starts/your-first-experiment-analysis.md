@@ -1,10 +1,8 @@
 ---
-id: experimentation-quickstart
-sidebar_position: 2
-slug: /experimentation-quickstart
+slug: /experiment-quickstart
 ---
 
-# Your first experiment
+# Your first experiment analysis
 
 Follow this quickstart to get your first experiment set up on Eppo.
 

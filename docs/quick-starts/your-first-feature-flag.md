@@ -1,6 +1,5 @@
 ---
-sidebar_position: 1
-id: feature-flagging-quickstart
+slug: /feature-flag-quickstart
 ---
 
 # Your first feature flag
