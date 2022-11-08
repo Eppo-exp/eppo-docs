@@ -62,7 +62,7 @@ Now that Eppo is connected to your data warehouse, the first thing we are going 
 
 ![Select user as entity](../../static/img/building-experiments/select-user-as-entity.png)
 
-Entities are the randomization units of your experiment. By default, entities in Eppo are **User**, but you can also [create your own custom entities](./building-experiments/entities.md) and attach Assignment SQL's to them.
+Entities are the randomization units of your experiment. By default, entities in Eppo are **User**, but you can also [create your own custom entities](./experiments/building-experiments/entities.md) and attach Assignment SQL's to them.
 
 3. Name your Assignment SQL
 
@@ -108,7 +108,7 @@ Fact SQL's define events, like sign-ups, activations, or orders. Together, the A
 
 2. Select **User** as the entity
 
-**User** is the default entity in Eppo but you can also create your own [custom entity](./building-experiments/entities.md) and select that here.
+**User** is the default entity in Eppo but you can also create your own [custom entity](./experiments/building-experiments/entities.md) and select that here.
 
 3. Name your Fact SQL
 
@@ -146,7 +146,7 @@ You've now created your first Fact SQL. If you have more events that you would l
 
 1. Navigate to **Metrics**, click **+Metric**, then select **User** as the subject of the metric
 
-**User** is the default entity in Eppo, but you can also create a [custom entity](./building-experiments/entities.md) and select it here.
+**User** is the default entity in Eppo, but you can also create a [custom entity](./experiments/building-experiments/entities.md) and select it here.
 
 2. Select a fact
 
@@ -190,7 +190,7 @@ The minimum detectable effect refers to the smallest effect you want to reliably
 
 ![Fill experiment form](../../static/img/building-experiments/fill-create-experiment-form.png)
 
-Give your experiment a name, start and end date. You can optionally provide no end date if you would like the experiment to run indefinitely. Refer to the [best practices guide](./running-successful-experiments/index.md) if you're not sure how long you would like the experiment to run.
+Give your experiment a name, start and end date. You can optionally provide no end date if you would like the experiment to run indefinitely. Refer to the [best practices guide](./experiments/running-successful-experiments/index.md) if you're not sure how long you would like the experiment to run.
 
 3. Navigate to the **Set Up** tab and click the **Configure the Experiment** button
 
@@ -230,7 +230,7 @@ The default is an even split between all the variants (including control), but y
 
 1. Navigate to **Experiments** and click the **Overview** tab
 
-Under **Decision metrics**, you will see that [guardmail metrics](./building-experiments/experiments/guardrail-metrics.md) have already been included automatically.
+Under **Decision metrics**, you will see that [guardmail metrics](./experiments/building-experiments/experiments/guardrail-metrics.md) have already been included automatically.
 
 4. Click **+Add metric** button
 

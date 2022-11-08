@@ -31,7 +31,7 @@ In this example, `user_id` is assigned to `experiment_name` in the `variant_name
 
 ![Select user as entity](../../../../static/img/building-experiments/select-user-as-entity.png)
 
-Entities are the randomization units of your experiment. By default, entities in Eppo are **User**, but you can also [create your own customized entities](./building-experiments/entities.md) and attach Assignment SQL's to them.
+Entities are the randomization units of your experiment. By default, entities in Eppo are **User**, but you can also [create your own customized entities](./experiments/building-experiments/entities.md) and attach Assignment SQL's to them.
 
 4. Name your Assignment SQL
 
