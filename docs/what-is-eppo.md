@@ -6,7 +6,7 @@ slug: /
 
 # What is Eppo?
 
-Eppo is a next-generation experimentation platform build right on top of your data warehouse:
+Eppo is a next-generation feature flag and experimentation platform build right on top of your data warehouse:
 
 ![What is Eppo Gif](../static/img/building-experiments/what-is-eppo.gif)
 
