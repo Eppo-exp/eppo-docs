@@ -79,9 +79,9 @@ const config = {
         items: [
           {
             type: "doc",
-            docId: "quickstart",
+            docId: "what-is-eppo",
             position: "left",
-            label: "Quickstart",
+            label: "What is Eppo?",
           }
         ],
       },
@@ -92,8 +92,8 @@ const config = {
             title: "Docs",
             items: [
               {
-                label: "Quickstart",
-                to: "/",
+                label: "Experiment quickstart",
+                to: "/experiment-quickstart",
               }
             ],
           }
