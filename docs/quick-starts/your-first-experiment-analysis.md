@@ -10,20 +10,20 @@ Follow this quickstart to get your first experiment set up on Eppo.
 
 <img src="https://user-images.githubusercontent.com/111296875/186039257-d2d9f8db-e42a-45e7-af5f-19c899d54339.jpg" width="650" height="780" />
 
-1. [Prep your data warehouse and set up feature flagging](#0-prep-your-data-warehouse-and-set-up-feature-flagging)
-2. [Create an Eppo account](#1-create-eppo-account)
-3. [Connect your data warehouse](#2-connect-your-data-warehouse)
-4. [Create an Assignment SQL](#3-create-an-assignment-sql)
-5. [Create Fact SQLs](#4-create-a-fact-sql)
-6. [Create metrics](#5-create-metrics)
-7. [Create an experiment](#6-create-an-experiment)
-8. [Add metrics to experiment](#7-add-metrics-to-experiment)
+1. [Prep your data warehouse and set up experiment assignment](#1-prep-your-data-warehouse-and-set-up-experiment-assignment)
+2. [Create an Eppo account](#2-create-eppo-account)
+3. [Connect your data warehouse](#3-connect-your-data-warehouse)
+4. [Create an Assignment SQL](#4-create-an-assignment-sql)
+5. [Create Fact SQLs](#5-create-a-fact-sql)
+6. [Create metrics](#6-create-metrics)
+7. [Create an experiment](#7-create-an-experiment)
+8. [Add metrics to experiment](#8-add-metrics-to-experiment)
 
-## 1. Prep your data warehouse and set up feature flagging
+## 1. Prep your data warehouse and set up experiment assignment
 
-Eppo assumes that you are already using a third party feature flagging tool like [LaunchDarkly](https://launchdarkly.com/) or [Optimizely](https://www.optimizely.com/) and are exporting experiment data into a data warehouse. In particular, Eppo requires that you have the following tables in your data warehouse:
+Eppo assumes that you are already using a third party experiment assignment (i.e feature flagging) tool like [LaunchDarkly](https://launchdarkly.com/) or [Optimizely](https://www.optimizely.com/) and are exporting experiment data into a data warehouse. In particular, Eppo requires that you have the following tables in your data warehouse:
 
-- An assignment table that indicates which experiment subjects were assigned to which experiments and variants at which time. It should [contain columns](./connecting-your-data/assignment-tables/required-data)  that roughly correspond to:
+- An assignment table that indicates which experiment subjects were assigned to which experiments and variants at which time. It should [contain columns](../experiments/connecting-your-data/assignment-tables/required-data)  that roughly correspond to:
 
     | timestamp | user_id | experiment | variation |
     | --------- | ------- | ---------- | --------- |
@@ -36,9 +36,9 @@ Eppo assumes that you are already using a third party feature flagging tool like
     | 2021-07-17T18:57:13.000Z	 | 49980400511307080 | Revenue | 45.5695	|
     | 2021-07-17T18:57:13.000Z	 | 2281323415877132491 | Subscription | 1 |
 
-If you do not have a feature flagging tool integrated, please refer to the [feature flagging](./prerequisites/feature-flagging/) section for more instructions.
+If you do not have a experiment assignment tool integrated, please refer to the [experiment assignment](../experiments/prerequisites/experiment-assignment) section for more instructions.
 
-If you have a feature flagging tool integrated but do not have an assignment table set up in your data warehouse, please follow the instructions [here](./connecting-your-data/assignment-tables/) to log your assignment data.
+If you have a experiment assignment tool integrated but do not have an assignment table set up in your data warehouse, please follow the instructions [here](../experiments/connecting-your-data/assignment-tables/) to log your assignment data.
 
 ## 2. Create Eppo account
 
@@ -48,9 +48,9 @@ Create a new account at https://eppo.cloud/. Eppo implements Auth0 and you shoul
 
 Follow the linked warehouse-specific guides to connect Eppo to your data warehouse.
 
-- [Snowflake](./connecting-your-data/data-warehouses/connecting-to-snowflake)
-- [BigQuery](./connecting-your-data/data-warehouses/connecting-to-bigquery)
-- [RedShift](./connecting-your-data/data-warehouses/connecting-to-redshift)
+- [Snowflake](../experiments/connecting-your-data/data-warehouses/connecting-to-snowflake)
+- [BigQuery](../experiments/connecting-your-data/data-warehouses/connecting-to-bigquery)
+- [RedShift](../experiments/connecting-your-data/data-warehouses/connecting-to-redshift)
 
 ## 4. Create an Assignment SQL
 
@@ -70,7 +70,7 @@ Entities are the randomization units of your experiment. By default, entities in
 
 ![Write Assignment SQL Query](../../static/img/building-experiments/add-assignment-sql-query.png)
 
-Recall in the [Set up Feature Flagging](#0-prep-your-data-warehouse-and-set-up-feature-flagging) section that you should have an assignment table in your data warehouse with certain column types.
+Recall in the [Set up experiment assignment](#1-prep-your-data-warehouse-and-set-up-experiment-assignment) section that you should have an assignment table in your data warehouse with certain column types.
 
 In this step, you're going to write SQL to pull that data.
 
@@ -114,7 +114,7 @@ Fact SQL's define events, like sign-ups, activations, or orders. Together, the A
 
 4. Write SQL in the SQL editor to pull events data from the data warehouse
 
-Recall in the [Set up Feature Flagging](#1-set-up-feature-flagging) section that you should have (potentially multiple) event tables in your data warehouse with certain column types.
+Recall in the [Set up experiment assignment](#1-prep-your-data-warehouse-and-set-up-experiment-assignment) section that you should have (potentially multiple) event tables in your data warehouse with certain column types.
 
 In this step, you're going to write SQL to pull that data.
 
@@ -190,7 +190,7 @@ The minimum detectable effect refers to the smallest effect you want to reliably
 
 ![Fill experiment form](../../static/img/building-experiments/fill-create-experiment-form.png)
 
-Give your experiment a name, start and end date. You can optionally provide no end date if you would like the experiment to run indefinitely. Refer to the [best practices guide](./experiments/running-successful-experiments/index.md) if you're not sure how long you would like the experiment to run.
+Give your experiment a name, start and end date. You can optionally provide no end date if you would like the experiment to run indefinitely. Refer to the [best practices guide](../experiments/planning-experiments/running-successful-experiments/index.md) if you're not sure how long you would like the experiment to run.
 
 3. Navigate to the **Set Up** tab and click the **Configure the Experiment** button
 
@@ -244,4 +244,4 @@ You can select one of them to add to the experiment
 
 ## Your experiment is now in progress!
 
-Your experiment will likely take a few days to start outputting results. Go [here](./interpreting-experiments/) for an overview of how to interpret your experiment.
+Your experiment will likely take a few days to start outputting results. Go [here](../experiments/interpreting-experiments/) for an overview of how to interpret your experiment.

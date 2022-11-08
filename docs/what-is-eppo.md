@@ -27,7 +27,7 @@ Eppo's analysis works is built on top of your data warehouse. Concretely, this m
 Generating an experiment report on Eppo involves five pieces:
 
 1. Use your feature flagging tool of choice to send experiment assignments into your data warehouse.
-2. Connect Eppo to your data warehouse. Currently Eppo supports [Snowflake](./connecting-your-data/data-warehouses/connecting-to-snowflake), [Redshift](./connecting-your-data/data-warehouses/connecting-to-redshift), and [BigQuery](./connecting-your-data/data-warehouses/connecting-to-bigquery).
+2. Connect Eppo to your data warehouse. Currently Eppo supports [Snowflake](../experiments/connecting-your-data/data-warehouses/connecting-to-snowflake), [Redshift](../experiments/connecting-your-data/data-warehouses/connecting-to-redshift), and [BigQuery](../experiments/connecting-your-data/data-warehouses/connecting-to-bigquery).
 3. Build your experiments by writing SQL.
 4. Monitor your experiments' progress.
 5. Explore and share experiment results.

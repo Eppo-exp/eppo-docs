@@ -2,13 +2,13 @@
 
 ## Summary
 
-When [creating an experiment](../building-experiments/experiments/creating-experiments.md), Eppo can analyze events which occur during or after randomization. 
+When [creating an experiment](../experiments/building-experiments/experiments/creating-experiments.md), Eppo can analyze events which occur during or after randomization.
 
 By default in Eppo, users are assigned (randomized) into an experiment and all events are tracked on the same timeline as assignment.
 
 ![Same timeline](../../static/img/reference/same-timeline.png)
 
-However, in certain cases, you may want events to be tracked well after randomization ends. 
+However, in certain cases, you may want events to be tracked well after randomization ends.
 
 ![Differing timelines](../../static/img/reference/distinct-events-timeline.png)
 
@@ -16,7 +16,7 @@ While uncommon, event dates should be extended past the assignment period if you
 
 ### Example 1: Short-lived marketing campaign
 
-Let's test the following: if we run a marketing campaign on our landing page for one day, do our customers  generate higher revenue for us over the next month? 
+Let's test the following: if we run a marketing campaign on our landing page for one day, do our customers  generate higher revenue for us over the next month?
 
 Using distinct assignment and event periods, we should:
 - Assign users for one day

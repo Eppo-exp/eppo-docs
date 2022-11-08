@@ -1,6 +1,6 @@
 # Creating metrics
 
-Metrics are statistics like "Revenue per User" or "Signup Rate" that Eppo will calculate for you. In order to create a metric, you first need to have set up a [Fact SQL Definition](/building-experiments/definitions/fact-sql) to point to the underlying data for your metric in your data warehouse.
+Metrics are statistics like "Revenue per User" or "Signup Rate" that Eppo will calculate for you. In order to create a metric, you first need to have set up a [Fact SQL Definition](/experiments/building-experiments/definitions/fact-sql) to point to the underlying data for your metric in your data warehouse.
 
 1. Navigate to **Metrics**, click **+Metric**, then select **User** as the subject of the metric
 

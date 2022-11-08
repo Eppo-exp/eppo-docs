@@ -3,7 +3,7 @@ import TabItem from '@theme/TabItem';
 
 # Create assignment table from Eppo Randomization SDK
 
-_Note:_ this guide assumes that you have are using the [Eppo Randomization SDK](../../prerequisites/feature-flagging/randomization-sdk) to feature flag your code.
+_Note:_ this guide assumes that you have are using the [Eppo SDK](../../prerequisites/experiment-assignment/eppo) for experiment assignment in your code.
 
 1. Find all places in your code where your feature flags are being invoked.
 
