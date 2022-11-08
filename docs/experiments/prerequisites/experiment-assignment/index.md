@@ -1,17 +1,17 @@
-# Feature Flagging
+# Experiment assignment
 
-### Randomize subjects
+### Assign subjects
 
-The first step to running experiments is setting up randomization. Randomization refers to a function in your code that can assign subjects (e.g users) to variants (e.g `control`, `treatment`) given an experiment configuration. If you don't already have a way to randomize users in your app, you'll need to setup one of the following options:
+The first step to running experiments is setting up an assignment function, which maps subjects (e.g users) to variants (e.g `control`, `treatment`) given an experiment configuration. If you don't already have a way to assign subjects in your app, you'll need to setup one of the following options:
 
-- [Eppo's Randomization SDKs](./randomization-sdk/)
+- [Eppo SDKs](./eppo/)
 - A third party tool such as [Launch Darkly](./launch-darkly) or [Optimizely](./optimizely)
 - An internal tool that you build yourself
 
 
 ### Log assignments
 
-Once you are able to randomize, you'll also need a way to log assignment data into your data warehouse, the mechanics of which will depend on what tool you use for randomization. In your warehouse, the most straighforward way to store assignment history is an append-only <b>assignments table</b> with the following columns:
+Once you are able to assign subjects, you'll also need a way to log assignment data into your data warehouse, the mechanics of which will depend on what tool you use for randomization. In your warehouse, the most straighforward way to store assignment history is an append-only <b>assignments table</b> with the following columns:
 
 | timestamp | user_id | experiment | variation |
 | :-- | :-- | :-- | :-- |
@@ -24,7 +24,7 @@ It's ok for this table to contain duplicate rows for the same subject, however f
 
 Refer to our tool specific guides to understand how to log assignments to your warehouse:
 
-- [Logging assignment data using Eppo's Randomization SDKs](./randomization-sdk/)
+- [Logging assignment data using Eppo's SDKs](./eppo/)
 - [Exporting assignment data from Launch Darkly](./launch-darkly)
 - [Exporting assignment data from Optimizely](./optimizely)
 
