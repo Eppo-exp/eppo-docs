@@ -31,12 +31,13 @@ the more conservative significance level helps us avoid false positives.
 
 ## Traffic alerts
 
-When we detect a mismatch between expected traffic allocation and observed allocations in the data, a traffic alert goes of.
-While it is not always easy to track down what caused the alert, it is important to track it down and understand its source.
+When we detect a mismatch between expected traffic allocation and observed allocations in the data, a traffic alert sets off.
+While it is not always easy to understand down what caused the alert, it is important to track it down and understand its source.
 Traffic imbalance often indicates that the results of an experiment cannot be trusted.
 
 Issues with the traffic allocations can come from many sources; here are some common ones we have seen:
 
-- There is an issue with logging assignments (note this could be introduced through latency)
+- There is an issue with the logging assignments (note this could be introduced through latency)
 - Traffic allocations are updated in the middle of an experiments; in general avoid changing the traffic allocations during an experiment
+
 
