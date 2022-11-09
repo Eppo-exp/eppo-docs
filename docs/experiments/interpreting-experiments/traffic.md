@@ -31,7 +31,9 @@ the more conservative significance level helps us avoid false positives.
 
 ## Traffic alerts
 
-When we detect a mismatch between expected traffic allocation and observed allocations in the data, a traffic alert sets off.
+When we detect a mismatch between expected traffic allocation and observed allocations in the data, Eppo surfaces a traffic alert both on the Traffic page, as well as the diagnostics page.
+Optionally, we also send a slack notification.
+
 While it is not always easy to understand down what caused the alert, it is important to track it down and understand its source.
 Traffic imbalance often indicates that the results of an experiment cannot be trusted.
 
