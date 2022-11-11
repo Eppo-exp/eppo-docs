@@ -18,4 +18,4 @@ Eppo’s SDKs are durable and resilient by relying from Google’s globally dist
 
 Eppo’s SDKs use a background process to fetch and store configuration objects. The `p75` latency of these requests is 50ms. This latency does not affect variation assignments, which are effectively instant and use locally stored experiment data.
 
-At Eppo we take pride in building functional systems that are also simple and  understandable systems. If you have questions around any of these topics please email us at feature-flagging@geteppo.com and we'll get back to you as soon as possible.
+At Eppo we take pride in building functional systems that are also simple and understandable. If you have questions around any of these topics please email us at feature-flagging@geteppo.com and we'll get back to you as soon as possible.
