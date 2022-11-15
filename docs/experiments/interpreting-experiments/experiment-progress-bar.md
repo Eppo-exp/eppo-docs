@@ -30,7 +30,7 @@ Before starting with any experiment, we have to set the MDE to something that ma
 
 Suppose, given the above considerations, we decide to set our MDE at 5%. We start our experiment, the progress bar begins to fill up. How should we use it to make decisions?
 
-1. The _color_ of the progress bar indicates whether or not the primary metric is significant and positive. Blue indicates it is, gray indicates it is not.
+1. The _color_ of the progress bar indicates whether or not the effect on the primary metric is larger than the currently detectable effect. Blue indicates it is, gray indicates it is not.
 
 2. The progress bar is an indicator of when it is safe to conclude there was no effect. If it is reaching 100% progress, and still grey, it is likely that there is no lift in our primary metric of at least the configured MDE size. Other metrics might show significant results, and might warrant shipping the treatment even though the primary metric is flat, however.
 
