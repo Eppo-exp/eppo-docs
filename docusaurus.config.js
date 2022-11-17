@@ -101,6 +101,7 @@ const config = {
         copyright: `Copyright © ${new Date().getFullYear()} Eppo, Inc.`,
       },
       prism: {
+        additionalLanguages: ['java', 'groovy'],
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
       },
