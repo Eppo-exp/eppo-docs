@@ -29,9 +29,12 @@ Eppo supports the following aggregations:
 
 4. Set outlier handling
 
-Eppo handles outliers through a technique called winsorization. Lower and upper bounds by percentiles for winsorization can be defined by the user for every metric.
+Eppo handles outliers through a technique called winsorization. Lower and upper bounds by percentiles for winsorization can be defined by the user for every metric. For example, in the screenshot below, we are setting the upper bound for winsorization at the 99.9th percentile. This means that any user with a value above the 99.9th percentile will be rounded down to the 99.9th percentile value.
 
 Note that winsorization is only utilized for `SUM` and `COUNT` aggregations. This is because conversion and retention metrics are binomial variables that are not prone to influence from outliers. As a result, winsorization is redundant for these metric types.
+
+![Winsorization highlight](../../../../static/img/building-experiments/outlier-handling.png)
+
 
 5. (Optional) Create a denominator for your metric
 
