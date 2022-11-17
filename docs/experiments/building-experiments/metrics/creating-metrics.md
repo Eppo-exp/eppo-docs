@@ -95,6 +95,6 @@ $(\text{timestamp of event}) - (\text{timestamp of assignment}) < 7 \text{ days}
 
 ### Threshold
 
-Threshold metrics measure the proportion of entities who meet a user-specicied `SUM` OR `COUNT` of a fact within an optional time-period. For example, you
+Threshold metrics measure the proportion of entities who meet a user-specified `SUM` OR `COUNT` of a fact within an optional time-period. For example, you might want to understand what share of users in your experiment spent more than $100 within 7 days of assignment into an experiment.
 
 ![Threshold example](../../../../static/img/building-experiments/threshold_metric_example.png)
