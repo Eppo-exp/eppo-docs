@@ -2,17 +2,17 @@
 
 Metrics are statistics like "Revenue per User" or "Signup Rate" that Eppo will calculate for you. In order to create a metric, you first need to have set up a [Fact SQL Definition](/experiments/building-experiments/definitions/fact-sql) to point to the underlying data for your metric in your data warehouse.
 
-1. Navigate to **Metrics**, click **+Metric**, then select **User** as the subject of the metric
+1. **Navigate to `Metrics`, click `+Metric`, then select `User` as the subject of the metric**
 
 **User** is the default entity in Eppo, but you can also create a [custom entity](../../building-experiments/entities) and select it here.
 
-2. Select a fact
+2. **Select a fact**
 
 ![Select Fact](../../../../static/img/building-experiments/select-fact-for-metric.png)
 
 This should be one of the facts that you created in the step above, and should correspond to a metric that you want to track in an experiment.
 
-3. Select an aggregation
+3. **Select an aggregation**
 
 ![Select Aggregation](../../../../static/img/building-experiments/select-aggregation-for-metric.png)
 
@@ -21,12 +21,22 @@ The aggregation will aggregate over whatever the fact is measuring on a per-enti
 Eppo supports the following aggregations:
 
 - [SUM](#sum)
-- [COUNT DISTINCT](#count-distinct)
+- [UNIQUE ENTITIES](#unique-entities)
 - [COUNT](#count)
 - [RETENTION](#retention)
 - [CONVERSION](#conversion)
+- [THRESHOLD](#threshold)
 
-4. (Optional) Create a denominator for your metric
+4. **Set outlier handling**
+
+Eppo handles outliers through a technique called winsorization. Lower and upper bounds by percentiles for winsorization can be defined by the user for every metric. For example, in the screenshot below, we are setting the upper bound for winsorization at the 99.9th percentile. This means that any user with a value above the 99.9th percentile will be rounded down to the 99.9th percentile value.
+
+Note that winsorization is only utilized for `SUM` and `COUNT` aggregations. This is because conversion and retention metrics are binomial variables that are not prone to influence from outliers. As a result, winsorization is redundant for these metric types.
+
+![Winsorization highlight](../../../../static/img/building-experiments/outlier-handling.png)
+
+
+5. (Optional) **Create a denominator for your metric**
 
 You may actually want to create a metric that is a ratio of two facts. To do this, click on the **Ratio** tab, and select the appropriate fact and aggregation for the denominator as well.
 
@@ -34,7 +44,7 @@ You may actually want to create a metric that is a ratio of two facts. To do thi
 
 In the example above, we're creating a metric that corresponds to the revenue per user per purchase.
 
-5. Select a minimum detectable effect
+6. **Select a minimum detectable effect**
 
 The minimum detectable effect refers to the smallest effect you want to reliably detect in experiments. The lower the minimum detectable effect you set, the more samples you'll need for the experiment to reach conclusive results.
 
@@ -48,9 +58,9 @@ $\frac{\text{SUM of fact value}}{\text{Number of unique entities assigned}}$
 
 Examples: average revenue per user, sign-up rate, minutes streamed per user, average order value.
 
-### Count Distinct
+### Unique Entities
 
-Count Distinct computes the number of unique entities with a non-null event. If the fact value is NULL, it is discarded.
+`Unique Entities` computes the number of unique entities with a non-null event. If the fact value is NULL, it is discarded.
 
 $\frac{\text{Number of unique entities with an event}}{\text{Number of unique entities assigned}}$
 
@@ -86,5 +96,8 @@ For example, if $X = 7 \text{ days}$, Eppo records a conversion event for an ent
 
 $(\text{timestamp of event}) - (\text{timestamp of assignment}) < 7 \text{ days}$.
 
+### Threshold
 
+Threshold metrics measure the proportion of entities who meet a user-specified `SUM` OR `COUNT` of a fact within an optional time-period. For example, you might want to understand what share of users in your experiment spent more than $100 within 7 days of assignment into an experiment.
 
+![Threshold example](../../../../static/img/building-experiments/threshold_metric_example.png)
