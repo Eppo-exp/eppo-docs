@@ -21,12 +21,19 @@ The aggregation will aggregate over whatever the fact is measuring on a per-enti
 Eppo supports the following aggregations:
 
 - [SUM](#sum)
-- [COUNT DISTINCT](#count-distinct)
+- [UNIQUE ENTITIES](#unique-entities)
 - [COUNT](#count)
 - [RETENTION](#retention)
 - [CONVERSION](#conversion)
+- [THRESHOLD](#threshold)
 
-4. (Optional) Create a denominator for your metric
+4. Set outlier handling
+
+Eppo handles outliers through a technique called winsorization. Lower and upper bounds by percentiles for winsorization can be defined by the user for every metric.
+
+Note that winsorization is only utilized for `SUM` and `COUNT` aggregations. This is because conversion and retention metrics are binomial variables that are not prone to influence from outliers. As a result, winsorization is redundant for these metric types.
+
+5. (Optional) Create a denominator for your metric
 
 You may actually want to create a metric that is a ratio of two facts. To do this, click on the **Ratio** tab, and select the appropriate fact and aggregation for the denominator as well.
 
@@ -34,7 +41,7 @@ You may actually want to create a metric that is a ratio of two facts. To do thi
 
 In the example above, we're creating a metric that corresponds to the revenue per user per purchase.
 
-5. Select a minimum detectable effect
+6. Select a minimum detectable effect
 
 The minimum detectable effect refers to the smallest effect you want to reliably detect in experiments. The lower the minimum detectable effect you set, the more samples you'll need for the experiment to reach conclusive results.
 
@@ -48,9 +55,9 @@ $\frac{\text{SUM of fact value}}{\text{Number of unique entities assigned}}$
 
 Examples: average revenue per user, sign-up rate, minutes streamed per user, average order value.
 
-### Count Distinct
+### Unique Entities
 
-Count Distinct computes the number of unique entities with a non-null event. If the fact value is NULL, it is discarded.
+`Unique Entities` computes the number of unique entities with a non-null event. If the fact value is NULL, it is discarded.
 
 $\frac{\text{Number of unique entities with an event}}{\text{Number of unique entities assigned}}$
 
@@ -86,5 +93,8 @@ For example, if $X = 7 \text{ days}$, Eppo records a conversion event for an ent
 
 $(\text{timestamp of event}) - (\text{timestamp of assignment}) < 7 \text{ days}$.
 
+### Threshold
 
+Threshold metrics measure the proportion of entities who meet a user-specicied `SUM` OR `COUNT` of a fact within an optional time-period. For example, you
 
+![Threshold example](../../../../static/img/building-experiments/threshold_metric_example.png)
