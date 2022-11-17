@@ -83,9 +83,7 @@ Assigning users to flags or experiments with a single `getAssignment` function:
 import cloud.eppo.android.EppoClient;
 
 EppoClient eppoClient = EppoClient.getInstance(); // requires the SDK to already be initialized
-String variation = eppoClient.getAssignment("<SUBJECT-KEY>", "<FLAG-OR-EXPERIMENT-KEY>", {
-  // Optional map of subject metadata for targeting.
-});
+String variation = eppoClient.getAssignment("<SUBJECT-KEY>", "<FLAG-OR-EXPERIMENT-KEY>");
 ```
 
 The `getAssignment` function takes two required and one optional input to assign a variation:
