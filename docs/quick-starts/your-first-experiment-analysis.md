@@ -8,7 +8,7 @@ Follow this quickstart to get your first experiment set up on Eppo.
 
 ## Overview
 
-<img src="https://user-images.githubusercontent.com/111296875/186039257-d2d9f8db-e42a-45e7-af5f-19c899d54339.jpg" width="650" height="780" />
+<img src="https://user-images.githubusercontent.com/1095808/202587691-167d7c80-1f3c-4436-a963-c43790e95ac3.jpg" width="650" height="780" />
 
 1. [Prep your data warehouse and set up experiment assignment](#1-prep-your-data-warehouse-and-set-up-experiment-assignment)
 2. [Create an Eppo account](#2-create-eppo-account)

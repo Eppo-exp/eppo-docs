@@ -58,7 +58,7 @@ The SDK will invoke the `log_assignment` function with an `assignment` object th
 | `subjectAttributes` (map) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `{ "country": "US" }` |
 
 
-## 3. Assign Experiment Variations
+## 3. Assign variations
 Assigning users to flags or experiments with a single `get_assignment` function:
 
 ```python
