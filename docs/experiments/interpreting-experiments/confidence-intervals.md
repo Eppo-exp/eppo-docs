@@ -1,9 +1,29 @@
 # Lift Estimates and Confidence Intervals
-By navigating to the detail view of any experiment, you can view the effect that any of the treatments have had on each of the selected metrics for that experiment. You can get to the detail view of any experiment by clicking the **Experiments** tab on the left panel and then clicking on the name of the experiment you're interested in from the list. In order to provide effect estimates consistently across all metric types (counts, rates, percentages, etc.), we use the **relative lift** between treatment and control (that is, $\frac{Treatment - Control}{Control}$), rather than their absolute difference.
 
-The effect on each metric comes with an accompanying **confidence interval**, showing the range of values we consider plausible at the specified **significance level**, which defaults to 5%. The significance level represents how likely a treatment that was identical to the control (that is, an A/A test) would show an effect at least as large as what you've observed in your experiment.[^1] A *higher* significance level means that you are willing to accept more risk of seeing an effect that isn't actually there[^2], but also that you can make a decision with less data; it will also mean that the confidence intervals will be narrower.
+In order to provide effect estimates consistently across all metric types
+(counts, rates, percentages, etc.), we use the **relative lift** between
+treatment and control (that is, $\frac{Treatment - Control}{Control}$), rather
+than their absolute difference.
 
-If zero falls within the confidence interval, then we cannot rule out (at the given significance level) the possibility that the treatment is no different from control. In that case, the confidence interval will be colored gray. On the other hand, if the entire confidence interval is above or below zero, then the effect is *statistically significant*. In that case, the confidence interval and the lift estimate box will be colored <span class="positive-change-green-bg">green</span> if the change is good, and <span class="negative-change-red-bg">red</span> if the change is bad. If the change is good, there will also be a 🎉 symbol in the lift estimate box.
+The effect on each metric comes with an accompanying **confidence interval**,
+showing the range of values we consider plausible at the specified 
+**confidence level**, which defaults to 95%. The significance level represents how likely a
+treatment that was identical to the control (that is, an A/A test) would show an
+effect at least as large as what you've observed in your experiment.[^1] A
+*higher* significance level means that you are willing to accept more risk of
+seeing an effect that isn't actually there[^2], but also that you can make a
+decision with less data; it will also mean that the confidence intervals will be
+narrower.
+
+If zero falls within the confidence interval, then we cannot rule out (at the
+given significance level) the possibility that the treatment is no different
+from control. In that case, the confidence interval will be colored gray. On the
+other hand, if the entire confidence interval is above or below zero, then the
+effect is *statistically significant*. In that case, the confidence interval and
+the lift estimate box will be colored <span
+class="positive-change-green-bg">green</span> if the change is good, and <span
+class="negative-change-red-bg">red</span> if the change is bad. If the change is
+good, there will also be a 🎉 symbol in the lift estimate box.
 
 :::info
 In general, a positive lift will be *good* (colored green) and a negative lift will be *bad* (colored red). However, for metrics such as page load time or app crashes, a higher number is *bad*. If you've set the "Desired Change" field in the fact definition to "Metric Decreasing", then positive lifts will be in <span class="negative-change-red-bg">red</span> and negative lifts will be in <span class="positive-change-green-bg">green</span>.
