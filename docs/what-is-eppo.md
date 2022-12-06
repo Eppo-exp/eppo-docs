@@ -6,7 +6,7 @@ slug: /
 
 # What is Eppo?
 
-Eppo is a next-generation feature flag and experimentation platform build right on top of your data warehouse:
+Eppo is a next-generation feature flag and experimentation platform built right on top of your data warehouse:
 
 ![What is Eppo Gif](../static/img/building-experiments/what-is-eppo.gif)
 
@@ -20,7 +20,7 @@ We offer companies an end-to-end suite of experimentation tools, but let you dec
 
 # How experiment analysis works
 
-Eppo's analysis works is built on top of your data warehouse. Concretely, this means experiment results are computed within the warehouse without data ever leaving your system. As part of that process, intermediate and aggregate tables are always available in the warehouse for you to audit. In Eppo business metrics are defined in SQL, the same definitions that you use for business reporting.
+Eppo's analysis is built on top of your data warehouse. Concretely, this means experiment results are computed within the warehouse without data ever leaving your system. As part of that process, intermediate and aggregate tables are always available in the warehouse for you to audit. In Eppo business metrics are defined in SQL, the same definitions that you use for business reporting.
 
 ![How Eppo Works](../static/img/building-experiments/how-eppo-works.png)
 
@@ -28,7 +28,7 @@ Generating an experiment report on Eppo involves five pieces:
 
 1. Use your feature flagging tool of choice to send experiment assignments into your data warehouse.
 2. Connect Eppo to your data warehouse. Currently Eppo supports [Snowflake](../experiments/connecting-your-data/data-warehouses/connecting-to-snowflake), [Redshift](../experiments/connecting-your-data/data-warehouses/connecting-to-redshift), and [BigQuery](../experiments/connecting-your-data/data-warehouses/connecting-to-bigquery).
-3. Build your experiments by writing SQL.
+3. Annotate experiment assignments and event streams by writing short SQL snippets.
 4. Monitor your experiments' progress.
 5. Explore and share experiment results.
 
