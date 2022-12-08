@@ -31,4 +31,6 @@ $H_0: \frac{\hat{\mu}_T}{\hat{\mu}_C} - 1 = 0$
 
 The sampling distributions for estimates of the means for control and treatment are both asymptotically Normal following the Central Limit Theorem. We then apply the [Delta method](https://en.wikipedia.org/wiki/Delta_method) to find that the sampling distribution of the ratio statistic is asymptotically normal with variance
 
-$V = \left(\frac{\mu_T}{\mu_C}\right)^2\left(\frac{\sigma_T^2}{\mu_T^2} + \frac{\sigma_C^2}{\mu_C^2}\right)$, where we replace parameters with their sample estimates.
+$V = \left(\frac{\mu_T}{\mu_C}\right)^2\left(\frac{\sigma_T^2}{\mu_T^2} + \frac{\sigma_C^2}{\mu_C^2} - \frac{-2\text{Cov}(X, Y)}{n \mu_C \mu_T}\right)$, where we replace parameters with their sample estimates.
+
+where X and Y are the observatons on subjects for numerator and denominator.
