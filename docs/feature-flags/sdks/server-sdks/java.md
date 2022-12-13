@@ -72,7 +72,7 @@ Optional<String> assignedVariation = eppoClient.getAssignment("<SUBJECT-KEY>", "
 
 The `getAssignment` function takes two required and one optional input to assign a variation:
 - `subjectKey` - The entity ID that is being experimented on, typically represented by a uuid.
-- `flagOrExperimentKey` - This key is available on the detail page of for both flags and experiments.
+- `flagOrExperimentKey` - This key is available on the detail page for both flags and experiments.
 - `targetingAttributes` - An optional map of metadata about the subject used for targeting. If you create rules based on attributes on a flag/experiment, those attributes should be passed in on every assignment call.
 
 ### Handling the empty assignment
