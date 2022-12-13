@@ -24,11 +24,22 @@ $\rho = \frac{10000}{\log( \log ( e \alpha^{-2} ) )-2\log{ \alpha }}$.
 As improvements to the state of the art methods are developed, we will incorporate them into the Eppo platform.
 
 
-#### Ratio test statistic
+#### Confidence intervals for the relative lift
 The null hypothesis test, for statistical significance for the ratio between treatment and control, has the form:
 
 $H_0: \frac{\hat{\mu}_T}{\hat{\mu}_C} - 1 = 0$
 
-The sampling distributions for estimates of the means for control and treatment are both asymptotically Normal following the Central Limit Theorem. We then apply the [Delta method](https://en.wikipedia.org/wiki/Delta_method) to find that the sampling distribution of the ratio statistic is asymptotically normal with variance
+The sampling distributions for estimates of the means for control and treatment both asymptotically have a Gaussian distribution following the Central Limit Theorem. We then apply the [Delta method](https://en.wikipedia.org/wiki/Delta_method) to find that the sampling distribution of the ratio statistic is asymptotically normal with variance
+$V = \left(\frac{\mu_T}{\mu_C}\right)^2\left(\frac{\sigma_T^2}{\mu_T^2} + \frac{\sigma_C^2}{\mu_C^2} \right)$, where we replace parameters with their sample estimates.
 
-$V = \left(\frac{\mu_T}{\mu_C}\right)^2\left(\frac{\sigma_T^2}{\mu_T^2} + \frac{\sigma_C^2}{\mu_C^2} - \frac{2\text{Cov}(X, Y)}{n \mu_C \mu_T}\right)$, where we replace parameters with their sample estimates and X and Y are the observatons on subjects for numerator and denominator, respectively.
+
+### Ratio metrics
+
+Default metrics have the form $\frac{\sum_{i=1}^n X_i}{n}$ where $X_i$ are observations on a metric for each subject in the experiment and want to estimate its mean.
+However, Eppo also supports ratio metrics, where instead of estimating the mean of a metric, we are interested in understanding the ratio two means.
+That is, our estimator has the form $\frac{\sum_{i=1}^n X_i}{\sum_{i=1}^n Y_i}$.
+To find the (asymptotic) sampling distribution of this estimator, we again rely on the Delta method, but since numerator and denominator are not independent in this case, there is an extra term for the covariance:
+$V = \left(\frac{\mu_X}{\mu_Y}\right)^2\left(\frac{\sigma_X^2}{\mu_X^2} + \frac{\sigma_Y^2}{\mu_Y^2} - \frac{2\sigma_{XY}}{n \mu_X \mu_Y}\right)$, where again we replace parameters with their sample estimates. $\sigma_{XY}$ denotes the covariance between $X_i$ and $Y_i$ and we divide by $n$ because we need the covariance between sample averages.
+
+
+
