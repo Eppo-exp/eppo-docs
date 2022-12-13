@@ -38,8 +38,10 @@ $V = \left(\frac{\mu_T}{\mu_C}\right)^2\left(\frac{\sigma_T^2}{\mu_T^2} + \frac{
 Default metrics have the form $\frac{\sum_{i=1}^n X_i}{n}$ where $X_i$ are observations on a metric for each subject in the experiment and want to estimate its mean.
 However, Eppo also supports ratio metrics, where instead of estimating the mean of a metric, we are interested in understanding the ratio two means.
 That is, our estimator has the form $\frac{\sum_{i=1}^n X_i}{\sum_{i=1}^n Y_i}$.
-To find the (asymptotic) sampling distribution of this estimator, we again rely on the Delta method, but since numerator and denominator are not independent in this case, there is an extra term for the covariance:
-$V = \left(\frac{\mu_X}{\mu_Y}\right)^2\left(\frac{\sigma_X^2}{\mu_X^2} + \frac{\sigma_Y^2}{\mu_Y^2} - \frac{2\sigma_{XY}}{n \mu_X \mu_Y}\right)$, where again we replace parameters with their sample estimates. $\sigma_{XY}$ denotes the covariance between $X_i$ and $Y_i$ and we divide by $n$ because we need the covariance between sample averages.
+To find the (asymptotic) sampling distribution of this estimator, we again rely on the Delta method.
+Because numerator and denominator are not independent in this case, there is an extra term for the covariance:
+$V = \left(\frac{\mu_X}{\mu_Y}\right)^2\left(\frac{\sigma_X^2}{\mu_X^2} + \frac{\sigma_Y^2}{\mu_Y^2} - \frac{2\sigma_{XY}}{n \mu_X \mu_Y}\right)$.
+Again we replace parameters with their sample estimates. $\sigma_{XY}$ denotes the covariance between $X_i$ and $Y_i$ and we divide by $n$ because we need the covariance between sample averages.
 
 
 
