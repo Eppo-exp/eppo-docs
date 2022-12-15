@@ -3,6 +3,9 @@
  * bundles Infima by default. Infima is a CSS framework designed to
  * work well for content-centric websites.
  */
+html {
+  scroll-padding-top: 70px; /* height of sticky header */
+}
 
 /* You can override the default Infima variables here. */
 :root {
@@ -37,3 +40,28 @@
 [data-theme='dark'] .docusaurus-highlight-code-line {
   background-color: rgba(0, 0, 0, 0.3);
 }
+
+.positive-change-green {
+  color: rgb(158, 230, 213);
+}
+
+.positive-change-green-bg {
+  background-color: rgb(158, 230, 213);
+}
+
+.negative-change-red {
+  color: rgb(255, 182, 196)
+}
+
+.negative-change-red-bg {
+  background-color: rgb(255, 182, 196);
+}
+
+td, th {
+  vertical-align: top;
+}
+
+.row-header {
+  font-weight: bold
+}
+
