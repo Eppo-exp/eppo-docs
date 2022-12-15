@@ -6,6 +6,7 @@ const darkCodeTheme = require("prism-react-renderer/themes/dracula");
 
 const math = require('remark-math');
 const katex = require('rehype-katex');
+const footnote = require('remark-numbered-footnote-labels');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
@@ -13,6 +14,7 @@ const config = {
   tagline: "Documentation for Eppo's experimentation platform.",
   url: "https://adoring-yonath-6ecb9d.netlify.app",
   baseUrl: "/",
+  staticDirectories: ["static"],
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
@@ -29,7 +31,7 @@ const config = {
           sidebarPath: require.resolve("./sidebars.js"),
           // Please change this to your repo.
           editUrl: 'https://github.com/Eppo-exp/eppo-docs/tree/main',
-          remarkPlugins: [math],
+          remarkPlugins: [math, footnote],
           rehypePlugins: [katex],
         },
         blog: {
