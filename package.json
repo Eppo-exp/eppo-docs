@@ -39,13 +39,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.46.0",
-    "@typescript-eslint/parser": "^5.46.0",
-    "eslint": "^8.29.0",
-    "eslint-plugin-mdx": "^2.0.5",
-    "eslint-plugin-react": "^7.31.11",
-    "typescript": "^4.9.4"
   }
 }
