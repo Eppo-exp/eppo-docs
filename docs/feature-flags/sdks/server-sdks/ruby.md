@@ -42,8 +42,8 @@ require 'segment/analytics'
 Analytics = Segment::Analytics.new({ write_key: 'SEGMENT_WRITE_KEY' })
 
 class CustomAssignmentLogger < EppoClient::AssignmentLogger
-	def log_assignment(assignment)
-		Analytics.track(assignment["subject"], "Eppo Assignment", assignment)
+  def log_assignment(assignment)
+    Analytics.track(assignment["subject"], "Eppo Assignment", assignment)
   end
 end
 
