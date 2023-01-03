@@ -26,9 +26,7 @@ During initialization, the SDK sends an API request to Eppo to retrieve the most
 
 <br />
 
-:::note
-API Keys used with Client SDKs should have only ‘Randomization READ’ permissions.
-:::
+:::note API Keys used with Client SDKs should have only ‘Randomization READ’ permissions. :::
 
 <br />
 
@@ -97,18 +95,4 @@ We recommend always handling the `nil` case in your code. Here are some examples
 
 <br />
 
-:::note
-It may take up to 5 minutes for changes to Eppo experiments to be reflected by the SDK assignments.
-:::
-
-<br />
-
-## 5. Refreshing Test Data
-
-Periodically it may be necessary to fetch new test data. This is almost never necessary but useful if global test data has been updated.
-
-First install [gsutil](https://cloud.google.com/storage/docs/gsutil_install) and update test data using
-
-  make test-data
-
-This is only necessary when test data has changed
+:::note It may take up to 5 minutes for changes to Eppo experiments to be reflected by the SDK assignments. :::
