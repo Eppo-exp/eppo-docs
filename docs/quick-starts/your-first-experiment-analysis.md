@@ -10,8 +10,6 @@ Follow this quickstart to get your first experiment set up on Eppo.
 
 <img src="https://user-images.githubusercontent.com/1095808/202587691-167d7c80-1f3c-4436-a963-c43790e95ac3.jpg" width="650" height="780" />
 
-- [Your first experiment analysis](#your-first-experiment-analysis)
-  - [Overview](#overview)
   - [1. Prep your data warehouse and set up experiment assignment](#1-prep-your-data-warehouse-and-set-up-experiment-assignment)
   - [2. Create Eppo account](#2-create-eppo-account)
   - [3. Connect your data warehouse](#3-connect-your-data-warehouse)
@@ -19,9 +17,7 @@ Follow this quickstart to get your first experiment set up on Eppo.
   - [5. Create a Fact SQL](#5-create-a-fact-sql)
   - [6. Create metrics](#6-create-metrics)
   - [7. Create an experiment](#7-create-an-experiment)
-    - [Configure the experiment](#configure-the-experiment)
-    - [8. Add metrics to experiment](#8-add-metrics-to-experiment)
-  - [Your experiment is now in progress!](#your-experiment-is-now-in-progress)
+  - [8. Add metrics to experiment](#8-add-metrics-to-experiment)
 
 ## 1. Prep your data warehouse and set up experiment assignment
 
@@ -186,8 +182,6 @@ The minimum detectable effect refers to the smallest effect you want to reliably
 
 ## 7. Create an experiment
 
-### Configure the experiment
-
 1. Navigate to **Experiments** in the left-hand menu and click **+Experiment**
 
 2. Fill out the **Create Experiment** Form
@@ -230,7 +224,7 @@ The default is an even split between all the variants (including control), but y
 
 11. Click **Save Changes**
 
-### 8. Add metrics to experiment
+## 8. Add metrics to experiment
 
 1. Navigate to **Experiments** and click the **Overview** tab
 

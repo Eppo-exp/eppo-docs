@@ -1,12 +1,21 @@
-import React from 'react';
+import React from "react";
 
-export default function NoBreak({children}) {
+/**
+ * Ensure contents are not wrapped across lines.
+ *
+ * Useful especially when Katex components are wrapped unnaturally
+ *
+ * @param {*} children
+ * @returns
+ */
+export default function NoBreak({ children }) {
   return (
     <span
-     style={{
-      whiteSpace: 'nowrap'
-     }}>
+      style={{
+        whiteSpace: "nowrap",
+      }}
+    >
       {children}
     </span>
-  )
+  );
 }
