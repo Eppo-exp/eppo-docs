@@ -1,4 +1,4 @@
-# IOS
+# iOS
 
 iOS implementation of the Eppo Randomization and Feature Flagging SDK.
 
@@ -6,13 +6,10 @@ iOS implementation of the Eppo Randomization and Feature Flagging SDK.
 
 While in XCode:
 
-> 1. choose `File > Add Packages`
-> 2. Click `Add Local`. Which will add two targets to your project:
->
->    * eppo-flagging
->    * eppo-flagging-tests
->
->     Then select the eppo-flagging-tests target in Xcode and run Product > Test.
+> 1. Choose `Package Dependencies`
+> 2. Click `+` and enter package URL: `git@github.com:Eppo-exp/ios-sdk.git`
+> 3. Set dependency rule to `Up to Next Minor Version` and select `Add Package`
+> 4. Add to your project's target.
 
 ## 2. Initialize the SDK
 
