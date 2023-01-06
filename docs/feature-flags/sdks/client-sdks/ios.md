@@ -2,12 +2,14 @@
 
 iOS implementation of the Eppo Randomization and Feature Flagging SDK.
 
+The repository is hosted at [https://github.com/Eppo-exp/eppo-ios-sdk](https://github.com/Eppo-exp/eppo-ios-sdk)
+
 ## 1. Install the SDK
 
 While in XCode:
 
 > 1. Choose `Package Dependencies`
-> 2. Click `+` and enter package URL: `git@github.com:Eppo-exp/ios-sdk.git`
+> 2. Click `+` and enter package URL: `git@github.com:Eppo-exp/eppo-ios-sdk.git`
 > 3. Set dependency rule to `Up to Next Minor Version` and select `Add Package`
 > 4. Add to your project's target.
 
