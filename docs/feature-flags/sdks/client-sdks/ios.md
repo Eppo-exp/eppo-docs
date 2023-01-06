@@ -26,7 +26,9 @@ During initialization, the SDK sends an API request to Eppo to retrieve the most
 
 <br />
 
-:::note API Keys used with Client SDKs should have only ‘Randomization READ’ permissions. :::
+:::note
+API Keys used with Client SDKs should have only ‘Randomization READ’ permissions.
+:::
 
 <br />
 
