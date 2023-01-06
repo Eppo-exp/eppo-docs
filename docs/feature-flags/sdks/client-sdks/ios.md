@@ -26,7 +26,9 @@ During initialization, the SDK sends an API request to Eppo to retrieve the most
 
 <br />
 
-:::note API Keys used with Client SDKs should have only ‘Randomization READ’ permissions. :::
+:::note
+API Keys used with Client SDKs should have only ‘Randomization READ’ permissions.
+:::
 
 <br />
 
@@ -95,4 +97,6 @@ We recommend always handling the `nil` case in your code. Here are some examples
 
 <br />
 
-:::note It may take up to 5 minutes for changes to Eppo experiments to be reflected by the SDK assignments. :::
+:::note
+It may take up to 5 minutes for changes to Eppo experiments to be reflected by the SDK assignments.
+:::
