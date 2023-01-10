@@ -47,7 +47,10 @@ class CustomAssignmentLogger < EppoClient::AssignmentLogger
   end
 end
 
-config = EppoClient::Config.new('<YOUR_API_KEY>', assignment_logger: CustomAssignmentLogger.new)
+config = EppoClient::Config.new(
+  '<YOUR_API_KEY>',
+  assignment_logger: CustomAssignmentLogger.new
+)
 client = EppoClient::init(config)
 ```
 
@@ -69,9 +72,13 @@ Assigning users to flags or experiments with a single `get_assignment` function:
 require 'eppo_client'
 
 client = EppoClient::Client.instance
-variation = client.get_assignment('<SUBJECT-KEY>', '<FLAG-OR-EXPERIMENT-KEY>', {
-  # Optional map of subject metadata for targeting.
-})
+variation = client.get_assignment(
+  '<SUBJECT-KEY>', 
+  '<FLAG-OR-EXPERIMENT-KEY>', 
+  {
+    # Optional map of subject metadata for targeting.
+  }
+)
 ```
 
 The `get_assignment` function takes two required and one optional input to assign a variation:
@@ -89,6 +96,24 @@ We recommend always handling the `nil` case in your code. Here are some examples
 
   ![start-experiment](../../../../static/img/connecting-data/StartExperiment.png)
 3.  If `get_assignment` is invoked before the SDK has finished initializing, the SDK may not have access to the most recent experiment configurations. In this case, the SDK will assign a variation based on any previously downloaded experiment configurations stored in local storage, or return `nil` if no configurations have been downloaded.
+
+
+### Debugging `nil`
+If you need more visibility into why `get_assignment` is returning `nil`, you can change the logging level to `Logger::DEBUG` to see more details in the standard output.
+
+```ruby
+require 'eppo_client'
+require 'logger'
+
+client = EppoClient::Client.instance
+variation = client.get_assignment(
+  '<SUBJECT-KEY>', 
+  '<FLAG-OR-EXPERIMENT-KEY>',
+  {},
+  Logger::DEBUG
+)
+```
+
 
 <br />
 
