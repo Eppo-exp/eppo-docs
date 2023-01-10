@@ -18,9 +18,16 @@ page.
 
 ## Settings
 
+The experiment-level analysis plan settings are on the
+[experiment setup page](../building-experiments/experiments/creating-experiments.md#analysis-plan-settings).
+
+![Experiment Analysis Plan Settings](/img/building-experiments/experiment-setup-statistical-analysis-plans.gif)
+
+
 ### 1. Confidence interval method {#confidence-interval-method}
 
-Which [analysis method](../interpreting-experiments/lift-estimates-and-confidence-intervals/analysis-methods.md) to use to estimate the lift and construct the confidence interval.
+Which [analysis method](../interpreting-experiments/lift-estimates-and-confidence-intervals/analysis-methods.md)
+to use to estimate the lift and construct the confidence interval.
 
 ### 2. Confidence level {#confidence-level}
 
@@ -47,7 +54,7 @@ result in more power (and thus will fill up more of the progress bar), but there
 are diminishing returns: each additional percentage point of power requires
 collecting more and more additional data.
 
-### 4. Minimum detectable effect {#mde}
+### 4. Minimum detectable effect (MDE) {#mde}
 
 The smallest non-trivial lift: what is the minimum lift you want to be able to
 detect? Another way of putting it would be: what is the largest lift that you
@@ -58,6 +65,8 @@ which shows how close you are to being [powered](#progress-bar-power) to detect
 a lift of this size in the primary metric.
 
 By default, the primary metric's MDE is used, but you can override it manually.
+For more on MDEs as they relate to individual metrics, see
+[Minimum Detectable Effects](./minimum_detectable_effects.md).
 
 [^pval]: For anyone used to thinking in
     [p-values](https://en.wikipedia.org/wiki/P-value), this corresponds to a
@@ -110,13 +119,20 @@ positives *assuming there is no effect*, or the rate of false negatives
 
 :::tip Stats jargon
 
-In general, *statistical [**significance**](https://en.wikipedia.org/wiki/Statistical_significance)* is about limiting the *false **positive** rate*:
-If your treatment doesn't do anything at all, you want to make sure the random differences between groups are unlikely to be flagged as a significant metric movement.[^statsig]
+In general, *statistical
+[**significance**](https://en.wikipedia.org/wiki/Statistical_significance)*
+is about limiting the *false **positive** rate*: If your treatment doesn't do
+anything at all, you want to make sure the random differences between groups are
+unlikely to be flagged as a significant metric movement.[^statsig]
 
-Having more *statistical [**power**](https://en.wikipedia.org/wiki/Power_of_a_test)*, on the other hand, means that you'll have a lower *false **negative** rate*:
-If there's a real treatment effect, the more power you have the more likely you are to be able to detect a significant metric movement.
+Having more *statistical [**power**](https://en.wikipedia.org/wiki/Power_of_a_test)*,
+on the other hand, means that you'll have a lower *false **negative** rate*:
+If there's a real treatment effect, the more power you have the
+more likely you are to be able to detect a significant metric movement.
 
-Note, though, that these terms don't have the same meaning if using a [Bayesian analysis](../interpreting-experiments/lift-estimates-and-confidence-intervals/analysis-methods.md#bayesian-analysis) analysis method, although the concepts can still be useful.
+Note, though, that these terms don't have the same meaning if using a
+[Bayesian analysis](../interpreting-experiments/lift-estimates-and-confidence-intervals/analysis-methods.md#bayesian-analysis)
+analysis method, although the concepts can still be useful.
 
 :::
 

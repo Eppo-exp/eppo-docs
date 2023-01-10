@@ -13,7 +13,7 @@ confidence intervals in Eppo, and the essentials of using experiment results to
 make ship/no-ship decisions, see the main [Interpreting experiments](../index.md)
 page.
 
-## Basics of estimating lift
+## Basics of estimating lift {#estimating-lift}
 
 In order to provide effect estimates consistently across all metric types
 (counts, rates, percentages, etc.), we use the <Term def={true}>relative

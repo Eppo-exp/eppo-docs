@@ -54,11 +54,13 @@ You can go ahead and add each variant into the experiment here.
 
 The default is an even split between all the variants (including control), but you can also customize the allocation for unequal splits.
 
-### 10. [Optional] The Statistical Analysis Plan 
-If you want to set custom statistical methodologies for this experiment, uncheck the "use company default" checkbox next to the applicable fields. Otherwise, you can stay opted in to using the [defaults set by your company](../../../administration/setting-statistical-analysis-plan-defaults). For information on the different analysis plan settings, see [Analysis plans](../../planning-experiments/analysis-plans.md).
+### 10. [Optional] The Statistical Analysis Plan {#analysis-plan-settings}
+If you want to set custom statistical methodologies for this experiment, uncheck
+the "use company default" checkbox next to the applicable fields. Otherwise, you
+can stay opted in to using
+the [defaults set by your company](../../../administration/setting-statistical-analysis-plan-defaults.md).
+For information on the different analysis plan settings, see [Analysis plans](../../planning-experiments/analysis-plans.md).
 
-![Experiment Analysis Plan Settings](https://user-images.githubusercontent.com/90637953/200431000-54588eda-ea9a-4964-92ee-83999556954f.gif)
-
-
+![Experiment Analysis Plan Settings](/img/building-experiments/experiment-setup-statistical-analysis-plans.gif)
 
 11. Click **Save Changes**

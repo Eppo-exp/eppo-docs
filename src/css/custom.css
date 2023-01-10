@@ -66,3 +66,14 @@ td, th {
   font-weight: bold
 }
 
+figcaption {
+  font-size: 0.85em;
+  color: #666;
+}
+
+.icon {
+  height: 1.3em;
+  margin-left: -0.2em;
+  margin-right: -0.2em;
+  margin-bottom: -0.2em;
+}
