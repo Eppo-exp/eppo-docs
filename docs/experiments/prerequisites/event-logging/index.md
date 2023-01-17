@@ -11,7 +11,7 @@ Eppo's SDKs include either an assignment logger base class or an interface, in w
 
 Similar patterns can be adopted for Eppo's SDKs in other languages, e.g. Java, Python, and etc.
 
-The object passed into the assignment logger function contrains the following fields:
+The object passed into the assignment logger function contains the following fields:
 
 | Field | Description | Example |
 | --------- | ------- | ---------- |
