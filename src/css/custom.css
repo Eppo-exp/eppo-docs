@@ -41,7 +41,7 @@ html {
   background-color: rgba(0, 0, 0, 0.3);
 }
 
-/* TODO: Delete these */
+/* TODO: Delete these since we're using components for +/- change colors */
 .positive-change-green {
   color: rgb(158, 230, 213);
 }
@@ -69,6 +69,13 @@ td, th {
 figcaption {
   font-size: 0.85em;
   color: #666;
+}
+
+sup {
+  font-size: 0.75em;
+  line-height: 0em;
+  --ifm-link-decoration: none;
+  --ifm-link-color: #888;
 }
 
 .icon {
