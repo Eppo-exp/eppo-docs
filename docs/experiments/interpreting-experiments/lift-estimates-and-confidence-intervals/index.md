@@ -65,7 +65,7 @@ back-of-the-envelope calculations.
 
 :::info
 
-If you use [Bayesian analysis](#bayesian-analysis), the estimated lift might be
+If you use [Bayesian analysis](./analysis-methods.md#bayesian-analysis), the estimated lift might be
 *quite* different from the naive calculation, because the prior can influence
 the estimate a lot, particularly if the sample size is not large.
 
@@ -78,13 +78,13 @@ The confidence intervals around the estimated lift show the range of lifts that
 could be plausibly supported by the data from the experiment; lifts outside that
 confidence interval are possible, but unlikely. (The exact meaning of
 "plausible" and "unlikely" depend on the particular
-[methodology](./analysis-methods.md), of course.[^1]) If the entire confidence
+[methodology](./analysis-methods.md), of course.[^ci-defn]) If the entire confidence
 interval is above zero, then it is unlikely for the true lift to be zero, or
 negative: the experiment data indicates that the treatment had a positive effect
 on that metric (and vice versa if the entire confidence interval is *below*
 zero).
 
-The distance between the lift estimate and the lower (or upper[^2]) bound of the
+The distance between the lift estimate and the lower (or upper[^symmetric]) bound of the
 confidence interval is called the *precision*; the width of the confidence
 interval is twice the precision.  In order for the confidence interval to be
 entirely above or below zero, the precision needs to be less than the lift
@@ -97,7 +97,7 @@ factors:
 1. **How spread out the metric values are.** 
   
    If different subjects tend to have similar metric values, then the range of
-   plausible values will be smaller.[^3]
+   plausible values will be smaller.[^varreduc]
 
 2. **How many subjects are in the experiment (that is, the *sample size*).**
    
@@ -124,18 +124,20 @@ factors:
    guarantees a given confidence level if you make a decision based on a single
    examination of the experiment results, while sequential analysis guarantees a
    confidence level no matter how many times you look at the results (there are
-   of course other requirements for those guarantees to hold, however).
+   of course other requirements for those guarantees to hold). In order
+   to achieve the stronger guarantees, however, the sequential method will produce
+   wider confidence intervals for the same data than the fixed-sample method.
 
-[^1]: Indeed, the very term "confidence interval" is only used in the
+[^ci-defn]: Indeed, the very term "confidence interval" is only used in the
     [frequentist](https://en.wikipedia.org/wiki/Frequentist_inference)
     framework, while 
     [Bayesian](https://en.wikipedia.org/wiki/Bayesian_inference) methods
     use "credible interval" to describe a similar (though distinct!) concept.
     For simplicity, we'll use "confidence interval" throughout, and discuss the
-    distinction with Bayesian credible intervals [below](#bayesian-analysis).
-[^2]: We use symmetric confidence intervals, so the upper and lower bounds are
+    distinction with Bayesian credible intervals [here](./analysis-methods.md#bayesian-analysis).
+[^symmetric]: We use symmetric confidence intervals, so the upper and lower bounds are
     the same distance from the lift estimate.
-[^3]: In technical terms, this is called the *variance*, and it's one of the
+[^varreduc]: In technical terms, this is called the *variance*, and it's one of the
     reasons we put a lot of emphasis on *variance reduction* through methods
     like CUPED and winsorization: reducing the variance of the metric (by
     controlling for, and therefore removing, random variation) makes the

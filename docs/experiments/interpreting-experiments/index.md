@@ -18,73 +18,97 @@ view**, which shows all of your experiments. You can filter this list by
 experiment name, status, entity, or owner, or just show experiments you have
 **starred**.
 
-<Figure alt="Experiment list view" src="/img/interpreting-experiments/experiments-list-view.png" />
+<Figure alt="Experiment list view" src="/img/interpreting-experiments/experiments-list-view.png">
+   The experiment list view, showing a list of experiments that can be filtered and searched.
+</Figure>
+
+<!-- TODO: Discuss the experiment table view? -->
 
 ## Overview of an experiment's results
 
 Clicking on the name of an experiment will take you to the
-**experiment detail view**, which shows the effects of each treatment variant,
-compared to control. Within each variant, for each metric that
-[you have attached to the experiment](../building-experiments/experiments/adding-metrics-to-experiment.md),
-we display the *average (per subject) value for the control variant*, as well as
+**experiment detail view**, which shows the effects of each treatment variation,
+compared to control. Within each variation, for each metric that
+[you have added to the experiment](../building-experiments/experiments/adding-metrics-to-experiment.md),
+we display the (per subject) **average value for the control variation**, as well as
 the estimate of the <Term def={true}>relative lift</Term> (that is, the percentage change
-from the control value) caused by that treatment variant.
+from the control value) caused by that treatment variation.
 
 <Figure alt="Experiment details - overview" src="/img/interpreting-experiments/experiment-details-view.png">
    In this example, the control value of <code>Total Purchase Value</code> is
-   15.63 (per subject), and variant B is estimated to increase that by 4.68%.
-   For <code>Add-to-Cart Conversion</code>, the control value is 55%, because it has been set to
-   display as a percentage, and the lift is 8%: this means that the add-to-cart
-   conversion rate is <em>108% times the control rate of 55%</em>, that is, 59.4%.
+   &#8203;<b>15.63</b> (per subject), and variation B is estimated to increase that by <b>4.68%</b>.
+   For <code>Add-to-Cart Conversion</code>, the control value is <b>55%</b>, because it has been set to
+   display as a percentage, and the lift is <b>8%</b>: this means that the add-to-cart
+   conversion rate that would be expected from shipping the treatment
+   is <em>108% times the control rate of 55%</em>, that is, 59.4%.
 </Figure>
 
 If you hover over the lift, you can see the metric values for both control and
-treatment variants, as well as the sum of the underlying fact(s) and the number
-of subjects assigned to each variant.
+treatment variations, as well as the sum of the underlying fact(s) and the number
+of subjects assigned to each variation.
 
 <Figure caption="Experiment details - hovering over metric" src="/img/interpreting-experiments/experiment-details-view-hover.png" >
    In this example, the total purchase value <em>per assigned subject</em> is
-   15.63 for control and 16.36 for treatment, and the total purchase
-   value <em>acrosss all assigned subjects</em> is 812,884.95 for control and
-   851,526.71 for treatment.
-   There are 52,004 subjects assigned to control, and 52,039 assigned to treatment.
+   &#8203;<b>15.63</b> for control and <b>16.36</b> for treatment, and the total purchase
+   value <em>acrosss all assigned subjects</em> is <b>812,884.95</b> for control
+   and <b>851,526.71</b> for treatment.
+   There are <b>52,004</b> subjects assigned to control, and <b>52,039</b> assigned to treatment.
 </Figure>
 
 :::caution
 
-In many cases (in particular, if [CUPED](./lift-estimates-and-confidence-intervals/cuped.md) is enabled), the *estimated
-lift* is not simply the difference between treatment and control expressed as a
-percentage of the control—meaning the lift calculated from the values displayed
-in this popover **will not match** the lift displayed in the UI. See
-[Basics of estimating lift](./lift-estimates-and-confidence-intervals/index.md#estimating-lift) for more
-information on how we estimate lift in different circumstances.
+Depending on the metric settings, we may
+[remove outliers](../building-experiments/metrics/creating-metrics.md#outlier-handling)
+from the raw data in order to improve the quality of our lift estimates,
+and so the average and total values displayed in this popover
+might differ from those displayed in other tools.
+
+In addition, in many cases (in particular, if
+[CUPED](./lift-estimates-and-confidence-intervals/cuped.md) is enabled),
+we perform additional processing on the data before estimating the lift
+(such as correcting for imbalances across variations along different
+dimensions). For this reason, the lift displayed on the details page
+may not match the lift calculated directly from the numbers in this popover.
+
+See [Basics of estimating
+lift](./lift-estimates-and-confidence-intervals/index.md#estimating-lift)
+for more information on how we estimate lift in different circumstances.
 
 :::
 
-To the right, we display the estimated lift graphically as a black vertical bar,
+To the right of the details page, we display the estimated lift graphically as a black vertical bar,
 as well as a <Term def={true}>confidence interval</Term> that shows the values of the lift that we
-consider *plausible* given the observed data from the experiment. The precise
+consider plausible given the observed data from the experiment. The precise
 definition of *plausible* is determined by, among other things,
 the <Term def={true}>confidence level</Term>, which defaults to 95%: we set the lower and upper
-bounds of the confidence interval such that the probability that the *true lift*
-lies within that range is at least 95% (or whatever confidence level you've
-selected).[^confident] In addition, Eppo has several different
+bounds of the confidence interval such that it will contain the true lift
+at least 95% (or whatever confidence level you've
+selected) of the time.[^confident] In addition, Eppo has several different
 [methods for calculating the confidence intervals](./lift-estimates-and-confidence-intervals/analysis-methods.md),
-which can be set at the company- or experiment-level.
+which can be set at the company or experiment level.
 
 [^confident]: For more on how we define confidence intervals, how to interpret
   them, and a precise technical definition of what it means to be "X%
-  confident", see [Lift Estimates and Confidence Intervals](./lift-estimates-and-confidence-intervals/index.md)
+  confident", see
+  [Lift estimates and confidence intervals](./lift-estimates-and-confidence-intervals/index.md).
 
 :::tip Where does the uncertainty come from?
 
-Randomly allocating users to each variant means that the lift we
-observe in the experiment data should be a good estimate[^goodest] of the lift you would
+Randomly allocating users to each variation means that the lift we observe in
+the experiment data should be a good estimate[^goodest] of the lift you would
 observe if you shipped the treatment. However, any time you estimate something
-for a whole population using measurements from just a *portion* of that population
-(in this case, the treatment variant), there's a risk that the sample you chose
-to observe behaves differently from the population as a whole.
-This is the uncertainty represented by the confidence interval.[^uncertainty]
+for a whole population using measurements from just a *portion* of that
+population (in this case, the subjects in the  treatment variation), there's a
+risk that the sample you chose to observe behaves differently from the
+population as a whole. Specifically, there's always a chance that a bunch of
+really active subjects, instead of being evenly split across variations,
+happened to end up concentrated in the control variation or the treatment
+variation; that would mean that the lift you observed in the experiment would be
+lower or higher, respectively, than what you'd observe if you shipped the
+treatment. This is the uncertainty represented by the confidence
+interval.[^uncertainty] (This is why 
+[CUPED](./lift-estimates-and-confidence-intervals/cuped.md), which corrects some
+of this imbalance, can often greatly reduce the width of the confidence intervals.)
 
 [^goodest]: In technical terms, it is *consistent*, meaning that it gets closer
     to the true lift as the number of subjects in the experiment increases.
@@ -97,7 +121,7 @@ This is the uncertainty represented by the confidence interval.[^uncertainty]
     circumstances (like trends, or different economic conditions) that have changed
     and affect how users react to the treatment; or (especially if your product is
     growing and adding more and more users) the *users* that use the product in
-    December might be different than those that were part of the experiment.
+    December might be different than those that were part of the experiment in June.
 
 :::
 
@@ -108,8 +132,8 @@ upper and lower bounds for this confidence interval:
    src="/img/interpreting-experiments/experiment-details-confidence-interval-hover-highlight.png">
    <p>
       In this case, based on our statistical analysis of the experiment data, our best
-      estimate of the lift caused by this treatment is 4.68%, and we are 95% confident
-      that the lift is between 1.76% and 7.61%. Since a lift of 0% does not fall within
+      estimate of the lift caused by this treatment is <b>4.68%</b>, and we are 95% confident
+      that the lift is between <b>1.76%</b> and <b>7.61%</b>. Since a lift of 0% does not fall within
       that range, the confidence interval is highlighted in <GreenHighlight>green</GreenHighlight>.
    </p><p>
    </p>
@@ -123,10 +147,10 @@ if the movement is *good* (in which case there will also be a
 🎉 symbol in the lift estimate box), and <RedHighlight>red</RedHighlight>
 if the movement is *bad*.
 
-:::info
+:::info Green/red means *good*/*bad* not *up*/*down*
 
-In general, a positive lift will be *good* (colored green) and a
-negative lift will be *bad* (colored red). However, for metrics such as page
+In general, a positive lift will be *good* (colored <GreenHighlight>green</GreenHighlight>) and a
+negative lift will be *bad* (colored <RedHighlight>red</RedHighlight>). However, for metrics such as page
 load time or app crashes, a higher number is *bad*. We call
 these <Term def={true}>reversed metrics</Term>. If you've set the "Desired Change" field in the
 [fact definition](../building-experiments/definitions/fact-sql.md)
@@ -138,16 +162,18 @@ will be in <GreenHighlight>green</GreenHighlight>.
 
 The confidence level is set as part of the [analysis plan](../planning-experiments/analysis-plans.md),
 and you can change the company-wide default on the
-[**Admin** tab](../../administration/setting-statistical-analysis-plan-defaults.md)
+[Admin tab](../../administration/setting-statistical-analysis-plan-defaults.md)
 or set an experiment-specific confidence level on the
-[**Set Up** tab](../building-experiments/experiments/creating-experiments.md#10-optional-the-statistical-analysis-plan).
+[experiment Set Up page](../building-experiments/experiments/creating-experiments.md#10-optional-the-statistical-analysis-plan).
 The confidence level being used for any experiment is displayed on the experiment
 detail page below the table of metric results:
 
 <Figure
    alt="The confidence level is displayed at the bottom of the metric results table"
    src="/img/interpreting-experiments/experiment-details-confidence-level-highlight.png"
-/>
+>
+   The confidence level is displayed at the bottom of the metric results table.
+</Figure>
 
 ### Impact accounting
 
@@ -161,14 +187,21 @@ You can click on the [**Impact accounting**](./lift-estimates-and-confidence-int
 icon (<Icon src="/img/interpreting-experiments/global-lift-icon.svg" />)
 to show, for each metric,
 the <Term def={true}>coverage</Term> (the share of all events that are part of the
-experiment) and <Term def={true}>global lift</Term> (that is, the expected
-increase in the metric if the treatment variant were rolled out to 100%, as a
+experiment) and <Term def={true}>global lift</Term> (the expected
+increase in the metric if the treatment variation were rolled out to 100%, as a
 percentage of the global total metric value).
 
 <Figure
    alt="Switching to impact accounting view"
    src="/img/interpreting-experiments/experiment-details-global-impact.gif"
-/>
+>
+   In this example, the impact accounting view shows that, since the experiment has been
+   active, only <b>81.8%</b> of <code>Total Upgrades to Paid Plan</code> events were done by subjects
+   that had been assigned to any varaition in the experiment. This means that, while
+   the lift <em>among subjects in the experiment</em> is <b>6.06%</b>, since 18.2% of
+   events are done by subjects who would not have been affected by the treatment,
+   the topline number of upgrades is only expected to go up by <b>4.93%</b>.
+</Figure>
 
 ### Statistical details
 
@@ -180,7 +213,7 @@ them. The actual values being shown will differ based on which
 [analysis method](./lift-estimates-and-confidence-intervals/analysis-methods.md)
 is being used:
 sequential and fixed-sample methods will show the frequentist statistics, while
-Bayesian statistics will differ to reflect the different decision making
+Bayesian statistics will differ to reflect the different decision-making
 processes compatible with that method.
 
 <Figure alt="Switching to impact accounting view" src="/img/interpreting-experiments/experiment-details-statistical-details.gif">
@@ -220,13 +253,17 @@ See: https://docusaurus.io/docs/markdown-features/react#markdown-and-jsx-interop
 
 #### Bayesian statistics
 
-1. &#8203;<Term def={true}>Probability Beats Control</Term>: The probability that the treatment variant is
-   superior to the control variant; in other words, the chance that the lift is good
+[Bayesian methods](./lift-estimates-and-confidence-intervals/analysis-methods.md#bayesian-analysis)
+rely on a different way of thinking about probabilities, and thus use different
+statistics to summarize the results of an experiment. 
+
+1. &#8203;<Term def={true}>Probability Beats Control</Term>: The probability that the treatment variation is
+   superior to the control variation; in other words, the chance that the lift is good
    (positive for most metrics, but negative for <Term>reversed metrics</Term>)
 
 2. &#8203;<Term def={true}>Probability Better Than MDE</Term>: Bayesian analyses comparing two
-   distributions (in our case the average metric values in the treatment variant
-   compared to the average metric values in the control variant) sometimes refer to the
+   distributions (in our case the average metric values in the treatment variation
+   compared to the average metric values in the control variation) sometimes refer to the
    [<Term>Region of Practical Equivalence (ROPE)</Term>](https://journals.sagepub.com/doi/10.1177/2515245918771304), which is the amount of
    difference between the distributions that is, practically speaking, trivial.
    In other words, we might care not just about whether the treatment is
@@ -252,7 +289,7 @@ See: https://docusaurus.io/docs/markdown-features/react#markdown-and-jsx-interop
 
 You are able to filter experiment results to specific subgroups by selecting the
 filter menu at the top right corner. We provide two distinct options to filter
-results
+results.
 
 ### Segments
 
