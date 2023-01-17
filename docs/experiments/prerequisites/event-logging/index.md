@@ -11,6 +11,16 @@ Eppo's SDKs include either an assignment logger base class or an interface, in w
 
 Similar patterns can be adopted for Eppo's SDKs in other languages, e.g. Java, Python, and etc.
 
+The object passed into the assignment logger function contrains the following fields:
+
+| Field | Description | Example |
+| --------- | ------- | ---------- |
+| `experiment` (string) | An Eppo experiment key | "recommendation_algo" |
+| `subject` (string) | An identifier of the subject or user assigned to the experiment variation | UUID |
+| `variation` (string) | The experiment variation the subject was assigned to | "control" |
+| `timestamp` (string) | The time when the subject was assigned to the variation | 2021-06-22T17:35:12.000Z |
+| `subjectAttributes` (map) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `{ "country": "US" }` |
+
 
 ## Segment
 

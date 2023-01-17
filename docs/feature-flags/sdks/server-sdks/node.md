@@ -79,6 +79,9 @@ The SDK will invoke the `logAssignment` function with an `assignment` object tha
 | `timestamp` (string) | The time when the subject was assigned to the variation | 2021-06-22T17:35:12.000Z |
 | `subjectAttributes` (map) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `{ "country": "US" }` |
 
+:::note
+More examples of logging (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/experiments/prerequisites/event-logging/) page.
+:::
 
 ## 3. Assign variations
 
