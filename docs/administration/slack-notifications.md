@@ -1,8 +1,8 @@
 # Slack notifications
 <p float="left">
-  <img width="300" style=”margin: 4px 4px 4px 4px" alt="data issues alert" src="https://user-images.githubusercontent.com/90637953/213244183-a3580e3b-e077-4fc5-9bbb-2dc307660ebd.png" />
-  <img width="300" style=”margin: 4px 4px 4px 4px" alt="status change alert" src="https://user-images.githubusercontent.com/90637953/213244188-3dbd1333-185e-4416-b925-d36bbac08223.png" /> 
-  <img width="300" style=”margin: 4px 4px 4px 4px" alt="metrics alert" src="https://user-images.githubusercontent.com/90637953/213244191-5cfcceec-5019-4d82-bd40-ead2aeacd20e.png" />
+  <img width="280" alt="data issues alert" src="https://user-images.githubusercontent.com/90637953/213244183-a3580e3b-e077-4fc5-9bbb-2dc307660ebd.png" /> &ensp;
+  <img width="280" alt="status change alert" src="https://user-images.githubusercontent.com/90637953/213244188-3dbd1333-185e-4416-b925-d36bbac08223.png" /> &ensp;
+  <img width="280" alt="metrics alert" src="https://user-images.githubusercontent.com/90637953/213244191-5cfcceec-5019-4d82-bd40-ead2aeacd20e.png" />
 </p>
 
 1. [Allow Permissions to a Slack Workspace](#allow-permissions-to-a-slack-workspace)
