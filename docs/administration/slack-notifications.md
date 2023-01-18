@@ -1,11 +1,15 @@
 # Slack notifications
+<p float="left">
+  <img width="334" alt="data issues alert" src="https://user-images.githubusercontent.com/90637953/213244183-a3580e3b-e077-4fc5-9bbb-2dc307660ebd.png" />
+  <img width="334" alt="status change alert" src="https://user-images.githubusercontent.com/90637953/213244188-3dbd1333-185e-4416-b925-d36bbac08223.png" /> 
+  <img width="334" alt="metrics alert" src="https://user-images.githubusercontent.com/90637953/213244191-5cfcceec-5019-4d82-bd40-ead2aeacd20e.png" />
+</p>
 
 1. [Allow Permissions to a Slack Workspace](#allow-permissions-to-a-slack-workspace)
 2. [Configure System Wide Slack Notifications](#configure-system-wide-slack-notifications)
 3. [Configure Slack Notifications for a Specific Experiment](#configure-slack-notifications-for-a-specific-experiment)
 4. [Configure Slack Notifications for a Specific Metric](#configure-slack-notifications-for-a-specific-metric)
 5. [Notification Triggers](#notification-triggers)
-
 
 ## Allow Permissions to a Slack Workspace
 ![Enable Slack Notifications](https://user-images.githubusercontent.com/90637953/197907443-9c3d3db1-65fa-405f-b808-bac63d4d09f8.gif)
