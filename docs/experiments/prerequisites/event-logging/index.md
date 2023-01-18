@@ -95,8 +95,8 @@ const variation = eppoClient.getAssignment("<SUBJECT-KEY>", "<FLAG-OR-EXPERIMENT
 import { IAssignmentLogger, init } from '@eppo/node-server-sdk';
 
 // Initialize mParticle
-var mParticle = require('mparticle');
-var api = new mParticle.EventsApi(new mParticle.Configuration(
+const mParticle = require('mparticle');
+const api = new mParticle.EventsApi(new mParticle.Configuration(
     '<MPARTICLE_API_KEY>', 
     '<MPARTICLE_API_SECRET>'
 ));
@@ -104,10 +104,10 @@ var api = new mParticle.EventsApi(new mParticle.Configuration(
 // Define logAssignment so that it logs events to mParticle
 const assignmentLogger: IAssignmentLogger = {
   logAssignment(assignment) {
-    var batch = new mParticle.Batch(mParticle.Batch.Environment.development);
+    const batch = new mParticle.Batch(mParticle.Batch.Environment.development);
     batch.user_identities = new mParticle.UserIdentities();
     batch.user_identities.customerid = assignment.subject
-    var event = new mParticle.AppEvent(
+    const event = new mParticle.AppEvent(
       mParticle.AppEvent.CustomEventType.navigation, 
       'Eppo Randomization Event'
     );
