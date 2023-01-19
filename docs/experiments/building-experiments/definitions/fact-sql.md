@@ -36,7 +36,7 @@ In this step, you're going to write SQL to pull that data.
 
 In the example above, Eppo has already automatically determined that the `timestamp of creation` column is `TS` and the relevant `entity id` column is `USER_ID`.
 
-8. Add Facts
+7. Add Facts
 
 Facts are the numeric quantities associated with the event. For every event that you want to track, you should add its corresponding column in the data warehouse as a fact.
 
@@ -44,10 +44,12 @@ Facts are the numeric quantities associated with the event. For every event that
 
 In the example above, we would like to measure the effect of the experiment on revenue.
 
-In the data warehouse, every time there is a revenue event (that might be someone purchasing something,), that event is logged as a row in the data warehouse.
+In the data warehouse, every time there is a revenue event (such as if someone purchases something), that event is logged as a row in the data warehouse.
 
 This event is translated into an integer value, which is the revenue amount, that can then be used as an Eppo fact and tracked in an experiment.
 
-10. Save & Close
+By default, having more events is better, so the "Desired Change" is set to `Metric Increasing`. However, for things like page load time, spam reports, or other *bad* events, you can indicate that more is *worse* by changing this to `Metric Decreasing`.
+
+8. Save & Close
 
 You've now created your a Fact SQL. If you have more events that you would like to track in your experiment, you can repeat the steps in this section to create additional Fact SQLs.

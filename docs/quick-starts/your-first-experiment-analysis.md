@@ -10,14 +10,14 @@ Follow this quickstart to get your first experiment set up on Eppo.
 
 <img src="https://user-images.githubusercontent.com/1095808/202587691-167d7c80-1f3c-4436-a963-c43790e95ac3.jpg" width="650" height="780" />
 
-1. [Prep your data warehouse and set up experiment assignment](#1-prep-your-data-warehouse-and-set-up-experiment-assignment)
-2. [Create an Eppo account](#2-create-eppo-account)
-3. [Connect your data warehouse](#3-connect-your-data-warehouse)
-4. [Create an Assignment SQL](#4-create-an-assignment-sql)
-5. [Create Fact SQLs](#5-create-a-fact-sql)
-6. [Create metrics](#6-create-metrics)
-7. [Create an experiment](#7-create-an-experiment)
-8. [Add metrics to experiment](#8-add-metrics-to-experiment)
+  - [1. Prep your data warehouse and set up experiment assignment](#1-prep-your-data-warehouse-and-set-up-experiment-assignment)
+  - [2. Create Eppo account](#2-create-eppo-account)
+  - [3. Connect your data warehouse](#3-connect-your-data-warehouse)
+  - [4. Create an Assignment SQL](#4-create-an-assignment-sql)
+  - [5. Create a Fact SQL](#5-create-a-fact-sql)
+  - [6. Create metrics](#6-create-metrics)
+  - [7. Create an experiment](#7-create-an-experiment)
+  - [8. Add metrics to experiment](#8-add-metrics-to-experiment)
 
 ## 1. Prep your data warehouse and set up experiment assignment
 
@@ -62,7 +62,7 @@ Now that Eppo is connected to your data warehouse, the first thing we are going 
 
 ![Select user as entity](../../static/img/building-experiments/select-user-as-entity.png)
 
-Entities are the randomization units of your experiment. By default, entities in Eppo are **User**, but you can also [create your own custom entities](./experiments/building-experiments/entities.md) and attach Assignment SQL's to them.
+Entities are the randomization units of your experiment. By default, entities in Eppo are **User**, but you can also [create your own custom entities](../experiments/building-experiments/entities.md) and attach Assignment SQL's to them.
 
 3. Name your Assignment SQL
 
@@ -108,7 +108,7 @@ Fact SQL's define events, like sign-ups, activations, or orders. Together, the A
 
 2. Select **User** as the entity
 
-**User** is the default entity in Eppo but you can also create your own [custom entity](./experiments/building-experiments/entities.md) and select that here.
+**User** is the default entity in Eppo but you can also create your own [custom entity](../experiments/building-experiments/entities.md) and select that here.
 
 3. Name your Fact SQL
 
@@ -146,7 +146,7 @@ You've now created your first Fact SQL. If you have more events that you would l
 
 1. Navigate to **Metrics**, click **+Metric**, then select **User** as the subject of the metric
 
-**User** is the default entity in Eppo, but you can also create a [custom entity](./experiments/building-experiments/entities.md) and select it here.
+**User** is the default entity in Eppo, but you can also create a [custom entity](../experiments/building-experiments/entities.md) and select it here.
 
 2. Select a fact
 
@@ -181,8 +181,6 @@ Here, you can filter on any of those dimensions. In the example above, we want t
 The minimum detectable effect refers to the smallest effect you want to reliably detect in experiments. The higher the minimum detectable effect you set, the longer the experiment will take to reach conclusive results.
 
 ## 7. Create an experiment
-
-### Configure the experiment
 
 1. Navigate to **Experiments** in the left-hand menu and click **+Experiment**
 
@@ -226,11 +224,11 @@ The default is an even split between all the variants (including control), but y
 
 11. Click **Save Changes**
 
-### 8. Add metrics to experiment
+## 8. Add metrics to experiment
 
 1. Navigate to **Experiments** and click the **Overview** tab
 
-Under **Decision metrics**, you will see that [guardmail metrics](./experiments/building-experiments/experiments/guardrail-metrics.md) have already been included automatically.
+Under **Decision metrics**, you will see that [guardmail metrics](../experiments/building-experiments/experiments/guardrail-metrics.md) have already been included automatically.
 
 4. Click **+Add metric** button
 

@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 # Enterprise authentication
 
 ![Logging in with Okta](../../static/img/reference/okta.gif)

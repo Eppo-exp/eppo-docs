@@ -1,10 +1,9 @@
 # Controlled-experiment Using Pre-Existing Data (CUPED)
 The precision of experiment results (the width of confidence intervals) depends on the variance of the metrics we are measuring. One way to improve the precision of experiments is to gather more data, as the variance goes down as we gather more data; this obviously means that it takes longer to run an experiment.
 
-owever, there are more direct ways to reduce variance, beyond just waiting for more data to show up.
 However, there are options beyond waiting to gather more data, and all these options address reducing the variance in the metrics we are measuring directly. One particularly flexible and powerful method is known as CUPED. Standard experiment analysis involves comparing metric data from subjects exposed to a treatment to that of a control group -- all the data is gathered during the experiment. But most companies know something about their users beyond what they did during the experiment, most prominently metric data from before the experiment started. CUPED leverages this data from outside the experiment in order to control for some of the variance in metrics that comes from randomly picking variants for each subject; in a standard experiment, you might end up with one variant having more active users just by random chance, while CUPED reduces the effect of this random variation by controlling for the different activity levels across different variants. You can think of CUPED as a pair of noise cancelling headphones: it uses data gathered prior to the experiment to understand the ambient noise, allowing you to notice a more pronounced pattern in the data.
 
-![CUPED variance reduction explained](../../../static/img/measuring-experiments/cuped-variance-plot.png)
+![CUPED variance reduction explained](/img/measuring-experiments/cuped-variance-plot.png)
 
 An illustration of how CUPED helps reduce the variance in an effect estimate, leading to a much tighter confidence interval.
 
@@ -20,13 +19,13 @@ The statistics behind CUPED quickly get quite involved. If you are looking for m
 
 You can switch between CUPED and non-CUPED results from the CUPED dropdown.
 
-![Switch to non CUPED](../../../static/img/measuring-experiments/cuped-switch-to-non-cuped.png)
+![Switch to non CUPED](/img/measuring-experiments/cuped-switch-to-non-cuped.png)
 
-![Switch to CUPED](../../../static/img/measuring-experiments/cuped-switch-to-cuped.png)
+![Switch to CUPED](/img/measuring-experiments/cuped-switch-to-cuped.png)
 
 CUPED can be turned on in the admin panel, and in the overview page of an experiment you can switch between CUPED and standard estimates. The models are updated once a day, but you can manually refresh upon changing the control variant or adding a new metric.
 
-![Turn CUPED on](../../../static/img/measuring-experiments/cuped-turn-on-cuped.png)
+![Turn CUPED on](/img/measuring-experiments/cuped-turn-on-cuped.png)
 
 ## Notes
 - Conversion and retention metrics do not have a clear pre-experiment equivalent, which means that for experiments that only have conversion and/or retention metrics, CUPED does not work.
