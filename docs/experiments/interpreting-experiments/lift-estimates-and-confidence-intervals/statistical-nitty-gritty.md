@@ -34,10 +34,30 @@ First, some notation:
   (unobserved) population variance is $\sigma^2_C$ and $\sigma^2_T$
 
 * $m_C$ and $m_T$ are the averages of $\bold{Y}_C$ and $\bold{Y}_T$ across all
-  subjects in the control group and treatment group, respectively
+  subjects in the control group and treatment group, respectively:
+  
+  $$
+  \begin{equation}
+  \begin{split}
+  m_C &= \frac{\sum_{i=1}^{n_C}{y_i}}{n_C}
+  \\[1.2em]
+  m_T &= \frac{\sum_{j=1}^{n_T}{y_j}}{n_T}
+  \end{split}
+  \end{equation}
+  $$
 
 * $s^2_C$ and $s^2_T$ are the *sample* variances of $\bold{Y}_C$ and $\bold{Y}_T$
-  for the control group and treatment group, respectively
+  for the control group and treatment group, respectively:
+
+  $$
+  \begin{equation}
+  \begin{split}
+  s^2_C &= \frac{n_C}{n_C - 1}\left(\frac{\sum_{i=1}^{n_C}{y_i^2}}{n_C} - m_C^2\right)
+  \\[1.2em]
+  s^2_T &= \frac{n_T}{n_T - 1}\left(\frac{\sum_{j=1}^{n_T}{y_j^2}}{n_T} - m_T^2\right)
+  \end{split}
+  \end{equation}
+  $$
 
 Regardless of the distribution of $\bold{Y}_C$ and $\bold{Y}_T$, the
 [Central Limit Theorem (CLT)](https://en.wikipedia.org/wiki/Central_limit_theorem)
@@ -55,6 +75,75 @@ $$
 \end{equation}
 $$
 
+:::info Ratio metrics
+
+Eppo also supports <Term def={true}>ratio metrics</Term>, where instead of
+estimating the mean of a single metric, we are interested in understanding the
+ratio of two means (or, equivalently, the ratio of two sums),
+such as average order value or time per session. In this
+case (leaving out the $\small{C}$ / $\small{T}$ subscript for brevity),
+we observe from a sample of size $n$ the numerator metric $y_i$ and
+the denominator metric $z_i$ for each subject (with the set of
+all subject observations being $\bold{Y}$ and $\bold{Z}$ respectively)
+and are trying to estimate:
+
+$$
+\mu_{ratio} = \frac{\mu_{\tiny{Y}}}{\mu_{\tiny{Z}}} = \frac{\sum_{i=1}^{n}{y_i}}{\sum_{i=1}^n{z_i}}
+$$
+
+As above, $\mu_{\tiny{Y}}$ and $\mu_{\tiny{Z}}$ can be estimated by their sample means $m_{\tiny{Y}}$
+and $m_{\tiny{Z}}$, which are normally distributed around the true values with
+variances $\frac{\sigma^2_{\tiny{Y}}}{n}$ and $\frac{\sigma^2_{\tiny{Z}}}{n}$, which
+in turn can be estimated by the sample variances $s_{\tiny{Y}}$ and $s_{\tiny{Z}}$.
+
+Estimating the ratio $\mu$ then becomes a matter of dividing the distributions
+for each component of the ratio; under some reasonable assumptions[^normality],
+the resulting quotient is also approximately normally distributed:
+
+$$
+\frac{\sum_i{\bold{Y}}}{\sum_i{\bold{Z}}} \xrightarrow{D}
+\mathcal{N}\big(\mu_{ratio},~\sigma^2_{ratio}\big)
+$$
+
+The variance term can be calculated
+using the [delta method](https://en.wikipedia.org/wiki/Delta_method)
+(with $\sigma_{\!\tiny{\textit{YZ}}}$ representing the covariance between $\bold{Y}$ and $\bold{Z}$)
+as:
+
+$$
+\sigma^2_{ratio} = \left(
+  \frac{\mu_{\tiny{Y}}}{\mu_{\tiny{Z}}}
+\right)^2
+\left(
+  \frac{\sigma_{\tiny{Y}}^2}{\mu_{\tiny{Y}}^2} + \frac{\sigma_{\tiny{Z}}^2}{\mu_{\tiny{Z}}^2} - \frac{2\sigma_{\!\tiny{\textit{YZ}}}}{n \mu_{\tiny{Y}} \mu_{\tiny{Z}}}
+\right)
+$$
+
+Note that the extra $n$ in the denominator of the last term is because we need the covariance
+between the sample averages.
+
+For each variation, then, we can plug in the sample moments of the numerator and
+denominator metrics to calculate the values for the ratio:
+
+$$
+
+\begin{align}
+m_{ratio} &= \frac{m_{\tiny{Y}}}{m_{\tiny{Z}}} 
+\\
+s^2_{ratio} &= \left(
+  \frac{m_{\tiny{Y}}}{m_{\tiny{Z}}}
+\right)^2
+\left(
+  \frac{s_{\tiny{Y}}^2}{m_{\tiny{Y}}^2} + \frac{s_{\tiny{Z}}^2}{m_{\tiny{Z}}^2} - \frac{2s_{\!\tiny{\textit{YZ}}}}{n m_{\tiny{Y}} m_{\tiny{Z}}}
+\right)
+\end{align}
+$$
+
+The below analysis then simply uses these values for ratio metrics instead of
+the simple sample means and variances for each variation.
+
+:::
+
 ### Frequentist analysis
 
 We want to calculate the lift, which we'll call $\Delta$:
@@ -65,10 +154,10 @@ $$
 
 But, since we don't know the true values $\mu_T$ and <NoBreak>$\mu_C$</NoBreak>,
 we'll need to instead *estimate* the lift. We know from the CLT, as shown in
-equation 1 above, that $m_T$ and $m_C$ are approximately normally
+equation 3 above, that $m_T$ and $m_C$ are approximately normally
 distributed (for sufficiently large $n_C$ and $n_T$); furthermore, since $m_T$
 and $m_C$ are independent, under reasonable assumptions the ratio
-$\frac{m_T}{m_C}$ is approximately normal.[^normality] This allows us to model
+$\frac{m_T}{m_C}$ is approximately normal.[^normality2] This allows us to model
 $\hat{\Delta}$ as a normal distribution:
 
 $$
@@ -92,15 +181,21 @@ methods (fixed-sample and sequential), that's where we end, in terms of
 estimating the lift (see below for turning that estimate into confidence
 intervals). For Bayesian, however, there's one more step.
 
-[^normality]: In essence, the approximation requires that the denominator (that
-    is, the [normal] distribution of the treatment mean) be unlikely to be
-    negative. Since all metrics are positive, the requirement boils down to
-    whether the distribution of the denominator is sufficiently narrow (that is,
-    has sufficiently low variance, relative to the mean). There is a short
-    treatment of this approximation
+[^normality]: Under reasonable assumptions, we can approximate the ratio of two
+    normal distributions as a normal distribution centered on the ratio of the
+    means. In essence, the approximation requires that the denominator be
+    unlikely to be negative. Since all metrics are positive, the requirement
+    boils down to whether the distribution of the denominator is sufficiently
+    narrow (that is, has sufficiently low variance, relative to the mean). There
+    is a short treatment of this approximation
     [here](https://en.wikipedia.org/wiki/Ratio_distribution#Uncorrelated_noncentral_normal_ratio),
     and a longer treatment in
     [Díaz-Francés and Rubio (2004), "On the Existence of a Normal Approximation to the Distribution of the Ratio of Two Independent Normal Random Variables."](https://www.researchgate.net/profile/F-Rubio/publication/257406150_On_the_existence_of_a_normal_approximation_to_the_distribution_of_the_ratio_of_two_independent_normal_random_variables/links/53d7a18a0cf2e38c632ddabc/On-the-existence-of-a-normal-approximation-to-the-distribution-of-the-ratio-of-two-independent-normal-random-variables.pdf)
+
+[^normality2]: For more on requirements for this approximation, see note
+    [above](#fn-normality). In this case, the denominator (which must be
+    unlikely to be negative for the approximation to hold) is the distribution
+    of the treatment metric.
 
 :::info
 

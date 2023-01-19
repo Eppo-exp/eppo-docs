@@ -62,7 +62,7 @@ await init({
 });
 ```
 
-After initialization, the SDK begins polling Eppo’s API at regular intervals to retrieve the most recent experiment configurations such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments are effectively instant. If you are using the SDK for experiment assignments, make sure to pass in an assignment logging callback (see [section](#define-an-assignment-logger-experiment-assignment-only) below).
+During initialization, the SDK sends an API request to Eppo to retrieve the most recent experiment configurations such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments are effectively instant. If you are using the SDK for experiment assignments, make sure to pass in an assignment logging callback (see [section](#define-an-assignment-logger-experiment-assignment-only) below).
 
 <br />
 
@@ -123,7 +123,7 @@ const variation = eppoClient.getAssignment("<SUBJECT-KEY>", "<FLAG-OR-EXPERIMENT
 
 The `getAssignment` function takes two required and one optional input to assign a variation:
 - `subjectKey` - The entity ID that is being experimented on, typically represented by a uuid.
-- `flagOrExperimentKey` - This key is available on the detail page of for both flags and experiments.
+- `flagOrExperimentKey` - This key is available on the detail page for both flags and experiments.
 - `targetingAttributes` - An optional map of metadata about the subject used for targeting. If you create rules based on attributes on a flag/experiment, those attributes should be passed in on every assignment call.
 
 
