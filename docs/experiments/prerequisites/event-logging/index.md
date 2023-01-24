@@ -9,8 +9,6 @@ Eppo's SDKs include either an assignment logger base class or an interface, in w
 * [mParticle](#mparticle)
 * [Snowplow](#snowplow)
 
-Similar patterns can be adopted for Eppo's SDKs in other languages, e.g. Java, Python, and etc.
-
 The object passed into the assignment logger function contains the following fields:
 
 | Field | Description | Example |
@@ -21,6 +19,7 @@ The object passed into the assignment logger function contains the following fie
 | `timestamp` (string) | The time when the subject was assigned to the variation | 2021-06-22T17:35:12.000Z |
 | `subjectAttributes` (map) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `{ "country": "US" }` |
 
+The examples below are written in JavaScript, but similar patterns can be adapted for all of Eppo's SDKs including Java, Python, and etc.
 
 ## Segment
 
