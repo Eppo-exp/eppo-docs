@@ -117,6 +117,13 @@ Now that you have a proper User created for Eppo with adequate privileges, you c
 
 **Note**: Eppo uses [Google Secret Manager](https://cloud.google.com/secret-manager) to store and manage your credentials. Credentials are never stored in plaintext, and Secret Manager can only be accessed via authorized roles in GCP, where all usage is monitored and logged.
 
+### Connecting via IAM
+
+Eppo also supports using the AWS IAM service. This mechanism allows for
+a different type of authorization, if that is required.
+
+Please contact your support representative for a guided connection.
+
 ### Updating Credentials
 
 Credentials can be updated at any time within the Admin panel of the app.
