@@ -28,7 +28,7 @@ Go to an experiment and click on the bell icon in the upper right of the page. S
 
 To configure which types of notifications this channel will recieve, click on "Configure" next to the channel name and update preferences.
 
-To remove the slack channel from this experiment, click on "Configure" and turn off the channel.
+To remove the Slack channel from this experiment, click on "Configure" and turn off the channel.
 
 
 ## Configure Slack Notifications for a Specific Metric
@@ -51,3 +51,10 @@ See more on <a href="https://docs.geteppo.com/building-experiments/experiments/e
 
 ### A primary or guardrail metric reached statistical significance on this experiment
 * When a primary metric or a guardrail metric on an experiment reaches statistical significance for **Sequential experiments ONLY**
+
+---
+
+The Eppo slack app is included for free in any subscription plan for the Eppo experimentation platform.
+
+If you have any questions or feedback, please contact Eppo Support at [support@geteppo.com](mailto:support@geteppo.com). You can read [Eppo's Privacy Policy
+here](https://app.termly.io/document/privacy-policy/a555478b-524f-4b53-b70e-6575d94ad3c7). 
