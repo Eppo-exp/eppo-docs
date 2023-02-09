@@ -3,7 +3,7 @@ sidebar_position: 2
 ---
 
 # Concepts
-This page explores **flags**, **variations**, and **allocations**, the central feature flagging concepts on Eppo.
+This page explores **flags**, **variations**, and **allocations**, and **environments**, the central feature flagging concepts on Eppo.
 
 ## Flags
 A flag is simply a fork somewhere in your code. Where originally there was a single code path, the presence of a flag creates a gate that splits that path into two or more code paths. In its most basic form a flag object can represented by a human readable name, a key, and a status (on/off). Here's a quick example:
@@ -49,4 +49,15 @@ Allocations can be turned on/off in the waterfall using the `Enable Allocation` 
 
 Note that it is possible to reduce an allocation's traffic exposure to less than 100%. In this case, the allocation's rules are evaluated and then subsequently traffic exposure check is computed. Subjects that pass the rules test but fall outside the traffic exposure check are always served `NULL`. They do not continue down the waterfall.
 
+## Environments
 
+Every Eppo instance comes with two out-of-the-box environments: **Test** and **Production**. These represent two independent silos for flags and experiments, mirroring the way you test and ship code. Use the **Test** environment to check feature flag behavior before releasing them in **Production**. Note: unlike flags, all experiments (under the *Experiments* tab) currently live in the **Production** environment.
+
+API keys for both environments can be created on the *Admin > API Keys* section of the interface:
+
+![API key setup](../../static/img/feature-flagging/environments/api-keys.png)
+
+There is no limit to the number of API keys per environment. Once keys are generated, they can be used to initialize the SDK in the given environment. From there, flags can be toggled on an off independently per environment on the flag list and flag detail views. You can also define different targeting rules per environment:
+
+![Feature flag list page](../../static/img/feature-flagging/environments/ff-list-page.png)
+![Feature flag detail page](../../static/img/feature-flagging/environments/ff-detail-page.png)
