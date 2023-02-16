@@ -72,6 +72,6 @@ We then define progress as $\text{Progress} = \left(\frac{\text{Target precision
 ### Example
 
 Suppose the target precision on an experiment is 5%, and we have a single treatment variant whose primary metric has a point estimate of 0%, with confidence interval of (-10%, 10%). In this case, our current precision is 10%.
-Hence, the current progress is (5%/10%)^2 = 25%.
+Hence, the current progress is $\left(\frac{5\%}{10\%}\right)^2 = 25%.
 
 [1]: Note: for the Bayesian methodology this relies on the fact that the prior is set accurately. E.g. when using an uninformative prior, one should not use early stopping.
