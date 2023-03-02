@@ -54,6 +54,6 @@ See more on <a href="https://docs.geteppo.com/building-experiments/experiments/e
 
 ---
 
-The Eppo Slack app is included for free in any subscription plan for the Eppo experimentation platform. If you have any questions or feedback, please contact Eppo Support at [support@geteppo.com](mailto:support@geteppo.com).
+The Eppo App for Slack is included for free in any subscription plan for the Eppo experimentation platform. If you have any questions or feedback, please contact Eppo Support at [support@geteppo.com](mailto:support@geteppo.com).
 
 Eppo's [Privacy Policy](https://app.termly.io/document/privacy-policy/a555478b-524f-4b53-b70e-6575d94ad3c7) and [Terms of Use](https://app.termly.io/document/terms-of-use-for-saas/4c635cc8-24f6-4c05-83fa-0382fca756ce). 
