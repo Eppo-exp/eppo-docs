@@ -11,8 +11,7 @@
 5. [Notification Triggers](#notification-triggers)
 
 ## Allow Permissions to a Slack Workspace
-![connect slack](https://user-images.githubusercontent.com/90637953/223586097-a2a1e567-7a9c-4e60-bff1-103d91a65c91.gif)
-
+![connect slack](https://user-images.githubusercontent.com/90637953/223587265-019faec4-279a-4ebe-b410-5fe2a3982a1d.gif)
 
 Go to Admin > Notifications to allow permissions to a Slack workspace. This is required before you can select Slack channels to recieve system wide notifications as well as for any user to add Slack channels for specific experiments and metrics.
 
