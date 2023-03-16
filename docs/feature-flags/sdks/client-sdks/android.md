@@ -30,7 +30,7 @@ During initialization, the SDK sends an API request to Eppo to retrieve the most
 <br />
 
 :::note
-API Keys used with Client SDKs should have only ‘Randomization READ’ permissions. 
+API Keys used with Client SDKs should have only 'Feature Flagging READ' permissions on, with all other permissions set to 'No Access'.
 :::
 
 <br />
