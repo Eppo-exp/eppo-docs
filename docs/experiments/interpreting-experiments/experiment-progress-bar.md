@@ -12,15 +12,15 @@ The progress of an experiment is measured with respect to **precision**. Precisi
 
 The goal of the progress bar is to measure whether we have gathered enough data to be confident in making a decision.
 
-To view the progress bar, we must first navigate to the **Experiments** tab from the left panel. The progress bar can be seen in the list item card for each experiment in the experiment list. It can also be seen in the right panel if we click the card. Hovering over the progress bar shows we more details like the % lift that can be detected with the assignments seen so far.
+To view the progress bar, we must first navigate to the **Experiments** tab from the left panel. The progress bar can be seen in the list item card for each experiment in the experiment list. It can also be seen in the right panel if we click the card. Hovering over the progress bar shows we more details like the % lift that can be detected with the assignments seen so far:
 
 ![Progress on list page](../../../static/img/interpreting-experiments/progress-card.png)
 
-we can also see the progress bar on the details page for each experiment.
+we can also see the progress bar on the details page for each experiment:
 
 ![Progress on details page](../../../static/img/interpreting-experiments/progress-details.png)
 
-Furthermore, when hovering over a progress bar, additional information about the current progress of the experiment is shown
+Furthermore, when hovering over a progress bar, additional information about the current progress of the experiment is shown:
 
 ![Progress bar popover](../../../static/img/interpreting-experiments/progress-popover.png)
 
@@ -41,7 +41,7 @@ Suppose, given the above considerations, we decide to set our precision at 5%. W
 
 When using the frequentist fixed sample methodology, the experiment runtime has to be decided ahead of time, e.g. using a sample size calculator, or prior experience from similar experiments.
 Once the end date of the experiment is reached, or the precision target is met for all primary metrics of the variants, the progress bar is at 100% and we marke the experiment **ready for review**.
-You are now able to confidently make a decision.
+You are now able to confidently make a decision:
 
 ![Progress bar popover](../../../static/img/interpreting-experiments/progress-bar-fixed-sample.png)
 
@@ -50,7 +50,7 @@ You are now able to confidently make a decision.
 When using either the sequential confidence intervals, or Bayesian methodology, the above still applies.
 But with both of these there is another option: both of these methods[^1] are always-valid and hence you can confidently stop an experiment any time.
 
-Whenever we detect that a primary metric of one of the variants is statistically significant (the confidence/credible interval does not contain 0%), we mark the experiment is **early stopping eligible\*** and hence **ready for review**. Of course, you might still want to run the experiment for longer, e.g. to obtain more data on secondary metrics. In the following example, the precision target is set to 2%, which has not been reached yet, but the experiment is still eligible for early stopping as we see a statistically significant lift and are using sequential analysis
+Whenever we detect that a primary metric of one of the variants is statistically significant (the confidence/credible interval does not contain 0%), we mark the experiment is **early stopping eligible\*** and hence **ready for review**. Of course, you might still want to run the experiment for longer, e.g. to obtain more data on secondary metrics. In the following example, the precision target is set to 2%, which has not been reached yet, but the experiment is still eligible for early stopping as we see a statistically significant lift and are using sequential analysis:
 
 ![Progress bar popover](../../../static/img/interpreting-experiments/progress-bar-early-stopping.png)
 
