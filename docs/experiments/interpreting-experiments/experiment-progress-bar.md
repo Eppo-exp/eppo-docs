@@ -48,7 +48,7 @@ You are now able to confidently make a decision.
 ### Sequential and Bayesian methodology
 
 When using either the sequential confidence intervals, or Bayesian methodology, the above still applies.
-But with both of these there is another option: both of these methods[1] are always-valid and hence you can confidently stop an experiment any time.
+But with both of these there is another option: both of these methods[^1] are always-valid and hence you can confidently stop an experiment any time.
 
 Whenever we detect that a primary metric of one of the variants is statistically significant (the confidence/credible interval does not contain 0%), we mark the experiment is **early stopping eligible\*** and hence **ready for review**. Of course, you might still want to run the experiment for longer, e.g. to obtain more data on secondary metrics. In the following example, the precision target is set to 2%, which has not been reached yet, but the experiment is still eligible for early stopping as we see a statistically significant lift and are using sequential analysis
 
@@ -74,4 +74,4 @@ We then define progress as $\text{Progress} = \left(\frac{\text{Target precision
 Suppose the target precision on an experiment is 5%, and we have a single treatment variant whose primary metric has a point estimate of 0%, with confidence interval of (-10%, 10%). In this case, our current precision is 10%.
 Hence, the current progress is $\left(\frac{5\%}{10\%}\right)^2 = 25%.
 
-[1]: Note: for the Bayesian methodology this relies on the fact that the prior is set accurately. E.g. when using an uninformative prior, one should not use early stopping.
+[^1]: Note: for the Bayesian methodology this relies on the fact that the prior is set accurately. E.g. when using an uninformative prior, one should not use early stopping.
