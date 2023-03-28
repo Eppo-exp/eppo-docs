@@ -14,15 +14,15 @@ The goal of the progress bar is to measure whether we have gathered enough data 
 
 To view the progress bar, we must first navigate to the **Experiments** tab from the left panel. The progress bar can be seen in the list item card for each experiment in the experiment list. It can also be seen in the right panel if we click the card. Hovering over the progress bar shows we more details like the % lift that can be detected with the assignments seen so far.
 
-<!-- todo: update screenshot -->
-
-![Completed progress bar](../../../static/img/measuring-experiments/completed-progress-bar.png)
+![Progress on list page](../../../static/img/interpreting-experiments/progress-card.png)
 
 we can also see the progress bar on the details page for each experiment.
 
-<!-- todo: update screenshot -->
+![Progress on details page](../../../static/img/interpreting-experiments/progress-details.png)
 
-![Running progress bar](../../../static/img/measuring-experiments/running-progress-bar.png)
+Furthermore, when hovering over a progress bar, additional information about the current progress of the experiment is shown
+
+![Progress bar popover](../../../static/img/interpreting-experiments/progress-popover.png)
 
 **Note:** We compute the days remaining using a linear interpolation. This interpolation does not take into account that gathering data usually slows down during an experiment, and so the estimate may be optimistic, especially in the early days of an experiment.
 
@@ -43,16 +43,16 @@ When using the frequentist fixed sample methodology, the experiment runtime has 
 Once the end date of the experiment is reached, or the precision target is met for all primary metrics of the variants, the progress bar is at 100% and we marke the experiment **ready for review**.
 You are now able to confidently make a decision.
 
-<!-- todo: add screenshot of 100% progress -->
+![Progress bar popover](../../../static/img/interpreting-experiments/progress-bar-fixed-sample.png)
 
 ### Sequential and Bayesian methodology
 
 When using either the sequential confidence intervals, or Bayesian methodology, the above still applies.
 But with both of these there is another option: both of these methods[1] are always-valid and hence you can confidently stop an experiment any time.
 
-Whenever we detect that a primary metric of one of the variants is statistically significant (the confidence/credible interval does not contain 0%), we mark the experiment is **early stopping eligible\*** and hence **ready for review**. Of course, you might still want to run the experiment for longer, e.g. to obtain more data on secondary metrics.
+Whenever we detect that a primary metric of one of the variants is statistically significant (the confidence/credible interval does not contain 0%), we mark the experiment is **early stopping eligible\*** and hence **ready for review**. Of course, you might still want to run the experiment for longer, e.g. to obtain more data on secondary metrics. In the following example, the precision target is set to 2%, which has not been reached yet, but the experiment is still eligible for early stopping as we see a statistically significant lift and are using sequential analysis
 
-<!-- todo: add screenshot of early stopping eligible -->
+![Progress bar popover](../../../static/img/interpreting-experiments/progress-bar-early-stopping.png)
 
 <!-- todo: uncomment when we roll out minimum requirements
 ## Minimum requirements
