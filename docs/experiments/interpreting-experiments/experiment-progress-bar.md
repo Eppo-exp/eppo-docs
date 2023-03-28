@@ -6,6 +6,8 @@ The progress bar helps us understand how much data we have gathered and whether 
 
 The progress of an experiment is measured with respect to **precision**. Precision is the uncertainty in the point estimate as defined by the width of the confidence interval, and it is set at the metric level. However, it is possible to override this and set it to a particular value at the experiment level.
 
+![Setting precision target](../../../static/img/interpreting-experiments/progress-bar-analysis-plan.png)
+
 **Note:** A smaller precision requires the experiment to run much longer to collect sufficient data.
 
 ## Progress Bar
