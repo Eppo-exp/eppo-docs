@@ -5,7 +5,12 @@ The progress bar helps us understand how much data we have gathered and whether 
 ## Precision {#precision}
 
 The progress of an experiment is measured with respect to **precision**. Precision is the uncertainty in the point estimate as defined by the width of the confidence interval.
-For example, suppose that a metric shows a 5% lift for treatment variant versus the control variant, with a confidence interval of 3% to 7%. Then, we say the precision is 2%.
+
+:::tip Precision example
+
+For example, suppose that a metric shows a 5% lift for treatment variant versus the control variant, with a confidence interval of 3% to 7%. Then, the precision is 2%.
+
+:::
 
 Precision is set at the metric level. However, it is possible to override this and set it to a particular value at the experiment level.
 
