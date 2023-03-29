@@ -79,9 +79,12 @@ Furthermore, our statistical methods rely on having sufficient number of observa
 To compute progress, we first compute the **current precision**, which is simply the width of the confidence interval.
 We then define progress as $\text{Progress} = \left(\frac{\text{Target precision}}{\text{Current precision}}\right)^2$. The square comes from the fact that if we want to detect an effect twice as small, we need roughly 4 times more data.
 
-### Example
+:::tip Progress example
 
 Suppose the target precision on an experiment is 5%, and we have a single treatment variant whose primary metric has a point estimate of 0%, with confidence interval of (-10%, 10%). In this case, our current precision is 10%.
-Hence, the current progress is $\left(\frac{5\%}{10\%}\right)^2 = 25%.
+Hence, the current progress is $\left(\frac{5\%}{10\%}\right)^2$ = 25%.
+Note the quadratic relationship between precision and progress: if we want to reduce the precision by a factor of 2, we need to gather 4 times as much data: this is a fundamental law that shows up all over statistics.
+
+:::
 
 [^1]: Note: for the Bayesian methodology this relies on the fact that the prior is set accurately. E.g. when using an uninformative prior, one should not use early stopping.
