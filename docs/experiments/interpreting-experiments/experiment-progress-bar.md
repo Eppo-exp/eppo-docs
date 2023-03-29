@@ -83,7 +83,7 @@ We then define progress as $\text{Progress} = \left(\frac{\text{Target precision
 
 Suppose the target precision on an experiment is 5%, and we have a single treatment variant whose primary metric has a point estimate of 0%, with confidence interval of (-10%, 10%). In this case, our current precision is 10%.
 Hence, the current progress is $\left(\frac{5\%}{10\%}\right)^2$ = 25%.
-Note the quadratic relationship between precision and progress: if we want to reduce the precision by a factor of 2, we need to gather 4 times as much data: this is a fundamental law that shows up all over statistics.
+As noted before, we see the quadratic relationship between precision and progress: if we want to reduce the precision by a factor of 2, we need to gather 4 times as much data: this is a fundamental principle of statistics.
 
 :::
 
