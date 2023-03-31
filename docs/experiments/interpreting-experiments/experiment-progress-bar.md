@@ -20,7 +20,7 @@ Precision is set at the metric level. However, it is possible to override this a
 
 ## Progress Bar
 
-The goal of the progress bar is to measure whether we have gathered enough data to be confident in making a decision.
+The goal of the progress bar is to measure whether we have gathered enough data to be confident in making a decision. In particular, use the progress bar to help you stop experiments that look flat once these hit 100% progress.
 
 To view the progress bar, we must first navigate to the **Experiments** tab from the left panel. The progress bar can be seen in the list item card for each experiment in the experiment list. It can also be seen in the right panel if we click the card. Hovering over the progress bar shows we more details like the % lift that can be detected with the assignments seen so far:
 
@@ -43,14 +43,14 @@ Traditionally, when using a fixed sample test, we decide up front how long the e
 Before starting with any experiment, we have to set the precision to something that makes sense for our use case. Two aspects are important:
 
 - What constitutes a meaningful impact to the business: a 0.1% increase in revenue can be valuable for a company that operates at the scale of Google, but for a start-up that looks to grow 3x year over year, this would make for a negligible impact.
-- What effect sizes are we able to detect in a reasonable amount of time given the data volume. It's important to keep in mind that, as a rule of thumb, detecting an effect twice as small takes 4 times as long. Thus if based on our data volume it takes a month to detect a 10% lift, then it would take 4 months to detect a 5% lift. A constraint on the maximum time we are comfortable running an experiment often limits what MDE we can aim for.
+- What effect sizes are we able to detect in a reasonable amount of time given the data volume. It's important to keep in mind that, as a rule of thumb, detecting an effect twice as small takes 4 times as long. Thus if based on our data volume it takes a month to detect a 10% lift, then it would take 4 months to detect a 5% lift. A constraint on the maximum time we are comfortable running an experiment often limits what precision we can aim for. You can use our [Sample Size Calculator](../planning-experiments/using_the_sample_size_calculator/) to give an idea about how long it takes to reach a certain level of precision based on experiment runtime.
 
 Suppose, given the above considerations, we decide to set our precision at 5%. We start our experiment, the progress bar begins to fill up. How should we use it to make decisions?
 
 ### Frequentist fixed sample methodology
 
 When using the frequentist fixed sample methodology, the experiment runtime has to be decided ahead of time, e.g. using a sample size calculator, or prior experience from similar experiments.
-Once the end date of the experiment is reached, or the precision target is met for all primary metrics of the variants, the progress bar is at 100% and we marke the experiment **ready for review**.
+Once the end date of the experiment is reached, or the precision target is met for all primary metrics of the variants, the progress bar is at 100% and we mark the experiment **ready for review**.
 You are now able to confidently make a decision:
 
 ![Progress bar popover](../../../static/img/interpreting-experiments/progress-bar-fixed-sample.png)
@@ -58,7 +58,7 @@ You are now able to confidently make a decision:
 ### Sequential and Bayesian methodology
 
 When using either the sequential confidence intervals, or Bayesian methodology, the above still applies.
-But with both of these there is another option: both of these methods[^1] are always-valid and hence you can confidently stop an experiment any time.
+But with both of these there is another option: both of these methods[^bayesian-peeking] are always-valid and hence you can confidently stop an experiment any time.
 
 Whenever we detect that a primary metric of one of the variants is statistically significant (the confidence/credible interval does not contain 0%), we mark the experiment is **early stopping eligible\*** and hence **ready for review**. Of course, you might still want to run the experiment for longer, e.g. to obtain more data on secondary metrics. In the following example, the precision target is set to 2%, which has not been reached yet, but the experiment is still eligible for early stopping as we see a statistically significant lift and are using sequential analysis:
 
@@ -83,8 +83,9 @@ We then define progress as $\text{Progress} = \left(\frac{\text{Target precision
 
 Suppose the target precision on an experiment is 5%, and we have a single treatment variant whose primary metric has a point estimate of 0%, with confidence interval of (-10%, 10%). In this case, our current precision is 10%.
 Hence, the current progress is $\left(\frac{5\%}{10\%}\right)^2$ = 25%.
-As noted before, we see the quadratic relationship between precision and progress: if we want to reduce the precision by a factor of 2, we need to gather 4 times as much data: this is a fundamental principle of statistics.
+As noted before, we see the quadratic relationship between precision and progress:
+If we want to reduce the precision by a factor of 2, we need to gather 4 times as much data.
 
 :::
 
-[^1]: Note: for the Bayesian methodology this relies on the fact that the prior is set accurately. E.g. when using an uninformative prior, one should not use early stopping.
+[^bayesian-peeking]: Note: for the Bayesian methodology this relies on the fact that the prior is set accurately. E.g. when using an uninformative prior, one should not use early stopping.
