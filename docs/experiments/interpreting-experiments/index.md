@@ -284,6 +284,10 @@ statistics to summarize the results of an experiment.
    that in fact *control* is better than *treatment*. The risk measures, in that
    case, what the expected value (that is, the average of all lifts weighted by
    their likelihood under the posterior distribution) of the lift would be.
+   
+4. &#8203;<Term def={true}>Risk Control</Term>: The *expected metric loss* (measured in lift
+   terms, that is, as a percentage of the control value) *if* the lift were in
+   fact positive (or, for reversed metrics, negative) and we decide to choose the control variation.
 
 ## Segments and filters
 
