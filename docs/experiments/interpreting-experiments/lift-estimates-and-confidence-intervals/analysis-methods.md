@@ -50,9 +50,22 @@ brief, the methods are:
     </td>
   </tr>
   <tr>
+    <td class="row-header">Sequential hybrid</td>
+    <td>
+      This is a combination of the sequential and fixed sample methods: while the experiment is running we use sequential analysis, and once the experiment has finished, it switches to a fixed confidence interval. To maintain statistical guarantees, confidence intervals are slightly wider.
+    </td>
+    <td>
+      Combines the benefits of sequential and fixed sample testing: early stopping and high power at the end of an experiment
+    </td>
+    <td>
+      Requires to plan how long to run the experiment and slightly larger confidence intervals both during and at the end of the experiment
+    </td>
+  </tr>
+  <tr>
     <td class="row-header">Bayesian</td>
     <td>
-      Combine data from the experiment with a <em>prior belief</em> about how likely different lifts are, and use the result to make a decision</td>
+      Combine data from the experiment with a <em>prior belief</em> about how likely different lifts are, and use the result to make a decision
+    </td>
     <td>
       Allows for making nuanced decisions based on the full distribution of expected lifts, which is particularly helpful when sample sizes are small
     </td>
