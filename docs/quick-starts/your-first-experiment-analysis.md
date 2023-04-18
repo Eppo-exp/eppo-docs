@@ -21,7 +21,7 @@ Follow this quickstart to get your first experiment set up on Eppo.
 
 ## 1. Prep your data warehouse and set up experiment assignment
 
-Eppo assumes that you are already using a third party experiment assignment (i.e feature flagging) tool like [LaunchDarkly](https://launchdarkly.com/) or [Optimizely](https://www.optimizely.com/) and are exporting experiment data into a data warehouse. In particular, Eppo requires that you have the following tables in your data warehouse:
+This quickstart assumes that already have assignment logs tracked in your data warehouse, either from Eppo's randomization solution (i.e feature flagging) or an existing internal or third party solution. In particular, Eppo requires that you have the following tables in your data warehouse:
 
 - An assignment table that indicates which experiment subjects were assigned to which experiments and variants at which time. It should [contain columns](../experiments/connecting-your-data/assignment-tables/required-data)  that roughly correspond to:
 
