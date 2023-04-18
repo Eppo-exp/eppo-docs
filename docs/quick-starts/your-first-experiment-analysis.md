@@ -23,15 +23,18 @@ Follow this quickstart to get your first experiment set up on Eppo.
 
 This quickstart assumes that you already have assignment logs tracked in your data warehouse, either from Eppo's randomization solution or an existing internal or third party solution. In particular, Eppo requires that you have the following tables in your data warehouse:
 
-- An assignment table that indicates which experiment subjects were assigned to which experiments and variants at which time. It should [contain columns](../experiments/connecting-your-data/assignment-tables/required-data)  that roughly correspond to:
+- An assignment table that indicates which experiment subjects were assigned to which experiments and variants at which time. It should contain columns that roughly correspond to:
 
-    | timestamp | user_id | experiment | variation |
-    | --------- | ------- | ---------- | --------- |
+    | timestamp | subject_id        | experiment | variation |
+    |-------------------| ------- | ---------- | --------- |
     | 2021-06-22T17:35:12.000Z | 165740867980881574 | adding_BNPL_experiment | affirm |
+
+  where `subject_id` is a unique identifier for the [entity](../experiments/building-experiments/entities) on which you wish to experiment (in most cases, this will be either `user_id` or `session_id`).
+
 
 - An event table whose rows are logs of specific events that occurred at specific times. It should contain columns that roughly correspond to:
 
-    | timestamp | user_id | event_type | event_value |
+    | timestamp | subject_id | event_type | event_value |
     | --------- | ------- | ------- | -------------- |
     | 2021-07-17T18:57:13.000Z	 | 49980400511307080 | Revenue | 45.5695	|
     | 2021-07-17T18:57:13.000Z	 | 2281323415877132491 | Subscription | 1 |
