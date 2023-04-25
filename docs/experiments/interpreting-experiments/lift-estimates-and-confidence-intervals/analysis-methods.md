@@ -325,7 +325,7 @@ required to plan an analysis ahead of time.
     analysis, but without one there is no way to know when is an appropriate to
     look at the results.
 
-## Sequential hybrid analysis _(the default)_ {#hybrid-analysis}
+## Sequential hybrid analysis {#hybrid-analysis}
 
 The sequential analysis method is attractive because it allows us to continuously monitor experiment results.
 However, the downside is that the confidence intervals necessarily have to be more conservative.
