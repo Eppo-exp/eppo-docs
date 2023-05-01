@@ -64,7 +64,8 @@ The benefit of this approach over the classical Bonferroni correction is that th
 Note, this setting is unavailable for the Bayesian methodology.
 
 ### 4. Minimum Requirements {#minimum-requirements}
-If enabled by your admin, these are the minimum run requirements before an experiment status can be "Ready for Review". Experiments must meet both the minimum duration (days run) as well as sample size per variant. This is to help prevent premature experiment decisions. 
+
+If enabled by your admin, these are the minimum run requirements before an experiment status can be "Ready for Review". Experiments must meet both the minimum duration (days run) as well as sample size per variant. This is to help prevent premature experiment decisions.
 
 If your admin has not enabled this setting, then minimum requirements will not be visible on experiments.
 ![Minimum requirements](/img/planning-experiments/min-requirements-exp-settings.png)
