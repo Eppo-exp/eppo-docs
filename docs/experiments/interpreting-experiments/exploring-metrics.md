@@ -19,7 +19,7 @@ After selecting a metric and updating the chart, you can select which visualizat
 If there is not enough data to calculate the confidence of a lift, then the bands will be shown in a gradient fading out from the center line.
 ![Lift Visualization](/img/measuring-experiments/explore-lift-viz.png)
 
-## Time Series
+### Time Series
 The time series chart shows how the percent lift and precision change over the duration of the experiment. The lift compared to the control is shown as the center line, and the confidence interval bands are shown in the lower opacity shading. 
 
 If there is not enough data to calculate the confidence of a lift, then the bands will be shown in a gradient fading out from the center line.
