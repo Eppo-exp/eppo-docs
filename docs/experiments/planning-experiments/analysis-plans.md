@@ -56,7 +56,7 @@ We can avoid this by making our confidence intervals more conservative (wider) i
 
 We allow for control of FWER using the **preferential Bonferroni** method. This is similar to the well-known [Bonferroni correction](https://en.wikipedia.org/wiki/Bonferroni_correction) except that it gives additional weight to the primary metric:
 
-![Multiple testing settings](/img/planning-experiments/multiple-testing-settings.png)
+<img width="646" alt="image" src="https://user-images.githubusercontent.com/90637953/235504469-eb02fcd2-06a0-48f1-9dc9-2f6512bf81d2.png">
 
 To be precise, if $\gamma$ indicates the weighted alpha spending, and assume we have $k$ treatment variants and $m$ metrics, then the preferential Bonferroni method gives us $\gamma \frac{\alpha}{k}$-confidence intervals for the primary metrics ands $(1-\gamma)\frac{\alpha}{k (m-1)}$-confidence intervals for all other metrics.
 The benefit of this approach over the classical Bonferroni correction is that the power to detect changes in the primary metric does not depend on how many other metrics are added to the experiment.
