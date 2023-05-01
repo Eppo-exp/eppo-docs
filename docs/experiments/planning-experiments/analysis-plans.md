@@ -63,7 +63,14 @@ The benefit of this approach over the classical Bonferroni correction is that th
 
 Note, this setting is unavailable for the Bayesian methodology.
 
-### 4. Precision {#precision}
+### 4. Minimum Requirements {#minimum-requirements}
+If enabled by your admin, these are the minimum run requirements before an experiment status can be "Ready for Review". Experiments must meet both the minimum duration (days run) as well as sample size per variant. This is to help prevent premature experiment decisions. 
+
+If your admin has not enabled this setting, then minimum requirements will not be visible on experiments.
+<img width="1146" alt="min-requirements" src="https://user-images.githubusercontent.com/90637953/235502727-5cd8fc73-8bbd-4dce-92cc-dd41db6d81bf.png">
+
+
+### 5. Precision {#precision}
 
 [Precision](../interpreting-experiments/experiment-progress-bar.md#precision) captures the uncertainty in the point estimate as defined by the width of the confidence interval.
 Precision is set at the metric level.
