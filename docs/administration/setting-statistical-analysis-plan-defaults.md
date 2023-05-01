@@ -7,10 +7,16 @@ In particular, you can set company-wide defaults for the following settings:
 * **Confidence Interval Method**: Sequential, Fixed Sample, Bayesian
 * **Confidence Level**: The percent of time the confidence interval contains the true lift
 * **Desired Power (for the progress bar)**: The percent of the time the minimum effect size will be detected, assuming it exists.
+* **Multiple testing correction**: When enabled, Eppo will apply a preferential Bonferroni correction to adjust the confidence intervals for multiple metrics and variations. This results in wider intervals and reduces the likelihood of false positives at the cost of increased false negatives.
 
 Each of these can be overridden for individual experiments, if need be. For more
 on what each setting is and how to choose the right settings, see
 [Analysis Plans](../experiments/planning-experiments/analysis-plans.md).
+
+### Experiment Progress Settings
+#### Setting a minimum threshold for experiments
+When enabled, this setting cannot be overriden on individual experiments. The experiments must meet both a minimum duration (days run) and sample size requirement before an experiment status can be “ready for review”. This is to help prevent premature stopping and decisions on experiments. 
+<img width="904" alt="image" src="https://user-images.githubusercontent.com/90637953/235506682-a77451b4-5c06-4006-b13e-0448835ab304.png">
 
 
 ## How to Change the Defaults
@@ -23,4 +29,4 @@ using the defaults. Individual experiments can choose to opt out of the
 company-wide defaults and use different settings. See how to set the
 [statistical analysis plan at the experiment level](../experiments/building-experiments/experiments/creating-experiments.md#analysis-plan-settings).
 
-![Company Analysis Plan](https://user-images.githubusercontent.com/90637953/200430663-1272805d-b494-44aa-bc48-cfd2e9fc3439.gif)
+![company analysis plan](https://user-images.githubusercontent.com/90637953/235506624-f2fd0583-ba78-4306-a3c4-b6bca998b1bb.gif)
