@@ -69,7 +69,6 @@ If enabled by your admin, these are the minimum run requirements before an exper
 If your admin has not enabled this setting, then minimum requirements will not be visible on experiments.
 <img width="1146" alt="min-requirements" src="https://user-images.githubusercontent.com/90637953/235502727-5cd8fc73-8bbd-4dce-92cc-dd41db6d81bf.png">
 
-
 ### 5. Precision {#precision}
 
 [Precision](../interpreting-experiments/experiment-progress-bar.md#precision) captures the uncertainty in the point estimate as defined by the width of the confidence interval.
