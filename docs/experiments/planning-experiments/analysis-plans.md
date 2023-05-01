@@ -140,8 +140,6 @@ Note, though, that these terms don't have the same meaning if using a
 [Bayesian analysis](../interpreting-experiments/lift-estimates-and-confidence-intervals/analysis-methods.md#bayesian-analysis)
 analysis method, although the concepts can still be useful.
 
-:::
-
 ### Frequentist methods: taking control
 
 The [fixed-sample](../interpreting-experiments/lift-estimates-and-confidence-intervals/analysis-methods.md#fixed-sample-analysis)
