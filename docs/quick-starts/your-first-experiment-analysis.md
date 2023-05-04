@@ -39,7 +39,7 @@ This quickstart assumes that you already have assignment logs tracked in your da
     | 2021-07-17T18:57:13.000Z	 | 49980400511307080 | Revenue | 45.5695	|
     | 2021-07-17T18:57:13.000Z	 | 2281323415877132491 | Subscription | 1 |
 
-If you do not have a experiment assignment tool integrated, please refer to the [experiment assignment](../experiments/prerequisites/experiment-assignment) section for more instructions.
+If you do not have a experiment assignment tool integrated, please refer to the [experiment assignment](../experiments/prerequisites/experiment-assignment/) section for more instructions.
 
 If you have a experiment assignment tool integrated but do not have an assignment table set up in your data warehouse, please follow the instructions [here](../experiments/connecting-your-data/assignment-tables/) to log your assignment data.
 
