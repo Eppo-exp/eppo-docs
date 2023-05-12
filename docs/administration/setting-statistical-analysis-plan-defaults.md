@@ -15,7 +15,9 @@ on what each setting is and how to choose the right settings, see
 
 ### Experiment Progress Settings
 #### Setting a minimum threshold for experiments
-When enabled, this setting cannot be overriden on individual experiments. The experiments must meet both a minimum duration (days run) and sample size requirement before an experiment status can be “ready for review”. This is to help prevent premature stopping and decisions on experiments. 
+When enabled, this setting cannot be overriden on individual experiments. When enabled, experiments must meet both a minimum duration (days run) and sample size requirement before the experiment’s progress will be displayed.
+
+ This is to help prevent premature stopping and decisions on experiments. 
 ![Minimum Threshold](/img/administration/min-threshold-admin-setting.png)
 
 ## How to Change the Defaults
