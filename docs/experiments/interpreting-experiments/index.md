@@ -261,18 +261,18 @@ statistics to summarize the results of an experiment.
    superior to the control variation; in other words, the chance that the lift is good
    (positive for most metrics, but negative for <Term>reversed metrics</Term> (e.g. latency: lower latency is better)
 
-2. &#8203;<Term def={true}>Probability Better Than MDE</Term>: Bayesian analyses comparing two
+2. &#8203;<Term def={true}>Probability > Precision</Term>: Bayesian analyses comparing two
    distributions (in our case the average metric values in the treatment variation
    compared to the average metric values in the control variation) sometimes refer to the
-   [<Term>Region of Practical Equivalence (ROPE)</Term>](https://journals.sagepub.com/doi/10.1177/2515245918771304), which is the amount of
-   difference between the distributions that is, practically speaking, trivial.
+   [<Term>Region of Practical Equivalence (ROPE)</Term>](https://journals.sagepub.com/doi/10.1177/2515245918771304), 
+   which is the amount of difference between the distributions that is, practically speaking, trivial.
    In other words, we might care not just about whether the treatment is
    strictly better than control, but whether it is better *enough* that the
-   difference is meaningful (in business terms). Since the MDE represents the
+   difference is meaningful (in business terms). Since the precision represents the
    smallest lift that the business cares about, it is also a useful boundary for
    the ROPE.
 
-   For example, if the MDE for a metric was a 5% lift, this statistic would
+   For example, if the precision for a metric was a 5% lift, this statistic would
    calculate the portion of the posterior lift distribution that is *above* 5%
    (assuming positive lift is good).
 
