@@ -259,7 +259,7 @@ statistics to summarize the results of an experiment.
 
 1. &#8203;<Term def={true}>Probability Beats Control</Term>: The probability that the treatment variation is
    superior to the control variation; in other words, the chance that the lift is good
-   (positive for most metrics, but negative for <Term>reversed metrics</Term>)
+   (positive for most metrics, but negative for <Term>reversed metrics</Term> (e.g. latency: lower latency is better)
 
 2. &#8203;<Term def={true}>Probability Better Than MDE</Term>: Bayesian analyses comparing two
    distributions (in our case the average metric values in the treatment variation
