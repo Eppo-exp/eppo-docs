@@ -19,7 +19,7 @@ require (
 Or you can install the SDK from the command line with:
 
 ```
-go get github.com/Eppo-exp/go-server-sdk@latest
+go get github.com/Eppo-exp/golang-sdk@latest
 ```
 
 ## 2. Initialize the SDK
