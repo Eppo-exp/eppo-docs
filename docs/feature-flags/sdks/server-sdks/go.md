@@ -4,7 +4,7 @@ import TabItem from '@theme/TabItem';
 # Go
 
 Eppo's open source Go SDK can be used for both feature flagging and experiment assignment:
-- [GitHub repository](https://github.com/Eppo-exp/go-server-sdk)
+- [GitHub repository](https://github.com/Eppo-exp/golang-sdk)
 - [Package](https://pkg.go.dev/github.com/Eppo-exp/golang-sdk)
 
 ## 1. Install the SDK
@@ -19,7 +19,7 @@ require (
 Or you can install the SDK from the command line with:
 
 ```
-go get github.com/Eppo-exp/go-server-sdk@latest
+go get github.com/Eppo-exp/golang-sdk@latest
 ```
 
 ## 2. Initialize the SDK
