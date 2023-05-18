@@ -1,3 +1,6 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Event logging
 
 The second prerequisite to running experiments on Eppo is logging application events to your warehouse. It is best practice to centralize application logging as much as possible, and Eppo's SDKs work seamlessly with most logging tools, meaning you can keep using your favorite logger. The last step would be configuring your logging tool, e.g. Segment, to push your data into your data warehouse.
@@ -21,7 +24,8 @@ The object passed into the assignment logger function contains the following fie
 
 The examples below are written in JavaScript, but similar patterns can be adapted for all of Eppo's SDKs including Java, Python, and etc.
 
-## Segment
+<Tabs>
+<TabItem value="segment" label="Segment">
 
 ```javascript
 // Import Eppo's assignment logger interface and client initializer
@@ -53,7 +57,8 @@ const eppoClient = EppoSdk.getInstance();
 const variation = eppoClient.getAssignment("<SUBJECT-KEY>", "<FLAG-OR-EXPERIMENT-KEY>", {});
 ```
 
-## Rudderstack
+</TabItem>
+<TabItem value="rudderstack" label="Rudderstack">
 
 ```javascript
 // Import Eppo's assignment logger interface and client initializer
@@ -87,7 +92,8 @@ const eppoClient = EppoSdk.getInstance();
 const variation = eppoClient.getAssignment("<SUBJECT-KEY>", "<FLAG-OR-EXPERIMENT-KEY>", {});
 ```
 
-## mParticle
+</TabItem>
+<TabItem value="mparticle" label="mParticle">
 
 ```javascript
 // Import Eppo's assignment logger interface and client initializer
@@ -127,7 +133,8 @@ const eppoClient = EppoSdk.getInstance();
 const variation = eppoClient.getAssignment("<SUBJECT-KEY>", "<FLAG-OR-EXPERIMENT-KEY>", {});
 ```
 
-## Snowplow
+</TabItem>
+<TabItem value="snowplow" label="Snowplow">
 
 This examples shows the setup for Snowplow's Node.js Tracker v3 SDK.
 
@@ -176,3 +183,7 @@ await init({
 const eppoClient = EppoSdk.getInstance();
 const variation = eppoClient.getAssignment("<SUBJECT-KEY>", "<FLAG-OR-EXPERIMENT-KEY>", {});
 ```
+
+
+</TabItem>
+</Tabs>
