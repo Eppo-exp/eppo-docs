@@ -121,5 +121,5 @@ variation = client.get_assignment(
 <br />
 
 :::note
-It may take up to 5 minutes for changes to Eppo experiments to be reflected by the SDK assignments.
+It may take up to 10 seconds for changes to Eppo experiments to be reflected by the SDK assignments.
 :::
