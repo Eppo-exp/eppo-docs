@@ -37,5 +37,5 @@ Generating an experiment report on Eppo involves five pieces:
 # Getting started resources
 
 - [Your first experiment analysis](./experiment-quickstart)
-- [Connect your data warehouse to Eppo](./experiments/connecting-your-data/data-warehouses/connecting-to-bigquery)
+- [Connect your data warehouse to Eppo](experiments/prerequisites/connecting-to-data-warehouse/connecting-to-bigquery.md)
 - [How the Eppo data pipeline works](./experiments/building-experiments/eppo-data-pipeline)

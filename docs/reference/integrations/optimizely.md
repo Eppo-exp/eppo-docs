@@ -1,18 +1,24 @@
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+# Optimizely
 
-# Create assignment table from Optimizely
+In order to perform its analyses, Eppo needs access to an assignment table in your data warehouse that lists each user that comes through the system and which variant they saw at which time.
 
-_Note:_ this guide assumes that you have already integrated Optimizely feature flags into your code.
+| timestamp | user_id | experiment | variation |
+| --------- | ------- | ---------- | --------- |
+| 2021-06-22T17:35:12.000Z | 165740867980881574 | adding_BNPL_experiment | affirm |
 
-1. Find all places in your code where your feature flags are being invoked.
+By default, Optimizely does not make accessible the data which allows Eppo to determine which users were assigned/exposed to any given feature/experiment. To access this data, you have a couple of options:
 
-**Find the SDK that you're using in the [Optimizely SDK documentation](https://docs.developers.optimizely.com/full-stack/v4.0/docs/create-flag-variations#implement-flag-variations) and identify the syntax you're searching for.** 
+- [Pay to Export data from Optimizely to Snowflake](https://docs.developers.optimizely.com/optimizely-data/docs/snowflake-integration)
+- Log assignments manually with wrapper code (see below)
+
+## Logging assignments manually with wrapper code
+
+To manually log Optimizely assignments, you'll need to find all places in your code where Optimizely is being invoked and replace with a wrapper function. The example below is based on Javascript, see [Optimizely SDK documentation](https://docs.developers.optimizely.com/full-stack/v4.0/docs/create-flag-variations#implement-flag-variations) to find the syntax for your language of choice.
+
+### Find all places in your code where your feature flags are being invoked.
+
 
 Optimizely's SDK supports [flag variations](https://docs.developers.optimizely.com/full-stack/v4.0/docs/create-flag-variations). You need to first define the variations in the Optimizely app, and then use the `decision.variables` method to retrieve which variation is enabled for the current user. 
-
-<Tabs>
-<TabItem value="js" label="JavaScript">
 
 ```js
 // Fetch enabled state for the "product_sort" flag.
@@ -39,35 +45,11 @@ if (enabled) {
 let products = productProvider.get(colorOfButton);
 ```
 
-</TabItem>
-<TabItem value="py" label="Python">
-
-```py
-# Is the flag enabled for the user?
-user = optimizely.create_user_context("user123")
-decision = user.decide("button_color_experiment")
-enabled = decision.enabled
-
-"""
-    In the online Optimizely app, go define flag variations
-"""
-
-if enabled:
-    # get flag variable values depending on the variation the user bucketed into
-    color_of_button = decision.variables["color"]
-```
-
-</TabItem>
-</Tabs>
-
-2. Log all feature flag invocations.
+### Log all feature flag invocations.
 
 In order to capture assignment data, every time the feature flag is invoked, you need to log the user, timestamp, and which experiment and variant they're seeing
 
 In Javascript, it may look like this:
-
-<Tabs>
-<TabItem value='js' label='Javascript'>
 
 ```javascript
 function checkFeatureEnabled(experimentKey, defaultValue) {
@@ -102,8 +84,6 @@ function checkFeatureEnabled(experimentKey, defaultValue) {
     return colorOfButton;
 }
 ```
-</TabItem>
-</Tabs>
 
 You need to ensure that all usages of feature flags (or at least those you wish to run an experiment on) are wrapped with this new function you created.
 

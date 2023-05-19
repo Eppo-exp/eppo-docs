@@ -1,16 +1,32 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Creating assignment table from LaunchDarkly
+# LaunchDarkly
 
-_Note:_ this guide assumes that you have already integrated LaunchDarkly feature flags into your code.
+## Exporting data from LaunchDarkly
 
-1. Find all places in your code where your feature flags are being invoked.
+In order to perform its analyses, Eppo needs access to an assignment table in your data warehouse that lists each user that comes through the system and which variant they saw at which time.
 
-**Find the SDK that you're using in the [LaunchDarkly SDK documentation](https://docs.launchdarkly.com/sdk) and identify the syntax you're searching for.**
+| timestamp | user_id | experiment | variation |
+| --------- | ------- | ---------- | --------- |
+| 2021-06-22T17:35:12.000Z | 165740867980881574 | adding_BNPL_experiment | affirm |
+
+By default, LaunchDarkly does not make accessible the data which allows Eppo to determine which users were assigned/exposed to any given feature/experiment.
+
+To access this data, you have a couple of options:
+
+- [Pay to export data from LaunchDarkly to PubSub Systems](https://docs.launchdarkly.com/home/getting-started)
+  - If you go this route, you will subsequently then need to move the data from the pubsub system to the data warehouse.
+- Log assignments manually with wrapper code (see below).
+
+
+## Logging assignments manually with wrapper code
+
+To manually log LaunchDarkly assignments, you'll need to find all places in your code where feature flags are being invoked and replace with a wrapper function. The example below is based on Javascript, see [LaunchDarkly SDK documentation](https://docs.launchdarkly.com/sdk) to find the syntax for your language of choice.
+
+### Find all places where feature flags are being invoked
 
 LaunchDarkly’s SDK exposes methods for retrieving whether or not a feature is enabled for the current user. 
-
 
 <Tabs>
 <TabItem value="js" label="JavaScript">
@@ -41,7 +57,8 @@ export default withLDConsumer()(Home);
 </TabItem>
 </Tabs>
 
-2. Log all feature flag invocations.
+
+### Log all feature flag invocations.
 
 In order to capture assignment data, every time the feature flag is invoked, you need to log the user, timestamp, and which experiment and variant they're seeing
 
@@ -78,12 +95,3 @@ function checkFeatureEnabled(experimentKey, defaultValue) {
 You need to ensure that all usages of feature flags (or at least those you wish to run an experiment on) are wrapped with this new function you created.
 
 It is possible that an engineer on your team could call this new function before showing the new feature to the user. Be sure that the assignment event is only sent once the user experiences the feature you are experimenting on.
-
-
-
-
-
-
-
-
-
