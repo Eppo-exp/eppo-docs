@@ -60,6 +60,7 @@ AssignmentLogger logger = new AssignmentLogger() {
 EppoClient eppoClient = new EppoClient.Builder()
     .apiKey("YOUR_API_KEY")
     .assignmentLogger(assignmentLogger)
+    .application(application)
     .buildAndInit();
 ```
 
