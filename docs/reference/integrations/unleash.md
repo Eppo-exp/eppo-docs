@@ -1,18 +1,16 @@
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+# Unleash
 
-# Creating assignment table from Unleash
+In order to perform its analyses, Eppo needs access to an assignment table in your data warehouse that lists each user that comes through the system and which variant they saw at which time.
 
-_Note:_ this guide assumes that you have already integrated Unleash feature flags into your code.
+| timestamp | user_id | experiment | variation |
+| --------- | ------- | ---------- | --------- |
+| 2021-06-22T17:35:12.000Z | 165740867980881574 | adding_BNPL_experiment | affirm |
 
-1. Find all places in your code where your feature flags are being invoked.
+To track this data for Unleash assignments, you first need to find all places where Unleash flags are being invoked and replace with a wrapper function. The example below is based on Javascript, see the [Unleash SDK documentation](https://docs.getunleash.io/advanced/toggle_variants#client-sdk-support) to identify the syntax for your language of choice.
 
-**Find the SDK that you're using in the [Unleash SDK documentation](https://docs.getunleash.io/advanced/toggle_variants#client-sdk-support) and identify the syntax you're searching for.**
+### Find all places in your code where your feature flags are being invoked.
 
 Unleash supports [feature toggle variants](https://docs.getunleash.io/advanced/toggle_variants) and typically exposes a [`getVariant()`](https://docs.getunleash.io/advanced/toggle_variants#client-sdk-support) method for retrieving the variant the user is seeing. 
-
-<Tabs>
-<TabItem value="node" label="JavaScript">
 
 ```javascript
 const { initialize } = require('unleash-client');
@@ -40,43 +38,10 @@ unleash.on('synchronized', () => {
   }
 });
 ```
-</TabItem>
 
-<TabItem value='py' label="Python">
-
-```py
-from UnleashClient import UnleashClient
-
-client = UnleashClient(
-    url="https://unleash.herokuapp.com",
-    app_name="my-python-app",
-    custom_headers={'Authorization': '<API token>'})
-
-client.initialize_client()
-
-# Evaluate a feature flag and variable
-my_toggle_enabled = client.is_enabled("button-color-experiment")
-
-context = {'userId': '2'}  # Context must have userId, sessionId, or remoteAddr.  If none are present, distribution will be random.
-
-variant = client.get_variant("button-color-experiment", context)
-
-if variant['name'] == "red":
-    # show red button
-elif variant['name'] == "blue":
-    # show blue button
-else:
-    # show control
-```
-</TabItem>
-</Tabs>
-
-2. Log all feature flag invocations.
+### Log all feature flag invocations.
 
 In order to capture assignment data, every time the feature flag is invoked, you need to log the user, timestamp, and which experiment and variant they're seeing
-
-<Tabs>
-<TabItem value="js" label="Javascript">
 
 ```javascript
 function checkFeatureEnabled(experimentKey, defaultValue) {
@@ -114,8 +79,6 @@ function checkFeatureEnabled(experimentKey, defaultValue) {
   return variant;
 }
 ```
-</TabItem>
-</Tabs>
 
 You need to ensure that all usages of feature flags (or at least those you wish to run an experiment on) are wrapped with this new function you created.
 

@@ -1,31 +1,17 @@
 # Experiment assignment
 
-### Assign subjects
+### Assigning subjects with Eppo
 
-The first step to running experiments is setting up an assignment function, which maps subjects (e.g users) to variants (e.g `control`, `treatment`) given an experiment configuration. If you don't already have a way to assign subjects in your app, you'll need to setup one of the following options:
+Our SDKs assign subjects to variations according to the experiment traffic allocations you set in Eppo's user interface. You can dial up an experiment's traffic exposure over time and limit who is exposed to the experiment using fine grained targeting rules. If the traffic exposure is increased, the SDK never reassigns subjects who were previously assigned. Our SDKs also enable you to test an experiment before launch via allow-list overrides on each variant.
 
-- [Eppo SDKs](./eppo/)
-- A third party tool such as [Launch Darkly](./launch-darkly) or [Optimizely](./optimizely)
-- An internal tool that you build yourself
+To get started with the Eppo's SDKs for experiment assignment, refer to our [SDK guide on experiment assignment](/feature-flags/use-cases/experiment-assignment).
 
+### Choosing an SDK
 
-### Log assignments
+Eppo has two types of SDKs: client SDKs and server SDKs. Which type of SDK you choose depends on the environment your application runs in. Client SDKs are intended for applications that run on end-user devices such as web browsers or mobile phones. Server SDKs are meant for use by a web server that may serve multiple user requests at a time. See the below links for more details on each type of SDK:
+- [Client SDKs](/feature-flags/sdks/client-sdks/)
+- [Server SDKs](/feature-flags/sdks/server-sdks/)
 
-Once you are able to assign subjects, you'll also need a way to log assignment data into your data warehouse, the mechanics of which will depend on what tool you use for randomization. In your warehouse, the most straighforward way to store assignment history is an append-only <b>assignments table</b> with the following columns:
+### Integrating Eppo with an internal or third-party feature flagging system
 
-| timestamp | user_id | experiment | variation |
-| :-- | :-- | :-- | :-- |
-| `2021-06-22T17:35:12.000Z` | `6342` | `checkout-button-color` | `purple` |
-
-This row represents the fact that the user with ID `6342` was assigned to the variation `blue` of the experiment `checkout-button-color` on June 22nd, which Eppo will need to properly analyze that
-experiment.
-
-It's ok for this table to contain duplicate rows for the same subject, however for a given experiment, the same subject should only ever be assigned one variation. The relative ordering of rows relative to each other is not important.
-
-Refer to our tool specific guides to understand how to log assignments to your warehouse:
-
-- [Logging assignment data using Eppo's SDKs](./eppo/)
-- [Exporting assignment data from Launch Darkly](./launch-darkly)
-- [Exporting assignment data from Optimizely](./optimizely)
-
-For all other systems, email us at feature-flagging@geteppo.com and we'll happily walk you through the process.
+Eppo is modular, meaning that if you already have an experiment assignment system in place you can use Eppo only for experiment analysis. To configure this, see the [integrations page](/reference/integrations/).

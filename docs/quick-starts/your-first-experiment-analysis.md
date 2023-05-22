@@ -41,7 +41,7 @@ This quickstart assumes that you already have assignment logs tracked in your da
 
 If you do not have a experiment assignment tool integrated, please refer to the [experiment assignment](../experiments/prerequisites/experiment-assignment) section for more instructions.
 
-If you have a experiment assignment tool integrated but do not have an assignment table set up in your data warehouse, please follow the instructions [here](../experiments/connecting-your-data/assignment-tables/) to log your assignment data.
+If you have a third-party feature flagging tool integrated but do not have an assignment table set up in your data warehouse, please follow the instructions [here](../reference/integrations) to log your assignment data.
 
 ## 2. Create Eppo account
 
@@ -51,9 +51,9 @@ Create a new account at https://eppo.cloud/. Eppo implements Auth0 and you shoul
 
 Follow the linked warehouse-specific guides to connect Eppo to your data warehouse.
 
-- [Snowflake](../experiments/connecting-your-data/data-warehouses/connecting-to-snowflake)
-- [BigQuery](../experiments/connecting-your-data/data-warehouses/connecting-to-bigquery)
-- [RedShift](../experiments/connecting-your-data/data-warehouses/connecting-to-redshift)
+- [Snowflake](../experiments/prerequisites/connecting-to-data-warehouse/connecting-to-snowflake.md)
+- [BigQuery](../experiments/prerequisites/connecting-to-data-warehouse/connecting-to-bigquery.md)
+- [RedShift](../experiments/prerequisites/connecting-to-data-warehouse/connecting-to-redshift.md)
 
 ## 4. Create an Assignment SQL
 
