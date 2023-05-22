@@ -12,6 +12,6 @@ Eppo has two types of SDKs: client SDKs and server SDKs. Which type of SDK you c
 - [Client SDKs](/feature-flags/sdks/client-sdks/)
 - [Server SDKs](/feature-flags/sdks/server-sdks/)
 
-### Integrating Eppo with an internal or third-party assignment system
+### Integrating Eppo with an internal or third-party feature flagging system
 
 Eppo is modular, meaning that if you already have an experiment assignment system in place you can use Eppo only for experiment analysis. To configure this, see the [integrations page](/reference/integrations/).
