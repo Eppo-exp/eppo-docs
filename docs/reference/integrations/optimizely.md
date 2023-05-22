@@ -13,7 +13,7 @@ By default, Optimizely does not make accessible the data which allows Eppo to de
 
 ## Logging assignments manually with wrapper code
 
-To manually log Optimizely assignments, you'll need to find all places in your code where Optimizely is being invoked and replace with a wrapper function. The example below is based on Javascript, see [Optimizely SDK documentation](https://docs.developers.optimizely.com/full-stack/v4.0/docs/create-flag-variations#implement-flag-variations) to find the syntax for your language of choice.
+To manually log Optimizely assignments, you need to find all places in your code where Optimizely is being invoked and replace with a wrapper function. The example below is based on Javascript, see [Optimizely SDK documentation](https://docs.developers.optimizely.com/full-stack/v4.0/docs/create-flag-variations#implement-flag-variations) to find the syntax for your language of choice.
 
 ### Find all places in your code where your feature flags are being invoked.
 
