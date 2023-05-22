@@ -50,7 +50,7 @@ Suppose, given the above considerations, we decide to set our precision at 5%. W
 ### Frequentist fixed sample methodology
 
 When using the frequentist fixed sample methodology, the experiment runtime has to be decided ahead of time, e.g. using a sample size calculator, or prior experience from similar experiments.
-Once the end date of the experiment is reached, or the precision target is met for all primary metrics of the variants, the progress bar is at 100% and we mark the experiment **ready for review**.
+Once the end date of the experiment is reached, or the precision target is met for all primary metrics of the variants, the progress bar is at 100%. Furthermore, we mark the experiment **ready for review** once the end date is reached.
 You are now able to confidently make a decision:
 
 ![Progress bar popover](../../../static/img/interpreting-experiments/progress-bar-fixed-sample.png)
