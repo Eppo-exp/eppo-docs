@@ -1,6 +1,6 @@
 # Integrating a third-party or internal experiment assignment system
 
-You can use Eppo for end-to-end experimentation, or only for analysis. To integrate Eppo with an existing randomization tool, you'll just need a log of experiment assignments in your warehouse. Eppo expects data in the following format (the specific column names do not matter):
+You can use Eppo for end-to-end experimentation, or only for analysis. To integrate Eppo with an existing feature flagging tool, you just need a log of experiment assignments in your warehouse. Eppo expects data in the following format (the specific column names do not matter):
 
 | timestamp | user_id | experiment | variation |
 | :-- | :-- | :-- | :-- |
