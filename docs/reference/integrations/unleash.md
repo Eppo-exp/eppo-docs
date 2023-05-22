@@ -6,7 +6,7 @@ In order to perform its analyses, Eppo needs access to an assignment table in yo
 | --------- | ------- | ---------- | --------- |
 | 2021-06-22T17:35:12.000Z | 165740867980881574 | adding_BNPL_experiment | affirm |
 
-To track this data for Unleash assignments, you'll need to first find all places where Unleash flags are being invoked and replace with a wrapper function. The example below is based on Javascript, see the [Unleash SDK documentation](https://docs.getunleash.io/advanced/toggle_variants#client-sdk-support) to identify the syntax for your language of choice.
+To track this data for Unleash assignments, you first need to find all places where Unleash flags are being invoked and replace with a wrapper function. The example below is based on Javascript, see the [Unleash SDK documentation](https://docs.getunleash.io/advanced/toggle_variants#client-sdk-support) to identify the syntax for your language of choice.
 
 ### Find all places in your code where your feature flags are being invoked.
 
