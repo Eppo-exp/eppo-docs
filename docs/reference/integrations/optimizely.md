@@ -1,6 +1,6 @@
 # Optimizely
 
-In order to perform its analyses, Eppo needs access to an assignment table in your data warehouse that lists each user that comes through the system and which variant they saw at which time.
+In order to perform its analyses, Eppo needs access to an assignment table in your data warehouse that what user got assigned to which variation in an experiment at a specific point in time.
 
 | timestamp | user_id | experiment | variation |
 | --------- | ------- | ---------- | --------- |
