@@ -7,14 +7,16 @@ sidebar_position: 1
 Flags can be used to gate new or unfinished features. This is sometimes referred to as "dark launching" code. Eppo's flexible targeting rules allow you to launch a feature to any subset of your population, including specific user IDs, instead of all at once.
 
 ### Create a feature gate
+
 Here we create a flag for a hypothetical new feature on our site, a new checkout page:
 
-![Feature gate 1](../../../static/img/feature-flagging/feature-gate-1.png)
+![Feature gate 1](/img/feature-flagging/feature-gate-1.png)
 
 ### Create allocations to describe your target audience
+
 After creating the flag, we create two allocations that describe our target audience: internal users and half of all North American web users:
 
-![Feature gate 2](../../../static/img/feature-flagging/feature-gate-2.png)
+![Feature gate 2](/img/feature-flagging/feature-gate-2.png)
 
 In this case, we didn't have to create an explicit variation `off`. If the
 assigned variation is not `on`, then we can assume the variation was off.
@@ -36,7 +38,4 @@ else:
     # Show old checkout page.
 ```
 
-
 The last step is turning on the flag, which can be done using the toggle on the flag's detail view.
-
-

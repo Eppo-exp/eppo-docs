@@ -1,14 +1,14 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 id: what-is-eppo
-slug: /
+slug: /what-is-eppo
 ---
 
 # What is Eppo?
 
 Eppo is a next-generation feature flag and experimentation platform built right on top of your data warehouse:
 
-![What is Eppo Gif](../static/img/building-experiments/what-is-eppo.gif)
+![What is Eppo Gif](/img/building-experiments/what-is-eppo.gif)
 
 We offer companies an end-to-end suite of experimentation tools, but let you decide which ones are right for you. Here are a few common ways teams use Eppo:
 
@@ -22,7 +22,7 @@ We offer companies an end-to-end suite of experimentation tools, but let you dec
 
 Eppo's analysis is built on top of your data warehouse. Concretely, this means experiment results are computed within the warehouse without data ever leaving your system. As part of that process, intermediate and aggregate tables are always available in the warehouse for you to audit. In Eppo business metrics are defined in SQL, the same definitions that you use for business reporting.
 
-![How Eppo Works](../static/img/building-experiments/how-eppo-works.png)
+![How Eppo Works](/img/building-experiments/how-eppo-works.png)
 
 Generating an experiment report on Eppo involves five pieces:
 
