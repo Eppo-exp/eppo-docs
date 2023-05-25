@@ -12,12 +12,12 @@ SaaS outages are a great example. If a Saas provider's functionality is gated wi
 
 Give the killswitch a descriptive name and key. The switch only needs one variation to determine if it's on. Below we've named that variation `on`:
 
-![Killswitch 1](../../../static/img/feature-flagging/killswitch-1.png)
+![Killswitch 1](/img/feature-flagging/killswitch-1.png)
 
 After creation, the switch can be embedded in your code as is, with the default status being off. Since the switch is all
 or nothing, no allocation is required:
 
-![Killswitch 2](../../../static/img/feature-flagging/killswitch-2.png)
+![Killswitch 2](/img/feature-flagging/killswitch-2.png)
 
 ### Use the kill switch in your code
 
@@ -30,3 +30,4 @@ if (eppoClient.getAssignment(user_id, 'twilio-killswitch') == 'on'):
     # Code to gracefully handle a Twilio outage.
 else:
     # Normal Twilio code.
+```
