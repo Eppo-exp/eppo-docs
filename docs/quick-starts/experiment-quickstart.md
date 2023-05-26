@@ -30,7 +30,7 @@ This quickstart assumes that you already have assignment logs tracked in your da
   | ------------------------ | ------------------ | ---------------------- | --------- |
   | 2021-06-22T17:35:12.000Z | 165740867980881574 | adding_BNPL_experiment | affirm    |
 
-  where `subject_id` is a unique identifier for the [entity](../experiments/building-experiments/entities) on which you wish to experiment (in most cases, this will be either `user_id` or `session_id`).
+  where `subject_id` is a unique identifier for the [entity](/data-management/entities) on which you wish to experiment (in most cases, this will be either `user_id` or `session_id`).
 
 - An event table whose rows are logs of specific events that occurred at specific times. It should contain columns that roughly correspond to:
 
@@ -39,9 +39,9 @@ This quickstart assumes that you already have assignment logs tracked in your da
   | 2021-07-17T18:57:13.000Z | 49980400511307080   | Revenue      | 45.5695     |
   | 2021-07-17T18:57:13.000Z | 2281323415877132491 | Subscription | 1           |
 
-If you do not have a experiment assignment tool integrated, please refer to the [experiment assignment](../experiments/prerequisites/experiment-assignment) section for more instructions.
+If you do not have a experiment assignment tool integrated, please refer to the [experiment assignment](/feature-flags/experiment-assignment) section for more instructions.
 
-If you have a third-party feature flagging tool integrated but do not have an assignment table set up in your data warehouse, please follow the instructions [here](../reference/integrations) to log your assignment data.
+If you have a third-party feature flagging tool integrated but do not have an assignment table set up in your data warehouse, please follow the instructions [here](/reference/integrations) to log your assignment data.
 
 ## 2. Create Eppo account
 
@@ -51,9 +51,10 @@ Create a new account at https://eppo.cloud/. Eppo implements Auth0 and you shoul
 
 Follow the linked warehouse-specific guides to connect Eppo to your data warehouse.
 
-- [Snowflake](../experiments/prerequisites/connecting-to-data-warehouse/connecting-to-snowflake.md)
-- [BigQuery](../experiments/prerequisites/connecting-to-data-warehouse/connecting-to-bigquery.md)
-- [RedShift](../experiments/prerequisites/connecting-to-data-warehouse/connecting-to-redshift.md)
+- [BigQuery](/how-tos/connecting-dwh/snowflake.md)
+- [Databricks](/how-tos/connecting-dwh/databricks.md)
+- [Redshift](/how-tos/connecting-dwh/redshift.md)
+- [Snowflake](/how-tos/connecting-dwh/snowflake.md)
 
 ## 4. Create an Assignment SQL
 
@@ -65,7 +66,7 @@ Now that Eppo is connected to your data warehouse, the first thing we are going 
 
 ![Select user as entity](/img/building-experiments/select-user-as-entity.png)
 
-Entities are the randomization units of your experiment. By default, entities in Eppo are **User**, but you can also [create your own custom entities](../experiments/building-experiments/entities.md) and attach Assignment SQL's to them.
+Entities are the randomization units of your experiment. By default, entities in Eppo are **User**, but you can also [create your own custom entities](/data-management/entities) and attach Assignment SQL's to them.
 
 3. Name your Assignment SQL
 
@@ -111,7 +112,7 @@ Fact SQL's define events, like sign-ups, activations, or orders. Together, the A
 
 2. Select **User** as the entity
 
-**User** is the default entity in Eppo but you can also create your own [custom entity](../experiments/building-experiments/entities.md) and select that here.
+**User** is the default entity in Eppo but you can also create your own [custom entity](/data-management/entities) and select that here.
 
 3. Name your Fact SQL
 
@@ -149,7 +150,7 @@ You've now created your first Fact SQL. If you have more events that you would l
 
 1. Navigate to **Metrics**, click **+Metric**, then select **User** as the subject of the metric
 
-**User** is the default entity in Eppo, but you can also create a [custom entity](../experiments/building-experiments/entities.md) and select it here.
+**User** is the default entity in Eppo, but you can also create a [custom entity](/data-management/entities) and select it here.
 
 2. Select a fact
 
@@ -191,7 +192,7 @@ The minimum detectable effect refers to the smallest effect you want to reliably
 
 ![Fill experiment form](/img/building-experiments/fill-create-experiment-form.png)
 
-Give your experiment a name, start and end date. You can optionally provide no end date if you would like the experiment to run indefinitely. Refer to the [best practices guide](../experiments/planning-experiments/running-successful-experiments/index.md) if you're not sure how long you would like the experiment to run.
+Give your experiment a name, start and end date. You can optionally provide no end date if you would like the experiment to run indefinitely. Refer to the [best practices guide](/experiments/best-practices) if you're not sure how long you would like the experiment to run.
 
 3. Navigate to the **Set Up** tab and click the **Configure the Experiment** button
 
@@ -231,7 +232,7 @@ The default is an even split between all the variants (including control), but y
 
 1. Navigate to **Experiments** and click the **Overview** tab
 
-Under **Decision metrics**, you will see that [guardmail metrics](../experiments/building-experiments/experiments/guardrail-metrics.md) have already been included automatically.
+Under **Decision metrics**, you will see that [guardmail metrics](/data-management/metrics/guardrails) have already been included automatically.
 
 4. Click **+Add metric** button
 
@@ -245,4 +246,4 @@ You can select one of them to add to the experiment
 
 ## Your experiment is now in progress!
 
-Your experiment will likely take a few days to start outputting results. Go [here](../experiments/interpreting-experiments/) for an overview of how to interpret your experiment.
+Your experiment will likely take a few days to start outputting results. Go [here](/experiments) for an overview of how to interpret your experiment.

@@ -105,7 +105,7 @@ underlying each method on the [statistical nitty-gritty](statistical-nitty-gritt
 
 If you want to learn more about what you might want to consider when choosing an
 analysis method, you can find some
-[discussion of that on the Analysis Plans](../../planning-experiments/analysis-plans.md#considerations-for-setting-an-analysis-plan)
+[discussion of that on the Analysis Plans](/experiments/analysis-plans.md#considerations-for-setting-an-analysis-plan)
 page.
 
 [^failures]:
@@ -199,10 +199,10 @@ to know now long is "long enough" without...
 A _power analysis_ looks at the historical data for a given metric, and tries
 to predict how many subjects will be needed in order to be able to detect a
 lift of a given size. First, you determine the minimum lift you care about (the
-[minimum detectable effect](docs/experiments/planning-experiments/minimum_detectable_effects.md),
+[minimum detectable effect](/statistics/sample-size-calculator/mde),
 or MDE) for _each metric_ you're going to observe in the experiment. Then, you
 you can use a tool like Eppo's
-[Sample Size Calculator](docs/experiments/planning-experiments/index.md)
+[Sample Size Calculator](/statistics/sample-size-calculator)
 to get the estimated sample size needed to detect that MDE.
 
 One danger with a power analysis is that historical behavior is not always a
@@ -230,7 +230,7 @@ experiment at risk; a fixed-sample analysis precludes that option.
 ### Cons of fixed-sample analysis
 
 - **You have to select your sample size or duration ahead of time.** Eppo's
-  [Sample Size Calculator](docs/experiments/planning-experiments/index.md) makes this
+  [Sample Size Calculator](/statistics/sample-size-calculator) makes this
   significantly easier, but if the assumptions you put into it end up not
   holding (for example, if the variance in your metrics is higher than it
   historically has been), then you can still end up underpowered at the
@@ -280,7 +280,7 @@ required to plan an analysis ahead of time.
 
 - **You don't have to predetermine your sample size.**
   Although it is still useful to use Eppo's
-  [Sample Size Calculator](docs/experiments/planning-experiments/index.md) to understand,
+  [Sample Size Calculator](/statistics/sample-size-calculator) to understand,
   operationally, when you can expect to be able to detect an effect if it
   exists, unlike with fixed-sample analysis, sequential analysis does not
   _require_ you to do a power analysis beforehand.[^powerrequire] More
@@ -360,7 +360,7 @@ lift might be, given both the prior we started with and the data we've observed.
 
 One important difference between Bayesian and the frequentist methods described
 above is that the center of the confidence interval is _not_ the lift measured
-from the data, even when [CUPED](./cuped.md) is disabled.[^cupedlift] Instead, the
+from the data, even when [CUPED](/statistics/cuped) is disabled.[^cupedlift] Instead, the
 lift measured from the data is used to update our prior, and the resulting
 _posterior distribution_ determines both the center _and_ bounds of the confidence
 interval.
@@ -368,7 +368,7 @@ interval.
 :::
 
 The prior we use is described specifically on the
-[Statistical nitty-gritty](./statistical-nitty-gritty.md) page, but in essence
+[Statistical nitty-gritty](statistics/confidence-intervals/statistical-nitty-gritty) page, but in essence
 we set our pre-experiment belief to be that the lift on any given metric will
 be, on average, zero, and that there will be random fluctuations around that
 average such that for 50% of experiments the lift will fall between -21% and
@@ -425,14 +425,14 @@ that process.
 
 Some summary statistics that can help make decisions surrounding Bayesian
 experiments are described in the documentation on
-[statistical details](docs/experiments/interpreting-experiments/index.md#statistical-details).
+[statistical details](/experiments#statistical-details).
 
 You can, of course, decide to use Bayesian results like you would frequentist
 results: if the confidence interval is above zero, there was a positive lift,
 and the experiment gets shipped. In some ways, that negates key benefits of a
 Bayesian approach, and since that approach depends so much on a choice of prior
 it's often prudent to think more about
-[_what happens if I'm wrong_](docs/experiments/planning-experiments/analysis-plans.md#whats-the-best-way-to-be-wrong)
+[_what happens if I'm wrong_](/experiments/analysis-plans.md#whats-the-best-way-to-be-wrong)
 than with frequentist methods (luckily, Bayesian methods make it much easier to
 think about exactly that question). However, even if you apply a simple decision
 rule to Bayesian experiment results, there are a number of ways where Bayesian
@@ -513,9 +513,9 @@ rigorously.
   into a decision on whether to ship a particular treatment. For example, do you
   care more about risk, or probability the treatment beats control? What
   probability that the lift exceeds the
-  [MDE](docs/experiments/planning-experiments/minimum_detectable_effects.md)
+  [MDE](/statistics/sample-size-calculator/mde)
   is considered "good enough to ship"? (The documentation on Bayesian
-  [summary statistics](docs/experiments/interpreting-experiments/index.md#statistical-details)
+  [summary statistics](/experiments#statistical-details)
   might provide some useful decision-making procedures.)
 
 [^freqcis]:

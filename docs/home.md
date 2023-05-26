@@ -8,19 +8,20 @@ slug: /
 
 One paragraph on Eppo
 
-How to reach out to us
+:::note
+Need help? Do not hesitate to reach out to us via `support@geteppo.com`; we would love to hear from you!
+:::
 
 # Getting started
 
-Quick start links:
-
-- Setting up Eppo for the first time
-- First feature flag
-- First experiment
+- [Initial Eppo Setup](/setup-quickstart)
+- [Your first feature flag](/feature-flag-quickstart)
+- [Your first experiment analysis](/experiment-quickstart)
+- [How the Eppo data pipeline works](/data-management/pipeline)
 
 # Deep dives
 
-- Data management
-- Feature flagging
-- Experimentation
-- Statistics
+- [Data management](/data-management)
+- [Feature flagging](/feature-flags)
+- [Experimentation](/experiments)
+- [Statistics](/statistics)

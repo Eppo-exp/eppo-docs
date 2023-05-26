@@ -93,7 +93,7 @@ The SDK will invoke the `LogAssignment` function with an `event` object that con
 | `subjectAttributes` (map) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `{ "country": "US" }`    |
 
 :::note
-More examples of logging (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/experiments/prerequisites/event-logging/) page.
+More examples of logging (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](./how-tos/event-logging/) page.
 :::
 
 ## 3. Assign variations

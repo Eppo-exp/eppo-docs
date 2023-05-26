@@ -10,7 +10,7 @@ experiment results.
 
 For information on how to find the lift estimates and
 confidence intervals in Eppo, and the essentials of using experiment results to
-make ship/no-ship decisions, see the main [Interpreting experiments](../index.md)
+make ship/no-ship decisions, see the main [Interpreting experiments](/experiments)
 page.
 
 ## Basics of estimating lift {#estimating-lift}
@@ -44,7 +44,7 @@ _relative_ value. However, there are a number of methods we can use to improve
 on this naive calculation. For example, because we randomly allocate users to
 each variant, we can expect that there will be random differences between the users
 in each variant (perhaps a lot of really unengaged users were randomly assigned
-to the treatment variant, say); using [CUPED](./cuped.md) can make it easier to
+to the treatment variant, say); using [CUPED](/statistics/cuped) can make it easier to
 get a reliable estimate of the lift by mitigating these random fluctuations.
 Another example is [<Term>winsorization</Term>](https://en.wikipedia.org/wiki/Winsorizing),
 which reduces the impacts of extreme outliers.
@@ -52,7 +52,7 @@ which reduces the impacts of extreme outliers.
 :::caution
 
 For any metric where you have elected to use
-[<Term>winsorization</Term>](../../building-experiments/metrics/creating-metrics.md)
+[<Term>winsorization</Term>](/data-management/metrics/creating-metrics)
 to handle outliers, the metric totals displayed in the tooltip when hovering
 over the lift are the _winsorized_ totals, not raw values.
 
@@ -65,7 +65,7 @@ back-of-the-envelope calculations.
 
 :::info
 
-If you use [Bayesian analysis](./analysis-methods.md#bayesian-analysis), the estimated lift might be
+If you use [Bayesian analysis](/statistics/confidence-intervals/analysis-methods.md#bayesian-analysis), the estimated lift might be
 _quite_ different from the naive calculation, because the prior can influence
 the estimate a lot, particularly if the sample size is not large.
 
@@ -77,7 +77,7 @@ The confidence intervals around the estimated lift show the range of lifts that
 could be plausibly supported by the data from the experiment; lifts outside that
 confidence interval are possible, but unlikely. (The exact meaning of
 "plausible" and "unlikely" depend on the particular
-[methodology](./analysis-methods.md), of course.[^ci-defn]) If the entire confidence
+[methodology](/statistics/confidence-intervals/analysis-methods), of course.[^ci-defn]) If the entire confidence
 interval is above zero, then it is unlikely for the true lift to be zero, or
 negative: the experiment data indicates that the treatment had a positive effect
 on that metric (and vice versa if the entire confidence interval is _below_
@@ -108,14 +108,14 @@ factors:
    will be representative of the population as a whole (and therefore the more
    confident we can be that the true lift is close to the lift from our sample).
 
-3. **The [<Term>confidence level</Term>](../../planning-experiments/analysis-plans.md#confidence-level) specified for the experiment (which is 95% by default), which dictates _how_ confident we want to be.**
+3. **The [<Term>confidence level</Term>](/experiments/analysis-plans.md#confidence-level) specified for the experiment (which is 95% by default), which dictates _how_ confident we want to be.**
 
    The <Term>confidence level</Term> represents how often we want the true lift to be inside
    the <Term>confidence interval</Term>, and thus the confidence interval needs to be wide
    enough to ensure that is true: the _higher_ the confidence **level**, the _wider_
    the confidence **interval**.
 
-4. **The [<Term>analysis method</Term>](./analysis-methods.md) being used**
+4. **The [<Term>analysis method</Term>](/statistics/confidence-intervals/analysis-methods.md) being used**
 
    Although the confidence level indicates how confident we want to be in our
    lift estimate, the analysis method dictates _under what circumstances_ we can
@@ -134,7 +134,7 @@ factors:
     [Bayesian](https://en.wikipedia.org/wiki/Bayesian_inference) methods
     use "credible interval" to describe a similar (though distinct!) concept.
     For simplicity, we'll use "confidence interval" throughout, and discuss the
-    distinction with Bayesian credible intervals [here](./analysis-methods.md#bayesian-analysis).
+    distinction with Bayesian credible intervals [here](statistics/confidence-intervals/analysis-methods.md#bayesian-analysis).
 
 [^symmetric]:
     We use symmetric confidence intervals, so the upper and lower bounds are

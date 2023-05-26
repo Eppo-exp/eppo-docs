@@ -1,10 +1,9 @@
 ---
 sidebar_position: 2
 id: what-is-eppo
-slug: /what-is-eppo
 ---
 
-# What is Eppo?
+# What is Eppo? [wip]
 
 Eppo is a next-generation feature flag and experimentation platform built right on top of your data warehouse:
 
@@ -12,11 +11,15 @@ Eppo is a next-generation feature flag and experimentation platform built right 
 
 We offer companies an end-to-end suite of experimentation tools, but let you decide which ones are right for you. Here are a few common ways teams use Eppo:
 
-- For [**experiment analysis**](./experiment-quickstart) alongside another feature flagging tool such as LaunchDarkly.
-- For [**feature flagging**](./feature-flag-quickstart) without experimentation.
-- As an [**end-to-end experimentation platform**](./feature-flags/use-cases/experiment-assignment) - both feature flagging and analysis.
+- For [**experiment analysis**](/experiment-quickstart) alongside another feature flagging tool such as LaunchDarkly.
+- For [**feature flagging**](/feature-flag-quickstart) without experimentation.
+- As an [**end-to-end experimentation platform**](/feature-flags/use-cases/experiment-assignment) - both feature flagging and analysis.
 
 <br />
+
+# How feature flagging works [wip]
+
+TBA
 
 # How experiment analysis works
 
@@ -27,15 +30,9 @@ Eppo's analysis is built on top of your data warehouse. Concretely, this means e
 Generating an experiment report on Eppo involves five pieces:
 
 1. Use your feature flagging tool of choice to send experiment assignments into your data warehouse.
-2. Connect Eppo to your data warehouse. Currently Eppo supports [Snowflake](../experiments/prerequisites/connecting-to-data-warehouse/connecting-to-snowflake), [Redshift](../experiments/prerequisites/connecting-to-data-warehouse/connecting-to-redshift), [BigQuery](../experiments/prerequisites/connecting-to-data-warehouse/connecting-to-bigquery), and [Databricks](../experiments/prerequisites/connecting-to-data-warehouse/connecting-to-databricks).
+2. Connect Eppo to your data warehouse. Currently Eppo supports [Snowflake](/how-tos/connecting-dwh/snowflake), [Redshift](/how-tos/connecting-dwh/redshift), [BigQuery](/how-tos/connecting-dwh/bigquery), and [Databricks](/how-tos/connecting-dwh/databricks).
 3. Annotate experiment assignments and event streams by writing short SQL snippets.
 4. Monitor your experiments' progress.
 5. Explore and share experiment results.
 
 <br />
-
-# Getting started resources
-
-- [Your first experiment analysis](./experiment-quickstart)
-- [Connect your data warehouse to Eppo](experiments/prerequisites/connecting-to-data-warehouse/connecting-to-bigquery.md)
-- [How the Eppo data pipeline works](./experiments/building-experiments/eppo-data-pipeline)
