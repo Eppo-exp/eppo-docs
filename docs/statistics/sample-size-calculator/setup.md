@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Setting up the Sample Size Calculator
+# Setup
 
 How long should you plan for a particular experiment to run? Eppo includes tools for estimating in advance when a metric’s Minimum Detectable Effect (MDE) is likely to be achieved. The Minimum Detectable Effect is the smallest lift that can be detected by an experiment a certain percent of the time.
 

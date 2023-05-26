@@ -6,13 +6,13 @@ sidebar_position: 1
 
 In Eppo, you can build your experiments using a few core building blocks:
 
-- [Entities](./data-management/entities/)
-- [Definitions](./data-management/definitions/)
-  - [Assignments](./data-management/definitions/assignment-sql)
-  - [Facts](./data-management/definitions/fact-sql)
-- [Metrics](./data-management/metrics/creating-metrics)
+- [Entities](/data-management/entities/)
+- [Definitions](/data-management/definitions/)
+  - [Assignments](/data-management/definitions/assignment-sql)
+  - [Facts](/data-management/definitions/fact-sql)
+- [Metrics](/data-management/metrics/creating-metrics)
 
-These building blocks are combined in the [Eppo Data Pipeline](./data-management/pipeline)
+These building blocks are combined in the [Eppo Data Pipeline](/data-management/pipeline)
 
 # Prerequisites
 
@@ -30,7 +30,7 @@ In order to perform its analyses, Eppo needs access to an assignment table in yo
 | ------------------------ | ------------------ | ---------------------- | --------- |
 | 2021-06-22T17:35:12.000Z | 165740867980881574 | adding_BNPL_experiment | affirm    |
 
-If your infastructure lines up with this diagram and you already have data in this format, you can skip right to [connecting your data warehouse](./how-tos/connecting-to-data-warehouse/). If you are new to experimentation or are interested in hearing our recommended best practices, read further into our guides on [experiment assignment](./experiment-assignment/) and [event logging](./how-tos/event-logging/).
+If your infastructure lines up with this diagram and you already have data in this format, you can skip right to [connecting your data warehouse](/how-tos/connecting-dwh). If you are new to experimentation or are interested in hearing our recommended best practices, read further into our guides on [experiment assignment](/feature-flags/experiment-assignment/) and [event logging](/how-tos/event-logging/).
 
 ## Overview
 
@@ -128,7 +128,7 @@ This will allow Eppo to calculate out the rentention metric for the entire popul
 
 ![Choose assignment SQL](/img/building-experiments/choose-assignment-sql-in-experiment.png)
 
-If you are pre-assigning subjects before they are actually exposed to a variant, you may want to take advantage of the _Filter assignments by entry point_ checkbox. This will include only those subjects that appear in an [entry point](../../planning-experiments/setting_up_the_sample_size_calculator#creating-entry-points) with an entry time after their assignment time.
+If you are pre-assigning subjects before they are actually exposed to a variant, you may want to take advantage of the _Filter assignments by entry point_ checkbox. This will include only those subjects that appear in an [entry point](/statistics/sample-size-calculator/setup#what-is-an-entry-point) with an entry time after their assignment time.
 
 ### 6. Input feature flag name
 
@@ -159,8 +159,8 @@ The default is an even split between all the variants (including control), but y
 If you want to set custom statistical methodologies for this experiment, uncheck
 the "use company default" checkbox next to the applicable fields. Otherwise, you
 can stay opted in to using
-the [defaults set by your company](../administration/setting-statistical-analysis-plan-defaults.md).
-For information on the different analysis plan settings, see [Analysis plans](./analysis-plans.md).
+the [defaults set by your company](/administration/setting-statistical-analysis-plan-defaults.md).
+For information on the different analysis plan settings, see [Analysis plans](/experiments/analysis-plans.md).
 
 ![Experiment Analysis Plan Settings](/img/building-experiments/experiment-setup-statistical-analysis-plans.gif)
 

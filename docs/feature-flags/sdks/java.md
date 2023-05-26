@@ -62,7 +62,7 @@ The SDK will invoke the `logAssignment` function with an `event` object that con
 | `subjectAttributes` (Map<String, EppoValue>) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `Map.of("device", EppoValue.valueOf("iOS")` |
 
 :::note
-More examples of logging (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/experiments/prerequisites/event-logging/) page.
+More examples of logging (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/how-tos/event-logging/) page.
 :::
 
 ## 3. Assign variations

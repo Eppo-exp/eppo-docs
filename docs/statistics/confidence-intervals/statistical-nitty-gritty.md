@@ -24,18 +24,18 @@ values for the true lift.
 
 First, some notation:
 
-* For a given metric, we observe $y_i$ for each subject $i$ in the control group
+- For a given metric, we observe $y_i$ for each subject $i$ in the control group
   of size $n_C$, and $y_j$ for each subject $j$ in the treatment group of size
   $n_T$. The set of all observations in the control group is $\bold{Y}_C$, and
   for the treatment group it is $\bold{Y}_T$.
 
-* The *true* population mean (which we don't know!) of the metric among the control group
-  is $\mu_C$, and among the treatment group it is $\mu_T$. Similarly, the *true*
+- The _true_ population mean (which we don't know!) of the metric among the control group
+  is $\mu_C$, and among the treatment group it is $\mu_T$. Similarly, the _true_
   (unobserved) population variance is $\sigma^2_C$ and $\sigma^2_T$
 
-* $m_C$ and $m_T$ are the averages of $\bold{Y}_C$ and $\bold{Y}_T$ across all
+- $m_C$ and $m_T$ are the averages of $\bold{Y}_C$ and $\bold{Y}_T$ across all
   subjects in the control group and treatment group, respectively:
-  
+
   $$
   \begin{equation}
   \begin{split}
@@ -46,7 +46,7 @@ First, some notation:
   \end{equation}
   $$
 
-* $s^2_C$ and $s^2_T$ are the *sample* variances of $\bold{Y}_C$ and $\bold{Y}_T$
+- $s^2_C$ and $s^2_T$ are the _sample_ variances of $\bold{Y}_C$ and $\bold{Y}_T$
   for the control group and treatment group, respectively:
 
   $$
@@ -61,7 +61,7 @@ First, some notation:
 
 Regardless of the distribution of $\bold{Y}_C$ and $\bold{Y}_T$, the
 [Central Limit Theorem (CLT)](https://en.wikipedia.org/wiki/Central_limit_theorem)
-says that, when $n_C$ and $n_T$ are sufficiently large, the *mean* of
+says that, when $n_C$ and $n_T$ are sufficiently large, the _mean_ of
 $\bold{Y}_C$ and $\bold{Y}_T$ are each normally distributed;
 that is:
 
@@ -128,7 +128,7 @@ denominator metrics to calculate the values for the ratio:
 $$
 
 \begin{align}
-m_{ratio} &= \frac{m_{\tiny{Y}}}{m_{\tiny{Z}}} 
+m_{ratio} &= \frac{m_{\tiny{Y}}}{m_{\tiny{Z}}}
 \\
 s^2_{ratio} &= \left(
   \frac{m_{\tiny{Y}}}{m_{\tiny{Z}}}
@@ -153,7 +153,7 @@ $$
 $$
 
 But, since we don't know the true values $\mu_T$ and <NoBreak>$\mu_C$</NoBreak>,
-we'll need to instead *estimate* the lift. We know from the CLT, as shown in
+we'll need to instead _estimate_ the lift. We know from the CLT, as shown in
 equation 3 above, that $m_T$ and $m_C$ are approximately normally
 distributed (for sufficiently large $n_C$ and $n_T$); furthermore, since $m_T$
 and $m_C$ are independent, under reasonable assumptions the ratio
@@ -181,7 +181,8 @@ methods (fixed-sample and sequential), that's where we end, in terms of
 estimating the lift (see below for turning that estimate into confidence
 intervals). For Bayesian, however, there's one more step.
 
-[^normality]: Under reasonable assumptions, we can approximate the ratio of two
+[^normality]:
+    Under reasonable assumptions, we can approximate the ratio of two
     normal distributions as a normal distribution centered on the ratio of the
     means. In essence, the approximation requires that the denominator be
     unlikely to be negative. Since all metrics are positive, the requirement
@@ -192,7 +193,8 @@ intervals). For Bayesian, however, there's one more step.
     and a longer treatment in
     [Díaz-Francés and Rubio (2004), "On the Existence of a Normal Approximation to the Distribution of the Ratio of Two Independent Normal Random Variables."](https://www.researchgate.net/profile/F-Rubio/publication/257406150_On_the_existence_of_a_normal_approximation_to_the_distribution_of_the_ratio_of_two_independent_normal_random_variables/links/53d7a18a0cf2e38c632ddabc/On-the-existence-of-a-normal-approximation-to-the-distribution-of-the-ratio-of-two-independent-normal-random-variables.pdf)
 
-[^normality2]: For more on requirements for this approximation, see note
+[^normality2]:
+    For more on requirements for this approximation, see note
     [above](#fn-normality). In this case, the denominator (which must be
     unlikely to be negative for the approximation to hold) is the distribution
     of the treatment metric.
@@ -202,19 +204,19 @@ intervals). For Bayesian, however, there's one more step.
 If you are using <Term>CUPED</Term>, then the estimate of the lift will be a bit more
 complicated; we still model the lift as a normal distribution, but the mean and
 variance are computed after using a ridge regression to account for random (that
-is, *not correlated with the treatment assignment*) pre-experiment differences
-between the groups. See the [CUPED docs](cuped.md) for more information.
+is, _not correlated with the treatment assignment_) pre-experiment differences
+between the groups. See the [CUPED docs](/statistics/cuped) for more information.
 
 :::
 
 ### Bayesian analysis
 
-In a Bayesian framework, you start with a *prior distribution*, which describes
+In a Bayesian framework, you start with a _prior distribution_, which describes
 what you believe before running the experiment. Then, you run the experiment and
-collect data, which you use to *update* your prior: in essence, you combine your
+collect data, which you use to _update_ your prior: in essence, you combine your
 pre-experiment beliefs about what the lift would be, with the evidence you've
-gotten from the experiment, into a *new* set of beliefs, called the *posterior*
-(because it comes *after* gathering data). The estimated average lift is then
+gotten from the experiment, into a _new_ set of beliefs, called the _posterior_
+(because it comes _after_ gathering data). The estimated average lift is then
 just the mean of this posterior distribution.
 
 #### Setting the prior
@@ -234,13 +236,14 @@ for each metric, about 50% of experiments will show a lift between -21% and
 our experience running experiments, this is a fairly conservative prior, as
 having lifts over ±50% is extremely rare.
 
-[^conjugate]: We use a normal distribution because it is a convenient [conjugate
-  prior](https://en.wikipedia.org/wiki/Conjugate_prior), meaning that we can
-  update it with our (normally distributed) lift estimate and produce another
-  normal distribution. In this case, we are assuming that the variance of the
-  lift is known, that is, that $\hat{\sigma}^2_{\tiny{\Delta}}$ is accurate. The choice of a
-  wide prior is, in part, designed to compensate for this assumption. Evaluating
-  and improving upon our choice of prior is an area of ongoing research.
+[^conjugate]:
+    We use a normal distribution because it is a convenient [conjugate
+    prior](https://en.wikipedia.org/wiki/Conjugate_prior), meaning that we can
+    update it with our (normally distributed) lift estimate and produce another
+    normal distribution. In this case, we are assuming that the variance of the
+    lift is known, that is, that $\hat{\sigma}^2_{\tiny{\Delta}}$ is accurate. The choice of a
+    wide prior is, in part, designed to compensate for this assumption. Evaluating
+    and improving upon our choice of prior is an area of ongoing research.
 
 #### Updating the prior
 
@@ -250,7 +253,7 @@ However, for the Bayesian method we use this evidence to update the above prior,
 and the result is our posterior.
 
 Specifically, our posterior is a normal distribution with mean $\mu_{post}$ and
-variance $\sigma_{post}^2$, where:[^derivation] 
+variance $\sigma_{post}^2$, where:[^derivation]
 
 $$
 \begin{align}
@@ -260,9 +263,9 @@ $$
     1
   }{
     \sigma^2_{prior}
-  } 
+  }
     \mu_{prior}
-  + 
+  +
   \frac{
     1
   }{
@@ -283,7 +286,7 @@ $$
 
 In other words, our posterior mean is the weighted average of the prior and the
 observed data, where for each term the weight is the precision (that is, the
-*inverse* of the variance). The variance, meanwhile, is related to the harmonic
+_inverse_ of the variance). The variance, meanwhile, is related to the harmonic
 mean of the variances of the prior and the observed data.
 
 :::tip Intuition for the posterior
@@ -303,33 +306,34 @@ $$
 \end{equation}
 $$
 
-Note that 
+Note that
 $\tfrac{\hat{\sigma}^2_{\tiny{\Delta}}}{\hat{\sigma}^2_{\tiny{\Delta}} + \sigma^2_{prior}}$
 reflects how spread out the data are, relative to the prior,[^weakprior] and
 $(\hat{\mu}_{\tiny{\Delta}} - \mu_{prior})$ is the distance between what we've observed
 and our prior expectation; thus, we can interpret equation 8 as showing that our posterior
-lift is the lift we observed in the experiment *shrunk toward the prior* (that is, toward 0),
-and that the shrinkage will be larger if our data is noisy 
+lift is the lift we observed in the experiment _shrunk toward the prior_ (that is, toward 0),
+and that the shrinkage will be larger if our data is noisy
 (such as happens when we have few observations) and/or our prior is very strong
 (that is, $\sigma^2_{prior}$ is low).
 
-[^gelman]: This section follows
-  [Gelman et al., “Bayesian Data Analysis Third Edition” (2020)](http://www.stat.columbia.edu/~gelman/book/BDA3.pdf),
-  p. 40, with some slight tweaks to notation and ordering.
+[^gelman]:
+    This section follows
+    [Gelman et al., “Bayesian Data Analysis Third Edition” (2020)](http://www.stat.columbia.edu/~gelman/book/BDA3.pdf),
+    p. 40, with some slight tweaks to notation and ordering.
 
-[^weakprior]: In particular, if the sample variance of the data goes to zero (as
+[^weakprior]:
+    In particular, if the sample variance of the data goes to zero (as
     would happen if our sample size gets very large), so will this quotient,
     meaning that the prior will have less and less of an effect on the
-    posterior. Furthermore, it will get to zero *faster*, as we add samples, if
-    our prior is *weaker*—that is, if it has a higher variance. On the other
-    hand, if we have a *strong* prior belief, represented by a *low* value of
-    $\sigma^2_{prior}$, then moving this term toward zero requires *more* data
+    posterior. Furthermore, it will get to zero _faster_, as we add samples, if
+    our prior is _weaker_—that is, if it has a higher variance. On the other
+    hand, if we have a _strong_ prior belief, represented by a _low_ value of
+    $\sigma^2_{prior}$, then moving this term toward zero requires _more_ data
     (or, data that doesn't vary much).
 
 :::
 
-
-<!-- 
+<!--
 \hat{\mu}_{post} =&~~ \frac{
   \hat{\sigma}^2_{\tiny{\Delta}} \mu_{prior}
   +
@@ -360,6 +364,7 @@ $$
 $$
 
 -->
+
 #### Arriving at the posterior
 
 Since our prior is that the lift is zero (that is, $\mu_{prior}=0$), we can
@@ -386,10 +391,11 @@ $$
 \end{align}
 $$
 
-[^derivation]: For a derivation, see
-  [Gelman et al., “Bayesian Data Analysis Third Edition” (2020)](http://www.stat.columbia.edu/~gelman/book/BDA3.pdf),
-  §2.5. An alternative derivation is provided in
-  [Murphy, “Conjugate Bayesian Analysis of the Gaussian Distribution” (2007)](https://www.cs.ubc.ca/~murphyk/Papers/bayesGauss.pdf). 
+[^derivation]:
+    For a derivation, see
+    [Gelman et al., “Bayesian Data Analysis Third Edition” (2020)](http://www.stat.columbia.edu/~gelman/book/BDA3.pdf),
+    §2.5. An alternative derivation is provided in
+    [Murphy, “Conjugate Bayesian Analysis of the Gaussian Distribution” (2007)](https://www.cs.ubc.ca/~murphyk/Papers/bayesGauss.pdf).
 
 ## Confidence intervals
 
@@ -403,8 +409,8 @@ desired likelihood of the interval including the true lift.
 
 For frequentist methods, we want to ensure that our confidence interval contains
 the true lift $\Delta$ with some minimum probability $c$
-(our *confidence level*).[^freqfalsepos] Specifically, after $t$ observations
-(where $t = n_C + n_T$ and can be thought of as a function of *time*), we
+(our _confidence level_).[^freqfalsepos] Specifically, after $t$ observations
+(where $t = n_C + n_T$ and can be thought of as a function of _time_), we
 want to set the lower and upper bounds of our confidence interval $(L_t, U_t)$
 such that:[^tvaries]
 
@@ -414,12 +420,15 @@ P(L_t^c \le \Delta_t \le U_t^c) \ge c
 \end{equation}
 $$
 
-[^freqfalsepos]: This is equivalent to saying that we want to limit the *false
-    positive rate* to be no more than $1-c$, which is how this constraint is
+[^freqfalsepos]:
+    This is equivalent to saying that we want to limit the _false
+    positive rate_ to be no more than $1-c$, which is how this constraint is
     typically framed in the context of
     [null hypothsesis significance testing](https://en.wikipedia.org/wiki/Statistical_significance).
-[^tvaries]: Note that we do not assume, as is typical, that $\Delta$ is constant
-    across all sample sizes $t$. See 
+
+[^tvaries]:
+    Note that we do not assume, as is typical, that $\Delta$ is constant
+    across all sample sizes $t$. See
     [Howard et al., “Time-Uniform, Nonparametric, Nonasymptotic Confidence Sequences”](https://arxiv.org/pdf/1810.08240.pdf),
     p. 19 for a discussion of the implications of assuming that lift is
     invariant over sample sizes.
@@ -453,14 +462,14 @@ $$
 #### Sequential
 
 For the sequential analysis method, we need to ensure that the constraint in
-equation 15 holds *for all $t$ at once*. That is:
+equation 15 holds _for all $t$ at once_. That is:
 
 $$
 P(L_t^c \le \Delta_t \le U_t^c~,~ \forall t \ge 1) \ge c
 $$
 
-This means that we do not have a single *confidence interval*, but rather a
-*confidence sequence*: an infinite sequence of confidence intervals such that,
+This means that we do not have a single _confidence interval_, but rather a
+_confidence sequence_: an infinite sequence of confidence intervals such that,
 not only is each individual interval valid for controlling the rate of false
 positives, but the aggregation of all intervals is valid as well. In other
 words, a confidence sequence provides statistical guarantees while allowing
@@ -518,9 +527,10 @@ typical A/B test sample sizes.
 We have run extensive simulations to validate that these confidence intervals
 satisfy the specified coverage guarantees.
 
-[^modifications]: In particular, Howard et al. assume unit variance while our
+[^modifications]:
+    In particular, Howard et al. assume unit variance while our
     lift estimate has variance $\hat{\sigma}^2_{\tiny{\Delta}}$, and we set our bounds around
-    the mean estimated lift, rather than the sum. 
+    the mean estimated lift, rather than the sum.
 
 ### Bayesian
 
@@ -552,9 +562,9 @@ $$
 
 It is important to note that the constraint in equation 12 (ensuring that the
 probability that the true lift falls within the bounds $(L^c, U^c)$ is at least
-as high as our confidence level) does *not* hold in the Bayesian case, simply
+as high as our confidence level) does _not_ hold in the Bayesian case, simply
 because such a constraint is nonsensical in a Bayesian context. Instead, the
-above bounds in equation 15 (which constitute a *credible interval*) describe
+above bounds in equation 15 (which constitute a _credible interval_) describe
 our beliefs about what the lift might plausibly be given our prior and the
 observed data. In particular, we can say that we expect $\Delta \in (L^c, U^c)$
 with probability $c$, given our prior and the observed data.

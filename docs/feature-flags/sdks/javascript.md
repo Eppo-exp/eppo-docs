@@ -4,7 +4,7 @@ import TabItem from '@theme/TabItem';
 # JavaScript
 
 :::note
-This documentation is for our client-side SDK intended for use by browser applications. For use in server applications, refer to our [Node JS SDK](../server-sdks/node.md).
+This documentation is for our client-side SDK intended for use by browser applications. For use in server applications, refer to our [Node JS SDK](/feature-flags/sdks/node).
 :::
 
 <br />
@@ -110,7 +110,7 @@ The SDK will invoke the `logAssignment` function with an `assignment` object tha
 | `subjectAttributes` (map) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `{ "country": "US" }`    |
 
 :::note
-More examples of logging (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/experiments/prerequisites/event-logging/) page.
+More examples of logging (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/how-tos/event-logging/) page.
 :::
 
 ## 3. Assign variations
