@@ -19,8 +19,6 @@ We offer companies an end-to-end suite of experimentation tools, but let you dec
 
 # How feature flagging works [wip]
 
-TBA
-
 # How experiment analysis works
 
 Eppo's analysis is built on top of your data warehouse. Concretely, this means experiment results are computed within the warehouse without data ever leaving your system. As part of that process, intermediate and aggregate tables are always available in the warehouse for you to audit. In Eppo business metrics are defined in SQL, the same definitions that you use for business reporting.
