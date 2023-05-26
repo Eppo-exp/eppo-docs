@@ -1,6 +1,6 @@
 # Eppo feature flagging SDKs
 
-## Client SDKs #{client-sdks}
+## Client SDKs {#client-sdks}
 
 Eppo's client SDK integrates with client-side applications that run on a user device. The below diagram shows how the SDK interacts with your application code, event tracking system, and Eppo's servers:
 
@@ -24,7 +24,7 @@ The SDK uses a background process to fetch and store the experiment data. The p7
 - [Android](./android)
 - [iOS](./ios)
 
-## Server SDKs #{server-sdks}
+## Server SDKs {#server-sdks}
 
 Eppo's server-side SDKs may be used to implement flags and run experiments in your application server code. The below diagram shows the interactions of the SDK with Eppo's server:
 
