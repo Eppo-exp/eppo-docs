@@ -8,7 +8,7 @@ dashboards and visualizations–and thus into ship/no-ship decisions.
 In general, an experimentaiton program is most effective if decisions are made
 in a consistent way across an entire company, and so most of the analysis plan
 settings can be set on the
-[administration](../../administration/setting-statistical-analysis-plan-defaults.md)
+[administration](/administration/setting-statistical-analysis-plan-defaults.md)
 page. However, occasionally you may want to have different settings for certain
 individual experiments; for example, a website that connects homeowners to
 contractors is likely to have many more users who are homeowners than
@@ -19,13 +19,13 @@ page.
 ## Settings
 
 The experiment-level analysis plan settings are on the
-[experiment setup page](../building-experiments/experiments/creating-experiments.md#analysis-plan-settings).
+[experiment setup page](/experiments/creating-experiments.md#analysis-plan-settings).
 
 ![Experiment Analysis Plan Settings](/img/building-experiments/experiment-setup-statistical-analysis-plans.gif)
 
 ### 1. Confidence interval method {#confidence-interval-method}
 
-Which [analysis method](../interpreting-experiments/lift-estimates-and-confidence-intervals/analysis-methods.md)
+Which [analysis method](/statistics/confidence-intervals/analysis-methods.md)
 to use to estimate the lift and construct the confidence interval.
 
 ### 2. Confidence level {#confidence-level}
@@ -49,7 +49,7 @@ effect).
 
 ### 3. Multiple testing correction {#multiple-testing}
 
-Use this setting to configure [multiple testing correction](../statistics/multiple-testing.md).
+Use this setting to configure [multiple testing correction](/statistics/multiple-testing.md).
 When turned on, we ensure that the confidence intervals are widened in order to control for the [Family-wise error rate](https://en.wikipedia.org/wiki/Family-wise_error_rate).
 You can also adjust how much weight to give to the primary metric.
 
@@ -64,10 +64,10 @@ If your admin has not enabled this setting, then minimum requirements will not b
 
 ### 5. Precision {#precision}
 
-[Precision](../interpreting-experiments/experiment-progress-bar.md#precision) captures the uncertainty in the point estimate as defined by the width of the confidence interval.
+[Precision](/experiments/progress-bar#precision) captures the uncertainty in the point estimate as defined by the width of the confidence interval.
 Precision is set at the metric level.
 However, it is possible to override this and set it to a particular value at the experiment level using the analysis plan
-This is used to power the [progress bar](../interpreting-experiments/experiment-progress-bar.md),
+This is used to power the [progress bar](/experiments/progress-bar),
 helping you decide when the experiment has run sufficiently long for you to make a decision confidently.
 
 ## Considerations for setting an analysis plan
@@ -129,15 +129,15 @@ If there's a real treatment effect, the more power you have the
 more likely you are to be able to detect a significant metric movement.
 
 Note, though, that these terms don't have the same meaning if using a
-[Bayesian analysis](../interpreting-experiments/lift-estimates-and-confidence-intervals/analysis-methods.md#bayesian-analysis)
+[Bayesian analysis](/statistics/confidence-intervals/analysis-methods#bayesian-analysis)
 analysis method, although the concepts can still be useful.
 
 :::
 
 ### Frequentist methods: taking control
 
-The [fixed-sample](../interpreting-experiments/lift-estimates-and-confidence-intervals/analysis-methods.md#fixed-sample-analysis)
-and [sequential](../interpreting-experiments/lift-estimates-and-confidence-intervals/analysis-methods.md#sequential-analysis)
+The [fixed-sample](/statistics/confidence-intervals/analysis-methods#fixed-sample-analysis)
+and [sequential](/statistics/confidence-intervals/analysis-methods#sequential-analysis)
 analysis methods use the framework of
 [null hypothesis significance testing](https://en.wikipedia.org/wiki/Statistical_significance)
 to control the _false positive rate_: that is, the rate at which a non-effectual treatment
@@ -150,7 +150,7 @@ the rate at which a treatment with a real effect will go undetected; that
 requires ensuring that you have enough data (and therefore enough
 [power](https://en.wikipedia.org/wiki/Power_of_a_test)) to detect any treatment
 effect that actually exists.
-(Using Eppo's [Sample Size Calculator](./using_the_sample_size_calculator.md)
+(Using Eppo's [Sample Size Calculator](/statistics/sample-size-calculator)
 is a great way to do that.)
 
 The biggest difference between these methods is in how flexible they are, given
@@ -161,7 +161,7 @@ make a decision at any point.
 
 ### Bayesian methods: telling you what you actually want to know
 
-[Bayesian](../interpreting-experiments/lift-estimates-and-confidence-intervals/analysis-methods.md#bayesian-analysis)
+[Bayesian](/statistics/confidence-intervals/analysis-methods#bayesian-analysis)
 methods, in contrast, make no guarantees about either false
 positive or false negative rates. Instead, the goal is to provide a description
 of _your beliefs_ about what the true lift is (meaning, how likely is any

@@ -29,7 +29,7 @@ experiment name, status, entity, or owner, or just show experiments you have
 Clicking on the name of an experiment will take you to the
 **experiment detail view**, which shows the effects of each treatment variation,
 compared to control. Within each variation, for each metric that
-[you have added to the experiment](../building-experiments/experiments/adding-metrics-to-experiment.md),
+[you have added to the experiment](/experiments/experiment-metrics),
 we display the (per subject) **average value for the control variation**, as well as
 the estimate of the <Term def={true}>relative lift</Term> (that is, the percentage change
 from the control value) caused by that treatment variation.
@@ -58,20 +58,19 @@ of subjects assigned to each variation.
 :::caution
 
 Depending on the metric settings, we may
-[remove outliers](../building-experiments/metrics/creating-metrics.md#outlier-handling)
+[remove outliers](/data-management/metrics/creating-metrics.md#outlier-handling)
 from the raw data in order to improve the quality of our lift estimates,
 and so the average and total values displayed in this popover
 might differ from those displayed in other tools.
 
 In addition, in many cases (in particular, if
-[CUPED](./lift-estimates-and-confidence-intervals/cuped.md) is enabled),
+[CUPED](/statistics/cuped) is enabled),
 we perform additional processing on the data before estimating the lift
 (such as correcting for imbalances across variations along different
 dimensions). For this reason, the lift displayed on the details page
 may not match the lift calculated directly from the numbers in this popover.
 
-See [Basics of estimating
-lift](./lift-estimates-and-confidence-intervals/index.md#estimating-lift)
+See [Basics of estimating lift](/statistics/confidence-intervals)
 for more information on how we estimate lift in different circumstances.
 
 :::
@@ -84,14 +83,14 @@ the <Term def={true}>confidence level</Term>, which defaults to 95%: we set the 
 bounds of the confidence interval such that it will contain the true lift
 at least 95% (or whatever confidence level you've
 selected) of the time.[^confident] In addition, Eppo has several different
-[methods for calculating the confidence intervals](./lift-estimates-and-confidence-intervals/analysis-methods.md),
+[methods for calculating the confidence intervals](/statistics/confidence-intervals/analysis-methods),
 which can be set at the company or experiment level.
 
 [^confident]:
     For more on how we define confidence intervals, how to interpret
     them, and a precise technical definition of what it means to be "X%
     confident", see
-    [Lift estimates and confidence intervals](./lift-estimates-and-confidence-intervals/index.md).
+    [Lift estimates and confidence intervals](/statistics/confidence-intervals).
 
 :::tip Where does the uncertainty come from?
 
@@ -108,7 +107,7 @@ variation; that would mean that the lift you observed in the experiment would be
 lower or higher, respectively, than what you'd observe if you shipped the
 treatment. This is the uncertainty represented by the confidence
 interval.[^uncertainty] (This is why
-[CUPED](./lift-estimates-and-confidence-intervals/cuped.md), which corrects some
+[CUPED](/statistics/cuped), which corrects some
 of this imbalance, can often greatly reduce the width of the confidence intervals.)
 
 [^goodest]:
@@ -157,18 +156,18 @@ In general, a positive lift will be _good_ (colored <GreenHighlight>green</Green
 negative lift will be _bad_ (colored <RedHighlight>red</RedHighlight>). However, for metrics such as page
 load time or app crashes, a higher number is _bad_. We call
 these <Term def={true}>reversed metrics</Term>. If you've set the "Desired Change" field in the
-[fact definition](../building-experiments/definitions/fact-sql.md)
+[fact definition](/data-management/definitions/fact-sql)
 to "Metric Decreasing", then positive lifts
 will be in <RedHighlight>red</RedHighlight> and negative lifts
 will be in <GreenHighlight>green</GreenHighlight>.
 
 :::
 
-The confidence level is set as part of the [analysis plan](../planning-experiments/analysis-plans.md),
+The confidence level is set as part of the [analysis plan](/experiments/analysis-plans),
 and you can change the company-wide default on the
-[Admin tab](../../administration/setting-statistical-analysis-plan-defaults.md)
+[Admin tab](/administration/setting-statistical-analysis-plan-defaults.md)
 or set an experiment-specific confidence level on the
-[experiment Set Up page](../building-experiments/experiments/creating-experiments.md#10-optional-the-statistical-analysis-plan).
+[experiment Set Up page](/experiments/creating-experiments.md#10-optional-the-statistical-analysis-plan).
 The confidence level being used for any experiment is displayed on the experiment
 detail page below the table of metric results:
 
@@ -187,7 +186,7 @@ but you may want to understand the treatment effect _globally_; a large
 lift in an experiment that targets a tiny portion of your users might have a
 negligible business impact.
 
-You can click on the [**Impact accounting**](./lift-estimates-and-confidence-intervals/global-lift.md)
+You can click on the [**Impact accounting**](/experiments/global-lift)
 icon (<Icon src="/img/interpreting-experiments/global-lift-icon.svg" />)
 to show, for each metric,
 the <Term def={true}>coverage</Term> (the share of all events that are part of the
@@ -214,7 +213,7 @@ make a ship/no-ship decision. However, if you want to see additional statistical
 details, you can click on the **Statistical details**
 icon (<Icon src="/img/interpreting-experiments/statistical-details-icon.svg" />) to display
 them. The actual values being shown will differ based on which
-[analysis method](./lift-estimates-and-confidence-intervals/analysis-methods.md)
+[analysis method](/statistics/confidence-intervals/analysis-methods)
 is being used:
 sequential and fixed-sample methods will show the frequentist statistics, while
 Bayesian statistics will differ to reflect the different decision-making
@@ -257,7 +256,7 @@ See: https://docusaurus.io/docs/markdown-features/react#markdown-and-jsx-interop
 
 #### Bayesian statistics
 
-[Bayesian methods](./lift-estimates-and-confidence-intervals/analysis-methods.md#bayesian-analysis)
+[Bayesian methods](/statistics/confidence-intervals/analysis-methods.md#bayesian-analysis)
 rely on a different way of thinking about probabilities, and thus use different
 statistics to summarize the results of an experiment.
 
@@ -320,7 +319,7 @@ results.
 
 You can also further investigate the performance of an individual metric by
 clicking on navigator icon the next to the metric name. This will take you to
-the [Metric explore](./exploring-metrics.md) page where you can further slice
+the [Metric explore](/experiments/explores) page where you can further slice
 the experiment results by different dimensions that have been configured, for
 example user persona, or browser, etc.
 

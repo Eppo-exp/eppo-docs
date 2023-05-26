@@ -9,8 +9,9 @@ To get started with the Eppo's SDKs for experiment assignment, refer to our [SDK
 ### Choosing an SDK
 
 Eppo has two types of SDKs: client SDKs and server SDKs. Which type of SDK you choose depends on the environment your application runs in. Client SDKs are intended for applications that run on end-user devices such as web browsers or mobile phones. Server SDKs are meant for use by a web server that may serve multiple user requests at a time. See the below links for more details on each type of SDK:
-- [Client SDKs](/feature-flags/sdks/client-sdks/)
-- [Server SDKs](/feature-flags/sdks/server-sdks/)
+
+- [Client SDKs](/feature-flags/sdks#client-sdks)
+- [Server SDKs](/feature-flags/sdks#server-sdks)
 
 ### Integrating Eppo with an internal or third-party feature flagging system
 

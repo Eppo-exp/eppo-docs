@@ -19,7 +19,7 @@ Give the flag a descriptive human readable name and create a single variation fo
 
 ### Create allocations to describe your target audience
 
-After creating the flag, decide who to target by creating [allocations](../feature-flags/concepts#allocations). In this case we will create two allocations that describe our target audience for the new page: internal users and half of all North American web users:
+After creating the flag, decide who to target by creating [allocations](/feature-flags#allocations). In this case we will create two allocations that describe our target audience for the new page: internal users and half of all North American web users:
 
 ![Feature gate 2](/img/feature-flagging/feature-gate-2.png)
 
@@ -27,7 +27,7 @@ Create each allocation one by one, giving each a name and specifying the traffic
 
 ### Initialize the SDK
 
-Choose the [Eppo SDK](../feature-flags/sdks) that fits in your stack. You'll need to install initialize the SDK in your app and create an Eppo client. Here is an example in Javascript:
+Choose the [Eppo SDK](/feature-flags/sdks) that fits in your stack. You'll need to install initialize the SDK in your app and create an Eppo client. Here is an example in Javascript:
 
 ```javascript
 import { init } from "@eppo/js-client-sdk";
@@ -35,7 +35,7 @@ import { init } from "@eppo/js-client-sdk";
 await init({ apiKey: "<YOUR_API_KEY>" });
 ```
 
-If you are using React, we have some [React specific recommendations](../feature-flags/sdks/client-sdks/javascript#usage-in-react).
+If you are using React, we have some [React specific recommendations](../feature-flags/sdks/javascript#usage-in-react).
 
 ### Embed the flag in your code
 

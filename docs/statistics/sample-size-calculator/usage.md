@@ -2,11 +2,11 @@
 sidebar_position: 2
 ---
 
-# Using the Sample Size Calculator
+# Usage
 
-An experiment’s statistical power, or ability to detect treatment effects in a particular metric, is determined the number of subjects in the experiment, as well as that metric’s mean and variance. Eppo provides a dedicated interface for computing [Minimum Detectable Effects](./minimum_detectable_effects) for various experiment runtimes using historical data in your data warehouse. To use Eppo’s **Sample Size Calculator**, you or someone at your company will first need to [set up one or more Entry Points](./setting_up_the_sample_size_calculator#creating-entry-points). The rest of this article assumes that an Entry Point has been configured, and that you are ready to perform a sample-size calculation.
+An experiment’s statistical power, or ability to detect treatment effects in a particular metric, is determined the number of subjects in the experiment, as well as that metric’s mean and variance. Eppo provides a dedicated interface for computing [Minimum Detectable Effects](/statistics/sample-size-calculator/mde) for various experiment runtimes using historical data in your data warehouse. To use Eppo’s **Sample Size Calculator**, you or someone at your company will first need to [set up one or more Entry Points](/statistics/sample-size-calculator/setup#creating-entry-points). The rest of this article assumes that an Entry Point has been configured, and that you are ready to perform a sample-size calculation.
 
-Open up the **Sample Size Calculator** using the button in the top-right corner of the Experiments page and choose the [entity](../building-experiments/entities/) for which you plan to run an experiment.
+Open up the **Sample Size Calculator** using the button in the top-right corner of the Experiments page and choose the [entity](/data-management/entities) for which you plan to run an experiment.
 
 ![Sample size calculator is located in the upper right on experiments page](/img/planning-experiments/sample_size_calculator_homepage.png)
 
@@ -22,7 +22,7 @@ After selecting a metric, a table will appear that summarizes the Minimum Detect
 
 ![Sample size calculator example](/img/planning-experiments/sample_size_calculator_example.png)
 
-In statistical terms, [Minimum Detectable Effect (MDE)](./minimum_detectable_effects) is defined as the smallest lift that can be detected a certain percent of the time, while ensuring that the experiment's confidence intervals contain the true value a specified percent of the time; these two numbers (called Power and Confidence Level) can be configured under Advanced Settings, on the left. You may notice while using those controls that higher power and confidence levels correspond to larger Minimum Detectable Effects for all metrics.
+In statistical terms, [Minimum Detectable Effect (MDE)](/statistics/sample-size-calculator/mde) is defined as the smallest lift that can be detected a certain percent of the time, while ensuring that the experiment's confidence intervals contain the true value a specified percent of the time; these two numbers (called Power and Confidence Level) can be configured under Advanced Settings, on the left. You may notice while using those controls that higher power and confidence levels correspond to larger Minimum Detectable Effects for all metrics.
 
 Often it is desirable to compute MDEs for several metrics at once to ensure that several metrics of interest will achieve a given MDE. You can add more than one metric to the table using the _Add..._ control in the top-right corner. You can remove a metric from the table using the Actions (...) control next to each metric name.
 
