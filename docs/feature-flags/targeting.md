@@ -5,7 +5,7 @@ sidebar_position: 2
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Targeting Rules
+# Targeting rules
 
 Targeting rules allow you to define which subjects should belong to your experiment population. For example, you might define a rule to target mobile device users.
 
