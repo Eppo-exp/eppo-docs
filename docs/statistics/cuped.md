@@ -1,4 +1,4 @@
-# CUPED
+# CUPED++
 
 The precision of experiment results (the width of confidence intervals) depends on the variance of the metrics we are measuring. One way to improve the precision of experiments is to gather more data, as the variance goes down as we gather more data; this obviously means that it takes longer to run an experiment.
 

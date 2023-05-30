@@ -1,4 +1,4 @@
-# Traffic diagnostics
+# Sample Ratio Mismatch
 
 Validity of experimental results crucially relies on proper randomization of subjects.
 The traffic tab shows how many subjects are randomized into the experiment, and how they are divided across variants.

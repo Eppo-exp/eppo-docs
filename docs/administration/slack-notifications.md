@@ -1,6 +1,6 @@
 # Slack notifications
 
-The Eppo App for Slack allows you to receive notifications for important updates on your experiments, such as when Eppo detect a [traffic imbalance](/experiments/traffic) in your assignments.
+The Eppo App for Slack allows you to receive notifications for important updates on your experiments, such as when Eppo detect a [traffic imbalance](/statistics/sample-ratio-mismatch) in your assignments.
 
 <img width="440" alt="data issues alert" src="https://user-images.githubusercontent.com/90637953/213244183-a3580e3b-e077-4fc5-9bbb-2dc307660ebd.png" /> &ensp;
 <img width="440" alt="status change alert" src="https://user-images.githubusercontent.com/90637953/213244188-3dbd1333-185e-4416-b925-d36bbac08223.png" /> &ensp;
@@ -45,7 +45,7 @@ To remove the Slack channel from this metirc, click on "Configure" and turn off 
 
 ### A data problem on an experiment
 
-- When Eppo detects a [traffic imbalance](/experiments/traffic) in your assignments
+- When Eppo detects a [traffic imbalance](/statistics/sample-ratio-mismatch) in your assignments
 - When there is an error and the experiment results cannot be refreshed
 
 ### A status change on an experiment
