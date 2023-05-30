@@ -2,4 +2,10 @@
 sidebar_position: 2
 ---
 
-# Properties
+# Properties [wip]
+
+## Entity properties
+
+### Assignment properties
+
+## Metric properties
