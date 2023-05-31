@@ -56,6 +56,14 @@ async function createConfig() {
       crossorigin: 'anonymous',
     },
   ],
+
+  scripts: [
+    {
+      src: '/scripts/rudderstack.js',
+      async: true,
+    },
+  ],
+
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
