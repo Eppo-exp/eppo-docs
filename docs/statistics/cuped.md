@@ -6,17 +6,53 @@ However, there are options beyond waiting to gather more data, and all these opt
 
 ![CUPED variance reduction explained](/img/measuring-experiments/cuped-variance-plot.png)
 
-An illustration of how CUPED helps reduce the variance in an effect estimate, leading to a much tighter confidence interval.
+The above sketch illustrates how CUPED helps reduce the variance in an effect estimate, leading to a much tighter confidence interval.
 
-## Overview
+:::info
 
-When CUPED is enabled, Eppo automatically ingests aggregated data about each subjects' events across metrics that are added to your experiment for the 30 days before they joined the experiment. Eppo then uses a ridge regression model to predict subject-level outcomes for each metric. For each metric, we predict outcomes using every available metric. These predictions are then used to get more accurate effect estimates, reducing the variance and hence leading to better confidence intervals.
+Note that we only use CUPED to reduce variance on the metrics overview page.
+In particular, not that there are no CUPED estimates for:
 
-CUPED works best for experiments with long-time users for whom many pre-experiment data points exist. It is less effective for newer users; if you are running an experiment on a change in the onboarding flow for new users, there is no prior data to leverage, and hence there is little benefit. However, one appealing characteristic of our approach that you do not have to worry about CUPED giving you worse results. In the worst case scenario, it does equally well as the standard approach.
+- filtered results (including segments)
+- explores
+  This is due to the fact that CUPED models are computationally intense and hence we do not want to use them indiscriminately.
 
-## Inner workings
+:::
 
-The statistics behind CUPED quickly get quite involved. If you are looking for more details on our regression based approach, [this paper goes into depth on using regression adjustments for experimental data](https://projecteuclid.org/journals/annals-of-applied-statistics/volume-7/issue-1/Agnostic-notes-on-regression-adjustments-to-experimental-data--Reexamining/10.1214/12-AOAS583.full).
+## Data
+
+When CUPED is enabled, Eppo automatically ingests aggregated data about each subjects in the following ways:
+
+- For each (applicable) experiment metric, we look at the pre-experiment values during a lookback window which defaults to 30 days.
+- Furthermore, we also leverage the [assignment properties](/data-management/properties) for the subject (e.g. country, browser, etc.)
+
+:::note
+As a concrete example, consider an e-commerce website that runs an experiment with 3 metrics:
+
+- total order value (sum of price),
+- number of orders (count of price), and
+- 7-day purchase conversion.
+
+Furthermore, the assignment table has an assignment property indicating the user's country. In this case, our CUPED++ model uses historical data on order value, number of orders, and user country. It does not use historical data on 7-day purchase conversion since it does not have a clear pre-experiment analog.
+:::
+
+Think of the above as the $X$ matrix in a regression; in fact, we will re-use this X to improve estimates for each experiment metric.
+
+## Model
+
+For each of the metrics in the experiment, we now regress the outcome on the covariates as defined above using a ridge regression, separately for each variation.
+We can then use the predictions of these models to improve the effect estimates, with the variance of these estimates being proportional to the mean square error of the predictions.
+Thus, the improvement in the confidence intervals is directly related to how well the pre-experiment data can predict experiment outcomes.
+
+CUPED works best for experiments with long-time users for whom many pre-experiment data points exist. It is generally less effective for newer users; if you are running an experiment on a change in the onboarding flow for new users, there is no prior data to leverage, just the assignment dimensions, and hence there is less benefit. However, one appealing characteristic of our approach that you do not have to worry about CUPED giving you worse results. In the worst case scenario, it does equally well as the standard approach.
+
+## What makes Eppo's CUPED++ different
+
+In general, CUPED refers to reducing the variance of a metric by using pre-experiment data on only that metric itself based on the covariance between the two; this is equivalent to running a simple regression.
+This is often the most important variable in a regression, but does suffer some drawbacks:
+
+- For some metrics, there is no clear pre-experiment equivalent: e.g. a conversion or retention metric. In our case, we can still leverage historical data of related metrics to help improve estimates
+- This approach does not help for experiments where no pre-experiment data exists (experiments on new users). Our approach is able to leverage assignment properties to reduce variance.
 
 ## Using CUPED on Eppo
 
@@ -30,7 +66,9 @@ CUPED can be turned on in the admin panel, and in the overview page of an experi
 
 ![Turn CUPED on](/img/measuring-experiments/cuped-turn-on-cuped.png)
 
-## Notes
+## Further reading
 
-- Conversion and retention metrics do not have a clear pre-experiment equivalent, which means that for experiments that only have conversion and/or retention metrics, CUPED does not work.
-- We have plenty of improvements for CUPED planned; stay tuned for additional ways to improve your confidence intervals.
+The statistics behind CUPED quickly get quite involved. For more details, please see
+
+- a [write-up of our statistics engine](https://www.geteppo.com/assets/pdf/code-2022-ci-pdf) presented at [MIT CODE](https://ide.mit.edu/events/2022-conference-on-digital-experimentation-mit-codemit/)
+- a [paper on regression adjustments for experimental data](https://projecteuclid.org/journals/annals-of-applied-statistics/volume-7/issue-1/Agnostic-notes-on-regression-adjustments-to-experimental-data--Reexamining/10.1214/12-AOAS583.full)
