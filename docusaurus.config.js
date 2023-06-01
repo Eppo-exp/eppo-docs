@@ -57,15 +57,8 @@ async function createConfig () {
       }
     ],
 
-    scripts: [
-      {
-        src: '/scripts/rudderInitialize.js',
-        async: true
-      }
-    ],
-
     clientModules: [
-      require.resolve('./static/scripts/rudderTrack.js')
+      require.resolve('./src/rudderstack.config.js')
     ],
 
     themeConfig:
