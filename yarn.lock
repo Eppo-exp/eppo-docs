@@ -7253,6 +7253,11 @@ rtlcss@^3.5.0:
     postcss "^8.3.11"
     strip-json-comments "^3.1.1"
 
+rudder-sdk-js@^2.34.0:
+  version "2.34.0"
+  resolved "https://registry.yarnpkg.com/rudder-sdk-js/-/rudder-sdk-js-2.34.0.tgz#7d4530a22bb7ebbd1ae1206ab454cfaca68e610d"
+  integrity sha512-yEQUIaeQouxw1wFozTYyGAfRqBNAESPWMjoQM44UXP4bIpG4cmP1nU8MM0zNXxZaYWfBkdr5uteJlQT97CAUJQ==
+
 run-parallel@^1.1.9:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/run-parallel/-/run-parallel-1.2.0.tgz#66d1368da7bdf921eb9d95bd1a9229e7f21a43ee"
