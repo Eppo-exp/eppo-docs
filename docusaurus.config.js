@@ -126,6 +126,10 @@ async function createConfig () {
               {
                 label: "Dashboard",
                 to: "https://eppo.cloud",
+              },
+              {
+                label: "Product updates",
+                to: "https://updates.eppo.cloud",
               }
             ],
           }
