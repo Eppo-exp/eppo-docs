@@ -17,7 +17,7 @@ A *Metric Collection* can be thought of as a "template" with a name and list of 
 
 ![Creating a metric collection](/img/building-experiments/create-metric-collection.gif)
 
-And a modal will appear in which you can give the collection a name, select the entity that the metrics belong to, and optionally write a description about the collection.
+Now a modal will appear in which you can give the collection a name, select the entity that the metrics belong to, and optionally write a description about the collection.
 
 ![Submitting a metric collection](/img/building-experiments/create-metric-collection-submit.gif)
 
@@ -37,7 +37,7 @@ In the Overview tab within the experiment's page, you can click `+ Add` and the 
 
 2. **Edit the metrics in the added group**
 
-"Adding" a Metric Collection to an experiment copies the metrics and title from Metric Collection into a group in the experiment. You can add or remove metrics from this group without affecting the original Metric Collection.
+Adding a Metric Collection to an experiment copies the metrics and title from Metric Collection into a group in the experiment. You can add or remove metrics from this group without affecting the original Metric Collection.
 
 ![Add and remove a metric from a group](/img/building-experiments/add-and-remove-metric-from-group.gif)
 
