@@ -125,6 +125,10 @@ async function createConfig() {
               {
                 label: "Product updates",
                 to: "https://updates.eppo.cloud",
+              },
+              {
+                label: "API reference",
+                to: "https://eppo.cloud/api/docs#/",
               }
             ],
           }
