@@ -38,7 +38,7 @@ Finally, we add Canada, Mexico, and the United States as dimension values.
 This defines the North America segment. However, it is easy to create more fine-grained segments (such as North American Mobile users) by adding additional filters to the segment.
 
 '''info
-When using a property filter based on an assignment definition, only experiments that use that particular assignment definition are able to leverage that segments.  
+When using a property filter based on an [assignment property](/data-management/properties#assignment-properties), only experiments that use that particular assignment definition are able to leverage that segments.  
 '''
 
 ### Analyzing results by segment
@@ -57,7 +57,7 @@ Now, the results indicate that we are analyzing the selected segment
 
 ## Single dimension filter
 
-When you want to quickly explore results along a particular property, you can use the single dimension filter.
+The single dimension filter allows you to quickly explore experiment results based on a specific property.
 In the filter menu, select the "Single Value" filter and select the property and value you want to explore
 
 ![filter results by dimension](/img/experiments/segments/filter_by_dimension.png)
