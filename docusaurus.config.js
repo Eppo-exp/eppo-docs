@@ -93,11 +93,42 @@ async function createConfig() {
             title: "Docs",
             items: [
               {
+                label: "Initial setup",
+                to: "/setup-quickstart",
+              },
+              {
+                label: "Feature flag quickstart",
+                to: "/feature-flag-quickstart",
+              },
+              {
                 label: "Experiment quickstart",
                 to: "/experiment-quickstart",
               }
             ],
+          },
+
+          {
+            title: "Links",
+            items: [
+              {
+                label: "Eppo Home",
+                to: "https://geteppo.com",
+              },
+              {
+                label: "Blog",
+                to: "https://geteppo.com/blog",
+              },
+              {
+                label: "Dashboard",
+                to: "https://eppo.cloud",
+              },
+              {
+                label: "Product updates",
+                to: "https://updates.eppo.cloud",
+              }
+            ],
           }
+
         ],
         copyright: `Copyright © ${new Date().getFullYear()} Eppo, Inc.`,
       },

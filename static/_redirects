@@ -1,2 +1,6 @@
 https://adoring-yonath-6ecb9d.netlify.app/* https://docs.geteppo.com/:splat 301!
 http://adoring-yonath-6ecb9d.netlify.app/*  http://docs.geteppo.com/:splat  301!
+/experiments/connecting-your-data/data-warehouses/connecting-to-snowflake  /experiments/prerequisites/connecting-to-data-warehouse/connecting-to-snowflake
+/experiments/connecting-your-data/data-warehouses/connecting-to-bigquery   /experiments/prerequisites/connecting-to-data-warehouse/connecting-to-bigquery
+/experiments/connecting-your-data/data-warehouses/connecting-to-databricks /experiments/prerequisites/connecting-to-data-warehouse/connecting-to-databricks
+/experiments/connecting-your-data/data-warehouses/connecting-to-redshift   /experiments/prerequisites/connecting-to-data-warehouse/connecting-to-redshift
