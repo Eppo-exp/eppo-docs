@@ -11,7 +11,7 @@ The above sketch illustrates how CUPED helps reduce the variance in an effect es
 :::info
 
 Note that we only use CUPED to reduce variance on the metrics overview page.
-In particular, not that there are no CUPED estimates for:
+In particular, note that there are no CUPED estimates for:
 
 - filtered results (including segments)
 - explores
@@ -51,8 +51,8 @@ CUPED works best for experiments with long-time users for whom many pre-experime
 In general, CUPED refers to reducing the variance of a metric by using pre-experiment data on only that metric itself based on the covariance between the two; this is equivalent to running a simple regression.
 This is often the most important variable in a regression, but does suffer some drawbacks:
 
-- For some metrics, there is no clear pre-experiment equivalent: e.g. a conversion or retention metric. In our case, we can still leverage historical data of related metrics to help improve estimates
-- This approach does not help for experiments where no pre-experiment data exists (experiments on new users). Our approach is able to leverage assignment properties to reduce variance.
+- For some metrics, there is no clear pre-experiment equivalent for that metric: e.g. a conversion or retention metric. In our implementation, we can still leverage historical data of the other experiment metrics to help improve estimates of these conversion and retention metrics. This allows us to get improved estimates for conversion and retention metrics versus a standard CUPED approach.
+- CUPED help for experiments where no pre-experiment data exists (experiments on new users, such as onboarding flows). Because we also use assignment properties as covariates in the regression adjustments model, we are able to reduce variance for these experiments as well, which leads to smaller confidence intervals for such experiments.
 
 ## Using CUPED on Eppo
 
