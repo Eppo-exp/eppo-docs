@@ -1,3 +1,7 @@
+---
+sidebar_position: 5
+---
+
 # Adding screenshots
 In your experiments, you can add screenshots to your different variations. You can use these screenshots to highlight the changes made in the variation.
 

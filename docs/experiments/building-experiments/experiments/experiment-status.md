@@ -1,3 +1,7 @@
+---
+sidebar_position: 6
+---
+
 # Experiment status
 
 You can navigate to the **Experiments** page by clicking on the **Experiments** icon from the left tab. Each experiment has an associated status which indicates the current state of the experiment. An experiment can have one of 4 different statuses:
