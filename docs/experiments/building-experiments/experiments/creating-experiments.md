@@ -30,7 +30,7 @@ You can also choose to set a metric event analysis period that is different from
 
 ![Choose assignment SQL](../../../../static/img/building-experiments/choose-assignment-sql-in-experiment.png)
 
-If you are pre-assigning subjects before they are actually exposed to a variant, you may want to take advantage of the *Filter assignments by entry point* checkbox. This will include only those subjects that appear in an [entry point](../../planning-experiments/setting_up_the_sample_size_calculator#creating-entry-points) with an entry time after their assignment time.
+If you are pre-assigning subjects before they are actually exposed to a variant, you may want to take advantage of the [*Filter assignments by entry points* checkbox](./filter-assignments-by-entry-point). This will include only those subjects that appear in an [entry point](../../planning-experiments/setting_up_the_sample_size_calculator#creating-entry-points) with an entry time after their assignment time.
 
 ### 6. Input feature flag name
 
