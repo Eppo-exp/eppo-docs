@@ -8,5 +8,5 @@ This section walks you through the initial set up of Eppo. Whether you are using
 - [Your first experiment analysis](/experiment-quickstart/) - Once you have metrics and assignment logs set up in Eppo, use this guide to start measuring the impact of your experiments.
 
 :::note
-Don't be blocked! We're here to help get running with Eppo. Contact us at [support@geteppo.com](mailto:support@geteppo.com).
+Don't be blocked! We're here to help you get running with Eppo. Contact us at [support@geteppo.com](mailto:support@geteppo.com).
 :::
