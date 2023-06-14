@@ -7,7 +7,7 @@ sidebar_position: 3
 
 This 10 minute guide will get you set up with your first running feature flag on Eppo. In the example we'll imagine that we are using a flag on our frontend to gradually launch a new checkout page.
 
-### Creating a flag
+### 1. Creating a flag
 
 Start by creating a flag that will serve as a gate for who sees the new page:
 
@@ -17,7 +17,7 @@ Give the flag a descriptive human readable name and create a single variation fo
 
 ![Feature gate 1](/img/feature-flagging/feature-gate-1.png)
 
-### Create allocations to describe your target audience
+### 2. Create allocations to describe your target audience
 
 After creating the flag, decide who to target by creating [allocations](/feature-flags#allocations). In this case we will create two allocations that describe our target audience for the new page: internal users and half of all North American web users:
 
@@ -25,19 +25,49 @@ After creating the flag, decide who to target by creating [allocations](/feature
 
 Create each allocation one by one, giving each a name and specifying the traffic split and traffic exposure. Finally, enter rules that specify which subjects are part of that allocation. In the example above `Internals users` are determined by their email, and `North America Web Users` are determined by their country and device. For this allocation we'll set the traffic exposure to 50% so that 50% of the group still sees the original page (SDK will return `null`).
 
-### Initialize the SDK
+### 3. Connect a logging function to the Eppo SDK (optional)
+
+If you are using feature flags to implement a randomized experiment, you will need to log each time a user is assigned a variant. Instead of integrating an additional event logging system, Eppo connects to your existing data warehouse logging infrastructure. Whether you are using a third party system to log events to the data warehouse or have an internally built solution, you'll simply pass in a logging function when initializing the SDK. 
+
+For instance, if you are using Segment, the logging function might look something like this:
+
+```jsx
+import { IAssignmentLogger } from '@eppo/js-client-sdk';
+import { AnalyticsBrowser } from '@segment/analytics-next'
+
+// Connect to Segment (or your own event-tracking system)
+const analytics = AnalyticsBrowser.load({ writeKey: '<SEGMENT_WRITE_KEY>' })
+
+const assignmentLogger: IAssignmentLogger = {
+  logAssignment(assignment) {
+    analytics.track({
+      userId: assignment.subject,
+      event: 'Eppo Randomized Assignment',
+      type: 'track',
+      properties: { ...assignment }
+    });
+  },
+};
+```
+
+You can read more about assignment logging functions [here](/how-tos/event-logging/).
+
+### 4. Initialize the SDK
 
 Choose the [Eppo SDK](/feature-flags/sdks) that fits in your stack. You'll need to install initialize the SDK in your app and create an Eppo client. Here is an example in Javascript:
 
 ```javascript
 import { init } from "@eppo/js-client-sdk";
 
-await init({ apiKey: "<YOUR_API_KEY>" });
+await init({
+  apiKey: '<API_KEY>',
+  assignmentLogger,
+});
 ```
 
 If you are using React, we have some [React specific recommendations](../feature-flags/sdks/javascript#usage-in-react).
 
-### Embed the flag in your code
+### 5. Embed the flag in your code
 
 Once the SDK is initialized, you can embed the flag in your application's logic to check if users should be see the new page:
 
@@ -68,7 +98,7 @@ if (variation == "on") {
 }
 ```
 
-### Turn on the flag to start splitting traffic
+### 6. Turn on the flag to start splitting traffic
 
 The last step is turning on the flag, which can be done back in the interface using the toggle on the flag's detail view:
 
