@@ -34,16 +34,25 @@ Existing Metrics can also be updated with any configured Metric properties on th
 
 ![Update a new Metric](/img/properties/metric-property-experiment-results.png)
 
-Metrics with Metric property filters appear normally on Experiment results.
+Metrics with filters appear normally on Experiment results.
 
 ### Exploring Experiment results
 
-Any Metric on an Experiment can 
+When exploring a Metric on an Experiment 
 
 Metric property filters are already applied to the Metric values; as such only Assignment and Entity
 properties are available.
 
-Any Metric on an Experiment can 
+![Explore](/img/properties/metric-property-explore-lift1.png)
+
+
+![Explore as a time series](/img/properties/metric-property-explore-ts1.png)
+
+Explore as a time-series split by any dimension with lifts at each day.
+
+![Explore as as time series with data](/img/properties/metric-property-explore-ts2.png)
+
+Tabular view available.
 
 ### Impact on warehouse compute
 
