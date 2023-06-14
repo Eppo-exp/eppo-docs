@@ -22,9 +22,11 @@ This only needs to be configured once and re-use many times for any Metrics crea
 
 ### Configure a Metric with a property filter
 
+Metric Properties can be added as filters when creating Metrics. This will allow you to filter down to a particular value or values when calculating that metric. For example, you may want to create a metric called 'Purchases (USA)' to track purchases within a single country.
+
 ![Create a new Metric](/img/properties/metric-property-create-metric.png)
 
-Any number of Metrics can be created with one or more Fact properties applied.
+Any number of Metric Properties can be created with one or more Fact properties applied.
 
 ![Update a new Metric](/img/properties/metric-property-update-metric.png)
 
@@ -38,23 +40,12 @@ Metrics with filters appear normally on Experiment results.
 
 ### Exploring Experiment results
 
-When exploring a Metric on an Experiment 
-
-Metric property filters are already applied to the Metric values; as such only Assignment and Entity
-properties are available.
+For Metrics that use a Metric Property filter, the filter is already applied and cannot be used to explore only Assignment and Entity properties are available.
 
 ![Explore](/img/properties/metric-property-explore-lift1.png)
 
+For Metrics that do not use a Metric Property filter, you can explore the results and split by Metric Property values.
 
 ![Explore as a time series](/img/properties/metric-property-explore-ts1.png)
 
 Explore as a time-series split by any dimension with lifts at each day.
-
-![Explore as as time series with data](/img/properties/metric-property-explore-ts2.png)
-
-Tabular view available.
-
-### Impact on warehouse compute
-
-Metric properties are ingested along with their associated events 
-and are more efficient than Entity properties. 
