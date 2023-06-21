@@ -90,18 +90,18 @@ async function createConfig() {
         style: "dark",
         links: [
           {
-            title: "Docs",
+            title: "Quick start guides",
             items: [
               {
                 label: "Initial setup",
                 to: "/setup-quickstart",
               },
               {
-                label: "Feature flag quickstart",
+                label: "Feature flag quick start",
                 to: "/feature-flag-quickstart",
               },
               {
-                label: "Experiment quickstart",
+                label: "Experiment quick start",
                 to: "/experiment-quickstart",
               }
             ],
@@ -111,7 +111,7 @@ async function createConfig() {
             title: "Links",
             items: [
               {
-                label: "Eppo Home",
+                label: "Eppo",
                 to: "https://geteppo.com",
               },
               {
@@ -119,16 +119,25 @@ async function createConfig() {
                 to: "https://geteppo.com/blog",
               },
               {
-                label: "Dashboard",
+                label: "Eppo application",
                 to: "https://eppo.cloud",
               },
               {
                 label: "Product updates",
                 to: "https://updates.eppo.cloud",
               },
+            ],
+          },
+          {
+            title: "Reference",
+            items: [
               {
                 label: "API reference",
                 to: "https://eppo.cloud/api/docs#/",
+              },
+              {
+                label: "Security",
+                to: "https://www.geteppo.com/security",
               }
             ],
           }
