@@ -50,7 +50,7 @@ const assignmentLogger: IAssignmentLogger = {
 };
 ```
 
-You can read more about assignment logging functions [here](/how-tos/event-logging/).
+The [event logging](/how-tos/event-logging/) page has more information on how to set up logging using different logging tools
 
 ### 4. Initialize the SDK
 
