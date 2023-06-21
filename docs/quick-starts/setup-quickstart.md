@@ -24,7 +24,7 @@ Eppo uses your data warehouse to host all experimentation data. This means that 
 
 Entities specify the different subjects on which you plan to run experiments. Common examples include users, anonymous IDs, or organizations. To create an Entity, navigate to the [definitions page](https://eppo.cloud/definitions), click **Manage Entities** in the top right corner, and then click **+Create Entity**. You can name the entity anything relevant to your business. To learn more about entities see [this page](/data-management/entities/).
 
-![Create Entity](/../static/img/initial-setup/quick-start-1.png)
+![Create Entity](/img/initial-setup/quick-start-1.png)
 
 ## 4. Create an Assignment SQL definition (optional)
 
