@@ -8,7 +8,7 @@ Metrics in Eppo are created at the [entity](/data-management/entities) level (su
 
 ## Ratio Metrics
 
-[Ratio metrics](/data-management/metrics/ratio-metric) allow companies to calculate ratios or percentages based on different metrics, providing deeper insights into the relative performance of variations.
+[Ratio metrics](/data-management/metrics/ratio-metric) allow you to calculate ratios based on different metrics, providing deeper insights into the relative performance of variations.
 This enables a more nuanced analysis of experimental results, allowing businesses to understand the impact of changes in a more comprehensive manner.
 
 For example, consider an _average order value_ metric, which is created by dividing revenue (sum of prices) by number of orders (_sum_ of items purchased or _count_ of prices).
@@ -24,6 +24,3 @@ $$
 ## Guardrail metrics
 
 Furthermore, you can set metrics as [guardrail metrics](/data-management/metrics/guardrails), which means they are automatically added to every experiment. This feature ensures that specific metrics are consistently tracked across experiments, providing a standardized measurement framework. By setting metrics as guard rails, you can maintain a unified approach to experimentation and easily compare results across different tests.
-
-$$
-$$

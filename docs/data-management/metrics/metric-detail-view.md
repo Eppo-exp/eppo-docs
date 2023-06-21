@@ -1,3 +1,7 @@
+---
+sidebar_position: 4
+---
+
 # Metric detail view
 
 If you click on any metric listed under the **Metrics** tab, you can see more details about it. The details page consists of two tabs: **Overview** and **Experiments**.
