@@ -72,7 +72,7 @@ The initialization methods in Eppo’s SDKs are non-blocking in order to minimiz
 
 2. If no configurations were previously downloaded or the SDK stores the configuration in-memory and loses it during re-initialization, then the SDK will return a null value when `getAssignment` is invoked.
 
-One workaround for this is to pause execution after the initialization method is called (e.g. `time.Sleep(8 * time.Second)`) to give the SDK time to fetch its first configuration before invoking `getAssignment`. If pausing execution is undesirable, e.g. slowing the start up of a mobile app is poor UX, then the returned null value will need to be handled in your code to gracefully fallback on a sensible default variant.
+One workaround for this is to pause execution after the initialization method is called (e.g. `time.Sleep(8 * time.Second)`) to give the SDK time to fetch its first configuration before invoking `getAssignment`. If pausing execution is undesirable, e.g. slowing the start up of a mobile app is poor UX, then the returned null value will need to be handled in your code to gracefully fallback on a sensible default experience.
 
 ## 4. Using targeting lists to define a large list of users
 
