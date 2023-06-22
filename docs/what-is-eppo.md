@@ -3,7 +3,7 @@ sidebar_position: 2
 id: what-is-eppo
 ---
 
-# What is Eppo? [wip]
+# What is Eppo?
 
 Eppo is a next-generation feature flag and experimentation platform built right on top of your data warehouse:
 
@@ -17,7 +17,18 @@ We offer companies an end-to-end suite of experimentation tools, but let you dec
 
 <br />
 
-# How feature flagging works [wip]
+# How feature flagging works
+
+Eppo’s lightweight [feature flagging SDKs](/feature-flags/sdks) can run on either the client- or server-side. Our SDKs span the most common tech stacks, including [Node](/feature-flags/sdks/node), [JavaScript](/feature-flags/sdks/javascript) (including [React](/feature-flags/sdks/react)), [Python](/feature-flags/sdks/python), [Go](/feature-flags/sdks/go), [PHP](/feature-flags/sdks/php), [Ruby](/feature-flags/sdks/ruby), [iOS](/feature-flags/sdks/ios), and [Android](/feature-flags/sdks/android).
+
+Creating a feature flag in Eppo involves the following steps:
+
+1. Set up variations, with values that you control from the SDK
+2. Optionally, you can create fine-tuned targeting allocations that allow you to target subjects that match specific rules.
+3. Initialize the SDK.
+4. Embed the SDK in your code base.
+5. Enable the feature flag in your test or production environment.
+6. Log which experiments a user has been exposed to. You can pass in a [logging callback](https://docs.geteppo.com/experiments/prerequisites/event-logging/) to any SDK (e.g. a wrapper around Segment or Rudderstack) to route Eppo assignments to your data warehouse.
 
 # How experiment analysis works
 
