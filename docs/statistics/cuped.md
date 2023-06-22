@@ -52,7 +52,7 @@ In general, CUPED refers to reducing the variance of a metric by using pre-exper
 This is often the most important variable in a regression, but does suffer some drawbacks:
 
 - For some metrics, there is no clear pre-experiment equivalent for that metric: e.g. a conversion or retention metric. In our implementation, we can still leverage historical data of the other experiment metrics to help improve estimates of these conversion and retention metrics. This allows us to get improved estimates for conversion and retention metrics versus a standard CUPED approach.
-- CUPED help for experiments where no pre-experiment data exists (experiments on new users, such as onboarding flows). Because we also use assignment properties as covariates in the regression adjustments model, we are able to reduce variance for these experiments as well, which leads to smaller confidence intervals for such experiments.
+- The standard CUPED approach does not help for experiments where no pre-experiment data exists (experiments on new users, such as onboarding flows). Because we also use assignment properties as covariates in the regression adjustments model, we are able to reduce variance for these experiments as well, which leads to smaller confidence intervals for such experiments.
 
 ## Using CUPED on Eppo
 
