@@ -2,89 +2,25 @@
 sidebar_position: 1
 ---
 
-# Creating an experiment [wip]
-
-In Eppo, you can build your experiments using a few core building blocks:
-
-- [Entities](/data-management/entities/)
-- [Definitions](/data-management/definitions/)
-  - [Assignments](/data-management/definitions/assignment-sql)
-  - [Facts](/data-management/definitions/fact-sql)
-- [Metrics](/data-management/metrics/creating-metrics)
-
-These building blocks are combined in the [Eppo Data Pipeline](/data-management/pipeline)
-
-# Prerequisites
-
-To analyze experiments on Eppo you must first:
-
-1. Set up a function to assign subjects to experiments in your application and log those assignments into your application's event stream.
-2. Direct your application's event stream into your data warehouse, commonly achieved using a tool like Segment.
-3. Connect Eppo to your data warehouse by setting up a dedicated service account.
-
-![Data inputs](/img/feature-flagging/data-inputs.png)
-
-In order to perform its analyses, Eppo needs access to an assignment table in your data warehouse that lists each user that comes through the system and which variant they saw at which time.
-
-| timestamp                | user_id            | experiment             | variation |
-| ------------------------ | ------------------ | ---------------------- | --------- |
-| 2021-06-22T17:35:12.000Z | 165740867980881574 | adding_BNPL_experiment | affirm    |
-
-If your infastructure lines up with this diagram and you already have data in this format, you can skip right to [connecting your data warehouse](/how-tos/connecting-dwh). If you are new to experimentation or are interested in hearing our recommended best practices, read further into our guides on [experiment assignment](/feature-flags/experiment-assignment/) and [event logging](/how-tos/event-logging/).
-
-## Overview
-
-Let's suppose that you're a food delivery app that wants to track the effect of a new push notification on customer ordering habits.
-
-_Assignments_ refer to the assignment of customers into different experiment groups (some of the customers received the push notifications and some of them did not).
-
-The food delivery app will have events that occur like "Customer X placed an order worth $23.44 from Restaurant Y at time T".
-
-```sql
-SELECT
-  ts,
-  customer_id,
-  restaurant_id,
-  order_value,
-  promo_amount
-FROM mydb.myschema.restaurant_orders
-```
-
-_Entities_ are who was involved in the event - in this case _Customer_ and _Restaurant_.
-
-_Facts_ (one of kind of _Definition_) are the numeric quantities associated with the event - in this case `order_value` and `promo_amount`.
-
-_Facts_ are aggregated to form _Metrics_ which you use to evaluate _Experiments_.
-
-From the above `restaurant_orders` event, you can construct metrics such as:
-
-- Total order volume -- the sum of order values across all customers
-- Number of orders -- the number of orders placed by all customers
-- Distinct ordering customers -- the number of customers who have placed an order
-- Total revenue by customer (entity = customer, fact = `order_value`)
-- Total revenue by restaurant (entity = restaurant, fact = `order_value`)
-- Total promos received by restaurant (entity = customer, fact =
-  `promo_amount`)
-
 # Creating experiments
 
 Experiments are a set of metrics that correspond to users being shown different feature sets that you would like to track over time.
 
-## 1. Navigate to **Experiments** in the left-hand menu and click **+Experiment**
+### 1. Navigate to **Experiments** in the left-hand menu and click **+Experiment**
 
 ![Create experiment](/img/building-experiments/create-experiment.png)
 
-## 2. Fill out the **Create Experiment** Form
+### 2. Fill out the **Create Experiment** Form
 
 ![Fill experiment form](/img/building-experiments/fill-create-experiment-form.png)
 
 Give your experiment a name and hypothesis.
 
-## 3. Click the **Configure the Experiment** button
+### 3. Click the **Configure the Experiment** button
 
 ![Configure experiment](/img/building-experiments/set-up-and-configure-experiment.png)
 
-## 4. Select the date range for your experiment.
+### 4. Select the date range for your experiment.
 
 ![Select dates](/img/building-experiments/select-dates.png)
 
@@ -104,7 +40,7 @@ However, in certain cases, you may want events to be tracked well after randomiz
 
 While uncommon, event dates should be extended past the assignment period if you wish to detect an effect that will appear long after treatment exposure.
 
-**Example 1: Short-lived marketing campaign**
+:::info Example 1: Short-lived marketing campaign
 
 Let's test the following: if we run a marketing campaign on our landing page for one day, do our customers generate higher revenue for us over the next month?
 
@@ -115,7 +51,9 @@ Using distinct assignment and event periods, we should:
 
 If the assignment period matched the event period, then we'd be continually exposing the marketing campaign to users, which is not what we intended.
 
-**Example 2: New user onboarding flow**
+:::
+
+:::info Example 2: New user onboarding flow
 
 A service is interested in testing whether a new onboarding flow will increase 90-day retention. One possible design could be the following:
 
@@ -123,6 +61,8 @@ A service is interested in testing whether a new onboarding flow will increase 9
 - Track events for 104 days (14 days + 90 days)
 
 This will allow Eppo to calculate out the rentention metric for the entire population. If the assignment period matched the event period (as is the default in Eppo), this could expose more users than necessary to a new onboarding flow without first understanding the long-term impact.
+
+:::
 
 ### 5. Select an assignment SQL from the definitions you created
 
@@ -164,7 +104,7 @@ For information on the different analysis plan settings, see [Analysis plans](/e
 
 ![Experiment Analysis Plan Settings](/img/building-experiments/experiment-setup-statistical-analysis-plans.gif)
 
-11. Click **Save Changes**
+### 11. Click **Save Changes**
 
 # Adding screenshots
 
