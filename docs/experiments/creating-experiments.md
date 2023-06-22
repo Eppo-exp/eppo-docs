@@ -68,7 +68,7 @@ This will allow Eppo to calculate out the rentention metric for the entire popul
 
 ![Choose assignment SQL](/img/building-experiments/choose-assignment-sql-in-experiment.png)
 
-If you are pre-assigning subjects before they are actually exposed to a variant, you may want to take advantage of the _Filter assignments by entry point_ checkbox. This will include only those subjects that appear in an [entry point](/statistics/sample-size-calculator/setup#what-is-an-entry-point) with an entry time after their assignment time.
+If you are pre-assigning subjects before they are actually exposed to a variant, you may want to take advantage of the [_Filter assignments by entry point_ checkbox](./filter-assignments-by-entry-point). This will include only those subjects that appear in an [entry point](/statistics/sample-size-calculator/setup#what-is-an-entry-point) with an entry time after their assignment time.
 
 ### 6. Input feature flag name
 
