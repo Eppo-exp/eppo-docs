@@ -1,4 +1,4 @@
-# Analyzing Anonymous User Experiments
+# Analyzing anonymous user experiments
 
 In the field of A/B testing, it is common to assign unauthenticated users to experiments using anonymous identifiers such as Cookie IDs. However, it is necessary to link these assignments to user-level events in order to calculate metrics for these unauthenticated users. In some cases, certain events may have an associated User ID, while others may not, due to users transitioning between authenticated and unauthenticated states.
 
