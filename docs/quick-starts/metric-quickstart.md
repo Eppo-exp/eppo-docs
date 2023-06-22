@@ -9,7 +9,7 @@ sidebar_position: 2
 In order to create a metric, you must have a data warehouse connected and an entity created. See [the initial setup quickstart](/setup-quickstart) for details.
 :::
 
-Metrics are standardized definitions of where data lives in your data warehouse and how it should be used to analyze experiments. In this guide, you'll create a Fact SQL definition to tell Eppo where data lives, and create a metric definition to standardize how this data should be used to analyze experiments.  
+Metrics are standardized definitions of where data lives in your data warehouse and how it should be used to analyze experiments. In this guide, you'll create a Fact SQL definition to tell Eppo where data lives, and create a metric definition to standardize how this data should be used to analyze experiments.
 
 ### 1. Create a Fact SQL definition
 
@@ -30,9 +30,9 @@ Follow the steps below to create your first Fact SQL definition.
 
 Metrics specify how the raw event data you defined above should be aggregated for experiment analysis. Follow the steps below to create your first metric.
 
-1. Navigate to the **Metrics** page and click **+Create** 
+1. Navigate to the **Metrics** page and click **+Create**
 2. Select the relevant entity
-3. Select the fact you would like to aggregate and the relevant [aggregation method](/data-management/metrics/creating-metrics#metric-aggregation-types)
+3. Select the fact you would like to aggregate and the relevant [aggregation method](/data-management/metrics/simple-metric#metric-aggregation-types)
 4. (Optional) Set metric time window (relative to experiment assignment), and Winsorization settings
 5. Hit **Create Metric** and repeat for any other metrics you would like to create
 

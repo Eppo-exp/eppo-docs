@@ -4,7 +4,7 @@ Metrics serve as the foundation for evaluating experiments and determining the e
 
 # Entities and aggregations
 
-Metrics in Eppo are created at the [entity](/data-management/entities) level (such as a user), allowing you to define specific measurement criteria for different aspects of their experiments. An entity can be any meaningful unit of analysis, such as a user, session, or page view. To capture meaningful insights, metrics combine a [fact](/data-management/definitions/fact-sql) and an [aggregation](/data-management/metrics/create-metric#metric-aggregation-types). The fact represents the event or action being measured, while the aggregation defines how the data is summarized (e.g., _sum_, _count_, _conversion_, and _retention_) across the specified entity.
+Metrics in Eppo are created at the [entity](/data-management/entities) level (such as a user), allowing you to define specific measurement criteria for different aspects of their experiments. An entity can be any meaningful unit of analysis, such as a user, session, or page view. To capture meaningful insights, metrics combine a [fact](/data-management/definitions/fact-sql) and an [aggregation](/data-management/metrics/simple-metric#metric-aggregation-types). The fact represents the event or action being measured, while the aggregation defines how the data is summarized (e.g., _sum_, _count_, _conversion_, and _retention_) across the specified entity.
 
 ## Ratio Metrics
 
