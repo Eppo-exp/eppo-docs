@@ -52,7 +52,7 @@ which reduces the impacts of extreme outliers.
 :::caution
 
 For any metric where you have elected to use
-[<Term>winsorization</Term>](/data-management/metrics/creating-metrics)
+[<Term>winsorization</Term>](/data-management/metrics/simple-metric)
 to handle outliers, the metric totals displayed in the tooltip when hovering
 over the lift are the _winsorized_ totals, not raw values.
 
