@@ -61,9 +61,9 @@ The diagnostics tab for your experiment will alert you if an experiment is missi
 
 Clicking on the diagnostic will open a sidebar with detailed information and troubleshooting tips.
 
-![Diagnostics sidebar with additional details](/img/how-tos/debugging-metrics/diagnostics-sidebar.png)
+<!-- ![Diagnostics sidebar with additional details](/img/how-tos/debugging-metrics/diagnostics-sidebar.png)
 
-![Diagnostics sidebar with SQL query](/img/how-tos/debugging-metrics/diagnostics-sql.png)
+![Diagnostics sidebar with SQL query](/img/how-tos/debugging-metrics/diagnostics-sql.png) -->
 
 The diagnostics window will contain event volume information if it is available, and SQL snippets for the metric source and the diagnostic query can be copied and executed against your warehouse to help investigate.
 
