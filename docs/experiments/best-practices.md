@@ -1,30 +1,27 @@
 # Best practices
 
-Running a successful experiment isn't just about tracking metrics and looking at statistical significance. It's also about choosing the right metrics, the right duration, and any number of other small choices in experimental design and interpretation. While many of these decisions will be context-dependent, here are some best practices:
+Running a successful experiment involves more than just tracking metrics and analyzing statistical significance. It requires careful consideration of metrics selection, experiment duration, and various design and interpretation choices. While specific decisions may depend on the context, the following best practices can guide you:
 
-## Know what you want
+## Define your goals
 
-You should go into the experiment with a clear understanding of what type of experiment you're running. This will inform what kinds of reults you're looking for, and how long the experiment should run. Some common scenarios are:
+Before starting an experiment, clearly understand the type of experiment you are conducting. This knowledge will determine the desired outcomes and the appropriate duration for the experiment. Consider common scenarios, such as:
 
-- Testing a new variation to decide whether this improves user experience
-  - In this case, you are looking for a clear sign that the experience improves, and want to roll out quickly
-- Testing a rollout (e.g. refactor of code), making sure that experience isn’t broken
-  - In this case, you aren’t necessarily looking for an improvement in metrics, but rather want to make sure there aren’t any unforeseen negative consequences.
-- Running an experiment to understand user behavior better
-  - In this case, you want to run an experiment for a longer period of time so you get tighter confidence intervals: even if one variant is clearly better than another, there may be reason to continue to gather more data.
+- Testing a new variation to assess improvements in user experience: Look for clear indications of improvement to expedite implementation.
+- Testing a rollout (e.g., code refactor) to ensure the experience remains intact: Focus on identifying unforeseen negative consequences rather than expecting metric improvements.
+- Conducting an experiment to gain insights into user behavior: Run the experiment for a longer duration to achieve tighter confidence intervals. Even if one variant appears superior, extended data collection may be useful.
 
 ## How long should you run an experiment?
 
-In addition to the scenarios above, other factors can play a role in determining how long you should run an experiment:
+Apart from scenario-based considerations, other factors influence the ideal experiment duration:
 
-- If you have many potential experiments that compete for “space”, you want to be more aggressive in stopping experiments early
-- On the other hand, if there are no other experiments that are planned, feel free to run experiments longer so you gain a better understanding of the effects on your product.
+- Competition for experiment "real estate": If multiple experiments vie for attention, consider ending experiments earlier to prioritize resources.
+- Lack of planned experiments: When no other experiments are scheduled, feel free to run experiments for longer durations to gain a comprehensive understanding of their impact on your product.
 
 ## Traffic balances
 
-Unless you have strong reason otherwise, aim for a balanced split (that is, 50/50 in terms of 2 variations, or 33/33/33 in case of 3 variations). The variation with the lowest traffic allocation will always be the bottleneck of reducing uncertainty.
+Unless specific reasons dictate otherwise, aim for a balanced split of traffic allocation. For example, consider a 50/50 split for two variations or a 33/33/33 split for three variations. The variation with the lowest traffic allocation becomes the bottleneck for reducing uncertainty.
 
-A common motivation for running an imbalanced split (say 90/10) is that people are worried about a negative outcome, and want to minimize their users' exposure to this outcome. This is natural, but it’s good to realize that doing a 90/10 split might not help much: rather than 50% of the users having a short negative experience (and you quickly learning about this), you will give 10% of your users a long negative experience (because it will take much longer to pick up on the negative effect). That is, the total amount of “negative” is the same, it’s just spread out differently across your users.
+An imbalanced split (e.g., 90/10) is sometimes used to minimize users' exposure to a potentially negative outcome. However, it's important to recognize that a 90/10 split may not offer significant benefits. Instead of 50% of users experiencing a short negative experience (facilitating quick learning), 10% of users would endure a longer negative experience, as it takes more time to detect the negative effect. The total negative impact remains the same, only distributed differently among users.
 
 ## Avoid reassigning users to different variants mid-experiment
 
