@@ -2,7 +2,7 @@
 
 When you write an **Assignment SQL**, you're defining which entities will be assigned to which experiment and variation, and at what time.
 
-You can optionally include any [dimensions](./dimension-sql.md) that you want to be able to slice/dice the analysis by.
+You can optionally include any [properties](./property-sql.md) that you want to be able to slice/dice the analysis by.
 
 ```sql
 SELECT
@@ -59,11 +59,11 @@ Note the values of the **VARIANT** column; in this example it's `control` and `t
 
 You will need these names later.
 
-8. Adding optional dimensions
+8. Adding optional properties
 
-![Add Assignment SQL Dimensions](/img/building-experiments/add-assignment-sql-dimensions.png)
+![Add Assignment SQL Properties](/img/building-experiments/add-assignment-sql-dimensions.png)
 
-Your feature flag tooling may have logged additional data about the user, like what country they're from or which browser they're using. You can annotate these additional dimensions here, and they will show up under the **Dimension SQL** tab.
+Your feature flag tooling may have logged additional data about the user, like what country they're from or which browser they're using. You can annotate these additional properties here, and they will show up under the **Entity Property SQL** tab.
 
 <!-- <img src="https://firebasestorage.googleapis.com/v0/b/eppo-documentation-images.appspot.com/o/add-assignment-sql-dimensions.png?alt=media&token=dfd583db-4ea7-4013-b5fc-d90612118738" width="500" height="200"/> -->
 
