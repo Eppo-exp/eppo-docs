@@ -2,7 +2,7 @@
 
 When you write an **Assignment SQL**, you're defining which entities will be assigned to which experiment and variation, and at what time.
 
-You can optionally include any [properties](./dimension-sql.md) that you want to be able to slice/dice the analysis by.
+You can optionally include any [properties](./property-sql.md) that you want to be able to slice/dice the analysis by.
 
 ```sql
 SELECT

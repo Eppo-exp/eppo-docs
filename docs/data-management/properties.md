@@ -7,6 +7,7 @@ sidebar_position: 2
 Properties are additional descriptors of entities and metrics used to enable further analysis.
 
 ## Entity Properties
+
 Entity Properties define additional details about the given entity that do not change. For example, for a consumer they can be used to describe their country, marital status, or age.
 
 Entity Properties can be used to create Segments and can be used to split or filter experiment results.
@@ -17,15 +18,15 @@ Each Entity can only have one value for a given property. If you will be using p
 
 Click on the “Create Definition SQL” button in the Definitions page and select “Entity Properties SQL”.
 
-![Create Definition SQL](/img/properties/properties-1.png)
+![Create Definition SQL](/img/data-management/properties/properties-1.png)
 
 Select the Entity you wish to add properties for.
 
-![Select the Entity](/img/properties/properties-2.png)
+![Select the Entity](/img/data-management/properties/properties-2.png)
 
 Write SQL that includes the Entity ID and the properties you wish to define. All properties will be evaluated as strings.
 
-![Writing Entity Property SQL](/img/properties/properties-3.png)
+![Writing Entity Property SQL](/img/data-management/properties/properties-3.png)
 
 ### Viewing experiment results with Entity Properties
 
@@ -33,7 +34,7 @@ You can filter all metrics on an experiment by Entity Properties. Click on the �
 
 This filter is a temporary view and will not be saved when you leave the page.
 
-![Filter on an experiment](/img/properties/properties-4.png)
+![Filter on an experiment](/img/data-management/properties/properties-4.png)
 
 ### Exploring experiment metrics with Entity Properties
 
@@ -45,7 +46,7 @@ To split a metric, click on the “Split By” dropdown and select a property.
 
 When you save an Explore by clicking the “Add to Experiment” button all filters and splits applied will be saved with it.
 
-![Filter and split an Explore](/img/properties/properties-5.png)
+![Filter and split an Explore](/img/data-management/properties/properties-5.png)
 
 ## Assignment Properties
 
@@ -59,7 +60,7 @@ If we observe multiple values for a given entity in Assignment Properties, we ap
 
 With your Assignment SQL, add properties that are also present in your table. All properties will be evaluated as strings.
 
-![Writing Assignment SQL](/img/properties/properties-6.png)
+![Writing Assignment SQL](/img/data-management/properties/properties-6.png)
 
 ## Metric Properties
 
