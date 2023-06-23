@@ -31,7 +31,7 @@ Next, select a property to filter by, in this case, we will filter by the Countr
 
 ![select property for segment](/img/experiments/segments/segment_select_source.png)
 
-Finally, we add Canada, Mexico, and the United States as dimension values.
+Finally, we add Canada, Mexico, and the United States as property values.
 
 ![select property values for segment](/img/experiments/segments/segment_add_dimensions.png)
 
@@ -55,12 +55,12 @@ Now, the results indicate that we are analyzing the selected segment
 
 ![experiment results filtered by a segment](/img/experiments/segments/segment_results.png)
 
-## Single dimension filter
+## Single property filter
 
-The single dimension filter allows you to quickly explore experiment results based on a specific property.
+The single property filter allows you to quickly explore experiment results based on a specific property.
 In the filter menu, select the "Single Value" filter and select the property and value you want to explore
 
-![filter results by dimension](/img/experiments/segments/filter_by_dimension.png)
+![filter results by property](/img/experiments/segments/filter_by_dimension.png)
 
 and the experiment results are now filtered to users that fit the filter
 
