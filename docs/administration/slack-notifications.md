@@ -1,6 +1,6 @@
 # Slack notifications
 
-The Eppo App for Slack allows you to receive notifications for important updates on your experiments, such as when Eppo detect a [traffic imbalance](../experiments/interpreting-experiments/traffic) in your assignments.
+The Eppo App for Slack allows you to receive notifications for important updates on your experiments, such as when Eppo detect a [traffic imbalance](/statistics/sample-ratio-mismatch) in your assignments.
 
 <img width="440" alt="data issues alert" src="https://user-images.githubusercontent.com/90637953/213244183-a3580e3b-e077-4fc5-9bbb-2dc307660ebd.png" /> &ensp;
 <img width="440" alt="status change alert" src="https://user-images.githubusercontent.com/90637953/213244188-3dbd1333-185e-4416-b925-d36bbac08223.png" /> &ensp;
@@ -13,17 +13,18 @@ The Eppo App for Slack allows you to receive notifications for important updates
 5. [Notification Triggers](#notification-triggers)
 
 ## Allow Permissions to a Slack Workspace
+
 ![connect slack](https://user-images.githubusercontent.com/90637953/223587265-019faec4-279a-4ebe-b410-5fe2a3982a1d.gif)
 
 Go to Admin > Notifications to allow permissions to a Slack workspace. This is required before you can select Slack channels to recieve system wide notifications as well as for any user to add Slack channels for specific experiments and metrics.
 
-
 ## Configure System Wide Slack Notifications
+
 You can select specific Slack channels to receive notifications for **ANY** experiment running in Eppo.
 <img width="1386" alt="image" src="https://user-images.githubusercontent.com/90637953/197908102-3f9f5ec4-98ce-427c-8888-079f89b8ec0c.png"/>
 
-
 ## Configure Slack Notifications for a Specific Experiment
+
 ![experiment-slack-notifications](https://user-images.githubusercontent.com/90637953/197909040-bb01590c-d329-4d50-8aba-505ba0c60cdc.gif)
 
 Go to an experiment and click on the bell icon in the upper right of the page. Select a Slack channel to receive notifications.
@@ -32,30 +33,33 @@ To configure which types of notifications this channel will recieve, click on "C
 
 To remove the Slack channel from this experiment, click on "Configure" and turn off the channel.
 
-
 ## Configure Slack Notifications for a Specific Metric
+
 ![metric-slack-notifications](https://user-images.githubusercontent.com/90637953/197909642-14ed977c-8ce0-4cad-b512-9c40d7ae20a5.gif)
 
 Go to a metric and click on the bell icon in the upper right of the page. Select a Slack channel to receive notifications.
 
 To remove the Slack channel from this metirc, click on "Configure" and turn off the channel.
 
-
 ## Notification Triggers
+
 ### A data problem on an experiment
-* When Eppo detects a [traffic imbalance](../experiments/interpreting-experiments/traffic) in your assignments
-* When there is an error and the experiment results cannot be refreshed
+
+- When Eppo detects a [traffic imbalance](/statistics/sample-ratio-mismatch) in your assignments
+- When there is an error and the experiment results cannot be refreshed
 
 ### A status change on an experiment
-* When an experiment changes status from `DRAFT` &rarr; `RUNNING` &rarr; `WRAP UP` &rarr; `COMPLETED`
+
+- When an experiment changes status from `DRAFT` &rarr; `RUNNING` &rarr; `WRAP UP` &rarr; `COMPLETED`
 
 See more on <a href="https://docs.geteppo.com/building-experiments/experiments/experiment-status" target="_blank">experiment statuses</a>.
 
 ### A primary or guardrail metric reached statistical significance on this experiment
-* When a primary metric or a guardrail metric on an experiment reaches statistical significance for **Sequential experiments ONLY**
+
+- When a primary metric or a guardrail metric on an experiment reaches statistical significance for **Sequential experiments ONLY**
 
 ---
 
 The Eppo App for Slack is included for free in any subscription plan for the Eppo experimentation platform. If you have any questions or feedback, please contact Eppo Support at [support@geteppo.com](mailto:support@geteppo.com).
 
-Eppo's [Privacy Policy](https://app.termly.io/document/privacy-policy/a555478b-524f-4b53-b70e-6575d94ad3c7) and [Terms of Use](https://app.termly.io/document/terms-of-use-for-saas/4c635cc8-24f6-4c05-83fa-0382fca756ce). 
+Eppo's [Privacy Policy](https://app.termly.io/document/privacy-policy/a555478b-524f-4b53-b70e-6575d94ad3c7) and [Terms of Use](https://app.termly.io/document/terms-of-use-for-saas/4c635cc8-24f6-4c05-83fa-0382fca756ce).
