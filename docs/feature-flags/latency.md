@@ -1,4 +1,8 @@
-# Eppo Feature Flagging Performance
+---
+sidebar_position: 6
+---
+
+# Latency
 
 Eppo’s feature flagging architecture enables faster delivery of client-side web experiments. By leveraging a "dumb server, smart client" approach and utilizing the power of the Fastly CDN, Eppo offers low-latency feature flag evaluations and efficient updates.
 
@@ -43,11 +47,11 @@ Most regions, including the US, Europe, South Korea, and Australia, experience l
 
 ### Update Latency
 
-Update latency refers to the time required for updated feature-flagging rules (JSON file) to reach the clients. 
+Update latency refers to the time required for updated feature-flagging rules (JSON file) to reach the clients.
 
-For client side SDKs (Android, iOS, React, etc), the rules are updated each time the Eppo SDK is initialized, which should happen only one time per application lifecycle. If the SDK is initialized more than once during an application’s lifecycle, an exception is thrown. 
+For client side SDKs (Android, iOS, React, etc), the rules are updated each time the Eppo SDK is initialized, which should happen only one time per application lifecycle. If the SDK is initialized more than once during an application’s lifecycle, an exception is thrown.
 
-For server side SDKs (Java, Node.js, Ruby, etc), the rules are first updated when the Eppo SDK is initialized, then again every 30 seconds for the duration of the application’s lifecycle. 
+For server side SDKs (Java, Node.js, Ruby, etc), the rules are first updated when the Eppo SDK is initialized, then again every 30 seconds for the duration of the application’s lifecycle.
 
 ### Conclusion
 

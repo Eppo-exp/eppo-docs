@@ -1,4 +1,8 @@
-# Frequently asked questions
+---
+sidebar_position: 7
+---
+
+# Risk FAQ
 
 Integrating with Eppo involves assessing risk, and we take reliability seriously. Here are a few commonly asked questions we get from decision makers around reliability, and our responses. If you have a question not listed here please reach out to us on Slack.
 
@@ -17,17 +21,20 @@ Integrating with Eppo involves assessing risk, and we take reliability seriously
 - All Eppo SDKs cache configurations locally (implementation dependent on SDKs) so that assignments can be near instant.
 - We use a highly available, globally distributed CDN to deliver our flag configurations. In most cases update propagation times are less than 10 seconds.
 
-## What else does Eppo do to make sure the service is resilient?
+## What else does Eppo do to ensure the service is resilient?
 
-- All our SDKs are designed to be resilient in case there is an issue in the API
-  requests, to make sure a seamless experience on your side.
-- Client SDKs:
-  - These SDKs use the freshest values if it’s able to reach our CDN.
-  - If not, then they use cached value from a previous fetch, if available.
-  - If not, then they will return the value `null`, which we recommend handling explicitly by delivering your default experience. This means the worst case scenario your users will see your default experiences.
-- Server SDKs:
-  - These SDKs use the freshest values on initialization and cache those values in memory.
-  - If not, then they will return the value `null`, which we recommend handling explicitly by delivering your default experience. This means the worst case scenario your users will see your default experiences.
+All our SDKs are designed to be resilient in case there is an issue in the API requests, to make sure a seamless experience on your side.
+
+#### Client SDKs
+
+- These SDKs use the freshest values if it’s able to reach our CDN.
+- If not, then they use cached value from a previous fetch, if available.
+- If not, then they will return the value `null`, which we recommend handling explicitly by delivering your default experience. This means the worst case scenario your users will see your default experiences.
+
+#### Server SDKs
+
+- These SDKs use the freshest values on initialization and cache those values in memory.
+- If not, then they will return the value `null`, which we recommend handling explicitly by delivering your default experience. This means the worst case scenario your users will see your default experiences.
 
 ## What kind of automated testing does Eppo do?
 

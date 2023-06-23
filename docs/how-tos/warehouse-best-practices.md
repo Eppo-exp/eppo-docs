@@ -1,4 +1,8 @@
-# Warehouse table best practices
+---
+sidebar_position: 3
+---
+
+# Warehouse best practices
 
 Eppo sits on top of your data warehouse, allowing you to run automated experimentation analyses with data you know and trust. To do this properly, Eppo expects your data to be formatted in a certain way. Fortunately, these expectations are very simple and are designed to require very little, if any, preparatory work on the user’s side.
 

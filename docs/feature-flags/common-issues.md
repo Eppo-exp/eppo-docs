@@ -1,3 +1,7 @@
+---
+sidebar_position: 8
+---
+
 # Common issues
 
 This page walks through some common pitfalls that occur when first implementing Eppo’s SDK.
@@ -16,14 +20,15 @@ Suppose we are testing out a new payment experience with users. When implementin
 
 ```javascript
 export default function PaymentPage({ user: User }): JSX.Element {
-  const useNewPaymentFlow = 
-    eppoClient.getAssignment(user.email, 'new-payment-flow') === 'true';
+  const useNewPaymentFlow =
+    eppoClient.getAssignment(user.email, "new-payment-flow") === "true";
 
   return (
     <Container>
-      {(useNewPaymentFlow 
-		? <PaymentPageV2 user={user} />
-		: <PaymentPage user={user} />
+      {useNewPaymentFlow ? (
+        <PaymentPageV2 user={user} />
+      ) : (
+        <PaymentPage user={user} />
       )}
     </Container>
   );
@@ -38,20 +43,24 @@ It can be tempting to preemptively compute all possible assignments for a given 
 
 ```javascript
 const getUserAssignments = (email: string) => ({
-  useNewPaymentFlow: eppoClient.getAssignment(email, 'new-payment-flow') === 'true',
-  useNewFeedRanking: eppoClient.getAssignment(email, 'new-feed-ranking') === 'true',
-  useGreenSubmitButton: eppoClient.getAssignment(email, 'submit-button-color') === 'green',
-	// ... all possible assignments for user.
-})
+  useNewPaymentFlow:
+    eppoClient.getAssignment(email, "new-payment-flow") === "true",
+  useNewFeedRanking:
+    eppoClient.getAssignment(email, "new-feed-ranking") === "true",
+  useGreenSubmitButton:
+    eppoClient.getAssignment(email, "submit-button-color") === "green",
+  // ... all possible assignments for user.
+});
 
 export default function PaymentPage({ user: User }): JSX.Element {
   const { useNewPaymentFlow } = getUserAssignments(user.email);
 
   return (
     <Container>
-      {(useNewPaymentFlow 
-		? <PaymentPageV2 user={user} />
-		: <PaymentPage user={user} />
+      {useNewPaymentFlow ? (
+        <PaymentPageV2 user={user} />
+      ) : (
+        <PaymentPage user={user} />
       )}
     </Container>
   );
@@ -81,11 +90,9 @@ Eppo targeting works based on subject attributes passed into the `getAssignment`
 A better pattern is to define audiences via user-level attributes. For instance, if you would like to target a list of beta users, you can pass an attribute into the `getAssignment` call specifying whether the user is in the beta group.
 
 ```javascript
-const variation = eppoClient.getAssignment(
-    'userId',
-    'my-flag-key',
-    {'beta_user': 'true'}
-)
+const variation = eppoClient.getAssignment("userId", "my-flag-key", {
+  beta_user: "true",
+});
 ```
 
 Now, simply add allocation logic specifying to target users with `beta_user = 'true'`.
