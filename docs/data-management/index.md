@@ -6,7 +6,7 @@ Once this setup is complete, we can now create metrics based on the event data, 
 
 ## Data annotation
 
-The following diagram illustrates how the core concepts of [entities](/data-management/entities), [assignments](/data-management/definitions/assignment-sql), [facts](/data-management/defenitions/fact-sql), and [properties](/data-management/definitions/dimension-sql) relate.
+The following diagram illustrates how the core concepts of [entities](/data-management/entities), [assignments](/data-management/definitions/assignment-sql), [facts](/data-management/definitions/fact-sql), and [properties](/data-management/definitions/property-sql) relate.
 
 ![data annotation illustration](/img/data-management/data-annotation.jpg)
 
