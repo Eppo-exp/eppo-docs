@@ -12,7 +12,7 @@ Don't hesitate to shoot us an email at support@geteppo.com.
 ## Data management
 
 - Learn how to [debug issues](/how-tos/debugging-metrics) with experiment metrics.
-- Setting up your data warehouse for efficient computation can make a big difference in compute, so we have a guide on [best practices](/how-tos/warehouse-table-best-practices).
+- Setting up your data warehouse for efficient computation can make a big difference in compute, so we have a guide on [best practices](/how-tos/warehouse-best-practices).
 
 ### Conecting your data warehouse
 
