@@ -48,4 +48,4 @@ For Metrics that do not use a Metric Property filter, you can explore the result
 
 ![Explore as a time series](/img/properties/metric-property-explore-ts1.png)
 
-Explore as a time-series split by any dimension with lifts at each day.
+Explore as a time-series split by any property with lifts at each day.
