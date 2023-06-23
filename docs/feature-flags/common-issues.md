@@ -7,7 +7,7 @@ sidebar_position: 8
 This page walks through some common pitfalls that occur when first implementing Eppo’s SDK.
 
 :::note
-Don't be blocked! We're here to help get running with Eppo. Contact us at [support@geteppo.com](mailto:support@geteppo.com).
+Don't be blocked! We're here to help you get up and running with Eppo. Contact us at [support@geteppo.com](mailto:support@geteppo.com).
 :::
 
 ## 1. Batching assignments
