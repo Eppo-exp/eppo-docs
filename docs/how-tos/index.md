@@ -2,6 +2,13 @@
 
 This part of the documentation is dedicated to providing detailed guides on how to accomplish a specific task on a wide variety of topics, such as connecting a particular data warehouse to Eppo and how to set up experiment logging.
 
+:::note
+
+Let us know what other guides you are interested in; we would love to add additional content!
+Don't hesitate to shoot us an email at support@geteppo.com.
+
+:::
+
 ## Data management
 
 - Learn how to [debug issues](/how-tos/debugging-metrics) with experiment metrics.
