@@ -1,6 +1,6 @@
-# Dimension SQL
+# Entity Property SQL
 
-When you write an **Assignment SQL**, you can optionally include any dimensions that you want to be able to slice/dice the analysis by.
+When you write an **Assignment SQL**, you can optionally include any properties that you want to be able to slice/dice the analysis by.
 
 ```sql
 SELECT
@@ -15,39 +15,39 @@ FROM mydb.myschema.assignments
 
 In this example Assignment SQL, at the time of assignment, we logged the `browser` and `device_type` of the user. We included it in the Assignment SQL so that later on we can look at how metrics perform across different browsers and devices.
 
-Dimensions can be any categorical data that lives in your data warehouse. Other potential examples include UTM parameters (source, medium, campaign), or geolocation.
+Properties can be any categorical data that lives in your data warehouse. Other potential examples include UTM parameters (source, medium, campaign), or geolocation.
 
-## Create a Dimension SQL
+## Create an Entity Property SQL
 
-If you include optional dimensions in your Assignment SQL, it will show up under **Definitions** > **Dimensions**
+If you include optional properties in your Assignment SQL, it will show up under **Definitions** > **Properties**
 
-![Dimensions](/img/building-experiments/dimensions-from-bnpl.png)
+![Properties](/img/building-experiments/dimensions-from-bnpl.png)
 
-You can also create a dimension SQL separately:
+You can also create an Entity Property SQL separately:
 
-1. Go to **Definitions** > **Create Definition** > **Dimension SQL**
+1. Go to **Definitions** > **Create Definition** > **Entity Property SQL**
 
-2. Select the _Entity_ your _Dimension_ will be attached to
+2. Select the _Entity_ your _Property_ will be attached to
 
 In this case we select _User_
 
-3. Write SQL that fetches the dimensions you want for your user
+3. Write SQL that fetches the properties you want for your user
 
-![Write SQL Dimensions](/img/building-experiments/dimension-sql-query.png)
+![Write SQL Properties](/img/building-experiments/dimension-sql-query.png)
 
 4. Annotate the columns of the data that comes back
 
-![Annotate SQL Dimensions](/img/building-experiments/dimension-sql-annotate.png)
+![Annotate SQL Properties](/img/building-experiments/dimension-sql-annotate.png)
 
 The required columns in order for Eppo to recognize the data are:
 
 - Entity Id -- in this case, `USER_ID`
 - Timestamp -- in this case, `CREATED_AT`
 
-5. Add optional dimensions
+5. Add optional properties
 
-![Add optional dimensions](/img/building-experiments/dimension-sql-dimension.png)
+![Add optional properties](/img/building-experiments/dimension-sql-dimension.png)
 
-Add any dimensions you would later like to slice by here; in the example above, we are adding the User Persona dimension.
+Add any properties you would later like to slice by here; in the example above, we are adding the User Persona property.
 
 5. Click **Save & Close**

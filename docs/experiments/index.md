@@ -308,10 +308,10 @@ for such a subgroup.
 Note that when you first add a segment to an experiment, you have to manually
 refresh the results to compute the results for the segment.
 
-### Single dimension filter
+### Single property filter
 
-For quick investigations, we also provide the single dimension filter: here you
-can select a single dimension (e.g. Country) and single value (e.g. 'USA').
+For quick investigations, we also provide the single property filter: here you
+can select a single property (e.g. Country) and single value (e.g. 'USA').
 These results are available immediately -- no need to manually refresh the
 results.
 
@@ -320,7 +320,7 @@ results.
 You can also further investigate the performance of an individual metric by
 clicking on navigator icon the next to the metric name. This will take you to
 the [Metric explore](/experiments/explores) page where you can further slice
-the experiment results by different dimensions that have been configured, for
+the experiment results by different properties that have been configured, for
 example user persona, or browser, etc.
 
-<Figure alt="Dimension explore" src="/img/building-experiments/dimension-explore.gif" />
+<Figure alt="Property explore" src="/img/building-experiments/dimension-explore.gif" />

@@ -38,7 +38,7 @@ This generates a table, `g_experiment_enriched_metric_events_*` that includes th
 
 After the Assignment/Event join, Eppo aggregates data at the subject level. For each subject, we compute the cumulative value for each metric of interest. This subject level aggregation is done mainly for two reasons:
 
-1. By aggregating data at the subject level first, we are able to reduce the size of data before applying joins to Dimension SQLs in order to compute dimensional cuts.
+1. By aggregating data at the subject level first, we are able to reduce the size of data before applying joins to Property SQLs in order to compute dimensional cuts.
 2. Eppo applies [Winsorization](https://en.wikipedia.org/wiki/Winsorizing) at the 99th percentile to reduce the impact of outliers on experiment results. _Note that this may cause results from Eppo’s data pipeline to differ from simple aggregates, especially if your metrics have heavy skew._
 
 The output of this step has the following schema:
@@ -61,7 +61,7 @@ The above table can be found in the Eppo-scratch dataset with the name `g_experi
 
 ## CUPED pipeline
 
-If CUPED is enabled, we run additional tasks to compute the CUPED models. First, we extract pre-experiment data that is used as input to the CUPED models. We look at pre-experiment events for all sum, count, and count distinct metrics that have been added to an experiment, as well as assignment dimensions.
+If CUPED is enabled, we run additional tasks to compute the CUPED models. First, we extract pre-experiment data that is used as input to the CUPED models. We look at pre-experiment events for all sum, count, and count distinct metrics that have been added to an experiment, as well as assignment properites.
 
 The resulting table with features can be found in the `g_experiment_subject_features_experiment_*` tables.
 
