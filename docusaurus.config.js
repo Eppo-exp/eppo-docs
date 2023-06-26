@@ -12,7 +12,7 @@ async function createConfig () {
   return {
     title: 'The Eppo Docs',
     tagline: "Documentation for Eppo's experimentation platform.",
-    url: 'https://adoring-yonath-6ecb9d.netlify.app',
+    url: 'https://docs.geteppo.com',
     baseUrl: '/',
     staticDirectories: ['static'],
     onBrokenLinks: 'throw',
@@ -42,6 +42,12 @@ async function createConfig () {
           },
           theme: {
             customCss: require.resolve('./src/css/custom.css')
+          },
+          sitemap: {
+            changefreq: 'weekly',
+            priority: 0.5,
+            ignorePatterns: ['/tags/**'],
+            filename: 'sitemap.xml'
           }
         })
       ]
