@@ -66,15 +66,15 @@ async function createConfig () {
     ({
 
       algolia: {
-        // The application ID provided by Algolia
-        appId: 'XFI8PX63MB',
+        // // The application ID provided by Algolia
+        // appId: 'ECM1HGQRTR',
 
-        // Public API key: it is safe to commit it
-        apiKey: '6ac33fd9492c00c1b395088df31bb46f',
+        // // Public API key: it is safe to commit it
+        // apiKey: 'da6798ec5b7565fc622f8614143d55b3',
 
-        indexName: 'geteppo'
+        // indexName: 'geteppo'
 
-        // ... other Algolia params
+        // // ... other Algolia params
       },
       navbar: {
         // title: 'Eppo',
