@@ -12,6 +12,7 @@ async function createConfig () {
   return {
     title: 'The Eppo Docs',
     tagline: "Documentation for Eppo's experimentation platform.",
+    url: 'https://docs.geteppo.com',
     baseUrl: '/',
     staticDirectories: ['static'],
     onBrokenLinks: 'throw',
