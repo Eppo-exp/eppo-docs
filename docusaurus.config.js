@@ -12,7 +12,6 @@ async function createConfig () {
   return {
     title: 'The Eppo Docs',
     tagline: "Documentation for Eppo's experimentation platform.",
-    url: 'https://adoring-yonath-6ecb9d.netlify.app',
     baseUrl: '/',
     staticDirectories: ['static'],
     onBrokenLinks: 'throw',
