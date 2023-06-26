@@ -65,17 +65,17 @@ async function createConfig () {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
 
-      algolia: {
-        // // The application ID provided by Algolia
-        // appId: 'ECM1HGQRTR',
+      // algolia: {
+      //   // // The application ID provided by Algolia
+      //   // appId: 'ECM1HGQRTR',
 
-        // // Public API key: it is safe to commit it
-        // apiKey: 'da6798ec5b7565fc622f8614143d55b3',
+      //   // // Public API key: it is safe to commit it
+      //   // apiKey: 'da6798ec5b7565fc622f8614143d55b3',
 
-        // indexName: 'geteppo'
+      //   // indexName: 'geteppo'
 
-        // // ... other Algolia params
-      },
+      //   // // ... other Algolia params
+      // },
       navbar: {
         // title: 'Eppo',
         logo: {
