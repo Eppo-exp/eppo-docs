@@ -43,7 +43,7 @@ There are three options:
 
 - No timeframe: as long as the user completes the steps in order, it counts as a conversion.
 - Time window from time of assignment: the user has to complete the funnel within the set duration, where the time of assignment starts the clock.
-- Time window from time of first event: the user has to complete the funnel within the set duration, but the clock starts at the time of the (first event of the) first step in the funnel.
+- Time window from time of first event: the user has to complete the funnel within the set duration, but the clock starts at the time of the first step in the funnel for that user.
 
 ![Funnel metric timeframe](/img/data-management/metrics/funnel-metric-timeframe.png)
 
