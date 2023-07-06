@@ -13,7 +13,27 @@ Simple metrics turn an event stream (created from a [Fact SQL Definition](/data-
 1. First, the events are aggregated at the entity level (such as a User) using an aggregation
 2. Second, the values are averaged across entities
 
-For example, to compute a revenue metric, first we sum the amount spent by each user. Second, we cake the average across all users to obtain the average revenue per user.
+For example, to compute a revenue metric, first we sum the amount spent by each user.
+Second, we cake the average across all users to obtain the average revenue per user.
+In SQL terms, a simplified version of this two step process looks like
+
+```sql
+WITH user_summaries AS (
+    SELECT
+        user,
+        SUM(spent) AS user_spent
+    FROM spent_events
+    GROUP BY user
+    WHERE spent_ts BETWEEN experiment_start AND experiment_end
+)
+
+SELECT
+    variant,
+    AVG(COALESCE(user_spent, 0)) as metric_estimate
+FROM assignments
+LEFT JOIN user_summaries ON user
+GROUP BY variant
+```
 
 ### Metric aggregation types
 
