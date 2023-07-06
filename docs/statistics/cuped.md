@@ -51,8 +51,11 @@ CUPED works best for experiments with long-time users for whom many pre-experime
 In general, CUPED refers to reducing the variance of a metric by using pre-experiment data on only that metric itself based on the covariance between the two; this is equivalent to running a simple regression.
 This is often the most important variable in a regression, but does suffer some drawbacks:
 
-- For some metrics, there is no clear pre-experiment equivalent for that metric: e.g. a conversion or retention metric. In our implementation, we can still leverage historical data of the other experiment metrics to help improve estimates of these conversion and retention metrics. This allows us to get improved estimates for conversion and retention metrics versus a standard CUPED approach.
-- The standard CUPED approach does not help for experiments where no pre-experiment data exists (e.g. experiments on new users, such as onboarding flows). Because we also use assignment properties as covariates in the regression adjustments model, we are able to reduce variance for these experiments as well, which leads to smaller confidence intervals for such experiments.
+- For some metrics, there is no clear pre-experiment equivalent for that metric: e.g. a conversion or retention metric.
+  In our implementation, we can still leverage historical data of the **other experiment metrics** to help improve estimates of these conversion and retention metrics.
+  This allows us to get improved estimates for conversion and retention metrics versus a standard CUPED approach.
+- The standard CUPED approach does not help for experiments where no pre-experiment data exists (e.g. experiments on new users, such as onboarding flows).
+  Because we also use **assignment properties** as covariates in the regression adjustments model, we are able to reduce variance for these experiments as well, which leads to smaller confidence intervals for such experiments.
 
 ## Using CUPED on Eppo
 
@@ -65,6 +68,33 @@ You can switch between CUPED and non-CUPED results from the CUPED dropdown.
 CUPED can be turned on in the admin panel, and in the overview page of an experiment you can switch between CUPED and standard estimates. The models are updated once a day, but you can manually refresh upon changing the control variant or adding a new metric.
 
 ![Turn CUPED on](/img/measuring-experiments/cuped-turn-on-cuped.png)
+
+## Frequently asked questions
+
+**What data does CUPED use?**
+- Pre-experiment data from _all_ [eligible metrics](/data-management/metrics/simple-metric#metric-aggregation-types) (sum, count, unique entities, and these aggregations for ratio metrics)
+- [Assignment properties](/data-management/properties#assignment-properties) from the AssignmentSQL used for this experiment. These are interpreted as categorical features.
+
+**Why do the point estimates between CUPED and non-CUPED look different?**
+CUPED and non-CUPED estimators are both unbiased (given proper randomization) of the same quantity, so we would expect estimates to be close.
+However, they are generally not the same -- if they were, then how would CUPED be able to reduce variance?
+This in particular can be somewhat confusing when one of the estimates is positive, while the other is negative.
+
+In general, as long as the estimates are close, this is nothing to worry about.
+Obviously, it is important to understand what "close" is?
+How close these two estimators are to each other depends on the variance of the estimates.
+In general, we expect the point estimate of the CUPED estimator to lie within the confidence interval of the non-CUPED interval.
+Thus, when the non-CUPED confidence interval is very wide, the two point estimates can look quite different.
+
+On the other hand, when there is no overlap between confidence intervals, then it suggests there is indeed a problem.
+The two most common problems are:
+
+1. There is a [traffic imbalance](/experiments/diagnostics#traffic-diagnostics), which invalidates both CUPED and non-CUPED results.
+2. Pre-experiment data is tainted, for example because some users were exposed to the treatment before the experiment analysis has started.
+  In this case, the CUPED results are no longer valid, but non-CUPED results still are.
+
+Do not hesitate to reach out to help you understand the discrepancy.
+
 
 ## Further reading
 
