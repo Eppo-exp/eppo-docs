@@ -72,7 +72,7 @@ CUPED can be turned on in the admin panel, and in the overview page of an experi
 ## Frequently asked questions
 
 **What data does CUPED use?**
-- Pre-experiment data from **all** [eligible metrics](/data-management/metrics/simple-metric#metric-aggregation-types) (sum, count, unique entities)
+- Pre-experiment data from **all** [eligible metrics](/data-management/metrics/simple-metric#metric-aggregation-types) (sum, count, unique entities, and these aggregations for ratio metrics)
 - [Assignment properties](/data-management/properties#assignment-properties) from the AssignmentSQL used for this experiment. These are interpreted as categorical features.
 
 **Why do the point estimates between CUPED and non-CUPED look different?**
