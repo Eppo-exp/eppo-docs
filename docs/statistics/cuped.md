@@ -71,6 +71,10 @@ CUPED can be turned on in the admin panel, and in the overview page of an experi
 
 ## Frequently asked questions
 
+**What data does CUPED use?**
+- Pre-experiment data from **all** [eligible metrics](/data-management/metrics/simple-metric#metric-aggregation-types) (sum, count, unique entities)
+- [Assignment properties](/data-management/properties#assignment-properties) from the AssignmentSQL used for this experiment. These are interpreted as categorical features.
+
 **Why do the point estimates between CUPED and non-CUPED look different?**
 CUPED and non-CUPED estimators are both unbiased (given proper randomization) of the same quantity, so we would expect estimates to be close.
 However, they are generally not the same -- if they were, then how would CUPED be able to reduce variance?
