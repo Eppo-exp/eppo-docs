@@ -15,7 +15,6 @@ Simple metrics turn an event stream (created from a [Fact SQL Definition](/data-
 
 For example, to compute a revenue metric, first we sum the amount spent by each user.
 Second, we cake the average across all users to obtain the average revenue per user.
-
 In SQL terms, a simplified version of this two step process looks like
 
 ```sql
