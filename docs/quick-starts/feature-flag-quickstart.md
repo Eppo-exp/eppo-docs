@@ -7,6 +7,22 @@ sidebar_position: 3
 
 This 10 minute guide will get you set up with your first running feature flag on Eppo. In the example we'll imagine that we are using a flag on our frontend to gradually launch a new checkout page.
 
+### 0. Generate an API key
+
+If you have not created an API key yet, set that up first.
+From the Admin pag, navigate to the API keys tab.
+Here you can generate keys to use both in production (1) as well as for testing purposes (2).
+
+![Setup Eppo API key](/img/feature-flagging/api-key.png)
+
+For now, let's create a Test environment API key.
+Give the key a name and give it read access: we want the feature flagging SDK to be able to read the configuration.
+
+![Generate an API key](/img/feature-flagging/api-key-modal.png)
+
+Store the API key securely; it is not possible to view it after closing the modal.
+However, generating a new key is easy in case you do lose it.
+
 ### 1. Creating a flag
 
 Start by creating a flag that will serve as a gate for who sees the new page:
@@ -27,7 +43,7 @@ Create each allocation one by one, giving each a name and specifying the traffic
 
 ### 3. Connect a logging function to the Eppo SDK (optional)
 
-If you are using feature flags to implement a randomized experiment, you will need to log each time a user is assigned a variant. Instead of integrating an additional event logging system, Eppo connects to your existing data warehouse logging infrastructure. Whether you are using a third party system to log events to the data warehouse or have an internally built solution, you'll simply pass in a logging function when initializing the SDK. 
+If you are using feature flags to implement a randomized experiment, you will need to log each time a user is assigned a variant. Instead of integrating an additional event logging system, Eppo connects to your existing data warehouse logging infrastructure. Whether you are using a third party system to log events to the data warehouse or have an internally built solution, you'll simply pass in a logging function when initializing the SDK.
 
 For instance, if you are using Segment, the logging function might look something like this:
 
@@ -64,6 +80,7 @@ await init({
   assignmentLogger,
 });
 ```
+Note, here is where you use the API key generated in step 0.
 
 If you are using React, we have some [React specific recommendations](../feature-flags/sdks/javascript#usage-in-react).
 
