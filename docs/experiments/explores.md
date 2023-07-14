@@ -28,3 +28,7 @@ The time series chart shows how the percent lift and precision change over the d
 
 If there is not enough data to calculate the confidence of a lift, then the bands will be shown in a gradient fading out from the center line.
 ![Lift Visualization](/img/measuring-experiments/explore-viz-time-series.png)
+
+### Funnel Steps
+This chart only applies to funnel metrics. The funnel steps visualization shows how each step of the funnel converted (cumulatively). The solid bars represent the conversion from assignment into the experiment and the gradient represents the drop-off. You can view further details and the survivor count in the tables below.
+![Funnel Steps](/img/measuring-experiments/funnel_steps.png)
