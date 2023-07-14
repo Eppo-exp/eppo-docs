@@ -61,3 +61,21 @@ The popover shows additional details:
 - survivors are the total number of users that made it all the way to this step in the funnel.
 
 ![Funnel metric analysis](/img/data-management/metrics/funnel-analysis.png)
+
+
+## Exploring funnel metrics
+Dive deeper into your funnel metric's performance by clicking the "explore" button or going to the Explore tab to create a new chart. 
+
+![Funnel explores](/img/data-management/metrics/funnel_explores.gif)
+
+### Funnel Steps
+The funnel steps visualization shows how each step of the funnel converted (cumulatively). The solid bars represent the conversion from assignment into the experiment and the gradient represents the drop-off. You can view further details and the survivor count in the tables below.
+![Funnel Steps](/img/data-management/metrics/funnel_steps_viz.png)
+
+Apply split bys to your funnel to see how the funnel performed for different properties.
+![Funnel Steps with Splitby](/img/data-management/metrics/funnel_steps_splitby.png)
+
+### Funnel Lift
+The funnel lift visualization shows for each step the relative percent lift in comparision to the control variant. 
+
+![Funnel Lift](/img/data-management/metrics/funnel_lift.png)
