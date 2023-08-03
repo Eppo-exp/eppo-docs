@@ -279,14 +279,14 @@ required to plan an analysis ahead of time.
 ### Pros of sequential analysis
 
 - **You don't have to predetermine your sample size.**
-  Although it is still useful to use Eppo's
-  [Sample Size Calculator](/statistics/sample-size-calculator) to understand,
-  operationally, when you can expect to be able to detect an effect if it
-  exists, unlike with fixed-sample analysis, sequential analysis does not
+  Unlike with fixed-sample analysis, sequential analysis does not
   _require_ you to do a power analysis beforehand.[^powerrequire] More
   importantly, it also does not require you to restart the experiment if any of
   the parameters of that power analysis (such as the expected metric values and
-  variances) end up being incorrect.
+  variances) end up being incorrect. Note that it can still be insightful to use Eppo's
+  [Sample Size Calculator](/statistics/sample-size-calculator) to understand,
+  operationally, when you can expect to be able to detect an effect if it
+  exists.
 
 - **You can make any decision at any time, safely.**
   Go ahead, peek away 👀! If you want, you can check the results every day and
