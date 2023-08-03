@@ -279,17 +279,17 @@ statistics to summarize the results of an experiment.
    calculate the portion of the posterior lift distribution that is _above_ 5%
    (assuming positive lift is good).
 
-3. &#8203;<Term def={true}>Risk</Term>: The _expected metric loss_ (measured in lift
+3. &#8203;<Term def={true}>Risk</Term>: The _expected metric lift_ (measured in lift
    terms, that is, as a percentage of the control value) _if_ the lift were in
-   fact negative (or, for reversed metrics, positive). In other words, even if
+   fact negative: $E(X | X < 0)$ (or, for reversed metrics, positive). In other words, even if
    the bulk of the distribution indicates that the treatment is better than
    control, some portion is going to be on the other side: there's some chance
    that in fact _control_ is better than _treatment_. The risk measures, in that
    case, what the expected value (that is, the average of all lifts weighted by
    their likelihood under the posterior distribution) of the lift would be.
-4. &#8203;<Term def={true}>Risk Control</Term>: The _expected metric loss_ (measured in lift
-   terms, that is, as a percentage of the control value) _if_ the lift were in
-   fact positive (or, for reversed metrics, negative) and we decide to choose the control variation.
+
+4. &#8203;<Term def={true}>Loss</Term>: The expected value of the loss function $\min(X, 0)$ (reversed for reversed metrics).
+   Note that this is the same as the probability control beats treatment multiplied by risk.
 
 ## Segments and filters
 
