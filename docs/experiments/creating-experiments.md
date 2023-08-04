@@ -14,7 +14,9 @@ Experiments are a set of metrics that correspond to users being shown different 
 
 ![Fill experiment form](/img/building-experiments/fill-create-experiment-form.png)
 
-Give your experiment a name and hypothesis.
+Give your experiment a name, select or enter the Feature Flag Key, select an Entity, pick the Assignment Logging table, and enter a name and hypothesis for the experiment.
+
+If you are pre-assigning subjects before they are actually exposed to a variant, you may want to take advantage of the [_Filter assignments by entry point_ checkbox](./filter-assignments-by-entry-point). This will include only those subjects that appear in an [entry point](/statistics/sample-size-calculator/setup#what-is-an-entry-point) with an entry time after their assignment time.
 
 ### 3. Click the **Configure the Experiment** button
 
@@ -64,25 +66,13 @@ This will allow Eppo to calculate out the rentention metric for the entire popul
 
 :::
 
-### 5. Select an assignment SQL from the definitions you created
-
-![Choose assignment SQL](/img/building-experiments/choose-assignment-sql-in-experiment.png)
-
-If you are pre-assigning subjects before they are actually exposed to a variant, you may want to take advantage of the [_Filter assignments by entry point_ checkbox](./filter-assignments-by-entry-point). This will include only those subjects that appear in an [entry point](/statistics/sample-size-calculator/setup#what-is-an-entry-point) with an entry time after their assignment time.
-
-### 6. Input feature flag name
-
-When you created your assignment SQL, you should have made note of your feature flag name. In our case it's `new_user_onboarding`.
-
-![Configure experiment](/img/building-experiments/choose-feature-flag-in-experiment.png)
-
-### 7. Input what percentage of traffic you want randomized into the experiment.
+### 5. Input what percentage of traffic you want randomized into the experiment.
 
 If you input 100%, 100% of the relevant entities (users in this case) will be included in the experiment.
 
 ![Percent Traffic](/img/building-experiments/name-variants.png)
 
-### 8. Add the variants
+### 6. Add the variants
 
 ![Add variants](/img/building-experiments/name-variants.png)
 
@@ -90,11 +80,11 @@ When you created your assignment SQL, you should have made note of your variant 
 
 You can go ahead and add each variant into the experiment here.
 
-### 9. Select the traffic allocation you would like
+### 7. Select the traffic allocation you would like
 
 The default is an even split between all the variants (including control), but you can also customize the allocation for unequal splits.
 
-### 10. [Optional] The Statistical Analysis Plan {#analysis-plan-settings}
+### 8. [Optional] The Statistical Analysis Plan {#analysis-plan-settings}
 
 If you want to set custom statistical methodologies for this experiment, uncheck
 the "use company default" checkbox next to the applicable fields. Otherwise, you
@@ -104,7 +94,7 @@ For information on the different analysis plan settings, see [Analysis plans](/e
 
 ![Experiment Analysis Plan Settings](/img/building-experiments/experiment-setup-statistical-analysis-plans.gif)
 
-### 11. Click **Save Changes**
+### 9. Click **Save Changes**
 
 # Adding screenshots
 
