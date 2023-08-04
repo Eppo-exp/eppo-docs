@@ -11,7 +11,7 @@ Targeting rules allow you to define which subjects should belong to your experim
 
 ## Add Targeting Rules to an Experiment
 
-Targeting rules are supported for experiments that use Eppo's randomization SDK. Navigate to the Experiment Setup tab to configure targeting rules. You may target any attribute names that you use in your code, but the same attributes must be passed to the SDK during assignment.
+Targeting rules are supported for experiments that use Eppo's Feature Flagging SDK. Navigate to an allocation in a Feature Flag to configure targeting rules. You may target any attribute names that you use in your code, but the same attributes must be passed to the SDK during assignment.
 
 ![generating-api-token-1](/img/connecting-data/targeting-rules.png)
 
