@@ -35,7 +35,7 @@ Give the flag a descriptive human readable name and create a single variation fo
 
 ### 2. Create allocations to describe your target audience
 
-After creating the flag, decide who to target by creating [allocations](/feature-flags#allocations). In this case we will create two allocations that describe our target audience for the new page: internal users and half of all North American web users:
+After creating the flag, decide who to target by creating [allocations](/feature-flags#allocations). In this case we will create two feature gate allocations that describe our target audience for the new page: internal users and half of all North American web users:
 
 ![Feature gate 2](/img/feature-flagging/feature-gate-2.png)
 
