@@ -64,6 +64,7 @@ async function createConfig () {
     ],
 
     clientModules: [
+      require.resolve('./src/algolia.config.js'),
       require.resolve('./src/rudderstack.config.js')
     ],
 
