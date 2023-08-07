@@ -71,17 +71,17 @@ async function createConfig () {
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
 
-      // algolia: {
-      //   // // The application ID provided by Algolia
-      //   // appId: 'ECM1HGQRTR',
+      algolia: {
+      // // The application ID provided by Algolia
+        appId: 'XFI8PX63MB',
 
-      //   // // Public API key: it is safe to commit it
-      //   // apiKey: 'da6798ec5b7565fc622f8614143d55b3',
+        // // Public API key: it is safe to commit it
+        apiKey: '097f2a86e0398b9815e685970293621f',
 
-      //   // indexName: 'geteppo'
+        indexName: 'geteppo'
 
-      //   // // ... other Algolia params
-      // },
+      // // ... other Algolia params
+      },
       navbar: {
         // title: 'Eppo',
         logo: {
@@ -101,56 +101,56 @@ async function createConfig () {
         style: 'dark',
         links: [
           {
-            title: "Quick start guides",
+            title: 'Quick start guides',
             items: [
               {
-                label: "Initial setup",
-                to: "/setup-quickstart",
+                label: 'Initial setup',
+                to: '/setup-quickstart'
               },
               {
-                label: "Feature flag quick start",
-                to: "/feature-flag-quickstart",
+                label: 'Feature flag quick start',
+                to: '/feature-flag-quickstart'
               },
               {
-                label: "Experiment quick start",
-                to: "/experiment-quickstart",
+                label: 'Experiment quick start',
+                to: '/experiment-quickstart'
               }
-            ],
+            ]
           },
 
           {
-            title: "Links",
+            title: 'Links',
             items: [
               {
-                label: "Eppo",
-                to: "https://geteppo.com",
+                label: 'Eppo',
+                to: 'https://geteppo.com'
               },
               {
-                label: "Blog",
-                to: "https://geteppo.com/blog",
+                label: 'Blog',
+                to: 'https://geteppo.com/blog'
               },
               {
-                label: "Eppo application",
-                to: "https://eppo.cloud",
+                label: 'Eppo application',
+                to: 'https://eppo.cloud'
               },
               {
-                label: "Product updates",
-                to: "https://updates.eppo.cloud",
-              },
-            ],
+                label: 'Product updates',
+                to: 'https://updates.eppo.cloud'
+              }
+            ]
           },
           {
-            title: "Reference",
+            title: 'Reference',
             items: [
               {
-                label: "API reference",
-                to: "https://eppo.cloud/api/docs#/",
+                label: 'API reference',
+                to: 'https://eppo.cloud/api/docs#/'
               },
               {
-                label: "Security",
-                to: "https://www.geteppo.com/security",
+                label: 'Security',
+                to: 'https://www.geteppo.com/security'
               }
-            ],
+            ]
           }
 
         ],
