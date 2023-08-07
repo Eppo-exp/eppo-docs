@@ -73,7 +73,7 @@ async function createConfig () {
 
       algolia: {
       // // The application ID provided by Algolia
-        appId: 'ECM1HGQRTR',
+        appId: 'XFI8PX63MB',
 
         // // Public API key: it is safe to commit it
         apiKey: '097f2a86e0398b9815e685970293621f',
