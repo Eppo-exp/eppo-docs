@@ -14,7 +14,7 @@ Here we create a flag for a hypothetical new feature on our site, a new checkout
 
 ### Create allocations to describe your target audience
 
-After creating the flag, we create two allocations that describe our target audience: internal users and half of all North American web users:
+After creating the flag, we create two feature gate allocations that describe our target audience: internal users and half of all North American web users:
 
 ![Feature gate 2](/img/feature-flagging/feature-gate-2.png)
 

@@ -13,7 +13,9 @@ This guide will walk you through creating your first experiment readout. We will
 
 ### 1. Create an experiment
 
-From the **Experiments** tab, click **+Experiment**, select an Entity, and enter a name and hypothesis for the experiment.
+From the **Experiments** tab, click **+Experiment**, add a name for the experiment, select or enter the Feature Flag Key, select an Entity, pick the Assignment Logging table, and enter a name and hypothesis for the experiment.
+
+**Logging & Feature Flag Key**. This section tells Eppo who was eligible for this experiment. Select the Assignment SQL definition you created in the [Initial Setup Quickstart](/setup-quickstart/) and select the Feature Flag Key that corresponds to this experiment. Eppo will pre-populate a list of known experiment keys in a scheduled batch job, but if you do not yet see your experiment key in the dropdown you can enter it manually.
 
 ![Create Experiment](/../static/img/building-experiments/quick-start-1.png)
 
@@ -25,11 +27,10 @@ Once you have created an experiment, you will land on the experiment setup page.
 
 The setup flow will walk you through several sections:
 
-1. **Experiment Analysis Plan**. Default analysis options are set to make it easy to start using Eppo without diving deep into the details of our statistics engine. For the majority of our customers, the default settings are appropriate. If you want to dive deeper into what these settings do, please see the [Statistics section of our docs](/statistics/).  
-2. **Assignment & Analysis Date Range**. Use this section to tell Eppo what date range of assignments to use. You can also set a different date range for the metric events you want to include the experiment. See [here](/experiments/creating-experiments#experiments-with-custom-event-dates) for more information.
-3. **Logging & Experiment Key**. This section tells Eppo who was eligible for this experiment. Select the Assignment SQL definition you created in the [Initial Setup Quickstart](/setup-quickstart/) and select the experiment key that corresponds to this experiment. Eppo will pre-populate a list of known experiment keys in a scheduled batch job, but if you do not yet see your experiment key in the dropdown you can enter it manually.
-4. **Exposure**. If your experiment was only rolled out to a subset of eligble users (with the remainder not tracked in your assignment table), you can specify the percent eligible in this section. This powers the [Global Lift](/experiments/global-lift) calculator. In most use cases it is appropriate to keep this at 100%.
-5. **Variations**. Use this section to tell Eppo the different variants that were a part of the experiment and the expected traffic allocation across groups. Eppo uses these allocation ratios to perform [sample ratio mismatch checks](/statistics/sample-ratio-mismatch). 
+1. **Assignment & Analysis Date Range**. Use this section to tell Eppo what date range of assignments to use. You can also set a different date range for the metric events you want to include the experiment. See [here](/experiments/creating-experiments#experiments-with-custom-event-dates) for more information.
+2. **Variations**. Use this section to tell Eppo the different variants that were a part of the experiment and the expected traffic allocation across groups. Eppo uses these allocation ratios to perform [sample ratio mismatch checks](/statistics/sample-ratio-mismatch). 
+3. **Allocation**. If your experiment has a custom traffic split or was only rolled out to a subset of eligble users (with the remainder not tracked in your assignment table), you can specify that in this section. The traffic expoure powers the [Global Lift](/experiments/global-lift) calculator. In most use cases it is appropriate to keep this expoure at 100% and the traffic split even.
+4. **Experiment Analysis Plan (optional)**. Default analysis options are set to make it easy to start using Eppo without diving deep into the details of our statistics engine. For the majority of our customers, the default settings are appropriate. If you want to dive deeper into what these settings do, please see the [Analysis Plan section of our docs](experiments/analysis-plans).  
 
 Once you have configured your experiment, click **Save Changes** and continue on to adding metrics.
 
