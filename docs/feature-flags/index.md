@@ -65,7 +65,7 @@ Note that it is possible to reduce an allocation's traffic exposure to less than
 
 ### Environments
 
-Every Eppo instance comes with two out-of-the-box environments: **Test** and **Production**. These represent two independent silos for flags and experiments, mirroring the way you test and ship code. Use the **Test** environment to check feature flag behavior before releasing them in **Production**. Note: unlike flags, all experiments (under the _Experiments_ tab) currently live in the **Production** environment.
+Every Eppo instance comes with two out-of-the-box environments: **Test** and **Production**. These represent two independent silos for flags and experiments, mirroring the way you test and ship code. Use the **Test** environment to check feature flag behavior before releasing them in **Production**.
 
 API keys for both environments can be created on the _Admin > API Keys_ section of the interface:
 
