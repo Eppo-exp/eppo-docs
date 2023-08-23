@@ -75,6 +75,11 @@ CUPED can be turned on in the admin panel, and in the overview page of an experi
 - Pre-experiment data from _all_ [eligible metrics](/data-management/metrics/simple-metric#metric-aggregation-types) (sum, count, unique entities, and these aggregations for ratio metrics)
 - [Assignment properties](/data-management/properties#assignment-properties) from the AssignmentSQL used for this experiment. These are interpreted as categorical features.
 
+To avoid confusion, it is useful to keep in mind that the above refers to the input data. CUPED produces improved results across all metrics.
+
+**Does CUPED apply to all metrics?**
+Yes, our CUPED implementation works for any metric type (standard, ratio, funnel). The only requirement for CUPED is that the experiment has eligible metrics and/or assignment properties configured (see previous question). If so, CUPED is applied across all metrics (even those that are not eligible as input to CUPED).
+
 **Why do the point estimates between CUPED and non-CUPED look different?**
 CUPED and non-CUPED estimators are both unbiased (given proper randomization) of the same quantity, so we would expect estimates to be close.
 However, they are generally not the same -- if they were, then how would CUPED be able to reduce variance?
