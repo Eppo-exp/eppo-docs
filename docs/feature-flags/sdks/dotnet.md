@@ -1,16 +1,16 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# DotNet
+# .NET
 
-Eppo's open source Dot Net SDK can be used for both feature flagging and experiment assignment:
+Eppo's open source .NET SDK can be used for both feature flagging and experiment assignment:
 
 - [GitHub repository](https://github.com/Eppo-exp/dot-net-server-sdk)
 - [Package](https://www.nuget.org/packages/Eppo.Sdk)
 
 ## 1. Install the SDK
 
-In your Dot Net Solution, add the Eppo.Sdk Package from Nuget using your favourite editor
+In your .NET application, add the Eppo.Sdk Package from Nuget.
 
 ```
 dotnet add package Eppo.Sdk
@@ -27,7 +27,7 @@ var eppoClientConfig = new EppoClientConfig(apiToken, new AssignmentLogger());
 var eppoClient = EppoClient.Init(eppoClientConfig);
 ```
 
-After initialization, the SDK begins polling Eppo’s API at regular intervals to retrieve the most recent experiment configurations such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments thereafter are effectively instant. If you are using the SDK for experiment assignments, make sure to pass in an assignment logging callback (see [section](#define-an-assignment-logger-experiment-assignment-only) below).
+After initialization, the SDK begins polling Eppo's API at regular intervals to retrieve the most recent experiment configurations such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments thereafter are effectively instant. If you are using the SDK for experiment assignments, make sure to pass in an assignment logging callback (see [section](#define-an-assignment-logger-experiment-assignment-only) below).
 
 ### Define an assignment logger (experiment assignment only)
 
@@ -64,19 +64,26 @@ More examples of logging (with Segment, Rudderstack, mParticle, and Snowplow) ca
 
 ## 3. Assign variations
 
-Assigning users to flags or experiments with a single `getAssignment` function:
+Assigning users to flags or experiments with a single `GetStringAssignment` function:
 
 ```csharp
-var assignedVariation = eppoClient.GetAssignment("<SUBJECT-KEY>", "<FLAG-OR-EXPERIMENT-KEY>", {
+var assignedVariation = eppoClient.GetStringAssignment("<SUBJECT-KEY>", "<FLAG-OR-EXPERIMENT-KEY>", {
   // Optional Dictionary of subject metadata for targeting.
 });
 ```
 
-The `GetAssignment` function takes two required and one optional input to assign a variation:
+The `GetStringAssignment` function takes two required and one optional input to assign a variation:
 
 - `subjectKey` - The entity ID that is being experimented on, typically represented by a uuid.
 - `flagOrExperimentKey` - This key is available on the detail page for both flags and experiments.
 - `targetingAttributes` - An optional map of metadata about the subject used for targeting. If you create rules based on attributes on a flag/experiment, those attributes should be passed in on every assignment call.
+
+Starting in version `v2.0.0` typed functions are available:
+
+```
+eppoClient.GetBoolAssignment(string subjectKey, string flagKey, SubjectAttributes? subjectAttributes = null)
+eppoClient.GetNumericAssignment(string subjectKey, string flagKey, SubjectAttributes? subjectAttributes = null)
+```
 
 ### Handling the null assignment
 
