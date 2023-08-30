@@ -83,7 +83,7 @@ The initialization methods in Eppo’s SDKs are non-blocking in order to minimiz
 
 One workaround for this is to pause execution after the initialization method is called (e.g. `time.Sleep(4 * time.Second)`) to give the SDK time to fetch its first configuration before invoking `getAssignment`. If pausing execution is undesirable, e.g. slowing the start up of a mobile app is poor UX, then the returned null value will need to be handled in your code to gracefully fallback on a sensible default experience.
 
-## 4. Using targeting lists to define a large list of users
+## 4. Using targeting rules to define a large list of users
 
 Eppo targeting works based on subject attributes passed into the `getAssignment` function. It is tempting to use these targeting rules to define a list of specific users to target. However, this can lead to performance issues as now every time the SDK is initialized, this full list of users need to be pulled in from the Eppo CDN. To help keep the Eppo SDK lightweight, we limit the list of specific values you can target to 50.
 
@@ -109,7 +109,7 @@ Any code that calls the Eppo SDK should gracefully handle the case that `getAssi
 
 When you are running an AB experiment, it is best practice to explicitly assign users as control. If you have already confirmed that null values are handled well and serves a default experience (see above), it may be tempting to serve 10% of traffic the new variant, serve the remaining 90% `NULL`, and then analyze the experiment using `NULL` as the control group.
 
-This however can lead to issues in analyzing an experiment. First, if some traffic receives a `NULL` assignment due to network issues, they will all land in the control group. This validates the core assumption of AB experimentation: that on average there is no difference between the two groups other than the feature on which you are experimenting.
+This however can lead to issues in analyzing an experiment. First, if some traffic receives a `NULL` assignment due to network issues, they will all land in the control group. This breaks the core assumption of AB experimentation: that on average there is no difference between the two groups other than the feature on which you are experimenting.
 
 Further, if the allocation percentage changes over time, additional bias may be introduced. Imagine ramping up an experiment to 50% after one week of smoke testing at 10%. If you were to randomly select a user from the control group, they are now more likely to be from the first week of the experiment. Again, there is a difference between the two groups (control is more likely to be from the first week).
 
