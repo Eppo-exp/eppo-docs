@@ -19,7 +19,7 @@ We offer companies an end-to-end suite of experimentation tools, but let you dec
 
 # How feature flagging works
 
-Eppo’s lightweight [feature flagging SDKs](/feature-flags/sdks) can run on either the client- or server-side. Our SDKs span the most common tech stacks, including [Node](/feature-flags/sdks/node), [JavaScript](/feature-flags/sdks/javascript) (including [React](/feature-flags/sdks/react)), [Python](/feature-flags/sdks/python), [Go](/feature-flags/sdks/go), [PHP](/feature-flags/sdks/php), [Ruby](/feature-flags/sdks/ruby), [iOS](/feature-flags/sdks/ios), and [Android](/feature-flags/sdks/android).
+Eppo’s lightweight [feature flagging SDKs](/feature-flags/sdks) can run on either the client- or server-side. Our SDKs span the most common tech stacks, including [Node](/feature-flags/sdks/node), [JavaScript](/feature-flags/sdks/javascript) (including [React](/feature-flags/sdks/react-native)), [Python](/feature-flags/sdks/python), [Go](/feature-flags/sdks/go), [PHP](/feature-flags/sdks/php), [Ruby](/feature-flags/sdks/ruby), [iOS](/feature-flags/sdks/ios), and [Android](/feature-flags/sdks/android).
 
 Creating a feature flag in Eppo involves the following steps:
 
