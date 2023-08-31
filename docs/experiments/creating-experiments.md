@@ -66,25 +66,19 @@ This will allow Eppo to calculate out the rentention metric for the entire popul
 
 :::
 
-### 5. Input what percentage of traffic you want randomized into the experiment.
+### 5. Add variants
 
-If you input 100%, 100% of the relevant entities (users in this case) will be included in the experiment.
-
-![Percent Traffic](/img/building-experiments/name-variants.png)
-
-### 6. Add the variants
+This section allows you to select which variants you would like to include in the experiment. The value reflects what is observed in the assignment SQL table, whereas the name specifies what will be displayed in the Eppo UI.
 
 ![Add variants](/img/building-experiments/name-variants.png)
 
-When you created your assignment SQL, you should have made note of your variant names. In our case here it's `control` and `variant`.
+### 6. Add traffic allocation (externally randomized experiments only)
 
-You can go ahead and add each variant into the experiment here.
+If the experiment was randomized outside of Eppo, use this section to tell Eppo the expected traffic split across variants as well as the percent of eligible users that were enrolled. The expected traffic split is used when checking for [sample ratio mismatch (SRM)](/statistics/sample-ratio-mismatch/) and the traffic exposure is used in computing [global impact](/experiments/global-lift/).
 
-### 7. Select the traffic allocation you would like
+![Percent Traffic](/img/building-experiments/define-traffic-allocation.png)
 
-The default is an even split between all the variants (including control), but you can also customize the allocation for unequal splits.
-
-### 8. [Optional] The Statistical Analysis Plan {#analysis-plan-settings}
+### 7. The Statistical Analysis Plan (optional) {#analysis-plan-settings} 
 
 If you want to set custom statistical methodologies for this experiment, uncheck
 the "use company default" checkbox next to the applicable fields. Otherwise, you
@@ -94,7 +88,7 @@ For information on the different analysis plan settings, see [Analysis plans](/e
 
 ![Experiment Analysis Plan Settings](/img/building-experiments/experiment-setup-statistical-analysis-plans.gif)
 
-### 9. Click **Save Changes**
+### 8. Click **Save Changes**
 
 # Adding screenshots
 

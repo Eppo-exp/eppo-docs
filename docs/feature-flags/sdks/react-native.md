@@ -1,7 +1,7 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# React
+# React Native
 
 Eppo's open source React Native SDK can be used for both feature flagging and experiment assignment:
 
