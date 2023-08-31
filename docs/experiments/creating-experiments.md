@@ -66,15 +66,15 @@ This will allow Eppo to calculate out the rentention metric for the entire popul
 
 :::
 
-### 5. Add the variants
+### 5. Add variants
 
-The variants section allows you to select which variants you would like to include in the experiment. The value reflects what is observed in the assignment SQL table, whereas the name specifies what will be displayed in the Eppo UI.
+This section allows you to select which variants you would like to include in the experiment. The value reflects what is observed in the assignment SQL table, whereas the name specifies what will be displayed in the Eppo UI.
 
 ![Add variants](/img/building-experiments/name-variants.png)
 
 ### 6. Add traffic allocation (externally randomized experiments only)
 
-If the experiment was randomized outside of Eppo, use this section to tell Eppo the expected traffic split across variants as well as the percent of eligible users that were enrolled. The expected traffic split is used when checking for [sample ratio mismatch (SRM)](/statistics/sample-ratio-mismatch/) and the traffic exposure is used in computed [global impact](/experiments/global-lift/).
+If the experiment was randomized outside of Eppo, use this section to tell Eppo the expected traffic split across variants as well as the percent of eligible users that were enrolled. The expected traffic split is used when checking for [sample ratio mismatch (SRM)](/statistics/sample-ratio-mismatch/) and the traffic exposure is used in computing [global impact](/experiments/global-lift/).
 
 ![Percent Traffic](/img/building-experiments/define-traffic-allocation.png)
 
