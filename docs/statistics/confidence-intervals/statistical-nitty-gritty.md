@@ -497,8 +497,8 @@ and has the following useful properties:
 
 We use a slightly modified version of equation 14 from the reference, with some
 changes in notation, to construct our bounds.[^modifications] Specifically, using
-the estimated lift $\hat{\mu}_{\tiny{\Delta}}$ from equation 3, the
-estimated standard error of the lift $\hat{\sigma}_{\tiny{\Delta}}$ from equation 4,
+the estimated lift $\hat{\mu}_{\tiny{\Delta}}$ from equation 7, the
+estimated standard error of the lift $\hat{\sigma}_{\tiny{\Delta}}$ from equation 8,
 the confidence level $c \in (0, 1)$, and the total sample size $t = n_C + n_T$
 :
 
