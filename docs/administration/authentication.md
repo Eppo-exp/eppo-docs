@@ -4,7 +4,7 @@ sidebar_position: 3
 
 # Authentication
 
-![Logging in with Okta](/img/reference/okta.gif)
+![Logging in with Okta](/img/reference/okta.png)
 
 Eppo supports the following enterprise authentication options:
 
