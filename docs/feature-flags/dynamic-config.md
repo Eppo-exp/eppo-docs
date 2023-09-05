@@ -4,7 +4,7 @@
 
 Dynamic Configuration changes the experience of an application from the Feature Flag without the need for a code deploy.
 
-This is achieved by the engineering team implementing a number of variables in the application that can receive values from the feature flag configuration file. These variables can include front-end changes such as copy and color as well as back-end changes such as which version of an algorithm to utilize
+This is achieved by the engineering team implementing a number of variables in the application that can receive values from the feature flag configuration file. These variables can include front-end changes such as copy and color as well as back-end changes such as which version of an algorithm to utilize.
 
 ## Marketing use cases
 
