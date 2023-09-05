@@ -4,8 +4,34 @@ sidebar_position: 4
 
 # Flag variations
 
-All Eppo flags return strings. However, since strings are generic, they can be used to represent numbers (e.g `'5'`), booleans (e.g `'true'`), and even maps with arbitrary key-value pairs:
+Eppo flags support multiple types: boolean, string, numeric, and JSON.
 
-![Typed flags](/img/feature-flagging/typed-flags.png)
+![Flag types](/img/feature-flagging/flag-types.png)
 
-In the example above the flag has two variants, each with it’s own JSON value represented as a string. When delivering this flag, _Eppo SDKs will return strings_. It is up to your application to deserialize these strings into maps. The same is true for numbers and booleans. Deserialized typed values can than then be used in your application logic.
+## Boolean flags
+
+Boolean flags can only ever have two variants, each corresponding to a `true` or `false` value. We recommend setting boolean flags to `true` when the flag is on and `false` when the flag is off.
+
+## String flags
+
+String flags are the default and cover most use cases.
+
+String flags have a limit of 65KB. Strings are UTF-8 encoded, so certain characters, like emojis and non-ASCII characters, take more than one byte each.
+
+You can use escape sequences in string flag values.
+
+## Numeric flags
+
+Numeric flags are recommended when you want to target variations based on dates, timeouts, or other numerical operations.
+
+Numeric flags can be either an integer or a floating-point type. Eppo will show an error message in the UI if a variation value is not a numeric type.
+
+## JSON flags
+
+JSON flags allow you to send a map of values. This can be helpful to change the user experience without needing to deploy code.
+
+You can write an empty array as `{}` if there is no property value present for a variation.
+
+JSON object and array flags have a size limit of 32KB.
+
+Eppo will show an error message in the UI if a variation value does not validate as proper JSON.
