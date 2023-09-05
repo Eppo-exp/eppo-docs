@@ -6,17 +6,21 @@ sidebar_position: 4
 
 Eppo flags support multiple types: boolean, string, numeric, and JSON.
 
+![Flag types](/img/feature-flagging/flag-types.png)
+
 ## Boolean flags
 
 Boolean flags can only ever have two variants, each corresponsing to a `true` or `false` value. We recommend setting boolean flags to `true` when the flag is on and `false` when the flag is off.
 
 ## String flags
 
-String flags have a limit of 32KB. Strings are UTF-8 encoded, so certain characters, like emojis and non-ASCII characters, take more than one byte each.
+String flags are the default and cover most use cases.
+
+String flags have a limit of 65KB. Strings are UTF-8 encoded, so certain characters, like emojis and non-ASCII characters, take more than one byte each.
 
 You can use escape sequences in string flag values.
 
-## Numberic flags
+## Numeric flags
 
 Numeric flags are recommended when you want to target variations based on dates, timeouts, or other numerical operations.
 
