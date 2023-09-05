@@ -10,7 +10,7 @@ Eppo flags support multiple types: boolean, string, numeric, and JSON.
 
 ## Boolean flags
 
-Boolean flags can only ever have two variants, each corresponsing to a `true` or `false` value. We recommend setting boolean flags to `true` when the flag is on and `false` when the flag is off.
+Boolean flags can only ever have two variants, each corresponding to a `true` or `false` value. We recommend setting boolean flags to `true` when the flag is on and `false` when the flag is off.
 
 ## String flags
 
