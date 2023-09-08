@@ -12,6 +12,6 @@ You will need to initialize whichever SDK you choose with an API key. The SDK us
 
 ### API Key Permissions
 
-Make sure to give your API Key read access to the Eppo's randomization settings. This permission allows the SDK to retrieve information about your experiment variations, traffic allocations, and allow-list overrides.
+Make sure to give your API Key read access to the Eppo's randomization settings. This permission allows the SDK to retrieve information about your experiment variations, traffic allocations, and allow-list overrides. You may also specify [REST API](../reference/api/) permissions to allow reading/writing definitions, metrics, and experiments.
 
 ![api-key-permissions](/img/connecting-data/api-key-permissions.png)
