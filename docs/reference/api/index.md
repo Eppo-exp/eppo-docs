@@ -4,7 +4,7 @@ Eppo has an HTTP REST API which allows you to read and write data related to exp
 
 #### Make a request to the Eppo API
 ```
-curl --header 'X-Eppo-Token: -JHr3VLG-N-kzLF5IEy8DpUC7QDikSzbD9r7762GqUk' https://eppo.cloud/api/v1/experiments
+curl --header 'X-Eppo-Token: <api key>' https://eppo.cloud/api/v1/experiments
 ```
 
 #### Explore the API Swagger documentation
