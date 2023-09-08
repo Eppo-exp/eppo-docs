@@ -16,7 +16,7 @@ In your pom.xml, add the SDK package as a dependency:
 <dependency>
   <groupId>cloud.eppo</groupId>
   <artifactId>eppo-server-sdk</artifactId>
-  <version>1.1.0</version>
+  <version>2.0.0</version>
 </dependency>
 ```
 
@@ -32,7 +32,7 @@ EppoClientConfig config = EppoClientConfig.builder()
 EppoClient eppoClient = EppoClient.init(config);
 ```
 
-After initialization, the SDK begins polling Eppo’s API at regular intervals to retrieve the most recent experiment configurations such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments thereafter are effectively instant. If you are using the SDK for experiment assignments, make sure to pass in an assignment logging callback (see [section](#define-an-assignment-logger-experiment-assignment-only) below).
+After initialization, the SDK begins polling Eppo's API at regular intervals to retrieve the most recent experiment configurations such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments thereafter are effectively instant. If you are using the SDK for experiment assignments, make sure to pass in an assignment logging callback (see [section](#define-an-assignment-logger-experiment-assignment-only) below).
 
 ### Define an assignment logger (experiment assignment only)
 
@@ -67,19 +67,28 @@ More examples of logging (with Segment, Rudderstack, mParticle, and Snowplow) ca
 
 ## 3. Assign variations
 
-Assigning users to flags or experiments with a single `getAssignment` function:
+Assigning users to flags or experiments with a single `getStringAssignment` function:
 
 ```java
-Optional<String> assignedVariation = eppoClient.getAssignment("<SUBJECT-KEY>", "<FLAG-OR-EXPERIMENT-KEY>", {
+Optional<String> assignedVariation = eppoClient.getStringAssignment("<SUBJECT-KEY>", "<FLAG-OR-EXPERIMENT-KEY>", {
   // Optional map of subject metadata for targeting.
 });
 ```
 
-The `getAssignment` function takes two required and one optional input to assign a variation:
+The `getStringAssignment` function takes two required and one optional input to assign a variation:
 
 - `subjectKey` - The entity ID that is being experimented on, typically represented by a uuid.
 - `flagOrExperimentKey` - This key is available on the detail page for both flags and experiments.
 - `targetingAttributes` - An optional map of metadata about the subject used for targeting. If you create rules based on attributes on a flag/experiment, those attributes should be passed in on every assignment call.
+
+### Typed assignments
+
+Additional functions are available:
+
+```
+getBoolAssignment(...)
+getNumericAssignment(...)
+```
 
 ### Handling the empty assignment
 
@@ -87,11 +96,11 @@ We recommend always handling the empty assignment case in your code. Here are so
 
 1. The **Traffic Exposure** setting on experiments/allocations determines the percentage of subjects the SDK will assign to that experiment/allocation. For example, if Traffic Exposure is 25%, the SDK will assign a variation for 25% of subjects and `Optional.empty()` for the remaining 75% (unless the subject is part of an allow list).
 
-2. If you are using Eppo for experiment assignments, you must start the experiment in the user interface before `GetAssignment` returns variations. It will return `Optional.empty()` if the experiment is not running, both before and after.
+2. If you are using Eppo for experiment assignments, you must start the experiment in the user interface before `getStringAssignment` returns variations. It will return `Optional.empty()` if the experiment is not running, both before and after.
 
 ![start-experiment](/img/connecting-data/StartExperiment.png)
 
-3.  If `GetAssignment` is invoked before the SDK has finished initializing, the SDK may not have access to the most recent experiment configurations. In this case, the SDK will assign a variation based on any previously downloaded experiment configurations stored in local storage, or return `Optional.empty()` if no configurations have been downloaded.
+3.  If `getStringAssignment` is invoked before the SDK has finished initializing, the SDK may not have access to the most recent experiment configurations. In this case, the SDK will assign a variation based on any previously downloaded experiment configurations stored in local storage, or return `Optional.empty()` if no configurations have been downloaded.
 
 <br />
 

@@ -13,7 +13,7 @@ Eppo's open source Android SDK can be used for both feature flagging and experim
 You can install the SDK using Gradle:
 
 ```groovy
-implementation 'cloud.eppo:android-sdk:0.3.0'
+implementation 'cloud.eppo:android-sdk:1.0.0'
 ```
 
 ## 2. Initialize the SDK
@@ -31,7 +31,7 @@ During initialization, the SDK sends an API request to Eppo to retrieve the most
 <br />
 
 :::note
-API Keys used with Client SDKs should have only 'Feature Flagging READ' permissions on, with all other permissions set to 'No Access'.
+API Keys used with Client SDKs should have at least 'Feature Flagging READ' permissions enabled.
 :::
 
 <br />
@@ -81,20 +81,27 @@ More examples of logging (with Segment, Rudderstack, mParticle, and Snowplow) ca
 
 ## 3. Assign variations
 
-Assigning users to flags or experiments with a single `getAssignment` function:
+Assigning users to flags or experiments with a single `getStringAssignment` function:
 
 ```java
 import cloud.eppo.android.EppoClient;
 
 EppoClient eppoClient = EppoClient.getInstance(); // requires the SDK to already be initialized
-String variation = eppoClient.getAssignment("<SUBJECT-KEY>", "<FLAG-OR-EXPERIMENT-KEY>");
+String variation = eppoClient.getStringAssignment("<SUBJECT-KEY>", "<FLAG-OR-EXPERIMENT-KEY>");
 ```
 
-The `getAssignment` function takes two required and one optional input to assign a variation:
+The `getStringAssignment` function takes two required and one optional input to assign a variation:
 
 - `subjectKey` - The entity ID that is being experimented on, typically represented by a uuid.
 - `flagKey` - This key is available on the detail page for both flags and experiments. Can also be an experiment key.
 - `subjectAttributes` - An optional map of metadata about the subject used for targeting. If you create rules based on attributes on a flag/experiment, those attributes should be passed in on every assignment call.
+
+Starting in version `v1.0.0` typed functions are available:
+
+```
+eppoClient.GetBoolAssignment(...)
+eppoClient.GetNumericAssignment(...)
+```
 
 ### Handling `null`
 
@@ -102,9 +109,9 @@ We recommend always handling the `null` case in your code. Here are some example
 
 1. The **Traffic Exposure** setting on experiments/allocations determines the percentage of subjects the SDK will assign to that experiment/allocation. For example, if Traffic Exposure is 25%, the SDK will assign a variation for 25% of subjects and `null` for the remaining 75% (unless the subject is part of an allow list).
 
-2. If you are using Eppo for experiment assignments, you must start the experiment in the user interface before `getAssignment` returns variations. It will return `null` if the experiment is not running, both before and after.
+2. If you are using Eppo for experiment assignments, you must start the experiment in the user interface before `getStringAssignment` returns variations. It will return `null` if the experiment is not running, both before and after.
 
-![start-experiment](/img/connecting-data/StartExperiment.png) 3. If `getAssignment` is invoked before the SDK has finished initializing, the SDK may not have access to the most recent experiment configurations. In this case, the SDK will assign a variation based on any previously downloaded experiment configurations stored in local storage, or return `null` if no configurations have been downloaded.
+![start-experiment](/img/connecting-data/StartExperiment.png) 3. If `getStringAssignment` is invoked before the SDK has finished initializing, the SDK may not have access to the most recent experiment configurations. In this case, the SDK will assign a variation based on any previously downloaded experiment configurations stored in local storage, or return `null` if no configurations have been downloaded.
 
 <br />
 
