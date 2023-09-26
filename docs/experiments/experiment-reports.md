@@ -17,7 +17,7 @@ On the overview tab you can summarize the learnings of your experiment by fillin
 
 
 ### Adding Cards and Blocks
-Cards allow you to further customize your experiment report. Each card acts like a page where you can add text and experiment blocks. If you are familiar with Notion, Eppo reports uses a similar pattern with the page and block model. This includes using the slash (/) command to open up the menu to select from available blocks. Alternativey, you can add blocks by clicking on the plus icon when hovering over an existing block. 
+Cards allow you to further customize your experiment report. Each card acts like a page where you can add text and experiment blocks. If you are familiar with Notion, Eppo reports uses a similar pattern with the page and block model. This includes using the slash (/) command to open up the menu to select from available blocks. Alternatively, you can add blocks by clicking on the plus icon when hovering over an existing block. 
 
 ![Adding Blocks](/img/experiments/reports/adding-metric-block.gif)
 
