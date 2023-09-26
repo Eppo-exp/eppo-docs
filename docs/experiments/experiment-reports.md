@@ -2,7 +2,9 @@
 sidebar_position: 3
 ---
 
-# Summarize Experiment Learnings with Reports
+# [Beta] Document Learnings with Reports
+
+This feature is currently in BETA. We would love to hear your feedback!
 
 Anyone with an Experiment Editor role or higher can edit the information on the Overview tab of an experiment. Those with a Viewer role can see the content, but cannot edit. 
 
@@ -16,7 +18,9 @@ Cards allow you to further customize your experiment report. Each card acts like
 
 ![Adding Blocks](/img/experiments/reports/adding-metric-block.gif)
 
-## Eppo Blocks
+## Eppo Experiment Blocks
+These are blocks that can be added to a report that are linked to your experiment configuration, data, and results. Metric block results will update with each experiment refresh.
+
 ### Single Metric Lift
 Select any metric that has been added to the decision metrics tab of the experiment. 
 ![Single Metric Block](/img/experiments/reports/single-metric-block.png)
