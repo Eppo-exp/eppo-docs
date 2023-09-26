@@ -6,7 +6,7 @@ sidebar_position: 3
 
 This feature is currently in BETA. We would love to hear your feedback!
 
-Anyone with an Experiment Editor role or higher can edit the information on the Overview tab of an experiment. Those with a Viewer role can see the content, but cannot edit. 
+Anyone with an Experiment Editor role or higher can edit the content on the Overview tab of an experiment. Those with a Viewer role can see the content, but cannot edit. 
 
 On the overview tab you can summarize the learnings of your experiment by filling in your hypothesis, key takeaways, and decision. Help centralize your documentation by adding links to relevant planning docs, figma files, issue tracking, and more.
 
