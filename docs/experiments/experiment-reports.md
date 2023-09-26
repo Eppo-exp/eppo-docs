@@ -19,11 +19,11 @@ Cards allow you to further customize your experiment report. Each card acts like
 ## Eppo Blocks
 ### Single Metric Lift
 Select any metric that has been added to the decision metrics tab of the experiment. 
-![Single Metric Block](/img/experiments/reports/single-metric-block.gif)
+![Single Metric Block](/img/experiments/reports/single-metric-block.png)
 
 ### Primary + Guardrail Metric Lift
 A curated collection of metrics consisting of the experiments primary metric and any guardrail metrics on the experiment. 
-![Adding Blocks](/img/experiments/reports/primary-guardrail-block.gif)
+![Adding Blocks](/img/experiments/reports/primary-guardrail-block.png)
 
 ### Block types coming soon:
 * Variations: Add screenshots and descriptions for your variations. 
