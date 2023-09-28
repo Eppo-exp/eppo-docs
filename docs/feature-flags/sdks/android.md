@@ -100,7 +100,9 @@ Starting in version `v1.0.0` typed functions are available:
 
 ```
 eppoClient.GetBoolAssignment(...)
-eppoClient.GetNumericAssignment(...)
+eppoClient.getDoubleAssignment(...)
+eppoClient.getJSONStringAssignment(...)
+eppoClient.getParsedJSONAssignment(...)
 ```
 
 ### Handling `null`
