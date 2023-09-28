@@ -56,12 +56,12 @@ If you install via a `<script>` tag, include a version in the URL to install a s
 Initialize the SDK with an API key, which can be generated in the Eppo interface:
 
 ```javascript
-import { init } from '@eppo/js-client-sdk'
+import { init } from "@eppo/js-client-sdk";
 
 await init({
-  apiKey: '<API_KEY>',
-  assignmentLogger
-})
+  apiKey: "<API_KEY>",
+  assignmentLogger,
+});
 ```
 
 During initialization, the SDK sends an API request to Eppo to retrieve the most recent experiment configurations such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments are effectively instant. If you are using the SDK for experiment assignments, make sure to pass in an assignment logging callback (see [section](#define-an-assignment-logger-experiment-assignment-only) below).
@@ -81,22 +81,22 @@ If you are using the Eppo SDK for experiment assignment (i.e randomization), pas
 The code below illustrates an example implementation of a logging callback using Segment. You could also use your own logging system, the only requirement is that the SDK receives a `logAssignment` function. Here we define an implementation of the Eppo `AssignmentLogger` interface containing a single function named `logAssignment`:
 
 ```javascript
-import { IAssignmentLogger } from '@eppo/js-client-sdk'
-import { AnalyticsBrowser } from '@segment/analytics-next'
+import { IAssignmentLogger } from "@eppo/js-client-sdk";
+import { AnalyticsBrowser } from "@segment/analytics-next";
 
 // Connect to Segment (or your own event-tracking system)
-const analytics = AnalyticsBrowser.load({ writeKey: '<SEGMENT_WRITE_KEY>' })
+const analytics = AnalyticsBrowser.load({ writeKey: "<SEGMENT_WRITE_KEY>" });
 
 const assignmentLogger: IAssignmentLogger = {
   logAssignment(assignment) {
     analytics.track({
       userId: assignment.subject,
-      event: 'Eppo Randomized Assignment',
-      type: 'track',
-      properties: { ...assignment }
-    })
-  }
-}
+      event: "Eppo Randomized Assignment",
+      type: "track",
+      properties: { ...assignment },
+    });
+  },
+};
 ```
 
 The SDK will invoke the `logAssignment` function with an `assignment` object that contains the following fields:
@@ -112,7 +112,7 @@ The SDK will invoke the `logAssignment` function with an `assignment` object tha
 | `allocation` (string)     | An Eppo allocation key                                                                                                   | "allocation-17"                     |
 
 :::note
-More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/how-tos/event-logging/) page.
+More examples of logging (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/how-tos/event-logging/) page.
 :::
 
 ## 3. Assign variations
@@ -120,16 +120,16 @@ More details about logging and examples (with Segment, Rudderstack, mParticle, a
 Assigning users to flags or experiments with a single `getAssignment` function:
 
 ```javascript
-import * as EppoSdk from '@eppo/js-client-sdk'
+import * as EppoSdk from "@eppo/js-client-sdk";
 
-const eppoClient = EppoSdk.getInstance()
+const eppoClient = EppoSdk.getInstance();
 const variation = eppoClient.getAssignment(
-  '<SUBJECT-KEY>',
-  '<FLAG-OR-EXPERIMENT-KEY>',
+  "<SUBJECT-KEY>",
+  "<FLAG-OR-EXPERIMENT-KEY>",
   {
     // Optional map of subject metadata for targeting.
   }
-)
+);
 ```
 
 The `getAssignment` function takes two required and one optional input to assign a variation:
@@ -161,39 +161,39 @@ It may take up to 10 seconds for changes to Eppo experiments to be reflected by 
 For usage in React, we recommend using the below `EppoRandomizationProvider` at the root of your component tree. By default, this component waits for initialization of the SDK before rendering its children. If `waitForInitialization` is set to false, the SDK `getAssignment` function will return `null` assignments while initializing and will only start assigning subjects when a new browser session is started.
 
 ```tsx
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 
-import { init } from '@eppo/js-client-sdk'
+import { init } from "@eppo/js-client-sdk";
 
 interface IEppoRandomizationProvider {
-  waitForInitialization?: boolean
-  children: JSX.Element
-  loadingComponent?: JSX.Element
+  waitForInitialization?: boolean;
+  children: JSX.Element;
+  loadingComponent?: JSX.Element;
 }
 
 export default function EppoRandomizationProvider({
   waitForInitialization = true,
   children,
-  loadingComponent = <div>Loading...</div>
+  loadingComponent = <div>Loading...</div>,
 }: IEppoRandomizationProvider): JSX.Element {
-  const [isInitialized, setIsInitialized] = useState(false)
+  const [isInitialized, setIsInitialized] = useState(false);
   useEffect(() => {
     init({
-      apiKey: '<YOUR-API-KEY>',
+      apiKey: "<YOUR-API-KEY>",
       assignmentLogger: {
         logAssignment(assignment) {
           // logging implementation
-        }
-      }
+        },
+      },
     }).then(() => {
-      return setIsInitialized(true)
-    })
-  }, [])
+      return setIsInitialized(true);
+    });
+  }, []);
 
   if (!waitForInitialization || isInitialized) {
-    return children
+    return children;
   }
-  return loadingComponent
+  return loadingComponent;
 }
 ```
 
@@ -208,15 +208,15 @@ After the SDK is initialized, you may assign variations from any child component
 ```tsx
 function MyComponent(): JSX.Element {
   const assignedVariation = useMemo(() => {
-    const eppoClient = getInstance()
-    return eppoClient.getAssignment('<SUBJECT-KEY>', '<EXPERIMENT-KEY>')
-  }, [])
+    const eppoClient = getInstance();
+    return eppoClient.getAssignment("<SUBJECT-KEY>", "<EXPERIMENT-KEY>");
+  }, []);
 
   return (
     <div>
-      {assignedVariation === '<VARIATION-KEY>' && <p>Assigned control</p>}
+      {assignedVariation === "<VARIATION-KEY>" && <p>Assigned control</p>}
     </div>
-  )
+  );
 }
 ```
 
