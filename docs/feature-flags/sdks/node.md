@@ -36,12 +36,12 @@ npm install @eppo/node-server-sdk
 Initialize the SDK with an API key, which can be generated in the Eppo interface. Initialization should happen when your application starts up to generate a singleton client instance, once per application lifecycle:
 
 ```javascript
-import { init } from "@eppo/node-server-sdk";
+import { init } from '@eppo/node-server-sdk'
 
 await init({
-  apiKey: "<API_KEY>",
-  assignmentLogger,
-});
+  apiKey: '<API_KEY>',
+  assignmentLogger
+})
 ```
 
 After initialization, the SDK begins polling Eppo’s API at regular intervals to retrieve the most recent experiment configurations such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments thereafter are effectively instant. If you are using the SDK for experiment assignments, make sure to pass in an assignment logging callback (see [section](#define-an-assignment-logger-experiment-assignment-only) below).
@@ -53,32 +53,34 @@ If you are using the Eppo SDK for experiment assignment (i.e randomization), pas
 The code below illustrates an example implementation of a logging callback using Segment. You could also use your own logging system, the only requirement is that the SDK receives a `logAssignment` function. Here we define an implementation of the Eppo `IAssignmentLogger` interface containing a single function named `logAssignment`:
 
 ```javascript
-import { IAssignmentLogger } from "@eppo/node-server-sdk";
+import { IAssignmentLogger } from '@eppo/node-server-sdk'
 
 // Connect to Segment (or your own event-tracking system)
-const Analytics = require("analytics-node");
-const analytics = new Analytics("<SEGMENT_WRITE_KEY>");
+const Analytics = require('analytics-node')
+const analytics = new Analytics('<SEGMENT_WRITE_KEY>')
 
 const assignmentLogger: IAssignmentLogger = {
   logAssignment(assignment) {
     analytics.track({
       userId: assignment.subject,
-      event: "Eppo Randomization Event",
-      properties: assignment,
-    });
-  },
-};
+      event: 'Eppo Randomization Event',
+      properties: assignment
+    })
+  }
+}
 ```
 
 The SDK will invoke the `logAssignment` function with an `assignment` object that contains the following fields:
 
-| Field                     | Description                                                                                                              | Example                  |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ------------------------ |
-| `experiment` (string)     | An Eppo experiment key                                                                                                   | "recommendation_algo"    |
-| `subject` (string)        | An identifier of the subject or user assigned to the experiment variation                                                | UUID                     |
-| `variation` (string)      | The experiment variation the subject was assigned to                                                                     | "control"                |
-| `timestamp` (string)      | The time when the subject was assigned to the variation                                                                  | 2021-06-22T17:35:12.000Z |
-| `subjectAttributes` (map) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `{ "country": "US" }`    |
+| Field                     | Description                                                                                                              | Example                             |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------- |
+| `experiment` (string)     | An Eppo experiment key                                                                                                   | "recommendation-algo-allocation-17" |
+| `subject` (string)        | An identifier of the subject or user assigned to the experiment variation                                                | UUID                                |
+| `variation` (string)      | The experiment variation the subject was assigned to                                                                     | "control"                           |
+| `timestamp` (string)      | The time when the subject was assigned to the variation                                                                  | 2021-06-22T17:35:12.000Z            |
+| `subjectAttributes` (map) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `{ "country": "US" }`               |
+| `featureFlag` (string)    | An Eppo feature flag key                                                                                                 | "recommendation-algo"               |
+| `allocation` (string)     | An Eppo allocation key                                                                                                   | "allocation-17"                     |
 
 :::note
 More examples of logging (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/how-tos/event-logging/) page.
@@ -89,16 +91,16 @@ More examples of logging (with Segment, Rudderstack, mParticle, and Snowplow) ca
 Assigning users to flags or experiments with a single `getAssignment` function:
 
 ```javascript
-import * as EppoSdk from "@eppo/node-server-sdk";
+import * as EppoSdk from '@eppo/node-server-sdk'
 
-const eppoClient = EppoSdk.getInstance();
+const eppoClient = EppoSdk.getInstance()
 const variation = eppoClient.getAssignment(
-  "<SUBJECT-KEY>",
-  "<FLAG-OR-EXPERIMENT-KEY>",
+  '<SUBJECT-KEY>',
+  '<FLAG-OR-EXPERIMENT-KEY>',
   {
     // Optional map of subject metadata for targeting.
   }
-);
+)
 ```
 
 The `getAssignment` function takes two required and one optional input to assign a variation:
