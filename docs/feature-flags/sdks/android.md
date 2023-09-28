@@ -99,7 +99,7 @@ The `getStringAssignment` function takes two required and one optional input to 
 Starting in version `v1.0.0` typed functions are available:
 
 ```
-eppoClient.GetBoolAssignment(...)
+eppoClient.getBooleanAssignment(...)
 eppoClient.getDoubleAssignment(...)
 eppoClient.getJSONStringAssignment(...)
 eppoClient.getParsedJSONAssignment(...)
