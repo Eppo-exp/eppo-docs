@@ -36,12 +36,12 @@ npm install @eppo/react-native-sdk
 Initialize the SDK with an API key, which can be generated in the Eppo interface:
 
 ```javascript
-import { init } from "@eppo/react-native-sdk";
+import { init } from '@eppo/react-native-sdk'
 
 await init({
-  apiKey: "<API_KEY>",
-  assignmentLogger,
-});
+  apiKey: '<API_KEY>',
+  assignmentLogger
+})
 ```
 
 During initialization, the SDK sends an API request to Eppo to retrieve the most recent experiment configurations such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments are effectively instant. If you are using the SDK for experiment assignments, make sure to pass in an assignment logging callback (see [section](#define-an-assignment-logger-experiment-assignment-only) below).
@@ -88,16 +88,18 @@ const assignmentLogger: IAssignmentLogger = {
 
 The SDK will invoke the `logAssignment` function with an `assignment` object that contains the following fields:
 
-| Field                     | Description                                                                                                              | Example                  |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ------------------------ |
-| `experiment` (string)     | An Eppo experiment key                                                                                                   | "recommendation_algo"    |
-| `subject` (string)        | An identifier of the subject or user assigned to the experiment variation                                                | UUID                     |
-| `variation` (string)      | The experiment variation the subject was assigned to                                                                     | "control"                |
-| `timestamp` (string)      | The time when the subject was assigned to the variation                                                                  | 2021-06-22T17:35:12.000Z |
-| `subjectAttributes` (map) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `{ "country": "US" }`    |
+| Field                     | Description                                                                                                              | Example                             |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------- |
+| `experiment` (string)     | An Eppo experiment key                                                                                                   | "recommendation-algo-allocation-17" |
+| `subject` (string)        | An identifier of the subject or user assigned to the experiment variation                                                | UUID                                |
+| `variation` (string)      | The experiment variation the subject was assigned to                                                                     | "control"                           |
+| `timestamp` (string)      | The time when the subject was assigned to the variation                                                                  | 2021-06-22T17:35:12.000Z            |
+| `subjectAttributes` (map) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `{ "country": "US" }`               |
+| `featureFlag` (string)    | An Eppo feature flag key                                                                                                 | "recommendation-algo"               |
+| `allocation` (string)     | An Eppo allocation key                                                                                                   | "allocation-17"                     |
 
 :::note
-More examples of logging (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/how-tos/event-logging) page.
+More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/how-tos/event-logging) page.
 :::
 
 ## 3. Assign variations
@@ -105,16 +107,16 @@ More examples of logging (with Segment, Rudderstack, mParticle, and Snowplow) ca
 Assigning users to flags or experiments with a single `getAssignment` function:
 
 ```javascript
-import * as EppoSdk from "@eppo/react-native-sdk";
+import * as EppoSdk from '@eppo/react-native-sdk'
 
-const eppoClient = EppoSdk.getInstance();
+const eppoClient = EppoSdk.getInstance()
 const variation = eppoClient.getAssignment(
-  "<SUBJECT-KEY>",
-  "<FLAG-OR-EXPERIMENT-KEY>",
+  '<SUBJECT-KEY>',
+  '<FLAG-OR-EXPERIMENT-KEY>',
   {
     // Optional map of subject metadata for targeting.
   }
-);
+)
 ```
 
 The `getAssignment` function takes two required and one optional input to assign a variation:
@@ -148,39 +150,39 @@ It may take up to 10 seconds for changes to Eppo experiments to be reflected by 
 For usage in React, we recommend using the below `EppoRandomizationProvider` at the root of your component tree. By default, this component waits for initialization of the SDK before rendering its children. If `waitForInitialization` is set to false, the SDK `getAssignment` function will return `null` assignments while initializing and will only start assigning subjects when a new browser session is started.
 
 ```tsx
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react'
 
-import { init } from "@eppo/react-native-sdk";
+import { init } from '@eppo/react-native-sdk'
 
 interface IEppoRandomizationProvider {
-  waitForInitialization?: boolean;
-  children: JSX.Element;
-  loadingComponent?: JSX.Element;
+  waitForInitialization?: boolean
+  children: JSX.Element
+  loadingComponent?: JSX.Element
 }
 
 export default function EppoRandomizationProvider({
   waitForInitialization = true,
   children,
-  loadingComponent = <div>Loading...</div>,
+  loadingComponent = <div>Loading...</div>
 }: IEppoRandomizationProvider): JSX.Element {
-  const [isInitialized, setIsInitialized] = useState(false);
+  const [isInitialized, setIsInitialized] = useState(false)
   useEffect(() => {
     init({
-      apiKey: "<YOUR-API-KEY>",
+      apiKey: '<YOUR-API-KEY>',
       assignmentLogger: {
         logAssignment(assignment) {
           // logging implementation
-        },
-      },
+        }
+      }
     }).then(() => {
-      return setIsInitialized(true);
-    });
-  }, []);
+      return setIsInitialized(true)
+    })
+  }, [])
 
   if (!waitForInitialization || isInitialized) {
-    return children;
+    return children
   }
-  return loadingComponent;
+  return loadingComponent
 }
 ```
 
@@ -195,15 +197,15 @@ After the SDK is initialized, you may assign variations from any child component
 ```tsx
 function MyComponent(): JSX.Element {
   const assignedVariation = useMemo(() => {
-    const eppoClient = getInstance();
-    return eppoClient.getAssignment("<SUBJECT-KEY>", "<EXPERIMENT-KEY>");
-  }, []);
+    const eppoClient = getInstance()
+    return eppoClient.getAssignment('<SUBJECT-KEY>', '<EXPERIMENT-KEY>')
+  }, [])
 
   return (
     <div>
-      {assignedVariation === "<VARIATION-KEY>" && <p>Assigned control</p>}
+      {assignedVariation === '<VARIATION-KEY>' && <p>Assigned control</p>}
     </div>
-  );
+  )
 }
 ```
 

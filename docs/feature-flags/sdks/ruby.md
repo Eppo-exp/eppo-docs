@@ -68,7 +68,7 @@ The SDK will invoke the `log_assignment` function with an `assignment` object th
 | `allocation` (string)     | An Eppo allocation key                                                                                                   | "allocation-17"                     |
 
 :::note
-More examples of logging (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/how-tos/event-logging/) page.
+More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/how-tos/event-logging/) page.
 :::
 
 ## 3. Assign variations
