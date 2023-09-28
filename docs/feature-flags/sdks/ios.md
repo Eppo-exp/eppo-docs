@@ -88,6 +88,7 @@ Additional functions are available:
 ```
 getBoolAssignment(...)
 getNumericAssignment(...)
+getJSONStringAssignment(...)
 ```
 
 ## 4. Handling `nil`

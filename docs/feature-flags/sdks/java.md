@@ -87,7 +87,9 @@ Additional functions are available:
 
 ```
 getBoolAssignment(...)
-getNumericAssignment(...)
+getDoubleAssignment(...)
+getJSONStringAssignment(...)
+getParsedJSONAssignment(...)
 ```
 
 ### Handling the empty assignment
