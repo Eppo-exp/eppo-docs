@@ -49,9 +49,9 @@ Task {
 }
 ```
 
-It is reccomended to wrap initialization in a `Task` block in order to perform network request asynchronously.
+It is recommended to wrap initialization in a `Task` block in order to perform network request asynchronously.
 
-For applications wrapping initalization and assignment in an `ObservableObject` is reccomended. This will create an object that will update Swift UI when the assignment is received.
+For applications wrapping initalization and assignment in an `ObservableObject` is recommended. This will create an object that will update Swift UI when the assignment is received.
 
 ```
 @MainActor
@@ -99,7 +99,6 @@ We recommend always handling the `nil` case in your code. Here are some examples
 2. If you are using Eppo for experiment assignments, you must start the experiment in the user interface before getStringAssignment returns variations. It will return `nil` if the experiment is not running, both before and after.
 
 ![Start experiment page](https://docs.geteppo.com/assets/images/StartExperiment-1d66da3798e70673bc23a3411f82bc45.png)
-
 
 3. If `getStringAssignment` is invoked before the SDK has finished initializing, the SDK may not have access to the most recent experiment configurations. In this case, the SDK will assign a variation based on any previously downloaded experiment configurations stored in local storage, or return `nil` if no configurations have been downloaded.
 
