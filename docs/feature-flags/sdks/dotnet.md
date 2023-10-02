@@ -20,8 +20,8 @@ dotnet add package Eppo.Sdk
 
 Initialize the SDK with an API key, which can be generated in the Eppo interface. Initialization should happen when your application starts up to generate a singleton client instance, once per application lifecycle:
 
-
 Then use that to create the EppoClient instance.
+
 ```csharp
 var eppoClientConfig = new EppoClientConfig(apiToken, new AssignmentLogger());
 var eppoClient = EppoClient.Init(eppoClientConfig);
@@ -52,14 +52,16 @@ The SDK will invoke the `LogAssignment` function with an `event` object that con
 
 | Field                                        | Description                                                                                                              | Example                                     |
 | -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------- |
-| `experiment` (string)                        | An Eppo experiment key                                                                                                   | "recommendation_algo"                       |
+| `experiment` (string)                        | An Eppo experiment key                                                                                                   | "recommendation-algo-allocation-17"         |
 | `subject` (string)                           | An identifier of the subject or user assigned to the experiment variation                                                | UUID                                        |
 | `variation` (string)                         | The experiment variation the subject was assigned to                                                                     | "control"                                   |
 | `timestamp` (DateTime)                       | The time when the subject was assigned to the variation                                                                  | 2021-06-22T17:35:12.000Z                    |
 | `subjectAttributes` (Map<String, EppoValue>) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `Map.of("device", EppoValue.valueOf("iOS")` |
+| `featureFlag` (string)                       | An Eppo feature flag key                                                                                                 | "recommendation-algo"                       |
+| `allocation` (string)                        | An Eppo allocation key                                                                                                   | "allocation-17"                             |
 
 :::note
-More examples of logging (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/how-tos/event-logging/) page.
+More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/how-tos/event-logging/) page.
 :::
 
 ## 3. Assign variations
