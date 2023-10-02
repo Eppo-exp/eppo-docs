@@ -88,13 +88,13 @@ More details about logging and examples (with Segment, Rudderstack, mParticle, a
 
 ## 3. Assign variations
 
-Assigning users to flags or experiments with a single `getAssignment` function:
+Assigning users to flags or experiments with a single `getStringAssignment` function:
 
 ```javascript
 import * as EppoSdk from "@eppo/node-server-sdk";
 
 const eppoClient = EppoSdk.getInstance();
-const variation = eppoClient.getAssignment(
+const variation = eppoClient.getStringAssignment(
   "<SUBJECT-KEY>",
   "<FLAG-OR-EXPERIMENT-KEY>",
   {
@@ -103,11 +103,22 @@ const variation = eppoClient.getAssignment(
 );
 ```
 
-The `getAssignment` function takes two required and one optional input to assign a variation:
+The `getStringAssignment` function takes two required and one optional input to assign a variation:
 
 - `subjectKey` - The entity ID that is being experimented on, typically represented by a uuid.
 - `flagOrExperimentKey` - This key is available on the detail page for both flags and experiments.
-- `targetingAttributes` - An optional map of metadata about the subject used for targeting. If you create rules based on attributes on a flag/experiment, those attributes should be passed in on every assignment call.
+- `subjectAttributes` - An optional map of metadata about the subject used for targeting. If you create rules based on attributes on a flag/experiment, those attributes should be passed in on every assignment call.
+
+### Typed assignments
+
+Additional functions are available:
+
+```
+getBoolAssignment(...)
+getNumericAssignment(...)
+getJSONStringAssignment(...)
+getParsedJSONAssignment(...)
+```
 
 ### Handling `null`
 
@@ -115,9 +126,11 @@ We recommend always handling the `null` case in your code. Here are some example
 
 1. The **Traffic Exposure** setting on experiments/allocations determines the percentage of subjects the SDK will assign to that experiment/allocation. For example, if Traffic Exposure is 25%, the SDK will assign a variation for 25% of subjects and `null` for the remaining 75% (unless the subject is part of an allow list).
 
-2. If you are using Eppo for experiment assignments, you must start the experiment in the user interface before `getAssignment` returns variations. It will return `null` if the experiment is not running, both before and after.
+2. Assignments occur within the environments of feature flags. You must enable the environment corresponding to the feature flag's allocation in the user interface before `getStringAssignment` returns variations. It will return `null` if the environment is not enabled.
 
-![start-experiment](/img/connecting-data/StartExperiment.png) 3. If `getAssignment` is invoked before the SDK has finished initializing, the SDK may not have access to the most recent experiment configurations. In this case, the SDK will assign a variation based on any previously downloaded experiment configurations stored in local storage, or return `null` if no configurations have been downloaded.
+![Toggle to enable environment](/img/feature-flagging/enable-environment.png)
+
+3. If `getStringAssignment` is invoked before the SDK has finished initializing, the SDK may not have access to the most recent experiment configurations. In this case, the SDK will assign a variation based on any previously downloaded experiment configurations stored in local storage, or return `null` if no configurations have been downloaded.
 
 <br />
 
