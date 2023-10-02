@@ -63,7 +63,7 @@ The SDK will invoke the `log_assignment` function with an `assignment` object th
 | `subject` (string)        | An identifier of the subject or user assigned to the experiment variation                                                | UUID                                |
 | `variation` (string)      | The experiment variation the subject was assigned to                                                                     | "control"                           |
 | `timestamp` (string)      | The time when the subject was assigned to the variation                                                                  | 2021-06-22T17:35:12.000Z            |
-| `subjectAttributes` (map) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `{ "country": "US" }`               |
+| `subjectAttributes` (map) | A Hash of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `{ "country": "US" }`               |
 | `featureFlag` (string)    | An Eppo feature flag key                                                                                                 | "recommendation-algo"               |
 | `allocation` (string)     | An Eppo allocation key                                                                                                   | "allocation-17"                     |
 
