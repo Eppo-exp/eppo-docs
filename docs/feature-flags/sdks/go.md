@@ -133,9 +133,9 @@ We recommend always handling the empty assignment case, when the SDK returns `""
 
 1. The **Traffic Exposure** setting on experiments/allocations determines the percentage of subjects the SDK will assign to that experiment/allocation. For example, if Traffic Exposure is 25%, the SDK will assign a variation for 25% of subjects and `""` for the remaining 75% (unless the subject is part of an allow list).
 
-2. If you are using Eppo for experiment assignments, you must start the experiment in the user interface before `getStringAssignment` returns variations. It will return `""` if the experiment is not running, both before and after.
+2. Assignments occur within the environments of feature flags. You must enable the environment corresponding to the feature flag's allocation in the user interface before `getStringAssignment` returns variations. It will return `""` if the environment not enabled.
 
-![start-experiment](/img/connecting-data/StartExperiment.png)
+![Toggle to enable environment](/img/feature-flagging/enable-environment.png)
 
 3.  If `getStringAssignment` is invoked before the SDK has finished initializing, the SDK may not have access to the most recent experiment configurations. In this case, the SDK will assign a variation based on any previously downloaded experiment configurations stored in local storage, or return `""` if no configurations have been downloaded.
 
