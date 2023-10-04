@@ -30,11 +30,14 @@ Select any metric that has been added to the decision metrics tab of the experim
 
 #### Primary + Guardrail Metric Lift
 A curated collection of metrics consisting of the experiments primary metric and any guardrail metrics on the experiment. 
-![Adding Blocks](/img/experiments/reports/primary-guardrail-block.png)
+![Primary Guardrail Blocks](/img/experiments/reports/primary-guardrail-block.png)
+
+#### Explore Charts
+Deep dive into metrics with exlore charts that allow you to slice-and-dice a metric.
+![Explore Block](/img/experiments/reports/explore-block.png)
 
 #### Block types coming soon:
 * Variations: Add screenshots and descriptions for your variations. 
-* Explores: Insert explore charts with slice-and-dice visualizations into your report.
-
+* Image media blocks: Add images to the report.
 
 Let us know if there is a block type or reports feature that would be useful for you and your team!
