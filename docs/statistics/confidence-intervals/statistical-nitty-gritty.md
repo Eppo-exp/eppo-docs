@@ -68,9 +68,9 @@ that is:
 $$
 \begin{equation}
 \begin{align*}
-\lim_{n_C \to \infty}m_C \sim&~~ \mathcal{N}(\mu_C; \frac{\sigma^2_C}{n_C})
+\lim_{n_C \to \infty}m_C \sim&~~ \mathcal{N}\left(\mu_C; \frac{\sigma^2_C}{n_C}\right)
 \\[1em]
-\lim_{n_T \to \infty}m_T \sim&~~ \mathcal{N}(\mu_T; \frac{\sigma^2_T}{n_T})
+\lim_{n_T \to \infty}m_T \sim&~~ \mathcal{N}\left(\mu_T; \frac{\sigma^2_T}{n_T}\right)
 \end{align*}
 \end{equation}
 $$
@@ -115,7 +115,7 @@ $$
   \frac{\mu_{\tiny{Y}}}{\mu_{\tiny{Z}}}
 \right)^2
 \left(
-  \frac{\sigma_{\tiny{Y}}^2}{\mu_{\tiny{Y}}^2} + \frac{\sigma_{\tiny{Z}}^2}{\mu_{\tiny{Z}}^2} - \frac{2\sigma_{\!\tiny{\textit{YZ}}}}{n \mu_{\tiny{Y}} \mu_{\tiny{Z}}}
+  \frac{\sigma_{\tiny{Y}}^2}{n\mu_{\tiny{Y}}^2} + \frac{\sigma_{\tiny{Z}}^2}{n\mu_{\tiny{Z}}^2} - \frac{2\sigma_{\!\tiny{\textit{YZ}}}}{n \mu_{\tiny{Y}} \mu_{\tiny{Z}}}
 \right)
 $$
 
@@ -134,7 +134,7 @@ s^2_{ratio} &= \left(
   \frac{m_{\tiny{Y}}}{m_{\tiny{Z}}}
 \right)^2
 \left(
-  \frac{s_{\tiny{Y}}^2}{m_{\tiny{Y}}^2} + \frac{s_{\tiny{Z}}^2}{m_{\tiny{Z}}^2} - \frac{2s_{\!\tiny{\textit{YZ}}}}{n m_{\tiny{Y}} m_{\tiny{Z}}}
+  \frac{s_{\tiny{Y}}^2}{n m_{\tiny{Y}}^2} + \frac{s_{\tiny{Z}}^2}{n m_{\tiny{Z}}^2} - \frac{2s_{\!\tiny{\textit{YZ}}}}{n m_{\tiny{Y}} m_{\tiny{Z}}}
 \right)
 \end{align}
 $$
@@ -167,7 +167,7 @@ $$
 \hat{\mu}_{\tiny{\Delta}} =&~~ \frac{m_T}{m_C} - 1
 \\[1em]
 \hat{\sigma}^2_{\tiny{\Delta}} =&~~ \frac{m_T^2}{m_C^2}\left(
-  \frac{s^2_C}{m_C^2} + \frac{s^2_T}{m_T^2}
+  \frac{s^2_C}{n m_C^2} + \frac{s^2_T}{n m_T^2}
 \right)
 \end{align}
 $$
@@ -226,24 +226,19 @@ distribution[^conjugate] as our prior for the lift:
 
 $$
 \begin{equation}
-\hat{\Delta}_{prior} \sim \mathcal{N}(\mu_{prior}=0; ~\sigma_{prior}^2 = 0.1)
+\hat{\Delta}_{prior} \sim \mathcal{N}(\mu_{prior}=0; ~\sigma_{prior}^2 = 0.1^2)
 \end{equation}
 $$
 
-In other words, our prior is that the lift, on average, will be zero, and that
-for each metric, about 50% of experiments will show a lift between -21% and
-+21%, and about 95% of experiments will show a lift between -62% and +62%; from
-our experience running experiments, this is a fairly conservative prior, as
-having lifts over ±50% is extremely rare.
+In other words, our prior is that the lift, on average, will be zero, with a standard
+deviation of $0.1$. Reach out to us if you want to adjust this default.
 
 [^conjugate]:
     We use a normal distribution because it is a convenient [conjugate
     prior](https://en.wikipedia.org/wiki/Conjugate_prior), meaning that we can
     update it with our (normally distributed) lift estimate and produce another
     normal distribution. In this case, we are assuming that the variance of the
-    lift is known, that is, that $\hat{\sigma}^2_{\tiny{\Delta}}$ is accurate. The choice of a
-    wide prior is, in part, designed to compensate for this assumption. Evaluating
-    and improving upon our choice of prior is an area of ongoing research.
+    lift is known, that is, that $\hat{\sigma}^2_{\tiny{\Delta}}$ is accurate. 
 
 #### Updating the prior
 
