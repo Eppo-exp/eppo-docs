@@ -36,8 +36,11 @@ A curated collection of metrics consisting of the experiments primary metric and
 Deep dive into metrics with exlore charts that allow you to slice-and-dice a metric.
 ![Explore Block](/img/experiments/reports/explore-block.png)
 
+#### Variations
+Add screenshots and descriptions for your variations. 
+![Variation Block](/img/experiments/reports/variation-block.png)
+
 #### Block types coming soon:
-* Variations: Add screenshots and descriptions for your variations. 
 * Image media blocks: Add images to the report.
 
 Let us know if there is a block type or reports feature that would be useful for you and your team!
