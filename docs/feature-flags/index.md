@@ -65,13 +65,19 @@ Note that it is possible to reduce an allocation's traffic exposure to less than
 
 ### Environments
 
-Every Eppo instance comes with two out-of-the-box environments: **Test** and **Production**. These represent two independent silos for flags and experiments, mirroring the way you test and ship code. Use the **Test** environment to check feature flag behavior before releasing them in **Production**.
+Every Eppo instance comes with two out-of-the-box environments: **Test** and **Production**.  Use the **Test** environment to check feature flag behavior before releasing them in **Production**.
 
-API keys for both environments can be created on the _Admin > API Keys_ section of the interface:
+Additional environments can be added with no limit to match the ways you develop and ship code. For example, you can create environments for every developer's local environment or if you have multiple lower environments. Use _Feature Flags > Environments_ to create new environments.
 
-![API key setup](/img/feature-flagging/environments/api-keys.png)
+![Environment setup](/img/feature-flagging/environments/environment-setup.png)
 
-There is no limit to the number of API keys per environment. Once keys are generated, they can be used to initialize the SDK in the given environment. From there, flags can be toggled on an off independently per environment on the flag list and flag detail views. You can also define different targeting rules per environment:
+SDK keys for environments can be created on the _Feature Flags > SDK Keys_ section of the interface:
+
+![SDK key setup](/img/feature-flagging/environments/sdk-keys.png)
+
+There is no limit to the number of SDK keys per environment. Once keys are generated, they can be used to initialize the SDK in the given environment.
+
+Flags can be toggled on an off independently per environment on the flag list and flag detail views. You can also define different targeting rules per environment:
 
 ![Feature flag list page](/img/feature-flagging/environments/ff-list-page.png)
 ![Feature flag detail page](/img/feature-flagging/environments/ff-detail-page.png)
