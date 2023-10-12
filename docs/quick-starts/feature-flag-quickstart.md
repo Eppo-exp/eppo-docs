@@ -18,7 +18,7 @@ Here you can generate keys to use both in production (1) as well as for testing 
 For now, let's create a Test environment SDK key.
 Give the key a name and give it read access: we want the feature flagging SDK to be able to read the configuration.
 
-![Generate a SDK key](/img/feature-flagging/api-key-modal.png)
+![Generate a SDK key](/img/feature-flagging/sdk-key-modal.png)
 
 Store the SDK key securely; it is not possible to view it after closing the modal.
 However, generating a new key is easy in case you do lose it.
