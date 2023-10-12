@@ -9,19 +9,15 @@ This 10 minute guide will get you set up with your first running feature flag on
 
 ### 0. Generate a SDK key
 
-If you have not created an API key yet, set that up first.
-From the Feature Flag page, navigate to the SDK keys tab.
-Here you can generate keys to use both in production (1) as well as for testing purposes (2).
+From the Feature Flag page, navigate to the SDK keys tab. Here you can generate keys to use both in production as well as for testing purposes.
 
 ![Setup Eppo SDK key](/img/feature-flagging/environments/sdk-keys.png)
 
-For now, let's create a Test environment SDK key.
-Give the key a name and give it read access: we want the feature flagging SDK to be able to read the configuration.
+For now, let's create a Test environment SDK key by using the "New SDK Key" button. Give the key a name and select "Test" for the Environment.
 
-![Generate a SDK key](/img/feature-flagging/api-key-modal.png)
+![Generate a SDK key](/img/feature-flagging/sdk-key-modal.png)
 
-Store the SDK key securely; it is not possible to view it after closing the modal.
-However, generating a new key is easy in case you do lose it.
+Store the SDK key securely; it is not possible to view it after closing the modal. However, generating a new key is easy in case you do lose it.
 
 ### 1. Creating a flag
 
