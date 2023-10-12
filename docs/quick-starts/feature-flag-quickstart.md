@@ -8,11 +8,14 @@ sidebar_position: 3
 This 10 minute guide will get you set up with your first running feature flag on Eppo. In the example we'll imagine that we are using a flag on our frontend to gradually launch a new checkout page.
 
 ### 0. Generate a SDK key
+### 0. Generate a SDK key
 
 If you have not created an API key yet, set that up first.
 From the Feature Flag page, navigate to the SDK keys tab.
+From the Feature Flag page, navigate to the SDK keys tab.
 Here you can generate keys to use both in production (1) as well as for testing purposes (2).
 
+![Setup Eppo SDK key](/img/feature-flagging/environments/sdk-keys.png)
 ![Setup Eppo SDK key](/img/feature-flagging/environments/sdk-keys.png)
 
 For now, let's create a Test environment SDK key.
