@@ -102,6 +102,41 @@ The SDK will invoke the `logAssignment` function with an `assignment` object tha
 More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/how-tos/event-logging/) page.
 :::
 
+### Reducing duplicate assignment logs
+
+Each invocation of the `get*Assignment` method also triggers the assignment callback function.
+If you have connected it to transmit events back to your Data Warehouse this 
+will store duplicate data and increase associated costs unnecessarily.
+
+Starting in version `1.3.6`, Eppo's SDK by default attempts to cache assignment events using the `NonExpiringAssignmentCache` 
+and exposes an API to enable customizing this behavior.
+
+It is assumed that each client will handle assignment for a single Subject.
+Therefore the goal is to removal all duplicate events for that Subject,
+lessening the pressure to reduce the memory footprint.
+
+For the ReactNative SDK we recommend using the provided class:
+
+```javascript
+import { init } from "@eppo/react-native-sdk";
+
+await init({
+  ...,
+  assignmentCache: new NonExpiringAssignmentCache(),
+});
+```
+
+To disable this cache, pass `undefined` into the initialization:
+
+```javascript
+import { init } from "@eppo/react-native-sdk";
+
+await init({
+  ...,
+  assignmentCache: undefined,
+});
+```
+
 ## 3. Assign variations
 
 Assigning users to flags or experiments with a single `getStringAssignment` function:

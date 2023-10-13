@@ -86,6 +86,38 @@ The SDK will invoke the `logAssignment` function with an `assignment` object tha
 More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/how-tos/event-logging/) page.
 :::
 
+### Reducing duplicate assignment logs
+
+Each invocation of the `get*Assignment` method also triggers the assignment callback function.
+If you have connected it to transmit events back to your Data Warehouse this 
+will store duplicate data and increase associated costs unnecessarily.
+
+Starting in version `1.3.6`, Eppo's SDK by default attempts to cache assignment events using the `LRUAssignmentCache` 
+and exposes an API to enable customizing this behavior.
+
+For the NodeJS SDK we recommend using the provided class and adjusting the maximum number of 
+elements to fit your needs. A larger cache is useful when there are more distinct subjects per backing server:
+
+```javascript
+import { init } from "@eppo/node-server-sdk";
+
+await init({
+  ...,
+  assignmentCache: new LRUAssignmentCache(100_000),
+});
+```
+
+To disable this cache, pass `undefined` into the initialization:
+
+```javascript
+import { init } from "@eppo/node-server-sdk";
+
+await init({
+  ...,
+  assignmentCache: undefined,
+});
+```
+
 ## 3. Assign variations
 
 Assigning users to flags or experiments with a single `getStringAssignment` function:
