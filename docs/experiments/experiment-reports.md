@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-# [Beta] Document Learnings with Reports
+# Document Learnings with Reports
 
 A key part of the experimentation workflow is post-experiment run time when results are shared. Teams have different rituals about how they do this such as a meeting with a presentation or an email to stakeholders. Regardless of how it's done, it's key to building a culture of experimentation but there is a lot of work needed to get the results from the the tool or data to create the needed artifact.
 
@@ -21,15 +21,20 @@ Cards allow you to further customize your experiment report. Each card acts like
 
 ![Adding Blocks](/img/experiments/reports/adding-metric-block.gif)
 
+### Exporting Your Report as a PDF
+Share your experiment report as a PDF by clicking on the "Export" button in the upper right of the page. A preview modal will appear and select "Export as PDF". Stay on the page until the export is complete and the PDF file will be available for download. 
+![Export PDF](/img/experiments/reports/export-pdf.gif)
+
+
 ### Eppo Experiment Blocks
 These are blocks that can be added to a report that are linked to your experiment configuration, data, and results. Metric block results will update with each experiment refresh.
 
 #### Single Metric Lift
-Select any metric that has been added to the decision metrics tab of the experiment. 
+Select any metric that has been added to the decision metrics tab of the experiment. You can apply filters to a metric block by clicking on the filter dropdown when hovering over the block.
 ![Single Metric Block](/img/experiments/reports/single-metric-block.png)
 
 #### Primary + Guardrail Metric Lift
-A curated collection of metrics consisting of the experiments primary metric and any guardrail metrics on the experiment. 
+A curated collection of metrics consisting of the experiments primary metric and any guardrail metrics on the experiment. You can apply filters to a metric block by clicking on the filter dropdown when hovering over the block.
 ![Primary Guardrail Blocks](/img/experiments/reports/primary-guardrail-block.png)
 
 #### Explore Charts
