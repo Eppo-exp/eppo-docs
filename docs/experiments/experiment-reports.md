@@ -6,7 +6,7 @@ sidebar_position: 3
 
 A key part of the experimentation workflow is post-experiment run time when results are shared. Teams have different rituals about how they do this such as a meeting with a presentation or an email to stakeholders. Regardless of how it's done, it's key to building a culture of experimentation but there is a lot of work needed to get the results from the the tool or data to create the needed artifact.
 
-We're proud to introduce Eppo Reports Beta which aims to solve this problem. Reports make it easier than ever to curate experiment insights, and then share those results widely. You can compose the story of the experiment’s hypothesis to show variants, cover the metrics that led to your decision, and then share those results with anyone.
+We're proud to introduce Eppo Reports which aims to solve this problem. Reports make it easier than ever to curate experiment insights, and then share those results widely. You can compose the story of the experiment’s hypothesis to show variants, cover the metrics that led to your decision, and then share those results with anyone.
 
 ## Creating a Report
 Anyone with an Experiment Editor role or higher can edit the content on the Overview tab of an experiment. Those with a Viewer role can see the content, but cannot edit. 
