@@ -87,7 +87,7 @@ func (al *ExampleAssignmentLogger) LogAssignment(event eppoclient.AssignmentEven
 ## Experiment Analysis
 
 Experiments during the enrollment period will proceed like normal on Eppo, 
-with the only divergency being that subjects logged with a `holdout` key  being omitted.
+with the only divergency being that subjects logged with a `holdout` key will be omitted.
 
 ## Holdout Analysis
 
