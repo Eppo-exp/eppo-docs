@@ -1,27 +1,41 @@
 # Holdouts
 
+Eppo's Holdout Analysis allows your company to validate the impact of Experimentation.
+
+This functionality offers the ability to set a holdout audience in feature flags that keeps an audience isolated from all active experiments, 
+and measures metric changes for the holdout audience versus an audience that only experiences winning experiments.
+
 ## Journey of a Holdout user
 
-1. Define one or more holdout groups. At a minimum give each a name and a percent. You can have multiple holdout groups running at once (e.g one for each team that runs experiments).
+Define one or more holdout groups with a relevant key and the desired active date range. You can have multiple holdout groups running at once (e.g one for each team that runs experiments).
 
 ![Creating a Holdout](/img/experiments/holdouts/holdouts-docs-setup1.png)
 
-2. Create experiments on your own schedule.
-3. When subjects are assigned to experiments whose dates overlap with an active Holdout, 
-they may be assigned to a `holdout` group. The assignments `control` and `holdout` should lead to the same end user experience.
+### Assignment period
+
+1. Create experiments on your own schedule.
+2. When subjects are assigned to eligible experiments (more details below) with an active Holdout, 
+Eppo's SDK may assign them to a `holdout` group. The assignments `control` and `holdout` should lead to the same end user experience.
 For this cohort the SDK will return the `control` variation.
-4. Once an experiment is complete and a winning variation is selected, all non-holdout users (variations and control) will receive it. Users will now either get assigned the winning variant or `holdout`.
-5. Run as many experiments as you want by repeating steps 2-4.
+
+*Eligible experiments*
+
+* Any experiment allocation that starts after the start date will have a holdout applied.
+* Any experiment allocations that starts after the end date will not have a holdout applied
+* Experiments allocation that start during the assignment window but do not end in that time, will have the holdout applied but not included in the analysis. In this case some traffic is wasted.
+
+3. Once an experiment is complete and a winning variation is selected, all non-holdout users (variations and control) will receive it. Users will now either get assigned the winning variant or `holdout`.
+4. Run as many experiments as you want by repeating these steps.
 
 ### Evaluation period
 
-You may begin an analysis anytime by creating a Holdout Experiment.
+You may begin an analysis at the conclusion of your desired assignment period by creating a Holdout Experiment.
 
 ![Creating a Holdout Experiment](/img/experiments/holdouts/holdouts-create-an-experiment.png)
 
-1. While the evaluation is ongoing, newly shipped winning variations will be added to it automatically.
-7. For that holdout group, after the evaluation period finishes, end the holdout group and dismantle the experiments in the group. 
-8. A report can now be generated reflecting data from the evaluation period showing how the holdout group did against users who saw all experiment winners.
+1. The evaluation is ongoing and newly shipped winning variations will be added to it automatically.
+2. For that holdout group, after the evaluation period finishes, end the holdout group. 
+3. A report can now be generated reflecting data from the evaluation period showing how the holdout group did against users who saw all experiment winners.
 
 ![View Holdout Report](/img/experiments/holdouts/holdouts-view-report.png)
 
@@ -33,10 +47,10 @@ For the correctness of Holdout Analysis to take place, the experience of
 subjects assigned to a Holdout should match those in the `control` of each 
 experiment during the enrollment phase.
 
-When invocating the `get*Assignment` methods with a subject and flag keys,
+When invoking the `get*Assignment` methods with a subject and flag keys,
 subjects assigned to a Holdout will have the `control` variation returned.
 This makes it foolproof to design your User Experience without worrying
-about handling a special third case.
+about handling a special case.
 
 ### Changes to assignment logging
 
@@ -67,8 +81,7 @@ func (al *ExampleAssignmentLogger) LogAssignment(event eppoclient.AssignmentEven
 ## Experiment Analysis
 
 Experiments during the enrollment period will proceed like normal on Eppo, 
-with the only divergency being that subjects logged with a `holdout` key 
-being omitted.
+with the only divergency being that subjects logged with a `holdout` key  being omitted.
 
 ## Holdout Analysis
 
