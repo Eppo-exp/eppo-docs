@@ -1,6 +1,6 @@
 # Slack notifications
 
-The Eppo App for Slack allows you to receive notifications for important updates on your experiments, such as when Eppo detect a [traffic imbalance](/statistics/sample-ratio-mismatch) in your assignments.
+The Eppo App for Slack allows you to receive notifications for important updates on your feature flags and experiments, such as when Eppo detect a [traffic imbalance](/statistics/sample-ratio-mismatch) in your assignments.
 
 <img width="440" alt="data issues alert" src="https://user-images.githubusercontent.com/90637953/213244183-a3580e3b-e077-4fc5-9bbb-2dc307660ebd.png" /> &ensp;
 <img width="440" alt="status change alert" src="https://user-images.githubusercontent.com/90637953/213244188-3dbd1333-185e-4416-b925-d36bbac08223.png" /> &ensp;
@@ -16,12 +16,13 @@ The Eppo App for Slack allows you to receive notifications for important updates
 
 ![connect slack](https://user-images.githubusercontent.com/90637953/223587265-019faec4-279a-4ebe-b410-5fe2a3982a1d.gif)
 
-Go to Admin > Notifications to allow permissions to a Slack workspace. This is required before you can select Slack channels to recieve system wide notifications as well as for any user to add Slack channels for specific experiments and metrics.
+Go to Admin > Notifications to allow permissions to a Slack workspace. This is required before you can select Slack channels to recieve system wide notifications as well as for any user to add Slack channels for specific experiments, feature flags, or metrics.
 
 ## Configure System Wide Slack Notifications
 
-You can select specific Slack channels to receive notifications for **ANY** experiment running in Eppo.
-<img width="1386" alt="image" src="https://user-images.githubusercontent.com/90637953/197908102-3f9f5ec4-98ce-427c-8888-079f89b8ec0c.png"/>
+You can select specific Slack channels to receive notifications for **ANY** experiment or feature flag in Eppo.
+
+![Slack notification setup](/img/administration/global-slack-notifications.png)
 
 ## Configure Slack Notifications for a Specific Experiment
 
@@ -41,7 +42,13 @@ Go to a metric and click on the bell icon in the upper right of the page. Select
 
 To remove the Slack channel from this metirc, click on "Configure" and turn off the channel.
 
-## Notification Triggers
+## Configure Slack Notifications for a Specific Feature Flag
+
+Go to a feature flag and click on the bell icon in the upper right of the page. Select a Slack channel to receive notifications.
+
+To remove the Slack channel from this feature flag, click on "Configure" and turn off the channel.
+
+## Experiment Notification Triggers
 
 ### A data problem on an experiment
 
@@ -57,6 +64,17 @@ See more on <a href="https://docs.geteppo.com/building-experiments/experiments/e
 ### A primary or guardrail metric reached statistical significance on this experiment
 
 - When a primary metric or a guardrail metric on an experiment reaches statistical significance for **Sequential experiments ONLY**
+
+## Feature Flag Notification Triggers
+
+### A Feature Flag is enabled or disabled in production environment
+
+- When a user enables or disables a feature flag in the Production environment only
+
+### A new allocation is added, edited, or deleted to a flag in production environment
+
+- When a user adds, edit, or deletes an allocation of a flag in the Production environment only
+- When a user adds a value to the default allocation of a flag in the Production environment only
 
 ---
 
