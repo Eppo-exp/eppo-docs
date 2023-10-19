@@ -9,6 +9,8 @@ and measures metric changes for the holdout audience versus an audience that onl
 
 Define one or more holdout groups with a relevant key and the desired active date range. You can have multiple holdout groups running at once (e.g one for each team that runs experiments).
 
+The holdout is split into two groups: `status quo` who always see the control experience, and `winning variants` who see the treatment from experiments that are rolled out.
+
 ![Creating a Holdout](/img/experiments/holdouts/holdouts-docs-setup1.png)
 
 ### Assignment period
