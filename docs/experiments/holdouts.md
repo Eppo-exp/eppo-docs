@@ -1,5 +1,7 @@
 # Holdouts
 
+**This is a beta feature.**
+
 Eppo's Holdout Analysis allows your company to validate the impact of Experimentation.
 
 This functionality offers the ability to set a holdout audience in feature flags that keeps an audience isolated from all active experiments, 
@@ -11,7 +13,7 @@ Define one or more holdout groups with a relevant key and the desired active dat
 
 The holdout is split into two groups: `status quo` who always see the control experience, and `winning variants` who see the treatment from experiments that are rolled out.
 
-![Creating a Holdout](/img/experiments/holdouts/holdouts-docs-setup1.png)
+![Creating a Holdout](/img/experiments/holdouts/holdouts-create-object.png)
 
 ### Assignment period
 
@@ -33,13 +35,13 @@ For this cohort the SDK will return the `control` variation.
 
 You may begin an analysis at the conclusion of your desired assignment period by creating a Holdout Experiment.
 
-![Creating a Holdout Experiment](/img/experiments/holdouts/holdouts-create-an-experiment.png)
+![Creating a Holdout Experiment](/img/experiments/holdouts/holdouts-create-experiment.png)
 
 1. The evaluation is ongoing and newly shipped winning variations will be added to it automatically.
 2. For that holdout group, after the evaluation period finishes, end the holdout group. 
 3. A report can now be generated reflecting data from the evaluation period showing how the holdout group did against users who saw all experiment winners.
 
-![View Holdout Report](/img/experiments/holdouts/holdouts-view-report.png)
+![View Holdout Report](/img/experiments/holdouts/holdouts-report.png)
 
 ## SDK Behavior
 
@@ -53,6 +55,8 @@ When invoking the `get*Assignment` methods with a subject and flag keys,
 subjects assigned to a Holdout will have the `control` variation returned.
 This makes it foolproof to design your User Experience without worrying
 about handling a special case.
+
+![Data Flow](/img/experiments/holdouts/holdouts-data-flow.png)
 
 ### Changes to assignment logging
 
