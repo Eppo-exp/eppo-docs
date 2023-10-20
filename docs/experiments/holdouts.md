@@ -2,7 +2,7 @@
 
 **This is a beta feature.**
 
-Eppo's Holdout Analysis allows your company to validate the impact of Experimentation.
+Eppo's Holdout Analysis allows your company to independently verify the impact of decisions made with experiments over a period of time.
 
 This functionality offers the ability to set a holdout audience in feature flags that keeps an audience isolated from all active experiments, 
 and measures metric changes for the holdout audience versus an audience that only experiences winning experiments.
@@ -33,7 +33,7 @@ For this cohort the SDK will return the `control` variation.
 
 ### Evaluation period
 
-You may begin an analysis at the conclusion of your desired assignment period by creating a Holdout Experiment.
+You may begin an analysis by creating a Holdout Experiment.
 
 ![Creating a Holdout Experiment](/img/experiments/holdouts/holdouts-create-experiment.png)
 
@@ -45,11 +45,18 @@ You may begin an analysis at the conclusion of your desired assignment period by
 
 ## SDK Behavior
 
-Application developers should expect no changes to the SDKs.
+Application developers should expect no changes to the SDK integration
+when running Holdout Experiments.
 
 For the correctness of Holdout Analysis to take place, the experience of
-subjects assigned to a Holdout should match those in the `control` of each 
+subjects assigned to a `holdout` should match those in the `control` of each 
 experiment during the enrollment phase.
+
+| Group Assignment      | Value      |
+|-----------------------|------------|
+| Variations            | variation  |
+| Control               | control    |
+| Holdout               | control    |
 
 When invoking the `get*Assignment` methods with a subject and flag keys,
 subjects assigned to a Holdout will have the `control` variation returned.
@@ -62,7 +69,7 @@ about handling a special case.
 
 The callback function is augmented with a `holdout` value if the `subject`
 was assigned to one. This should be transmitted to your Data Warehouse
-to faciliate filtering and computation of lifts.
+to faciliate filtering and analysis computation.
 
 An example in GoLang:
 
