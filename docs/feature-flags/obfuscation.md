@@ -2,7 +2,7 @@
 sidebar_position: 9
 ---
 
-# Assignment configuration obfuscation
+# Configuration obfuscation
 
 During SDK initialization, a configuration file is retrieved from Eppo, which includes information about the feature flag/experiment variations, traffic allocations, and targeting rules. The SDK stores these configurations locally for rapid lookup. However, when the SDK is initialized in certain mobile and browser clients, this configration may be accessible by users, and so Eppo hashes data in the configuration to obfuscate it. The configuration cannot be hashed entirely without compromising functionality, so the hashed fields in the configuration that can be used without leaking sensitive data are shown below.
 
@@ -52,8 +52,6 @@ During SDK initialization, a configuration file is retrieved from Eppo, which in
 
 The `value` field in `conditions` may or may not be hashed depending on the configured `operator` for the targetting rule in the allocation.
 
-![Selecting rule operator](/img/feature-flagging/select-rule-operator.gif)
-
 | `operator`                 | `value` |
 | -------------------------- | ------- |
 | is one of                  | hashed  |
@@ -63,6 +61,8 @@ The `value` field in `conditions` may or may not be hashed depending on the conf
 | greater than (>)           | encoded |
 | greater than or equal (>=) | encoded |
 | matches regex              | encoded |
+
+<img src="/img/feature-flagging/select-rule-operator.gif" alt="Selecting rule operator" width="600" />
 
 For `operator` types that do not support hashing, we recommend against entering sensitive data for the `value`.
 
