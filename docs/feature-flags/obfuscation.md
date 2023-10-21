@@ -24,23 +24,7 @@ During SDK initialization, a configuration file is retrieved from Eppo, which in
                 },
                 ...
             ],
-            "allocations": [
-                {
-                    "allocation-123": {
-                        "percentExposure": 1,
-                        "variations": [
-                            {
-                                "name": "control",
-                                "value": "A"
-                            },
-                            {
-                                "name": "treatment",
-                                "value": "B"
-                            }
-                        ]
-                    }
-                }
-            ]
+            "allocations": [ ... ],
             ...
         },
         ...
