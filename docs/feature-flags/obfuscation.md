@@ -62,6 +62,8 @@ The `value` field in `conditions` may or may not be hashed depending on the conf
 | greater than or equal (>=) | encoded |
 | matches regex              | encoded |
 
+The targetting rule's `operator` is configured in the UI during allocation setup.
+
 <img src="/img/feature-flagging/select-rule-operator.gif" alt="Selecting rule operator" width="600" />
 
 For `operator` types that do not support hashing, we recommend against entering sensitive data for the `value`.
