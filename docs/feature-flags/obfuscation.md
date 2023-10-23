@@ -32,9 +32,9 @@ During SDK initialization, a configuration file is retrieved from Eppo, which in
 }
 ```
 
-## Targetting rule values are conditionally hashed
+## Targeting rule values are conditionally hashed
 
-The `value` field in `conditions` may or may not be hashed depending on the configured `operator` for the targetting rule in the allocation.
+The `value` field in `conditions` may or may not be hashed depending on the configured `operator` for the targeting rule in the allocation.
 
 | `operator`                 | `value` |
 | -------------------------- | ------- |
@@ -46,7 +46,7 @@ The `value` field in `conditions` may or may not be hashed depending on the conf
 | greater than or equal (>=) | encoded |
 | matches regex              | encoded |
 
-The targetting rule's `operator` is configured in the UI during allocation setup.
+The targeting rule's `operator` is configured in the UI during allocation setup.
 
 <img src="/img/feature-flagging/select-rule-operator.gif" alt="Selecting rule operator" width="600" />
 
