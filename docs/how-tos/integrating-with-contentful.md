@@ -95,7 +95,7 @@ Once your application is running you should see your entry fields logged based o
 
 Engineering will still need to build the site to read from the CMS and render the page as appropriate. For the initial deployment, it may be easiest to only include one variant. The addition of new content and randomized variants can then all be managed in the Contentful and Eppo UIs.
 
-We recommend having a default entry ID in case there are any issues initializing the Eppo client; in this case the Eppo SDK will return `NULL`` for the variant value.
+We recommend having a default entry ID in case there are any issues initializing the Eppo client; in this case the Eppo SDK will return `NULL` for the variant value.
 
 ### Workflow for deploying a new content experiment
 
