@@ -88,7 +88,7 @@ console.log(entry) // see the different assignments that a user received
 
 Once your application is running you should see your entry fields logged based on what variation that user ID was assigned.
 
-[Example variation and Contentful content logged](/img/how-tos/integrating-with-contentful/example-variation-log.png)
+![Example variation and Contentful content logged](/img/how-tos/integrating-with-contentful/example-variation-log.png)
 
 
 ### Initial Deployment
