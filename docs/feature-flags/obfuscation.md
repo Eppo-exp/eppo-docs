@@ -4,7 +4,7 @@ sidebar_position: 9
 
 # Configuration obfuscation
 
-During SDK initialization, a configuration file is retrieved from Eppo, which includes information about the feature flag/experiment variations, traffic allocations, and targeting rules. The SDK stores these configurations locally for rapid lookup. However, when the SDK is initialized in certain mobile and browser clients, this configration may be accessible by users, and so Eppo hashes data in the configuration to obfuscate it. The configuration cannot be hashed entirely without compromising functionality, so the hashed fields in the configuration that can be used without leaking sensitive data are shown below.
+During SDK initialization, a configuration file is retrieved from Eppo's CDN, which includes information about the feature flag/experiment variations, traffic allocations, and targeting rules. The SDK stores these configurations locally for rapid lookup. However, when the SDK is initialized in certain mobile and browser clients, this configuration may be accessible by users, and so Eppo hashes data in the configuration to obfuscate it. The configuration cannot be hashed entirely without compromising functionality, so the hashed fields in the configuration that can be used without leaking sensitive data are shown below.
 
 
 ```json
