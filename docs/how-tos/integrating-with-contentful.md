@@ -118,4 +118,4 @@ This can all be done in the Contentful and Eppo UIs with no additional engineeri
 
 ## Conclusion
 
-Now that you have Contentful and Eppo set up, you can see how easy it is to run no-code experiments once the initial setup is complete. Once your content models are defined and Eppo feature flags are set up, teams can set up additional variations and define content in Contentful without any additional code releases.
+Now that you have Contentful and Eppo set up, you can see how easy it is to run no-code experiments. Once your content models are defined and Eppo feature flags are set up, teams can set up additional variations and define content in Contentful without any additional code releases.
