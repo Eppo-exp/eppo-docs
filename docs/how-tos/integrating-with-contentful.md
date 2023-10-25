@@ -44,7 +44,7 @@ Next, we’ll create a [corresponding flag in Eppo](/feature-flag-quickstart/) (
 ![Eppo feature flag setup](/img/how-tos/integrating-with-contentful/eppo-feature-flag-setup.png)
 
 ## Setting up your Node environment
-Now that we have the flag and a few variants defined, you can enable the flag in your local environment and start developing the page using the content defined in Contentful. For details on setting up your first flag, please see the [Feature Flag quick start section](https://docs.geteppo.com/feature-flag-quickstart) of our docs.
+Now that we have the flag and a few variants defined, you can enable the flag in your local environment and start developing the page using the content defined in Contentful. For details on setting up your first flag, please see the [Feature Flag quick start section](/feature-flag-quickstart) of our docs.
 
 The code example below does the following:
 
