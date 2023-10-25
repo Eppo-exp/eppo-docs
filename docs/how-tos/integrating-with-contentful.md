@@ -33,7 +33,7 @@ Now to create our variants, duplicate your “Homepage Baseline” Content Model
 For this tutorial, we are including a Control and Variant for an A/B test, but you can repeat this process to add additional variants.
 :::
 
-Now that we have the content defined, we’ll need to get the entry ID for our two pages. In Contentful, the entry ID can be found on the content page and by clicking on the 3 dots next to your Content Model and clicking ‘Copy entry ID’. Save these for now, we will use them in our Eppo setup next.
+Now that we have the content defined, we’ll need to get the entry ID for our two pages. In Contentful, the entry ID can be found on the content page and by clicking on the 3 dots next to your content entries and clicking ‘Copy entry ID’. Save these for now, we will use them in our Eppo setup next.
 
 ![Getting Contentful entry ids](/img/how-tos/integrating-with-contentful/getting-contentful-entry-ids.png)
 
