@@ -20,7 +20,7 @@ For this example, imagine we are running an experiment on the Eppo homepage. The
 3. The CTA text (”Preview Eppo Now”), and the CTA link (”www.geteppo.com/get-access”)
 4. The demo video
 
-To build this experiment out in our Contentful space, create a new Content Model with the name “Homepage Baseline”. Add the following content fields:
+To build this experiment out in our Contentful space, create a new Content Model with the name “Homepage”. Add the following content fields:
 
 ![Contentful field setup](/img/how-tos/integrating-with-contentful/contentful-field-setup.png)
 
