@@ -52,7 +52,7 @@ The code example below does the following:
 2. Use the Eppo client to determine which variation a user should be assigned
 3. Use the variation assignment to fetch content from Contentful
 
-To get the implementation we built running locally, [clone this repo from Github](https://github.com/hhargreaveseppo/contentful_eppo_blog), and follow the README instructions. If you have an idea in mind of where you would like to implement this integration already then using the following code as a boilerplate for your instance:
+To get the implementation we built running locally, [clone this repo from Github](https://github.com/hhargreaveseppo/contentful_eppo_blog), and follow the README instructions. If you already know where you would like to implement this integration you can use the following code as boilerplate:
 
 ```js
 
