@@ -13,6 +13,8 @@ Using a headless CMS like Contentful, and a lightweight, robust feature flagging
 
 For this example, imagine we are running an experiment on the Eppo homepage. There are a few places where we might want to experiment on this page:
 
+![Eppo homepage](/img/how-tos/integrating-with-contentful/eppo-homepage.png)
+
 1. The hero title (”Run reliable, impactful experiments”)
 2. The hero body (”Eppo streamlines …”)
 3. The CTA text (”Preview Eppo Now”), and the CTA link (”www.geteppo.com/get-access”)
