@@ -39,7 +39,7 @@ Now that we have the content defined, we’ll need to get the entry ID for our t
 
 ## Setting up Eppo
 
-Next, we’ll create a [corresponding flag in Eppo](https://docs.geteppo.com/feature-flag-quickstart/) (Feature Flags >> Create). For each variant above, simply add a new variant in the Eppo UI. For each variant value, paste in the corresponding Contentful entry ID. Make sure to also save your Feature Flag key – you will need it for your Node implementation later.
+Next, we’ll create a [corresponding flag in Eppo](/feature-flag-quickstart/) (Feature Flags >> Create). For each variant above, simply add a new variant in the Eppo UI. For each variant value, paste in the corresponding Contentful entry ID. Make sure to also save your Feature Flag key – you will need it for your Node implementation later.
 
 ![Eppo feature flag setup](/img/how-tos/integrating-with-contentful/eppo-feature-flag-setup.png)
 
