@@ -107,7 +107,7 @@ The recommended workflow for launching a content-based experiment is as follows:
 2. Create a new variant in Eppo with the `entry_id` from Contentful UI.
 3. Create an allocation to test the new content in production (see screenshot below).
 4. Load page to QA new content and [add screenshots to Eppo](/experiments/creating-experiments/#8-click-save-changes) for reference.
-5. [Create an experiment allocation](https://docs.geteppo.com/feature-flags/use-cases/experiment-assignment/) and launch the experiment.
+5. [Create an experiment allocation](/feature-flags/use-cases/experiment-assignment/) and launch the experiment.
 6. Analyze experiment and make rollout decisions like any other Eppo experiment.
 
 :::tip
