@@ -22,7 +22,6 @@ Initialize the SDK with an API key, which can be generated in the Eppo interface
 
 ```ruby
 require 'eppo_client'
-from eppo_client.config import Config
 
 config = EppoClient::Config.new('<YOUR_API_KEY>')
 client = EppoClient::init(config)
