@@ -2,6 +2,8 @@
 sidebar_position: 7
 ---
 
+# Mutually exclusive experiments
+
 ## How to run mutually exclusive experiments in Eppo
 
 True interaction effects in experiments are virtually nonexistent. Microsoft has done research across multiple products that show that interaction effects are [incredibly rare](https://www.microsoft.com/en-us/research/group/experimentation-platform-exp/articles/a-b-interactions-a-call-to-relax/). Given the very small risk that a true interaction effect poses, we recommend only making experiments mutually exclusive when one of the changes effects the user experience of the other.
