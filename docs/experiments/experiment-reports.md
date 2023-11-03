@@ -45,7 +45,9 @@ Deep dive into metrics with exlore charts that allow you to slice-and-dice a met
 Add screenshots and descriptions for your variations. 
 ![Variation Block](/img/experiments/reports/variation-block.png)
 
-#### Block types coming soon:
-* Image media blocks: Add images to the report.
+#### Images
+Upload any stand-alone image to your report.
+![Image Block](/img/experiments/reports/image-block.png)
 
+#### Block types coming soon:
 Let us know if there is a block type or reports feature that would be useful for you and your team!
