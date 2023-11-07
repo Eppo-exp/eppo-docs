@@ -18,7 +18,7 @@ implementation 'cloud.eppo:android-sdk:1.0.0'
 
 ## 2. Initialize the SDK
 
-Initialize the SDK with an API key, which can be created in the Eppo web interface:
+Initialize the SDK with a SDK key, which can be created in the Eppo web interface:
 
 ```java
 import cloud.eppo.android.EppoClient;

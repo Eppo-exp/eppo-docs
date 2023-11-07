@@ -15,7 +15,7 @@ While in XCode:
 
 ## 2. Initialize the SDK
 
-Initialize the SDK with an API key, which can be created in the Eppo web interface:
+Initialize the SDK with a SDK key, which can be created in the Eppo web interface:
 
 ```
 var eppoClient: EppoClient = EppoClient(EPPO_API_KEY);
