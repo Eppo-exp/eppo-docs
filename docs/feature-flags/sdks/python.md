@@ -18,7 +18,7 @@ pip install eppo-server-sdk
 
 ## 2. Initialize the SDK
 
-Initialize the SDK with an API key, which can be generated in the Eppo interface. Initialization the SDK when your application starts up to generate a singleton client instance, once per application lifecycle:
+Initialize the SDK with a SDK key, which can be generated in the Eppo interface. Initialization the SDK when your application starts up to generate a singleton client instance, once per application lifecycle:
 
 ```python
 import eppo_client

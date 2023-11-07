@@ -53,7 +53,7 @@ If you install via a `<script>` tag, include a version in the URL to install a s
 
 ## 2. Initialize the SDK
 
-Initialize the SDK with an API key, which can be generated in the Eppo interface:
+Initialize the SDK with a SDK key, which can be generated in the Eppo interface:
 
 ```javascript
 import { init } from "@eppo/js-client-sdk";
