@@ -58,7 +58,7 @@ Your feature flag tooling may have logged additional data about the user, like w
 
 ![Add Assignment SQL Properties](/img/building-experiments/add-assignment-sql-dimensions.png)
 
-Holdout columns are also defined here. More information is available on the [dedicated page](/experiments/holdouts)).
+Holdout columns are also defined here. More information is available on the [dedicated page](/experiments/holdouts).
 
 ![Write Assignment SQL Query](/img/experiments/holdouts/holdouts-assignment-sql.png)
 
