@@ -2,7 +2,7 @@
 
 **Assignment SQLs** tell Eppo where to find a log of every time a subject (e.g., user) was enrolled into an experiment, the name of that experiment, and the variant that was assigned. Assignment SQLs can point to either logs from Eppo's SDK or from existing internal or third party randomization tools. You can also create multiple assignment sources if you use a combination of assignment methods.
 
-Assignment SQLS can also include any [properties](./property-sql.md) by which you want to split results.
+Assignment SQLs can also include any [properties](./property-sql.md) by which you want to split results.
 
 ```sql
 SELECT
@@ -57,5 +57,9 @@ Your feature flag tooling may have logged additional data about the user, like w
 <!-- <img src="https://firebasestorage.googleapis.com/v0/b/eppo-documentation-images.appspot.com/o/add-assignment-sql-dimensions.png?alt=media&token=dfd583db-4ea7-4013-b5fc-d90612118738" width="500" height="200"/> -->
 
 ![Add Assignment SQL Properties](/img/building-experiments/add-assignment-sql-dimensions.png)
+
+Holdout columns are also defined here. More information is available on the [dedicated page](/experiments/holdouts).
+
+![Write Assignment SQL Query](/img/experiments/holdouts/holdouts-assignment-sql.png)
 
 8. Click **Save & Close**

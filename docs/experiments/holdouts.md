@@ -2,12 +2,17 @@
 
 **This is a beta feature.**
 
-Eppo's Holdout Analysis allows your company to validate the impact of Experimentation.
+Eppo's Holdouts allows you to validate the aggregate impact of Experimentation.
 
-This functionality offers the ability to set a holdout audience in feature flags that keeps an audience isolated from all active experiments, 
-and measures metric changes for the holdout audience versus an audience that only experiences winning experiments.
+This functionality offers the ability to set a holdout audience in feature flags that keeps an audience isolated from all active experiments, and measures metric changes for the holdout audience versus an audience that only experiences winning experiments.
 
-## Journey of a Holdout user
+The feature can be used with Eppo's SDK for an end-to-end managed experiment or in an [**Analysis-Only mode**](#analysis-only-holdouts) where you use an external randomization library.
+
+## Using Eppo SDKs
+
+Begin by [configuring your Assignment Source](/data-management/definitions/assignment-sql) to annotate your holdout columns.
+
+### Journey of a Holdout user
 
 Define one or more holdout groups with a relevant key and the desired active date range. You can have multiple holdout groups running at once (e.g one for each team that runs experiments).
 
@@ -41,9 +46,7 @@ You may begin an analysis at the conclusion of your desired assignment period by
 2. For that holdout group, after the evaluation period finishes, end the holdout group. 
 3. A report can now be generated reflecting data from the evaluation period showing how the holdout group did against users who saw all experiment winners.
 
-![View Holdout Report](/img/experiments/holdouts/holdouts-report.png)
-
-## SDK Behavior
+### SDK Behavior
 
 Application developers should expect no changes to the SDKs.
 
@@ -84,11 +87,46 @@ func (al *ExampleAssignmentLogger) LogAssignment(event eppoclient.AssignmentEven
 }
 ```
 
-## Experiment Analysis
+## Analysis-Only Holdouts
 
-Experiments during the enrollment period will proceed like normal on Eppo, 
-with the only divergency being that subjects logged with a `holdout` key will be omitted.
+If your Holdouts are deployed by an external randomization library and you are not using Eppo's feature flags, please refer to this section.
+
+Eppo enables you to bring your own Holdouts and provides a full-featured analysis of that Holdout on key metrics.
+
+### Assignment setup
+
+While Eppo is flexible to how you configure Holdouts on your end, we recommend you setup your Holdouts in the following fashion:
+* There should be two variants: `status_quo` and `winning_variants`
+* Traffic should be evenly split between these variants within your withheld traffic group
+* Users in `status_quo` should always see the control experience until the holdout is released
+* Users in `winning_variants` should be exposed to the winning variant of each experiment after it has been concluded and rolled out
+
+Ensure you are logging exposure to the holdout and each variant in an Assignment Source. Eppo requires the following information:
+*  An `experiment key` which is the name of the Holdout the user is enrolled in
+*  The `variant` name that the user is enrolled in for the applicable Holdout
+
+With this setup, Holdouts will be logged with Experiments in AssignmentSQL that is setup in Eppo.
+
+![Verify assignment source](/img/experiments/holdouts/standalone-assignment-sql.png)
+
+### Configuring a Holdouts Analysis
+
+Create a new Holdout experiment over your desired date range by clicking on the "+Experiment: button on the Experiments tab.
+
+Configure the analysis with the variation names in your holdout, such as `status_quo` and `winning_variants`.  This allows the Eppo generated SQL to correctly query the data in your warehouse.
+
+![Configure variations](/img/experiments/holdouts/standalone-variations.png)
+
+You are able to link experiments to your holdout to provide a comprehensive report of how each experiment impacted the primary Holdout metric and show the experience provided by the winning variants. To do so, go to the Overview tab and add Experiments that are part of the Holdout. Note that these experiments must be configured in Eppo to be linked.
+
+![Create a stand-alone analysis](/img/experiments/holdouts/analysis-only-setup1.png)
 
 ## Holdout Analysis
 
+Regardless of whether you use Eppo's SDK or your own, the artifact will be a report detailing impact of the holdout variation over the control,
+with annotations display the shipped experiments.
+
 Lift on the primary metric will be computed across the winning variants comparing the holdout subjects against everyone else.
+
+![View Holdout Report](/img/experiments/holdouts/holdouts-report.png)
+
