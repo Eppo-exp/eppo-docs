@@ -24,7 +24,7 @@ To build this experiment out in our Contentful space, create a new Content Model
 
 ![Contentful field setup](/img/how-tos/integrating-with-contentful/contentful-field-setup.png)
 
-Now to create our variants, navigate to the content page and create two content entries using the Homepage Content Model you created above. Name one “Homepage Redesign” and the other “Homepage Redesign”. Each version should reflect the copy you want to test:
+Now to create our variants, navigate to the content page and create two content entries using the Homepage Content Model you created above. Name one “Homepage Baseline” and the other “Homepage Redesign”. Each version should reflect the copy you want to test:
 
 ![Contentful variant setup](/img/how-tos/integrating-with-contentful/contentful-variant-setup.png)
 
