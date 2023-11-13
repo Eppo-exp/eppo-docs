@@ -28,7 +28,7 @@ Creating a feature flag in Eppo involves the following steps:
 3. Initialize the SDK.
 4. Embed the SDK in your code base.
 5. Enable the feature flag in your test or production environment.
-6. Log which experiments a user has been exposed to. You can pass in a [logging callback](/experiments/how-tos/event-logging/) to any SDK (e.g. a wrapper around Segment or Rudderstack) to route Eppo assignments to your data warehouse.
+6. Log which experiments a user has been exposed to. You can pass in a [logging callback](/how-tos/event-logging/) to any SDK (e.g. a wrapper around Segment or Rudderstack) to route Eppo assignments to your data warehouse.
 
 # How experiment analysis works
 
