@@ -32,7 +32,7 @@ This behavior is enabled by default and no action is required beyond upgrading t
 
 ### Globally Distributed Experiment Configurations
 
-The SDK retrieves experiment data from a CDN that is globally distributed to over 100 edge locations. Each CDN location maintains a cache experiment data. 90% of requests are served by the CDN cache, while the remaining are handled by Eppo’s servers in the us-central GCP region. If there is a change to an experiment, such as an increase in traffic allocation, cached experiment configurations are updated within 10 minutes.
+The SDK retrieves experiment data from the globally distributed Fastly CDN. Each CDN location maintains a cache of experiment data. If there is a change to an experiment, such as an increase in traffic allocation, cached experiment configurations are updated within 10 seconds.
 
 The SDK uses a background process to fetch and store the experiment data. The p75 latency of these requests is 50ms. This latency does not affect variation assignments, which use locally stored experiment data.
 
