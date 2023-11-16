@@ -100,4 +100,3 @@ window.eppo.getInstance().setIsGracefulFailureMode(false);
 
 To see a demo of the Webflow integration in action, see this link: https://star-wars-demo.webflow.io/. 
 
-Let us know what variation of our droid ad you are bucketed into!
