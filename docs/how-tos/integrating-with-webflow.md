@@ -2,35 +2,35 @@
 sidebar_position: 7
 ---
 
-# Integrating Eppo with Webflow
+# Integrating with Webflow
 
 
-In this tutorial, you will learn how how run landing page tests in Webflow after minimal  engineering setup. At a high level, you will add a client side version of Eppo’s Javascript SDK as a script in your Webflow workspace that will:
+In this tutorial, we learn how how run landing page tests in Webflow after minimal engineering setup. At a high level, we add a client side version of Eppo’s Javascript SDK as a script in your Webflow workspace that:
 
-- initialize the Eppo JS client
-- handle experiment assignment logic
-- dynamically update pre-defined content variables such as text and image URLs
+- Initializes the Eppo JS client
+- Handles experiment assignment logic
+- Dynamically updates pre-defined content variables such as text and image URLs
 
 ## Prerequisites:
 
-- Eppo Account
+- Eppo account
 - Webflow account
-- Client-side analytics platform like Segment, Amplitude, Adobe, Mixpanel, etc to capture Eppo assignment events and send them to your data warehouse for analysis.
+- Client-side analytics platform like Segment, Amplitude, Adobe, Mixpanel, etc., to capture Eppo assignment events and send them to your data warehouse for analysis
 
 ## Setting up Eppo
 
-Set up an feature flag in Eppo — for step by step instructions, follow our [quickstart](/feature-flags/). We will be using JSON flag type to fill in the content on our Webflow landing page. For the sake of this tutorial, make sure to include the following keys for both variations:
+Set up an feature flag in Eppo — for step by step instructions, follow our [quickstart](/feature-flags/). We will be using JSON flag type to fill in the content on our Webflow landing page. For the sake of this tutorial, make JSON-typed variations that have the same keys as below:
 
 ```json
 {
-	"title": "some words",
-	"image": "https://myimage.com",
-	"subtitle": "some more words",
-	"cta": "even more words"
-}
+  "title": "These are the droids you're looking for",
+  "image": "obi-wan.jpg",
+  "subtitle": "We have more droids than you can shake a light saber at",
+  "cta": "Browse Droids"
+};
 ```
 
-You can make the values of the keys whatever makes sense for your use case, or you can use our example from our prototype below:
+You can make the values of the variation whatever makes sense for your use case, or you can use our example from our prototype below:
 
 ![Setting up Eppo Feature Flag with JSON](/img/how-tos/integrating-with-webflow/setting-up-feature-flag.png)
 
@@ -53,21 +53,22 @@ By making sure our elements are “blank” to start with, we can completely red
 :::
 
 ```html
-<script>console.log('Loading eppo SDK')</script>
 <script src="https://cdn.jsdelivr.net/npm/@eppo/js-client-sdk@1.4.0/dist/eppo-sdk.js"></script>
-<script>console.log('Done loading eppo SDK')</script>
 
 <script>  
-// Init user parameters
-urlParams = new URLSearchParams(window.location.search);
-subject = urlParams.get('subject') || crypto.randomUUID();
-
 // Prep post-assignment code
 function setHeader() {
   
-  // Get variation
-  const variationData = window.eppo.getInstance().getParsedJSONAssignment(subject, '<FEATURE-FLAG-KEY>');
-  console.log('>>> got variation data', variationData);
+  // Default assignment data 
+  const defaultVariationData = {
+    title: "default title",
+    image: "https://defaultimage.png",
+    subtitle: "default subtitle",
+    cta": "default call to action"
+  };
+
+  // Get variation data from Eppo
+  const variationData = window.eppo.getInstance().getParsedJSONAssignment(subject, '<FEATURE-FLAG-KEY>') || defaultVariationData;
   
   // Add client side analytics tracking call to capture experiment data 
   // and make sure assignment data is sent to your 
@@ -77,9 +78,7 @@ function setHeader() {
   document.getElementById('header-subtitle').innerText = variationData.subtitle;
   document.getElementById('header-cta').querySelector('div').innerText = variationData.cta;
   
-  const headerSrc = variationData.image;
-  
-  const headerImageDiv = document.getElementById('header-image');
+  const headerImageDiv.style.backgroundImage = 'url('+variationData.image+')';
   headerImageDiv.style.backgroundImage = 'url('+headerSrc+')';
   headerImageDiv.style.backgroundPosition = 'center center';
   headerImageDiv.style.backgroundRepeat = 'no-repeat';
@@ -89,12 +88,11 @@ function setHeader() {
 // Init Eppo Client
 opts = {apiKey: '<EPPO-SDK-KEY>'};
 window.eppo.init(opts).then(setHeader);
-window.eppo.getInstance().setIsGracefulFailureMode(false);
 </script>
 ```
 
 - Provide your SDK key and Feature Flag key in the `'<SDK-KEY>'` and `'<FEATURE-FLAG-KEY>'` placeholders above.
-- Add your client side analytics tracking call once the assignment has been made. Make sure your analytics platform is sending data to your data warehouse connected to Eppo. This will ensure that assignments made by Eppo will be tracked and can be used for experiment analysis.
+- Add your client side analytics tracking call once the assignment has been made. Make sure your analytics platform is sending data to your data warehouse connected to Eppo. This will ensure that assignments made by Eppo will be tracked and can be used for experiment analysis. For more information on Eppo's event logging integrations with popular platforms like Segment, mParticle, Rudderstack, and Snowplow, see our documentation [here](/how-tos/event-logging).
 
 ## Demo
 
