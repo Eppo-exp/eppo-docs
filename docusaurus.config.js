@@ -123,11 +123,11 @@ async function createConfig () {
             items: [
               {
                 label: 'Eppo',
-                to: 'https://geteppo.com'
+                to: 'https://www.geteppo.com'
               },
               {
                 label: 'Blog',
-                to: 'https://geteppo.com/blog'
+                to: 'https://www.geteppo.com/blog'
               },
               {
                 label: 'Eppo application',
