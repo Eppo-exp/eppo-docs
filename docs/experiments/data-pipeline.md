@@ -23,25 +23,29 @@ At a high level, the Eppo experiment data pipeline has four main branches along 
 
 The core pipeline starts with the assignments, incrementally joins event data from your metrics/facts, aggregates the data, and computes winsorized aggregates.
 
-1. **Incremental daily data frame**: Eppo joins your experiment assignments to your fact sources
-2. **Cumulative data frame**:
-3. **Winsorized data frame**:
-4. **Dimensionalized summaries**:
-5. **Dimensionalized summaries reduced**:
+1. **Incremental daily data frame**: We join your experiment assignments to your fact sources. We use a "wide" table format where every metric aggregation is a separate column. As part of the incremental process, we first delete two days of data before re-inserting it. This is to ensure if there's time-delayed data it's updated appropriately.
+2. **Cumulative data frame**: We aggregate the daily data to generate a timeline view of all metric data for each subject.
+3. **Winsorized data frame**: We apply winsorization according to the cumulative data frame based on your metric settings.
+4. **Dimensionalized summaries**: We convert our subject-level winsorized data frame to an overall summary with dimensional values included.
+5. **Dimensionalized summaries reduced**: For high cardinality dimensions, we cap dimension values to 50 to minimize the data we transfer to our operational Postgres database.
 
 ## CUPED pipeline
 
-1. **CUPED lookback**:
-2. **CUPED dataframe**:
-3. **CUPED estimate means**:
+1. **CUPED lookback**: We summarize the prior 30-days of data for each subject for each metric.
+2. **CUPED dataframe**: We join the last day of data from the winsorized data frame from the core pipeline to the lookback data to create a unified CUPED data frame.
+3. **CUPED estimate means**: Our regression engine runs in your warehouse and estimates the lift for each metric.
 
 ## Metric dimensions/properties pipeline
 
-1. **Metric dimensions daily**:
-2. **Metric dimensions cumulative**:
+We compute metric dimension (also called metric properties) metric values as part of our pipeline to enable exploration by metric dimensions.
+
+1. **Metric dimensions daily**: An incremental step, very similar to the core pipeline daily data frame step. Every metric dimension value is treated as a separate metric with its own column. If you have high cardinality along several dimensions, this can make this step fairly slow (though we do cap cardinality at 50 to guard against this).
+2. **Metric dimensions cumulative**: Very similar to the cumulative data frame step from the core pipeline, we generate summarized metric dimension values for each subject and day.
 
 ## Funnel metrics pipeline
 
-1. **Incremental funnel metric events**:
-2. **Funnel metrics data frame**:
-3. **Funnel metrics summaries**:
+Funnel metrics require their own pipeline because of the complicated logic that must be performed over the relevant events.
+
+1. **Incremental funnel metric events**: We incrementally join assignment data to the event sources for your funnel metrics.
+2. **Funnel metrics data frame**: We generate a data frame for each subject and day for each funnel metric.
+3. **Funnel metrics summaries**: We summarize the values for your funnel metrics.
