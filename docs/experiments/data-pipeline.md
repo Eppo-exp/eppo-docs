@@ -1,7 +1,3 @@
----
-sidebar_position: 90
----
-
 # Experiment data pipeline
 
 At a high level, the Eppo experiment data pipeline has four main branches along with an assignment summarization that is a predecessor for each of those branches.
