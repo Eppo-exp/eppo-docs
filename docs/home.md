@@ -20,7 +20,7 @@ If you are just getting started with Eppo, check out these guides to get you up 
 - [Initial Eppo Setup](/setup-quickstart)
 - [Your first feature flag](/feature-flag-quickstart)
 - [Your first experiment analysis](/experiment-quickstart)
-- [How the Eppo data pipeline works](/data-management/pipeline)
+- [How the Eppo experiment data pipeline works](/experiments/data-pipeline)
 
 ## How-to guides
 
