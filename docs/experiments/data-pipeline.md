@@ -2,7 +2,7 @@
 sidebar_position: 14
 ---
 
-# Data pipeline
+# Experiment data pipeline
 
 At a high level, the Eppo experiment data pipeline has four main branches along with an assignment summarization that is a predecessor for each of those branches.
 
@@ -27,7 +27,7 @@ The core pipeline starts with the assignments, incrementally joins event data fr
 2. **Cumulative data frame**: We aggregate the daily data to generate a timeline view of all metric data for each subject.
 3. **Winsorized data frame**: We apply winsorization according to the cumulative data frame based on your metric settings.
 4. **Dimensionalized summaries**: We convert our subject-level winsorized data frame to an overall summary with dimensional values included.
-5. **Dimensionalized summaries reduced**: For high cardinality dimensions, we cap dimension values to 50 to minimize the data we transfer to our operational Postgres database.
+5. **Dimensionalized summaries reduced**: For high cardinality dimensions, we cap dimension values to 50 (by assignment volume) to minimize the data we transfer to our operational Postgres database.
 
 ## CUPED pipeline
 
