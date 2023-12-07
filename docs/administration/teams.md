@@ -2,8 +2,10 @@
 
 Create teams in your workspace to organize users and the scope of ownership of experiments, metrics, and feature flags in Eppo.
 
-## Manage Teams
+## Configure
 Only Admins have permission to create, edit, and archive teams.
+
+![Teams Home](/img/administration/Teams_Home.png)
 
 ### Create Teams
 Create teams under the [Teams home](https://eppo.cloud/teams) by selecting an icon and giving the team a name. 
