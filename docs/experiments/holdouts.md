@@ -1,7 +1,5 @@
 # Holdouts
 
-**This is a beta feature.**
-
 Eppo's Holdouts allows you to validate the aggregate impact of Experimentation.
 
 This functionality offers the ability to set a holdout audience in feature flags that keeps an audience isolated from all active experiments, and measures metric changes for the holdout audience versus an audience that only experiences winning experiments.
