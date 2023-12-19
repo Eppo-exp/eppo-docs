@@ -66,7 +66,7 @@ The [event logging](/how-tos/event-logging/) page has more information on how to
 
 ### 4. Initialize the SDK
 
-Choose the [Eppo SDK](/feature-flags/sdks) that fits in your stack. You'll need to install initialize the SDK in your app and create an Eppo client. Here is an example in Javascript:
+Choose the [Eppo SDK](/feature-flags/sdks) that fits in your stack. You'll need to initialize the SDK in your app and create an Eppo client. Here is an example in Javascript:
 
 ```javascript
 import { init } from "@eppo/js-client-sdk";

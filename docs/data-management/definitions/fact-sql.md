@@ -52,4 +52,4 @@ By default, having more events is better, so the "Desired Change" is set to `Met
 
 8. Save & Close
 
-You've now created your a Fact SQL. If you have more events that you would like to track in your experiment, you can repeat the steps in this section to create additional Fact SQLs.
+You've now created your first Fact SQL. If you have more events that you would like to track in your experiment, you can repeat the steps in this section to create additional Fact SQLs.
