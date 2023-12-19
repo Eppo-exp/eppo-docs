@@ -38,100 +38,12 @@ Any metric or fact created through the metric sync API will have a Certified bad
 ## Certified Metric Schema
 Eppo supports a YAML schema to describe Facts and Metrics.
 
+The Eppo certified metrics schema is [described here](https://eppo.cloud/api/docs#/Metrics%20Sync/syncMetrics)
+
 Notes:
 - Metrics are unique based on the `name` field.
 - `sync_tag` describes the source of the synced metrics and will show in the UI
-
-The Eppo certified metrics v1.0 schema is described below:
-```yaml
-{
-  "sync_tag": "string",
-  "release_url": "string", #optional
-  "fact_sources": [
-    {
-      "name": "string",
-      "sql": "string",
-      "reference_url": "string", #optional
-      "timestamp_column": "string",
-      "entities": [
-        {
-          "entity_name": "string",
-          "column": "string"
-        }
-      ],
-      "facts": [
-        {
-          "name": "string",
-          "column": "string",
-          "description": "string", #optional
-          "desired_change": "increase" #optional
-        }
-      ],
-      "properties": [ #optional
-        {
-          "name": "string",
-          "column": "string",
-          "description": "string"
-        }
-      ]
-    }
-  ],
-  "metrics": [
-    {
-      "name": "string",
-      "description": "string", #optional
-      "entity": "string",
-      "is_guardrail": false, #optional
-      "metric_display_style": "decimal", #optional
-      "minimum_detectable_effect": 0, #optional
-      "reference_url": "string", #optional
-      "numerator": {
-        "fact_name": "string",
-        "operation": "sum",
-        "filters": [ #optional
-          {
-            "fact_property": "string",
-            "operation": "equals",
-            "values": [
-              "string"
-            ]
-          }
-        ],
-        "retention_threshold_days": 0, #optional
-        "conversion_threshold_days": 0, #optional
-        "threshold_metric_settings": { #optional
-          "comparions_operator": "gt",
-          "aggregation_type": "sum",
-          "breach_value": 0,
-          "timeframe_unit": "days",
-          "timeframe_value": 0
-        },
-        "aggregation_timeframe_value": 0, #optional
-        "aggregation_timeframe_unit": "days", #optional
-        "winsorization_lower_percentile": 0, #optional
-        "winsorization_upper_percentile": 0 #optional
-      },
-      "denominator": { #optional
-        "fact_name": "string",
-        "operation": "sum",
-        "filters": [
-          {
-            "fact_property": "string",
-            "operation": "equals",
-            "values": [
-              "string"
-            ]
-          }
-        ],
-        "aggregation_timeframe_value": 0,
-        "aggregation_timeframe_unit": "days",
-        "winsorization_lower_percentile": 0,
-        "winsorization_upper_percentile": 0
-      }
-    }
-  ]
-}
-```
+- The following fields are optional: descriptions, reference URLs, properties, filters, and winzorization percentiles
 
 ## Sync with a Github repository
 
