@@ -35,11 +35,111 @@ Any metric or fact created through the metric sync API will have a Certified bad
 
 ![Certified metric example](/img/metrics/certified-metrics-1.png)
 
+## Certified Metric Schema
+Eppo supports a YAML schema to describe Facts and Metrics.
 
-## Connecting a Github repository
+Notes:
+- Metrics are unique based on the `name` field.
+- `sync_tag` describes the source of the synced metrics and will show in the UI
 
-We recommend setting up a separate Eppo workspace for staging changes to Certified Metrics. Please contact your Eppo support representative or email support@geteppo.com to have this created.  To connect a GitHub repository, you’ll need to complete the following steps:
+The Eppo certified metrics v1.0 schema is described below:
+```yaml
+{
+  "sync_tag": "string",
+  "release_url": "string", #optional
+  "fact_sources": [
+    {
+      "name": "string",
+      "sql": "string",
+      "reference_url": "string", #optional
+      "timestamp_column": "string",
+      "entities": [
+        {
+          "entity_name": "string",
+          "column": "string"
+        }
+      ],
+      "facts": [
+        {
+          "name": "string",
+          "column": "string",
+          "description": "string", #optional
+          "desired_change": "increase" #optional
+        }
+      ],
+      "properties": [ #optional
+        {
+          "name": "string",
+          "column": "string",
+          "description": "string"
+        }
+      ]
+    }
+  ],
+  "metrics": [
+    {
+      "name": "string",
+      "description": "string", #optional
+      "entity": "string",
+      "is_guardrail": false, #optional
+      "metric_display_style": "decimal", #optional
+      "minimum_detectable_effect": 0, #optional
+      "reference_url": "string", #optional
+      "numerator": {
+        "fact_name": "string",
+        "operation": "sum",
+        "filters": [ #optional
+          {
+            "fact_property": "string",
+            "operation": "equals",
+            "values": [
+              "string"
+            ]
+          }
+        ],
+        "retention_threshold_days": 0, #optional
+        "conversion_threshold_days": 0, #optional
+        "threshold_metric_settings": { #optional
+          "comparions_operator": "gt",
+          "aggregation_type": "sum",
+          "breach_value": 0,
+          "timeframe_unit": "days",
+          "timeframe_value": 0
+        },
+        "aggregation_timeframe_value": 0, #optional
+        "aggregation_timeframe_unit": "days", #optional
+        "winsorization_lower_percentile": 0, #optional
+        "winsorization_upper_percentile": 0 #optional
+      },
+      "denominator": { #optional
+        "fact_name": "string",
+        "operation": "sum",
+        "filters": [
+          {
+            "fact_property": "string",
+            "operation": "equals",
+            "values": [
+              "string"
+            ]
+          }
+        ],
+        "aggregation_timeframe_value": 0,
+        "aggregation_timeframe_unit": "days",
+        "winsorization_lower_percentile": 0,
+        "winsorization_upper_percentile": 0
+      }
+    }
+  ]
+}
+```
 
+## Sync with a Github repository
+
+Once files are in the Eppo YAML schema, you are ready to sync them.
+
+We recommend setting up a separate Eppo workspace for staging changes to Certified Metrics. Please contact your Eppo support representative or email support@geteppo.com to have this created.
+
+To connect a GitHub repository, you’ll need to complete the following steps:
 1. Create an API key in both your production and staging Eppo workspaces. This can be done by going to **Admin** >> **API Keys** in each workspace. Make sure that the keys have read/write access to the Certified Metrics Sync permission
 2. Add the API keys as a GitHub secrets named `EPPO_API_KEY` and `EPPO_API_KEY_STAGING`. (Alternatively, you can use GitHub environments, but will need to adjust the workflow yaml below slightly)
 3. Create a new branch on the repository you want to connect, and add metric yaml files to a directory called `eppo_metrics` (you can name this whatever you like, you’ll just need to adjust the directory name referenced in the GitHub workflow below)
