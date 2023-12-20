@@ -24,8 +24,8 @@ For example, if you are a food delivery app, and you want to run experiments on 
 There are three core tables that Eppo needs to know about to successfully analyze expeirments
 
 - Assignment tables: which subjects participated in experiments and what variants did they see?
-- Event tables: what actions did subjects take, so we can turn them into metrics?
-- Subject property tables subjects: what additional information do we have on entities that we want to slice experiment analyses by?
+- Fact tables: what actions did subjects take, so we can turn them into metrics?
+- Property tables: what additional information do we have on entities that we want to slice experiment analyses by?
 
 ### Metrics
 
