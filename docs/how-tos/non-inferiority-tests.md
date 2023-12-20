@@ -1,4 +1,4 @@
-# Non-inferiority Tests
+# Running Non-inferiority Tests
 
 This How To guide walks you through how to run non-inferioirty tests in Eppo. This evaluation allows you to measure that a new treatment is not significantly worse than an existing or standard treatment in terms of effectiveness or safety.
 
