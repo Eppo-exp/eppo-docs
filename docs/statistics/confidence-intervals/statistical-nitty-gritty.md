@@ -155,7 +155,7 @@ $$
 But, since we don't know the true values $\mu_T$ and <NoBreak>$\mu_C$</NoBreak>,
 we'll need to instead _estimate_ the lift. We know from the CLT, as shown in
 equation 3 above, that $m_T$ and $m_C$ are approximately normally
-distributed (for sufficiently large $n_C$ and $n_T$); furthermore, since $m_T$
+distributed (for sufficiently large $n_T$ and $n_C$); furthermore, since $m_T$
 and $m_C$ are independent, under reasonable assumptions the ratio
 $\frac{m_T}{m_C}$ is approximately normal.[^normality2] This allows us to model
 $\hat{\Delta}$ as a normal distribution:
@@ -197,7 +197,7 @@ intervals). For Bayesian, however, there's one more step.
     For more on requirements for this approximation, see note
     [above](#fn-normality). In this case, the denominator (which must be
     unlikely to be negative for the approximation to hold) is the distribution
-    of the treatment metric.
+    of the metric in the control group.
 
 :::info
 
@@ -226,12 +226,12 @@ distribution[^conjugate] as our prior for the lift:
 
 $$
 \begin{equation}
-\hat{\Delta}_{prior} \sim \mathcal{N}(\mu_{prior}=0; ~\sigma_{prior}^2 = 0.1^2)
+\hat{\Delta}_{prior} \sim \mathcal{N}(\mu_{prior}=0; ~\sigma_{prior}^2 = 0.05^2)
 \end{equation}
 $$
 
 In other words, our prior is that the lift, on average, will be zero, with a standard
-deviation of $0.1$. Reach out to us if you want to adjust this default.
+deviation of $0.05$. You can adjust the prior standard deviation in the [Statistical Analysis Plan admin settings](https://eppo.cloud/admin/statistical-analysis-plan) to reflect your prior knowledge of how common or rare large lifts are. This setting is shared across all experiments using Bayesian analysis. (To change the prior standard deviation when Bayesian is not the company default, temporarily make Bayesian the default, change the prior standard deviation, and save; then revert to the previous analysis method.)
 
 [^conjugate]:
     We use a normal distribution because it is a convenient [conjugate
@@ -242,7 +242,7 @@ deviation of $0.1$. Reach out to us if you want to adjust this default.
 
 #### Updating the prior
 
-The evidence from the experiment is construed as a normal distribution
+The evidence from the experiment is constructed as a normal distribution
 $\hat{\Delta}$ just as with the frequentist methods (see equations 2–4 above).
 However, for the Bayesian method we use this evidence to update the above prior,
 and the result is our posterior.
