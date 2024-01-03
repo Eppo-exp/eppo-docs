@@ -226,12 +226,12 @@ distribution[^conjugate] as our prior for the lift:
 
 $$
 \begin{equation}
-\hat{\Delta}_{prior} \sim \mathcal{N}(\mu_{prior}=0; ~\sigma_{prior}^2 = 0.1^2)
+\hat{\Delta}_{prior} \sim \mathcal{N}(\mu_{prior}=0; ~\sigma_{prior}^2 = 0.05^2)
 \end{equation}
 $$
 
 In other words, our prior is that the lift, on average, will be zero, with a standard
-deviation of $0.1$. Reach out to us if you want to adjust this default.
+deviation of $0.05$. You can adjust the prior standard deviation in the [Statistical Analysis Plan admin settings](https://eppo.cloud/admin/statistical-analysis-plan) to reflect your prior knowledge of how common or rare large lifts are. This setting is shared across all experiments using Bayesian analysis. (To change the prior standard deviation when Bayesian is not the company default, temporarily make Bayesian the default, change the prior standard deviation, and save; then revert to the previous analysis method.)
 
 [^conjugate]:
     We use a normal distribution because it is a convenient [conjugate
