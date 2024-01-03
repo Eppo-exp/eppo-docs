@@ -56,8 +56,8 @@ The code below illustrates an example implementation of a logging callback using
 import { IAssignmentLogger } from "@eppo/node-server-sdk";
 
 // Connect to Segment (or your own event-tracking system)
-const Analytics = require("analytics-node");
-const analytics = new Analytics("<SEGMENT_WRITE_KEY>");
+const { Analytics } = require('@segment/analytics-node');
+const analytics = new Analytics({ writeKey: '<SEGMENT_WRITE_KEY>'});
 
 const assignmentLogger: IAssignmentLogger = {
   logAssignment(assignment) {

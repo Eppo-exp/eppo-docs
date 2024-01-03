@@ -50,8 +50,8 @@ The examples below are written in JavaScript, but similar patterns can be adapte
 import { IAssignmentLogger, init } from "@eppo/node-server-sdk";
 
 // Connect to Segment
-const Analytics = require("analytics-node");
-const analytics = new Analytics("<SEGMENT_WRITE_KEY>");
+const { Analytics } = require('@segment/analytics-node');
+const analytics = new Analytics({ writeKey: '<SEGMENT_WRITE_KEY>'});
 
 // Define logAssignment so that it logs events to Segment
 const assignmentLogger: IAssignmentLogger = {
