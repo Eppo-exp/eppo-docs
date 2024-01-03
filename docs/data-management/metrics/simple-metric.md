@@ -76,11 +76,15 @@ Examples: videos watched per user, articles viewed per visitor, orders per user.
 
 Retention metrics measure the proportion of entities who have at least one fact value appear after a fixed number of days (X) from experiment assignment. For example, a 7-day retention metric on the website visits fact might measure the proportion of users who visit a website at least 7 days after being assigned to the experiment.
 
-$\frac{\text{Sum of \{1 if a non-null fact value is present X days after the assignment time, else 0, for each unique entity\}}}{\text{Number of unique entities assigned}}$
+$\frac{\text{Sum of \{1 if a non-null fact value is present X days after the assignment time, else 0, for each unique entity assigned at least X days ago\}}}{\text{Number of unique entities assigned at least X days ago}}$
+
+Only entities that were assigned at least $X$ days ago are included in both numerator and denominator. Those assigned within the last $X$ days cannot yet have retained, by construction. For those the numerator is always $0$, and including them would make retention appear artificially low.
 
 For example, if $X = 7 \text{ days}$, Eppo records a retention event for an entity when
 
-$(\text{timestamp of event}) - (\text{timestamp of assignment}) >= 7 \text{ days}$.
+$(\text{timestamp of event}) - (\text{timestamp of assignment}) \geq 7 \text{ days}$
+
+for all entities for which $\text{timestamp of assignment}$ is at least 7 days ago.
 
 #### Conversion
 
