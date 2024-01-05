@@ -1,4 +1,4 @@
-# Migrating to a New Data Warehouse with Eppo
+# Migrating to a New Data Warehouse
 
 If you're planning to transition to a new data warehouse, Eppo simplifies this process for you. We assist in creating a new Workspace that seamlessly connects to your new data warehouse, ensuring a smooth transition.
 
