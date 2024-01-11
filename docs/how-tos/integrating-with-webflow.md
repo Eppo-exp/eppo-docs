@@ -64,7 +64,7 @@ function setHeader() {
     title: "default title",
     image: "https://defaultimage.png",
     subtitle: "default subtitle",
-    cta": "default call to action"
+    cta: "default call to action"
   };
 
   // Get variation data from Eppo
