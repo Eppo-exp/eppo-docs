@@ -98,7 +98,7 @@ const userAttributes = {
   device: user.device,
 };
 
-const variation = eppoClient.getAssignment(
+const variation = eppoClient.getStringAssignment(
   user.id,
   "new-checkout-page",
   userAttributes
