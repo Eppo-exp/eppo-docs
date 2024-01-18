@@ -60,4 +60,4 @@ You will only need to perform the above steps when adding a new Entry Point into
 
 ## Next step
 
-Once your Entry Point is configured, you are ready to [use it to run a Sample Size Calculation](/sample-size-calculator/setup).
+Once your Entry Point is configured, you are ready to [use it to run a Sample Size Calculation](/statistics/sample-size-calculator/usage).
