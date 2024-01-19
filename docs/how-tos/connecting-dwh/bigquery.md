@@ -41,7 +41,7 @@ TO "serviceAccount:<service_account_name>@<project>.iam.gserviceaccount.com";
 
 ```sql
 GRANT `roles/bigquery.dataViewer`
-ON SCHEMA `<your-project>`.`<your-dataset>`
+ON SCHEMA `<your-project>`.`eppo_output`
 TO "serviceAccount:<service_account_name>@<project>.iam.gserviceaccount.com";
 ```
 
