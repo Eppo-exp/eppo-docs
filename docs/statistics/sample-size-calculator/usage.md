@@ -63,7 +63,7 @@ Below the main table interface, you will find a natural-language presentation of
 Unlike settings, metrics cannot be changed after you run the sample size calculation. Adding or removing metrics requires creating and launching a new calculation. You can do so by clicking the _Duplicate_ button that appears for completed calculations. This will create a new calculation with all the parameters copied over. You can then add or remove metrics as needed, and finally click _Run Calculation_.
 
 :::tip
-If a previous calculation for the same entry point already contains all the metrics you are interested in, you can save time and compute by re-using that saved calculation (accessible by URL). Note that this may include metrics that are not relevant to you; and all analysis settings are shared. If you need a calculation that only includes the metrics of interest, you need to create a new calculation.
+If a previous calculation for the same entry point already contains all the metrics you are interested in, you can save time and compute by re-using that saved calculation (accessible by URL). Note that this may include metrics that are not relevant to you; and all analysis settings are shared.
 :::
 
 ## Statistical details
