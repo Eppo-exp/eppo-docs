@@ -1,6 +1,6 @@
 # Sample size calculator
 
-Eppo's Sample Size Calculator operates on top of your data to determine how many subjects you will need to detect the effect of interest. Use the Sample Size Calculator to plan how long to run an experiment for and to understand how experiment setup and analysis settings affect what effect sizes you can reliably measure.
+Eppo's Sample Size Calculator operates on top of your data to determine how many subjects you need to detect the effect of interest. Use the Sample Size Calculator to plan how long to run an experiment for and to understand how experiment setup and analysis settings affect what effect sizes you can reliably measure.
 
 ## Quickstart
 
