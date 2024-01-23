@@ -76,7 +76,7 @@ API Keys used with Client SDKs should have only 'Feature Flagging READ' permissi
 
 ### Initialization options
 
-How the SDK fetches experiment configurations is configurable via additional initialization options:
+How the SDK fetches experiment configurations is configurable via additional optional initialization options:
 
 | Option | Description | Default |
 | ------ | ----------- | ------- | 
