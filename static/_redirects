@@ -9,3 +9,4 @@ http://adoring-yonath-6ecb9d.netlify.app/*  http://docs.geteppo.com/:splat  301!
 /experiments/interpreting-experiments/ /statistics/confidence-intervals/
 /experiments/interpreting-experiments/exploring-metrics /experiments/explores
 /experiments/interpreting-experiments/lift-estimates-and-confidence-intervals/statistical-nitty-gritty/ /statistics/confidence-intervals/statistical-nitty-gritty
+/experiments/interpreting-experiments/traffic /experiments/diagnostics#traffic-diagnostics
