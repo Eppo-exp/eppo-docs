@@ -19,7 +19,7 @@ In this tutorial, we learn how how run landing page tests in Webflow after minim
 
 ## Setting up Eppo
 
-Set up an feature flag in Eppo — for step by step instructions, follow our [quickstart](/feature-flags/). We will be using JSON flag type to fill in the content on our Webflow landing page. For the sake of this tutorial, make JSON-typed variations that have the same keys as below:
+Set up an feature flag in Eppo — for step by step instructions, follow our [quickstart](/feature-flagging/). We will be using JSON flag type to fill in the content on our Webflow landing page. For the sake of this tutorial, make JSON-typed variations that have the same keys as below:
 
 ```json
 {
@@ -32,9 +32,9 @@ Set up an feature flag in Eppo — for step by step instructions, follow our [qu
 
 You can make the values of the variation whatever makes sense for your use case, or you can use our example from our prototype below:
 
-![Setting up Eppo Feature Flag with JSON](/img/how-tos/integrating-with-webflow/setting-up-feature-flag.png)
+![Setting up Eppo Feature Flag with JSON](/img/guides/integrating-with-webflow/setting-up-feature-flag.png)
 
-Once you have your feature flag setup, set your [feature flag up as an experiment](/experiments/creating-experiments). Once you have data flowing to your data warehouse from your feature flag, you will be able to analyze your results.
+Once you have your feature flag setup, set your [feature flag up as an experiment](/experiment-analysis/creating-experiments). Once you have data flowing to your data warehouse from your feature flag, you will be able to analyze your results.
 
 ## Setting up Webflow
 
@@ -42,7 +42,7 @@ For the purposes of this tutorial, we will be very explicit on what things to te
 
 First, set up a Webflow landing page that has the following elements: a Header Title, a Header Subtitle, a Header CTA, and an image element. These elements should have no content in them for now since we will be filling in the image URL and messaging from our feature flag. As you are setting up these elements, make sure that you give each of the 4 elements one of the following custom ids: `header-subtitle`, `header-title`, `header-CTA`, and `header-image`. The custom code we add later specifically looks for these ids to write in the content from Eppo. See the screenshot below on where to update the ID for an element:
 
-![Setting up Webflow element IDs](/img/how-tos/integrating-with-webflow/setting-up-webflow-ids.png)
+![Setting up Webflow element IDs](/img/guides/integrating-with-webflow/setting-up-webflow-ids.png)
 
 Next, add the following code to your [custom code at the site level](https://university.webflow.com/lesson/custom-code-in-the-head-and-body-tags?topics=site-settings) in the footer:
 
@@ -92,7 +92,7 @@ window.eppo.init(opts).then(setHeader);
 ```
 
 - Provide your SDK key and Feature Flag key in the `'<SDK-KEY>'` and `'<FEATURE-FLAG-KEY>'` placeholders above.
-- Add your client side analytics tracking call once the assignment has been made. Make sure your analytics platform is sending data to your data warehouse connected to Eppo. This will ensure that assignments made by Eppo will be tracked and can be used for experiment analysis. For more information on Eppo's event logging integrations with popular platforms like Segment, mParticle, Rudderstack, and Snowplow, see our documentation [here](/how-tos/event-logging).
+- Add your client side analytics tracking call once the assignment has been made. Make sure your analytics platform is sending data to your data warehouse connected to Eppo. This will ensure that assignments made by Eppo will be tracked and can be used for experiment analysis. For more information on Eppo's event logging integrations with popular platforms like Segment, mParticle, Rudderstack, and Snowplow, see our documentation [here](/guides/event-logging).
 
 ## Demo
 

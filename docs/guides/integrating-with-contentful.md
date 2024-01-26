@@ -13,7 +13,7 @@ Using a headless CMS like Contentful, and a lightweight, robust feature flagging
 
 For this example, imagine we are running an experiment on the Eppo homepage. There are a few places where we might want to experiment on this page:
 
-![Eppo homepage](/img/how-tos/integrating-with-contentful/eppo-homepage.png)
+![Eppo homepage](/img/guides/integrating-with-contentful/eppo-homepage.png)
 
 1. The hero title (”Run reliable, impactful experiments”)
 2. The hero body (”Eppo streamlines …”)
@@ -22,11 +22,11 @@ For this example, imagine we are running an experiment on the Eppo homepage. The
 
 To build this experiment out in our Contentful space, create a new Content Model with the name “Homepage”. Add the following content fields:
 
-![Contentful field setup](/img/how-tos/integrating-with-contentful/contentful-field-setup.png)
+![Contentful field setup](/img/guides/integrating-with-contentful/contentful-field-setup.png)
 
 Now to create our variants, navigate to the content page and create two content entries using the Homepage Content Model you created above. Name one “Homepage Baseline” and the other “Homepage Redesign”. Each version should reflect the copy you want to test:
 
-![Contentful variant setup](/img/how-tos/integrating-with-contentful/contentful-variant-setup.png)
+![Contentful variant setup](/img/guides/integrating-with-contentful/contentful-variant-setup.png)
 
 
 :::note
@@ -35,13 +35,13 @@ For this tutorial, we are including a Control and Variant for an A/B test, but y
 
 Now that we have the content defined, we’ll need to get the entry ID for our two pages. In Contentful, the entry ID can be found on the content page and by clicking on the 3 dots next to your content entries and clicking ‘Copy entry ID’. Save these for now, we will use them in our Eppo setup next.
 
-![Getting Contentful entry ids](/img/how-tos/integrating-with-contentful/getting-contentful-entry-ids.png)
+![Getting Contentful entry ids](/img/guides/integrating-with-contentful/getting-contentful-entry-ids.png)
 
 ## Setting up Eppo
 
 Next, we’ll create a [corresponding flag in Eppo](/feature-flag-quickstart/) (Feature Flags >> Create). For each variant above, simply add a new variant in the Eppo UI. For each variant value, paste in the corresponding Contentful entry ID. Make sure to also save your Feature Flag key – you will need it for your Node implementation later.
 
-![Eppo feature flag setup](/img/how-tos/integrating-with-contentful/eppo-feature-flag-setup.png)
+![Eppo feature flag setup](/img/guides/integrating-with-contentful/eppo-feature-flag-setup.png)
 
 ## Setting up your Node environment
 Now that we have the flag and a few variants defined, you can enable the flag in your local environment and start developing the page using the content defined in Contentful. For details on setting up your first flag, please see the [Feature Flag quick start section](/feature-flag-quickstart) of our docs.
@@ -90,7 +90,7 @@ console.log(entry) // see the different assignments that a user received
 
 Once your application is running you should see your entry fields logged based on what variation that user ID was assigned.
 
-![Example variation and Contentful content logged](/img/how-tos/integrating-with-contentful/example-variation-log.png)
+![Example variation and Contentful content logged](/img/guides/integrating-with-contentful/example-variation-log.png)
 
 
 ### Initial Deployment
@@ -106,15 +106,15 @@ The recommended workflow for launching a content-based experiment is as follows:
 1. Create a new entry in Contentful for the appropriate content model.
 2. Create a new variant in Eppo with the `entry_id` from Contentful UI.
 3. Create an allocation to test the new content in production (see screenshot below).
-4. Load page to QA new content and [add screenshots to Eppo](/experiments/creating-experiments/#8-click-save-changes) for reference.
-5. [Create an experiment allocation](/feature-flags/use-cases/experiment-assignment/) and launch the experiment.
+4. Load page to QA new content and [add screenshots to Eppo](/experiment-analysis/creating-experiments/#8-click-save-changes) for reference.
+5. [Create an experiment allocation](/feature-flagging/use-cases/experiment-assignment/) and launch the experiment.
 6. Analyze experiment and make rollout decisions like any other Eppo experiment.
 
 :::tip
 This can all be done in the Contentful and Eppo UIs with no additional engineering support.
 :::
 
-![Updating Eppo Experiment allocation](/img/how-tos/integrating-with-contentful/updating-eppo-allocation.png)
+![Updating Eppo Experiment allocation](/img/guides/integrating-with-contentful/updating-eppo-allocation.png)
 
 ## Conclusion
 

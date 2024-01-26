@@ -130,7 +130,7 @@ Note that winsorization is only utilized for `SUM` and `COUNT` aggregations. Thi
 
 5. **Set a default precision target**
 
-The [precision](/experiments/progress-bar#precision) refers to the uncertainty you want to be able to measure in an experiment, as measured by the width of confidence intervals. You can set a default at the metric level, which will be used to measure [progress](/experiments/progress-bar) if this metric is the primary metric for an experiment.
+The [precision](/experiment-analysis/progress-bar#precision) refers to the uncertainty you want to be able to measure in an experiment, as measured by the width of confidence intervals. You can set a default at the metric level, which will be used to measure [progress](/experiment-analysis/progress-bar) if this metric is the primary metric for an experiment.
 
 6. **Set formatting options**
 

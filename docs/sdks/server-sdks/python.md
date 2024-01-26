@@ -32,7 +32,7 @@ After initialization, the SDK begins polling Eppo’s API at regular intervals t
 
 :::info
 
-By default the Eppo client initialization is asynchronous to ensure no critical code paths are blocked. For more information on handling non-blocking initialization, see our [documentation here](/feature-flags/common-issues#3-not-handling-non-blocking-initialization).
+By default the Eppo client initialization is asynchronous to ensure no critical code paths are blocked. For more information on handling non-blocking initialization, see our [documentation here](/feature-flagging/common-issues#3-not-handling-non-blocking-initialization).
 
 :::
 
@@ -67,7 +67,7 @@ The SDK will invoke the `log_assignment` function with an `assignment` object th
 | `allocation` (string)     | An Eppo allocation key                                                                                                   | "allocation-17"                     |
 
 :::note
-More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/how-tos/event-logging/) page.
+More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/guides/event-logging/) page.
 :::
 
 ## 3. Assign variations

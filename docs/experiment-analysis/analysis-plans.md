@@ -19,7 +19,7 @@ page.
 ## Settings
 
 The experiment-level analysis plan settings are on the
-[experiment setup page](/experiments/creating-experiments.md#analysis-plan-settings).
+[experiment setup page](/experiment-analysis/creating-experiments.md#analysis-plan-settings).
 
 ![Experiment Analysis Plan Settings](/img/building-experiments/experiment-setup-statistical-analysis-plans.gif)
 
@@ -64,10 +64,10 @@ If your admin has not enabled this setting, then minimum requirements will not b
 
 ### 5. Precision {#precision}
 
-[Precision](/experiments/progress-bar#precision) captures the uncertainty in the point estimate as defined by the width of the confidence interval.
+[Precision](/experiment-analysis/progress-bar#precision) captures the uncertainty in the point estimate as defined by the width of the confidence interval.
 Precision is set at the metric level.
 However, it is possible to override this and set it to a particular value at the experiment level using the analysis plan
-This is used to power the [progress bar](/experiments/progress-bar),
+This is used to power the [progress bar](/experiment-analysis/progress-bar),
 helping you decide when the experiment has run sufficiently long for you to make a decision confidently.
 
 ## Considerations for setting an analysis plan

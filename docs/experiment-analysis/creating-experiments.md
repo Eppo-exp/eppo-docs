@@ -74,7 +74,7 @@ This section allows you to select which variants you would like to include in th
 
 ### 6. Add traffic allocation (externally randomized experiments only)
 
-If the experiment was randomized outside of Eppo, use this section to tell Eppo the expected traffic split across variants as well as the percent of eligible users that were enrolled. The expected traffic split is used when checking for [sample ratio mismatch (SRM)](/statistics/sample-ratio-mismatch/) and the traffic exposure is used in computing [global impact](/experiments/global-lift/).
+If the experiment was randomized outside of Eppo, use this section to tell Eppo the expected traffic split across variants as well as the percent of eligible users that were enrolled. The expected traffic split is used when checking for [sample ratio mismatch (SRM)](/statistics/sample-ratio-mismatch/) and the traffic exposure is used in computing [global impact](/experiment-analysis/global-lift/).
 
 ![Percent Traffic](/img/building-experiments/define-traffic-allocation.png)
 
@@ -84,7 +84,7 @@ If you want to set custom statistical methodologies for this experiment, uncheck
 the "use company default" checkbox next to the applicable fields. Otherwise, you
 can stay opted in to using
 the [defaults set by your company](/administration/setting-statistical-analysis-plan-defaults.md).
-For information on the different analysis plan settings, see [Analysis plans](/experiments/analysis-plans.md).
+For information on the different analysis plan settings, see [Analysis plans](/experiment-analysis/analysis-plans.md).
 
 ![Experiment Analysis Plan Settings](/img/building-experiments/experiment-setup-statistical-analysis-plans.gif)
 

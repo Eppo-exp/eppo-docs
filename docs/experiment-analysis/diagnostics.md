@@ -6,7 +6,7 @@ Coupled with Slack notifications, Eppo diagnostics alert you to the first sign o
 
 Each diagnostic contains tools to help you understand, validate, and resolve the issue identified. This information includes graphical representations of the data observed, the SQL we ran that identified the issue, and suggestions on how to resolve the problem. To see more information about a given diagnostic error, click on the “Fix issue” link to the right of the diagnostic.
 
-![Overview of the diagnostics page](/img/experiments/diagnostics/diagnostics_overview.png)
+![Overview of the diagnostics page](/img/experiment-analysis/diagnostics/diagnostics_overview.png)
 
 ## Configuration diagnostics
 
@@ -40,13 +40,13 @@ Issues with the traffic allocations can come from many sources; here are some co
 - Traffic allocations are updated in the middle of an experiments; in general, try to avoid changing the traffic allocations during an experiment
 - Assignments for one variant (e.g. the control cell) started before assignments to other variants
 
-![Example diagnostic for a traffic imbalance in the assignment data](/img/experiments/diagnostics/diagnostics_imbalance.png)
+![Example diagnostic for a traffic imbalance in the assignment data](/img/experiment-analysis/diagnostics/diagnostics_imbalance.png)
 
 ### Dimensional imbalance diagnostic
 
 Eppo can also detect when the observed split of traffic across variations within one or more dimensions did not match the expected split. We will highlight the top dimensions where we an imbalance occurring so that you can investigate further.
 
-![Example diagnostic for dimensional assignment imbalance when country is Australia or India](/img/experiments/diagnostics/diagnostics_imbalance_dimensional.png)
+![Example diagnostic for dimensional assignment imbalance when country is Australia or India](/img/experiment-analysis/diagnostics/diagnostics_imbalance_dimensional.png)
 
 ## Metric diagnostics
 
@@ -57,7 +57,7 @@ Common causes for this a metric diagnostic failure include:
 1. Unsuccessful join between the assignment data and the event data. Ensure that both sources of data use the same unique identifier.
 2. Incorrect experiment configuration. Ensure both assignment data and event data exist in your data warehouse for users in this experiment during the specified period of analysis.
 
-![Example diagnostic error when data for the primary metric is missing](/img/experiments/diagnostics/diagnostics_metric.png)
+![Example diagnostic error when data for the primary metric is missing](/img/experiment-analysis/diagnostics/diagnostics_metric.png)
 
 ## Data quality diagnostics
 

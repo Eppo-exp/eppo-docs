@@ -38,7 +38,7 @@ In this example, `user_id` is assigned to `experiment_name` in the `variant_name
 
 At a minimum, this query should return a unique identifier for the subject (e.g., `user_id`), a unique identifier for the experiment, the variant the subject received, and a timestamp. You can also add optional subject properties such as browser or country.
 
-If you do not yet have assignment logs in your warehouse, see the [Event Logging page](/how-tos/event-logging).
+If you do not yet have assignment logs in your warehouse, see the [Event Logging page](/guides/event-logging).
 
 ![Write Assignment SQL Query](/img/building-experiments/add-assignment-sql-query.png)
 
@@ -58,8 +58,8 @@ Your feature flag tooling may have logged additional data about the user, like w
 
 ![Add Assignment SQL Properties](/img/building-experiments/add-assignment-sql-dimensions.png)
 
-Holdout columns are also defined here. More information is available on the [dedicated page](/experiments/holdouts).
+Holdout columns are also defined here. More information is available on the [dedicated page](/experiment-analysis/holdouts).
 
-![Write Assignment SQL Query](/img/experiments/holdouts/holdouts-assignment-sql.png)
+![Write Assignment SQL Query](/img/experiment-analysis/holdouts/holdouts-assignment-sql.png)
 
 8. Click **Save & Close**

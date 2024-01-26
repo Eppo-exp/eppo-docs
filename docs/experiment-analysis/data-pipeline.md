@@ -8,7 +8,7 @@ At a high level, the Eppo experiment data pipeline has four main branches along 
 4. Metric dimensions/properties pipeline
 5. Funnel metrics pipeline
 
-![Experiment data pipeline diagram](/img/experiments/data-pipeline/experiment_pipeline_visualization.png)
+![Experiment data pipeline diagram](/img/experiment-analysis/data-pipeline/experiment_pipeline_visualization.png)
 
 ## Assignment summarization
 

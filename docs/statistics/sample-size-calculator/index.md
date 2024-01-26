@@ -5,7 +5,7 @@ Eppo's Sample Size Calculator operates on top of your data to determine how many
 ## Quickstart
 
 1. From the **[Definitions](https://eppo.cloud/definitions)** page, create a new **Entry Point SQL** ([learn more](/statistics/sample-size-calculator/setup#entry-points)).
-2. Visit the **Sample Size Calculator** from the **[Experiments](https://eppo.cloud/experiments)** page, and create a new calculation.
+2. Visit the **Sample Size Calculator** from the **[Experiments](https://eppo.cloud/experiment-analysis)** page, and create a new calculation.
 3. Select **Entity**, **Entry Point**, and **Metrics**, then **Run** the calculation.
 4. Once the calculation completes, adjust experiment and analysis plan settings as needed.
 5. Get sample size and Minimum Detectable Effects at different experiment durations.

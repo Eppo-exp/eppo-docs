@@ -4,7 +4,7 @@ Eppo’s “Copy SQL” button provides SQL snippets to use for every intermedia
 
 Once you click the Copy SQL button on a metric in an experiment, you can choose from three options for viewing the data: assignment data, user-level aggregations, and aggregated results.
 
-![Copy SQL modal](/img/experiments/copy-sql/copy-sql-example.png)
+![Copy SQL modal](/img/experiment-analysis/copy-sql/copy-sql-example.png)
 
 This makes it easy to:
 
@@ -22,7 +22,7 @@ With the assignment data you can see exactly which subjects were in each treatme
 - Timestamp - timestamp of assignment into the experiment
 - Variant - variant the entity is assigned to
 
-![Assignment data table](/img/experiments/copy-sql/assignment-data.png)
+![Assignment data table](/img/experiment-analysis/copy-sql/assignment-data.png)
 
 ## User-level aggregations
 
@@ -40,7 +40,7 @@ Note that the table is indexed on date and entity id. This gives you the daily c
 - Denominator - denominator of metric aggregation when the metric is a ratio metric
 - Dimensions - Entity dimension values for the entity
 
-![User level aggregations table](/img/experiments/copy-sql/user-level-aggregations.png)
+![User level aggregations table](/img/experiment-analysis/copy-sql/user-level-aggregations.png)
 
 ## Aggregated results
 
@@ -57,4 +57,4 @@ Note that the table is indexed on date and variant. This gives you the daily cum
 - Observed_value_numerator - aggregated numerator value for the variant on the date
 - Observed_value_Denominator - aggregated denominator value for the variant on the date if the metric is a ratio metric
 
-![Aggregate results table](/img/experiments/copy-sql/aggregated-results.png)
+![Aggregate results table](/img/experiment-analysis/copy-sql/aggregated-results.png)

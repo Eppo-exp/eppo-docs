@@ -18,7 +18,7 @@ view**, which shows all of your experiments. You can filter this list by
 experiment name, status, entity, or owner, or just show experiments you have
 **starred**.
 
-<Figure alt="Experiment list view" src="/img/interpreting-experiments/experiments-list-view.png">
+<Figure alt="Experiment list view" src="/img/interpreting-experiments/experiment-analysis-list-view.png">
    The experiment list view, showing a list of experiments that can be filtered and searched.
 </Figure>
 
@@ -29,7 +29,7 @@ experiment name, status, entity, or owner, or just show experiments you have
 Clicking on the name of an experiment will take you to the
 **experiment detail view**, which shows the effects of each treatment variation,
 compared to control. Within each variation, for each metric that
-[you have added to the experiment](/experiments/experiment-metrics),
+[you have added to the experiment](/experiment-analysis/experiment-metrics),
 we display the (per subject) **average value for the control variation**, as well as
 the estimate of the <Term def={true}>relative lift</Term> (that is, the percentage change
 from the control value) caused by that treatment variation.
@@ -163,11 +163,11 @@ will be in <GreenHighlight>green</GreenHighlight>.
 
 :::
 
-The confidence level is set as part of the [analysis plan](/experiments/analysis-plans),
+The confidence level is set as part of the [analysis plan](/experiment-analysis/analysis-plans),
 and you can change the company-wide default on the
 [Admin tab](/administration/setting-statistical-analysis-plan-defaults.md)
 or set an experiment-specific confidence level on the
-[experiment Set Up page](/experiments/creating-experiments.md#10-optional-the-statistical-analysis-plan).
+[experiment Set Up page](/experiment-analysis/creating-experiments.md#10-optional-the-statistical-analysis-plan).
 The confidence level being used for any experiment is displayed on the experiment
 detail page below the table of metric results:
 
@@ -186,7 +186,7 @@ but you may want to understand the treatment effect _globally_; a large
 lift in an experiment that targets a tiny portion of your users might have a
 negligible business impact.
 
-You can click on the [**Impact accounting**](/experiments/global-lift)
+You can click on the [**Impact accounting**](/experiment-analysis/global-lift)
 icon (<Icon src="/img/interpreting-experiments/global-lift-icon.svg" />)
 to show, for each metric,
 the <Term def={true}>coverage</Term> (the share of all events that are part of the
@@ -319,7 +319,7 @@ results.
 
 You can also further investigate the performance of an individual metric by
 clicking on navigator icon the next to the metric name. This will take you to
-the [Metric explore](/experiments/explores) page where you can further slice
+the [Metric explore](/experiment-analysis/explores) page where you can further slice
 the experiment results by different properties that have been configured, for
 example user persona, or browser, etc.
 

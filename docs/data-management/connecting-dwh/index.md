@@ -6,7 +6,7 @@ In each case, a service account is used to connect Eppo to your warehouse. This 
 
 See below for warehouse-specific instructions:
 
-- [BigQuery](/how-tos/connecting-dwh/bigquery)
-- [Databricks](/how-tos/connecting-dwh/databricks)
-- [Redshift](/how-tos/connecting-dwh/redshift)
-- [Snowflake](/how-tos/connecting-dwh/snowflake)
+- [BigQuery](/guides/connecting-dwh/bigquery)
+- [Databricks](/guides/connecting-dwh/databricks)
+- [Redshift](/guides/connecting-dwh/redshift)
+- [Snowflake](/guides/connecting-dwh/snowflake)

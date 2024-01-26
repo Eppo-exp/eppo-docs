@@ -36,7 +36,7 @@ else:
     price_of_shoes = 10
 ```
 
-See the feature flag [use cases](/feature-flags/use-cases) to explore more interesting ways to use feature flags.
+See the feature flag [use cases](/feature-flagging/use-cases) to explore more interesting ways to use feature flags.
 
 ### Variations
 
@@ -48,7 +48,7 @@ In this case, the feature flag may be called `checkout_page_buy_now_button_color
 ### Allocations
 
 Allocations govern how users get assigned to different variations of a feature flag in a flexible way.
-An allocation is a logical grouping of [targeting rules](/feature-flags/targeting) and variation weights associated with a flag.
+An allocation is a logical grouping of [targeting rules](/feature-flagging/targeting) and variation weights associated with a flag.
 
 Eppo supports two types of allocations: Feature Gates and Experiment allocations.
 

@@ -14,6 +14,6 @@ The **left endpoint of the confidence interval in Eppo** has the same informatio
 
 ## Example
 
-![Example experiment.png](/img/how-tos/Example-experiment.png)
+![Example experiment.png](/img/guides/Example-experiment.png)
 
 In this example experiment, you might want to do a non-inferiority test on "Total revenue". Let's say you're willing to move forward as long as the impact is no worse than $c=-5$%. You see that the left side of the confidence interval is $-4.40$%, so you can reject the null hypothesis, aka declare that the test caused no harm. If instead you had a stricter threshold of $c=-3$%, you wouldn't have enough evidence (at that sample size) to make the call that the treatment caused no harm.

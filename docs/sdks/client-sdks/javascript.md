@@ -4,7 +4,7 @@ import TabItem from '@theme/TabItem';
 # JavaScript
 
 :::note
-This documentation is for our client-side SDK intended for use by browser applications. For use in server applications, refer to our [Node JS SDK](/feature-flags/sdks/node).
+This documentation is for our client-side SDK intended for use by browser applications. For use in server applications, refer to our [Node JS SDK](sdks/server-sdks/node).
 :::
 
 <br />
@@ -125,7 +125,7 @@ The SDK will invoke the `logAssignment` function with an `assignment` object tha
 | `allocation` (string)     | An Eppo allocation key                                                                                                   | "allocation-17"                     |
 
 :::note
-More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/how-tos/event-logging/) page.
+More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/guides/event-logging/) page.
 :::
 
 ## 3. Assign variations

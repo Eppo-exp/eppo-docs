@@ -4,7 +4,7 @@
 
 1. Navigate to **Experiments** and click the **Overview** tab
 
-You should have already [configured your feature flag](/experiments/creating-experiments) above, if you haven't, go do that first.
+You should have already [configured your feature flag](/experiment-analysis/creating-experiments) above, if you haven't, go do that first.
 
 Under **Decision metrics**, you will see that [guardmail metrics](/data-management/metrics/guardrails) have already been included automatically.
 
