@@ -30,7 +30,7 @@ Entities specify the different subjects on which you plan to run experiments. Co
 
 At the core of Eppo's data model is a log of every time a subject (e.g., user) was assigned to an experiment and which variant they received. If you have past experiments you would like to add to Eppo, you can create an Assignment SQL definition and specify where this data lives in your data warehouse. If you have not run an experiment before, see our [Feature Flagging quickstart](/feature-flag-quickstart) to implement your first randomized experiment.  
 
-To add historical experiments, navigate to the **Assignments** section on the **Definitions** tab and click **+Create Assignment Table**. Give the Assignment SQL a name (e.g., "Historical Experiment Assignments") and enter some SQL to return the following feilds from your data warehouse:
+To add historical experiments, navigate to the **Assignments** section on the **Definitions** tab and click **+Create Assignment Table**. Give the Assignment SQL a name (e.g., "Historical Experiment Assignments") and enter some SQL to return the following fields from your data warehouse:
 
 1. A unique identifier tied to the [entity](/data-management/entities) you created (e.g., `user_id`)
 2. A unique identifier for the experiment that the subject (user) was enrolled into
