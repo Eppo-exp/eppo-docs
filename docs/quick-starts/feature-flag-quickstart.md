@@ -106,11 +106,7 @@ const variation = eppoClient.getBoolAssignment(
   // userProperties
 );
 
-if (variation) {
-  return <NewCheckoutPage />;
-} else {
-  return <OldCheckoutPage />;
-}
+return variation ? <NewCheckoutPage /> : <OldCheckoutPage />
 ```
 
 Note that the `getAssignment` methods in Eppo are deterministic meaning that they will always return the same value for a given user throughout the experiment.
