@@ -52,7 +52,7 @@ When you save an Explore by clicking the “Add to Experiment” button all filt
 
 Assignment Properties are similar to Entity Properties - they are used to further describe a given Entity. In fact, they will show up on the Entity Properties tab and can be used to filter experiment results in the same way.
 
-The main difference with Assignment Properties are that they are defined with your Assignment SQL and have a timestamp associated with them. This can save you time if these properties are defined in the same table as your assignments as you don’t have to write the SQL twice.
+The main difference is that Assignment Properties, unlike Entity Properties, are defined with your Assignment SQL and have a timestamp associated with them. This can save you time if these properties are defined in the same table as your assignments as you don’t have to write the SQL twice.
 
 If we observe multiple values for a given entity in Assignment Properties, we apply the last value before assignment.
 
