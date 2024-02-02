@@ -87,7 +87,7 @@ Examples: videos watched per user, articles viewed per visitor, orders per user.
 
 $\frac{\text{Number of unique fact values}}{\text{Number of unique entities assigned}}$
 
-Examples: number of unique devices with a video watch, number of unique cookies who viewed an article, number of unique emails who entered checkout.
+Examples: number of unique videos watched per user (if the same video is watched twice, it only counts once), number of unique articles viewed per visitor, number of unique items ordered (if an item is ordered multiple times, it only counts once).
 
 #### Retention
 
