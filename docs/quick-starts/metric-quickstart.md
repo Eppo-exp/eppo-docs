@@ -1,9 +1,9 @@
 ---
 slug: /metric-quickstart
-sidebar_position: 3
+sidebar_position: 2
 ---
 
-# Your first metric
+# Creating your first metric
 
 :::info
 In order to create a metric, you must have a data warehouse connected and an entity created. See [the initial setup quickstart](/setup-quickstart) for details.

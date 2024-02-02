@@ -1,13 +1,15 @@
 ---
 slug: /feature-flag-quickstart
-sidebar_position: 2
+sidebar_position: 3
 ---
 
-# Your first experiment
+# Running your first experiment
 
 This 10 minute guide will walk through running your first experiment with Eppo. In the example we'll imagine that we are testing a new checkout page.
 
 While Eppo feature flags can be used for feature gates, kill switches, and targeted rollouts, this guide will focus on using Eppo flags for running randomized experiments.
+
+Note that if you are using Eppo alongside an existing randomization tool, you can skip right to the [next quick start](/experiment-quickstart).
 
 ### 0. Generate a SDK key
 
