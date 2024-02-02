@@ -38,10 +38,6 @@ GROUP BY variant
 ### Metric aggregation types
 
 In Eppo, you are able to create a wide variety of metrics because Eppo supports many aggregation functions:
-
-- [Simple metrics](#simple-metrics)
-  - [Anatomy of a metric](#anatomy-of-a-metric)
-    - [Metric aggregation types](#metric-aggregation-types)
       - [Sum](#sum)
       - [Unique Entities](#unique-entities)
       - [Count](#count)
@@ -49,12 +45,6 @@ In Eppo, you are able to create a wide variety of metrics because Eppo supports 
       - [Retention](#retention)
       - [Conversion](#conversion)
       - [Threshold](#threshold)
-  - [Creating a metric](#creating-a-metric)
-    - [Timeframes](#timeframes)
-    - [Metric properties](#metric-properties)
-  - [Editing metrics](#editing-metrics)
-  - [Deleting metrics](#deleting-metrics)
-
 Let's discuss each of them in more detail.
 
 #### Sum
