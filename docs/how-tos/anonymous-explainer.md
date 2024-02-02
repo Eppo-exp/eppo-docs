@@ -21,8 +21,8 @@ with
 
 users_lag as (
     SELECT
-        user_id,
-				, anonymous_id
+        user_id
+		, anonymous_id
         , lag(user_id) OVER (PARTITION BY anonymous_id ORDER BY ts) as last_user_id
         , lag(ts)  OVER (PARTITION BY anonymous_id ORDER BY ts) as last_ts
         , lead(ts)  OVER (PARTITION BY anonymous_id ORDER BY ts) as next_ts
