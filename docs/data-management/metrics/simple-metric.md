@@ -39,12 +39,21 @@ GROUP BY variant
 
 In Eppo, you are able to create a wide variety of metrics because Eppo supports many aggregation functions:
 
-- [Sum](#sum)
-- [Unique Entities](#unique-entities)
-- [Count](#count)
-- [Retention](#retention)
-- [Conversion](#conversion)
-- [Threshold](#threshold)
+- [Simple metrics](#simple-metrics)
+  - [Anatomy of a metric](#anatomy-of-a-metric)
+    - [Metric aggregation types](#metric-aggregation-types)
+      - [Sum](#sum)
+      - [Unique Entities](#unique-entities)
+      - [Count](#count)
+      - [Count Distinct](#count-distinct)
+      - [Retention](#retention)
+      - [Conversion](#conversion)
+      - [Threshold](#threshold)
+  - [Creating a metric](#creating-a-metric)
+    - [Timeframes](#timeframes)
+    - [Metric properties](#metric-properties)
+  - [Editing metrics](#editing-metrics)
+  - [Deleting metrics](#deleting-metrics)
 
 Let's discuss each of them in more detail.
 
@@ -71,6 +80,14 @@ Count leverages SQL's `COUNT` to compute a total count of events per entity. If 
 $\frac{\text{COUNT of fact values}}{\text{Number of unique entities assigned}}$
 
 Examples: videos watched per user, articles viewed per visitor, orders per user.
+
+#### Count Distinct
+
+`Count distinct` computes the number of unique non-numeric values in a fact. This allows for counting a number of unique values in a field other than the entity. If the fact value is NULL, it is discarded.
+
+$\frac{\text{Number of unique fact values}}{\text{Number of unique entities assigned}}$
+
+Examples: number of unique videos watched per user (if the same video is watched twice, it only counts once), number of unique articles viewed per visitor, number of unique items ordered (if an item is ordered multiple times, it only counts once).
 
 #### Retention
 
