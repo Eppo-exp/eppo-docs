@@ -1,12 +1,11 @@
 ---
 sidebar_position: 1
 ---
-
-# Simple metrics <!-- omit from toc -->
+# Simple metrics
 
 Metrics are essential for analyzing experiments in Eppo, as they provide quantitative measures to evaluate the performance of different variations in an A/B test. In this guide, we walk you through simple metrics: an aggregation over an entity. An example of a simple metric at the _User_ entity level would be _Revenue_: this is the sum of money spent by a user.
 
-## Anatomy of a metric <!-- omit from toc -->
+## Anatomy of a metric
 
 Simple metrics turn an event stream (created from a [Fact SQL Definition](/data-management/definitions/fact-sql)) into a single number for a variation in two steps:
 
@@ -35,7 +34,7 @@ LEFT JOIN user_summaries ON user
 GROUP BY variant
 ```
 
-### Metric aggregation types <!-- omit from toc -->
+### Metric aggregation types
 
 In Eppo, you are able to create a wide variety of metrics because Eppo supports many aggregation functions:
 - [Sum](#sum)
@@ -106,7 +105,7 @@ $(\text{timestamp of event}) - (\text{timestamp of assignment}) < 7 \text{ days}
 
 Threshold metrics measure the proportion of entities who meet a user-specified `SUM` OR `COUNT` of a fact within an optional time-period. For example, you might want to understand what share of users in your experiment spent more than $100 within 7 days of assignment into an experiment.
 
-## Creating a metric <!-- omit from toc -->
+## Creating a metric
 
 Now that we understand how metrics are defined withen Eppo, we are ready to create a metric.
 Note that in order to create a metric, you first need to have set up a [Fact SQL Definition](/data-management/definitions/fact-sql) to point to the underlying data for your metric in your data warehouse.
@@ -142,7 +141,7 @@ The [precision](/experiments/progress-bar#precision) refers to the uncertainty y
 
 Here, you can select whether to format the metric as a number or as a percentage.
 
-### Timeframes <!-- omit from toc -->
+### Timeframes
 
 Eppo allows you to further refine metrics by adding a timeframe. For example, we may be interested in a metric that only considers purchases within one week of the user's assignment to an experiment.
 
@@ -154,7 +153,7 @@ For example, suppose sending a promotional email boosts engagement for one week.
 
 :::
 
-### Metric properties <!-- omit from toc -->
+### Metric properties
 
 Metric properties give you another tool to filter events based on a [metric property](data-management/properties#metric-properties).
 Suppose you work at a streaming platform that streams both movies and series and _watch time_ is your primary metric. However, you may also be interested in understanding the impact of experiments on _movie watch time_ and _series watch time_ separately. In this case, you can add _show type_ as a category and create separate metrics for movies and shows.
@@ -162,7 +161,7 @@ Suppose you work at a streaming platform that streams both movies and series and
 When creating such a metric, specify that you want to use a metric property and select which values are valid.
 ![Adding a metric property](/img/data-management/metrics/create-metric-property.png)
 
-## Editing metrics <!-- omit from toc -->
+## Editing metrics
 
 ![Editing a metric](/img/building-experiments/edit-metric.gif)
 
@@ -174,7 +173,7 @@ When creating such a metric, specify that you want to use a metric property and 
 
 4. Select **Edit Metric** from the dropdown
 
-## Deleting metrics <!-- omit from toc -->
+## Deleting metrics
 
 ![Deleting a metric](/img/building-experiments/delete-metric.gif)
 
