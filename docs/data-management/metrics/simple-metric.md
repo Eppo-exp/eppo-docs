@@ -1,7 +1,6 @@
 ---
 sidebar_position: 1
 ---
-
 # Simple metrics
 
 Metrics are essential for analyzing experiments in Eppo, as they provide quantitative measures to evaluate the performance of different variations in an A/B test. In this guide, we walk you through simple metrics: an aggregation over an entity. An example of a simple metric at the _User_ entity level would be _Revenue_: this is the sum of money spent by a user.
@@ -38,24 +37,13 @@ GROUP BY variant
 ### Metric aggregation types
 
 In Eppo, you are able to create a wide variety of metrics because Eppo supports many aggregation functions:
-
-- [Simple metrics](#simple-metrics)
-  - [Anatomy of a metric](#anatomy-of-a-metric)
-    - [Metric aggregation types](#metric-aggregation-types)
-      - [Sum](#sum)
-      - [Unique Entities](#unique-entities)
-      - [Count](#count)
-      - [Count Distinct](#count-distinct)
-      - [Retention](#retention)
-      - [Conversion](#conversion)
-      - [Threshold](#threshold)
-  - [Creating a metric](#creating-a-metric)
-    - [Timeframes](#timeframes)
-    - [Metric properties](#metric-properties)
-  - [Editing metrics](#editing-metrics)
-  - [Deleting metrics](#deleting-metrics)
-
-Let's discuss each of them in more detail.
+- [Sum](#sum)
+- [Unique Entities](#unique-entities)
+- [Count](#count)
+- [Count Distinct](#count-distinct)
+- [Retention](#retention)
+- [Conversion](#conversion)
+- [Threshold](#threshold)
 
 #### Sum
 
