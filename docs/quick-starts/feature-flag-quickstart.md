@@ -3,43 +3,53 @@ slug: /feature-flag-quickstart
 sidebar_position: 3
 ---
 
-# Your first feature flag
+# Running your first experiment
 
-This 10 minute guide will get you set up with your first running feature flag on Eppo. In the example we'll imagine that we are using a flag on our frontend to gradually launch a new checkout page.
+This 10 minute guide will walk through running your first experiment with Eppo. In the example we'll imagine that we are testing a new checkout page.
 
-### 0. Generate a SDK key
+While Eppo feature flags can be used for feature gates, kill switches, and targeted rollouts, this guide will focus on using Eppo flags for running randomized experiments.
 
-From the Feature Flag page, navigate to the SDK keys tab. Here you can generate keys to use both in production as well as for testing purposes.
+Note that if you are using Eppo alongside an existing randomization tool, you can skip right to the [next quick start](/experiment-quickstart).
+
+### 1. Generate an SDK key
+
+From the Feature Flag page, navigate to the SDK keys tab. Here you can generate keys for both production and testing.
 
 ![Setup Eppo SDK key](/img/feature-flagging/environments/sdk-keys.png)
 
-For now, let's create a Test environment SDK key by using the "New SDK Key" button. Give the key a name and select "Test" for the Environment.
+For now, create a Test environment SDK key by using the "New SDK Key" button. Give the key a name and select "Test" for the Environment.
 
 ![Generate a SDK key](/img/feature-flagging/sdk-key-modal.png)
 
 Store the SDK key securely; it is not possible to view it after closing the modal. However, generating a new key is easy in case you do lose it.
 
-### 1. Creating a flag
+### 2. Create a flag
 
-Start by creating a flag that will serve as a gate for who sees the new page:
+Start by creating a flag for the new page:
 
-![Feature gate 0](/img/feature-flagging/feature-gate-0.png)
+![Feature gate 0](/img/feature-flagging/feature-flag-qs-0.png)
 
-Give the flag a descriptive human readable name and create a single variation for the on state. When using flag for boolean values we don't have to create an explicit `off` variation. If the assigned variation is not `on`, then `null` is returned and we can assume the page should not be shown:
+Give the flag a descriptive human readable name and create variations for each version of the checkout page. In this example we only have two states: enabled and disabled. If your flag is more involved, you can change the flag type to be string, numeric, or JSON-valued. Read more about flag types [here](/feature-flags/flag-variations).
 
-![Feature gate 1](/img/feature-flagging/feature-gate-1.png)
+![Feature gate 1](/img/feature-flagging/feature-flag-qs-1.png)
 
-### 2. Create allocations to describe your target audience
+### 3. Create an experiment allocation
 
-After creating the flag, decide who to target by creating [allocations](/feature-flags#allocations). In this case we will create two feature gate allocations that describe our target audience for the new page: internal users and half of all North American web users:
+After creating the flag, switch into the Test environment:
 
-![Feature gate 2](/img/feature-flagging/feature-gate-2.png)
+![Feature gate 2](/img/feature-flagging/feature-flag-qs-2.png)
 
-Create each allocation one by one, giving each a name and specifying the traffic split and traffic exposure. Finally, enter rules that specify which subjects are part of that allocation. In the example above `Internals users` are determined by their email, and `North America Web Users` are determined by their country and device. For this allocation we'll set the traffic exposure to 50% so that 50% of the group still sees the original page (SDK will return `null`).
+Now that you're in the Test environment, add an Experiment allocation to your flag. If you want to force certain segments or users into one variant, you can also add a Feature Gate allocation. You can read more about using Eppo for Feature Gates [here](/feature-flags/use-cases/feature-gates).
 
-### 3. Connect a logging function to the Eppo SDK (optional)
+![Feature gate 3](/img/feature-flagging/feature-flag-qs-3.png)
 
-If you are using feature flags to implement a randomized experiment, you will need to log each time a user is assigned a variant. Instead of integrating an additional event logging system, Eppo connects to your existing data warehouse logging infrastructure. Whether you are using a third party system to log events to the data warehouse or have an internally built solution, you'll simply pass in a logging function when initializing the SDK.
+For this example, we will assign all users to the experiment. If you want to target specific users, you can add targeting rules to the allocation. You can read more about targeting [here](/feature-flags/targeting).
+
+![Feature gate 4](/img/feature-flagging/feature-flag-qs-4.png)
+
+### 4. Connect a logging function to the Eppo SDK
+
+Eppo leverages your existing event logging infrastructure to track experiment assignment. Whether you are using a third party system to log events to the data warehouse or have an internally built solution, you'll simply pass in a logging function when initializing the SDK.
 
 For instance, if you are using Segment, the logging function might look something like this:
 
@@ -54,7 +64,7 @@ const assignmentLogger: IAssignmentLogger = {
   logAssignment(assignment) {
     analytics.track({
       userId: assignment.subject,
-      event: 'Eppo Randomized Assignment',
+      event: 'Eppo Experiment Assignment',
       type: 'track',
       properties: { ...assignment }
     });
@@ -62,9 +72,9 @@ const assignmentLogger: IAssignmentLogger = {
 };
 ```
 
-The [event logging](/how-tos/event-logging/) page has more information on how to set up logging using different logging tools
+The [event logging](/how-tos/event-logging/) page has more information on how to set up logging using different logging tools.
 
-### 4. Initialize the SDK
+### 5. Initialize the SDK
 
 Choose the [Eppo SDK](/feature-flags/sdks) that fits in your stack. You'll need to initialize the SDK in your app and create an Eppo client. Here is an example in Javascript:
 
@@ -72,17 +82,17 @@ Choose the [Eppo SDK](/feature-flags/sdks) that fits in your stack. You'll need 
 import { init } from "@eppo/js-client-sdk";
 
 await init({
-  apiKey: '<API_KEY>',
+  apiKey: '<SDK_KEY>',
   assignmentLogger,
 });
 ```
-Note, here is where you use the API key generated in step 0.
+Note, here is where you use the SDK key generated in step 1.
 
 If you are using React, we have some [React specific recommendations](../feature-flags/sdks/javascript#usage-in-react).
 
-### 5. Embed the flag in your code
+### 6. Embed the flag in your code
 
-Once the SDK is initialized, you can embed the flag in your application's logic to check if users should be see the new page:
+Once the SDK is initialized, use `getBoolAssignment` to check whether a user should see the new page:
 
 ```jsx
 // Wherever you render the checkout page...
@@ -91,30 +101,24 @@ import * as EppoSdk from "@eppo/js-client-sdk";
 
 const eppoClient = EppoSdk.getInstance();
 
-// Attributes that the targeting rules above depend on.
-const userAttributes = {
-  email: user.email,
-  country: user.country,
-  device: user.device,
-};
-
-const variation = eppoClient.getStringAssignment(
+const variation = eppoClient.getBoolAssignment(
   user.id,
   "new-checkout-page",
-  userAttributes
+  // if using Eppo to target users, pass in user properties as optional third argument
+  // userProperties
 );
 
-if (variation == "on") {
-  return <NewCheckoutPage />;
-} else {
-  return <OldCheckoutPage />;
-}
+return variation ? <NewCheckoutPage /> : <OldCheckoutPage />
 ```
 
-### 6. Turn on the flag to start splitting traffic
+Note that the `getAssignment` methods in Eppo are deterministic, meaning that they will always return the same variant for a given subject (e.g., user) throughout the experiment.
 
-The last step is turning on the flag, which can be done back in the interface using the toggle on the flag's detail view:
+### 7. Turn on the flag to start splitting traffic
 
-![Feature gate 3](/img/feature-flagging/feature-gate-3.png)
+To start randomly assigning traffic, flip the flag on in the Test environment.
 
-Congrats on setting up your first flag!
+![Feature gate 5](/img/feature-flagging/feature-flag-qs-5.png)
+
+You should now see assignments coming through the Eppo SDK!
+
+To deploy to production, create a new SDK key for the production environment, create a production experiment allocation, and enable the flag.
