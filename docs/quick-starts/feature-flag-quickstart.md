@@ -11,19 +11,19 @@ While Eppo feature flags can be used for feature gates, kill switches, and targe
 
 Note that if you are using Eppo alongside an existing randomization tool, you can skip right to the [next quick start](/experiment-quickstart).
 
-### 0. Generate a SDK key
+### 1. Generate an SDK key
 
 From the Feature Flag page, navigate to the SDK keys tab. Here you can generate keys for both production and testing.
 
 ![Setup Eppo SDK key](/img/feature-flagging/environments/sdk-keys.png)
 
-For now, let's create a Test environment SDK key by using the "New SDK Key" button. Give the key a name and select "Test" for the Environment.
+For now, create a Test environment SDK key by using the "New SDK Key" button. Give the key a name and select "Test" for the Environment.
 
 ![Generate a SDK key](/img/feature-flagging/sdk-key-modal.png)
 
 Store the SDK key securely; it is not possible to view it after closing the modal. However, generating a new key is easy in case you do lose it.
 
-### 1. Create a flag
+### 2. Create a flag
 
 Start by creating a flag for the new page:
 
@@ -33,7 +33,7 @@ Give the flag a descriptive human readable name and create variations for each v
 
 ![Feature gate 1](/img/feature-flagging/feature-flag-qs-1.png)
 
-### 2. Create an experiment allocation
+### 3. Create an experiment allocation
 
 After creating the flag, switch into the Test environment:
 
@@ -47,7 +47,7 @@ For this example, we will assign all users to the experiment. If you want to tar
 
 ![Feature gate 4](/img/feature-flagging/feature-flag-qs-4.png)
 
-### 3. Connect a logging function to the Eppo SDK
+### 4. Connect a logging function to the Eppo SDK
 
 Eppo leverages your existing event logging infrastructure to track experiment assignment. Whether you are using a third party system to log events to the data warehouse or have an internally built solution, you'll simply pass in a logging function when initializing the SDK.
 
@@ -74,7 +74,7 @@ const assignmentLogger: IAssignmentLogger = {
 
 The [event logging](/how-tos/event-logging/) page has more information on how to set up logging using different logging tools.
 
-### 4. Initialize the SDK
+### 5. Initialize the SDK
 
 Choose the [Eppo SDK](/feature-flags/sdks) that fits in your stack. You'll need to initialize the SDK in your app and create an Eppo client. Here is an example in Javascript:
 
@@ -86,11 +86,11 @@ await init({
   assignmentLogger,
 });
 ```
-Note, here is where you use the SDK key generated in step 0.
+Note, here is where you use the SDK key generated in step 1.
 
 If you are using React, we have some [React specific recommendations](../feature-flags/sdks/javascript#usage-in-react).
 
-### 5. Embed the flag in your code
+### 6. Embed the flag in your code
 
 Once the SDK is initialized, use `getBoolAssignment` to check whether a user should see the new page:
 
@@ -111,9 +111,9 @@ const variation = eppoClient.getBoolAssignment(
 return variation ? <NewCheckoutPage /> : <OldCheckoutPage />
 ```
 
-Note that the `getAssignment` methods in Eppo are deterministic meaning that they will always return the same value for a given user throughout the experiment.
+Note that the `getAssignment` methods in Eppo are deterministic, meaning that they will always return the same variant for a given subject (e.g., user) throughout the experiment.
 
-### 6. Turn on the flag to start splitting traffic
+### 7. Turn on the flag to start splitting traffic
 
 To start randomly assigning traffic, flip the flag on in the Test environment.
 

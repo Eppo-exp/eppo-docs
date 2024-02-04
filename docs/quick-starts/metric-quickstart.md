@@ -38,4 +38,4 @@ Metrics specify how the raw event data you defined above should be aggregated fo
 
 ![Create Assignment SQL](../../static/img/metrics/quick-start-4.png)
 
-You have now created your first metric! Next, [create an experiment](/experiment-quickstart/) and analyze the impact on your metrics.
+You have now created your first metric! Next, check out our quick start on [running your first experiment](/feature-flag-quickstart) or [analyzing a past experiment](/experiment-quickstart/).

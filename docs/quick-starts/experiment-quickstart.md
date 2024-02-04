@@ -15,7 +15,7 @@ In order to analyze an experiment, you must have completed the [initial setup qu
 This guide will walk you through creating your first experiment readout. We will create a new experiment analysis, set up basic configurations, add metrics, run the analysis, and visualize results.
 
 
-## 1. Create an Assignment SQL definition
+### 1. Create an Assignment SQL definition
 
 At the core of Eppo's data model is a log of every time a subject (e.g., user) was assigned to an experiment and which variant they received. These logs can capture both experiments randomized with Eppo as well as with other tools (for instance, email marketing systems). If you have not run an experiment before, see our [guide on running your first experiment](/feature-flag-quickstart).  
 
@@ -35,7 +35,7 @@ Once this query has been written, pull in a sample data set by clicking **Run** 
 
 You can read more about Assignment SQL Definitions [here](/data-management/definitions/assignment-sql).
 
-## 2. Create an experiment analysis
+### 2. Create an experiment analysis
 
 <Tabs>
 <TabItem value="e2e" label="Eppo Randomized">
@@ -60,7 +60,7 @@ Add a name for the experiment, select an entity, and select the Assignment SQL y
 
 </Tabs>
 
-## 3. Configure the experiment analysis
+### 3. Configure the experiment analysis
 
 Once you have created an experiment analysis, you'll land on the configuration page:
 
@@ -82,13 +82,13 @@ Default analysis options are set to make it easy to start using Eppo without div
 
 Once you have configured your experiment, click **Save Changes** and continue on to adding metrics.
 
-## 4. Add metrics
+### 4. Add metrics
 
 Now that the experiment is configured, navigate to the metrics tab and click **+Add** or **+Decision Metrics**. From here, you'll be able to see all of the metrics you created during the metric quick start. Select any that are relevant to this experiment.
 
 ![Add Metrics](/../static/img/building-experiments/quick-start-3.png)
 
-## 5. Run the analysis and visualize results
+### 5. Run the analysis and visualize results
 
 By default, results will update in a nightly incremental batch job. If you want to get results immediately you can manually trigger an update by clicking **update now** (see screenshot).
 
