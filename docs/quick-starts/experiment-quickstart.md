@@ -102,4 +102,4 @@ Once the job completes, you'll see a scorecard with each metric, measured lift, 
 
 Congratulations, you have now created your first experiment analysis! If you want to analyze additional experiments, simply repeat this process but substitute in a different experiment key.
 
-This is just the surface of Eppo's functionality. To learn more about analyzing experiments, see the [Experiments](/experiments/) section of our documentation.
+This is just the surface of Eppo's functionality. To learn more about analyzing experiments, see the [Experiments](/experiment-analysis/) section of our documentation.

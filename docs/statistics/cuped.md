@@ -94,7 +94,7 @@ Thus, when the non-CUPED confidence interval is very wide, the two point estimat
 On the other hand, when there is no overlap between confidence intervals, then it suggests there is indeed a problem.
 The two most common problems are:
 
-1. There is a [traffic imbalance](/experiments/diagnostics#traffic-diagnostics), which invalidates both CUPED and non-CUPED results.
+1. There is a [traffic imbalance](/experiment-analysis/diagnostics#traffic-diagnostics), which invalidates both CUPED and non-CUPED results.
 2. Pre-experiment data is tainted, for example because some users were exposed to the treatment before the experiment analysis has started.
   In this case, the CUPED results are no longer valid, but non-CUPED results still are.
 

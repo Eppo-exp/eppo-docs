@@ -35,7 +35,11 @@ Give the flag a descriptive human readable name and create variations for each v
 
 ### 3. Create an experiment allocation
 
+<<<<<<< HEAD
 After creating the flag, switch into the Test environment:
+=======
+After creating the flag, decide who to target by creating [allocations](/feature-flagging#allocations). In this case we will create two feature gate allocations that describe our target audience for the new page: internal users and half of all North American web users:
+>>>>>>> 63948ec15aa07a280889ab0acee72429aef476dd
 
 ![Feature gate 2](/img/feature-flagging/feature-flag-qs-2.png)
 
@@ -72,11 +76,11 @@ const assignmentLogger: IAssignmentLogger = {
 };
 ```
 
-The [event logging](/how-tos/event-logging/) page has more information on how to set up logging using different logging tools.
+The [event logging](/guides/event-logging/) page has more information on how to set up logging using different logging tools
 
 ### 5. Initialize the SDK
 
-Choose the [Eppo SDK](/feature-flags/sdks) that fits in your stack. You'll need to initialize the SDK in your app and create an Eppo client. Here is an example in Javascript:
+Choose the Eppo SDK that fits in your stack. You'll need to initialize the SDK in your app and create an Eppo client. Here is an example in Javascript:
 
 ```javascript
 import { init } from "@eppo/js-client-sdk";
@@ -88,7 +92,7 @@ await init({
 ```
 Note, here is where you use the SDK key generated in step 1.
 
-If you are using React, we have some [React specific recommendations](../feature-flags/sdks/javascript#usage-in-react).
+If you are using React, we have some [React specific recommendations](../sdks/client-sdks/javascript#usage-in-react).
 
 ### 6. Embed the flag in your code
 

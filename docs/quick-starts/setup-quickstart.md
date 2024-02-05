@@ -15,10 +15,10 @@ Eppo can be accessed at [eppo.cloud](http://eppo.cloud). You can sign in with an
 
 Eppo uses your data warehouse to host all experimentation data. This means that you have full control over your data and full visibility into how Eppo calculates results. To connect your data warehouse, please see read the relevant guide below:
 
-- [Snowflake](/how-tos/connecting-dwh/snowflake)
-- [Databricks](/how-tos/connecting-dwh/databricks)
-- [BigQuery](/how-tos/connecting-dwh/bigquery)
-- [Redshift](/how-tos/connecting-dwh/redshift)
+- [Snowflake](/guides/connecting-dwh/snowflake)
+- [Databricks](/guides/connecting-dwh/databricks)
+- [BigQuery](/guides/connecting-dwh/bigquery)
+- [Redshift](/guides/connecting-dwh/redshift)
 
 ### 3. Create an Entity
 
