@@ -6,7 +6,7 @@ Before you connect Eppo to your data warehouse, it is recommended that you creat
 
 ### 1. Add Eppo IP Address to Allowlist
 
-For Eppo to connect to your Redshift database, you’ll need to allow our inbound IP addresses ( `35.226.89.62`, `34.133.196.109` ) in your Cluster’s Security Group settings:
+For Eppo to connect to your Redshift database, you’ll need to allow our inbound IP addresses in your Cluster’s Security Group settings:
 
 1. Log in to the Redshift Management Console.
 2. Select **Clusters** from the left sidebar then select the cluster you want to connect to Eppo.
@@ -16,7 +16,35 @@ For Eppo to connect to your Redshift database, you’ll need to allow our inboun
 6. Click **Add Rule** to add a new Inbound Rule.
    a. Set the Type to **Redshift**.
    b. Adjust the Port, if needed.
-   c. Enter the following into the Source field: `35.226.89.62`, `34.133.196.109`
+   c. Enter the following into the Source field: 
+
+| IP Address |
+| --- |
+| `34.133.196.109` |
+| `35.226.89.62` |
+| `34.41.172.201` |
+| `34.29.62.236` |
+| `34.132.152.78` |
+| `35.232.0.89` |
+| `34.41.154.239` |
+| `146.148.74.70` |
+| `34.121.71.161` |
+| `34.70.156.102` |
+| `35.239.118.244` |
+| `34.132.46.38` |
+| `35.238.158.100` |
+| `34.42.48.99` |
+| `34.134.43.217` |
+| `34.134.2.209` |
+| `34.134.152.212` |
+| `35.225.36.104` |
+| `34.31.169.195` |
+| `34.134.214.137` |
+| `34.30.65.165` |
+| `34.28.215.125` |
+| `35.193.17.22` |
+| `34.27.118.169` |
+
 7. Click **Save**.
 
 ### 2. Create Dedicated User for Eppo
