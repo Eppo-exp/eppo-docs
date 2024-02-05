@@ -16,7 +16,7 @@ Define one or more holdout groups with a relevant key and the desired active dat
 
 The holdout is split into two groups: `status quo` who always see the control experience, and `winning variants` who see the treatment from experiments that are rolled out.
 
-![Creating a Holdout](/img/experiment-analysis/holdouts/holdouts-create-object.png)
+![Creating a Holdout](/img/experiments/holdouts/holdouts-create-object.png)
 
 ### Assignment period
 
@@ -38,7 +38,7 @@ For this cohort the SDK will return the `control` variation.
 
 You may begin an analysis at the conclusion of your desired assignment period by creating a Holdout Experiment.
 
-![Creating a Holdout Experiment](/img/experiment-analysis/holdouts/holdouts-create-experiment.png)
+![Creating a Holdout Experiment](/img/experiments/holdouts/holdouts-create-experiment.png)
 
 1. The evaluation is ongoing and newly shipped winning variations will be added to it automatically.
 2. For that holdout group, after the evaluation period finishes, end the holdout group. 
@@ -57,7 +57,7 @@ subjects assigned to a Holdout will have the `control` variation returned.
 This makes it foolproof to design your User Experience without worrying
 about handling a special case.
 
-![Data Flow](/img/experiment-analysis/holdouts/holdouts-data-flow.png)
+![Data Flow](/img/experiments/holdouts/holdouts-data-flow.png)
 
 ### Changes to assignment logging
 
@@ -105,7 +105,7 @@ Ensure you are logging exposure to the holdout and each variant in an Assignment
 
 With this setup, Holdouts will be logged with Experiments in AssignmentSQL that is setup in Eppo.
 
-![Verify assignment source](/img/experiment-analysis/holdouts/standalone-assignment-sql.png)
+![Verify assignment source](/img/experiments/holdouts/standalone-assignment-sql.png)
 
 ### Configuring a Holdouts Analysis
 
@@ -113,11 +113,11 @@ Create a new Holdout experiment over your desired date range by clicking on the 
 
 Configure the analysis with the variation names in your holdout, such as `status_quo` and `winning_variants`.  This allows the Eppo generated SQL to correctly query the data in your warehouse.
 
-![Configure variations](/img/experiment-analysis/holdouts/standalone-variations.png)
+![Configure variations](/img/experiments/holdouts/standalone-variations.png)
 
 You are able to link experiments to your holdout to provide a comprehensive report of how each experiment impacted the primary Holdout metric and show the experience provided by the winning variants. To do so, go to the Overview tab and add Experiments that are part of the Holdout. Note that these experiments must be configured in Eppo to be linked.
 
-![Create a stand-alone analysis](/img/experiment-analysis/holdouts/analysis-only-setup1.png)
+![Create a stand-alone analysis](/img/experiments/holdouts/analysis-only-setup1.png)
 
 ## Holdout Analysis
 
@@ -126,5 +126,5 @@ with annotations display the shipped experiments.
 
 Lift on the primary metric will be computed across the winning variants comparing the holdout subjects against everyone else.
 
-![View Holdout Report](/img/experiment-analysis/holdouts/holdouts-report.png)
+![View Holdout Report](/img/experiments/holdouts/holdouts-report.png)
 

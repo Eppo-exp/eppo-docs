@@ -60,6 +60,6 @@ Your feature flag tooling may have logged additional data about the user, like w
 
 Holdout columns are also defined here. More information is available on the [dedicated page](/experiment-analysis/holdouts).
 
-![Write Assignment SQL Query](/img/experiment-analysis/holdouts/holdouts-assignment-sql.png)
+![Write Assignment SQL Query](/img/experiments/holdouts/holdouts-assignment-sql.png)
 
 8. Click **Save & Close**

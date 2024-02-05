@@ -19,21 +19,21 @@ Segments allow you to define pre-defined filters to create subsets of users for 
 By creating segments, you can efficiently examine experiment results across different user groups.
 
 You can find all segments under the Metrics page in the Segments tab
-![overview of segments](/img/experiment-analysis/segments/segments_overview.png)
+![overview of segments](/img/experiments/segments/segments_overview.png)
 
 ### Creating a segment
 
 You can create a new segment on the segments page. For example, let's create a segment of North American users
 
-![create a new segment button](/img/experiment-analysis/segments/create_segment.png)
+![create a new segment button](/img/experiments/segments/create_segment.png)
 
 Next, select a property to filter by, in this case, we will filter by the Country property of the relevant assignment source
 
-![select property for segment](/img/experiment-analysis/segments/segment_select_source.png)
+![select property for segment](/img/experiments/segments/segment_select_source.png)
 
 Finally, we add Canada, Mexico, and the United States as property values.
 
-![select property values for segment](/img/experiment-analysis/segments/segment_add_dimensions.png)
+![select property values for segment](/img/experiments/segments/segment_add_dimensions.png)
 
 This defines the North America segment. However, it is easy to create more fine-grained segments (such as North American Mobile users) by adding additional filters to the segment.
 
@@ -45,7 +45,7 @@ When using a property filter based on an [assignment property](/data-management/
 
 On the experiments detail page, we can now filter the results of the experiment by the pre-defined segments
 
-![filter results by segment](/img/experiment-analysis/segments/filter_by_segment.png)
+![filter results by segment](/img/experiments/segments/filter_by_segment.png)
 
 '''note
 You may need to manually refresh the experiment results (or wait for the next pipeline run) for newly created segment results to be available.
@@ -53,15 +53,15 @@ You may need to manually refresh the experiment results (or wait for the next pi
 
 Now, the results indicate that we are analyzing the selected segment
 
-![experiment results filtered by a segment](/img/experiment-analysis/segments/segment_results.png)
+![experiment results filtered by a segment](/img/experiments/segments/segment_results.png)
 
 ## Single property filter
 
 The single property filter allows you to quickly explore experiment results based on a specific property.
 In the filter menu, select the "Single Value" filter and select the property and value you want to explore
 
-![filter results by property](/img/experiment-analysis/segments/filter_by_dimension.png)
+![filter results by property](/img/experiments/segments/filter_by_dimension.png)
 
 and the experiment results are now filtered to users that fit the filter
 
-![experiment results filtered by a segment](/img/experiment-analysis/segments/filter_results.png)
+![experiment results filtered by a segment](/img/experiments/segments/filter_results.png)
