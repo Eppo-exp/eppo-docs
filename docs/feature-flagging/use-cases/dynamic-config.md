@@ -1,4 +1,4 @@
-# Dynamic Configuration
+# Dynamic configuration
 
 ## What is Dynamic Configuration?
 
@@ -32,7 +32,7 @@ These key value pairs will be returned by the Eppo SDK and available for the app
 
 ### Get typed assignments
 
-The SDKs provide functions for getting assignments by type. The [Javascript client SDK](/sdks/client-sdks/javascript) for example has the following 5 functions:
+The SDKs provide functions for getting assignments by type. The [Javascript client SDK](/feature-flags/sdksclient-feature-flags/sdksjavascript) for example has the following 5 functions:
 
 ```
 getStringAssignment(...)

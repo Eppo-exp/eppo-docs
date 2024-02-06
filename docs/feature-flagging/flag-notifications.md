@@ -1,4 +1,9 @@
-# Feature Flag Notifications
+---
+sidebar_position: 6
+---
+
+
+# Notifications
 
 The Eppo App for Slack allows you to receive notifications for important updates on your feature flags.
 

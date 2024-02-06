@@ -76,7 +76,7 @@ const assignmentLogger: IAssignmentLogger = {
 };
 ```
 
-The [event logging](/guides/event-logging/) page has more information on how to set up logging using different logging tools
+The [event logging](/sdks/event-logging/) page has more information on how to set up logging using different logging tools
 
 ### 5. Initialize the SDK
 
@@ -92,7 +92,7 @@ await init({
 ```
 Note, here is where you use the SDK key generated in step 1.
 
-If you are using React, we have some [React specific recommendations](../sdks/client-sdks/javascript#usage-in-react).
+If you are using React, we have some [React specific recommendations](../feature-flags/sdksclient-feature-flags/sdksjavascript#usage-in-react).
 
 ### 6. Embed the flag in your code
 

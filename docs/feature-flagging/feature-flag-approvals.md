@@ -1,4 +1,8 @@
-# Feature Flag Approvals
+---
+sidebar_position: 3
+---
+
+# Approvals
 
 Approvals add an extra layer of security to minimize the risk of production changes. When enabled, all Non-admins who make changes in production will have their changes reviewed and approved by Admins.
 
@@ -9,7 +13,7 @@ Feature Flag Approvals are off by default. To enable, an Admin role should go to
 From there, Feature Flag Approvals can be enabled.
 ![Workflow settings page](/img/feature-flagging/approvals/workflow-settings.png)
 
-## When Approvlas Are Needed
+## When Approvals Are Needed
 Approvals are only needed for changes made by Non-admins that will result in a change to the production environment:
 * If a production flag is OFF, any changes to allocations and rules DO NOT need approval.
 * If a production flag is ON, any changes to allocations and rules WILL need approval.
