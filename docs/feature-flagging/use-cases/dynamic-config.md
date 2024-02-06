@@ -8,7 +8,7 @@ This is achieved by the engineering team implementing a number of variables in t
 
 ## Marketing use cases
 
-Once implemented, Dyanamic Configuration allows non-technical users to set values in Eppo's UI and see the change live on site in seconds without a deploy. In particular, a marketing user can set different variants with different values, allowing them to run multiple tests all from the same flag without any additional engineering work. This can be used to update or test headline copy, CTA button copy and color, and image assets used.
+Once implemented, Dynamic Configuration allows non-technical users to set values in Eppo's UI and see the change live on site in seconds without a deploy. In particular, a marketing user can set different variants with different values, allowing them to run multiple tests all from the same flag without any additional engineering work. This can be used to update or test headline copy, CTA button copy and color, and image assets used.
 
 ## AI use cases
 
@@ -32,7 +32,7 @@ These key value pairs will be returned by the Eppo SDK and available for the app
 
 ### Get typed assignments
 
-The SDKs provide functions for getting assignments by type. The [Javascript client SDK](/feature-flags/sdksclient-feature-flags/sdksjavascript) for example has the following 5 functions:
+The SDKs provide functions for getting assignments by type. The [Javascript client SDK](/sdks/client-sdks/javascript) for example has the following 5 functions:
 
 ```
 getStringAssignment(...)

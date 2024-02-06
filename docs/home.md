@@ -20,7 +20,7 @@ We offer companies an end-to-end suite of experimentation tools, but let you dec
 
 # How feature flagging works
 
-Eppo feature flag support feature gating, progressive rollouts, and randomized experiments with one consistent and intuitive interface. Eppo's lightweight SDKs can run either client side or server side. Our SDKs span the most common tech stacks, including [Node](/feature-flags/sdksserver-feature-flags/sdksnode), [JavaScript](/feature-flags/sdksclient-feature-flags/sdks/javascript) (including [React](/feature-flags/sdksclient-feature-flags/sdksjavascript#usage-in-react)), [Python](/feature-flags/sdksserver-feature-flags/sdkspython), [Go](/feature-flags/sdksserver-feature-flags/sdksgo), [PHP](/feature-flags/sdksserver-feature-flags/sdksphp), [Ruby](/feature-flags/sdksserver-feature-flags/sdksruby), [iOS](/feature-flags/sdksclient-feature-flags/sdksios), and [Android](/feature-flags/sdksclient-feature-flags/sdksandroid).
+Eppo feature flag support feature gating, progressive rollouts, and randomized experiments with one consistent and intuitive interface. Eppo's lightweight SDKs can run either client side or server side. Our SDKs span the most common tech stacks, including [Node](/sdks/server-sdks/node), [JavaScript](/sdks/client-sdks/javascript) (including [React](/sdks/client-sdks/javascript#usage-in-react)), [Python](sdks/server-sdks/python), [Go](sdks/server-sdks/go), [PHP](sdks/server-sdks/php), [Ruby](sdks/server-sdks/ruby), [iOS](/sdks/client-sdks/ios), and [Android](/sdks/client-sdks/android).
 
 Using an Eppo feature flag involves the following steps:
 1. Encode the variant values as booleans, strings, JSONs, or numerics

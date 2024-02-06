@@ -4,7 +4,7 @@ import TabItem from '@theme/TabItem';
 # JavaScript
 
 :::note
-This documentation is for our client-side SDK intended for use by browser applications. For use in server applications, refer to our [Node JS SDK](feature-flags/sdksserver-feature-flags/sdksnode).
+This documentation is for our client-side SDK intended for use by browser applications. For use in server applications, refer to our [Node JS SDK](/sdks/server-sdks/node).
 :::
 
 <br />
