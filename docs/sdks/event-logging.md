@@ -9,12 +9,7 @@ import TabItem from '@theme/TabItem';
 
 In order to run experiments on Eppo you'll need to provide a logging callback function to write assignment events to your warehouse. It is best practice to centralize application logging as much as possible, and Eppo's SDKs work seamlessly with most logging tools, meaning you can keep using your favorite logger.
 
-Eppo's SDKs include either an assignment logger base class or an interface, in which you can define a method according to your logging requirements. Examples are shown below in Eppo's Node SDK for logging with some common event loggers:
-
-- [Segment](#segment)
-- [Rudderstack](#rudderstack)
-- [mParticle](#mparticle)
-- [Snowplow](#snowplow)
+Eppo's SDKs include either an assignment logger base class or an interface, in which you can define a method according to your logging requirements. Examples are [shown below](/sdks/event-logging#examples-for-common-logging-systems) in Eppo's Node SDK for logging with some common event loggers.
 
 The object passed into the assignment logger function contains the following fields:
 
@@ -28,7 +23,7 @@ The object passed into the assignment logger function contains the following fie
 | `featureFlag` (string)    | An Eppo feature flag key                                                                                                 | "recommendation-algo"               |
 | `allocation` (string)     | An Eppo allocation key                                                                                                   | "allocation-17"                     |
 
-Eppo expects that the logger function will take this object and write data back to your warehouse in a format that roughly matched the table below. The specific column names do not matter, but the columns are needed to [define assignments](/data-management/definitions/assignment-sql.md).
+Eppo expects that the logger function will take this object and write data back to your warehouse in a format that roughly matched the table below. The specific column names do not matter, but these columns are needed to later [define assignments](/data-management/definitions/assignment-sql.md) in your warehouse.
 
 | experiment                          | subject | variation | timestamp                  | subject_attributes    |
 | :---------------------------------- | :------ | :-------- | :------------------------- | :-------------------- |
@@ -36,7 +31,7 @@ Eppo expects that the logger function will take this object and write data back 
 
 It's ok for this table to contain duplicate rows for the same subject. If a subject is assigned to multiple variants, Eppo will automatically remove them from the analysis.
 
-The `experiment` key is simply a concatenation of the `featureFlag` an `allocation` fields. By appending a unique identifier of the allocation to the flag key, we can separate traffic that saw a variant do to a rule set (Feature Gate allocation) or as part of randomized assignment (Experiment allocation). The `featureFlag` and `allocation` fields are not required for analysis but are provided for convenience.
+The `experiment` key is simply a concatenation of the `featureFlag` an `allocation` fields. By appending a unique identifier of the allocation to the flag key, we can separate traffic that saw a variant due to a rule set (Feature Gate allocation) or as part of randomized assignment (Experiment allocation). The `featureFlag` and `allocation` fields are not required for analysis but are provided for convenience.
 
 ### Examples for common logging systems
 

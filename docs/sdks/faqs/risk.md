@@ -2,7 +2,7 @@
 sidebar_position: 7
 ---
 
-# Risk FAQ
+# Risk
 
 Integrating with Eppo involves assessing risk, and we take reliability seriously. Here are a few commonly asked questions we get from decision makers around reliability, and our responses. If you have a question not listed here please reach out to us on Slack.
 
