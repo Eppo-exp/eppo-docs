@@ -69,16 +69,16 @@ Once you have created an experiment analysis, you'll land on the configuration p
 The setup flow will walk you through several sections:
 
 1. **Assignment & Analysis Date Range**
-Use this section to tell Eppo what date range of assignments to use. You can also set a different date range for the metric events you want to include the experiment. See [here](/experiments/creating-experiments#experiments-with-custom-event-dates) for more information.
+Use this section to tell Eppo what date range of assignments to use. You can also set a different date range for the metric events you want to include the experiment. See [here](/experiment-analysis/creating-experiments#experiments-with-custom-event-dates) for more information.
 
 2. **Variations (externally randomized experiments only)**
 Use this section to tell Eppo the different variants that were a part of the experiment and the expected traffic allocation across groups. Eppo uses these allocation ratios to perform [sample ratio mismatch checks](/statistics/sample-ratio-mismatch). Eppo will scan assignment logs in a scheduled batch job, but if you don't yet see your variant values you can enter them manually.
 
 3. **Allocation (externally randomized experiments only)**
-If your experiment has a custom traffic split or was only rolled out to a subset of eligible users (with the remainder not tracked in your assignment table), you can specify that in this section. The traffic exposure powers the [Global Lift](/experiments/global-lift) calculator. In most use cases it is appropriate to keep this exposure at 100% and the traffic split even.
+If your experiment has a custom traffic split or was only rolled out to a subset of eligible users (with the remainder not tracked in your assignment table), you can specify that in this section. The traffic exposure powers the [Global Lift](/experiment-analysis/global-lift) calculator. In most use cases it is appropriate to keep this exposure at 100% and the traffic split even.
 
 4. **Experiment Analysis Plan (optional)**
-Default analysis options are set to make it easy to start using Eppo without diving deep into the details of our statistics engine. For the majority of our customers, the default settings are appropriate. If you want to dive deeper into what these settings do, please see the [Analysis Plan section of our docs](experiments/analysis-plans).  
+Default analysis options are set to make it easy to start using Eppo without diving deep into the details of our statistics engine. For the majority of our customers, the default settings are appropriate. If you want to dive deeper into what these settings do, please see the [Analysis Plan section of our docs](/experiment-analysis/analysis-plans).  
 
 Once you have configured your experiment, click **Save Changes** and continue on to adding metrics.
 
@@ -102,4 +102,4 @@ Once the job completes, you'll see a scorecard with each metric, measured lift, 
 
 Congratulations, you have now created your first experiment analysis! If you want to analyze additional experiments, simply repeat this process but substitute in a different experiment key.
 
-This is just the surface of Eppo's functionality. To learn more about analyzing experiments, see the [Experiments](/experiments/) section of our documentation.
+This is just the surface of Eppo's functionality. To learn more about analyzing experiments, see the [Experiments](/experiment-analysis/) section of our documentation.

@@ -8,7 +8,7 @@ An experiment’s statistical power, or ability to detect treatment effects in a
 
 ## Setting up a sample size calculation
 
-Start by opening the **Sample Size Calculator** using the button in the top-right corner of the [Experiments](https://eppo.cloud/experiments) page.
+Start by opening the **Sample Size Calculator** using the button in the top-right corner of the [Experiments](https://eppo.cloud/experiment-analysis) page.
 
 ![Sample size calculator is located in the upper right on experiments page](/img/planning-experiments/sample_size_calculator_homepage.png)
 
@@ -23,7 +23,7 @@ You do not need to include all metrics you intend to add later to your experimen
 
 Instead, only include metrics for which you need to reach the target precision to make a ship/no-ship decision. These will typically be:
 - your primary metric, to verify that the effect size you anticipate from the experiment is greater than or equal to the Minimum Detectable Effect;
-- any guardrail metrics for which you need precise estimates to establish that the guardrail is met (possibly using a [non-inferiority test](/how-tos/non-inferiority-tests)).
+- any guardrail metrics for which you need precise estimates to establish that the guardrail is met (possibly using a [non-inferiority test](/guides/non-inferiority-tests)).
 :::
 
 After you have selected the metrics you're interested in, click _Run Calculation_. The setup is now saved and the calculation will begin in the background. You will receive an email when the calculation is completed, and the page will automatically refresh when completed. You are free to leave this page and come back later, without losing any work.

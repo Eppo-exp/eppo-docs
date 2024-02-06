@@ -6,7 +6,7 @@ Admins can create and manage REST API Keys by visiting Admin > API Keys
 
 #### Make a request to the Eppo API
 ```
-curl --header 'X-Eppo-Token: <api key>' https://eppo.cloud/api/v1/experiments
+curl --header 'X-Eppo-Token: <api key>' https://eppo.cloud/api/v1/experiment-analysis
 ```
 
 #### Explore the API Swagger documentation
