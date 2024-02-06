@@ -87,5 +87,9 @@ use Eppo's targeting rules to perform numeric comparisons against strings in the
 import eppo_client
 
 client = eppo_client.get_instance()
-variation = client.get_assignment("<SUBJECT-KEY>", "<EXPERIMENT-KEY>", { "device": "iOS", "appVersion": "28.5.0" })
+variation = client.get_assignment(
+  "<SUBJECT-KEY>", 
+  "<EXPERIMENT-KEY>", 
+  { "device": "iOS", "appVersion": "28.5.0" }
+)
 ```
