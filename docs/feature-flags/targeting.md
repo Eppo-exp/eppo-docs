@@ -74,7 +74,7 @@ variation = client.get_assignment("<SUBJECT-KEY>", "<EXPERIMENT-KEY>", { "device
 
 #### Special case: Semantic Versioning
 
-When rolling out new versions of your product or wishing to tailor an experimence across a range of past releases,
+When rolling out new versions of your product or wishing to deploy custom behavior across a range of releases,
 use Eppo's targeting rules to perform numeric comparisons against strings in the SemVer format.
 
 1. Create an allocation with your desired mix of rules.
