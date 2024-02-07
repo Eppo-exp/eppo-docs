@@ -26,9 +26,9 @@ http://adoring-yonath-6ecb9d.netlify.app/*  http://docs.geteppo.com/:splat  301!
 /experiments/holdouts /experiment-analysis/holdouts
 /experiments/progress-bar /experiment-analysis/progress-bar
 /experiments/segments /experiment-analysis/segments
-/feature-flags/api-keys /feature-flagging/sdks/api-keys
-/feature-flags/latency /feature-flagging/sdks/faqs/latency
-/feature-flags/risk /feature-flagging/sdks/faqs/risk
+/feature-flags/api-keys /sdks/api-keys
+/feature-flags/latency /sdks/faqs/latency
+/feature-flags/risk /sdks/faqs/risk
 /feature-flags/sdks /sdks
 /feature-flags/sdks/javascript /sdks/client-sdks/javascript
 /feature-flags/sdks/node /sdks/server-sdks/node
