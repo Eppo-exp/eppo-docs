@@ -35,6 +35,8 @@ Give the flag a descriptive human readable name and create variations for each v
 
 ### 3. Create an experiment allocation
 
+After creating the flag, switch into the Test environment:
+
 ![Feature gate 2](/img/feature-flagging/feature-flag-qs-2.png)
 
 Now that you're in the Test environment, add an Experiment allocation to your flag. If you want to force certain segments or users into one variant, you can also add a Feature Gate allocation. You can read more about using Eppo for Feature Gates [here](/feature-flagging/use-cases/feature-gates).
