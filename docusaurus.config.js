@@ -89,12 +89,6 @@ async function createConfig () {
           src: 'img/eppo_logo.svg'
         },
         items: [
-          {
-            type: 'doc',
-            docId: 'what-is-eppo',
-            position: 'left',
-            label: 'What is Eppo?'
-          }
         ]
       },
       footer: {
