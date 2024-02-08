@@ -37,6 +37,7 @@ http://adoring-yonath-6ecb9d.netlify.app/*  http://docs.geteppo.com/:splat  301!
 /feature-flags/sdks/python /sdks/server-sdks/python
 /feature-flags/sdks/react-native /sdks/client-sdks/react-native
 /feature-flags/sdks/ruby /sdks/server-sdks/ruby
+/feature-flags/sdks/dotnet /sdks/server-sdks/dotnet
 /how-tos /guides
 /how-tos/anonymous-explainer /guides/anonymous-explainer
 /how-tos/connecting-dwh /data-management/connecting-dwh
