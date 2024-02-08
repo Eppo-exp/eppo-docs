@@ -53,3 +53,4 @@ http://adoring-yonath-6ecb9d.netlify.app/*  http://docs.geteppo.com/:splat  301!
 /how-tos/running-well-powered-experiments /guides/running-well-powered-experiments
 /how-tos/warehouse-migration /guides/warehouse-migration
 /what-is-eppo /
+/experiment-analysis/creating-experiment-analysis /experiment-analysis/creating-experiments
