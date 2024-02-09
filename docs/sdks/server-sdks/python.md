@@ -36,7 +36,7 @@ This generates a singleton client instance, that can be reused throughout the ap
 
 ### C. Assign variations
 
-This instance can then be called to assigning users to flags or experiments using the `get_string_assignment` function:
+This instance can then be called to assign users to flags or experiments using the `get_string_assignment` function:
 
 ```python
 …
