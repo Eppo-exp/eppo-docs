@@ -68,7 +68,7 @@ Your users’ private information doesn’t leave your servers. Eppo only stores
 
 ### B. Automatical Updating the SDK
 
-After initialization, the SDK continues polling Eppo’s API at 30-second intervals. This retrieves the most recent experiment configurations such as variation values and traffic allocation.
+After initialization, the SDK continues polling Eppo’s API at 30-second intervals. This retrieves the most recent experiment configurations such as variation values, targeting rules, and traffic allocation.
 
 :::note
 
