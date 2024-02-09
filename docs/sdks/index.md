@@ -16,7 +16,7 @@ const variation = eppoClient.getStringAssignment(
 );
 ```
 
-Here, `SUBJECT-KEY` is a unique identifier for the unit on which you are assigning variant (e.g., `user_id`), and `FLAG-KEY` is a unique identifier for the feature of interest (e.g., `new_user_onboarding`). The optional third argument provides subject-level properties for targeting.
+Here, `SUBJECT-KEY` is a unique identifier for the unit on which you are assigning (e.g., `user_id`) and `FLAG-KEY` is a unique identifier for the feature of interest (e.g., `new_user_onboarding`). The optional third argument provides subject-level properties for targeting.
 
 For experimentation use cases, Eppo uses a deterministic hashing function to ensure that the same variant is returned for a given `SUBJECT-KEY`. This guarantee also holds across different SDKs. That is, experiment assignments from a server SDK will be consistent with experiment assignments from a client SDK for the same `SUBJECT-KEY`.
 
