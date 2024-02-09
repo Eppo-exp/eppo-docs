@@ -41,9 +41,9 @@ This instance can then be called to assigning users to flags or experiments usin
 ```python
 …
 variation = client.get_string_assignment("<SUBJECT-KEY>", "<FLAG-OR-EXPERIMENT-KEY>")
-if variation = "fast_checkout":
+if variation == "fast_checkout":
     …
-elif:
+else:
     …
 ```
 
@@ -137,31 +137,78 @@ By default the Eppo client initialization is asynchronous to ensure no critical 
 :::
 
 
-## 4. Advanced Configuration
+## 4. Advanced Configuration with Metadata
 
-### A. Assign Variations with Metadata
-
-When assigning entities, you can pass metadata through a dictionary of properties:
-
-```python
-…
-
-client = eppo_client.get_instance()
-variation = client.get_string_assignment("<SUBJECT-KEY>", "<FLAG-OR-EXPERIMENT-KEY>", {
-  # Optional map of subject metadata for targeting.
-})
-```
-
-We introduced `get_string_assignment`’s two required inputs in the [Getting started](#getting-started) section. The function also takes an optional input to assign targetted variation:
+We introduced `get_string_assignment`’s two required inputs in the [Getting started](#getting-started) section:
 
 - `subjectKey`: The Entity ID that is being experimented on, typically represented by a uuid.
 - `flagOrExperimentKey`: This key is available on the detail page for both flags and experiments.
-- `targetingAttributes`: An optional map of metadata about the subject used for targeting, for example:  
-  `{country:"Andorra", loyalty: "Gold", browser_type:"Mozilla", device_type: "Macintosh",
-     user_agent:"Mozilla/5.0 (Macintosh; Intel Mac OS X x.y; rv:42.0) Gecko/20100101 Firefox/42.0",}`  
-  If you create rules based on attributes on a flag/experiment, those attributes should be passed in on every assignment call. 
 
-### B. Typed Assignment Calls
+### A. Optional Properties for Targetting 
+
+The function also takes an optional input to ingest a dictionary of properties:
+
+. Assigning targetted variation:
+When assigning entities, you can pass metadata through a 
+
+
+- `targetingAttributes`: An optional dictionnary that details entity properties; for example, if the entity is a customer session:  
+  `{country:"Andorra", loyalty:"Gold", browser_type:"Mozilla", device_type:"Macintosh",
+     user_agent:"Mozilla/5.0 (Macintosh; Intel Mac OS X x.y; rv:42.0) Gecko/20100101 Firefox/42.0",}`
+
+Those can be used by the feature flag or the experiement for targeting, through the **Allocations** setting on the configuration page.
+
+### B. Example Payment Configuration
+
+Let’s say you are running a Django service with the User-Agent package. You want to use feature flags to offer payment method that adapt to the browser (only Safari users should be offered to user ApplePay) and the country (so that Dutch users can use iDEAL) and members of your loyalty program might use their points. You can use a feature flag to configure what is possible in which country, for which users, etc. 
+
+To make the decision, you can put the relevant information (`country`, `loyalty_tier`, etc.) in a `session_attributes` dictionary:
+
+```python
+…
+from ipware import get_client_ip
+from django.contrib.gis.utils import GeoIP
+g = GeoIP()
+
+…
+
+if request.method == 'POST':
+    country = ""
+    ip, is_routable = get_client_ip(request)
+    if is_routable:
+        country = g.city(ip)["country_code"]
+
+    session_attributes = {
+        'country': country,
+	'loyalty_tier': request.session.loyalty_tier
+        'browser_type': request.user_agent.browser.family,
+        'device_type': request.user_agent.device.family,
+    }
+
+    variation = client.get_string_assignment(
+        "<SUBJECT-KEY>",
+        "<FLAG-OR-EXPERIMENT-KEY>",
+        session_attributes,
+    )
+    
+    if variation == 'checkout_apple_pay':
+        …
+    elif variation == 'checkout_ideal':
+	…
+    else:
+	…
+```
+
+This approach lets you configure properties that match the relevant entity for your feature flag or your experiments. If a user is usually on iOS but they are connecting from a PC browser this time, they probably should not be offered an ApplePay option.
+
+:::note
+
+If you create rules based on attributes on a flag/experiment, those attributes should be passed in on every assignment call. 
+
+:::
+
+
+## 5. Typed Assignment Calls
 
 The SDK also offers assignment calls for other assignment types.
 
@@ -173,3 +220,34 @@ get_parsed_json_assignment(...)
 ```
 
 Those take the same input as `get_string_assignment`: `subjectKey`, `flagOrExperimentKey` and `targetingAttributes`.
+
+### A. Boolean
+
+For example, if you configure a flag as a Boolean (True or False), you can simplify your code:
+
+```python
+if get_boolean_assignment("<SUBJECT-KEY>", "<FLAG-KEY>"):
+    …
+else:
+    …
+```
+
+### B. Numeric
+
+The `get_numeric_assignment` guarantees that, if something tries to modify your assignment, they have to input a number. This is useful if you are using that value in computation, say to compute the amount of a promotion, to detect issues before they are released to production.
+
+### C. JSon assignment
+
+A more interesting pattern is to assign a JSon object. This allows to include structured information, say the text of a marketing copy for a promotional campaign, and the address of a hero image. Thanks to this pattern, you can configure a very simple landing page. Whoever has access to the Feature flag configuration can decide and change what to show to users throughout a promotional period, without having to update the code.
+
+```python
+…
+self.campaign_json = get_parsed_json_assignment("<SUBJECT-KEY>", "<FLAG-KEY>")
+if self.campaign_json is not None:
+    campaign['hero'] = True
+    campaign['hero_image'] = self.campaign_json.hero_image
+    campaign['hero_title'] = self.campaign_json.hero_title or ""
+    campaign['hero_description'] = self.campaign_json.hero_description or ""
+…
+```
+
