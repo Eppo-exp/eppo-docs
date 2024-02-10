@@ -46,15 +46,113 @@ if variation == "fast_checkout":
 else:
     …
 ```
-
 * `<SUBJECT-KEY>` is the value if the, typically `user_id`
-* `<FLAG-OR-EXPERIMENT-KEY>` is the key that you chose when creating a flag; you can find it on the [flag page](https://eppo.cloud/feature-flags).
+* `<FLAG-OR-EXPERIMENT-KEY>` is the key that you chose when creating a flag; you can find it on the [flag page](https://eppo.cloud/feature-flags). For the rest of this presentation, we’ll use `"test_checkout"`. We recommend that you create a test flag in your account to follow along and split users between `"fast_checkout"` and `"standard_checkout"`.
 
 That’s it: You can already start changing the feature flag on the page and see how it controls your code!
 
-## 2. Running the SDK
+However, if you wan to run experiments, there’s a little extra work to configure it properly.
 
-How is this SDK actually working?
+## 2. Assignment Logging for Experiment 
+
+If you are using the Eppo SDK for **experiment** assignment (i.e., randomization), we will need to know which entity, typically which user, passed through an entry point and was exposed to the experiment. For that, we need to log that information.
+
+### A. Local Logging
+
+To keep our example simple, let’s first use a local function to see what is logged. We’ll use the Python default `logging` package for now.
+
+For the assignment event to send the relevant information, we have to expand the class `AssignmentLogger` by defining the method `log_assignment` with a function that stores the contents of `assignment`.
+
+```python
+import eppo_client
+from eppo_client.config import Config
+from uuid import UUID
+import logging
+from time import sleep
+
+logging.basicConfig(filename='eppo_assignement_log.csv')
+
+class LocalAssignmentLogger(AssignmentLogger):
+	def log_assignment(self, assignment):
+		logging.info(assignment)
+
+client_config = Config(api_key="<YOUR_API_KEY>",
+	assignment_logger=LocalAssignmentLogger())
+eppo_client.init(client_config)
+client = eppo_client.get_instance()
+
+sleep(1)
+for _ in range (10):
+	user_id = UUID()
+	variation = client.get_string_assignment(user_id, "test_checkout")
+	if variation == "fast_checkout":
+	    print(f"{user_id}: Fast checkout")
+	else:
+	    print(f"{user_id}: Standard checkout")
+
+```
+
+You can check that the local logging file `eppo_assignement_log.csv` contains all the assignment information.
+
+| Field                     | Description                                                                                                              | Example                             |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------- |
+| `experiment` (string)     | An Eppo experiment key                                                                                                   | `"new_faster_checkout"` |
+| `subject` (string)        | An identifier of the subject or user assigned to the experiment variation                                                | `"60a67ae2-c9d2-4f8a-9be0-3bb4fe0c96ff"`|
+| `variation` (string)      | The experiment variation the subject was assigned to                                                                     | `"treatment"`                           |
+| `timestamp` (string)      | The time when the subject was assigned to the variation                                                                  | `2021-06-22T17:35:12.000Z`            |
+| `subjectAttributes` (map) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `{}`               |
+| `featureFlag` (string)    | An Eppo feature flag key                                                                                                 | `"checkout_type"`              |
+| `allocation` (string)     | An Eppo allocation key                                                                                                   | `"fast_checkout"`                     |
+
+If you implemented it that way in production, you would need to upload that assignment file to your database. That’s not very convenient. Instead, we recommend you use your usual on-line logging service to do so.
+
+### B. Define an Online Assignment Logger 
+
+In the previous example, we used a local logging function to show what it logged. In practice, we recommend that you pass a **callback logging** function when initializing the SDK. Whenever a variation is assigned, the client instance will invoke that callback, capturing assignment data.
+
+The code below illustrates an example implementation of a logging callback using **Segment**. You could also use your own logging system, the only requirement is that the SDK receives a `log_assignment` function.
+
+:::note
+
+More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/sdks/event-logging/) page.
+
+:::
+
+Here we define an implementation of the Eppo `AssignmentLogger` interface containing a single function named `log_assignment`:
+
+```python
+from eppo_client.assignment_logger import AssignmentLogger
+import analytics
+
+# Connect to Segment (or your own event-tracking system)
+analytics.write_key = "<SEGMENT_WRITE_KEY>"
+
+class SegmentAssignmentLogger(AssignmentLogger):
+	def log_assignment(self, assignment):
+		analytics.track(assignment["subject"],
+			"Eppo Randomization Assignment", assignment)
+
+client_config = Config(api_key="<YOUR_API_KEY>",
+	assignment_logger=SegmentAssignmentLogger())
+…
+```
+
+The SDK will invoke the `log_assignment` function with an `assignment` object that contains the following fields:
+
+| Field                     | Description                                                                                                              | Example                             |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------- |
+| `experiment` (string)     | An Eppo experiment key                                                                                                   | `"recommendation-algo-allocation-17"` |
+| `subject` (string)        | An identifier of the subject or user assigned to the experiment variation                                                | `"60a67ae2-c9d2-4f8a-9be0-3bb4fe0c96ff"` |
+| `variation` (string)      | The experiment variation the subject was assigned to                                                                     | `"control"`                           |
+| `timestamp` (string)      | The time when the subject was assigned to the variation                                                                  | `2021-06-22T17:35:12.000Z`            |
+| `subjectAttributes` (map) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `{ "country": "US" }`               |
+| `featureFlag` (string)    | An Eppo feature flag key                                                                                                 | `"recommendation-algo"`               |
+| `allocation` (string)     | An Eppo allocation key                                                                                                   | `"allocation-17"`                     |
+
+
+## 3. Running the SDK
+
+How is this SDK, hosted on your servers, actually getting the relevant information from Eppo?
 
 ### A. Loading Configuration
 
@@ -66,59 +164,17 @@ Your users’ private information doesn’t leave your servers. Eppo only stores
 
 :::
 
-### B. Automatical Updating the SDK
+### B. Automatical Updating the SDK Configuration
 
-After initialization, the SDK continues polling Eppo’s API at 30-second intervals. This retrieves the most recent experiment configurations such as variation values, targeting rules, and traffic allocation.
-
-:::note
-
-Changes made to experiments on Eppo’s web interface are almost instantly propagated through our CDN network. But because of the refresh rate, it may take up to 30 seconds for those to be reflected by the SDK assignments.
-
-:::
-
-## 3. Good practices 
-
-### A. Define an Assignment Logger (Experiment Assignment Only)
-
-If you are using the Eppo SDK for experiment assignment (i.e., randomization), we will need to know which entity, typically which user, passed through an Entry point and was exposed to the experiment. For that, we need to log that information. We recommend that you pass a **callback logging** function when initializing the SDK. Whenever a variation is assigned, the client instance will invoke that callback, capturing assignment data.
-
-The code below illustrates an example implementation of a logging callback using Segment. You could also use your own logging system, the only requirement is that the SDK receives a `log_assignment` function.
+After initialization, the SDK continues polling Eppo’s API at 30-second intervals. This retrieves the most recent flag and experiment configurations such as variation values, targeting rules, and traffic allocation. This happens independently of assignment calls.
 
 :::note
 
-More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/sdks/event-logging/) page.
+Changes made to experiments on Eppo’s web interface are almost instantly propagated through our Content-delivery network (CDN). Because of the refresh rate, it may take up to 30 seconds for those to be reflected by the SDK assignments.
 
 :::
 
-
-Here we define an implementation of the Eppo `IAssignmentLogger` interface containing a single function named `log_assignment`:
-
-```python
-from eppo_client.assignment_logger import AssignmentLogger
-import analytics
-
-# Connect to Segment (or your own event-tracking system)
-analytics.write_key = "<SEGMENT_WRITE_KEY>"
-
-client_config = Config(api_key="<YOUR_API_KEY>", assignment_logger=AssignmentLogger())
-
-class SegmentAssignmentLogger(AssignmentLogger):
-	def log_assignment(self, assignment):
-		analytics.track(assignment["subject"], "Eppo Randomization Assignment", assignment)
-```
-
-The SDK will invoke the `log_assignment` function with an `assignment` object that contains the following fields:
-
-| Field                     | Description                                                                                                              | Example                             |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------- |
-| `experiment` (string)     | An Eppo experiment key                                                                                                   | "recommendation-algo-allocation-17" |
-| `subject` (string)        | An identifier of the subject or user assigned to the experiment variation                                                | UUID                                |
-| `variation` (string)      | The experiment variation the subject was assigned to                                                                     | "control"                           |
-| `timestamp` (string)      | The time when the subject was assigned to the variation                                                                  | 2021-06-22T17:35:12.000Z            |
-| `subjectAttributes` (map) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `{ "country": "US" }`               |
-| `featureFlag` (string)    | An Eppo feature flag key                                                                                                 | "recommendation-algo"               |
-| `allocation` (string)     | An Eppo allocation key                                                                                                   | "allocation-17"                     |
-### B. Handling `None`
+### C. Handling `None`
 
 To be safe, we recommend always handling the `None` case in your code. Here are some examples illustrating when the SDK might return `None`:
 
@@ -141,18 +197,16 @@ By default the Eppo client initialization is asynchronous to ensure no critical 
 
 We introduced `get_string_assignment`’s two required inputs in the [Getting started](#getting-started) section:
 
-- `subjectKey`: The Entity ID that is being experimented on, typically represented by a uuid.
-- `flagOrExperimentKey`: This key is available on the detail page for both flags and experiments.
+- `subject_key`: The Entity ID that is being experimented on, typically represented by a uuid.
+- `flag_key`: This key is available on the detail page for both flags and experiments.
+
+But that’s not all: the function also takes an optional input for entity properties.
 
 ### A. Optional Properties for Targetting 
 
-The function also takes an optional input to ingest a dictionary of properties:
+Most entities on which we run feature flags have properties: sessions have browser types, users have loyalty status, corporate clients have a number of employees, videos have close-caption available or not, sport teams have a league, etc. If you want to decide how a feature flag behaves, or whether an experiment is ran on a certain entity based on those, you need to send that information too. When assigning entities, you can pass that additional information through:
 
-. Assigning targetted variation:
-When assigning entities, you can pass metadata through a 
-
-
-- `targetingAttributes`: An optional dictionnary that details entity properties; for example, if the entity is a customer session:  
+- `subject_attributes`: An optional dictionnary that details entity properties; for example, if the entity is a customer session:  
   `{country:"Andorra", loyalty:"Gold", browser_type:"Mozilla", device_type:"Macintosh",
      user_agent:"Mozilla/5.0 (Macintosh; Intel Mac OS X x.y; rv:42.0) Gecko/20100101 Firefox/42.0",}`
 
@@ -173,14 +227,14 @@ g = GeoIP()
 …
 
 if request.method == 'POST':
-    country = ""
-    ip, is_routable = get_client_ip(request)
-    if is_routable:
-        country = g.city(ip)["country_code"]
+	country = ""
+	ip, is_routable = get_client_ip(request)
+	if is_routable:
+		country = g.city(ip)["country_code"]
 
     session_attributes = {
-        'country': country,
-	'loyalty_tier': request.session.loyalty_tier
+		'country': country,
+		'loyalty_tier': request.session.loyalty_tier,
         'browser_type': request.user_agent.browser.family,
         'device_type': request.user_agent.device.family,
     }
@@ -194,16 +248,16 @@ if request.method == 'POST':
     if variation == 'checkout_apple_pay':
         …
     elif variation == 'checkout_ideal':
-	…
+		…
     else:
-	…
+		…
 ```
 
-This approach lets you configure properties that match the relevant entity for your feature flag or your experiments. If a user is usually on iOS but they are connecting from a PC browser this time, they probably should not be offered an ApplePay option.
+Our approach is more flexible: it lets you configure properties that match the relevant entity for your feature flag or your experiments. For example, if a user is usually on iOS but they are connecting from a PC browser this time, they probably should not be offered an ApplePay option, in spite of being labelled an iOS user.
 
 :::note
 
-If you create rules based on attributes on a flag/experiment, those attributes should be passed in on every assignment call. 
+If you create rules based on attributes on a flag or an experiment, those attributes should be passed in on every assignment call. 
 
 :::
 
@@ -219,11 +273,11 @@ get_json_string_assignment(...)
 get_parsed_json_assignment(...)
 ```
 
-Those take the same input as `get_string_assignment`: `subjectKey`, `flagOrExperimentKey` and `targetingAttributes`.
+Those take the same input as `get_string_assignment`: `subject_key`, `flag_key` and `subject_attributes`.
 
-### A. Boolean
+### A. Boolean Assignment
 
-For example, if you configure a flag as a Boolean (True or False), you can simplify your code:
+For example, if you configure a flag as a Boolean (`True` or `False`), you can simplify your code:
 
 ```python
 if get_boolean_assignment("<SUBJECT-KEY>", "<FLAG-KEY>"):
@@ -232,13 +286,15 @@ else:
     …
 ```
 
-### B. Numeric
+That prevents having the option of a third output. However, “True” can be ambiguous when the allocation names are unclear, like `hide_vs_delete_spam` or `no_collapse_price_breakdown`. We would recommend sticking to string that offer more explicit naming convention: `keep_and_hide_spam`, `delete_spam`, or `collapse_price_breakdown`, `expand_price_breakdown` and `delete_price_breakdown`.
 
-The `get_numeric_assignment` guarantees that, if something tries to modify your assignment, they have to input a number. This is useful if you are using that value in computation, say to compute the amount of a promotion, to detect issues before they are released to production.
+### B. Numeric Assignment
 
-### C. JSon assignment
+If you want to modify a quantity, say, the number of columns of your layout, the number of product recommendations per page or the minimum spent for free delivery, you want to make sure the allocation value is a number. Using a numeric assignement and the call `get_numeric_assignment` guarantees that. When someone edit the assignment, it will remain a number. This is useful if you are using that value in computation, say to process the amount of a promotion. It will not validate obvious configuration issues before they are rolled-out.
 
-A more interesting pattern is to assign a JSon object. This allows to include structured information, say the text of a marketing copy for a promotional campaign, and the address of a hero image. Thanks to this pattern, you can configure a very simple landing page. Whoever has access to the Feature flag configuration can decide and change what to show to users throughout a promotional period, without having to update the code.
+### C. Parsed JSon Assignment
+
+A more interesting pattern is to assign a JSon object. This allows to include structured information, say the text of a marketing copy for a promotional campaign, and the address of a hero image. Thanks to this pattern, one developer can configure a very simple landing page; with that in place, whoever has access to the Feature flag configuration can decide and change what copy to show to users throughout a promotional period, without them having to release new code.
 
 ```python
 …
@@ -251,3 +307,8 @@ if self.campaign_json is not None:
 …
 ```
 
+Assuming your service can be configured with many input parameters, that assignment type enables very powerful configuration changes. It does come with more risk of using the wrong key or value, so you probably want to explore ways to type check your variations.
+
+### D. String JSon Assignment
+
+`get_json_string_assignment` is similar, but the output is a string. This adds the responsability of unpacking the JSon from that string.
