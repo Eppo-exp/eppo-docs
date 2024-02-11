@@ -35,11 +35,7 @@ Give the flag a descriptive human readable name and create variations for each v
 
 ### 3. Create an experiment allocation
 
-<<<<<<< HEAD
 After creating the flag, switch into the Test environment:
-=======
-After creating the flag, decide who to target by creating [allocations](/feature-flagging#allocations). In this case we will create two feature gate allocations that describe our target audience for the new page: internal users and half of all North American web users:
->>>>>>> 63948ec15aa07a280889ab0acee72429aef476dd
 
 ![Feature gate 2](/img/feature-flagging/feature-flag-qs-2.png)
 

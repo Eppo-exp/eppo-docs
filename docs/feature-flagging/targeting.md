@@ -68,6 +68,28 @@ variation = client.get_assignment("<SUBJECT-KEY>", "<EXPERIMENT-KEY>", { "device
 
 | Operator                                                                                   | Attribute Type          | Meaning                                                                                                                                                                      |
 | :----------------------------------------------------------------------------------------- | :---------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| greater than (>), less than (<), greater than or equal to (>=), less than or equal to (<=) | number                  | Numeric comparison                                                                                                                                                           |
+| greater than (>), less than (<), greater than or equal to (>=), less than or equal to (<=) | number, SemVer          | Numeric comparison                                                                                                                                                           |
 | matches regex                                                                              | string                  | Regular expression match                                                                                                                                                     |
 | one of / not one of                                                                        | string, number, boolean | Is one of (or not one of) an array of strings. Non-string inputs (number and boolean) are cast to string before performing the comparison. Comparisons are case-insensitive. |
+
+#### Special case: Semantic Versioning
+
+When rolling out new versions of your product or wishing to deploy custom behavior across a range of releases,
+use Eppo's targeting rules to perform numeric comparisons against strings in the SemVer format.
+
+1. Create an allocation with your desired mix of rules.
+
+![generating-api-token-1](/img/feature-flagging/semver-targeting.png)
+
+2. Use the assignment implementation with the current version.
+
+```python
+import eppo_client
+
+client = eppo_client.get_instance()
+variation = client.get_assignment(
+  "<SUBJECT-KEY>", 
+  "<EXPERIMENT-KEY>", 
+  { "device": "iOS", "appVersion": "28.5.0" }
+)
+```
