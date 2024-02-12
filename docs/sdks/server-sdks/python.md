@@ -195,7 +195,7 @@ To be safe, we recommend always handling the `None` case in your code. Here are 
 
 2. Assignments occur within the environments of feature flags. You must **enable the environment** corresponding to the feature flag’s allocation in the [flag control pannel](https://eppo.cloud/feature-flags/) before `getStringAssignment` returns variations. It will return `None` if the environment is not enabled.
 
-![Toggle to enable environment](/static/img/feature-flagging/enable-environment.png)
+![Toggle to enable environment](/img/feature-flagging/enable-environment.png)
 
 3. If `get_string_assignment` is invoked **before the SDK has finished initializing**, the SDK may not have access to the most recent experiment configurations. In this case, the SDK will assign a variation based on any previously downloaded experiment configurations stored in local storage, or return `None` if no configurations have been downloaded.
 
