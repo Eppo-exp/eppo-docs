@@ -18,7 +18,7 @@ view**, which shows all of your experiments. You can filter this list by
 experiment name, status, entity, or owner, or just show experiments you have
 **starred**.
 
-<Figure alt="Experiment list view" src="/img/interpreting-experiments/experiment-analysis-list-view.png">
+<Figure alt="Experiment list view" src="/img/interpreting-experiments/experiments-list-view.png">
    The experiment list view, showing a list of experiments that can be filtered and searched.
 </Figure>
 
