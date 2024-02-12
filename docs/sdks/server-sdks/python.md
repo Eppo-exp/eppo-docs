@@ -63,36 +63,49 @@ To keep our example simple, let’s first use a local function to see what is lo
 
 For the assignment event to send the relevant information, we have to expand the class `AssignmentLogger` by defining the method `log_assignment` with a function that stores the contents of `assignment`.
 
-```python
-import eppo_client
-from eppo_client.config import Config
-from uuid import UUID
-import logging
-from time import sleep
+We have also stored out SDK Key into the environment variable `EPPO_API_KEY` as a common safety practice.
 
-logging.basicConfig(filename='eppo_assignement_log.csv')
+```python
+import logging, os
+from uuid import uuid4
+from time import sleep
+import eppo_client
+from eppo_client.config import Config, AssignmentLogger
+
+logging.basicConfig(
+	filename='eppo_assignments.csv',
+	level=logging.INFO,
+	format=f'%(message)s')
 
 class LocalAssignmentLogger(AssignmentLogger):
 	def log_assignment(self, assignment):
 		logging.info(assignment)
 
-client_config = Config(api_key="<YOUR_API_KEY>",
+client_config = Config(api_key=os.getenv("EPPO_API_KEY"),
 	assignment_logger=LocalAssignmentLogger())
 eppo_client.init(client_config)
 client = eppo_client.get_instance()
 
-sleep(1)
+# Give the client some time to initialize.
+while client.get_string_assignment('0', "test-checkout") is None:
+	print("Waiting for client to initialize")
+	sleep(1)
+# In a real-world scenario, other modules would load 
+# and the client would be initialized in the background.
+
 for _ in range (10):
-	user_id = UUID()
-	variation = client.get_string_assignment(user_id, "test_checkout")
+	user_id = str(uuid4())
+	variation = client.get_string_assignment(user_id, "test-checkout")
 	if variation == "fast_checkout":
-	    print(f"{user_id}: Fast checkout")
+		print(f"{user_id}: Fast checkout")
+	elif variation == "standard_checkout":		
+		print(f"{user_id}: Standard checkout")
 	else:
-	    print(f"{user_id}: Standard checkout")
+		print(f"{user_id}: Check your configuration")
 
 ```
 
-You can check that the local logging file `eppo_assignement_log.csv` contains all the assignment information.
+You can check that the local logging file `eppo_assignments.csv` contains all the assignment information.
 
 | Field                     | Description                                                                                                              | Example                             |
 | ------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------- |
