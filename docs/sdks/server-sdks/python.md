@@ -294,7 +294,7 @@ If you want to modify a quantity, say, the number of columns of your layout, the
 
 ### C. Parsed JSon Assignment
 
-A more interesting pattern is to assign a JSon object. This allows to include structured information, say the text of a marketing copy for a promotional campaign, and the address of a hero image. Thanks to this pattern, one developer can configure a very simple landing page; with that in place, whoever has access to the Feature flag configuration can decide and change what copy to show to users throughout a promotional period, without them having to release new code.
+A more interesting pattern is to assign a JSON object. This allows to include structured information, say the text of a marketing copy for a promotional campaign, and the address of a hero image. Thanks to this pattern, one developer can configure a very simple landing page; with that in place, whoever has access to the Feature flag configuration can decide and change what copy to show to users throughout a promotional period, without them having to release new code.
 
 ```python
 …
