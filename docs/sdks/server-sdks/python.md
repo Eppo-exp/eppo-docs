@@ -214,7 +214,7 @@ Those can be used by the feature flag or the experiement for targeting, through 
 
 ### B. Example Payment Configuration
 
-Let’s say you are running a Django service with the User-Agent package. You want to use feature flags to offer payment method that adapt to the browser (only Safari users should be offered to user ApplePay) and the country (so that Dutch users can use iDEAL) and members of your loyalty program might use their points. You can use a feature flag to configure what is possible in which country, for which users, etc. 
+Let’s say you are running a Django service with the User-Agent package. You want to use feature flags to offer payment method that adapt to the browser (only Safari users should be offered to use ApplePay) and the country (so that Dutch users can use iDEAL) and members of your loyalty program might use their points. You can use a feature flag to configure what is possible in which country, for which users, etc. 
 
 To make the decision, you can put the relevant information (`country`, `loyalty_tier`, etc.) in a `session_attributes` dictionary:
 
