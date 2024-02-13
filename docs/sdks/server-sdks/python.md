@@ -237,10 +237,10 @@ if request.method == 'POST':
 		country = g.city(ip)["country_code"]
 
     session_attributes = {
-	'country': country,
-	'loyalty_tier': request.session.loyalty_tier,
-	'browser_type': request.user_agent.browser.family,
-	'device_type': request.user_agent.device.family,
+        'country': country,
+        'loyalty_tier': request.session.loyalty_tier,
+        'browser_type': request.user_agent.browser.family,
+        'device_type': request.user_agent.device.family,
     }
 
     variation = client.get_string_assignment(
