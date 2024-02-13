@@ -20,4 +20,6 @@ Eppo's SDK is designed to encourage best practices in event capture. We leverage
 
 In some situations it's not practice to call `getAssignment` right at the code split. For instance, when experimenting on content it may be desirable to pre-fetch content before the user reaches that section of the page. In these situations, it is fine to call `getAssignment` ahead of time and then filter to exposed users on the analysis side. This is supported in Eppo by creating [Entry Points](/experiment-analysis/filter-assignments-by-entry-point).
 
-Several of our SDKs will cache when a flag has already been evaluated for a given user and, if so, not call the logging callback function. Eppo handles duplicated assignment records in the analytics engine, this is simply to help minimize event volume when possible. 
+Several of our SDKs will cache when a flag has already been evaluated for a given user and, if so, not call the logging callback function. The purpose of this cache is to help minimize event volume when possible. When analyzing data, Eppo's analytics engine will deduplicate assignment records if and when they occur.
+
+To read more about our architecture, see our [client SDKs](/sdks/client-sdks) and [server SDKs](/sdks/server-sdks) pages.
