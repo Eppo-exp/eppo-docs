@@ -24,9 +24,10 @@ To initialize the SDK, you will need a SDK key. You can generate one [in the fla
 
 ```python
 import eppo_client
-from eppo_client.config import Config
+from eppo_client.config import Config, AssignmentLogger
 
-client_config = Config(api_key="<YOUR_API_KEY>")
+client_config = Config(api_key="<YOUR_API_KEY>",
+    assignment_logger=AssignmentLogger())
 eppo_client.init(client_config)
 client = eppo_client.get_instance()
 …
@@ -46,8 +47,8 @@ if variation == "fast_checkout":
 else:
     …
 ```
-* `<SUBJECT-KEY>` is the value if the, typically `user_id`
-* `<FLAG-OR-EXPERIMENT-KEY>` is the key that you chose when creating a flag; you can find it on the [flag page](https://eppo.cloud/feature-flags). For the rest of this presentation, we’ll use `"test_checkout"`. We recommend that you create a test flag in your account to follow along and split users between `"fast_checkout"` and `"standard_checkout"`.
+* `<SUBJECT-KEY>` is the value that identifies each entity in your experiment, typically `user_id`;
+* `<FLAG-OR-EXPERIMENT-KEY>` is the key that you chose when creating a flag; you can find it on the [flag page](https://eppo.cloud/feature-flags). For the rest of this presentation, we’ll use `"test-checkout"`. To follow along, we recommend that you create a test flag in your account, and split users between `"fast_checkout"` and `"standard_checkout"`.
 
 That’s it: You can already start changing the feature flag on the page and see how it controls your code!
 
@@ -150,17 +151,7 @@ client_config = Config(api_key="<YOUR_API_KEY>",
 …
 ```
 
-The SDK will invoke the `log_assignment` function with an `assignment` object that contains the following fields:
-
-| Field                     | Description                                                                                                              | Example                             |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------- |
-| `experiment` (string)     | An Eppo experiment key                                                                                                   | `"recommendation-algo-allocation-17"` |
-| `subject` (string)        | An identifier of the subject or user assigned to the experiment variation                                                | `"60a67ae2-c9d2-4f8a-9be0-3bb4fe0c96ff"` |
-| `variation` (string)      | The experiment variation the subject was assigned to                                                                     | `"control"`                           |
-| `timestamp` (string)      | The time when the subject was assigned to the variation                                                                  | `2021-06-22T17:35:12.000Z`            |
-| `subjectAttributes` (map) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `{ "country": "US" }`               |
-| `featureFlag` (string)    | An Eppo feature flag key                                                                                                 | `"recommendation-algo"`               |
-| `allocation` (string)     | An Eppo allocation key                                                                                                   | `"allocation-17"`                     |
+The SDK will invoke the `log_assignment` function with an `assignment` object that contains the fields you've seem locally. Make sure the dictionnary is parse properly by your tooling.
 
 
 ## 3. Running the SDK
@@ -169,7 +160,7 @@ How is this SDK, hosted on your servers, actually getting the relevant informati
 
 ### A. Loading Configuration
 
-At initialization, the SDK polls Eppo’s API to retrieve the most recent experiment configurations. The SDK stores these configurations in memory. This is why assignments are effectively instant.
+At initialization, the SDK polls Eppo’s API to retrieve the most recent experiment configuration. The SDK stores that configuration in memory. This is why assignments are effectively instant, as you can see yourself by profiling the code above.
 
 :::note
 
@@ -183,7 +174,7 @@ After initialization, the SDK continues polling Eppo’s API at 30-second interv
 
 :::note
 
-Changes made to experiments on Eppo’s web interface are almost instantly propagated through our Content-delivery network (CDN). Because of the refresh rate, it may take up to 30 seconds for those to be reflected by the SDK assignments.
+Changes made to experiments on Eppo’s web interface are almost instantly propagated through our Content-delivery network (CDN) Fastly. Because of the refresh rate, it may take up to 30 seconds (± 5 seconds fuzzing) for those to be reflected by the SDK assignments.
 
 :::
 
@@ -246,10 +237,10 @@ if request.method == 'POST':
 		country = g.city(ip)["country_code"]
 
     session_attributes = {
-		'country': country,
-		'loyalty_tier': request.session.loyalty_tier,
-        'browser_type': request.user_agent.browser.family,
-        'device_type': request.user_agent.device.family,
+	'country': country,
+	'loyalty_tier': request.session.loyalty_tier,
+	'browser_type': request.user_agent.browser.family,
+	'device_type': request.user_agent.device.family,
     }
 
     variation = client.get_string_assignment(
@@ -261,9 +252,9 @@ if request.method == 'POST':
     if variation == 'checkout_apple_pay':
         …
     elif variation == 'checkout_ideal':
-		…
+	…
     else:
-		…
+	…
 ```
 
 Our approach is more flexible: it lets you configure properties that match the relevant entity for your feature flag or your experiments. For example, if a user is usually on iOS but they are connecting from a PC browser this time, they probably should not be offered an ApplePay option, in spite of being labelled an iOS user.
@@ -307,7 +298,7 @@ If you want to modify a quantity, say, the number of columns of your layout, the
 
 ### C. Parsed JSon Assignment
 
-A more interesting pattern is to assign a JSON object. This allows to include structured information, say the text of a marketing copy for a promotional campaign, and the address of a hero image. Thanks to this pattern, one developer can configure a very simple landing page; with that in place, whoever has access to the Feature flag configuration can decide and change what copy to show to users throughout a promotional period, without them having to release new code.
+A more interesting pattern is to assign a JSON object. This allows to include structured information, say the text of a marketing copy for a promotional campaign, and the address of a hero image. Thanks to this pattern, one developer can configure a very simple landing page; with that in place, whoever has access to the feature flag configuration can decide and change what copy to show to users throughout a promotional period, almost instantly and without them having to release new code.
 
 ```python
 …
