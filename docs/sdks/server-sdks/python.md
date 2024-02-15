@@ -41,7 +41,7 @@ This instance can then be called to assign users to flags or experiments using t
 
 ```python
 …
-variation = client.get_string_assignment("<SUBJECT-KEY>", "<FLAG-OR-EXPERIMENT-KEY>")
+variation = client.get_string_assignment("<SUBJECT-KEY>", "<FLAG-KEY>")
 if variation == "fast_checkout":
     …
 else:
