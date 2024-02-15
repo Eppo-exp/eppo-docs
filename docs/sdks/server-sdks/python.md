@@ -33,7 +33,7 @@ client = eppo_client.get_instance()
 …
 ```
 
-This generates a singleton client instance, that can be reused throughout the application lifecycle
+This generates a singleton client instance that can be reused throughout the application lifecycle
 
 ### C. Assign variations
 
