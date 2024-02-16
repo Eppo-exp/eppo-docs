@@ -18,11 +18,11 @@ Only experiment traffic imbalances and experiment refresh errors are available f
 
 You can select to recieve notifications related to flags, experiments, and metrics that are owned by the Teams you belong to.
 
-![Find your user profile](/img/administration/user-profile.png)
+![Find your user profile](/img/administration/User-profile.png)
 
 Click on your Workspace name in the left nav to reveal your profile. Click on your profile and you'll find the profile menu. Here you can see what Teams you belong to and manage your personal email notifications.
 
-![Enable team level notifications](/img/administration/user-profile-menu.png)
+![Enable team level notifications](/img/administration/User-profile-menu.png)
 
 To turn your notifications on, toggle the switch to the right of your email. You can configure which types of notifications you'll recieve by checking the boxes for each option.
 
