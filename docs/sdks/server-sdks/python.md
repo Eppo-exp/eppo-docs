@@ -48,7 +48,7 @@ else:
     …
 ```
 * `<SUBJECT-KEY>` is the value that identifies each entity in your experiment, typically `user_id`;
-* `<FLAG-OR-EXPERIMENT-KEY>` is the key that you chose when creating a flag; you can find it on the [flag page](https://eppo.cloud/feature-flags). For the rest of this presentation, we’ll use `"test-checkout"`. To follow along, we recommend that you create a test flag in your account, and split users between `"fast_checkout"` and `"standard_checkout"`.
+* `<FLAG-KEY>` is the key that you chose when creating a flag; you can find it on the [flag page](https://eppo.cloud/feature-flags). For the rest of this presentation, we’ll use `"test-checkout"`. To follow along, we recommend that you create a test flag in your account, and split users between `"fast_checkout"` and `"standard_checkout"`.
 
 That’s it: You can already start changing the feature flag on the page and see how it controls your code!
 
