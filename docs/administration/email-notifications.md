@@ -10,7 +10,7 @@ Email notifications allow you to receive notifications for important updates on 
 
 ![Enable system wide email notifications](/img/administration/system-wide-email-notifications.png)
 
-You can select specific email addresses to receive notifications for **ANY** experiment in Eppo. This is particularly good option for email groups where the notification can be sent to a relevant group of people.
+You can select specific email addresses to receive notifications for **ANY** experiment in Eppo. This is a particularly good option for email groups where the notification can be sent to a relevant group of people.
 
 Only experiment traffic imbalances and experiment refresh errors are available for system-wide email notifications.
 
@@ -18,11 +18,11 @@ Only experiment traffic imbalances and experiment refresh errors are available f
 
 You can select to recieve notifications related to flags, experiments, and metrics that are owned by the Teams you belong to.
 
-![Find your user profile](/img/administration/user-profile.png)
+![Find your user profile](/img/administration/User-profile.png)
 
 Click on your Workspace name in the left nav to reveal your profile. Click on your profile and you'll find the profile menu. Here you can see what Teams you belong to and manage your personal email notifications.
 
-![Enable team level notifications](/img/administration/user-profile-menu.png)
+![Enable team level notifications](/img/administration/User-profile-menu.png)
 
 To turn your notifications on, toggle the switch to the right of your email. You can configure which types of notifications you'll recieve by checking the boxes for each option.
 
@@ -31,6 +31,8 @@ To turn off email notifications, return to the profile menu and toggle notificat
 ## Experiment Notification Triggers
 
 ### A data problem on an experiment
+
+![Traffic imbalance notification email](/img/administration/traffic-imbalance-email.png)
 
 - When Eppo detects a [traffic imbalance](/statistics/sample-ratio-mismatch) in your assignments
 - When there is an error and the experiment results cannot be refreshed
@@ -46,6 +48,8 @@ See more on <a href="https://docs.geteppo.com/building-experiments/experiment-an
 - When a primary metric or a guardrail metric on an experiment reaches statistical significance for **Sequential experiments ONLY**
 
 ## Feature Flag Notification Triggers
+
+![Allocation created notification email](/img/administration/flag-change-email.png)
 
 ### A Feature Flag is enabled or disabled in production environment
 
