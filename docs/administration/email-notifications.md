@@ -10,7 +10,7 @@ Email notifications allow you to receive notifications for important updates on 
 
 ![Enable system wide email notifications](/img/administration/system-wide-email-notifications.png)
 
-You can select specific email addresses to receive notifications for **ANY** experiment in Eppo. This is particularly good option for email groups where the notification can be sent to a relevant group of people.
+You can select specific email addresses to receive notifications for **ANY** experiment in Eppo. This is a particularly good option for email groups where the notification can be sent to a relevant group of people.
 
 Only experiment traffic imbalances and experiment refresh errors are available for system-wide email notifications.
 
