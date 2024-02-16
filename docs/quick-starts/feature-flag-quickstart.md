@@ -13,7 +13,7 @@ Note that if you are using Eppo alongside an existing randomization tool, you ca
 
 ### 1. Generate an SDK key
 
-From the Feature Flag page, navigate to the SDK keys tab. Here you can generate keys for both production and testing.
+From the Configuration section, navigate to the SDK keys tab. Here you can generate keys for both production and testing.
 
 ![Setup Eppo SDK key](/img/feature-flagging/environments/sdk-keys.png)
 

@@ -6,7 +6,7 @@ sidebar_position: 1
 
 Experiments are a set of metrics that correspond to users being shown different feature sets that you would like to track over time.
 
-### 1. Navigate to **Experiments** in the left-hand menu and click **+Experiment**
+### 1. Navigate to **Analysis** in the left-hand menu, click **+Create**, and select **Experiment Analysis**
 
 ![Create experiment](/img/building-experiments/create-experiment.png)
 

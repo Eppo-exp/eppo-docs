@@ -13,7 +13,7 @@ slice and dice those results by looking at different segments and metric cuts.
 
 ## Viewing multiple experiments
 
-When you click on the **Experiments** tab, you will see the **experiment list
+When you click on the **Experiments** tab of the **Analysis** section, you will see the **experiment list
 view**, which shows all of your experiments. You can filter this list by
 experiment name, status, entity, or owner, or just show experiments you have
 **starred**.
