@@ -1,6 +1,6 @@
 # Email notifications
 
-Email notifications allow you to receive notifications for important updates on your feature flags, experiments, and metrics such as when Eppo detect a [traffic imbalance](/statistics/sample-ratio-mismatch) in your assignments.
+Email notifications allow you to receive notifications for important updates on your feature flags, experiments, and metrics such as when Eppo detects a [traffic imbalance](/statistics/sample-ratio-mismatch) in your assignments.
 
 1. [Configure System Wide Email Notifications](#configure-system-wide-email-notifications)
 2. [Configure Slack Notifications for Team owned Flags, Experiments, and Metrics](#configure-email-notifications-for-for-team-owned-flags-experiments-and-metrics)
