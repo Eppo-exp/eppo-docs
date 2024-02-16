@@ -32,6 +32,8 @@ To turn off email notifications, return to the profile menu and toggle notificat
 
 ### A data problem on an experiment
 
+![Traffic imbalance notification email](/img/administration/traffic-imbalance-email.png)
+
 - When Eppo detects a [traffic imbalance](/statistics/sample-ratio-mismatch) in your assignments
 - When there is an error and the experiment results cannot be refreshed
 
@@ -46,6 +48,8 @@ See more on <a href="https://docs.geteppo.com/building-experiments/experiment-an
 - When a primary metric or a guardrail metric on an experiment reaches statistical significance for **Sequential experiments ONLY**
 
 ## Feature Flag Notification Triggers
+
+![Allocation created notification email](/img/administration/flag-change-email.png)
 
 ### A Feature Flag is enabled or disabled in production environment
 
