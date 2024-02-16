@@ -54,19 +54,21 @@ Creating a simple metric in Eppo consists of the following steps:
 
 ### Aggregation methods
 
-The table below describes the aggregation methods that Eppo supports along with an illustrative SQL example.
+The table below describes each of the aggregation methods that Eppo supports, along with an illustrative SQL example. Note that for all aggregation types, metrics are normalized by the number of subjects (users) in the experiment.
 
+In each of the calculations below, NULL-valued facts are not included.
 
 | Aggregation | Description | SQL | Example Metrics |
 | ----------- | ----------- | ----------- | ----------- |
-| Sum | Sum of fact values by entity  | <pre><code>select <br></br>  <entity_id>, <br></br>  sum(<fact_col>) <br></br>from ... <br></br>group by 1</code></pre> | User-level revenue, minutes streamed, etc. |
-| Count | Count of non-null fact values by entity  | <pre><code>select <br></br>  <entity_id>, <br></br>  count(<fact_col>) <br></br>from ... <br></br>group by 1</code></pre> | Orders placed, videos watched, etc. |
-| Unique Entities | Count of entities with at least 1 non-null value  | <pre><code>select <br></br>  distinct <entity_id> <br></br>from ... <br></br>where <fact_col> is not null </code></pre> | Percent of users that reached check out, engaged with feature, etc.|
-| Count Distinct | Distinct fact values observed per entity  | <pre><code>select <br></br>  <entity_id>, <br></br>  count(distinct <fact_col>) <br></br>from ... <br></br>group by 1 </code></pre> | Number of distinct videos watched per user, distinct products viewed, etc. |
-| Retention | The proportion of entities with at least one occurrence of the fact after a set time window of assignment (limited to entities assigned at least that many days ago) | <pre><code>select <br></br>  distinct <entity_id>, <br></br>from ... <br></br>where fact_ts >= <br></br>  assignment_ts + 7 days  <br></br>and assignment_ts < <br></br>  current_date - 7 days </code></pre> | Percent of users that had another session at least 7 days after assignment |
-| Conversion | The proportion of entities with at least one occurrence of the fact within a set time window of assignment | <pre><code>select <br></br>  distinct <entity_id> <br></br>from ... <br></br>where fact_ts <= <br></br>  assignment_ts + 7 days </code></pre> | Percent of users that converted within 7 days |
-| Threshold | The proportion of entities with a sum or count above a specified threshold | <pre><code>select <br></br>  distinct <entity_id> <br></br>from ... <br></br>group by <entity_id> <br></br>having sum(<fact_col>) > 3 </code></pre> | Percent of users that had at least 3 app sessions within 7 days |
+| Sum | Sum of fact values per entity | <pre><code>select <br></br>  <entity_id>, <br></br>  sum(<fact_col>) <br></br>from ... <br></br>group by 1</code></pre> | User-level revenue, minutes streamed, etc. |
+| Unique Entities | Percent of entities with at least 1 non-null fact value  | <pre><code>select <br></br>  distinct <entity_id> <br></br>from ... <br></br>where <fact_col> is not null </code></pre> | Percent of users that reached check out, engaged with feature, etc.|
+| Count | Count of non-null fact values per entity  | <pre><code>select <br></br>  <entity_id>, <br></br>  count(<fact_col>) <br></br>from ... <br></br>group by 1</code></pre> | Orders placed, videos watched, etc. |
+| Count Distinct | Distinct non-null fact values observed per entity (use this to count the number of unique values in a field other than the entity_id)  | <pre><code>select <br></br>  <entity_id>, <br></br>  count(distinct <fact_col>) <br></br>from ... <br></br>group by 1 </code></pre> | Number of distinct videos watched per user, distinct products viewed, etc. If a user watches the same video twice, it will only count once |
+| Retention | The proportion of entities with at least one occurrence of the fact X days after assignment, limited to entities assigned at least X days ago* | <pre><code>select <br></br>  distinct <entity_id>, <br></br>from ... <br></br>where fact_ts >= <br></br>  assignment_ts + 7 days  <br></br>and assignment_ts < <br></br>  current_date - 7 days </code></pre> | Percent of users who visit a website at least 7 days after being assigned to the experiment |
+| Conversion | The proportion of entities with at least one occurrence of the fact within a set time window of assignment | <pre><code>select <br></br>  distinct <entity_id> <br></br>from ... <br></br>where fact_ts <= <br></br>  assignment_ts + 7 days </code></pre> | Percent of users who sign up for a free trial within 7 days of being assigned to the experiment |
+| Threshold | The proportion of entities with a sum or count above a specified threshold | <pre><code>select <br></br>  distinct <entity_id> <br></br>from ... <br></br>group by <entity_id> <br></br>having sum(<fact_col>) > 3 </code></pre> | Percent of users that spent more than $100 within 7 days of assignment into the experiment |
 
+\*Only entities that were assigned at least X days ago are included in both numerator and denominator. Those assigned within the last X days cannot yet have retained, by construction. For those the numerator is always 0, and including them would make retention appear artificially low.
 
 ### Timeframes
 
