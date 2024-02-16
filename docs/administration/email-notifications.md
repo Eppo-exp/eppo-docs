@@ -60,4 +60,4 @@ See more on <a href="https://docs.geteppo.com/building-experiments/experiment-an
 
 ### A metric reached statistical significance on any team’s sequential experiment
 
-- When a metrics reaches statistical significance across all experiments for **Sequential experiments ONLY**
+- When a metric reaches statistical significance across all experiments for **Sequential experiments ONLY**
