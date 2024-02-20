@@ -2,7 +2,7 @@
 
 ## Creating Explore Charts
 
-You can dive deeper into the results of your experiments by creating graphs with the result data. To do this, first navigate to the **Experiments** page using the tab on the left panel and click on the experiment you are interested in. Then, click on the **Explore** tab. You can create a new chart by clicking on the **Create Explore** button.
+You can dive deeper into the results of your experiments by creating graphs with the result data. To do this, first navigate to the **Analysis** page using the tab on the left panel and click on the experiment you are interested in. Then, click on the **Explore** tab. You can create a new chart by clicking on the **Create Explore** button.
 
 ![Create Explore](/img/measuring-experiments/create-explore-button.png)
 

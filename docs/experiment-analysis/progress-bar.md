@@ -22,7 +22,7 @@ Precision is set at the metric level. However, it is possible to override this a
 
 The goal of the progress bar is to measure whether we have gathered enough data to be confident in making a decision. In particular, use the progress bar to help you stop experiments that look flat once these hit 100% progress.
 
-To view the progress bar, we must first navigate to the **Experiments** tab from the left panel. The progress bar can be seen in the list item card for each experiment in the experiment list. It can also be seen in the right panel if we click the card. Hovering over the progress bar shows we more details like the % lift that can be detected with the assignments seen so far:
+To view the progress bar, we must first navigate to the **Analysis** tab from the left panel. The progress bar can be seen in the list item card for each experiment in the experiment list. It can also be seen in the right panel if we click the card. Hovering over the progress bar shows we more details like the % lift that can be detected with the assignments seen so far:
 
 ![Progress on list page](/img/interpreting-experiments/progress-card.png)
 

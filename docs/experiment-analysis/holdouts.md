@@ -109,7 +109,7 @@ With this setup, Holdouts will be logged with Experiments in AssignmentSQL that 
 
 ### Configuring a Holdouts Analysis
 
-Create a new Holdout experiment over your desired date range by clicking on the "+Experiment" button on the Experiments tab.
+Create a new Holdout experiment over your desired date range by clicking on the "+Create" button on the Analysis tab.
 
 Configure the analysis with the variation names in your holdout, such as `status_quo` and `winning_variants`.  This allows the Eppo generated SQL to correctly query the data in your warehouse.
 

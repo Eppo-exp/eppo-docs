@@ -1,6 +1,6 @@
 # Experiment status
 
-You can navigate to the **Experiments** page by clicking on the **Experiments** icon from the left tab. Each experiment has an associated status which indicates the current state of the experiment. An experiment can have one of 4 different statuses:
+You can navigate to the **Analysis** page by clicking on the icon from the left-hand manu. Each experiment has an associated status which indicates the current state of the experiment. An experiment can have one of 4 different statuses:
 
 1. Draft - The initial state after the experiment is created
 2. Running - The active state where the experiment is assigning subjects and/or updating the metric event data

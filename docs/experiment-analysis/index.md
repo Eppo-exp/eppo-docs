@@ -13,7 +13,7 @@ slice and dice those results by looking at different segments and metric cuts.
 
 ## Viewing multiple experiments
 
-When you click on the **Experiments** tab, you will see the **experiment list
+When you click on the **Experiments** tab of the **Analysis** section, you will see the **experiment list
 view**, which shows all of your experiments. You can filter this list by
 experiment name, status, entity, or owner, or just show experiments you have
 **starred**.
@@ -29,10 +29,7 @@ experiment name, status, entity, or owner, or just show experiments you have
 Clicking on the name of an experiment will take you to the
 **experiment detail view**, which shows the effects of each treatment variation,
 compared to control. Within each variation, for each metric that
-[you have added to the experiment](/experiment-analysis/experiment-metrics),
-we display the (per subject) **average value for the control variation**, as well as
-the estimate of the <Term def={true}>relative lift</Term> (that is, the percentage change
-from the control value) caused by that treatment variation.
+you have added to the experiment, we display the (per subject) **average value for the control variation**, as well as the estimate of the <Term def={true}>relative lift</Term> (that is, the percentage change from the control value) caused by that treatment variation.
 
 <Figure alt="Experiment details - overview" src="/img/interpreting-experiments/experiment-details-view.png">
    In this example, the control value of <code>Total Purchase Value</code> is
