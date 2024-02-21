@@ -6,7 +6,7 @@ sidebar_position: 5
 
 Eppo uses role-based access control to manage what users can view and actions they can perform. Four roles are provided that can be assigned to users to specify their level of access: "Admin," "Data Owner," "Experiment Editor," and "Viewer."
 
-Roles can be assign to users in the Admin section under the "Users & Permissions" tab.
+Roles can be assigned to users in the Admin section under the "Users & Permissions" tab.
 
 ![Feature gate 1](/img/reference/users-and-permissions-tab.png)
 
@@ -15,6 +15,8 @@ Roles can be assign to users in the Admin section under the "Users & Permissions
 ## Roles
 
 In the table below, the available roles and their corresponding permissions are listed.
+
+Additionally, [Teams](/administration/teams) provide an additional layer of permissions. Any non-admins that are not part of a Team that owns a metric, experiment, or flag do not have permission to edit it.
 
 | Role              | Permissions                                                                                                                                                                                                                                                                                                                                                          |
 | ----------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
