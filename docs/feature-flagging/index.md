@@ -37,10 +37,10 @@ else:
 ```
 
 Feature flags are applicable for a number of use cases:
-- [Feature gates](/feature-flagging/01-feature-gates)
-- [Experiment assignment](/feature-flagging/02-experiment-assignment)
-- [Progressive rollouts](/feature-flagging/03-progressive-rollouts)
-- [Kill switches](/feature-flagging/04-kill-switches)
+- [Feature gates](/feature-flagging/feature-gates)
+- [Experiment assignment](/feature-flagging/experiment-assignment)
+- [Progressive rollouts](/feature-flagging/progressive-rollouts)
+- [Kill switches](/feature-flagging/kill-switches)
 
 ### Variations
 
