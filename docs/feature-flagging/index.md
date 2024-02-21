@@ -36,7 +36,11 @@ else:
     price_of_shoes = 10
 ```
 
-See the feature flag [use cases](/feature-flagging/use-cases) to explore more interesting ways to use feature flags.
+Feature flags are applicable for a number of use cases:
+- [Feature gates](/feature-flagging/01-feature-gates)
+- [Experiment assignment](/feature-flagging/02-experiment-assignment)
+- [Progressive rollouts](/feature-flagging/03-progressive-rollouts)
+- [Kill switches](/feature-flagging/04-kill-switches)
 
 ### Variations
 
