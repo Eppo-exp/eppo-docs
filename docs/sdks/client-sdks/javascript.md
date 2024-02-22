@@ -64,17 +64,9 @@ await init({
 });
 ```
 
-During initialization, the SDK will fetch an experiment configuration containing variation values and traffic allocations. This configuration is cached on Eppo's global CDN, resulting in very fast initialization. Once the configuration is loaded, assignments happen locally. This means that evaluating a specific flag or experiment is effectively instantaneous. For more information see the pages on [SDK latency](/sdks/faqs/latency) and [risk mitigation](/sdks/faqs/risk).
+During initialization, the SDK sends an API request to Eppo to retrieve the most recent experiment configurations such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments are effectively instant. For more information, see the [architecture overview](/sdks/overview) page.
 
 If you are using the SDK for experiment assignments, make sure to pass in an assignment logging callback (see [section](#define-an-assignment-logger-experiment-assignment-only) below).
-
-<br />
-
-:::note
-API Keys used with Client SDKs should have only 'Feature Flagging READ' permissions on, with all other permissions set to 'No Access'.
-:::
-
-<br />
 
 ### Initialization options
 
