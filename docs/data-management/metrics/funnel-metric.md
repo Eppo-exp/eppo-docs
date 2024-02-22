@@ -31,6 +31,12 @@ Each of these actions are connected to separate events, and we want to understan
 
 :::note
 
+Make sure that, if a user hasn’t reached a step, the event in the corresponding table is either missing, or `NULL` and not marked as 0. 
+
+:::
+
+:::note
+
 Eppo requires the funnel steps to happen in order, but does not care whether unspecified events happen in between the funnel steps.
 
 :::
