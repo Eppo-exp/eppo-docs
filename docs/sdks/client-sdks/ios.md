@@ -21,15 +21,7 @@ Initialize the SDK with a SDK key, which can be created in the Eppo web interfac
 var eppoClient: EppoClient = EppoClient(EPPO_API_KEY);
 ```
 
-During initialization, the SDK sends an API request to Eppo to retrieve the most recent experiment configurations such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments are effectively instant.
-
-<br />
-
-:::note
-API Keys used with Client SDKs should have only 'Feature Flagging READ' permissions on, with all other permissions set to 'No Access'.
-:::
-
-<br />
+During initialization, the SDK sends an API request to Eppo to retrieve the most recent experiment configurations such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments are effectively instant. For more information, see the [architecture overview](/sdks/overview) page.
 
 ## 3. Assign Variations
 
