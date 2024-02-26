@@ -16,7 +16,7 @@ Your flag must be active to start the experiment assignment.
 
 ### Create an experiment
 
-Click "Create Expeirment" on the experiment allocation to create an experiment. You can do this at any time, even after experiment assignment has begun.
+Click "Create Experiment" on the experiment allocation to create an experiment. You can do this at any time, even after experiment assignment has begun.
 
 ![Randomization 1](/img/feature-flagging/randomization-1.png)
 
