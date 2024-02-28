@@ -5,7 +5,7 @@ sidebar_position: 5
 
 ## Overview
 
-This guide will walk through how to send Eppo feature flag assignments as RUM data to Datadog using Eppo’s [Node SDK](/sdks/sever-sdks/node.md) and Datadog’s [Node APM Tracer library](https://www.npmjs.com/package/dd-trace). While Node is used for this example, the concepts can be extrapolated to any language that are supported by Eppo SDKs and Datadog environments.
+This guide will walk through how to send Eppo feature flag assignments as RUM data to Datadog using Eppo’s [Node SDK](/sdks/server-sdks/node.md) and Datadog’s [Node APM Tracer library](https://www.npmjs.com/package/dd-trace). While Node is used for this example, the concepts can be extrapolated to any language that are supported by Eppo SDKs and Datadog environments.
 
 :::info
 
