@@ -33,7 +33,7 @@ If you are using the SDK for experiment assignments, make sure to pass in an ass
 
 :::info
 
-By default the Eppo client initialization is asynchronous to ensure no critical code paths are blocked. For more information on handling non-blocking initialization, see our [documentation here](/feature-flags/common-issues#3-not-handling-non-blocking-initialization).
+By default the Eppo client initialization is asynchronous to ensure no critical code paths are blocked. For more information on handling non-blocking initialization, see our [documentation here](/sdks/common-issues#3-not-handling-non-blocking-initialization).
 
 :::
 
