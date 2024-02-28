@@ -194,7 +194,7 @@ To be safe, we recommend always handling the `None` case in your code. Here are 
 
 :::info
 
-By default the Eppo client initialization is asynchronous to ensure no critical code paths are blocked. For more information on handling non-blocking initialization, see our [documentation here](/feature-flagging/common-issues#3-not-handling-non-blocking-initialization).
+By default the Eppo client initialization is asynchronous to ensure no critical code paths are blocked. For more information on handling non-blocking initialization, see our [documentation here](/sdks/common-issues#3-not-handling-non-blocking-initialization).
 
 :::
 

@@ -1,7 +1,6 @@
 ---
 sidebar_position: 2
 ---
-
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
@@ -17,54 +16,7 @@ Targeting rules are supported for experiments that use Eppo's Feature Flagging S
 
 Each rule may have multiple conditions. The rule is only satisfied if all the conditions match. Eppo's randomization SDK will return an assignment if any rules are satisfied, and `null` if no rules are satisfied.
 
-## Pass subject attributes to the Eppo SDK
-
-The below code examples show how to pass a value for the "device" attribute described in the previous section. The subject attributes are a free-form map, so you may also pass any other attribute names.
-
-<Tabs>
-<TabItem value="javascript" label="JavaScript (Client)">
-
-```javascript
-import * as EppoSdk from "@eppo/js-client-sdk";
-
-const subjectAttributes = { device: "iOS" };
-const variation = EppoSdk.getInstance().getAssignment(
-  "<SUBJECT-KEY>",
-  "<EXPERIMENT-KEY>",
-  subjectAttributes
-);
-```
-
-</TabItem>
-
-<TabItem value="node" label="Node">
-
-```javascript
-import * as EppoSdk from "@eppo/node-server-sdk";
-
-const subjectAttributes = { device: "iOS" };
-const variation = EppoSdk.getInstance().getAssignment(
-  "<SUBJECT-KEY>",
-  "<EXPERIMENT-KEY>",
-  subjectAttributes
-);
-```
-
-</TabItem>
-
-<TabItem value="python" label="Python">
-
-```python
-import eppo_client
-
-client = eppo_client.get_instance()
-variation = client.get_assignment("<SUBJECT-KEY>", "<EXPERIMENT-KEY>", { "device": "iOS" })
-```
-
-</TabItem>
-</Tabs>
-
-### Supported Rule Operators
+## Supported Rule Operators
 
 | Operator                                                                                   | Attribute Type          | Meaning                                                                                                                                                                      |
 | :----------------------------------------------------------------------------------------- | :---------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -72,7 +24,7 @@ variation = client.get_assignment("<SUBJECT-KEY>", "<EXPERIMENT-KEY>", { "device
 | matches regex                                                                              | string                  | Regular expression match                                                                                                                                                     |
 | one of / not one of                                                                        | string, number, boolean | Is one of (or not one of) an array of strings. Non-string inputs (number and boolean) are cast to string before performing the comparison. Comparisons are case-insensitive. |
 
-#### Special case: Semantic Versioning
+## Special case: Semantic Versioning
 
 When rolling out new versions of your product or wishing to deploy custom behavior across a range of releases,
 use Eppo's targeting rules to perform numeric comparisons against strings in the SemVer format.

@@ -1,7 +1,3 @@
----
-sidebar_position: 4
----
-
 # Audit log
 
 Each Eppo feature flag comes with a historical log that documents all updates made to that flag:

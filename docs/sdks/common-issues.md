@@ -1,8 +1,8 @@
 ---
-sidebar_position: 7
+sidebar_position: 8
 ---
 
-# Common issues
+# Best practices
 
 This page walks through some common pitfalls that occur when first implementing Eppo’s SDK.
 
@@ -13,6 +13,11 @@ Don't be blocked! We're here to help you get up and running with Eppo. Contact u
 ## 1. Batching assignments
 
 Always place assignment calls as close to your end experience as possible. This reduces the likelihood of logging an assignment but not delivering the corresponding experience, which can lead to issues in analysis, including lowering statistical power. An example of this is batching assignments.
+
+:::note
+
+While Eppo recommends placing assignment calls as close to the experience as possible, we understand this is not possible in all circumstances. In these cases, we provide the ability to filter analysis results. See [Filter assignments by entry points](/experiment-analysis/filter-assignments-by-entry-point) for more details.
+:::
 
 ### An example of how to get assignments correctly
 

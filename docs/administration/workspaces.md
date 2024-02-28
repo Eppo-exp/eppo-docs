@@ -9,4 +9,4 @@ Additional Workspaces are available for Enterprise customers who fit the followi
 
 Workspaces can be accessed through the the Workspace picker by clicking on the company name in the side nav.
 
-Please contact <a href="mailto:support@eppo.com">Eppo support</a> to add additional Workspaces.
+Please contact <a href="mailto:support@geteppo.com">Eppo support</a> to add additional Workspaces.
