@@ -26,8 +26,13 @@ which can invalidate the results of an experiment.
 We run this traffic imbalance test by running a [Pearson’s chi-squared test](https://en.wikipedia.org/wiki/Pearson%27s_chi-squared_test) with $\alpha=0.001$ on active variations,
 using the assignment weights for each variant (default is equal split across variations), which we convert to probabilities.
 This is also known as the sample ratio mismatch test (SRM).
-We run the test at the more conservative $\alpha=0.001$ level because this test is not sequentially valid;
-the more conservative significance level helps us avoid false positives.
+
+:::note
+The choice of $\alpha=0.001$ may appear low, but is appropriate for a sample ratio mismatch test. It limits false positives while retaining statistical power near 100%.
+1. The SRM diagnostic is performed every time experiment results are updated, yet the test is not a sequentially valid. Because of the continuous ``peeking'', the effective $\alpha$ is higher.
+2. False positives are expensive: they can lead to wasteful investigations (it's near impossible to definitely conclude that there is _no_ source of SRM), or cast doubt on experiment results more generally. The conservative $\alpha$ makes it very unlikely that an alert will be fired where there is no SRM.
+3. Sample ratio mismatch tests have very high power in typical settings (large samples, experiment allocation far from 0% and 100%). Whenever a ratio mismatch is present, it will be detected with probability near 100%.
+:::
 
 ## Alerts
 

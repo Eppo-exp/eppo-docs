@@ -1,7 +1,6 @@
 ---
 sidebar_position: 1
 ---
-
 # Simple metrics
 
 Metrics are essential for analyzing experiments in Eppo, as they provide quantitative measures to evaluate the performance of different variations in an A/B test. In this guide, we walk you through simple metrics: an aggregation over an entity. An example of a simple metric at the _User_ entity level would be _Revenue_: this is the sum of money spent by a user.
@@ -38,15 +37,13 @@ GROUP BY variant
 ### Metric aggregation types
 
 In Eppo, you are able to create a wide variety of metrics because Eppo supports many aggregation functions:
-
 - [Sum](#sum)
 - [Unique Entities](#unique-entities)
 - [Count](#count)
+- [Count Distinct](#count-distinct)
 - [Retention](#retention)
 - [Conversion](#conversion)
 - [Threshold](#threshold)
-
-Let's discuss each of them in more detail.
 
 #### Sum
 
@@ -71,6 +68,14 @@ Count leverages SQL's `COUNT` to compute a total count of events per entity. If 
 $\frac{\text{COUNT of fact values}}{\text{Number of unique entities assigned}}$
 
 Examples: videos watched per user, articles viewed per visitor, orders per user.
+
+#### Count Distinct
+
+`Count distinct` computes the number of unique non-numeric values in a fact. This allows for counting a number of unique values in a field other than the entity. If the fact value is NULL, it is discarded.
+
+$\frac{\text{Number of unique fact values}}{\text{Number of unique entities assigned}}$
+
+Examples: number of unique videos watched per user (if the same video is watched twice, it only counts once), number of unique articles viewed per visitor, number of unique items ordered (if an item is ordered multiple times, it only counts once).
 
 #### Retention
 
@@ -130,7 +135,7 @@ Note that winsorization is only utilized for `SUM` and `COUNT` aggregations. Thi
 
 5. **Set a default precision target**
 
-The [precision](/experiments/progress-bar#precision) refers to the uncertainty you want to be able to measure in an experiment, as measured by the width of confidence intervals. You can set a default at the metric level, which will be used to measure [progress](/experiments/progress-bar) if this metric is the primary metric for an experiment.
+The [precision](/experiment-analysis/progress-bar#precision) refers to the uncertainty you want to be able to measure in an experiment, as measured by the width of confidence intervals. You can set a default at the metric level, which will be used to measure [progress](/experiment-analysis/progress-bar) if this metric is the primary metric for an experiment.
 
 6. **Set formatting options**
 

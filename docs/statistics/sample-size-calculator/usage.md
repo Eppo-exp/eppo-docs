@@ -8,7 +8,7 @@ An experiment’s statistical power, or ability to detect treatment effects in a
 
 ## Setting up a sample size calculation
 
-Start by opening the **Sample Size Calculator** using the button in the top-right corner of the [Experiments](https://eppo.cloud/experiments) page.
+Start by opening the **Sample Size Calculator** using the button in the top-right corner of the [Experiments](https://eppo.cloud/experiment-analysis) page.
 
 ![Sample size calculator is located in the upper right on experiments page](/img/planning-experiments/sample_size_calculator_homepage.png)
 
@@ -16,21 +16,21 @@ Here you can see a record of all past calculations, which are automatically save
 
 ![Sample size calculator interface](/img/planning-experiments/on_demand_sample_size_calculator_interface.png)
 
-Use the controls on the left to configure the sample size calculation. Select the experiment Entity, the Entry Point, and metrics you want to compute [Minimum Detectable Effects](/statistics/sample-size-calculator/mde) for. You can customize the saved calculation name or use the auto-generated name.
+Use the controls on the left to configure the sample size calculation. Select the experiment Entity, the Entry Point, and metrics you want to compute [Minimum Detectable Effects](/statistics/sample-size-calculator/mde) for. Funnel metrics are not supported in the sample size calculator. You can customize the saved calculation name or use the auto-generated name.
 
 :::tip
-You do not need to include all metrics you intend to add later to your experiment analysis. 
+You do not need to include all metrics you intend to add later to your experiment analysis.
 
 Instead, only include metrics for which you need to reach the target precision to make a ship/no-ship decision. These will typically be:
 - your primary metric, to verify that the effect size you anticipate from the experiment is greater than or equal to the Minimum Detectable Effect;
-- any guardrail metrics for which you need precise estimates to establish that the guardrail is met (possibly using a [non-inferiority test](/how-tos/non-inferiority-tests)).
+- any guardrail metrics for which you need precise estimates to establish that the guardrail is met (possibly using a [non-inferiority test](/guides/non-inferiority-tests)).
 :::
 
 After you have selected the metrics you're interested in, click _Run Calculation_. The setup is now saved and the calculation will begin in the background. You will receive an email when the calculation is completed, and the page will automatically refresh when completed. You are free to leave this page and come back later, without losing any work.
 
 ## Adjusting settings and interpreting the results
 
-Before looking at the results, you may **optionally** adjust the settings. 
+Before looking at the results, you may **optionally** adjust the settings.
 
 Number of Variations includes the Control, and so has a minimum value of 2. Traffic Exposure is the percent of traffic (that is, of observed entries) that you plan to enroll in the experiment. Combined with the simulated experiment data, these two numbers will determine the number of subjects available for the planned experiment over various time periods. The default settings of 2 variations and 100% will result in the smallest Minimum Detectable Effects.
 
