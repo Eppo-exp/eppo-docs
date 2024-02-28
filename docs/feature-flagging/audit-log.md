@@ -26,6 +26,6 @@ Restore functionalty is currently in closed Beta
 
 The audit log also provides restore version functionality. When inspecting a previous version, you can easily see what changes will be made by restoring this version. Click on the `Restore` button to make the change.
 
-[Compare version and restore](/img/feature-flagging/restore-version)
+[Compare version and restore](/img/feature-flagging/restore-version.png)
 
 Restore functionality is only available to users who have edit rights to the Feature Flag.
