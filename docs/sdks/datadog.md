@@ -5,11 +5,11 @@ sidebar_position: 5
 
 ## Overview
 
-This guide will walk through how to send Eppo feature flag assignments as RUM data to Datadog using Eppo’s [Node SDK](/feature-flags/sdks/node) and Datadog’s [Node APM Tracer library](https://www.npmjs.com/package/dd-trace). While Node is used for this example, the concepts can be extrapolated to any language that are supported by Eppo SDKs and Datadog environments.
+This guide will walk through how to send Eppo feature flag assignments as RUM data to Datadog using Eppo’s [Node SDK](/sdks/sever-sdks/node.md) and Datadog’s [Node APM Tracer library](https://www.npmjs.com/package/dd-trace). While Node is used for this example, the concepts can be extrapolated to any language that are supported by Eppo SDKs and Datadog environments.
 
 :::info
 
-This example assumes there is a [feature flag](/feature-flags/use-cases/01-feature-gates.md) set up in Eppo and a [Datadog Agent](https://docs.datadoghq.com/tracing/trace_collection/automatic_instrumentation/dd_libraries/nodejs/) set up.  
+This example assumes there is a [feature flag](/feature-flagging/feature-gates.md) set up in Eppo and a [Datadog Agent](https://docs.datadoghq.com/tracing/trace_collection/automatic_instrumentation/dd_libraries/nodejs/) set up.  
 
 :::
 
@@ -47,4 +47,4 @@ In this example, we are logging an event called `flagViewed` to Datadog that has
 
 Below is a dashboard created on the Metrics Explorer page that shows the user’s CPU usage, all exposures to our flag called `datadog-testing`, and our variants in that flag called `control` and `variation`. 
 
-![Datadog Feature Flagging Dashboard](/img/how-tos/datadog/datadog-feature-flag-dashboard.png)
+![Datadog Feature Flagging Dashboard](/img/feature-flagging/datadog-feature-flag-dashboard.png)
