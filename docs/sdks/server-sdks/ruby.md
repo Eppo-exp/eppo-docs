@@ -31,6 +31,12 @@ After initialization, the SDK begins polling Eppo’s API at regular intervals t
 
 If you are using the SDK for experiment assignments, make sure to pass in an assignment logging callback (see [section](#define-an-assignment-logger-experiment-assignment-only) below).
 
+:::info
+
+By default the Eppo client initialization is asynchronous to ensure no critical code paths are blocked. For more information on handling non-blocking initialization, see our [documentation here](/sdks/common-issues#3-not-handling-non-blocking-initialization).
+
+:::
+
 ### Define an assignment logger (experiment assignment only)
 
 If you are using the Eppo SDK for experiment assignment (i.e randomization), include a logger instance in the config that is passed to the `init` function on SDK initialization. The SDK invokes the `log_assignment` method in the instance to capture assignment data whenever a variation is assigned.
