@@ -1,4 +1,7 @@
 # Mutual exclusion (Layers)
+---
+sidebar_position: 6
+---
 
 :::note
 Layers is currently in closed Beta
