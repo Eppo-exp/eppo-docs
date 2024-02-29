@@ -21,7 +21,7 @@ For example, if you are a food delivery app, and you want to run experiments on 
 
 ### Annotating tables
 
-There are three core tables that Eppo needs to know about to successfully analyze expeirments
+There are three core tables that Eppo needs to know about to successfully analyze experiments.
 
 - Assignment tables: which subjects participated in experiments and what variants did they see?
 - Fact tables: what actions did subjects take, so we can turn them into metrics?
