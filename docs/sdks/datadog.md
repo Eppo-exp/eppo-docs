@@ -28,6 +28,24 @@ dotenv.config();  // Load environment variables from .env file
 import tracer from 'dd-trace';
 tracer.init(); // initialize
 
+// Eppo Assignment logger
+const assignmentLogger = {
+    logAssignment(assignment) {
+      tracer.dogstatsd.increment(
+        'flagViewed',
+        1,
+        {
+          allocation: assignment.allocation,
+          experiment: assignment.experiment,
+          featureFlag: assignment.featureFlag,
+          variation: assignment.variation,
+          holdout: assignment.holdout,
+          holdoutVariation: assignment.holdoutVariation
+        }
+      )
+    },
+  };
+
 // Eppo startup
 await init({
     apiKey: process.env.EPPO_SDK_KEY,
@@ -38,12 +56,11 @@ const variation = eppoClient.getStringAssignment(
   "<SUBJECT-KEY>",
   "<FEATURE-FLAG-OR-EXPERIMENT-KEY>"
 );
-tracer.dogstatsd.increment('flagViewed', 1, { experiment: '<FEATURE-FLAG-OR-EXPERIMENT-KEY>', variation: variation } );
 ```
 
 ## Datadog reporting
 
-In this example, we are logging an event called `flagViewed` to Datadog that has the experiment key and variation key assigned to the metric as a property. This metric, `flagViewed` can be used to create and save dashboards under [Datadog’s Metrics Explorer](https://docs.datadoghq.com/metrics/explorer/) page that highlight the correlation between what flag and variant was used with other metrics such as CPU that would indicate performance. 
+In this example, we are logging an event called `flagViewed` to Datadog that logs Eppo assignment data like the variation key, assignment key, and feature flag key as properties to that metric in Datadog. Now you can create and save dashboards under [Datadog’s Metrics Explorer](https://docs.datadoghq.com/metrics/explorer/) page with the metric, `flagViewed`, to highlight the correlations between flags and other performance metrics such as CPU to indicate whether a new flag is inadvertantly causing performance issues. 
 
 Below is a dashboard created on the Metrics Explorer page that shows the user’s CPU usage, all exposures to our flag called `datadog-testing`, and our variants in that flag called `control` and `variation`. 
 
