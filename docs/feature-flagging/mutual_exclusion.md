@@ -40,7 +40,7 @@ This is the top-most rule and is evaluated first. This allows you to target a sp
 This is where Experiments will be added and evaluated.
 
 ### Rollout
-If you make a decision to ship a Variation from an Experiment, it will rollout to users in this rule. Specifically, Parameter values will be updated with the values from the winning Variation you chose. Any users who are not opted-out and are not in a running experiment will be exposed to the Rollout.
+If you make a decision to ship a Variation from an Experiment, it will rollout to users in this rule. Specifically, Parameter values will be updated with the values from the winning variation you chose. Any users who are not opted-out and are not in a running experiment will be exposed to the Rollout.
 
 ### Default Serving Rule
 This is the control Variation that users will see when they are not exposed to an Experiment and before any rollouts have taken place. 
@@ -56,7 +56,7 @@ Here you are able to define the Experiment name, the Variations to include in th
 Once your Experiment allocation is created, you'll want to add an Experiment Analysis to it to understand how it's performing. Do this by clicking on the `Create Analysis` button and filling out information about the Analysis. See [Creating Experiments](/experiment-analysis/creating-experiments) for more information.
 ![Creating an experiment analysis](/img/feature-flagging/layer-experiment-analysis.png)
 
-## Concluding an Experiment and Rolling out a Winning Variantion
+## Concluding an Experiment and Rolling out a Winning Variation
 Once the Experiment concludes, you'll want to free up the space in the layer that the Experiment was occupying and rollout any winners.
 
 First make a decision on the Experiment in the Analysis section. Then you can either `Archive` the experiment if you do not plan to ship a winning variation or `Rollout & Archive` if a treatment won. Eppo will provide a button in either case.
