@@ -17,3 +17,15 @@ Eppo logs the following updates:
 - Flag archival
 
 Knowing who changed what is useful both for governance and accounting for any unexpected behavior in your application.
+
+## Restore old versions
+
+:::note
+Restore functionalty is currently in closed Beta
+:::
+
+The audit log also provides restore version functionality. When inspecting a previous version, you can easily see what changes will be made by restoring this version. Click on the `Restore` button to make the change.
+
+[Compare version and restore](/img/feature-flagging/restore-version.png)
+
+Restore functionality is only available to users who have edit rights to the Feature Flag.
