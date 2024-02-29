@@ -24,6 +24,24 @@ const { init } = EppoSdk;
 import dotenv from 'dotenv'; 
 dotenv.config();  // Load environment variables from .env file
 
+// Eppo Assignment logger
+const assignmentLogger = {
+    logAssignment(assignment) {
+      tracer.dogstatsd.increment(
+        'flagViewed',
+        1,
+        {
+          allocation: assignment.allocation,
+          experiment: assignment.experiment,
+          featureFlag: assignment.featureFlag,
+          variation: assignment.variation,
+          holdout: assignment.holdout,
+          holdoutVariation: assignment.holdoutVariation
+        }
+      )
+    },
+  };
+
 // Datadog startup
 import tracer from 'dd-trace';
 tracer.init(); // initialize
@@ -38,12 +56,12 @@ const variation = eppoClient.getStringAssignment(
   "<SUBJECT-KEY>",
   "<FEATURE-FLAG-OR-EXPERIMENT-KEY>"
 );
-tracer.dogstatsd.increment('flagViewed', 1, { experiment: '<FEATURE-FLAG-OR-EXPERIMENT-KEY>', variation: variation } );
+
 ```
 
 ## Datadog reporting
 
-In this example, we are logging an event called `flagViewed` to Datadog that has the experiment key and variation key assigned to the metric as a property. This metric, `flagViewed` can be used to create and save dashboards under [Datadog’s Metrics Explorer](https://docs.datadoghq.com/metrics/explorer/) page that highlight the correlation between what flag and variant was used with other metrics such as CPU that would indicate performance. 
+In this example, we are logging an event called `flagViewed` to Datadog that has assignment data such as the experiment key, feature flag key, and variation key assigned to the metric as a property. This metric, `flagViewed` can be used to create and save dashboards under [Datadog’s Metrics Explorer](https://docs.datadoghq.com/metrics/explorer/) page that highlight the correlation between what flag and variant was used with other metrics such as CPU that would indicate performance. 
 
 Below is a dashboard created on the Metrics Explorer page that shows the user’s CPU usage, all exposures to our flag called `datadog-testing`, and our variants in that flag called `control` and `variation`. 
 
