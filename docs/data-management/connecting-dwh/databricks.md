@@ -49,7 +49,7 @@ Eppo runs computations in your SQL warehouse and requires write access to an out
 - Click "Create catalog"
 - Name your catalog something like "eppo_service_catalog"
 - Edit the owner. Make it the "Eppo Service Group".
-- Add permisions by clicking the permissions tab and then clicking "Grant". Grant all privileges to the "Eppo Service Group".
+- Add permissions by clicking the permissions tab and then clicking "Grant". Grant all privileges to the "Eppo Service Group".
 
 ### 2. Create an Eppo output schema
 

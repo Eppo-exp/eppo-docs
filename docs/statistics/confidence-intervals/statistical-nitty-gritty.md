@@ -419,7 +419,7 @@ $$
     This is equivalent to saying that we want to limit the _false
     positive rate_ to be no more than $1-c$, which is how this constraint is
     typically framed in the context of
-    [null hypothsesis significance testing](https://en.wikipedia.org/wiki/Statistical_significance).
+    [null hypothesis significance testing](https://en.wikipedia.org/wiki/Statistical_significance).
 
 [^tvaries]:
     Note that we do not assume, as is typical, that $\Delta$ is constant
@@ -479,7 +479,7 @@ and has the following useful properties:
 
 1. The statistical guarantees are valid even for very broad assumptions about
    the underlying distribution of $\Delta$.
-2. You do not need to predeterimine the sample size.
+2. You do not need to predetermine the sample size.
 3. You can peek at results any number of times, and can decide, based on what
    you see, to shut down the experiment or keep it running to collect more data.
 4. You can use any stopping rule you like, meaning, for example, you can change

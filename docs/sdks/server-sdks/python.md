@@ -151,7 +151,7 @@ client_config = Config(api_key="<YOUR_API_KEY>",
 …
 ```
 
-The SDK will invoke the `log_assignment` function with an `assignment` object that contains the fields you've seen locally. Make sure the dictionnary is parse properly by your tooling.
+The SDK will invoke the `log_assignment` function with an `assignment` object that contains the fields you've seen locally. Make sure the dictionary is parse properly by your tooling.
 
 
 ## 3. Running the SDK
@@ -186,7 +186,7 @@ To be safe, we recommend always handling the `None` case in your code. Here are 
 
 1. The **Traffic Exposure** setting on experiments/allocations determines the percentage of subjects the SDK will assign to that experiment/allocation. For example, if Traffic Exposure is 25%, the SDK will assign a variation for 25% of subjects and `None` for the remaining 75% (unless the subject is part of an allow list).
 
-2. Assignments occur within the environments of feature flags. You must **enable the environment** corresponding to the feature flag’s allocation in the [flag control pannel](https://eppo.cloud/feature-flags/) before `getStringAssignment` returns variations. It will return `None` if the environment is not enabled.
+2. Assignments occur within the environments of feature flags. You must **enable the environment** corresponding to the feature flag’s allocation in the [flag control panel](https://eppo.cloud/feature-flags/) before `getStringAssignment` returns variations. It will return `None` if the environment is not enabled.
 
 ![Toggle to enable environment](/img/feature-flagging/enable-environment.png)
 
@@ -208,9 +208,9 @@ We introduced `get_string_assignment`’s two required inputs in the [Getting st
 
 But that’s not all: the function also takes an optional input for entity properties.
 
-### A. Optional Properties for Targetting 
+### A. Optional Properties for Targeting 
 
-Most entities on which we run feature flags have properties: sessions have browser types, users have loyalty status, corporate clients have a number of employees, videos have close-caption available or not, sport teams have a league, etc. If you want to decide how a feature flag behaves, or whether an experiment is ran on a certain entity based on those, you need to send that information too. When assigning entities, you can pass that additional information through `subject_attributes`: an optional dictionnary that details entity properties. 
+Most entities on which we run feature flags have properties: sessions have browser types, users have loyalty status, corporate clients have a number of employees, videos have close-caption available or not, sport teams have a league, etc. If you want to decide how a feature flag behaves, or whether an experiment is ran on a certain entity based on those, you need to send that information too. When assigning entities, you can pass that additional information through `subject_attributes`: an optional dictionary that details entity properties. 
 
 For example, if the entity is a customer session ,`subject_attributes` might look like this:  
   `{country:"Andorra", loyalty:"Gold", browser_type:"Mozilla", device_type:"Macintosh",
@@ -317,4 +317,4 @@ Assuming your service can be configured with many input parameters, that assignm
 
 ### D. String JSON Assignment
 
-`get_json_string_assignment` is similar, but the output is a string. This adds the responsability of unpacking the JSON from that string.
+`get_json_string_assignment` is similar, but the output is a string. This adds the responsibility of unpacking the JSON from that string.

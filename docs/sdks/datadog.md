@@ -60,7 +60,7 @@ const variation = eppoClient.getStringAssignment(
 
 ## Datadog reporting
 
-In this example, we are logging an event called `flagViewed` to Datadog that logs Eppo assignment data like the variation key, assignment key, and feature flag key as properties to that metric in Datadog. Now you can create and save dashboards under [Datadog’s Metrics Explorer](https://docs.datadoghq.com/metrics/explorer/) page with the metric, `flagViewed`, to highlight the correlations between flags and other performance metrics such as CPU to indicate whether a new flag is inadvertantly causing performance issues. 
+In this example, we are logging an event called `flagViewed` to Datadog that logs Eppo assignment data like the variation key, assignment key, and feature flag key as properties to that metric in Datadog. Now you can create and save dashboards under [Datadog’s Metrics Explorer](https://docs.datadoghq.com/metrics/explorer/) page with the metric, `flagViewed`, to highlight the correlations between flags and other performance metrics such as CPU to indicate whether a new flag is inadvertently causing performance issues. 
 
 Below is a dashboard created on the Metrics Explorer page that shows the user’s CPU usage, all exposures to our flag called `datadog-testing`, and our variants in that flag called `control` and `variation`. 
 

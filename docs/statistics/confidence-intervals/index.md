@@ -28,7 +28,7 @@ For a lot of metrics, this is pretty straightforward: if the average revenue per
 subject in the control variant was \$10, a 5% lift would mean that the average
 revenue in the treatment variant was \$10.50, a 50-cent increase. For
 _percentage_ and _ratio_ metrics, however, such as conversion rates and
-clickthrough rates, there are some pitfalls to interpreting relative lifts. A 5%
+click through rates, there are some pitfalls to interpreting relative lifts. A 5%
 lift in retention rate (that is, share of users returning to the product after a
 period of time) from a control baseline of 20% would mean the treatment
 retention rate is **21%** (a 1-percentage-point increase), _not_ 25%. For ratio

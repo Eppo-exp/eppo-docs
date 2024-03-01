@@ -25,4 +25,4 @@ Teams can be assigned to Flags, Experiments, and Metrics. Teams are available as
 
 Teams also provide an additional layer of permissions. Any non-admins that are not part of a Team that owns a metric, experiment, or flag do not have permission to edit it.
 
-Metrics have "Global Metric" as an additional option for Team ownership. Global Metrics are great for top-level metrics that strech across teams, such as Revenue or DAU.
+Metrics have "Global Metric" as an additional option for Team ownership. Global Metrics are great for top-level metrics that stretch across teams, such as Revenue or DAU.

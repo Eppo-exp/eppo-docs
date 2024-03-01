@@ -8,7 +8,7 @@ You can dive deeper into the results of your experiments by creating graphs with
 
 On the page to create a new Explore chart, you first need to select a metric. You can also add filters and a split-by to the chart and select the variation you are interested in. Click the **Update Chart** button to view the chart built with your selected criteria. Finally, you can click the **Add to Experiment** button to add it to the **Explore** tab of the experiment.
 
-![Explore clickthrough](/img/measuring-experiments/explores_clickthrough.gif)
+![Explore click through](/img/measuring-experiments/explores_clickthrough.gif)
 
 ## Chart Visualizations
 

@@ -62,7 +62,7 @@ A service is interested in testing whether a new onboarding flow will increase 9
 - Assign users for two weeks (14 days)
 - Track events for 104 days (14 days + 90 days)
 
-This will allow Eppo to calculate out the rentention metric for the entire population. If the assignment period matched the event period (as is the default in Eppo), this could expose more users than necessary to a new onboarding flow without first understanding the long-term impact.
+This will allow Eppo to calculate out the retention metric for the entire population. If the assignment period matched the event period (as is the default in Eppo), this could expose more users than necessary to a new onboarding flow without first understanding the long-term impact.
 
 :::
 

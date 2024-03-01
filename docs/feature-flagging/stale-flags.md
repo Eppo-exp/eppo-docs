@@ -13,4 +13,4 @@ Eppo labels Feature Flags with a `stale` status when the following conditions oc
 * The Flag has a variation that is serving 100% or 0% in Production
 
 ## Stale flag notifications
-Stale flags are eligable for both [Slack](/administration/email-notifications) and [email notifications](/administration/email-notifications). Enable flag notifications in Admin and your user profile.
+Stale flags are eligible for both [Slack](/administration/email-notifications) and [email notifications](/administration/email-notifications). Enable flag notifications in Admin and your user profile.
