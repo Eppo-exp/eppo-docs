@@ -71,7 +71,7 @@ More details about logging and examples (with Segment, Rudderstack, mParticle, a
 Assigning users to flags or experiments with a single `GetStringAssignment` function:
 
 ```csharp
-var assignedVariation = eppoClient.GetStringAssignment("<SUBJECT-KEY>", "<FLAG-OR-EXPERIMENT-KEY>", {
+var assignedVariation = eppoClient.GetStringAssignment("<SUBJECT-KEY>", "<FLAG-KEY>", {
   // Optional Dictionary of subject metadata for targeting.
 });
 ```

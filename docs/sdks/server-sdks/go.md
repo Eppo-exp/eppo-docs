@@ -110,7 +110,7 @@ import (
 )
 
 var eppoClient = &eppoclient.EppoClient{} // in global scope
-variation := eppoClient.GetStringAssignment("<SUBJECT-KEY>", "<FLAG-OR-EXPERIMENT-KEY>", <TARGETING_ATTRIBUTES>);
+variation := eppoClient.GetStringAssignment("<SUBJECT-KEY>", "<FLAG-KEY>", <TARGETING_ATTRIBUTES>);
 ```
 
 The `GetStringAssignment` function takes two required and one optional input to assign a variation:
