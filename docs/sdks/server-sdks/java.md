@@ -74,7 +74,7 @@ More details about logging and examples (with Segment, Rudderstack, mParticle, a
 Assigning users to flags or experiments with a single `getStringAssignment` function:
 
 ```java
-Optional<String> assignedVariation = eppoClient.getStringAssignment("<SUBJECT-KEY>", "<FLAG-OR-EXPERIMENT-KEY>", {
+Optional<String> assignedVariation = eppoClient.getStringAssignment("<SUBJECT-KEY>", "<FLAG-KEY>", {
   // Optional map of subject metadata for targeting.
 });
 ```

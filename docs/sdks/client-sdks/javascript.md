@@ -137,7 +137,7 @@ import * as EppoSdk from "@eppo/js-client-sdk";
 const eppoClient = EppoSdk.getInstance();
 const variation = eppoClient.getStringAssignment(
   "<SUBJECT-KEY>",
-  "<FLAG-OR-EXPERIMENT-KEY>",
+  "<FLAG-KEY>",
   {
     // Optional map of subject metadata for targeting.
   }

@@ -69,7 +69,7 @@ await init({
 const eppoClient = EppoSdk.getInstance();
 const variation = eppoClient.getAssignment(
   "<SUBJECT-KEY>",
-  "<FLAG-OR-EXPERIMENT-KEY>",
+  "<FLAG-KEY>",
   {}
 );
 ```
@@ -108,7 +108,7 @@ await init({
 const eppoClient = EppoSdk.getInstance();
 const variation = eppoClient.getAssignment(
   "<SUBJECT-KEY>",
-  "<FLAG-OR-EXPERIMENT-KEY>",
+  "<FLAG-KEY>",
   {}
 );
 ```
@@ -152,7 +152,7 @@ await init({
 const eppoClient = EppoSdk.getInstance();
 const variation = eppoClient.getAssignment(
   "<SUBJECT-KEY>",
-  "<FLAG-OR-EXPERIMENT-KEY>",
+  "<FLAG-KEY>",
   {}
 );
 ```
@@ -213,7 +213,7 @@ await init({
 const eppoClient = EppoSdk.getInstance();
 const variation = eppoClient.getAssignment(
   "<SUBJECT-KEY>",
-  "<FLAG-OR-EXPERIMENT-KEY>",
+  "<FLAG-KEY>",
   {}
 );
 ```

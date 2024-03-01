@@ -88,7 +88,7 @@ require 'eppo_client'
 client = EppoClient::Client.instance
 variation = client.get_string_assignment(
   '<SUBJECT-KEY>',
-  '<FLAG-OR-EXPERIMENT-KEY>',
+  '<FLAG-KEY>',
   {
     # Optional map of subject metadata for targeting.
   }
@@ -135,7 +135,7 @@ require 'logger'
 client = EppoClient::Client.instance
 variation = client.get_string_assignment(
   '<SUBJECT-KEY>',
-  '<FLAG-OR-EXPERIMENT-KEY>',
+  '<FLAG-KEY>',
   {},
   Logger::DEBUG
 )
