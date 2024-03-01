@@ -68,15 +68,15 @@ await init({
 });
 
 let userid = “user id”
-let experiment_key = <EPPO EXPERIMENT KEY>
+let flag_key = <EPPO FLAG KEY>
 
 const eppoClient = EppoSdk.getInstance();
 
 const homepage_entry_id = eppoClient.getStringAssignment(
     userid, // unique identifier for the user
-    experiment_key, // flag key from Eppo UI
+    flag_key, // flag key from Eppo UI
 )
-console.log(experiment_key, homepage_entry_id)
+console.log(flag_key, homepage_entry_id)
 
 // Contentful specific methods
 const contentfulClient = await contentful.createClient({
