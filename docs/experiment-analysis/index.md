@@ -47,7 +47,7 @@ of subjects assigned to each variation.
 <Figure caption="Experiment details - hovering over metric" src="/img/interpreting-experiments/experiment-details-view-hover.png" >
    In this example, the total purchase value <em>per assigned subject</em> is
    &#8203;<b>15.63</b> for control and <b>16.36</b> for treatment, and the total purchase
-   value <em>acrosss all assigned subjects</em> is <b>812,884.95</b> for control
+   value <em>across all assigned subjects</em> is <b>812,884.95</b> for control
    and <b>851,526.71</b> for treatment.
    There are <b>52,004</b> subjects assigned to control, and <b>52,039</b> assigned to treatment.
 </Figure>
@@ -197,10 +197,10 @@ percentage of the global total metric value).
 >
    In this example, the impact accounting view shows that, since the experiment has been
    active, only <b>81.8%</b> of <code>Total Upgrades to Paid Plan</code> events were done by subjects
-   that had been assigned to any varaition in the experiment. This means that, while
+   that had been assigned to any variation in the experiment. This means that, while
    the lift <em>among subjects in the experiment</em> is <b>6.06%</b>, since 18.2% of
    events are done by subjects who would not have been affected by the treatment,
-   the topline number of upgrades is only expected to go up by <b>4.93%</b>.
+   the top-line number of upgrades is only expected to go up by <b>4.93%</b>.
 </Figure>
 
 ### Statistical details

@@ -68,11 +68,11 @@ Whenever we detect that a primary metric of one of the variants is statistically
 
 ## Minimum requirements
 
-It is important to keep in mind that the results we show are based on the period the data was collected. It is not uncommon to see strong weekly effects (users behave differently on Monday morning versuse Friday night), or novelty effects.
+It is important to keep in mind that the results we show are based on the period the data was collected. It is not uncommon to see strong weekly effects (users behave differently on Monday morning versus Friday night), or novelty effects.
 Therefore, it is often useful to set minimum requirements, e.g. an experiment should run for at least 7 days.
 We also allow setting a maximum experiment runtime, which helps ensure experiments are not accidentally left stuck in the running state.
 
-Furthermore, our statistical methods rely on having sufficient number of observations to be valid; the amount of data collected in a usual experiment is often much larger than the minumum number of samples required, so this is likely not a concern, but we do allow setting minimum sample size requirements as well.
+Furthermore, our statistical methods rely on having sufficient number of observations to be valid; the amount of data collected in a usual experiment is often much larger than the minimum number of samples required, so this is likely not a concern, but we do allow setting minimum sample size requirements as well.
 
 ## Mathematical details of computing progress
 

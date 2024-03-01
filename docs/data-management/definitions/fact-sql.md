@@ -2,7 +2,7 @@
 
 Fact SQL queries are queries that correspond to events.
 
-When you write Fact SQL's, you're pulling data from the data warehouse that correspond to specific events that serve as input to metrics. For example, signups, activations, net subscriptions, etc.
+When you write Fact SQL's, you're pulling data from the data warehouse that correspond to specific events that serve as input to metrics. For example, sign-ups, activations, net subscriptions, etc.
 
 ## Creating a Fact SQL
 

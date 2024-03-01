@@ -35,7 +35,7 @@ The Flag will revert to read-only mode and show the previous state without the s
 Users can view the pending changes by clicking the button on the banner, which will show the changes as a JSON diff. Only one change can be pending at a time. The change will have to be approved or declined before further changes can be made or suggested.
 ![Pending changes view](/img/feature-flagging/approvals/pending-changes.png)
 
-Once action is taken. the Requester will receieve an email with the decision made.
+Once action is taken. the Requester will receive an email with the decision made.
 ![Decision email to Requester](/img/feature-flagging/approvals/approval-email.png)
 
 ## Reviewer Workflow

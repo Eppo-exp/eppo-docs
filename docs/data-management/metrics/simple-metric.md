@@ -107,7 +107,7 @@ Threshold metrics measure the proportion of entities who meet a user-specified `
 
 ## Creating a metric
 
-Now that we understand how metrics are defined withen Eppo, we are ready to create a metric.
+Now that we understand how metrics are defined within Eppo, we are ready to create a metric.
 Note that in order to create a metric, you first need to have set up a [Fact SQL Definition](/data-management/definitions/fact-sql) to point to the underlying data for your metric in your data warehouse.
 Let's walk through an example to create a User Revenue metric based on a fact table that lists purchase events at the user level.
 
@@ -141,15 +141,15 @@ The [precision](/experiment-analysis/progress-bar#precision) refers to the uncer
 
 Here, you can select whether to format the metric as a number or as a percentage.
 
-### Timeframes
+### Time frames
 
-Eppo allows you to further refine metrics by adding a timeframe. For example, we may be interested in a metric that only considers purchases within one week of the user's assignment to an experiment.
+Eppo allows you to further refine metrics by adding a time frame. For example, we may be interested in a metric that only considers purchases within one week of the user's assignment to an experiment.
 
-![Adding a timeframe to a metric](/img/data-management/metrics/create-metric-timeframe.png)
+![Adding a time frame to a metric](/img/data-management/metrics/create-metric-timeframe.png)
 
 :::note
-Consider adding a timeframe metric to experiments where you believe the intervention has a short term effect.
-For example, suppose sending a promotional email boosts engagement for one week. If we do not add a timeframe and run the experiment over 4 weeks, then the experiment effect may be diluted by a factor up to 4.
+Consider adding a time frame metric to experiments where you believe the intervention has a short term effect.
+For example, suppose sending a promotional email boosts engagement for one week. If we do not add a time frame and run the experiment over 4 weeks, then the experiment effect may be diluted by a factor up to 4.
 
 :::
 
@@ -165,7 +165,7 @@ When creating such a metric, specify that you want to use a metric property and 
 
 ![Editing a metric](/img/building-experiments/edit-metric.gif)
 
-1. Navigate to the **Metrics** tab on the left-handside menu.
+1. Navigate to the **Metrics** tab on the left-hand side menu.
 
 2. Navigate to the metric you want to edit
 

@@ -63,7 +63,7 @@ about handling a special case.
 
 The callback function is augmented with a `holdout` value if the `subject`
 was assigned to one. This should be transmitted to your Data Warehouse
-to faciliate filtering and computation of lifts.
+to facilitate filtering and computation of lifts.
 
 An example in GoLang:
 

@@ -6,7 +6,7 @@ Furthermore, we use the sample ratio mismatch test to verify that subjects are d
 
 ## Diagnostics
 
-To check traffic diagnoistics, navigate to the **Experiments** page by clicking on the **Experiments** icon from the left tab and then from the list, click on the experiment that you are interested in.
+To check traffic diagnostics, navigate to the **Experiments** page by clicking on the **Experiments** icon from the left tab and then from the list, click on the experiment that you are interested in.
 The details page for each experiment contains a **Set Up** tab where you can configure the % of traffic you want to randomize into the experiment.
 
 ![Traffic diagnostic setup](/img/measuring-experiments/traffic-setup.png)

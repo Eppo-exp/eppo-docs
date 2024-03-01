@@ -84,7 +84,7 @@ Once this entity is created, create an Assignment SQL definition and link it to 
 
 ![Creating Anonymous SQL Assignments](/img/anonymous-experiments/creating_assignment_definition.gif)
 
-Finally, create a Fact SQL definition that utilizes the anonymous visitor-to-user model described previously to infer an anonymous idea for the user-level fact table. Be sure to specify the anonymous entity as the `Entity` and use the anonymous identifier from the anonymous visitor-to-user model for the `Enity ID` column.
+Finally, create a Fact SQL definition that utilizes the anonymous visitor-to-user model described previously to infer an anonymous idea for the user-level fact table. Be sure to specify the anonymous entity as the `Entity` and use the anonymous identifier from the anonymous visitor-to-user model for the `Entity ID` column.
 
 ![Creating Fact SQL Definition](/img/anonymous-experiments/creating_fact_sql.gif)
 

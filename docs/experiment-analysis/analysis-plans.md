@@ -5,7 +5,7 @@ are rigorous and repeatable; an **analysis plan** is a set of choices and
 parameters that will govern how Eppo translates the experiment data into
 dashboards and visualizations–and thus into ship/no-ship decisions.
 
-In general, an experimentaiton program is most effective if decisions are made
+In general, an experimentation program is most effective if decisions are made
 in a consistent way across an entire company, and so most of the analysis plan
 settings can be set on the
 [administration](/administration/setting-statistical-analysis-plan-defaults.md)
@@ -102,7 +102,7 @@ ways your decision can be _wrong_:
 
 Because you don't _know_, even after running the experiment, whether the treatment
 had an effect, you don't know whether observing a nonzero lift is a
-_true positive_ or a _false positive_; simarly, _not_ observing a lift
+_true positive_ or a _false positive_; similarly, _not_ observing a lift
 could be a _true negative_ or a _false negative_.
 
 Of course, for any given experiment, you either detect a difference or you
@@ -185,7 +185,7 @@ And, importantly, while frequentist methods provide a binary structure for
 making decisions—an effect exists or does not—Bayesian methods allow for a more
 nuanced way of making decisions, which in particular is useful when sample sizes
 are too small to be able to detect even reasonable lifts with a frequentist
-method. Bayesian methods also allow you to make descisions at any time, and make
+method. Bayesian methods also allow you to make decisions at any time, and make
 it easier to tailor the level of rigor to the potential costs of being wrong:
 you can move fast when being wrong is cheap, and be more thorough when it is
 expensive.
@@ -214,9 +214,9 @@ The goal for picking an analysis plan is to balance:
   _communicate about_ and _align on_ a decision)
 
 [^posneg]:
-    "Postive" here means _effect detected_, and "negative" means _no effect
+    "Positive" here means _effect detected_, and "negative" means _no effect
     detected_; think of a diagnostic test for a disease, where "positive" means
-    that the desease is present, and "negative" means it is not. In particular,
+    that the disease is present, and "negative" means it is not. In particular,
     a "positive" result in this sense would be _observing a difference, in
     **either** direction, between treatment and control_. That is, having a
     confidence interval that is entirely above _or_ below zero would be

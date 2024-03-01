@@ -86,7 +86,7 @@ brief, the methods are:
 
 We chose to make sequential analysis the default because it allows for maximum
 flexibility while still making ship/no-ship decisions relatively
-straightforward: you can peek—and make a decisison—at any time, without risking
+straightforward: you can peek—and make a decision—at any time, without risking
 unacceptably high rates of detecting phantom effects.
 
 While fixed-sample analysis might be more likely to detect an effect that _is_
@@ -126,7 +126,7 @@ The hard part with fixed-sample analysis is the first step:
 **deciding when to look at the experiment results** (and choose to ship or
 shut down). If you look at results too early, you might not have
 enough statistical power to detect a treatment effect even if it exists.
-If you look at reasults too late, then you've wasted time.
+If you look at results too late, then you've wasted time.
 
 :::danger
 
@@ -146,7 +146,7 @@ There are two primary ways this requirement gets violated, in practice:
    until you have collected that much data, then look at the results: the
    estimated lift is positive (or negative), but the confidence interval is too
    wide to exclude zero. So, you decide to continue running for a couple more
-   weeks to "achieve significance"; if it then has an unambigiously positive
+   weeks to "achieve significance"; if it then has an unambiguously positive
    lift, you ship it.
 
 The problem in both cases stems from the fact that early on in an experiment,
@@ -159,7 +159,7 @@ results:
 - If you _stop_ an experiment if it has a randomly _negative_ early lift,
   but _continue_ it for an equally random _positive_ lift, you don't give
   experiments that have _bad_ luck early on a chance to recover; you will tend to
-  shut down experiments that might, ultimately, have had postive lifts (thus
+  shut down experiments that might, ultimately, have had positive lifts (thus
   missing out on potential improvements) and therefore bias your results
   _downward_ (you will tend to think experiments have worse results than they
   actually do, and you'll miss). This is what would happen in scenario 1 above.
@@ -343,7 +343,7 @@ where we test how likely it would be to see the observed data under the
 assumption that the treatment and the control were identical; that is, they take
 it as _given_ that the lift will be zero on average—but with random
 fluctuations—and ask how often those fluctuations would produce the kind of
-results observed during the exepriment.[^nhst] In contrast, the
+results observed during the experiment.[^nhst] In contrast, the
 [Bayesian](https://en.wikipedia.org/wiki/Bayesian_inference) approach takes
 _the data as given_, as well as what we believed _before we collected data_, and
 asks what _distribution of lifts_ are most compatible with the combination of
@@ -489,7 +489,7 @@ rigorously.
 - **You have to trust the prior.**
   With enough data, having an incorrect prior won't significantly bias your
   results. But since one of the benefits of Bayesian approaches is that they are
-  easier to make decisons with when sample sizes are small, and the prior plays
+  easier to make decisions with when sample sizes are small, and the prior plays
   a larger role in just these cases, the choice of prior can sometimes determine
   whether a variant gets shipped or not. Even if you establish that the prior
   reflects the historical patterns in your pre-experiment data, you still have

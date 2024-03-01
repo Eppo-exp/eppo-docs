@@ -16,7 +16,7 @@ Only experiment traffic imbalances and experiment refresh errors are available f
 
 ## Configure Email Notifications for for Team owned Flags, Experiments, and Metrics
 
-You can select to recieve notifications related to flags, experiments, and metrics that are owned by the Teams you belong to.
+You can select to receive notifications related to flags, experiments, and metrics that are owned by the Teams you belong to.
 
 ![Find your user profile](/img/administration/User-profile.png)
 
@@ -24,7 +24,7 @@ Click on your Workspace name in the left nav to reveal your profile. Click on yo
 
 ![Enable team level notifications](/img/administration/User-profile-menu.png)
 
-To turn your notifications on, toggle the switch to the right of your email. You can configure which types of notifications you'll recieve by checking the boxes for each option.
+To turn your notifications on, toggle the switch to the right of your email. You can configure which types of notifications you'll receive by checking the boxes for each option.
 
 To turn off email notifications, return to the profile menu and toggle notifications off.
 

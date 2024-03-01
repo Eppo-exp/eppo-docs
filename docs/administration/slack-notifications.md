@@ -16,7 +16,7 @@ The Eppo App for Slack allows you to receive notifications for important updates
 
 ![connect slack](https://user-images.githubusercontent.com/90637953/223587265-019faec4-279a-4ebe-b410-5fe2a3982a1d.gif)
 
-Go to Admin > Notifications to allow permissions to a Slack workspace. This is required before you can select Slack channels to recieve system wide notifications as well as for any user to add Slack channels for specific experiments, feature flags, or metrics.
+Go to Admin > Notifications to allow permissions to a Slack workspace. This is required before you can select Slack channels to receive system wide notifications as well as for any user to add Slack channels for specific experiments, feature flags, or metrics.
 
 ## Configure System Wide Slack Notifications
 
@@ -30,7 +30,7 @@ You can select specific Slack channels to receive notifications for **ANY** expe
 
 Go to an experiment and click on the bell icon in the upper right of the page. Select a Slack channel to receive notifications.
 
-To configure which types of notifications this channel will recieve, click on "Configure" next to the channel name and update preferences.
+To configure which types of notifications this channel will receive, click on "Configure" next to the channel name and update preferences.
 
 To remove the Slack channel from this experiment, click on "Configure" and turn off the channel.
 
@@ -40,7 +40,7 @@ To remove the Slack channel from this experiment, click on "Configure" and turn 
 
 Go to a metric and click on the bell icon in the upper right of the page. Select a Slack channel to receive notifications.
 
-To remove the Slack channel from this metirc, click on "Configure" and turn off the channel.
+To remove the Slack channel from this metric, click on "Configure" and turn off the channel.
 
 ## Configure Slack Notifications for a Specific Feature Flag
 

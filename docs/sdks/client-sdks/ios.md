@@ -43,7 +43,7 @@ Task {
 
 It is recommended to wrap initialization in a `Task` block in order to perform network request asynchronously.
 
-For applications wrapping initalization and assignment in an `ObservableObject` is recommended. This will create an object that will update Swift UI when the assignment is received.
+For applications wrapping initialization and assignment in an `ObservableObject` is recommended. This will create an object that will update Swift UI when the assignment is received.
 
 ```
 @MainActor

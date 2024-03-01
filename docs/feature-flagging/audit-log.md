@@ -21,7 +21,7 @@ Knowing who changed what is useful both for governance and accounting for any un
 ## Restore old versions
 
 :::note
-Restore functionalty is currently in closed Beta
+Restore functionality is currently in closed Beta
 :::
 
 The audit log also provides restore version functionality. When inspecting a previous version, you can easily see what changes will be made by restoring this version. Click on the `Restore` button to make the change.
