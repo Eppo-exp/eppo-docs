@@ -25,12 +25,12 @@ WITH user_summaries AS (
         user_spent.user,
         assignments.variant,
         SUM(user_spent.spent) AS user_spent
-    FROM spent_events
-    JOIN assignments
-      ON spent_events.user = assignments.user
-     AND spent_events.timestamp >= assignments.timestamp
-    GROUP BY user
-    WHERE spent_ts BETWEEN experiment_start AND experiment_end
+   FROM spent_events
+   JOIN assignments
+     ON spent_events.user = assignments.user
+    AND spent_events.timestamp >= assignments.timestamp
+  GROUP BY user
+  WHERE spent_ts BETWEEN experiment_start AND experiment_end
 )
 
 SELECT
@@ -70,11 +70,11 @@ In each of the calculations below, NULL-valued facts are not included.
 
 \*Only entities that were assigned at least X days ago are included in both numerator and denominator. Those assigned within the last X days cannot yet have retained, by construction. For those the numerator is always 0, and including them would make retention appear artificially low.
 
-### Timeframes
+### Time frames
 
-Eppo allows you to further refine metrics by adding a timeframe. For example, we may be interested in a metric that only considers purchases within one week of the user's assignment to an experiment.
+Eppo allows you to further refine metrics by adding a time frame. For example, we may be interested in a metric that only considers purchases within one week of the user's assignment to an experiment.
 
-![Adding a timeframe to a metric](/img/data-management/metrics/create-metric-timeframe.png)
+![Adding a time frame to a metric](/img/data-management/metrics/create-metric-timeframe.png)
 
 :::note
 Consider adding a timeframe metric to experiments where you believe the intervention has a short term effect.

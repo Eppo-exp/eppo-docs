@@ -38,7 +38,7 @@ A curated collection of metrics consisting of the experiments primary metric and
 ![Primary Guardrail Blocks](/img/experiments/reports/primary-guardrail-block.png)
 
 #### Explore Charts
-Deep dive into metrics with exlore charts that allow you to slice-and-dice a metric.
+Deep dive into metrics with explore charts that allow you to slice-and-dice a metric.
 ![Explore Block](/img/experiments/reports/explore-block.png)
 
 #### Variations

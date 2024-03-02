@@ -40,7 +40,7 @@ You can read more about Assignment SQL Definitions [here](/data-management/defin
 <Tabs>
 <TabItem value="e2e" label="Eppo Randomized">
 
-From the Feature Flag page, click **Create Experiment Analysis**. Give the experiment a name, select the assignment logging table you created above, and click **Next**.
+From your Feature Flag, click **Create Experiment Analysis**. Give the experiment a name, select the assignment logging table you created above, and click **Next**.
 
 ![Create Experiment 1b](/../static/img/building-experiments/quick-start-1b.png)
 
@@ -48,7 +48,7 @@ From the Feature Flag page, click **Create Experiment Analysis**. Give the exper
 
 <TabItem value="external" label="Externally Randomized">
 
-From the **Experiments** tab, click **+Create** and select **Experiment Analysis**. 
+From the **Analysis** section, click **+Create** and select **Experiment Analysis**. 
 
 ![Create Experiment 1](/../static/img/building-experiments/quick-start-1.png)
 

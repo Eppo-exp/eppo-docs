@@ -18,7 +18,7 @@ on what each setting is and how to choose the right settings, see
 
 #### Setting a minimum threshold for experiments
 
-When enabled, this setting cannot be overriden on individual experiments. When enabled, experiments must meet both a minimum duration (days run) and sample size requirement before the experiment’s progress will be displayed.
+When enabled, this setting cannot be overridden on individual experiments. When enabled, experiments must meet both a minimum duration (days run) and sample size requirement before the experiment’s progress will be displayed.
 
 This is to help prevent premature stopping and decisions on experiments.
 ![Minimum Threshold](/img/administration/min-threshold-admin-setting.png)
@@ -26,7 +26,7 @@ This is to help prevent premature stopping and decisions on experiments.
 ## How to Change the Defaults
 
 You can define the defaults for the statistical methods used for experiments
-across Eppo by going to **Admin > Settings > Statistical Analyis Plan**.
+across Eppo by going to **Admin > Settings > Statistical Analysis Plan**.
 
 The settings defined at the Admin level will be the company-wide defaults for
 any “draft”, “running”, and “wrap up” experiments that have not opted out of

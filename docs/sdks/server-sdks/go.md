@@ -46,7 +46,9 @@ func main() {
 }
 ```
 
-After initialization, the SDK begins polling Eppo’s API at regular intervals to retrieve the most recent experiment configurations such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments thereafter are effectively instant. If you are using the SDK for experiment assignments, make sure to pass in an assignment logging callback (see [section](#define-an-assignment-logger-experiment-assignment-only) below).
+After initialization, the SDK begins polling Eppo’s API at regular intervals to retrieve the most recent experiment configurations such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments thereafter are effectively instant. For more information, see the [architecture overview](/sdks/overview) page.
+
+If you are using the SDK for experiment assignments, make sure to pass in an assignment logging callback (see [section](#define-an-assignment-logger-experiment-assignment-only) below).
 
 ### Define an assignment logger (experiment assignment only)
 
@@ -108,7 +110,7 @@ import (
 )
 
 var eppoClient = &eppoclient.EppoClient{} // in global scope
-variation := eppoClient.GetStringAssignment("<SUBJECT-KEY>", "<FLAG-OR-EXPERIMENT-KEY>", <TARGETING_ATTRIBUTES>);
+variation := eppoClient.GetStringAssignment("<SUBJECT-KEY>", "<FLAG-KEY>", <TARGETING_ATTRIBUTES>);
 ```
 
 The `GetStringAssignment` function takes two required and one optional input to assign a variation:

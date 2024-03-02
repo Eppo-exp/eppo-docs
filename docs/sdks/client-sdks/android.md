@@ -26,15 +26,9 @@ import cloud.eppo.android.EppoClient;
 EppoClient eppoClient = EppoClient.init("YOUR_API_KEY");
 ```
 
-During initialization, the SDK sends an API request to Eppo to retrieve the most recent experiment configurations such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments are effectively instant. If you are using the SDK for experiment assignments, make sure to pass in an assignment logging callback (see [section](#define-an-assignment-logger-experiment-assignment-only) below).
+During initialization, the SDK sends an API request to Eppo to retrieve the most recent experiment configurations such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments are effectively instant. For more information, see the [architecture overview](/sdks/overview) page. 
 
-<br />
-
-:::note
-API Keys used with Client SDKs should have at least 'Feature Flagging READ' permissions enabled.
-:::
-
-<br />
+If you are using the SDK for experiment assignments, make sure to pass in an assignment logging callback (see [section](#define-an-assignment-logger-experiment-assignment-only) below).
 
 ### Define an assignment logger (experiment assignment only)
 
@@ -89,7 +83,7 @@ Assigning users to flags or experiments with a single `getStringAssignment` func
 import cloud.eppo.android.EppoClient;
 
 EppoClient eppoClient = EppoClient.getInstance(); // requires the SDK to already be initialized
-String variation = eppoClient.getStringAssignment("<SUBJECT-KEY>", "<FLAG-OR-EXPERIMENT-KEY>");
+String variation = eppoClient.getStringAssignment("<SUBJECT-KEY>", "<FLAG-KEY>");
 ```
 
 The `getStringAssignment` function takes two required and one optional input to assign a variation:

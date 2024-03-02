@@ -39,7 +39,7 @@ Now that we have the content defined, we’ll need to get the entry ID for our t
 
 ## Setting up Eppo
 
-Next, we’ll create a [corresponding flag in Eppo](/feature-flag-quickstart/) (Feature Flags >> Create). For each variant above, simply add a new variant in the Eppo UI. For each variant value, paste in the corresponding Contentful entry ID. Make sure to also save your Feature Flag key – you will need it for your Node implementation later.
+Next, we’ll create a [corresponding flag in Eppo](/feature-flag-quickstart/) (Configuration >> Create). For each variant above, simply add a new variant in the Eppo UI. For each variant value, paste in the corresponding Contentful entry ID. Make sure to also save your Feature Flag key – you will need it for your Node implementation later.
 
 ![Eppo feature flag setup](/img/guides/integrating-with-contentful/eppo-feature-flag-setup.png)
 
@@ -68,15 +68,15 @@ await init({
 });
 
 let userid = “user id”
-let experiment_key = <EPPO EXPERIMENT KEY>
+let flag_key = <EPPO FLAG KEY>
 
 const eppoClient = EppoSdk.getInstance();
 
 const homepage_entry_id = eppoClient.getStringAssignment(
     userid, // unique identifier for the user
-    experiment_key, // flag key from Eppo UI
+    flag_key, // flag key from Eppo UI
 )
-console.log(experiment_key, homepage_entry_id)
+console.log(flag_key, homepage_entry_id)
 
 // Contentful specific methods
 const contentfulClient = await contentful.createClient({
@@ -107,7 +107,7 @@ The recommended workflow for launching a content-based experiment is as follows:
 2. Create a new variant in Eppo with the `entry_id` from Contentful UI.
 3. Create an allocation to test the new content in production (see screenshot below).
 4. Load page to QA new content and [add screenshots to Eppo](/experiment-analysis/creating-experiments/#8-click-save-changes) for reference.
-5. [Create an experiment allocation](/feature-flagging/use-cases/experiment-assignment/) and launch the experiment.
+5. [Create an experiment allocation](/feature-flagging/experiment-assignment/) and launch the experiment.
 6. Analyze experiment and make rollout decisions like any other Eppo experiment.
 
 :::tip

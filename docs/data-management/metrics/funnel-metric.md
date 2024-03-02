@@ -31,21 +31,27 @@ Each of these actions are connected to separate events, and we want to understan
 
 :::note
 
+Make sure that, if a user hasn’t reached a step, the event in the corresponding table is either missing, or `NULL` and not marked as 0. 
+
+:::
+
+:::note
+
 Eppo requires the funnel steps to happen in order, but does not care whether unspecified events happen in between the funnel steps.
 
 :::
 
-### Timeframes
+### Time frames
 
-You can additionally specify a timeframe in which a user needs to complete the funnel in order to count as a funnel conversion.
+You can additionally specify a time frame in which a user needs to complete the funnel in order to count as a funnel conversion.
 
 There are three options:
 
-- No timeframe: as long as the user completes the steps in order, it counts as a conversion.
+- No time frame: as long as the user completes the steps in order, it counts as a conversion.
 - Time window from time of assignment: the user has to complete the funnel within the set duration, where the time of assignment starts the clock.
 - Time window from time of first event: the user has to complete the funnel within the set duration, but the clock starts at the time of the first step in the funnel for that user.
 
-![Funnel metric timeframe](/img/data-management/metrics/funnel-metric-timeframe.png)
+![Funnel metric time frame](/img/data-management/metrics/funnel-metric-timeframe.png)
 
 ## Analysis of funnel metrics
 
@@ -73,9 +79,9 @@ The funnel steps visualization shows how each step of the funnel converted (cumu
 ![Funnel Steps](/img/data-management/metrics/funnel_steps_viz.png)
 
 Apply split bys to your funnel to see how the funnel performed for different properties.
-![Funnel Steps with Splitby](/img/data-management/metrics/funnel_steps_splitby.png)
+![Funnel Steps with Split by](/img/data-management/metrics/funnel_steps_splitby.png)
 
 ### Funnel Lift
-The funnel lift visualization shows for each step the relative percent lift in comparision to the control variant. 
+The funnel lift visualization shows for each step the relative percent lift in comparison to the control variant. 
 
 ![Funnel Lift](/img/data-management/metrics/funnel_lift.png)

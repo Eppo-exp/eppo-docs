@@ -55,3 +55,11 @@ http://adoring-yonath-6ecb9d.netlify.app/*  http://docs.geteppo.com/:splat  301!
 /how-tos/warehouse-migration /guides/warehouse-migration
 /what-is-eppo /
 /experiment-analysis/creating-experiment-analysis /experiment-analysis/creating-experiments
+
+/feature-flags/flag-variations /feature-flagging/flag-variations
+/feature-flags/use-cases/feature-gates /feature-flagging/use-cases/feature-gates
+/feature-flags/use-cases/experiment-assignment /feature-flagging/use-cases/experiment-assignment
+/feature-flags/targeting /feature-flagging/targeting
+
+/experiments/connecting-your-data/data-warehouses/connecting-to-databricks/ /data-management/connecting-dwh/databricks
+/experiments/connecting-your-data/data-warehouses/connecting-to-redshift/ /data-management/connecting-dwh/redshift

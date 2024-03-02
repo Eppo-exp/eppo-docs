@@ -26,7 +26,7 @@ Part 1: In your Okta instance, set up a new application for Eppo.
 
 Part 2: Securely send over your new app’s information to the Eppo team.
 
-1. In a new tab open up **One Time Secret** ([https://onetimesecret.com/](https://onetimesecret.com/)). This will allow you to securely share your app’s sensitive details with the Eppo team via an encrpyted link.
+1. In a new tab open up **One Time Secret** ([https://onetimesecret.com/](https://onetimesecret.com/)). This will allow you to securely share your app’s sensitive details with the Eppo team via an encrypted link.
 2. In the first text box, paste in your app’s **Client ID**, **Client Secret**, ****and **Okta Domain**, each separate by a new line.
 3. Below, create a simple pass code for your secret.
 4. Below, select **1 Day** as your **Lifetime**.

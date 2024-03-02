@@ -27,7 +27,9 @@ var eppoClientConfig = new EppoClientConfig(apiToken, new AssignmentLogger());
 var eppoClient = EppoClient.Init(eppoClientConfig);
 ```
 
-After initialization, the SDK begins polling Eppo's API at regular intervals to retrieve the most recent experiment configurations such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments thereafter are effectively instant. If you are using the SDK for experiment assignments, make sure to pass in an assignment logging callback (see [section](#define-an-assignment-logger-experiment-assignment-only) below).
+After initialization, the SDK begins polling Eppo's API at regular intervals to retrieve the most recent experiment configurations such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments thereafter are effectively instant. For more information, see the [architecture overview](/sdks/overview) page.
+
+If you are using the SDK for experiment assignments, make sure to pass in an assignment logging callback (see [section](#define-an-assignment-logger-experiment-assignment-only) below).
 
 ### Define an assignment logger (experiment assignment only)
 
@@ -69,7 +71,7 @@ More details about logging and examples (with Segment, Rudderstack, mParticle, a
 Assigning users to flags or experiments with a single `GetStringAssignment` function:
 
 ```csharp
-var assignedVariation = eppoClient.GetStringAssignment("<SUBJECT-KEY>", "<FLAG-OR-EXPERIMENT-KEY>", {
+var assignedVariation = eppoClient.GetStringAssignment("<SUBJECT-KEY>", "<FLAG-KEY>", {
   // Optional Dictionary of subject metadata for targeting.
 });
 ```

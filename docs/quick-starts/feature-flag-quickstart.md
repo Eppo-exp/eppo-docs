@@ -13,7 +13,7 @@ Note that if you are using Eppo alongside an existing randomization tool, you ca
 
 ### 1. Generate an SDK key
 
-From the Feature Flag page, navigate to the SDK keys tab. Here you can generate keys for both production and testing.
+From the Configuration section, navigate to the SDK keys tab. Here you can generate keys for both production and testing.
 
 ![Setup Eppo SDK key](/img/feature-flagging/environments/sdk-keys.png)
 
@@ -39,7 +39,7 @@ After creating the flag, switch into the Test environment:
 
 ![Feature gate 2](/img/feature-flagging/feature-flag-qs-2.png)
 
-Now that you're in the Test environment, add an Experiment allocation to your flag. If you want to force certain segments or users into one variant, you can also add a Feature Gate allocation. You can read more about using Eppo for Feature Gates [here](/feature-flagging/use-cases/feature-gates).
+Now that you're in the Test environment, add an Experiment allocation to your flag. If you want to force certain segments or users into one variant, you can also add a Feature Gate allocation. You can read more about using Eppo for Feature Gates [here](/feature-flagging/feature-gates).
 
 ![Feature gate 3](/img/feature-flagging/feature-flag-qs-3.png)
 

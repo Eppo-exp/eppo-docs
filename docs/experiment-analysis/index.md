@@ -13,12 +13,12 @@ slice and dice those results by looking at different segments and metric cuts.
 
 ## Viewing multiple experiments
 
-When you click on the **Experiments** tab, you will see the **experiment list
+When you click on the **Experiments** tab of the **Analysis** section, you will see the **experiment list
 view**, which shows all of your experiments. You can filter this list by
 experiment name, status, entity, or owner, or just show experiments you have
 **starred**.
 
-<Figure alt="Experiment list view" src="/img/interpreting-experiments/experiment-analysis-list-view.png">
+<Figure alt="Experiment list view" src="/img/interpreting-experiments/experiments-list-view.png">
    The experiment list view, showing a list of experiments that can be filtered and searched.
 </Figure>
 
@@ -29,10 +29,7 @@ experiment name, status, entity, or owner, or just show experiments you have
 Clicking on the name of an experiment will take you to the
 **experiment detail view**, which shows the effects of each treatment variation,
 compared to control. Within each variation, for each metric that
-[you have added to the experiment](/experiment-analysis/experiment-metrics),
-we display the (per subject) **average value for the control variation**, as well as
-the estimate of the <Term def={true}>relative lift</Term> (that is, the percentage change
-from the control value) caused by that treatment variation.
+you have added to the experiment, we display the (per subject) **average value for the control variation**, as well as the estimate of the <Term def={true}>relative lift</Term> (that is, the percentage change from the control value) caused by that treatment variation.
 
 <Figure alt="Experiment details - overview" src="/img/interpreting-experiments/experiment-details-view.png">
    In this example, the control value of <code>Total Purchase Value</code> is
@@ -50,7 +47,7 @@ of subjects assigned to each variation.
 <Figure caption="Experiment details - hovering over metric" src="/img/interpreting-experiments/experiment-details-view-hover.png" >
    In this example, the total purchase value <em>per assigned subject</em> is
    &#8203;<b>15.63</b> for control and <b>16.36</b> for treatment, and the total purchase
-   value <em>acrosss all assigned subjects</em> is <b>812,884.95</b> for control
+   value <em>across all assigned subjects</em> is <b>812,884.95</b> for control
    and <b>851,526.71</b> for treatment.
    There are <b>52,004</b> subjects assigned to control, and <b>52,039</b> assigned to treatment.
 </Figure>
@@ -200,10 +197,10 @@ percentage of the global total metric value).
 >
    In this example, the impact accounting view shows that, since the experiment has been
    active, only <b>81.8%</b> of <code>Total Upgrades to Paid Plan</code> events were done by subjects
-   that had been assigned to any varaition in the experiment. This means that, while
+   that had been assigned to any variation in the experiment. This means that, while
    the lift <em>among subjects in the experiment</em> is <b>6.06%</b>, since 18.2% of
    events are done by subjects who would not have been affected by the treatment,
-   the topline number of upgrades is only expected to go up by <b>4.93%</b>.
+   the top-line number of upgrades is only expected to go up by <b>4.93%</b>.
 </Figure>
 
 ### Statistical details

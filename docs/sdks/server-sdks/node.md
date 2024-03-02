@@ -44,7 +44,9 @@ await init({
 });
 ```
 
-After initialization, the SDK begins polling Eppo’s API at regular intervals to retrieve the most recent experiment configurations such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments thereafter are effectively instant. If you are using the SDK for experiment assignments, make sure to pass in an assignment logging callback (see [section](#define-an-assignment-logger-experiment-assignment-only) below).
+After initialization, the SDK begins polling Eppo’s API at regular intervals to retrieve the most recent experiment configurations such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments thereafter are effectively instant. For more information, see the [architecture overview](/sdks/overview) page.
+
+If you are using the SDK for experiment assignments, make sure to pass in an assignment logging callback (see [section](#define-an-assignment-logger-experiment-assignment-only) below).
 
 ### Initialization options
 
@@ -98,6 +100,11 @@ The SDK will invoke the `logAssignment` function with an `assignment` object tha
 More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/sdks/event-logging/) page.
 :::
 
+#### Avoiding duplicated assignment logs
+
+Eppo's SDK uses an internal cache to ensure that duplicate assignment events are not logged to the data warehouse. While Eppo's analytic engine will automatically deduplicate assignment records, this internal cache prevents firing unnecessary events and can help minimize costs associated with event logging. 
+
+
 ## 3. Assign variations
 
 Assigning users to flags or experiments with a single `getStringAssignment` function:
@@ -108,7 +115,7 @@ import * as EppoSdk from "@eppo/node-server-sdk";
 const eppoClient = EppoSdk.getInstance();
 const variation = eppoClient.getStringAssignment(
   "<SUBJECT-KEY>",
-  "<FLAG-OR-EXPERIMENT-KEY>",
+  "<FLAG-KEY>",
   {
     // Optional map of subject metadata for targeting.
   }

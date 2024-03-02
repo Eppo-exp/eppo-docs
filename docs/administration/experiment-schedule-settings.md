@@ -1,7 +1,7 @@
 # Experiment Schedule Settings
 
 ## Set Experiment Update Schedules
-Go to Admin > Settings > Experiment Schedule Settings to set the default schedule for experiments to update recurringly as well as create additional custom schedules. The default schedule will automatically be used for all running experiments, unless particular experiments have opted to use a custom schedule.
+Go to Admin > Settings > Experiment Schedule Settings to set the default schedule for experiments to update as well as create additional custom schedules. The default schedule will automatically be used for all running experiments, unless particular experiments have opted to use a custom schedule.
 
 ![Experiment Update Schedule](/img/administration/experiment-update-schedule-admin.png)
 

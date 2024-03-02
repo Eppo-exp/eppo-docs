@@ -6,7 +6,7 @@ sidebar_position: 1
 
 Experiments are a set of metrics that correspond to users being shown different feature sets that you would like to track over time.
 
-### 1. Navigate to **Experiments** in the left-hand menu and click **+Experiment**
+### 1. Navigate to **Analysis** in the left-hand menu, click **+Create**, and select **Experiment Analysis**
 
 ![Create experiment](/img/building-experiments/create-experiment.png)
 
@@ -62,7 +62,7 @@ A service is interested in testing whether a new onboarding flow will increase 9
 - Assign users for two weeks (14 days)
 - Track events for 104 days (14 days + 90 days)
 
-This will allow Eppo to calculate out the rentention metric for the entire population. If the assignment period matched the event period (as is the default in Eppo), this could expose more users than necessary to a new onboarding flow without first understanding the long-term impact.
+This will allow Eppo to calculate out the retention metric for the entire population. If the assignment period matched the event period (as is the default in Eppo), this could expose more users than necessary to a new onboarding flow without first understanding the long-term impact.
 
 :::
 

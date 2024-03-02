@@ -43,7 +43,7 @@ The Eppo certified metrics schema is [described here](https://eppo.cloud/api/doc
 Notes:
 - Metrics are unique based on the `name` field.
 - `sync_tag` describes the source of the synced metrics and will show in the UI
-- The following fields are optional: descriptions, reference URLs, properties, filters, and winzorization percentiles
+- The following fields are optional: descriptions, reference URLs, properties, filters, and winsorization percentiles
 
 ## Sync with a Github repository
 

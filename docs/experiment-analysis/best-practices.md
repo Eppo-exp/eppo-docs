@@ -31,7 +31,7 @@ User re-assignment can be triggered by higher-level changes in the experiment li
 
 - Changing randomization while experiment is in flight
 - Decreasing the overall traffic to an experiment
-  - You can generally monotonically increase overall traffic to an experiment without having to reassign users, but decreasing overall traffic, or non-monotonically changing traffic (i.e. decreasing traffic, then increasing it again), can result in statistically invalid metrics becauser users will likely be reassigned.
+  - You can generally monotonically increase overall traffic to an experiment without having to reassign users, but decreasing overall traffic, or non-monotonically changing traffic (i.e. decreasing traffic, then increasing it again), can result in statistically invalid metrics because users will likely be reassigned.
   - You should always check with your feature flagging tool of choice to see how they handle traffic increases and decreases. Some tools like LaunchDarkly do [variation reassignment by default](https://docs.launchdarkly.com/home/experimentation/allocation#using-variation-reassignment) when you're increasing or decreasing traffic. This feature would have to be [disabled](https://docs.launchdarkly.com/home/experimentation/allocation#disabling-variation-reassignment).
 - Turning off a variation
   - If you are sure you are no longer interested in a certain variation, you can turn it off, but you won’t get more signal on the other variants as the subjects in this variation will be tainted and data for these is discarded.

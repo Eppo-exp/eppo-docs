@@ -9,9 +9,11 @@ Eppo provides two approaches:
 - Pre-defined segments of subjects, which allows for complicated cuts of experiment results.
 - Ad-hoc filters on a single property, which is useful for quickly exploring results for a single property.
 
-'''info
+:::info
+
 We do not compute [CUPED](/statistics/cuped) results for neither segments nor ad-hoc filters due to the computational cost of computing CUPED results.
-'''
+
+:::
 
 ## Segments
 
@@ -37,9 +39,9 @@ Finally, we add Canada, Mexico, and the United States as property values.
 
 This defines the North America segment. However, it is easy to create more fine-grained segments (such as North American Mobile users) by adding additional filters to the segment.
 
-'''info
+:::info
 When using a property filter based on an [assignment property](/data-management/properties#assignment-properties), only experiments that use that particular assignment definition are able to leverage that segments.  
-'''
+:::
 
 ### Analyzing results by segment
 
@@ -47,9 +49,9 @@ On the experiments detail page, we can now filter the results of the experiment 
 
 ![filter results by segment](/img/experiments/segments/filter_by_segment.png)
 
-'''note
+:::note
 You may need to manually refresh the experiment results (or wait for the next pipeline run) for newly created segment results to be available.
-'''
+:::
 
 Now, the results indicate that we are analyzing the selected segment
 

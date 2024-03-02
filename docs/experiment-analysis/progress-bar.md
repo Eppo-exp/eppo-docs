@@ -22,7 +22,7 @@ Precision is set at the metric level. However, it is possible to override this a
 
 The goal of the progress bar is to measure whether we have gathered enough data to be confident in making a decision. In particular, use the progress bar to help you stop experiments that look flat once these hit 100% progress.
 
-To view the progress bar, we must first navigate to the **Experiments** tab from the left panel. The progress bar can be seen in the list item card for each experiment in the experiment list. It can also be seen in the right panel if we click the card. Hovering over the progress bar shows we more details like the % lift that can be detected with the assignments seen so far:
+To view the progress bar, we must first navigate to the **Analysis** tab from the left panel. The progress bar can be seen in the list item card for each experiment in the experiment list. It can also be seen in the right panel if we click the card. Hovering over the progress bar shows we more details like the % lift that can be detected with the assignments seen so far:
 
 ![Progress on list page](/img/interpreting-experiments/progress-card.png)
 
@@ -50,10 +50,12 @@ Suppose, given the above considerations, we decide to set our precision at 5%. W
 ### Frequentist fixed sample methodology
 
 When using the frequentist fixed sample methodology, the experiment runtime has to be decided ahead of time, e.g. using a sample size calculator, or prior experience from similar experiments.
-Once the end date of the experiment is reached, or the precision target is met for all primary metrics of the variants, the progress bar is at 100%. Furthermore, we mark the experiment **ready for review** once the end date is reached.
-You are now able to confidently make a decision:
+Once the end date of the experiment is reached, we mark the experiment **ready for review**.
 
 ![Progress bar popover for fixed sample methodology](/img/interpreting-experiments/progress-bar-fixed-sample.png)
+
+The progress bar itself measures whether we have gathered sufficient data to be well-powered based on the precision target.
+If, at the end of the experiment, the progress bar has not filled up, it might indicate the experiment is underpowered.
 
 ### Sequential and Bayesian methodology
 
@@ -64,15 +66,13 @@ Whenever we detect that a primary metric of one of the variants is statistically
 
 ![Progress bar popover for early stopping](/img/interpreting-experiments/progress-bar-early-stopping.png)
 
-<!-- todo: uncomment when we roll out minimum requirements
 ## Minimum requirements
 
-It is important to keep in mind that the results we show are based on the period the data was collected. It is not uncommon to see strong weekly effects (users behave differently on Monday morning versuse Friday night), or novelty effects.
+It is important to keep in mind that the results we show are based on the period the data was collected. It is not uncommon to see strong weekly effects (users behave differently on Monday morning versus Friday night), or novelty effects.
 Therefore, it is often useful to set minimum requirements, e.g. an experiment should run for at least 7 days.
 We also allow setting a maximum experiment runtime, which helps ensure experiments are not accidentally left stuck in the running state.
 
-Furthermore, our statistical methods rely on having sufficient number of observations to be valid; the amount of data collected in a usual experiment is often much larger than the minumum number of samples required, so this is likely not a concern, but we do allow setting minimum sample size requirements as well.
- -->
+Furthermore, our statistical methods rely on having sufficient number of observations to be valid; the amount of data collected in a usual experiment is often much larger than the minimum number of samples required, so this is likely not a concern, but we do allow setting minimum sample size requirements as well.
 
 ## Mathematical details of computing progress
 
