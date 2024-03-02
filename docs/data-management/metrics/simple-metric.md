@@ -77,8 +77,8 @@ Eppo allows you to further refine metrics by adding a time frame. For example, w
 ![Adding a time frame to a metric](/img/data-management/metrics/create-metric-timeframe.png)
 
 :::note
-Consider adding a timeframe metric to experiments where you believe the intervention has a short term effect.
-For example, sending a promotional email may boost engagement for one week. If the experiment runs for 4 weeks, adding a timeframe to the metric prevents that one week of boosted engagement from being diluted.
+Consider adding a time frame metric to experiments where you believe the intervention has a short term effect.
+For example, sending a promotional email may boost engagement for one week. If the experiment runs for 4 weeks, adding a time frame to the metric prevents that one week of boosted engagement from being diluted.
 :::
 
 ### Metric properties
