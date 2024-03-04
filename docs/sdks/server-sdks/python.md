@@ -133,7 +133,6 @@ More details about logging and examples (with Segment, Rudderstack, mParticle, a
 :::
 
 
-
 ```python
 from eppo_client.assignment_logger import AssignmentLogger
 import analytics
