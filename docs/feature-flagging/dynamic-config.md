@@ -10,22 +10,6 @@ This is achieved by the engineering team implementing a number of variables in t
 
 Once implemented, Dynamic Configuration allows non-technical users to set values in Eppo's UI and see the change live on site in seconds without a deploy. In particular, a marketing user can set different variants with different values, allowing them to run multiple tests all from the same flag without any additional engineering work. This can be used to update or test headline copy, CTA button copy and color, and image assets used.
 
-### Using JSON flags to parameterize frequently tested areas
-
-JSON flags can be used to parameterize your app or site to run experiments without an additional code release. By using a [JSON flag](https://docs.geteppo.com/feature-flagging/flag-variations#json-flags), values from Eppo dynamically update predefined values in your code. Extending the feature flag example above, variables in your code can be created to accept a value defined in the JSON object defined in Eppo. Combine JSON flags with the ability to create multiple experiment allocations on the same flag, and you can create new experiments without releasing additional code.
-```jsx
-import * as EppoSdk from '@eppo/node-server-sdk';
-
-const client = EppoSdk.getInstance();
-const variation = client.getParsedJSONAssignment("<SUBJECT-KEY>", "winter-promo", attributes)
-
-if (variation.show_banner === 'true') {
-	return banner_component
-}
-
-const background_image = variation.image_url;
-const cta = variation.cta;
-```
 ### Running no/low code experiments in Eppo
 
 Often times there is a need for teams to be able to release changes quickly without a code release, or there are frequently tested parts of a site or app where teams would like to execute changes in a self-service manner. Running experiments without having to release additional code is easy to do in Eppo by using a JSON flag type to parameterize parts of the site or app where frequent changes are made and creating additional experiment allocations on the same flag. By combining JSON flags and the ability to create new [experiment allocations on the same flag](/feature-flagging/experiment-assignment#creating-multiple-experiments-on-the-same-flag), teams can ship new experiments without a code release.
