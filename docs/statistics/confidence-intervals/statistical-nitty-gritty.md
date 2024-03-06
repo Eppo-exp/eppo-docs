@@ -504,14 +504,12 @@ L_t^c &= \hat{\mu}_{\tiny{\Delta}} - \hat{\sigma}_{\tiny{\Delta}}~B
 \\
 U_t^c &= \hat{\mu}_{\tiny{\Delta}} + \hat{\sigma}_{\tiny{\Delta}}~B
 \\
-B &= \frac{1}{t} \sqrt{ (t + \rho) \log\Bigl(\tfrac{t+\rho}{\rho(1 - c)^2}\Bigr)}
+B &= \frac{1}{\sqrt{t}} \sqrt{ (t + \rho) \log\Bigl(\tfrac{t+\rho}{\rho(1 - c)^2}\Bigr)}
 \\[1.2em]
 \rho &= \frac{N_{tune}}{\log\Bigl( \log \bigl( \tfrac{e}{(1-c)^{2}} \bigr) \Bigr)-2\log{(1-c)}}
 \end{split}
 \end{equation}
 $$
-
-<!-- TK: should B start with frac{1}{sqrt{t}}? -->
 
 where $N_{tune}$ is a tuning parameter that is used to determine where the ratio
 between the sequential confidence interval width and the fixed-sample confidence
