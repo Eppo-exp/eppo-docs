@@ -27,7 +27,7 @@ import eppo_client
 from eppo_client.config import Config, AssignmentLogger
 
 client_config = Config(api_key="<YOUR_API_KEY>",
-    assignment_logger=AssignmentLogger())
+                       assignment_logger=AssignmentLogger())
 eppo_client.init(client_config)
 client = eppo_client.get_instance()
 …
@@ -72,45 +72,48 @@ For the assignment event to send the relevant information, we have to expand the
 We have also stored out SDK Key into the environment variable `EPPO_API_KEY` as a common safety practice.
 
 ```python
-import logging, os
+import logging
+import os
 from uuid import uuid4
 from time import sleep
 import eppo_client
 from eppo_client.config import Config, AssignmentLogger
 
 logging.basicConfig(
-	filename='eppo_assignments.csv',
-	level=logging.INFO,
-	format=f'%(message)s')
+    filename='eppo_assignments.csv',
+    level=logging.INFO,
+    format=f'%(message)s')
+
 
 class LocalAssignmentLogger(AssignmentLogger):
-	def log_assignment(self, assignment):
-		logging.info(assignment)
+    def log_assignment(self, assignment):
+        logging.info(assignment)
+
 
 client_config = Config(api_key=os.getenv("EPPO_API_KEY"),
-	assignment_logger=LocalAssignmentLogger())
+                       assignment_logger=LocalAssignmentLogger())
 eppo_client.init(client_config)
 client = eppo_client.get_instance()
 
 # Give the client some time to initialize.
-# Note that the client may get stuck on this step if there are errors. 
+# Note that the client may get stuck on this step if there are errors.
 # Please refer to the logs.
 while client.get_string_assignment('0', "test-checkout") is None:
-	print("Waiting for client to initialize. Check the logs if this message persists.")
-	sleep(1)
-# In a real-world scenario, other modules would load 
+    print("Waiting for client to initialize. Check the logs if this message persists.")
+    sleep(1)
+# In a real-world scenario, other modules would load
 # and the client would be initialized in the background.
 
-for _ in range (10):
+for _ in range(10):
     # Randomly creating user ids. Note that they might not actually exist in your experiment.
-	user_id = str(uuid4())
-	variation = client.get_string_assignment(user_id, "test-checkout")
-	if variation == "fast_checkout":
-		print(f"{user_id}: Fast checkout")
-	elif variation == "standard_checkout":		
-		print(f"{user_id}: Standard checkout")
-	else:
-		print(f"{user_id}: Check your configuration")
+    user_id = str(uuid4())
+    variation = client.get_string_assignment(user_id, "test-checkout")
+    if variation == "fast_checkout":
+        print(f"{user_id}: Fast checkout")
+    elif variation == "standard_checkout":
+        print(f"{user_id}: Standard checkout")
+    else:
+        print(f"{user_id}: Check your configuration")
 
 ```
 
@@ -148,13 +151,16 @@ import analytics
 # Connect to Segment (or your own event-tracking system)
 analytics.write_key = "<SEGMENT_WRITE_KEY>"
 
+
 class SegmentAssignmentLogger(AssignmentLogger):
-	def log_assignment(self, assignment):
-		analytics.track(assignment["subject"],
-			"Eppo Randomization Assignment", assignment)
+    def log_assignment(self, assignment):
+        analytics.track(assignment["subject"],
+                        "Eppo Randomization Assignment", assignment)
+
 
 client_config = Config(api_key="<YOUR_API_KEY>",
-	assignment_logger=SegmentAssignmentLogger())
+                       assignment_logger=SegmentAssignmentLogger())
+
 …
 ```
 
