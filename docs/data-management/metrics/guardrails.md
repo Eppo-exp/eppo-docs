@@ -10,10 +10,10 @@ This approach enables you to establish a uniform measurement framework, allowing
 
 ## Create Guardrail metrics
 
-![Create guardrail metric](/img/building-experiments/set-as-guardrail.gif)
+![Create guardrail metric](/img/data-management/metrics/guardrail-metric-setup.png)
 
 1. Navigate to **Metrics**
 
-2. Click on the three dots on the right hand side of a metric
+2. Click on the No/Yes dropdown in the **Is Guardrail** column
 
-3. Select **Set as Guardrail metric** from the dropdown menu
+3. Select **Yes** from the dropdown menu
