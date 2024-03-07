@@ -20,7 +20,7 @@ pip install eppo-server-sdk
 
 ### B. Initialize the SDK
 
-To initialize the SDK, you will need a SDK key. You can generate one [in the flag interface](https://eppo.cloud/feature-flags/keys).
+To initialize the SDK, you will need an SDK key. You can generate one [in the flag interface](https://eppo.cloud/feature-flags/keys).
 
 ```python
 import eppo_client
@@ -50,9 +50,14 @@ else:
 * `<SUBJECT-KEY>` is the value that identifies each entity in your experiment, typically `user_id`;
 * `<FLAG-KEY>` is the key that you chose when creating a flag; you can find it on the [flag page](https://eppo.cloud/feature-flags). For the rest of this presentation, we’ll use `"test-checkout"`. To follow along, we recommend that you create a test flag in your account, and split users between `"fast_checkout"` and `"standard_checkout"`.
 
+Here's how this configuration looks in the [flag page](https://eppo.cloud/feature-flags):
+
+![Test checkout configuration](/img/feature-flagging/test-checkout-configuration.png)
+
+
 That’s it: You can already start changing the feature flag on the page and see how it controls your code!
 
-However, if you wan to run experiments, there’s a little extra work to configure it properly.
+However, if you want to run experiments, there’s a little extra work to configure it properly.
 
 ## 2. Assignment Logging for Experiment 
 
@@ -108,15 +113,15 @@ for _ in range (10):
 
 You can check that the local logging file `eppo_assignments.csv` contains all the assignment information.
 
-| Field                     | Description                                                                                                              | Example                             |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------- |
-| `experiment` (string)     | An Eppo experiment key                                                                                                   | `"checkout_type-allocation-1234"` |
-| `subject` (string)        | An identifier of the subject or user assigned to the experiment variation                                                | `"60a67ae2-c9d2-4f8a-9be0-3bb4fe0c96ff"`|
-| `variation` (string)      | The experiment variation the subject was assigned to                                                                     | `"fast_checkout"`                           |
-| `timestamp` (string)      | The time when the subject was assigned to the variation                                                                  | `2021-06-22T17:35:12.000Z`            |
-| `subjectAttributes` (map) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `{}`               |
-| `featureFlag` (string)    | An Eppo feature flag key                                                                                                 | `"checkout_type"`              |
-| `allocation` (string)     | An Eppo allocation key                                                                                                   | `"allocation-1234"`                     |
+| Field                     | Description                                                                                                              | Example                                  |
+|---------------------------|--------------------------------------------------------------------------------------------------------------------------|------------------------------------------|
+| `experiment` (string)     | An Eppo experiment key                                                                                                   | `"checkout_type-allocation-1234"`        |
+| `subject` (string)        | An identifier of the subject or user assigned to the experiment variation                                                | `"60a67ae2-c9d2-4f8a-9be0-3bb4fe0c96ff"` |
+| `variation` (string)      | The experiment variation the subject was assigned to                                                                     | `"fast_checkout"`                        |
+| `timestamp` (string)      | The time when the subject was assigned to the variation                                                                  | `2021-06-22T17:35:12.000Z`               |
+| `subjectAttributes` (map) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `{}`                                     |
+| `featureFlag` (string)    | An Eppo feature flag key                                                                                                 | `"checkout_type"`                        |
+| `allocation` (string)     | An Eppo allocation key                                                                                                   | `"allocation-1234"`                      |
 
 If you implemented it that way in production, you would need to upload that assignment file to your database. That’s not very convenient. Instead, we recommend you use your usual on-line logging service to do so.
 
@@ -193,7 +198,7 @@ To be safe, we recommend always handling the `None` case in your code. Here are 
 
 :::info
 
-By default the Eppo client initialization is asynchronous to ensure no critical code paths are blocked. For more information on handling non-blocking initialization, see our [documentation here](/sdks/common-issues#3-not-handling-non-blocking-initialization).
+By default, the Eppo client initialization is asynchronous to ensure no critical code paths are blocked. For more information on handling non-blocking initialization, see our [documentation here](/sdks/common-issues#3-not-handling-non-blocking-initialization).
 
 :::
 
@@ -209,7 +214,7 @@ But that’s not all: the function also takes an optional input for entity prope
 
 ### A. Optional Properties for Targeting 
 
-Most entities on which we run feature flags have properties: sessions have browser types, users have loyalty status, corporate clients have a number of employees, videos have close-caption available or not, sport teams have a league, etc. If you want to decide how a feature flag behaves, or whether an experiment is ran on a certain entity based on those, you need to send that information too. When assigning entities, you can pass that additional information through `subject_attributes`: an optional dictionary that details entity properties. 
+Most entities on which we run feature flags have properties: sessions have browser types, users have loyalty status, corporate clients have a number of employees, videos have close-caption available or not, sport teams have a league, etc. If you want to decide how a feature flag behaves, or whether an experiment is run on a certain entity based on those, you need to send that information too. When assigning entities, you can pass that additional information through `subject_attributes`: an optional dictionary that details entity properties. 
 
 For example, if the entity is a customer session ,`subject_attributes` might look like this:  
   `{country:"Andorra", loyalty:"Gold", browser_type:"Mozilla", device_type:"Macintosh",
@@ -219,7 +224,7 @@ Those can be used by the feature flag or the experiment for targeting, through t
 
 ### B. Example Payment Configuration
 
-Let’s say you are running a Django service with the User-Agent package. You want to use feature flags to offer a payment method that adapt to the browser (only Safari users should be offered to use ApplePay), the country (Dutch users can use iDEAL), and loyalty status (members might use their points). You can use a feature flag to configure what is possible in which country, for which users, etc. 
+Let’s say you are running a Django service with the User-Agent package. You want to use feature flags to offer a payment method that adapt to the browser (only Safari users should be offered to use Apple Pay), the country (Dutch users can use iDEAL), and loyalty status (members might use their points). You can use a feature flag to configure what is possible in which country, for which users, etc. 
 
 To make the decision, you can put the relevant information (`country`, `loyalty_tier`, etc.) in a `session_attributes` dictionary:
 
@@ -258,7 +263,7 @@ if request.method == 'POST':
 	…
 ```
 
-Our approach is highly flexible: it lets you configure properties that match the relevant entity for your feature flag or experiment. For example, if a user is usually on iOS but they are connecting from a PC browser this time, they probably should not be offered an ApplePay option, in spite of being labelled an iOS user.
+Our approach is highly flexible: it lets you configure properties that match the relevant entity for your feature flag or experiment. For example, if a user is usually on iOS but they are connecting from a PC browser this time, they probably should not be offered an Apple Pay option, in spite of being labelled an iOS user.
 
 :::note
 
