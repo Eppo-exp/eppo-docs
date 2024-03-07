@@ -12,7 +12,7 @@ Once implemented, Dynamic Configuration allows non-technical users to set values
 
 ### Running no/low code experiments in Eppo
 
-Often times there is a need for teams to be able to release changes quickly without a code release, or there are frequently tested parts of a site or app where teams would like to execute changes in a self-service manner. Running experiments without having to release additional code is easy to do in Eppo by using a JSON flag type to parameterize parts of the site or app where frequent changes are made and creating additional experiment allocations on the same flag. By combining JSON flags and the ability to create new [experiment allocations on the same flag](/feature-flagging/experiment-assignment#creating-multiple-experiments-on-the-same-flag), teams can ship new experiments without a code release.
+Oftentimes there is a need for teams to be able to release changes quickly without a code release, or there are frequently tested parts of a site or app where teams would like to execute changes in a self-service manner. Running experiments without having to release additional code is easy to do in Eppo by using a JSON flag type to parameterize parts of the site or app where frequent changes are made and creating additional experiment allocations on the same flag. By combining JSON flags and the ability to create new [experiment allocations on the same flag](/feature-flagging/experiment-assignment#creating-multiple-experiments-on-the-same-flag), teams can ship new experiments without a code release.
 
 ## AI use cases
 
