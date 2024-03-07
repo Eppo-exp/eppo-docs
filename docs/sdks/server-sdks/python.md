@@ -93,13 +93,16 @@ eppo_client.init(client_config)
 client = eppo_client.get_instance()
 
 # Give the client some time to initialize.
+# Note that the client may get stuck on this step if there are errors. 
+# Please refer to the logs.
 while client.get_string_assignment('0', "test-checkout") is None:
-	print("Waiting for client to initialize")
+	print("Waiting for client to initialize. Check the logs if this message persists.")
 	sleep(1)
 # In a real-world scenario, other modules would load 
 # and the client would be initialized in the background.
 
 for _ in range (10):
+    # Randomly creating user ids. Note that they might not actually exist in your experiment.
 	user_id = str(uuid4())
 	variation = client.get_string_assignment(user_id, "test-checkout")
 	if variation == "fast_checkout":
@@ -237,10 +240,10 @@ g = GeoIP()
 …
 
 if request.method == 'POST':
-	country = ""
-	ip, is_routable = get_client_ip(request)
-	if is_routable:
-		country = g.city(ip)["country_code"]
+    country = ""
+    ip, is_routable = get_client_ip(request)
+    if is_routable:
+        country = g.city(ip)["country_code"]
 
     session_attributes = {
         'country': country,
@@ -258,9 +261,9 @@ if request.method == 'POST':
     if variation == 'checkout_apple_pay':
         …
     elif variation == 'checkout_ideal':
-	…
+    …
     else:
-	…
+    …
 ```
 
 Our approach is highly flexible: it lets you configure properties that match the relevant entity for your feature flag or experiment. For example, if a user is usually on iOS but they are connecting from a PC browser this time, they probably should not be offered an Apple Pay option, in spite of being labelled an iOS user.
@@ -296,7 +299,7 @@ else:
     …
 ```
 
-That prevents having the option of a third output. However, “True” can be ambiguous when the allocation names are unclear, like `hide_vs_delete_spam` or `no_collapse_price_breakdown`. We would recommend sticking to strings that offer more explicit naming convention: `keep_and_hide_spam`, `delete_spam`, or `collapse_price_breakdown`, `expand_price_breakdown` and `delete_price_breakdown`.
+That prevents having the option of a third output. However, `“True”` can be ambiguous when the allocation names are unclear, like `hide_vs_delete_spam` or `no_collapse_price_breakdown`. We would recommend sticking to strings that offer more explicit naming convention: `keep_and_hide_spam`, `delete_spam`, or `collapse_price_breakdown`, `expand_price_breakdown` and `delete_price_breakdown`.
 
 ### B. Numeric Assignment
 
