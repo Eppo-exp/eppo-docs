@@ -6,7 +6,7 @@ Real time rollout monitoring is currently in closed Beta. Contact [support@getep
 
 The early stages of an experiment are critical for ensuring that everything is functioning as intended. This is where Eppo real time rollout monitoring comes into play, focusing on reducing risk by verifying an even user split and confirming the operational status of new features. It's a foundational step for safeguarding against performance issues or disruptions to core metrics.
 
-![Real time monitoring example](/img/measuring-experiment/real-time-monitoring.png)
+![Real time monitoring example](/img/measuring-experiments/real-time-monitoring.png)
 
 ## Criteria
 If your warehouse has a data table with performance data and critical business metrics that refreshes every ten minutes or less, you are eligible to use Eppo real time.
