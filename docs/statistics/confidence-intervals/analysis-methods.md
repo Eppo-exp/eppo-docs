@@ -192,7 +192,7 @@ There are primarily two ways to pick a decision point before running the experim
 Sometimes organizational or business constraints determine how long an
 experiment can be run. This is fine as long as the duration is long enough to
 actually be able to detect a difference, if there is one, but there's no way
-to know now long is "long enough" without...
+to know how long is "long enough" without...
 
 2. **Do a power analysis to determine target sample size.**
 
@@ -201,7 +201,7 @@ to predict how many subjects will be needed in order to be able to detect a
 lift of a given size. First, you determine the minimum lift you care about (the
 [minimum detectable effect](/statistics/sample-size-calculator/mde),
 or MDE) for _each metric_ you're going to observe in the experiment. Then, you
-you can use a tool like Eppo's
+can use a tool like Eppo's
 [Sample Size Calculator](/statistics/sample-size-calculator)
 to get the estimated sample size needed to detect that MDE.
 
