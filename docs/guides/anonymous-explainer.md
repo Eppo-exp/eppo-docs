@@ -51,6 +51,7 @@ group by 1,2,3
 
 SELECT
     anonymous_id
+    , user_id
     , IF(is_first, TIMESTAMP("0001-01-01 00:00:00"), ts_min) as ts_start_window
     , IF(is_last, TIMESTAMP("9999-12-31 23:59:59"), ts_max) as ts_end_window
 FROM user_login_windows_collapsed
