@@ -1,5 +1,9 @@
 # Sticky assignments
 
+:::note
+Sticky assignments are currently in closed Beta
+:::
+
 Eppo offers sticky assignments in use cases when you want to keep experiment experiences consistent over a long period of time. This is particularly useful for retention focused experiments.
 
 Experiments with sticky assignments have two periods: enrollment and evaluation. During the enrollment phase, all eligible users are assigned into the experiment. After enrollment ends, new users will no longer be assigned to the experiment. In this evaluation period, any previously enrolled users will remain assigned to their respective variations to keep the experience consistent for these users.
