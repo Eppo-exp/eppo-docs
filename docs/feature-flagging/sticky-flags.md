@@ -14,10 +14,10 @@ Eppo will evaluate the state of the Experiment Allocation according to these att
 
 | Enrolling? | Sticky? | Behavior |
 |---|---|---|
-| On | On | Check onPreAssignment, if no record, evaluate hash randomization <br> Call onPostAssignment |
-| On | Off | Skip onPreAssignment <br> Evaluate hash randomization <br> Skip onPostAssignment |
-| Off | On | Call onPreAssignment, if no record for this user, continue to remaining allocation waterfall |
-| Off | Off | Pass through to remaining allocation waterfall |
+| On | On | 1. Check onPreAssignment, if no record, evaluate hash randomization 2. Call onPostAssignment |
+| On | Off | 1. Skip onPreAssignment 2. Evaluate hash randomization 3. Skip onPostAssignment |
+| Off | On | 1. Call onPreAssignment, if no record for this user, continue to remaining allocation waterfall |
+| Off | Off | 1. Pass through to remaining allocation waterfall |
 
 By defining stickiness at the allocation level, you can continue to do up-stream overrides (e.g., adding new internal test users). In this case, the override would take priority over sticky assignments.
 
