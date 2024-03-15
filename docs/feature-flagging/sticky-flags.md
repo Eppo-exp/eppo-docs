@@ -14,11 +14,8 @@ Eppo will evaluate the state of the Experiment Allocation according to these att
 
 | Enrolling? | Sticky? | Behavior |
 |---|---|---|
-| On | On | Check onPreAssignment, if no record, evaluate hash randomization
-Call onPostAssignment |
-| On | Off | Skip onPreAssignment
-Evaluate hash randomization
-Skip onPostAssignment |
+| On | On | Check onPreAssignment, if no record, evaluate hash randomization <br> Call onPostAssignment |
+| On | Off | Skip onPreAssignment <br> Evaluate hash randomization <br> Skip onPostAssignment |
 | Off | On | Call onPreAssignment, if no record for this user, continue to remaining allocation waterfall |
 | Off | Off | Pass through to remaining allocation waterfall |
 
