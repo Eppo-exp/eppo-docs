@@ -22,15 +22,15 @@ Skip onPostAssignment |
 | Off | On | Call onPreAssignment, if no record for this user, continue to remaining allocation waterfall |
 | Off | Off | Pass through to remaining allocation waterfall |
 
-By defining stickiness at the allocation level, we can continue to do up-stream overrides (e.g., adding new internal test users). In this case, the override would take priority over sticky assignments.
+By defining stickiness at the allocation level, you can continue to do up-stream overrides (e.g., adding new internal test users). In this case, the override would take priority over sticky assignments.
 
 ## Implementing a Sticky Experiment
-To launch an experiment, toggle "sticky assignments" to enabled and save the Experiment Allocation. If you want to aborted the test before reaching the enrollment target, disable the "sticky assignments" toggle and archive the allocation.
+To launch an experiment, toggle "sticky assignments" to enabled and save the Experiment Allocation. If you want to abort the test before reaching the enrollment target, disable the "sticky assignments" toggle and archive the allocation.
 
 Once the enrollment goal has been reached, archive the Experiment Allocation. This will stop further enrollments and start the evaluation phase.
 
 There are three scenarios in which you can roll out the experiment:
-1. The test is a win >> roll out to all users - Add a rollout allocation above the sticky assignment allocation, disable "sticky assignments" and archive the Experiment Allocation
+1. The test is a win >> roll out to all users - Add a rollout allocation above the sticky assignment allocation, disable "sticky assignments", and archive the Experiment Allocation
 2. The test is a loss >> turn off for all users - disable "sticky assignments" and archive the Experiment Allocation
-3. The test is probably a winner, but we want to keep observing metrics - add a rollout allocation below the Experiment Allocation.
+3. The test is probably a winner, but you want to keep observing metrics - add a rollout allocation below the Experiment Allocation.
 
