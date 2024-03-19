@@ -17,36 +17,39 @@ By performing a small amount of data transformation within the data warehouse an
 To build an anonymous visitor-to-user attribution model, begin with a table similar to the one described above. From this table, build a model that identifies the minimum and maximum time in which an Anonymous ID was associated with a specific User ID. A template query to do this can be viewed below.
 
 ```sql
-with
-
-users_lag as (
+WITH
+users_lag AS (
     SELECT
         user_id
-		, anonymous_id
-        , lag(user_id) OVER (PARTITION BY anonymous_id ORDER BY ts) as last_user_id
-        , lag(ts)  OVER (PARTITION BY anonymous_id ORDER BY ts) as last_ts
-        , lead(ts)  OVER (PARTITION BY anonymous_id ORDER BY ts) as next_ts
+        , anonymous_id
+        , LAG(user_id) OVER (PARTITION BY anonymous_id ORDER BY ts) as last_user_id
+        , LAG(ts) OVER (PARTITION BY anonymous_id ORDER BY ts) as last_ts
+        , LEAD(ts) OVER (PARTITION BY anonymous_id ORDER BY ts) as next_ts
     FROM event_table
 )
 
-, user_switch as (
-SELECT
-    *
-    , SUM(IF(last_user_id != user_id, 1, 0)) OVER (PARTITION BY anonymous_id ORDER BY ts) as cumulative_switch
-FROM users_lag
+, user_switch AS (
+    SELECT
+      *
+      , SUM(IF(last_user_id != user_id, 1, 0)) OVER (
+          PARTITION BY anonymous_id
+          ORDER BY ts
+          BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
+        ) AS cumulative_switch
+  FROM users_lag
 )
 
 , user_login_windows_collapsed as (
-select
-    anonymous_id
-    , user_id
-    , cumulative_switch
-    , LOGICAL_OR(last_ts IS NULL) as is_first
-    , LOGICAL_OR(next_ts IS NULL) as is_last
-    , min(ts) as ts_min
-    , max(next_ts) as ts_max
-from user_switch
-group by 1,2,3
+    SELECT
+      anonymous_id
+      , user_id
+      , cumulative_switch
+      , LOGICAL_OR(last_ts IS NULL) as is_first
+      , LOGICAL_OR(next_ts IS NULL) as is_last
+      , MIN(ts) as ts_min
+      , MAX(next_ts) as ts_max
+    FROM user_switch
+    GROUP BY 1,2,3
 )
 
 SELECT
@@ -55,7 +58,7 @@ SELECT
     , IF(is_first, TIMESTAMP("0001-01-01 00:00:00"), ts_min) as ts_start_window
     , IF(is_last, TIMESTAMP("9999-12-31 23:59:59"), ts_max) as ts_end_window
 FROM user_login_windows_collapsed
-order by anonymous_id, ts_min;
+ORDER BY anonymous_id, ts_min;
 
 ```
 
@@ -64,15 +67,16 @@ For the first identified relationship between an Anonymous ID and a User ID, a t
 Once this model is built, it can be joined to any fact table within the data warehouse. It should be joined onto these fact tables by User ID wherever a fact event’s timestamp is between a given user’s `ts_start_window` and `ts_end_window`. By doing this, all fact tables at the user level can now have an inferred Anonymous ID. This inferred Anonymous ID can then be used by Eppo to link Assignment SQL definitions at the Anonymous ID level to these fact tables.
 
 ```sql
-select
- facts.ts,
- mapping.anonymous_id,
- facts.user_id
-
-from fact_table as facts
-	left join anon_visitor_to_user_mapping as mapping
-		on facts.user_id = mapping.user_id
-		and facts.ts between mapping.ts_start_window and mapping.ts_end_window
+SELECT
+   facts.ts
+   , mapping.anonymous_id
+   , facts.user_id
+FROM fact_table as facts
+LEFT JOIN anon_visitor_to_user_mapping AS mapping
+  ON facts.user_id = mapping.user_id
+    AND facts.ts BETWEEN
+      mapping.ts_start_window AND
+      mapping.ts_end_window
 ```
 
 ## Eppo Setup
