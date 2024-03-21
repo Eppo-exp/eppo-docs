@@ -31,40 +31,11 @@ npm install @eppo/node-server-sdk
 </TabItem>
 </Tabs>
 
-## 2. Initialize the SDK
-
-Initialize the SDK with a SDK key, which can be generated in the Eppo interface. Initialization should happen when your application starts up to generate a singleton client instance, once per application lifecycle:
-
-```javascript
-import { init } from "@eppo/node-server-sdk";
-
-await init({
-  apiKey: "<API_KEY>",
-  assignmentLogger,
-});
-```
-
-After initialization, the SDK begins polling Eppo’s API at regular intervals to retrieve the most recent experiment configurations such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments thereafter are effectively instant. For more information, see the [architecture overview](/sdks/overview) page.
-
-If you are using the SDK for experiment assignments, make sure to pass in an assignment logging callback (see [section](#define-an-assignment-logger-experiment-assignment-only) below).
-
-### Initialization options
-
-How the SDK fetches experiment configurations is configurable via additional optional initialization options:
-
-| Option | Description | Default |
-| ------ | ----------- | ------- | 
-| **`requestTimeoutMs`** (number) | Timeout in milliseconds for HTTPS requests for the experiment configurations. | `5000` |
-| **`numInitialRequestRetries`** (number) | Number of _additional_ times the initial configurations request will be attempted if it fails. This is the request typically synchronously waited (via `await`) for completion. A small wait will be done between requests. | `1` |
-| **`pollAfterFailedInitialization`** (boolean) | Poll for new configurations even if the initial configurations request failed. | `false` |
-| **`throwOnFailedInitialization`** (boolean) | Throw an error (reject the promise) if unable to fetch initial configurations during initialization. | `true` |
-| **`numPollRequestRetries`** (number) | If polling for updated configurations after initialization, the number of additional times a request will be attempted before giving up. Subsequent attempts are done using an exponential backoff. | `7` |
-
-### Define an assignment logger (experiment assignment only)
+## 2. Define an assignment logger
 
 If you are using the Eppo SDK for experiment assignment (i.e randomization), pass in a callback logging function to the `init` function on SDK initialization. The SDK invokes the callback to capture assignment data whenever a variation is assigned.
 
-The code below illustrates an example implementation of a logging callback using Segment. You could also use your own logging system, the only requirement is that the SDK receives a `logAssignment` function. Here we define an implementation of the Eppo `IAssignmentLogger` interface containing a single function named `logAssignment`:
+The code below illustrates an example implementation of a logging callback to Segment. You could also use your own logging system, the only requirement is that the SDK receives a `logAssignment` function. Here we define an implementation of the Eppo `IAssignmentLogger` interface containing a single function named `logAssignment`:
 
 ```javascript
 import { IAssignmentLogger } from "@eppo/node-server-sdk";
@@ -84,6 +55,9 @@ const assignmentLogger: IAssignmentLogger = {
 };
 ```
 
+
+
+
 The SDK will invoke the `logAssignment` function with an `assignment` object that contains the following fields:
 
 | Field                     | Description                                                                                                              | Example                             |
@@ -95,6 +69,8 @@ The SDK will invoke the `logAssignment` function with an `assignment` object tha
 | `subjectAttributes` (map) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `{ "country": "US" }`               |
 | `featureFlag` (string)    | An Eppo feature flag key                                                                                                 | "recommendation-algo"               |
 | `allocation` (string)     | An Eppo allocation key                                                                                                   | "allocation-17"                     |
+| `holdout` (string)    | An Eppo holdout group key                                                                                                 | "q1-holdout"               |
+| `holdoutVariation` (string)     | An Eppo holdout variation if experiment is eligible for analysis key                                                                                                   | "status_quo", "all_shipped_variations", or null                    |
 
 :::note
 More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/sdks/event-logging/) page.
@@ -104,8 +80,26 @@ More details about logging and examples (with Segment, Rudderstack, mParticle, a
 
 Eppo's SDK uses an internal cache to ensure that duplicate assignment events are not logged to the data warehouse. While Eppo's analytic engine will automatically deduplicate assignment records, this internal cache prevents firing unnecessary events and can help minimize costs associated with event logging. 
 
+## 3. Initialize the SDK
 
-## 3. Assign variations
+Initialize the SDK with a SDK key, which can be generated in the Eppo interface. Initialization should happen when your application starts up to generate a singleton client instance, once per application lifecycle:
+
+```javascript
+import { init } from "@eppo/node-server-sdk";
+
+await init({
+  apiKey: "<API_KEY>",
+  assignmentLogger,
+});
+```
+
+After initialization, the SDK begins polling Eppo’s API at regular intervals to retrieve the most recent experiment configurations such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments thereafter are effectively instant. For more information, see the [architecture overview](/sdks/overview) page.
+
+If you are using the SDK for experiment assignments, make sure to pass in an assignment logging callback (see [section](#define-an-assignment-logger-experiment-assignment-only) below).
+
+
+
+## 4. Assign variations
 
 Assigning users to flags or experiments with a single `getStringAssignment` function:
 
@@ -128,16 +122,58 @@ The `getStringAssignment` function takes two required and one optional input to 
 - `flagOrExperimentKey` - This key is available on the detail page for both flags and experiments.
 - `subjectAttributes` - An optional map of metadata about the subject used for targeting. If you create rules based on attributes on a flag/experiment, those attributes should be passed in on every assignment call.
 
-### Typed assignments
+## 5. Example setup
 
-Additional functions are available:
+See an end to end example below of setting up the Eppo Node client and logging events to the console.
 
+```javascript
+// Import Eppo's assignment logger interface and client initializer
+import { IAssignmentLogger, init } from "@eppo/node-server-sdk";
+
+// Define logAssignment so that it logs events
+const assignmentLogger: IAssignmentLogger = {
+  logAssignment(assignment) {
+		console.log(assignment)
+  },
+};
+
+// Initialize the client
+await init({
+  apiKey: "<API_KEY>",
+  assignmentLogger,
+});
+
+// Then every call to getAssignment will also log the event
+const user = {
+  userid: '1234567890',
+  attributes: { country: 'united states', subscription_status: 'gold' }
+}
+
+const eppoClient = EppoSdk.getInstance();
+const variation = eppoClient.getAssignment(
+  user.userid,
+  "new-user-onboarding",
+  user.attributes
+);
 ```
-getBoolAssignment(...)
-getNumericAssignment(...)
-getJSONStringAssignment(...)
-getParsedJSONAssignment(...)
+```javascript showLineNumbers
+// Output
+{
+  allocation: 'allocation-2468',
+  experiment: 'new-user-onboarding-allocation-2468',
+  featureFlag: 'new-user-onboarding',
+  variation: 'treatment',
+  timestamp: '2024-03-21T18:58:23.176Z',
+  subject: '1234567890',
+  holdout: 'q1-holdout',
+  holdoutVariation: null,
+  subjectAttributes: { country: 'united states', subscription_status: 'gold' }
+}
 ```
+
+
+
+## 6. Advanced Topics
 
 ### Handling `null`
 
@@ -156,3 +192,27 @@ We recommend always handling the `null` case in your code. Here are some example
 :::note
 It may take up to 10 seconds for changes to Eppo experiments to be reflected by the SDK assignments.
 :::
+
+### Typed assignments
+
+Use the following getAssignment method for the type of feature flag created:
+
+```
+getBoolAssignment(...)
+getNumericAssignment(...)
+getJSONStringAssignment(...)
+getParsedJSONAssignment(...)
+```
+
+### Initialization options
+
+How the SDK fetches experiment configurations is configurable via additional optional initialization options:
+
+| Option | Description | Default |
+| ------ | ----------- | ------- | 
+| **`requestTimeoutMs`** (number) | Timeout in milliseconds for HTTPS requests for the experiment configurations. | `5000` |
+| **`numInitialRequestRetries`** (number) | Number of _additional_ times the initial configurations request will be attempted if it fails. This is the request typically synchronously waited (via `await`) for completion. A small wait will be done between requests. | `1` |
+| **`pollAfterFailedInitialization`** (boolean) | Poll for new configurations even if the initial configurations request failed. | `false` |
+| **`throwOnFailedInitialization`** (boolean) | Throw an error (reject the promise) if unable to fetch initial configurations during initialization. | `true` |
+| **`numPollRequestRetries`** (number) | If polling for updated configurations after initialization, the number of additional times a request will be attempted before giving up. Subsequent attempts are done using an exponential backoff. | `7` |
+
