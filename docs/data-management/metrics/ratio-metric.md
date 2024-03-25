@@ -5,7 +5,7 @@ sidebar_position: 2
 # Ratio metrics
 ## Overview
 Ratio metrics allow you to calculate the ratio of two [simple metrics](/data-management/metrics/simple-metric). The most common use case for this is when the randomization entity is different from the analysis entity. 
-For example, consider the metric _average  order value_. Typically, experiments are not randomized at the _order_ level because a user can have multiple orders. 
+For example, consider the metric _average order value_. Typically, experiments are not randomized at the _order_ level because a user can have multiple orders. 
 Consequently, randomizing orders could lead to users experiencing multiple variants. When the experiment is randomized at the user level, it is not statistically valid to consider each
 _order_ an independent observation because orders from the same user are related. Treating the orders as statistically independent observations in experiments with user-based
 randomization typically leads to overconfident results (underestimating the variance). A proper estimation of the variance must recognize the fact that the observations (orders) are clustered
