@@ -43,8 +43,7 @@ as follows:
 1. Define the metric you wish to calculate and identify its analysis entity (e.g., an order in _average order value_).
 2. Divide both the numerator and the denominator by the _randomization_ entity (often a user).
 3. Identify the numerator metric and the denominator metric. The numerator metric will typically be a fact quantity per randomization entity (e.g., revenue per user). The denominator metric will typically be a count of the analysis entity per randomization entity (e.g., number of orders per user).
-4. Make sure that both the numerator metric and the denominator metric are already defined as [simple metrics](/data-management/metrics/simple-metric) in Eppo.
-5. Create the desired ratio metric by following the steps in the next section.
+4. Create the desired ratio metric by following the steps in the next section.
 
 ### Common examples
 - _Average order value_ as discussed in the example above.
