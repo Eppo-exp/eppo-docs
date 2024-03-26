@@ -39,10 +39,13 @@ $$
 $$
 
 Both the numerator and the denominator are simple metrics whose analysis entity matches the randomization entity (a user). In general, the steps to define a ratio metric are
-as follows:
+as follows. Note that Eppo automatically divides [simple metrics](/data-management/metrics/simple-metric) by the unique count of the randomization entity, so you do not need to explicitly specify this
+step when creating ratio metrics. For example, in the above example, the numerator metric is _revenue per user_, but you only need to specify a `SUM` aggregation for the numerator. The "per user" component is 
+implied based on the randomization entity.
+
 1. Define the metric you wish to calculate and identify its analysis entity (e.g., an order in _average order value_).
-2. Divide both the numerator and the denominator by the _randomization_ entity (often a user).
-3. Identify the numerator metric and the denominator metric. The numerator metric will typically be a fact quantity per randomization entity (e.g., revenue per user). The denominator metric will typically be a count of the analysis entity per randomization entity (e.g., number of orders per user).
+2. Identify the fact and aggregation for the numerator. In most cases, this will be a sum or a count. In our above example, it would be the sum of revenue.
+3. Identify the fact and aggregation for the denominator. In most cases, this will be a count of the analysis entity. In our above example, it would be the count of orders.
 4. Create the desired ratio metric by following the steps in the next section.
 
 ### Common examples
