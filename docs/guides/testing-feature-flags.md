@@ -22,6 +22,10 @@ Decide what will indicate an internal user based on what information is availabl
 
 In the example below, we target all users with an internal email address that ends in `@geteppo.com` or a specific user id. 
 
+:::note
+While Eppo does not store any raw data, note that targeting attributes will be passed into the logging callback function. If you do not want your logger to store user emails, you can apply the regex match before calling Eppo and then pass in a simple is_internal_user flag to the SDK call.
+:::
+
 ![Screenshot of targeting of internal audience](/img/guides/testing-feature-flags/qa-flag-internal-audience.png)
 
 Once the Feature Gate has been created, turn on the flag for the Production Environment to make the flag live for the internal audience.

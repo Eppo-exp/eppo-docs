@@ -70,7 +70,9 @@ const eppoClient = EppoSdk.getInstance();
 const variation = eppoClient.getAssignment(
   "<SUBJECT-KEY>",
   "<FLAG-KEY>",
-  {}
+  {
+    // Optional metadata about the user to be used for targeting
+  }
 );
 ```
 
@@ -109,7 +111,9 @@ const eppoClient = EppoSdk.getInstance();
 const variation = eppoClient.getAssignment(
   "<SUBJECT-KEY>",
   "<FLAG-KEY>",
-  {}
+  {
+    // Optional metadata about the user to be used for targeting
+  }
 );
 ```
 
@@ -153,7 +157,9 @@ const eppoClient = EppoSdk.getInstance();
 const variation = eppoClient.getAssignment(
   "<SUBJECT-KEY>",
   "<FLAG-KEY>",
-  {}
+  {
+    // Optional metadata about the user to be used for targeting
+  }
 );
 ```
 
@@ -214,9 +220,50 @@ const eppoClient = EppoSdk.getInstance();
 const variation = eppoClient.getAssignment(
   "<SUBJECT-KEY>",
   "<FLAG-KEY>",
-  {}
+  {
+    // Optional metadata about the user to be used for targeting
+  }
 );
 ```
 
 </TabItem>
+
+<TabItem value="amplitude" label="Amplitude">
+
+```javascript
+// Import Eppo's assignment logger interface and client initializer
+import { IAssignmentLogger, init } from "@eppo/node-server-sdk";
+
+// Initialize Amplitude
+import { track } from '@amplitude/analytics-node';
+
+
+// Define logAssignment so that it logs events to Amplitude
+const assignmentLogger: IAssignmentLogger = {
+  logAssignment(assignment) {
+    track('Experiment Viewed', assignment, {
+		  user_id: assignment.subject,
+    });
+  },
+};
+
+// Initialize the client
+await init({
+  apiKey: "<API_KEY>",
+  assignmentLogger,
+});
+
+// Then every call to getAssignment will also log the event to Amplitude
+const eppoClient = EppoSdk.getInstance();
+const variation = eppoClient.getAssignment(
+  "<SUBJECT-KEY>",
+  "<FLAG-KEY>",
+  {
+    // Optional metadata about the user to be used for targeting
+  }
+);
+```
+
+</TabItem>
+
 </Tabs>
