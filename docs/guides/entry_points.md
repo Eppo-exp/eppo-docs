@@ -65,7 +65,7 @@ There are more cases where tests on your deliveries would need an Entry point. L
 
 Not all logistical test require a separate Entry point. If you want to test a promotion that offers free delivery under certain condition, you can decide which customer sees that promotion when it becomes visible, not earlier.
 
-::: note
+:::note
 
 Be mindful when testing promotions on anonymous users: you risk contaminating your experiment. If they get re-assigned by refreshing their browser, or opening a private window, some users will stumble on it, notice the discrepancy, and figure out the trick. They might leak that information. If prospective buyers see it, they will try. You are better off testing promotions on entities that buyers can’t change easily: established user account, phone number, postal address.
 
