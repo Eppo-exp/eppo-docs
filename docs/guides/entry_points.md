@@ -22,7 +22,7 @@ You can likely make a decision that the new approach to customer service is bett
 
 If you include all your customers in the process, then you’ll have 9,000 extra participants in each variant that are not affected but the test, half of which will rate the service highly. Score will be around 4,500 + 250 = 4,750/10,000 vs. 5,250/10,000. The new treatment is still better but results will be noisier, probably around 4,750±100 and 5,250±100. The result after one month might not be conclusive. Your decision might have to wait for more evidence, while all you need is to focus on the information you already have.
 
-## Examples when an Entry point is useful
+## Examples when an Entry Point is useful
 
 Having a gap between assignment and **exposure** (seeing something difference) is common for experiments that involve expensive or slow pre-computation, calls to potentially delayed partner APIs, or post-sales changes.
 
