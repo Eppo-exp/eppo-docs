@@ -2,9 +2,9 @@
 
 For some experiments, subjects are assigned to a variant in one place, but are not exposed to it until they perform a certain action. For example, users may be assigned to all experiments upon visiting the homepage of a website, but only a subset of those users navigate to a page where an experiment is being conducted. More examples of when to consider using an entry point are available in this [guide](/guides/entry_points.md).
 
-Eppo provides the ability to filter an assignment source by an [Entry Point](../../statistics/sample-size-calculator/setup#creating-entry-points) when configuring an experiment. This ensures that only the subjects assigned to that entry point are analyzed in the experiment, based on the logged events for that entry point.
-
 ## Entry point for an experiment
+
+Eppo provides the ability to filter an assignment source by an [Entry Point](../../statistics/sample-size-calculator/setup#creating-entry-points) when configuring an experiment. This ensures that only the subjects assigned to that entry point are analyzed in the experiment, based on the logged events for that entry point.
 
 First you’ll need both an assignment source and an entry point source configured. Then, when setting up an experiment, check the box marked “Filter assignments by entry points” in the **Logging & Experiment Key** section:
 
