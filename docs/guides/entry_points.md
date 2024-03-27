@@ -38,7 +38,7 @@ There’s one concern though: while all visitors will be assigned in the experim
 
 For cases like that, we let you define an **Entry Point**: what event needs to happen for visitors to be exposed to a different experience, and considered enrolled to the experiment. It remains up to you to decide if this should be when the carousel enters the viewport, is fully or partially visible; it’s also up to your front-end developpers to trigger and log that event. But once that information is in your data warehouse, then you can use it to filter out which users participate in the experiment.
 
-::: note
+:::note
 If you define an Entry point, all the time-limted metrics (“Conversion 7 days after assignment”) are based on the timestamp of the Entry point, not the assignment. 
 :::
 
