@@ -39,7 +39,7 @@ Initialize the SDK with a SDK key, which can be generated in the Eppo interface.
 import { init } from "@eppo/node-server-sdk";
 
 await init({
-  SDKKey: "<SDK_KEY>",
+  apiKey: "<SDK_KEY>",
   assignmentLogger,
 });
 ```
