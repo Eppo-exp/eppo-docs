@@ -55,7 +55,7 @@ Let‘s say you want to test asking for fast and cheap options. Or you could be 
 
 In this case too, the assignment happens when confirming basket contents and the address, but the entry point should be set to a little later, when the customer sees a quote.
 
-::: note
+:::note
 
 If one of the API integration fails, and some customers assigned to Treatment don’t see the pricing quote because of a bug, then you’ll observe an [asymetric traffic](/statistics/sample-ratio-mismatch.md).
 
