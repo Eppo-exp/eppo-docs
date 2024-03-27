@@ -85,6 +85,6 @@ During internal tests, it matters less, but once you run an A/B test on users, i
 
 ### More examples
 
-There are many more example where the assignement has to happens before entities can see a difference, like API calls during time-sensitive ad auctions; or where the different treatment is triggered, but might not be visible to users, like including legal warning on a pop-up that could be blocked by the browser.
+There are many more examples where the assignment has to happen before entities can see a difference, like API calls during time-sensitive ad auctions; or where the different treatment is triggered, but might not be visible to users, like including a legal warning on a pop-up that could be blocked by the browser.
 
 If you have any questions, don’t hesitate to ask your Eppo contact.
