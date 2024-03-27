@@ -310,7 +310,7 @@ Eppo's SDK uses an internal cache to ensure that duplicate assignment events are
 
 ### Initialize the SDK
 
-Initialize the SDK with a SDK key, which can be generated in the Eppo interface. Initialization should happen when your application starts up to generate a singleton client instance, once per application lifecycle:
+Initialize the SDK with an SDK key, which can be generated [in the Eppo interface](https://eppo.cloud/feature-flags/keys). Initialization should happen when your application starts up to generate a singleton client instance, once per application lifecycle:
 
 ```javascript
 import { init } from "@eppo/node-server-sdk";
