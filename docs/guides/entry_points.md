@@ -12,7 +12,7 @@ For some experiments, subjects are assigned to a variant in one place but are no
 
 The visitors who don’t see a difference should behave the same between Control and Treatment, so they likely won’t skew your results one way on another. But having more unaffected customers will add **noise** to your results and make it harder to test a good idea apart. You often hear that more participants is better; that’s only true if they are actually participating in the test. More unaffected subjects won’t help.
 
-### Numeric Example 
+### Numerical Example 
 
 Let’s say you have 20,000 subscriber coming to your side and buying something per month. About half of your users give you good ratings. Only 10% call customer service. About a quarter of those give you good ratings after the call, and are more likely to come back.
 
