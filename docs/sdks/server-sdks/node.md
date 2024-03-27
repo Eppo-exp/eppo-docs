@@ -6,7 +6,7 @@ import TabItem from '@theme/TabItem';
 Eppo's open source Node SDK can be used for both feature flagging and experiment assignment:
 
 - [GitHub repository](https://github.com/Eppo-exp/node-server-sdk)
-- [API Reference](https://eppo-exp.github.io/node-server-sdk/node-server-sdk.html)
+- [SDK Reference](https://eppo-exp.github.io/node-server-sdk/node-server-sdk.html)
 - [NPM package](https://www.npmjs.com/package/@eppo/node-server-sdk)
 
 ## 1. Install the SDK
@@ -39,12 +39,12 @@ Initialize the SDK with a SDK key, which can be generated in the Eppo interface.
 import { init } from "@eppo/node-server-sdk";
 
 await init({
-  apiKey: "<API_KEY>",
+  SDKKey: "<SDK_KEY>",
   assignmentLogger,
 });
 ```
 
-After initialization, the SDK begins polling Eppo’s API at regular intervals to retrieve the most recent experiment configurations such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments thereafter are effectively instant. For more information, see the [architecture overview](/sdks/overview) page.
+After initialization, the SDK begins polling Eppo’s SDK at regular intervals to retrieve the most recent experiment configurations such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments thereafter are effectively instant. For more information, see the [architecture overview](/sdks/overview) page.
 
 If you are using the SDK for experiment assignments, make sure to pass in an assignment logging callback (see [section](#define-an-assignment-logger-experiment-assignment-only) below).
 
