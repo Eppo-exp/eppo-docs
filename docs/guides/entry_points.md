@@ -4,7 +4,7 @@ sidebar_position: 11
 
 # Filtering assignments by entry point
 
-This note describes why you would want to use Entry points. If you want to learn how to configure one in Eppo, refer to the [manual page](experiment-analysis/filter-assignments-by-entry-point.md).
+This guide walks through scenarios of when and why to consider using Entry Points. If you want to learn how to configure an Entry Point in Eppo, refer to [this page](experiment-analysis/filter-assignments-by-entry-point.md).
 
 ## Why exclude some users from an experiment?
 
