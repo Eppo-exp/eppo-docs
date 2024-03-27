@@ -16,7 +16,7 @@ The visitors who don’t see a difference should behave the same between Control
 
 Let’s say you have 20,000 subscriber coming to your side and buying something per month. About half of your users give you good ratings. Only 10% call customer service. About a quarter of those give you good ratings after the call, and are more likely to come back.
 
-If you A/B test a better customer service, you’ll end up splitting the 2,000 who call into 1,000 for Control (about 250 of which should give you a good rating) and 1,000 for Treatement. If the new service is a lot better and three quarters of customers calling you now give you a good rating, that’s 250/1000 vs. 750/1000, i.e. a very clear result. Experiments are noisy so it won’t be exactly 250 and 750, but probably 250±15 and 750±15.
+If you A/B test a better customer service, you’ll end up splitting the 2,000 who call into 1,000 for Control (about 250 of which should give you a good rating) and 1,000 for Treatment. If the new service is a lot better and three quarters of customers calling you now give you a good rating, that’s 250/1000 vs. 750/1000, i.e. a very clear result. Experiments are noisy so it won’t be exactly 250 and 750, but probably 250±15 and 750±15.
 
 You can likely make a decision that the new approach to customer service is better within a few weeks.
 
