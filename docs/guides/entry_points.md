@@ -2,7 +2,7 @@
 sidebar_position: 11
 ---
 
-# Filtering assignments by entry point
+# When to add Entry Point filters
 
 This guide walks through scenarios of when and why to consider using Entry Points. If you want to learn how to configure an Entry Point in Eppo, refer to [this page](experiment-analysis/filter-assignments-by-entry-point.md).
 
