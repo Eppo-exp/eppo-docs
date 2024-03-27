@@ -69,6 +69,7 @@ const variation = eppoClient.getAssignment(
   }
 );
 ```
+</TabItem>
 
 After initialization, the SDK begins polling Eppo’s SDK at regular intervals to retrieve the most recent experiment configurations such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments thereafter are effectively instant. For more information, see the [architecture overview](/sdks/overview) page.
 
