@@ -16,6 +16,6 @@ First you’ll need both an assignment source and an entry point source configur
 
 The filtering will take place during the next experiment calculation (either during the scheduled time or a manual update).
 
-## Entry points for a sample size
+## Entry point for a sample size calculation
 
 Before you run a test, we recommend that you check how sensitive that experiment can be using our [Sample size calculator](../../statistics/sample-size-calculator/). Knowing how large an effect you can detect let you prioritise testing impactful, detectable changes. When the change will only be visible after the assignment, you can define an [Entry Point](../../statistics/sample-size-calculator/setup#creating-entry-points) to measure the sensitivity of the test more accurately.
