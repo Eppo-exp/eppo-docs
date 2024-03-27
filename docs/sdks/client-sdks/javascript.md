@@ -12,7 +12,7 @@ This documentation is for our client-side SDK intended for use by browser applic
 Eppo's open source JavaScript SDK can be used for both feature flagging and experiment assignment:
 
 - [GitHub repository](https://github.com/Eppo-exp/js-client-sdk)
-- [API Reference](https://eppo-exp.github.io/js-client-sdk/js-client-sdk.html)
+- [SDK Reference](https://eppo-exp.github.io/js-client-sdk/js-client-sdk.html)
 - [NPM package](https://www.npmjs.com/package/@eppo/js-client-sdk)
 
 ## 1. Install the SDK
@@ -59,7 +59,7 @@ Initialize the SDK with a SDK key, which can be generated in the Eppo interface:
 import { init } from "@eppo/js-client-sdk";
 
 await init({
-  apiKey: "<API_KEY>",
+  apiKey: "<SDK_KEY>",
   assignmentLogger,
 });
 ```
@@ -204,7 +204,7 @@ export default function EppoRandomizationProvider({
   const [isInitialized, setIsInitialized] = useState(false);
   useEffect(() => {
     init({
-      apiKey: "<YOUR-API-KEY>",
+      apiKey: "<YOUR-SDK-KEY>",
       assignmentLogger: {
         logAssignment(assignment) {
           // logging implementation
