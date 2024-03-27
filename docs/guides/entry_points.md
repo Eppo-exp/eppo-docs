@@ -34,7 +34,7 @@ If you want to A/B test the impact of introducing that new recommendation, shoul
 
 When testing, should you assign all users? You need to decide whether to trigger the computation (Treatment) or not (Control). That assignment has to happen before you trigger the computation, therefore, as soon as the visitor starts loading the home page. You would need to assign a visit to either Control (older, fast recommendation) or Treatment (newer, better, slower recommendation) as soon as they start requesting the page.
 
-There’s one concern though: while all visitors will be assigned in the experiment, only the visitors who see the recommendation carousel are exposed to a different experience. (We’ll ignore the impact of triggering an expensive computation for now.) Therefore, the two thirds of visitors who were assigned but never scrolled down the homepage should not be included in that experiment.
+There’s one concern, though: while all visitors will be assigned in the experiment, only the visitors who see the recommendation carousel are exposed to a different experience. (We’ll ignore the impact of triggering an expensive computation for now.) Therefore, the two-thirds of visitors who were assigned but never scrolled down the homepage should not be included in that experiment.
 
 For cases like that, we let you define an **Entry Point**: what event needs to happen for visitors to be exposed to a different experience, and considered enrolled to the experiment. It remains up to you to decide if this should be when the carousel enters the viewport, is fully or partially visible; it’s also up to your front-end developpers to trigger and log that event. But once that information is in your data warehouse, then you can use it to filter out which users participate in the experiment.
 
@@ -45,7 +45,7 @@ If you define an Entry point, all the time-limted metrics (“Conversion 7 days 
 
 ### Second example: delivery pricing
 
-Let’s imagine another example: an e-commerce sells large, unusual or even fragile items. Items might not all be in stock, depending on factors like size, colors or other aspect. If you sell plants, you might want to confirm it’s still alive. 
+Let’s imagine another example: an e-commerce company sells large, unusual or even fragile items. Items might not all be in stock, depending on factors like size, colors or other aspect. If you sell plants, you might want to confirm it’s still alive. 
 
 Pricing for custom deliveries depends on a multitude of factors (destination, need for temperature control, tax status) and your logistical partner conveniently offers an API to send quotes. The issue is: the response time of that API is slow. Therefore, you trigger a request as soon as you visitors confirm the contents of their basket and the country where they want it delivered, but before you have confirmed that the items are in stock, for example. 
 
@@ -57,13 +57,13 @@ In this case too, the assignment happens when confirming basket contents and the
 
 :::note
 
-If one of the API integration fails, and some customers assigned to Treatment don’t see the pricing quote because of a bug, then you’ll observe an [asymetric traffic](/statistics/sample-ratio-mismatch.md).
+If one of the API integration fails, and some customers assigned to Treatment don’t see the pricing quote because of a bug, then you’ll observe [asymetric traffic](/statistics/sample-ratio-mismatch.md).
 
 :::
 
-There are more cases where tests on your deliveries would need an Entry point. Let’s say you want to improve the box opening experience, include a note, etc. The assignment has to hapen when packaging; the entry point has to be set when the customer receives the note. There’s no reason to include customers who didn’t get their packages when measuring the impact of a hand-written note on their satisfaction.
+There are more cases where tests on your deliveries would need an Entry Point. Let’s say you want to improve the box opening experience, include a note, etc. The assignment has to happen when packaging; the Entry Point has to be set when the customer receives the note. There’s no reason to include customers who didn’t get their packages when measuring the impact of a hand-written note on their satisfaction.
 
-Not all logistical test require a separate Entry point. If you want to test a promotion that offers free delivery under certain condition, you can decide which customer sees that promotion when it becomes visible, not earlier.
+Not all logistical test require a separate Entry Point. If you want to test a promotion that offers free delivery under certain condition, you can decide which customer sees that promotion when it becomes visible and not earlier.
 
 :::note
 
@@ -79,7 +79,7 @@ Once again, you have to decide to send information about a customer, i.e. assign
 
 In this example (as well as the examples about triggering complex recommendations) you could send an API call for **all users** and only decide which response to use once you need to show the information to the users. That pattern can avoid having to use Entry point. However, that vendor might charge per visitor, and you might want to lower the cost of testing their solution.
 
-More generally, complex models, some API calls, and AI services are non-trivial to scale and **expensive to serve**. You might want to limit the cost of testing Treatment by not wasting half of it. In a gradual roll-out process, you want organise your feature flag so that only internal developpers and testers see the results first, then expose a small minority of visitors to the A/B test, then scale it to a full 50/50 test. That allows you to control who you expose, and if Treatment is expensive, how much valuable ressources you dedicate to testing an idea.
+More generally, complex models, some API calls, and AI services are non-trivial to scale and **expensive to serve**. You might want to limit the cost of testing Treatment by not wasting half of it. In a gradual roll-out process, you want organise your feature flag so that only internal developers and testers see the results first, then expose a small minority of visitors to the A/B test, then scale it to a full 50/50 test. That allows you to control who you expose, and if Treatment is expensive, how much valuable resources you dedicate to testing an idea.
 
 During internal tests, it matters less, but once you run an A/B test on users, if you want properly validate the impact of those changes, an Entry point will help you get better, sharper results.
 
