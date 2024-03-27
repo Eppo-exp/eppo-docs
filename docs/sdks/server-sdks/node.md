@@ -428,7 +428,7 @@ getNumericAssignment(...)
 getJSONStringAssignment(...)
 getParsedJSONAssignment(...)
 ```
-
+To read more about different flag types, see the page on [Flag Varitions](/feature-flagging/flag-variations).
 ## Initialization options
 
 How the SDK fetches experiment configurations is configurable via additional optional initialization options:
