@@ -56,27 +56,7 @@ const assignmentLogger: IAssignmentLogger = {
 ```
 
 
-
-
-The SDK will invoke the `logAssignment` function with an `assignment` object that contains the following fields:
-
-| Field                     | Description                                                                                                              | Example                             |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------- |
-| `experiment` (string)     | An Eppo experiment key                                                                                                   | "recommendation-algo-allocation-17" |
-| `subject` (string)        | An identifier of the subject or user assigned to the experiment variation                                                | UUID                                |
-| `variation` (string)      | The experiment variation the subject was assigned to                                                                     | "control"                           |
-| `timestamp` (string)      | The time when the subject was assigned to the variation                                                                  | 2021-06-22T17:35:12.000Z            |
-| `subjectAttributes` (map) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `{ "country": "US" }`               |
-| `featureFlag` (string)    | An Eppo feature flag key                                                                                                 | "recommendation-algo"               |
-| `allocation` (string)     | An Eppo allocation key                                                                                                   | "allocation-17"                     |
-| `holdout` (string)    | An Eppo holdout group key                                                                                                 | "q1-holdout"               |
-| `holdoutVariation` (string)     | An Eppo holdout variation if experiment is eligible for analysis key                                                                                                   | "status_quo", "all_shipped_variations", or null                    |
-
-:::note
-More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/sdks/event-logging/) page.
-:::
-
-#### Avoiding duplicated assignment logs
+### Avoiding duplicated assignment logs
 
 Eppo's SDK uses an internal cache to ensure that duplicate assignment events are not logged to the data warehouse. While Eppo's analytic engine will automatically deduplicate assignment records, this internal cache prevents firing unnecessary events and can help minimize costs associated with event logging. 
 
@@ -216,3 +196,22 @@ How the SDK fetches experiment configurations is configurable via additional opt
 | **`throwOnFailedInitialization`** (boolean) | Throw an error (reject the promise) if unable to fetch initial configurations during initialization. | `true` |
 | **`numPollRequestRetries`** (number) | If polling for updated configurations after initialization, the number of additional times a request will be attempted before giving up. Subsequent attempts are done using an exponential backoff. | `7` |
 
+### Assignment Logger schema
+
+The SDK will invoke the `logAssignment` function with an `assignment` object that contains the following fields:
+
+| Field                     | Description                                                                                                              | Example                             |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------- |
+| `experiment` (string)     | An Eppo experiment key                                                                                                   | "recommendation-algo-allocation-17" |
+| `subject` (string)        | An identifier of the subject or user assigned to the experiment variation                                                | UUID                                |
+| `variation` (string)      | The experiment variation the subject was assigned to                                                                     | "control"                           |
+| `timestamp` (string)      | The time when the subject was assigned to the variation                                                                  | 2021-06-22T17:35:12.000Z            |
+| `subjectAttributes` (map) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `{ "country": "US" }`               |
+| `featureFlag` (string)    | An Eppo feature flag key                                                                                                 | "recommendation-algo"               |
+| `allocation` (string)     | An Eppo allocation key                                                                                                   | "allocation-17"                     |
+| `holdout` (string)    | An Eppo holdout group key                                                                                                 | "q1-holdout"               |
+| `holdoutVariation` (string)     | An Eppo holdout variation if experiment is eligible for analysis key                                                                                                   | "status_quo", "all_shipped_variations", or null                    |
+
+:::note
+More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/sdks/event-logging/) page.
+:::
