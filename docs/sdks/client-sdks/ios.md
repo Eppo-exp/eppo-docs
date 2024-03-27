@@ -18,7 +18,7 @@ While in XCode:
 Initialize the SDK with a SDK key, which can be created in the Eppo web interface:
 
 ```swift
-var eppoClient: EppoClient = EppoClient("YOUR_EPPO_API_KEY");
+var eppoClient: EppoClient = EppoClient("YOUR_EPPO_SDK_KEY");
 ```
 
 During initialization, the SDK sends an API request to Eppo to retrieve the most recent experiment configurations such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments are effectively instant. For more information, see the [architecture overview](/sdks/overview) page.
@@ -95,7 +95,7 @@ For applications wrapping initialization and assignment in an `ObservableObject`
 @MainActor
 class AssignmentObserver : ObservableObject {
     @Published var assignment: String?;
-    var eppoClient: EppoClient = EppoClient(EPPO_API_KEY);
+    var eppoClient: EppoClient = EppoClient(EPPO_SDK_KEY);
 
     public init() {
         Task {

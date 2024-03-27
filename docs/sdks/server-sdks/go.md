@@ -40,7 +40,7 @@ func main() {
 	assignmentLogger := NewExampleAssignmentLogger()
 
 	eppoClient = eppoclient.InitClient(eppoclient.Config{
-		ApiKey:           "<your_api_key>",
+		ApiKey:           "<your_sdk_key>",
 		AssignmentLogger: assignmentLogger,
 	})
 }

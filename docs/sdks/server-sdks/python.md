@@ -26,7 +26,7 @@ To initialize the SDK, you will need an SDK key. You can generate one [in the fl
 import eppo_client
 from eppo_client.config import Config, AssignmentLogger
 
-client_config = Config(api_key="<YOUR_API_KEY>",
+client_config = Config(api_key="<YOUR_SDK_KEY>",
                        assignment_logger=AssignmentLogger())
 eppo_client.init(client_config)
 client = eppo_client.get_instance()
@@ -69,7 +69,7 @@ To keep our example simple, let’s first use a local function to see what is lo
 
 For the assignment event to send the relevant information, we have to expand the class `AssignmentLogger` by defining the method `log_assignment` with a function that stores the contents of `assignment`.
 
-We have also stored out SDK Key into the environment variable `EPPO_API_KEY` as a common safety practice.
+We have also stored out SDK Key into the environment variable `EPPO_SDK_KEY` as a common safety practice.
 
 ```python
 import logging
@@ -90,7 +90,7 @@ class LocalAssignmentLogger(AssignmentLogger):
         logging.info(assignment)
 
 
-client_config = Config(api_key=os.getenv("EPPO_API_KEY"),
+client_config = Config(api_key=os.getenv("EPPO_SDK_KEY"),
                        assignment_logger=LocalAssignmentLogger())
 eppo_client.init(client_config)
 client = eppo_client.get_instance()
@@ -158,7 +158,7 @@ class SegmentAssignmentLogger(AssignmentLogger):
                         "Eppo Randomization Assignment", assignment)
 
 
-client_config = Config(api_key="<YOUR_API_KEY>",
+client_config = Config(api_key="<YOUR_SDK_KEY>",
                        assignment_logger=SegmentAssignmentLogger())
 
 …

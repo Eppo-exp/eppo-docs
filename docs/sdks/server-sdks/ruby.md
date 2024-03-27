@@ -23,7 +23,7 @@ Initialize the SDK with a SDK key, which can be generated in the Eppo interface.
 ```ruby
 require 'eppo_client'
 
-config = EppoClient::Config.new('<YOUR_API_KEY>')
+config = EppoClient::Config.new('<YOUR_SDK_KEY>')
 client = EppoClient::init(config)
 ```
 
@@ -56,7 +56,7 @@ class CustomAssignmentLogger < EppoClient::AssignmentLogger
 end
 
 config = EppoClient::Config.new(
-  '<YOUR_API_KEY>',
+  '<YOUR_SDK_KEY>',
   assignment_logger: CustomAssignmentLogger.new
 )
 client = EppoClient::init(config)

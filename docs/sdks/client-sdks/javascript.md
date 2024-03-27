@@ -59,7 +59,7 @@ Initialize the SDK with a SDK key, which can be generated in the Eppo interface:
 import { init } from "@eppo/js-client-sdk";
 
 await init({
-  apiKey: "<API_KEY>",
+  apiKey: "<SDK_KEY>",
   assignmentLogger,
 });
 ```
