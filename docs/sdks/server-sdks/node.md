@@ -6,7 +6,7 @@ import TabItem from '@theme/TabItem';
 Eppo's open source Node SDK can be used for both feature flagging and experiment assignment:
 
 - [GitHub repository](https://github.com/Eppo-exp/node-server-sdk)
-- [API Reference](https://eppo-exp.github.io/node-server-sdk/node-server-sdk.html)
+- [SDK Reference](https://eppo-exp.github.io/node-server-sdk/node-server-sdk.html)
 - [NPM package](https://www.npmjs.com/package/@eppo/node-server-sdk)
 
 ## Getting Started
@@ -69,7 +69,6 @@ const variation = eppoClient.getAssignment(
   }
 );
 ```
-
 </TabItem>
 
 <TabItem value="segment" label="Segment">

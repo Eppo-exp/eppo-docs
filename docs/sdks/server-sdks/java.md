@@ -26,7 +26,7 @@ Initialize the SDK with a SDK key, which can be generated in the Eppo interface.
 
 ```java
 EppoClientConfig config = EppoClientConfig.builder()
-        .apiKey("<api-key>")
+        .apiKey("<sdk-key>")
         .assignmentLogger((data) -> System.out.println(data.toString()))
         .build();
 EppoClient eppoClient = EppoClient.init(config);

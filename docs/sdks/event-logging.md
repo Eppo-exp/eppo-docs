@@ -61,7 +61,7 @@ const assignmentLogger: IAssignmentLogger = {
 
 // Initialize the client
 await init({
-  apiKey: "<API_KEY>",
+  apiKey: "<SDK_KEY>",
   assignmentLogger,
 });
 
@@ -102,7 +102,7 @@ const assignmentLogger: IAssignmentLogger = {
 
 // Initialize the client
 await init({
-  apiKey: "<API_KEY>",
+  apiKey: "<SDK_KEY>",
   assignmentLogger,
 });
 
@@ -148,7 +148,7 @@ const assignmentLogger: IAssignmentLogger = {
 
 // Initialize the client
 await init({
-  apiKey: "<API_KEY>",
+  apiKey: "<SDK_KEY>",
   assignmentLogger,
 });
 
@@ -211,7 +211,7 @@ const assignmentLogger: IAssignmentLogger = {
 
 // Initialize the client
 await init({
-  apiKey: "<API_KEY>",
+  apiKey: "<SDK_KEY>",
   assignmentLogger,
 });
 

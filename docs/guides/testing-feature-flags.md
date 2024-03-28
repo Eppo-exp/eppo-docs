@@ -2,7 +2,7 @@
 
 ## Testing in Staging or Local Environments
 
-Eppo supports separation of feature flags and their allocations between environments. Create an Eppo environment specifically for Staging or QA following this [documentation](/feature-flagging/#environments). Environments are separated by [SDK keys](/sdks/api-keys), and no unique key will be shared across Eppo Environments. Once an Environment is created, create an SDK for that Environment.
+Eppo supports separation of feature flags and their allocations between environments. Create an Eppo environment specifically for Staging or QA following this [documentation](/feature-flagging/#environments). Environments are separated by [SDK keys](/sdks/sdk-keys), and no unique key will be shared across Eppo Environments. Once an Environment is created, create an SDK for that Environment.
 
 After a flag has been created, click **Switch Environment** on the flag page and select the testing Environment the flag should run in.
 

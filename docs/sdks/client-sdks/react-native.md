@@ -39,7 +39,7 @@ Initialize the SDK with a SDK key, which can be generated in the Eppo interface:
 import { init } from "@eppo/react-native-sdk";
 
 await init({
-  apiKey: "<API_KEY>",
+  apiKey: "<SDK_KEY>",
   assignmentLogger,
 });
 ```
@@ -178,7 +178,7 @@ export default function EppoRandomizationProvider({
   const [isInitialized, setIsInitialized] = useState(false);
   useEffect(() => {
     init({
-      apiKey: "<YOUR-API-KEY>",
+      apiKey: "<YOUR-SDK-KEY>",
       assignmentLogger: {
         logAssignment(assignment) {
           // logging implementation

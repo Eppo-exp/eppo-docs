@@ -23,7 +23,7 @@ Initialize the SDK with a SDK key, which can be created in the Eppo web interfac
 ```java
 import cloud.eppo.android.EppoClient;
 
-EppoClient eppoClient = EppoClient.init("YOUR_API_KEY");
+EppoClient eppoClient = EppoClient.init("YOUR_SDK_KEY");
 ```
 
 During initialization, the SDK sends an API request to Eppo to retrieve the most recent experiment configurations such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments are effectively instant. For more information, see the [architecture overview](/sdks/overview) page. 
@@ -53,7 +53,7 @@ AssignmentLogger logger = new AssignmentLogger() {
 };
 
 EppoClient eppoClient = new EppoClient.Builder()
-    .apiKey("YOUR_API_KEY")
+    .apiKey("YOUR_SDK_KEY")
     .assignmentLogger(assignmentLogger)
     .application(application)
     .buildAndInit();
