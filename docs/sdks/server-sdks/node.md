@@ -52,22 +52,6 @@ const assignmentLogger: IAssignmentLogger = {
 		console.log(assignment)
   },
 };
-
-// Initialize the client
-await init({
-  apiKey: "<SDK_KEY>",
-  assignmentLogger,
-});
-
-// Then every call to getAssignment will also log the event
-const eppoClient = EppoSdk.getInstance();
-const variation = eppoClient.getAssignment(
-  "<SUBJECT-KEY>",
-  "<FLAG-KEY>",
-  {
-    // Optional metadata about the user to be used for targeting
-  }
-);
 ```
 
 </TabItem>
@@ -92,22 +76,6 @@ const assignmentLogger: IAssignmentLogger = {
     });
   },
 };
-
-// Initialize the client
-await init({
-  apiKey: "<SDK_KEY>",
-  assignmentLogger,
-});
-
-// Then every call to getAssignment will also log the event to Segment
-const eppoClient = EppoSdk.getInstance();
-const variation = eppoClient.getAssignment(
-  "<SUBJECT-KEY>",
-  "<FLAG-KEY>",
-  {
-    // Optional metadata about the user to be used for targeting
-  }
-);
 ```
 
 </TabItem>
@@ -133,22 +101,6 @@ const assignmentLogger: IAssignmentLogger = {
     });
   },
 };
-
-// Initialize the client
-await init({
-  apiKey: "<SDK_KEY>",
-  assignmentLogger,
-});
-
-// Then every call to getAssignment will also log the event to Rudderstack
-const eppoClient = EppoSdk.getInstance();
-const variation = eppoClient.getAssignment(
-  "<SUBJECT-KEY>",
-  "<FLAG-KEY>",
-  {
-    // Optional metadata about the user to be used for targeting
-  }
-);
 ```
 
 </TabItem>
@@ -179,28 +131,12 @@ const assignmentLogger: IAssignmentLogger = {
     api.uploadEvents([batch]);
   },
 };
-
-// Initialize the client
-await init({
-  apiKey: "<SDK_KEY>",
-  assignmentLogger,
-});
-
-// Then every call to getAssignment will also log the event to mParticle
-const eppoClient = EppoSdk.getInstance();
-const variation = eppoClient.getAssignment(
-  "<SUBJECT-KEY>",
-  "<FLAG-KEY>",
-  {
-    // Optional metadata about the user to be used for targeting
-  }
-);
 ```
 
 </TabItem>
 <TabItem value="snowplow" label="Snowplow">
 
-This examples shows the setup for Snowplow's Node.js Tracker v3 SDK.
+This example shows the setup for Snowplow's Node.js Tracker v3 SDK.
 
 ```javascript
 // Import Eppo's assignment logger interface and client initializer
@@ -243,21 +179,6 @@ const assignmentLogger: IAssignmentLogger = {
   },
 };
 
-// Initialize the client
-await init({
-  apiKey: "<SDK_KEY>",
-  assignmentLogger,
-});
-
-// Then every call to getAssignment will also log the event to Snowplow
-const eppoClient = EppoSdk.getInstance();
-const variation = eppoClient.getAssignment(
-  "<SUBJECT-KEY>",
-  "<FLAG-KEY>",
-  {
-    // Optional metadata about the user to be used for targeting
-  }
-);
 ```
 
 </TabItem>
@@ -281,21 +202,6 @@ const assignmentLogger: IAssignmentLogger = {
   },
 };
 
-// Initialize the client
-await init({
-  apiKey: "<SDK_KEY>",
-  assignmentLogger,
-});
-
-// Then every call to getAssignment will also log the event to Amplitude
-const eppoClient = EppoSdk.getInstance();
-const variation = eppoClient.getAssignment(
-  "<SUBJECT-KEY>",
-  "<FLAG-KEY>",
-  {
-    // Optional metadata about the user to be used for targeting
-  }
-);
 ```
 
 </TabItem>
@@ -351,7 +257,7 @@ The `getStringAssignment` function takes two required and one optional input to 
 
 ### Example
 
-See an end to end example below of setting up the Eppo Node client and logging events to the console.
+See an end-to-end example below of setting up the Eppo Node client and logging events to the console.
 
 ```javascript
 // Import Eppo's assignment logger interface and client initializer
