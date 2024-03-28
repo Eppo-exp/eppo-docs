@@ -69,7 +69,7 @@ Not all logistical test require a separate Entry Point. If you want to test a pr
 
 ### Third example: AI-generated customer service
 
-Finally, let’s say you want to test one of those chat-bots that promise to replace human-lead customer service. The vendor recommends to send them as much information about the customer as you can, including their queries and the product description that they open during their session. Small issue: user logs are streamed to your data warehouse, but you don’t really store that information in the browser memory or a convenient session object that could be sent as a single blob to the AI company. No problem: the vendor can ingest page content as the visitor goes through your site, store it, and use it as context when a customer asks a question.
+Finally, let’s say you want to test an AI chatbots for customer service. The vendor recommends to send them as much information about the customer as you can, including their queries and the product description that they open during their session. To do do that, rather than store it, you send the vendor page content as the visitor goes through your site. The vendor stores that information, and uses it as context when a customer asks a question.
 
 Once again, you have to decide to send information about a customer, i.e. assign them to either Control or Treatment before they ask a question and are exposed to the AI bot. 
 
