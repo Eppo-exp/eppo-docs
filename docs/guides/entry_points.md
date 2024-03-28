@@ -14,13 +14,13 @@ The visitors who don’t see a difference should behave the same between Control
 
 ### Numerical Example 
 
-Let’s say you have 20,000 subscribers coming to your side and buying an item per month. About half of your users give you good ratings. Only 10% call customer service. About a quarter of those give you good ratings after the call, and are more likely to come back.
+Let’s say you have 20,000 visitors per month who make a purchase on your site. About half of your users give you good ratings. Only 10% call customer service. About a quarter of those give you good ratings after the call, and are more likely to come back.
 
-If you A/B test a better customer service, you’ll end up splitting the 2,000 who call into 1,000 for Control (about 250 of which should give you a good rating) and 1,000 for Treatment. If the new service is a lot better and three quarters of customers calling you now give you a good rating, that’s 250/1000 vs. 750/1000, i.e. a very clear result. Experiments are noisy so it won’t be exactly 250 and 750, but probably 250±15 and 750±15.
+If you A/B test a better customer service experience, you’ll end up splitting the 2,000 who call into 1,000 for Control (about 250 of which should give you a good rating) and 1,000 for Treatment. If the new service is a lot better and three quarters of customers calling you now give you a good rating, that’s 250/1000 vs. 750/1000, i.e. a very clear result. Experiments are noisy so it won’t be exactly 250 and 750, but we should expect to observe values near that amount, with 95% confidence/credible interval of ± 25 or 30 ($1.96 * \sqrt(.25 * .75 / 1000) * 1000$).
 
-You can likely make a decision that the new approach to customer service is better within a few weeks.
+Even within a week or two, the distinction should be blattant. You would likely make a decision that the new approach to customer service is better.
 
-If you include all your customers in the process, then you’ll have 9,000 extra participants in each variant that are not affected but the test, half of which will rate the service highly. The score will be around 4,500 + 250 = 4,750/10,000 vs. 5,250/10,000. The new treatment is still better but results will be noisier, resulting in a wider confidence interval of ±100. The result after one month might not be conclusive. Your decision might have to wait for more evidence, while all you need is to focus on the information you already have.
+If you include all your customers in the process, then you’ll have 9,000 extra participants in each variant that are not affected but the test, half of which will rate the service highly. The score will be around 4,500 + 250 = 4,750/10,000 vs. 5,250/10,000. The new treatment is still better but results will be noisier, resulting in a wider confidence interval of ±100 ($1.96 * \sqrt(.475 * .525 / 10,000) * 10,000$). The result after one month might not be conclusive. Your decision might have to wait for more evidence, while all you need is to focus on the information you already have.
 
 ## Examples when an Entry Point is useful
 
@@ -59,17 +59,13 @@ In this case too, the assignment happens when confirming basket contents and the
 
 If one of the API integration fails, and some customers assigned to Treatment don’t see the pricing quote because of a bug, then you’ll observe [asymetric traffic](/statistics/sample-ratio-mismatch.md).
 
+This example highlights the value of monitoring traffic inbalance, however you shouldn’t rely on it exclusively. It’s not a very sensitive test. Always monitor your API calls to detect unusual error rates long before they affect your experiment.
+
 :::
 
 There are more cases where tests on your deliveries would need an Entry Point. Let’s say you want to improve the box opening experience, include a note, etc. The assignment has to happen when packaging; the Entry Point has to be set when the customer receives the note. There’s no reason to include customers who didn’t get their packages when measuring the impact of a hand-written note on their satisfaction.
 
 Not all logistical test require a separate Entry Point. If you want to test a promotion that offers free delivery under certain condition, you can decide which customer sees that promotion when it becomes visible and not earlier.
-
-:::note
-
-Be mindful when testing promotions on anonymous users: you risk contaminating your experiment. If they get re-assigned by refreshing their browser, or opening a private window, some users will stumble on it, notice the discrepancy, and figure out the trick. They might leak that information. If prospective buyers see it, they will try. You are better off testing promotions on entities that buyers can’t change easily: established user account, phone number, postal address.
-
-:::
 
 ### Third example: AI-generated customer service
 
@@ -77,14 +73,14 @@ Finally, let’s say you want to test one of those chat-bots that promise to rep
 
 Once again, you have to decide to send information about a customer, i.e. assign them to either Control or Treatment before they ask a question and are exposed to the AI bot. 
 
-In this example (as well as the examples about triggering complex recommendations) you could send an API call for **all users** and only decide which response to use once you need to show the information to the users. That pattern can avoid having to use Entry point. However, that vendor might charge per visitor, and you might want to lower the cost of testing their solution.
+### Alternative without Entry points
 
-More generally, complex models, some API calls, and AI services are non-trivial to scale and **expensive to serve**. You might want to limit the cost of testing Treatment by not wasting half of it. In a gradual roll-out process, you want organise your feature flag so that only internal developers and testers see the results first, then expose a small minority of visitors to the A/B test, then scale it to a full 50/50 test. That allows you to control who you expose, and if Treatment is expensive, how much valuable resources you dedicate to testing an idea.
+In this example (as well as the examples about triggering complex recommendations), rather than assign first and only trigger the expensive part of the process for half the population, you could send an API call for **all users**. With that set-up, you could decide which response to use once you need to show the information to the users. That pattern avoids having to use an Entry point.
 
-During internal tests, it matters less, but once you run an A/B test on users, if you want properly validate the impact of those changes, an Entry point will help you get better, sharper results.
+Assigning early lowers the cost of testing a solution by half. Complex models, some API calls, and AI services are non-trivial to scale and **expensive to serve**. You can to limit the cost of testing Treatment by not wasting half of it. In a gradual roll-out process, you want organise your feature flag so that only internal developers and testers see the results first, then expose a small minority of visitors to the A/B test, then scale it to a full 50/50 test. That allows you to control who you expose, and if Treatment is expensive, how much valuable resources you dedicate to testing an idea.
 
 ### More examples
 
 There are many more examples where the assignment has to happen before entities can see a difference, like API calls during time-sensitive ad auctions; or where the different treatment is triggered, but might not be visible to users, like including a legal warning on a pop-up that could be blocked by the browser.
 
-If you have any questions, don’t hesitate to ask your Eppo contact.
+If you have any questions, don’t hesitate to reach out to [Eppo support](support@geteppo.com).
