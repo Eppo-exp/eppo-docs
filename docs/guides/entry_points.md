@@ -39,7 +39,7 @@ There’s one concern, though: while all visitors will be assigned in the experi
 For cases like that, we let you define an **Entry Point**: what event needs to happen for visitors to be exposed to a different experience, and considered enrolled to the experiment. It remains up to you to decide if this should be when the carousel enters the viewport, is fully or partially visible; it’s also up to your front-end developpers to trigger and log that event. But once that information is in your data warehouse, then you can use it to filter out which users participate in the experiment.
 
 :::note
-If you define an Entry point, all the time-limted metrics (“Conversion 7 days after assignment”) are based on the timestamp of the Entry point, not the assignment. 
+If you define an Entry Point, all the time-limted metrics (“Conversion 7 days after assignment”) are based on the timestamp of the Entry Point, not the assignment. 
 :::
 
 
@@ -53,7 +53,7 @@ You also can easily imagine offering renting a car, or a valuable asset and need
 
 Let‘s say you want to test asking for fast and cheap options. Or you could be testing a new provider. Alternatively, you might want to test asking both for a quote and let customers compate. Whatever is the change you want to test, you will need to decide which API call to trigger before the customer is guaranteed to see pricing because you have to wait for confirmation, say, that the items are in stock.
 
-In this case too, the assignment happens when confirming basket contents and the address, but the entry point should be set to a little later, when the customer sees a quote.
+In this case too, the assignment happens when confirming basket contents and the address, but the Entry Point should be set to a little later, when the customer sees a quote.
 
 :::note
 
@@ -73,9 +73,9 @@ Finally, let’s say you want to test an AI chatbots for customer service. The v
 
 Once again, you have to decide to send information about a customer, i.e. assign them to either Control or Treatment before they ask a question and are exposed to the AI bot. 
 
-### Alternative without Entry points
+### Alternative without Entry Points
 
-In this example (as well as the examples about triggering complex recommendations), rather than assign first and only trigger the expensive part of the process for half the population, you could send an API call for **all users**. With that set-up, you could decide which response to use once you need to show the information to the users. That pattern avoids having to use an Entry point.
+In this example (as well as the examples about triggering complex recommendations), rather than assign first and only trigger the expensive part of the process for half the population, you could send an API call for **all users**. With that set-up, you could decide which response to use once you need to show the information to the users. That pattern avoids having to use an Entry Point.
 
 Assigning early lowers the cost of testing a solution by half. Complex models, some API calls, and AI services are non-trivial to scale and **expensive to serve**. You can to limit the cost of testing Treatment by not wasting half of it. In a gradual roll-out process, you want organise your feature flag so that only internal developers and testers see the results first, then expose a small minority of visitors to the A/B test, then scale it to a full 50/50 test. That allows you to control who you expose, and if Treatment is expensive, how much valuable resources you dedicate to testing an idea.
 
