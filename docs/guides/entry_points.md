@@ -83,4 +83,4 @@ Assigning early lowers the cost of testing a solution by half. Complex models, s
 
 There are many more examples where the assignment has to happen before entities can see a difference, like API calls during time-sensitive ad auctions; or where the different treatment is triggered, but might not be visible to users, like including a legal warning on a pop-up that could be blocked by the browser.
 
-If you have any questions, don’t hesitate to reach out to [Eppo support](support@geteppo.com).
+If you have any questions, don’t hesitate to reach out to [Eppo support](mailto:support@geteppo.com).
