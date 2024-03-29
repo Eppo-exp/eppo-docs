@@ -6,7 +6,7 @@ import RedHighlight from '@site/src/components/RedHighlight'
 
 # Analysis methods
 
-Eppo has three different methods for estimating the expected lift from
+Eppo has four different methods for estimating the expected lift from
 experiment data and constructing a confidence interval around that estimate.
 
 ## Overview
