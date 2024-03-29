@@ -6,6 +6,8 @@ This section walks you through the initial set up of Eppo. Whether you are using
 - [Creating your first metric](/metric-quickstart) - Use this guide to start annotating where existing data lives in your data warehouse and how it should be used to analyze experiments.
 - [Running your first experiment](/feature-flag-quickstart/) - This guide walks through the integration of our SDK into your application. If you are using Eppo in combination with an existing feature flagging or randomization system you can skip this guide. 
 - [Analyzing your first experiment](/experiment-quickstart/) - Once you have metrics and assignment logs set up in Eppo, use this guide to start measuring the impact of your experiments.
+- [Running your first bandit](/bandit-quickstart/) - This guide walks you through setting up a Contextual Bandit in using our SDK.
+
 
 :::note
 Don't be blocked! We're here to help you get running with Eppo. Contact us at [support@geteppo.com](mailto:support@geteppo.com).
