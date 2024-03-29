@@ -20,11 +20,11 @@ Definition errors can be seen in a number of places.
 
 On a definition page, click on the definition name to open a side-panel with details on the error.
 
-![Error on a definition](/img/data-management/definintion-error.png)
+![Error on a definition](/img/data-management/definition-error.png)
 
 The side panel will also show details on warnings for long running SQL as well.
 
-![Warning on a definition](/img/data-management/definintion-warning.png)
+![Warning on a definition](/img/data-management/definition-warning.png)
 
 If an experiment has a computation failure, the experiment diagnostic will also communicate if there is an error with a definition. Navigate to the diganostics tab in an Experiment Analysis and click on the "Fix error" button. This will open a side-panel with details on the error and a link to the specific definition SQL to update.
 
