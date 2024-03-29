@@ -181,7 +181,7 @@ Using the template provided for Bandit Training, click `Add Feature Gate Allocat
 
 To start the Bandit, flip the flag on in the Test environment.
 
-![Turn on the bandit using the toggle](/img/bandit/bandit-qs-5.png)
+![Turn on the bandit using the toggle](/img/bandit/bandit-qs-4.png)
 
 You should now see assignments coming through the Eppo SDK!
 
