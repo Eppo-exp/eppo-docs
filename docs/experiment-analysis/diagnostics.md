@@ -1,4 +1,4 @@
-# Diagnostics
+# Experiment Diagnostics
 
 Eppo runs simple checks to ensure your experiment is running smoothly and correctly. All diagnostic checks are scheduled to run with the experiment update schedule, and the results will be automatically refreshed after each run.
 
