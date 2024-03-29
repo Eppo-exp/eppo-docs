@@ -169,7 +169,7 @@ Optional<String> banditAssignment = eppoClient.getStringAssignment(subjectKey, f
 Note that the `getAssignment` methods in Eppo are deterministic, meaning that they will always return the same variant for a given subject (e.g., user) for the life of the bandit.
 
 ### 7. Train the Bandit 
-:::Note
+:::note
 Check that you're in the Test environment
 :::
 
