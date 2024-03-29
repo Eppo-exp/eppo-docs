@@ -13,7 +13,7 @@ On the definitions page for facts, entity properties, assignments, and entry poi
 3. Warning - the check has been run but it took longer than five minutes. This is an indication that the underlying query could potentially be rewritten to be more efficient and speed up experiment updates.
 4. Error - the check indicates a problem with the SQL that needs to be resolved
 
-![Status shown on the definitions page](/img/data-management/definintion-status.png)
+![Status shown on the definitions page](/img/data-management/definition-status.png)
 
 ## Definition errors
 Definition errors can be seen in a number of places.
