@@ -35,17 +35,98 @@ Any metric or fact created through the metric sync API will have a Certified bad
 
 ![Certified metric example](/img/metrics/certified-metrics-1.png)
 
-## Certified Metric Schema
-Eppo supports a YAML schema to describe Facts and Metrics.
+## Certified Metric schema
+Eppo supports a YAML schema to describe Facts and Metrics. Each yaml file can define fact sources, metrics, or both. 
 
-The Eppo certified metrics schema is [described here](https://eppo.cloud/api/docs#/Metrics%20Sync/syncMetrics)
+### Fact sources 
+
+Each certified metric yaml file can define one or more [fact sources](/data-management/definitions/fact-sql). The fact sources schema is shown below:
+
+| Property |  Description | Example |
+| -------- | ----------- | ------- | 
+| `name` | A name for the source to display in the Eppo UI | Purchases |
+| `sql` | The SQL definition for the source | <pre><code>select * <br></br>  from analytics_prod.revenue </code></pre> |
+| `timestamp_column` | The column that represents the time the fact occurred | `purchase_timestamp` |
+| `entities` | A list of [entities](/data-management/entities) in the table, each element containing the name of an existing entity created in the Eppo UI and the corresponding column | <pre><code>- entity_name: User <br></br>  column: user_id </code></pre> |
+| `facts` | A list of fact values in the table, their corresponding column, and optionally, a description and desired change (either `increase` or `decrease`) | <pre><code>- name: Purchase Revenue <br></br>  column: purchase_revenue <br></br>  description: ... <br></br>  desired_change: increase </code></pre> |
+| `properties` (optional) | An optional list of [fact properties](/data-management/properties#metric-properties) in the table, their corresponding column, and an optional description | <pre><code>- name: Purchase Type <br></br>  column: purchase_type <br></br>  description: ... </code></pre> |
+| `reference_url` (optional) | An optional URL to link to in the Eppo UI | `github.com/<my_repo>` |
+
+
+### Metrics
+
+Each certified metric yaml file can also define one or more metrics (either [simple](/data-management/metrics/simple-metric) or [ratio](/data-management/metrics/ratio-metric)). The metrics schema is shown below:
+
+| Property |  Description | Example |
+| -------- |  ----------- | ------- |
+| `name` | A name for the metric to show in the Eppo UI. Note that this is the unique identifier for the metric used when syncing metrics | Purchase Revenue |
+| `description` (optional) | An optional description for the metric | All non-subscription revenue | 
+| `entity` | The [entity](/data-management/entities) that the metric connects to | User | 
+| `numerator` | An aggregation object (see below) to specify how to compute the metric numerator | <pre><code>fact_name: Purchase Revenue <br></br>operation: sum </code></pre> | 
+| `denominator` <br></br> (optional)| An aggregation object (see below) that, if set, will specify the metric as a ratio | <pre><code>fact_name: Purchase Revenue <br></br>operation: count </code></pre>| 
+| `is_guardrail` <br></br> (optional)| Whether the metric should be analyzed for every experiment ran on this entity (default is false) | `true` or `false`| 
+| `metric_display_style` <br></br> (optional) | How to display the metric, either `decimal` or `percent` (default is `decimal`) | `decimal`| 
+| `minimum_detectable_effect` <br></br> (optional)| The default [MDE](/statistics/sample-size-calculator/mde#what-is-a-minimum-detectable-effect-mde) for the metric | `0.02` | 
+| `reference_url` <br></br> (optional)| An optional URL to link to in the Eppo UI | `github.com/.../<my_metric>` | 
+
+### Aggregations
+
+When defining certified metrics, you'll need to specify how to aggregated the metric numerator and optionally the denominator. If the denominator is not specified, Eppo will normalize the metric by the number of subjects (e.g., users) enrolled in the experiment.
+
+Numerators and denominators follow a similar schema, with some fields only being applicable to numerators:
+
+| Property |  Description | Example |
+| -------- |  ----------- | ------- |
+| `fact_name` | The name of a fact as specified in `fact_source`* |  Purchase Revenue |
+| `operation` | The [aggregation method](/data-management/metrics/simple-metric#aggregation-methods) to use. One of the follwoing: `sum, count, count_distinct, distinct_entity, threshold, conversion, retention` | `sum` |
+| `aggregation_timeframe_value` <br></br> (optional) | How many timeframe units since assignment to include | 7 |
+| `aggregation_timeframe_unit` <br></br> (optional) | The time unit to use: `minutes`, `hours`, `days`, or `weeks` | `days` |
+| `winsorization_lower_percentile` <br></br> (optional) | Percentile at which to clip aggregated metrics | 0.001 |
+| `winsorization_upper_percentile` <br></br> (optional) | Percentile at which to clip aggregated metrics | 0.999 |
+| `filters` <br></br> (optional) | A list of filters to apply to metric, each containing a fact property, an operation (`equals` or `not_equals`), and a list of values | <pre><code>- fact_property: Source <br></br>  operation: equals <br></br>  values: <br></br>   - organic <br></br>   - search </code></pre>  |
+| `retention_threshold_days` <br></br> (optional) | Number of days to use in retention calculation (only used if `operation` = `retention`) | 7 |
+| `conversion_threshold_days` <br></br> (optional) | Number of days to use in conversion calculation (only used if `operation` = `conversion`) | 7 |
+| `threshold_metric_settings` <br></br> (optional) | Setting for threshold metrics | <pre><code>comparison_operator: gt <br></br>aggregation_type: sum <br></br>breach_value: 0 <br></br>timeframe_unit: days <br></br>timeframe_value: 3 </code></pre> |
+
+
+*Note that `fact_name` can reference facts defined in a different yaml file.
+    
+
+The Eppo certified metrics schema is [described here](https://eppo.cloud/api/docs#/Metrics%20Sync/syncMetrics).
 
 Notes:
 - Metrics are unique based on the `name` field.
 - `sync_tag` describes the source of the synced metrics and will show in the UI
 - The following fields are optional: descriptions, reference URLs, properties, filters, and winsorization percentiles
 
-## Sync with a Github repository
+## Syncing metrics
+
+Certified metrics are synced using the `eppo-metrics-sync` [python package](https://github.com/Eppo-exp/eppo-metrics-sync). This package is a light wrapper that hits the Eppo `metrics/sync` API endpoint. If you prefer to integrate with the API directly, see the docs [here](https://eppo.cloud/api/docs#/Metrics%20Sync/syncMetrics).
+
+This section walks through using the `eppo-metrics-sync` package to sync metrics both from your local device (useful for developing metric yaml files) and from a GitHub repository (useful for long term version control). While the latter section focuses on GitHub, a similar approach can be use for any version control system.
+
+### From your local device
+
+To start, you'll need an Eppo API key with read/write certified metrics access. This can be created in the Eppo UI by navigating to **Admin** >> **API Keys**.
+
+Next, install the `eppo-metrics-sync` package and set local environment variables:
+
+```
+python3 -m pip install eppo_metrics_sync
+export EPPO_API_KEY=<your API key>
+export EPPO_SYNC_TAG=local_dev_sync
+```
+
+Now, call the `eppo-metric-sync` module and point it at a directory of yaml files:
+
+```
+python3 -m eppo_metrics_sync <path to your yaml files>
+```
+
+You should now see certified metrics in your Eppo workspace! To push updated metric definitions, simply call the `eppo-metric-sync` module again.
+
+
+### From a GitHub repository
 
 Once files are in the Eppo YAML schema, you are ready to sync them.
 
