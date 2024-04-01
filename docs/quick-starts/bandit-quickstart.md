@@ -29,7 +29,7 @@ Eppo leverages your existing event logging infrastructure to track experiment as
 
 The [event logging](/sdks/event-logging/) page has more information on how to set up logging using different logging tools
 
-This logger should write to a table with the following columns (they can be in any order):
+This logger should write to a table with columns with the following names (they can be in any order):
 * timestamp - Timestamp of the bandit assignment
 * key - The key (unique identifier) of the bandit
 * subject - The unique identifier for the subject being assigned
