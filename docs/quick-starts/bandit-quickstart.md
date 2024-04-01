@@ -25,7 +25,7 @@ Store the SDK key securely; it is not possible to view it after closing the moda
 
 ### 2. Connect a logging function to the Eppo SDK
 
-Eppo leverages your existing event logging infrastructure to track experiment assignment. Whether you are using a third party system to log events to the data warehouse or have an internally built solution, you'll simply pass in a logging function when initializing the SDK.
+Eppo leverages your existing event logging infrastructure to track experiment assignments. Whether you use a third-party system to log events to the data warehouse or have an internally built solution, you'll simply pass in a logging function when initializing the SDK.
 
 The [event logging](/sdks/event-logging/) page has more information on how to set up logging using different logging tools
 
