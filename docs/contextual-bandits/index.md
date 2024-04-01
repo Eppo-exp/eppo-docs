@@ -6,6 +6,10 @@ If you immediately want to get started with Contextual Bandits, check out our [G
 
 ### Example use cases for Contextual Bandits
 
+Contextual bandits are particularly well suited for [lightweight and dynamic recommendation problems](https://www.geteppo.com/blog/contextual-bandit-algorithms-vs-recommendation-systems).
+
+![contextual-bandit-comparison](/img/contextual-bandits/comparison-table.png)
+
 #### Promotions
 
 Suppes we have a rotating set of seasonal promotions that we can show to users. 
