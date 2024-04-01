@@ -177,7 +177,7 @@ Using the template provided for Bandit Training, click `Add Feature Gate Allocat
 
 ![Add bandit training to the Test environment](/img/bandit/bandit-qs-3.png)
 
-### 8. Turn on the Bandit
+### 8. Turn the Bandit on in Test
 
 To start the Bandit, flip the flag on in the Test environment.
 
@@ -185,4 +185,16 @@ To start the Bandit, flip the flag on in the Test environment.
 
 You should now see assignments coming through the Eppo SDK!
 
-To deploy to production, create a new SDK key for the production environment, create a production experiment allocation, and enable the flag.
+### 9. Deploy to Production
+
+Complete these last steps to deploy your Bandit to Production:
+
+1. Create a new SDK key for the production environment from the SDK Keys tab
+2. In the Test environment, click the `Duplicate allocation` button next to Bandit Training and choose to copy it to Production
+![Copy the Bandit Training to Production](/img/bandit/bandit-qs-5.png)
+3. Switch to the Production environment using the environment switcher
+4. Using the template provided, click to add an experiment allocation for `Bandit Analysis`. This will allow you to measure the impact of your Bandit on a small percentage of traffic.
+![Production setup](/img/bandit/bandit-qs-6.png)
+5. Toggle the flag on in Production
+
+Congrats on running your first Bandit! As a next step, you can connect your flag to an Experiment Analysis so you can measure the impact your bandit is having on your product. See the [experiment quickstart guide](/experiment-quickstart) for more.
