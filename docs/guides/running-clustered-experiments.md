@@ -82,7 +82,7 @@ entity matches the randomization entity (a user). Recall that Simple Metrics aut
 by the number of users (the assignment unit). Therefore, to specify AOV as a ratio metric, the numerator is the sum of
 revenue, and the denominator is the count of orders.
 
-## Example 2: Calculating a User level Conversion Rate in a Company-Randomized Experiment
+## Example 2: Calculating a User-Level Conversion Rate in a Company-Randomized Experiment
 
 Another helpful example is calculating a user-level conversion rate in an experiment that is randomized at the company
 level rather than the user level. This example is similar
