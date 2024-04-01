@@ -5,7 +5,7 @@ sidebar_position: 5
 
 # Running your first Contextual Bandit
 
-This 10 minute guide will walk through configuring and running your first Contextual Bandit with Eppo. Note that Contextual Bandits leverage the Eppo SDK and this guide will walk through SDK setup.
+This 10-minute guide will walk through configuring and running your first Contextual Bandit with Eppo. Note that Contextual Bandits leverage the Eppo SDK and this guide will walk through SDK setup.
 
 :::info
 In order to optimize a Bandit, you must have [created your first metric](/metric-quickstart).
