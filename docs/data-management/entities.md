@@ -4,22 +4,20 @@ sidebar_position: 1
 
 # Entities
 
-Entities are the subjects (aka randomization unit) of your experiments.
-For example, if you are a food delivery app, and you want to run experiments on _Restaurants_, _Customers_, and _Drivers_, you would have a restaurant entity, a customer entity, and a driver entity.
-Eppo creates a user entity by default, but you can add additional entities or edit the name of user if necessary.
+Entities are the subjects (randomization unit) of your experiments. For example, a food delivery app might run experiments on several entities: restaurants, customers, or Drivers. Similarly, a B2B SaaS company may have a user entity, a team entity, and a company entity.
 
-Assignment, Property, and Fact SQL's can be attached to entities -- for example, an assignment SQL attached to a user would pull the assignments of users into different experiment groups.
+Assignment, Property, and Fact SQL's are all attached to entities. Each assignment SQL ties to exactly one entity, whereas a Fact SQL can tie to multiple entities. To read more about adding your data models to Eppo, see the [Definitions](/data-management/definitions) page.
 
-## Creating a custom Entity
+## Creating an Entity
 
-To create a custom Entity, navigate to **Definitions** in the left menu bar from the Eppo homepage, then click **Manage Entities**.
+To create an Entity, navigate to **Definitions** in the left menu bar from the Eppo homepage, then click **Manage Entities**.
 
 ![Manage Entities](/img/building-experiments/manage-entities.png)
 
-A modal should pop up showing all the existing entities and their attached SQL's. Click **+ Create Entity** to create a new entity.
+On the Manage Entities page click **+ Create Entity** to add a new entity.
 
 ![Create Entities](/img/building-experiments/create-entity.png)
 
-In the example above, we created a new entity called Company
-
 Click **Confirm** and then **Save Changes**.
+
+Now that you've created an entity, you can start adding data models to Eppo by adding [SQL definitions](/data-management/definitions).

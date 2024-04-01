@@ -1,53 +1,29 @@
 # Entity Property SQL
 
-When you write an **Assignment SQL**, you can optionally include any properties that you want to be able to slice/dice the analysis by.
+**Entity Property SQLs** define entity-level properties that do not change as a result of experiments. Examples include original traffic source and primary country:
 
 ```sql
-SELECT
-    ts_assigned,
-    experiment_name,
-    variant_name,
-    user_id,
-    browser,
-    device_type
-FROM mydb.myschema.assignments
+select user_id
+    ,  original_traffic_source
+    ,  primary_country
+  from analytics_prod.user_dim
 ```
 
-In this example Assignment SQL, at the time of assignment, we logged the `browser` and `device_type` of the user. We included it in the Assignment SQL so that later on we can look at how metrics perform across different browsers and devices.
+If your property could change as part of the experiment (subscription tier, etc.), we suggest you add the property value at point of assignment to the [Assignment SQL](/data-management/definitions/assignment-sql) definition.
 
-Properties can be any categorical data that lives in your data warehouse. Other potential examples include UTM parameters (source, medium, campaign), or geolocation.
-
-## Create an Entity Property SQL
-
-If you include optional properties in your Assignment SQL, it will show up under **Definitions** > **Properties**
+Both properties added to Assignment SQLs and Entity Property SQLs are listed on the Definitions page under the Entity Properties tab
 
 ![Properties](/img/building-experiments/dimensions-from-bnpl.png)
 
-You can also create an Entity Property SQL separately:
+## Creating an Entity Property SQL
 
-1. Go to **Definitions** > **Create Definition** > **Entity Property SQL**
-
-2. Select the _Entity_ your _Property_ will be attached to
-
-In this case we select _User_
-
-3. Write SQL that fetches the properties you want for your user
+To create an Entity Property SQL follow the steps below:
+1. Navigate to the **Definitions** page, click **Create Definition SQL**, select **Entity Property SQL** and choose the relevant entity
+2. Give the Entity Property SQL a title
+3. Write SQL that returns the properties of interest
+4. Use the right panel to specify which column ties to the entity
+5. Create one or more Entity Properties by specifying a column in the table and giving it a human-readable name
 
 ![Write SQL Properties](/img/building-experiments/dimension-sql-query.png)
 
-4. Annotate the columns of the data that comes back
-
-![Annotate SQL Properties](/img/building-experiments/dimension-sql-annotate.png)
-
-The required columns in order for Eppo to recognize the data are:
-
-- Entity Id -- in this case, `USER_ID`
-- Timestamp -- in this case, `CREATED_AT`
-
-5. Add optional properties
-
-![Add optional properties](/img/building-experiments/dimension-sql-dimension.png)
-
-Add any properties you would later like to slice by here; in the example above, we are adding the User Persona property.
-
-5. Click **Save & Close**
+Once you're finished adding mapping columns into Eppo, click **Save & Close**.

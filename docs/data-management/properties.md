@@ -4,19 +4,17 @@ sidebar_position: 2
 
 # Properties
 
-Properties are additional descriptors of entities and metrics used to enable further analysis.
+Properties are additional descriptors of entities and metrics used to enable further analysis. Eppo supports entity-level properties and fact-level properties. Entity properties are one-to-one with experiment subjects (e.g., users), such as a user's primary country, their subscription tier, etc. Fact properties on the other hand are many-to-one with experiment subjects. Examples include product category, support ticket reason, etc.
 
 ## Entity Properties
 
-Entity Properties define additional details about the given entity that do not change. For example, for a consumer they can be used to describe their country, marital status, or age.
-
-Entity Properties can be used to create Segments and can be used to split or filter experiment results.
+Entity Properties define additional details about the given entity that do not change. For example, a consumer entity could have properties to describe their primary country, marital status, or age. Entity Properties can be used to create Segments and can be used to split or filter experiment results.
 
 Each Entity can only have one value for a given property. If you will be using properties that change often, we recommend using Assignment or Metric Properties.
 
 ### Adding via Entity Properties SQL
 
-Click on the “Create Definition SQL” button in the Definitions page and select “Entity Properties SQL”.
+Click on the **Create Definition SQL** button in the Definitions page and select **Entity Properties SQL**.
 
 ![Create Definition SQL](/img/data-management/properties/properties-1.png)
 
@@ -54,7 +52,7 @@ Assignment Properties are similar to Entity Properties - they are used to furthe
 
 The main difference is that Assignment Properties, unlike Entity Properties, are defined with your Assignment SQL and have a timestamp associated with them. This can save you time if these properties are defined in the same table as your assignments as you don’t have to write the SQL twice.
 
-If we observe multiple values for a given entity in Assignment Properties, we apply the last value before assignment.
+If we observe multiple values for a given entity in Assignment Properties, Eppo will use the first value observed during the assignment.
 
 ### Adding Assignment Properties via Assignment SQL
 
