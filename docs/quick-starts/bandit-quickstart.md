@@ -46,7 +46,7 @@ Additional information that is provided to the logger that can optionally--but i
 
 Below is an example bandit assignment logger for the Java SDK, defined when building the SDK client, that writes to Snowflake:
 ```java
-.banditLogger(banditLogData -> {
+.banditLogger(logData -> {
     String sql = "INSERT INTO bandit_assignments " +
       "(timestamp, experiment, variation_value, subject," +
       " action, action_probability, model_version," +
@@ -58,32 +58,32 @@ Below is an example bandit assignment logger for the Java SDK, defined when buil
       " parse_json(?), parse_json(?)";
 
     try (PreparedStatement statement = snowflakeConnection.prepareStatement(sql)) {
-      statement.setTimestamp(1, new Timestamp(banditLogData.timestamp.getTime()));
-      statement.setString(2, banditLogData.experiment);
-      statement.setString(3, banditLogData.banditKey);
-      statement.setString(4, banditLogData.subject);
-      statement.setString(5, banditLogData.action);
-      statement.setDouble(6, banditLogData.actionProbability);
-      statement.setString(7, banditLogData.modelVersion);
-      if (banditLogData.subjectNumericAttributes == null) {
+      statement.setTimestamp(1, new Timestamp(logData.timestamp.getTime()));
+      statement.setString(2, logData.experiment);
+      statement.setString(3, logData.banditKey);
+      statement.setString(4, logData.subject);
+      statement.setString(5, logData.action);
+      statement.setDouble(6, logData.actionProbability);
+      statement.setString(7, logData.modelVersion);
+      if (logData.subjectNumericAttributes == null) {
         statement.setNull(8, Types.NULL);
       } else {
-        statement.setString(8, EppoAttributes.serializeNonNullAttributesToJSONString(banditLogData.subjectNumericAttributes));
+        statement.setString(8, EppoAttributes.serializeNonNullAttributesToJSONString(logData.subjectNumericAttributes));
       }
-      if (banditLogData.subjectCategoricalAttributes == null) {
+      if (logData.subjectCategoricalAttributes == null) {
         statement.setNull(9, Types.NULL);
       } else {
-        statement.setString(9, EppoAttributes.serializeNonNullAttributesToJSONString(banditLogData.subjectCategoricalAttributes));
+        statement.setString(9, EppoAttributes.serializeNonNullAttributesToJSONString(logData.subjectCategoricalAttributes));
       }
-      if (banditLogData.actionNumericAttributes == null) {
+      if (logData.actionNumericAttributes == null) {
         statement.setNull(10, Types.NULL);
       } else {
-        statement.setString(10, EppoAttributes.serializeNonNullAttributesToJSONString(banditLogData.actionNumericAttributes));
+        statement.setString(10, EppoAttributes.serializeNonNullAttributesToJSONString(logData.actionNumericAttributes));
       }
-      if (banditLogData.actionNumericAttributes == null) {
+      if (logData.actionNumericAttributes == null) {
         statement.setNull(11, Types.NULL);
       } else {
-        statement.setString(11, EppoAttributes.serializeNonNullAttributesToJSONString(banditLogData.actionCategoricalAttributes));
+        statement.setString(11, EppoAttributes.serializeNonNullAttributesToJSONString(logData.actionCategoricalAttributes));
       }
 
       statement.executeUpdate();
@@ -118,6 +118,7 @@ Choose the Eppo SDK that fits in your stack. You'll need to initialize the SDK i
 EppoClientConfig config = EppoClientConfig.builder()
         .apiKey("<api-key>")
         .assignmentLogger((data) -> System.out.println(data.toString()))
+        .banditLogger((logData) -> System.out.println(data.toString()))
         .build();
 EppoClient eppoClient = EppoClient.init(config);
 ```
@@ -138,22 +139,22 @@ EppoAttributes subjectAttributes = userAttributes;
 
 // Action set for bandits
 Map<String, EppoAttributes> actionsWithAttributes = Map.of(
-  "dog", new EppoAttributes(Map.of(
-    "legs": EppoValue.of(4),
-    "size": "large"
+    "dog", new EppoAttributes(Map.of(
+    "legs", EppoValue.valueOf(4),
+    "size", EppoValue.valueOf("large")
   )),
-  "cat", new EppoAttributes(Map.of(
-    "legs": EppoValue.of(4),
-    "size": "medium"
+    "cat", new EppoAttributes(Map.of(
+    "legs", EppoValue.valueOf(4),
+    "size", EppoValue.valueOf("medium")
   )),
-  "bird", new EppoAttributes(Map.of(
-    "legs": EppoValue.of(2),
-    "size": "medium"
+    "bird", new EppoAttributes(Map.of(
+    "legs", EppoValue.valueOf(2),
+    "size", EppoValue.valueOf("medium")
   )),
-  "goldfish", new EppoAttributes(Map.of(
-    "legs": EppoValue.of(0),
-    "size": "small" 
-  ))   
+    "goldfish", new EppoAttributes(Map.of(
+    "legs", EppoValue.valueOf(0),
+    "size", EppoValue.valueOf("small")
+  ))
 );
 
 Optional<String> banditAssignment = eppoClient.getStringAssignment(subjectKey, flagKey, subjectAttributes, actionsWithAttributes);
