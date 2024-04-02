@@ -39,9 +39,9 @@ Contextual bandits, on the other hand, incorporate _context_ into the learning p
 Context is a generic term that can encompass a wide range of relevant information.
 For example, the context for a bandit problem finding optimal promotions can be based on:
 
-* User context: For example, the user's past behavior, demographic information, are they on a mobile device, etc.
+* Subject context: For example, the subject's past behavior, demographic information, are they on a mobile device, etc.
 * Action context: For example, the size of the discount, the type of product, the price, etc.
-* User-action interaction context: For example, the brand affinity of the user to the product (based on past purchases, user reviews, etc.)
+* Subject-action interaction context: For example, the brand affinity of the user to the product (based on past purchases, user reviews, etc.)
 
 
 ## Measuring impact using experiments
@@ -51,3 +51,26 @@ Therefore, Eppo's Contextual Bandits are tightly integrated with our experimenta
 This makes it easy to measure performance compared to a control group, whether that is a simple fixed action, or an elaborate recommendation system maintained in-house.
 
 Due to the tight integration with our experimentation platform, the analysis can leverage all of the same tools and metrics that you use in any experiment analysis: CUPED, Sequential and Bayesian analysis, explores and deep dives, guardrail metrics, reports, etc.
+
+## Contextual Bandit Architecture
+
+The Eppo Contextual Bandit implementation leverages the same architecture as our feature flags and experimentation.
+In particular, this brings two distinct advantages:
+
+1. **Data warehouse native**
+2. **Low latency**
+
+![Bandit architecture](/img/contextual-bandits/bandit-architecture.png)
+
+### Data warehouse native
+
+Eppo's Contextual Bandits implementation is fully data warehouse native. 
+This means that all of the data used to train and test the bandits is stored in your data warehouse, and can be used for any analysis that you want.
+Furthermore, no sensitive data is sent to Eppo's servers. 
+
+### Low latency
+
+Actions are selected in real-time by the Eppo SDK by evaluating the contextual bandit model locally. 
+This allows for a very low latency, as no network requests are required.
+
+

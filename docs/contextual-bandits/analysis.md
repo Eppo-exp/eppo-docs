@@ -1,4 +1,7 @@
-# Contextual Bandit Analysis
+---
+sidebar_position: 3
+---
+# Measuring Performance
 
 We want to make sure that analyzing the performance of the contextual bandit is as easy and powerful as creating a regular experiment from a feature flag.
 Therefore, we deploy the bandit directly from a feature flag, which also allows for a gradual rollout.

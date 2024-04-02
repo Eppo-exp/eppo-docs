@@ -1,3 +1,6 @@
+---
+sidebar_position: 2
+---
 # Creation and Deployment
 
 bandit is deployed as part of a feature flag. this also enables experiment analysis.
