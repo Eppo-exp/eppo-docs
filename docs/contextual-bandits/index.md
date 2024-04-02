@@ -72,5 +72,3 @@ Furthermore, no sensitive data is sent to Eppo's servers.
 
 Actions are selected in real-time by the Eppo SDK by evaluating the contextual bandit model locally. 
 This allows for a very low latency, as no network requests are required.
-
-
