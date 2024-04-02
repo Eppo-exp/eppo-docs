@@ -14,7 +14,7 @@ Contextual bandits are particularly well suited for [lightweight and dynamic rec
 
 #### Promotions
 
-Suppes we have a rotating set of seasonal promotions that we can show to users. 
+Suppose we have a rotating set of seasonal promotions that we can show to users. 
 We can use Eppo's Contextual Bandit to automatically personalize promotions to particular users based on their past behavior.
 Because promotions are often short-lived, it is important to efficiently learn which users get the most value out of them.
 
