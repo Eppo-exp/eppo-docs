@@ -21,7 +21,11 @@ Because promotions are often short-lived, it is important to efficiently learn w
 #### Dynamic feature highlighting
 
 Product-led growth B2B companies use Eppo's Contextual Bandits to automatically personalize the features they show to their users.
-In this case, past user behavior can indicate which out of an expanding set of pro features are most relevant in encouraging users to upgrade.
+In this case, past user behavior can indicate which out of an expanding set of pro features are most relevant in encouraging users to upgrade. Or it can personalize landing pages to optimize for lead generation.
+
+#### Recommendations
+
+Recommendations benefit not just from context of what the user searched for, but also who they are. Contextual bandits can augment recommendations by adding additional personalization context. This can dynamically feed into recommendation weights and optimize for click-through.
 
 ## Balancing exploration and exploitation
 
