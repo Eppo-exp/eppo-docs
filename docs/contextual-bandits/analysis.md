@@ -3,7 +3,7 @@
 We want to make sure that analyzing the performance of the contextual bandit is as easy and powerful as creating a regular experiment from a feature flag.
 Therefore, we deploy the bandit directly from a feature flag, which also allows for a gradual rollout.
 
-:::note 
+:::info 
 The contextual bandit analysis is focused on comparing the performance of the bandit to a control group,
 rather than comparing the performance of specific actions to each other.
 Because the bandit personalizes actions, the distribution of subjects that each action sees is different. 

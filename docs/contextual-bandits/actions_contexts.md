@@ -2,10 +2,6 @@
 
 On this page, we take a deeper dive into actions and contexts with a focus on integrating the Eppo SDK.
 
-:::note
-Check the [Quickstart guide](/bandit-quickstart) if you want to get up and running with contextual bandits in 5 minutes.
-:::
-
 
 Some notes:
 
