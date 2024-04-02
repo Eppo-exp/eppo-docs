@@ -3,7 +3,7 @@
 Eppo's Contextual Bandits allows us to automatically optimize _personalized_ user experiences.
 
 :::info
-If you immediately want to get started with Contextual Bandits, check out our [Getting Started guide](/quick-starts/bandit-quickstart).
+If you immediately want to get started with Contextual Bandits, check out our [Getting Started guide](/bandit-quickstart).
 :::
 
 ### Example use cases for Contextual Bandits
