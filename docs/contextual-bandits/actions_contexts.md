@@ -39,7 +39,7 @@ The Eppo SDK then uses the underlying Contextual Bandit model to select an actio
 
 ### Actions
 
-The Eppo Contextual Bandit selects one action based on a list of available actions by your application.
+Eppo Contextual Bandits select one action based on a list of available actions by your application.
 At this point, the available actions must be provided by their names; of course, you can then map these names to more complex objects in your application.
 
 The list of actions can be **dynamic** without any further configuration:
@@ -55,7 +55,7 @@ Then there might be specific requirements such as not showing any maternity item
 
 #### New actions
 
-Our Contextual Bandits automatically explores new actions as they are encountered and over time will learn for which contexts these actions are most effective.
+Contextual Bandits automatically explore new actions as they are encountered and over time will learn for which contexts these actions are most effective.
 
 ### Contexts
 
