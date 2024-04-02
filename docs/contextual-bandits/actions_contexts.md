@@ -55,11 +55,11 @@ Then there might be specific requirements such as not showing any maternity item
 
 #### New actions
 
-Our Contextual Bandits automatically explore new actions as they are encountered, and over time will learn for which contexts these are most effective.
+Our Contextual Bandits automatically explores new actions as they are encountered and over time will learn for which contexts these actions are most effective.
 
 ### Contexts
 
-To learn a bandit policy that personalizes, you also need to provide context. 
+To create a bandit policy that personalizes, you need to provide context. 
 
 Generally, there are three types of context:
 1. Subject context: For example, the subjects's past behavior, demographic information, are they on a mobile device, etc.
@@ -74,7 +74,7 @@ Behind the scenes, we combine the two to create a single context per action that
 #### Subject attributes
 
 Subject attributes capture information about the subject that is relevant to the actions. 
-Generic attributes such as age (bucket), gender, device information can be helpful, but the most salient attributes are problem specific.
+Generic attributes such as age (bucket), gender, and device information can be helpful, but the most salient attributes are product specific.
 
 #### Action attributes
 
@@ -86,7 +86,7 @@ Selection of which attributes to include in the context is a bit of an art.
 
 In general, there are two types of attributes that will help the Contextual Bandit efficiently learn a strong policy:
 1. Attributes that provide a strong signal on personalization: For example, the brand affinity of the subject to the product, the price, etc.
-2. Attributes that predict the outcome of an action: For example, when optimizing for purchases, whether a user is a new or returning user might not affect which action is best, it can help reduce variance (similar to CUPED), helping the contextual bandit learn more efficiently
+2. Attributes that predict the outcome of an action: For example, when optimizing for purchases, whether a user is a new or returning user might not affect which action is best, but it can help reduce variance (similar to CUPED), helping the contextual bandit learn more efficiently
 :::
 
 :::warning Avoid high cardinality attributes
