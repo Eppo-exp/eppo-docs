@@ -77,7 +77,7 @@ Numerators and denominators follow a similar schema, with some fields only being
 | Property |  Description | Example |
 | -------- |  ----------- | ------- |
 | `fact_name` | The name of a fact as specified in `fact_source`* |  Purchase Revenue |
-| `operation` | The [aggregation method](/data-management/metrics/simple-metric#aggregation-methods) to use. <br></br><br></br>For numerator aggregations options are `sum, count, count_distinct, distinct_entity, threshold, conversion, retention`. <br></br><br></br>For denominator, valid options are `sum, count, count_distinct, distinct_entity` | `sum` |
+| `operation` | The [aggregation method](/data-management/metrics/simple-metric#aggregation-methods) to use. <br></br><br></br>For numerator aggregations options are `sum, count, count_distinct, distinct_entity, threshold, conversion, retention`. <br></br><br></br>For denominator aggregations, valid options are `sum, count, count_distinct, distinct_entity` | `sum` |
 | `aggregation_timeframe_value` <br></br> (optional) | How many timeframe units since assignment to include | 7 |
 | `aggregation_timeframe_unit` <br></br> (optional) | The time unit to use: `minutes`, `hours`, `days`, or `weeks` | `days` |
 | `winsorization_lower_percentile` <br></br> (optional) | Percentile at which to clip aggregated metrics | 0.001 |
