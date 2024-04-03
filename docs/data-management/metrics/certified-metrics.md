@@ -63,7 +63,7 @@ Each certified metric yaml file can also define one or more metrics (either [sim
 | `entity` | The [entity](/data-management/entities) that the metric connects to | User | 
 | `numerator` | An aggregation object (see below) to specify how to compute the metric numerator | <pre><code>fact_name: Purchase Revenue <br></br>operation: sum </code></pre> | 
 | `denominator` <br></br> (optional)| An aggregation object (see below) that, if set, will specify the metric as a ratio | <pre><code>fact_name: Purchase Revenue <br></br>operation: count </code></pre>| 
-| `is_guardrail` <br></br> (optional)| Whether the metric should be analyzed for every experiment ran on this entity (default is false) | `true` or `false`| 
+| `is_guardrail` <br></br> (optional)| Whether the metric should be analyzed for every experiment run on this entity (default is false) | `true` or `false`| 
 | `metric_display_style` <br></br> (optional) | How to display the metric, either `decimal` or `percent` (default is `decimal`) | `decimal`| 
 | `minimum_detectable_effect` <br></br> (optional)| The default [MDE](/statistics/sample-size-calculator/mde#what-is-a-minimum-detectable-effect-mde) for the metric | `0.02` | 
 | `reference_url` <br></br> (optional)| An optional URL to link to in the Eppo UI | `github.com/.../<my_metric>` | 
