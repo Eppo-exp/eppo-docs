@@ -18,7 +18,7 @@ Both properties added to Assignment SQLs and Entity Property SQLs are listed on 
 ## Creating an Entity Property SQL
 
 To create an Entity Property SQL follow the steps below:
-1. Navigate to the **Definitions** page, click **Create Definition SQL**, select **Entity Property SQL** and choose the relevant entity
+1. Navigate to the **Definitions** page, click **Create Definition SQL**, select **Entity Property SQL**, and choose the relevant entity
 2. Give the Entity Property SQL a title
 3. Write SQL that returns the properties of interest
 4. Use the right panel to specify which column ties to the entity
