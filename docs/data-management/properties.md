@@ -8,7 +8,7 @@ Properties are additional descriptors of entities and metrics used to enable fur
 
 ## Entity Properties
 
-Entity Properties define additional details about the given entity that do not change. For example, a consumer entity could have properties to describe their primary country, marital status, or age. Entity Properties can be used to create Segments and can be used to split or filter experiment results.
+Entity Properties define additional details about the given entity that do not change. For example, a consumer entity could have properties to describe their primary country, marital status, or age. Entity Properties can be used to create Segments and to split or filter experiment results.
 
 Each Entity can only have one value for a given property. If you will be using properties that change often, we recommend using Assignment or Metric Properties.
 
