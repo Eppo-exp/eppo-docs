@@ -23,7 +23,7 @@ Fact SQL queries define the metric events to analyze in Eppo. Each Fact SQL shou
 
 ## Adding Facts
 
-Once entity IDs and timestamps have been added, click "Add Fact" to map fact value columns. If each record should be treated as one event, select `Each Record` instead of a column name.
+Once entity IDs and timestamps have been added, click "Add Fact" to map fact value columns. If each row should be treated as one event, select `Each Record` instead of a column name.
 
 When adding Facts, you can also add a description and the fact's desired change. This will determine whether statistically significant increases in the fact will be highlighted in green or red. For example, support tickets or model timeouts should have desired change set to "Decreasing".
 
