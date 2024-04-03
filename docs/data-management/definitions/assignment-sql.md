@@ -2,7 +2,7 @@
 
 **Assignment SQLs** tell Eppo where to find a log of every time a subject (e.g., user) was enrolled into an experiment, the name of that experiment, and the variant that was assigned. Assignment SQLs can point to either logs from Eppo's SDK or from existing internal or third party randomization tools. You can also create multiple assignment sources if you use a combination of assignment methods.
 
-Assignment SQLs can also include [properties](/data-management/properties) on which you want to filter or split results.
+Assignment SQLs can also include [properties](/data-management/properties) to use to filter or split results.
 
 ```sql
 SELECT
