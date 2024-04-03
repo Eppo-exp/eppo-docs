@@ -52,7 +52,7 @@ Assignment Properties are similar to Entity Properties - they are used to furthe
 
 The main difference is that Assignment Properties, unlike Entity Properties, are defined with your Assignment SQL and have a timestamp associated with them. This can save you time if these properties are defined in the same table as your assignments as you don’t have to write the SQL twice.
 
-If we observe multiple values for a given entity in Assignment Properties, Eppo will use the first value observed during the assignment.
+If we observe multiple values for a given entity in Assignment Properties, Eppo will use the first value observed during the experiment.
 
 ### Adding Assignment Properties via Assignment SQL
 
