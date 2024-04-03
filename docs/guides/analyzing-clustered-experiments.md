@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Running Clustered Experiments
+# Analyzing Clustered Experiments
 
 ## Overview
 
