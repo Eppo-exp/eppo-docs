@@ -1,55 +1,46 @@
 # Fact SQL
 
-Fact SQL queries are queries that correspond to events.
+Fact SQL queries define the metric events to analyze in Eppo. Each Fact SQL should return the following columns:
 
-When you write Fact SQL's, you're pulling data from the data warehouse that correspond to specific events that serve as input to metrics. For example, sign-ups, activations, net subscriptions, etc.
+1. **Entity ID(s)** - a set of entity-level identifiers used to join to assignment logs. Examples include `user_id`, `company_id`, or `anonymous_id`.
+2. **Timestamp** - the timestamp that the event occurred.
+3. **Fact Values (optional)** - Optional values associated with the event (revenue amount, minutes watched, etc.).
+4. **Fact Properties (optional)** - Optional properties associated with the event (`purchase_type`, etc.). Note that properties that are 1:1 with subjects should be defined in the [Assignment](/data-management/definitions/assignment-sql) or [Entity Property](/data-management/definitions/property-sql) SQL definition.
+
+
 
 ## Creating a Fact SQL
 
-1. Navigate to **Definitions** and click **Create Definition SQL**
+1. Navigate to **Definitions**, click **Create Definition SQL**, and select **Create Fact SQL**
 
-![Create Definition SQL](/img/building-experiments/create-definition-sql.png)
+![Create SQL Definition](/img/building-experiments/create-definition-sql.png)
 
-2. Click **Fact SQL**
+2. Enter a name for the Fact SQL
+3. Write SQL that returns the fact source and hit **Run**
+4. Map entity IDs and timestamp columns
 
 ![Create Fact SQL](/img/building-experiments/create-fact-sql.png)
 
-3. Select **User**
+## Adding Facts
 
-**User** is the default entity in Eppo but you can also create your own custom entity and select that here.
+Once entity IDs and timestamps have been added, click "Add Fact" to map fact value columns. If each row should be treated as one event, select `Each Record` instead of a column name.
 
-4. Name your Fact SQL
+When adding Facts, you can also add a description and the fact's desired change. This will determine whether statistically significant increases in the fact will be highlighted in green or red. For example, support tickets or model timeouts should have desired change set to "Decreasing".
 
-![Name Fact SQL](/img/building-experiments/name-fact-sql.png)
+![Create Fact](/img/building-experiments/add-fact-sql-fact.png)
 
-5. Write SQL in the SQL editor to pull events data from the data warehouse
+:::note
+You must add at least one fact before you can save the Fact SQL definition.
+:::
 
-Recall that that you should have (potentially multiple) event tables in your data warehouse with certain column types.
+## Adding Fact Properties (optional)
 
-In this step, you're going to write SQL to pull that data.
+If your facts have properties that you'd like to use either to filter events, or split experiment results, you can add them to the Fact SQL definition.
 
-![Name Fact SQL](/img/building-experiments/add-fact-sql-query.png)
+Note that only properties that are many-to-one with experiment subjects (e.g., users) should be included in the Fact SQL definition. Properties that are one-to-one with experiment subjects should be added to an Entity Properties SQL (if the properties are static), or to and Assignment SQL (if they vary over time).
 
-6. Annotate the columns that you've selected from the data warehouse
+You can read more about Fact Properties on the [Properties](/data-management/properties#metric-properties) page.
 
-![Annotate Fact SQL](/img/building-experiments/annotate-fact-sql-columns.png)
+![Create Property](/img/building-experiments/add-fact-sql-property.png)
 
-In the example above, Eppo has already automatically determined that the `timestamp of creation` column is `TS` and the relevant `entity id` column is `USER_ID`.
-
-7. Add Facts
-
-Facts are the numeric quantities associated with the event. For every event that you want to track, you should add its corresponding column in the data warehouse as a fact.
-
-![Add Facts](/img/building-experiments/add-fact-sql-fact.png)
-
-In the example above, we would like to measure the effect of the experiment on revenue.
-
-In the data warehouse, every time there is a revenue event (such as if someone purchases something), that event is logged as a row in the data warehouse.
-
-This event is translated into an integer value, which is the revenue amount, that can then be used as an Eppo fact and tracked in an experiment.
-
-By default, having more events is better, so the "Desired Change" is set to `Metric Increasing`. However, for things like page load time, spam reports, or other _bad_ events, you can indicate that more is _worse_ by changing this to `Metric Decreasing`.
-
-8. Save & Close
-
-You've now created your first Fact SQL. If you have more events that you would like to track in your experiment, you can repeat the steps in this section to create additional Fact SQLs.
+Once you have finished defining your Fact SQL, click **Save & Close**. You can now repeat this process for other fact tables, or continue on to create [Metrics](data-management/metrics/) from your new Facts.
