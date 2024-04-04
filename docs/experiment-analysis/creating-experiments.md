@@ -90,6 +90,20 @@ For information on the different analysis plan settings, see [Analysis plans](/e
 
 ### 8. Click **Save Changes**
 
+# Adding metrics
+
+Once the scope of the experiment is defined, you can pick metrics to lead your decision.
+
+![Adding metrics to a new experiment](/img/building-experiments/adding_metrics.png)
+
+All metrics are defined by their Entity (User, Anonymous visitor, etc.), so only metrics based on the same entity as the experiment will be available here.
+
+Note that if you can’t find the metric that you are looking for, anyone with the Data Owner role can create a new one from this screen.
+
+![Picking metrics to add](/img/building-experiments/picking_metrics.png)
+
+You can also add [collections of metrics](/data-management/collections.md) to add a curated set of metrics in one go.
+
 # Adding screenshots
 
 In your experiments, you can add screenshots to your different variations. You can use these screenshots to highlight the changes made in the variation.
