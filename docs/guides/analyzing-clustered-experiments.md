@@ -43,7 +43,7 @@ _Average order value_ is one of the examples mentioned in the [Ratio Metrics](/d
 documentation. Although we can recognize that it is a Ratio
 Metric because it is normalized by a count of orders rather than a count of assigned users (which would make it a Simple
 Metric), it is also a good example of a clustered metric. This makes this example a particularly helpful introduction
-because customers who use AOV are already running clustered experiment analyses, even if they do not realize it.
+because customers who use AOV are already running clustered experiment analyses, potentially without realizing it.
 Understanding how this familiar ratio metric is a clustered analysis provides the intuition for how Ratio Metrics accommodate more complicated clustered analyses.
 
 Typically average order value is calculated in experiments that are randomized at the user level, but AOV is a "per
