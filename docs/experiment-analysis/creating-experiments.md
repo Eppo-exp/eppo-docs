@@ -94,7 +94,7 @@ For information on the different analysis plan settings, see [Analysis plans](/e
 
 Once the scope of the experiment is defined, you can pick metrics to lead your decision.
 
-![Adding metrics to a new experiment](/img/building-experiments/addind_metrics.png)
+![Adding metrics to a new experiment](/img/building-experiments/adding_metrics.png)
 
 All metrics are defined by their Entity (User, Anonymous visitor, etc.), so only metrics based on the same entity as the assignment will be available here.
 
