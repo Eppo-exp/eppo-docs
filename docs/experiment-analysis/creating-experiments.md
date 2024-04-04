@@ -98,7 +98,7 @@ Once the scope of the experiment is defined, you can pick metrics to lead your d
 
 All metrics are defined by their Entity (User, Anonymous visitor, etc.), so only metrics based on the same entity as the experiment will be available here.
 
-Note that if you can’t find the metric that you are looking for, anyone with the Data Owner role can Create a new one from this screen.
+Note that if you can’t find the metric that you are looking for, anyone with the Data Owner role can create a new one from this screen.
 
 ![Picking metrics to add](/img/building-experiments/picking_metrics.png)
 
