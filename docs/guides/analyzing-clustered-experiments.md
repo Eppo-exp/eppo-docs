@@ -35,15 +35,16 @@ address this issue based on the approach described
 in [Deng et al.](https://alexdeng.github.io/public/files/kdd2018-dm.pdf) and recommended in Chapter 18 of _Trustworthy
 Online Controlled Experiments_. The approach is to recognize that a metric defined at a finer grain than the
 randomization unit can be expressed as the ratio of two metrics at the same grain as the randomization unit. To
-illustrate this,
-we will outline two examples.
+illustrate this, we will outline two examples.
 
 ## Example 1: Average Order Value (AOV)
 
 _Average order value_ is one of the examples mentioned in the [Ratio Metrics](/data-management/metrics/ratio-metric)
 documentation. Although we can recognize that it is a Ratio
 Metric because it is normalized by a count of orders rather than a count of assigned users (which would make it a Simple
-Metric), it is also a good example of a clustered metric.
+Metric), it is also a good example of a clustered metric. Understanding how this familiar ratio metric is a clustered
+analysis provides the intuition for how Ratio Metrics accommodate more complicated clustered analyses.
+
 Typically average order value is calculated in experiments that are randomized at the user level, but AOV is a "per
 order" metric. Each user can have multiple orders, so a user is
 a _cluster_ of orders. As a result, we need to make sure that our statistical calculations recognize the user-level
