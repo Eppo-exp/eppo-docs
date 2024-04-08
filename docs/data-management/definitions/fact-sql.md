@@ -43,4 +43,4 @@ You can read more about Fact Properties on the [Properties](/data-management/pro
 
 ![Create Property](/img/building-experiments/add-fact-sql-property.png)
 
-Once you have finished defining your Fact SQL, click **Save & Close**. You can now repeat this process for other fact tables, or continue on to create [Metrics](data-management/metrics/) from your new Facts.
+Once you have finished defining your Fact SQL, click **Save & Close**. You can now repeat this process for other fact tables, or continue on to create [Metrics](/metric-quickstart) from your new Facts.
