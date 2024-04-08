@@ -368,7 +368,7 @@ interval.
 :::
 
 The prior we use is described specifically on the
-[Statistical nitty-gritty](statistics/confidence-intervals/statistical-nitty-gritty) page, but in essence
+[Statistical nitty-gritty](statistical-nitty-gritty.md) page, but in essence
 we set our pre-experiment belief to be that the lift on any given metric will
 be, on average, zero, and that there will be random fluctuations around that
 average such that for 50% of experiments the lift will fall between -21% and
