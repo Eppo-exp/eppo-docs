@@ -22,7 +22,7 @@ Fill out the form with the following information:
 - **Name**: The name of the contextual bandit. This is the name that will be displayed throughout the Eppo UI.
 - **Key**: Reference this key when you query the Eppo SDK for a bandit action. Note that this key cannot be changed once the bandit has been created.
 - **Bandit entity**: this is the entity used to track the bandit, such as the `User` or `Session` entity
-- **Bandit actions logging**: Provide the name of the table in your data warehouse where bandit actions are logged, leveraging [the contextual bandit logger](/sdks/sdk-features/bandits#logging-bandit-assignments).
+- **Bandit actions logging**: Provide the name of the table in your data warehouse where bandit actions are logged, leveraging [the contextual bandit logger](sdks/sdk-features/bandits).
 - **Metric for optimization**: Choose the metric that you want the contextual bandit to optimize for. Note that this metric has to match the entity selected for the bandit entity.
 - **Lookback window**: Select the lookback window, which is how many days of data the bandit will use to update its model. Choose a short time window when the problem is dynamic and historic data is less relevant to optimize the experience today.
 
