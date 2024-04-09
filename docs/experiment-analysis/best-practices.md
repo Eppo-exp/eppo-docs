@@ -37,5 +37,5 @@ User re-assignment can be triggered by higher-level changes in the experiment li
   - If you are sure you are no longer interested in a certain variation, you can turn it off, but you won’t get more signal on the other variants as the subjects in this variation will be tainted and data for these is discarded.
 
 :::note
-Any user that was exposed to more than one variant over the course of the experiment is excluded from the experiment analysis.
+Any subject that was exposed to more than one variant over the course of the experiment is excluded from the experiment analysis.
 :::
