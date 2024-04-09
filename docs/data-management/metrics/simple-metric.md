@@ -194,7 +194,7 @@ For example, sending a promotional email may boost engagement for one week. If t
 :::
 
 :::note
-If you are using an [Entry Point](/../filter-assignments-by-entry-point.md), the starting point of the time frame is the Entry Point timestamp.
+If you are using an [Entry Point](/data-management/filter-assignments-by-entry-point), the starting point of the time frame is the Entry Point timestamp.
 :::
 
 ### Metric properties
