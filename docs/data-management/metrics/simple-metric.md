@@ -193,6 +193,10 @@ Consider adding a time frame metric to experiments where you believe the interve
 For example, sending a promotional email may boost engagement for one week. If the experiment runs for 4 weeks, adding a time frame to the metric prevents that one week of boosted engagement from being diluted.
 :::
 
+:::note
+If you are using an [Entry Point](/experiment-analysis/filter-assignments-by-entry-point), the starting point of the time frame is the Entry Point timestamp.
+:::
+
 ### Metric properties
 
 Metric properties allow you to filter events based on [properties associated with the fact](/data-management/properties#metric-properties).
