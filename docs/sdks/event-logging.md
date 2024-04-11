@@ -65,9 +65,9 @@ await init({
   assignmentLogger,
 });
 
-// Then every call to getAssignment will also log the event to Segment
+// Then every call to getStringAssignment will also log the event to Segment
 const eppoClient = EppoSdk.getInstance();
-const variation = eppoClient.getAssignment(
+const variation = eppoClient.getStringAssignment(
   "<SUBJECT-KEY>",
   "<FLAG-KEY>",
   {
@@ -106,9 +106,9 @@ await init({
   assignmentLogger,
 });
 
-// Then every call to getAssignment will also log the event to Rudderstack
+// Then every call to getStringAssignment will also log the event to Rudderstack
 const eppoClient = EppoSdk.getInstance();
-const variation = eppoClient.getAssignment(
+const variation = eppoClient.getStringAssignment(
   "<SUBJECT-KEY>",
   "<FLAG-KEY>",
   {
@@ -152,9 +152,9 @@ await init({
   assignmentLogger,
 });
 
-// Then every call to getAssignment will also log the event to mParticle
+// Then every call to getStringAssignment will also log the event to mParticle
 const eppoClient = EppoSdk.getInstance();
-const variation = eppoClient.getAssignment(
+const variation = eppoClient.getStringAssignment(
   "<SUBJECT-KEY>",
   "<FLAG-KEY>",
   {
@@ -215,9 +215,9 @@ await init({
   assignmentLogger,
 });
 
-// Then every call to getAssignment will also log the event to Snowplow
+// Then every call to getStringAssignment will also log the event to Snowplow
 const eppoClient = EppoSdk.getInstance();
-const variation = eppoClient.getAssignment(
+const variation = eppoClient.getStringAssignment(
   "<SUBJECT-KEY>",
   "<FLAG-KEY>",
   {
@@ -253,9 +253,9 @@ await init({
   assignmentLogger,
 });
 
-// Then every call to getAssignment will also log the event to Amplitude
+// Then every call to getStringAssignment will also log the event to Amplitude
 const eppoClient = EppoSdk.getInstance();
-const variation = eppoClient.getAssignment(
+const variation = eppoClient.getStringAssignment(
   "<SUBJECT-KEY>",
   "<FLAG-KEY>",
   {

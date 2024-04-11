@@ -16,7 +16,7 @@ The below code examples show how to pass a value for a "device" attribute. The s
 import * as EppoSdk from "@eppo/js-client-sdk";
 
 const subjectAttributes = { device: "iOS" };
-const variation = EppoSdk.getInstance().getAssignment(
+const variation = EppoSdk.getInstance().getStringAssignment(
   "<SUBJECT-KEY>",
   "<EXPERIMENT-KEY>",
   subjectAttributes
@@ -31,7 +31,7 @@ const variation = EppoSdk.getInstance().getAssignment(
 import * as EppoSdk from "@eppo/node-server-sdk";
 
 const subjectAttributes = { device: "iOS" };
-const variation = EppoSdk.getInstance().getAssignment(
+const variation = EppoSdk.getInstance().getStringAssignment(
   "<SUBJECT-KEY>",
   "<EXPERIMENT-KEY>",
   subjectAttributes
@@ -46,7 +46,7 @@ const variation = EppoSdk.getInstance().getAssignment(
 import eppo_client
 
 client = eppo_client.get_instance()
-variation = client.get_assignment("<SUBJECT-KEY>", "<EXPERIMENT-KEY>", { "device": "iOS" })
+variation = client.get_string_assignment("<SUBJECT-KEY>", "<EXPERIMENT-KEY>", { "device": "iOS" })
 ```
 
 </TabItem>

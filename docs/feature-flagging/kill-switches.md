@@ -26,7 +26,7 @@ Here's how you would use the switch in your code:
 ```python
 # The argument user_id is required but doesn't affect assignment in this case.
 
-if (eppoClient.getAssignment(user_id, 'twilio-killswitch') == 'on'):
+if (eppoClient.getStringAssignment(user_id, 'twilio-killswitch') == 'on'):
     # Code to gracefully handle a Twilio outage.
 else:
     # Normal Twilio code.

@@ -26,7 +26,7 @@ Suppose we are testing out a new payment experience with users. When implementin
 ```javascript
 export default function PaymentPage({ user: User }): JSX.Element {
   const useNewPaymentFlow =
-    eppoClient.getAssignment(user.email, "new-payment-flow") === "true";
+    eppoClient.getBoolAssignment(user.email, "new-payment-flow") === true;
 
   return (
     <Container>
@@ -49,11 +49,11 @@ It can be tempting to preemptively compute all possible assignments for a given 
 ```javascript
 const getUserAssignments = (email: string) => ({
   useNewPaymentFlow:
-    eppoClient.getAssignment(email, "new-payment-flow") === "true",
+    eppoClient.getBoolAssignment(email, "new-payment-flow") === true,
   useNewFeedRanking:
-    eppoClient.getAssignment(email, "new-feed-ranking") === "true",
+    eppoClient.getBoolAssignment(email, "new-feed-ranking") === true,
   useGreenSubmitButton:
-    eppoClient.getAssignment(email, "submit-button-color") === "green",
+    eppoClient.getStringAssignment(email, "submit-button-color") === "green",
   // ... all possible assignments for user.
 });
 
@@ -80,22 +80,22 @@ Another example of benefitting from placing assignments close to the experience 
 
 ## 3. Not handling non-blocking initialization
 
-The initialization methods in Eppo’s SDKs are non-blocking in order to minimize their footprint on the applications in which they are run. One consequence of this, however, is that it is possible to invoke the `getAssignment` method before the SDK has finished initializing. If `getAssignment` is invoked before the SDK has finished initializing, the SDK may not have access to the most recent configurations. There are two possible outcomes when `getAssignment` is invoked before the SDK has finished initializing:
+The initialization methods in Eppo’s SDKs are non-blocking in order to minimize their footprint on the applications in which they are run. One consequence of this, however, is that it is possible to invoke the `get<Type>Assignment` method before the SDK has finished initializing. If `get<Type>Assignment` is invoked before the SDK has finished initializing, the SDK may not have access to the most recent configurations. There are two possible outcomes when `get<Type>Assignment` is invoked before the SDK has finished initializing:
 
 1. If the SDK downloads configurations to a persistent store, e.g. the JavaScript client SDK uses local storage, and a configuration was previously downloaded, then the SDK will assign a variation based on a previously downloaded configuration.
 
-2. If no configurations were previously downloaded or the SDK stores the configuration in-memory and loses it during re-initialization, then the SDK will return a null value when `getAssignment` is invoked.
+2. If no configurations were previously downloaded or the SDK stores the configuration in-memory and loses it during re-initialization, then the SDK will return a null value when `get<Type>Assignment` is invoked.
 
-One workaround for this is to pause execution after the initialization method is called (e.g. `time.Sleep(4 * time.Second)`) to give the SDK time to fetch its first configuration before invoking `getAssignment`. If pausing execution is undesirable, e.g. slowing the start up of a mobile app is poor UX, then the returned null value will need to be handled in your code to gracefully fallback on a sensible default experience.
+One workaround for this is to pause execution after the initialization method is called (e.g. `time.Sleep(4 * time.Second)`) to give the SDK time to fetch its first configuration before invoking `get<Type>Assignment`. If pausing execution is undesirable, e.g. slowing the start up of a mobile app is poor UX, then the returned null value will need to be handled in your code to gracefully fallback on a sensible default experience.
 
 ## 4. Using targeting rules to define a large list of users
 
-Eppo targeting works based on subject attributes passed into the `getAssignment` function. It is tempting to use these targeting rules to define a list of specific users to target. However, this can lead to performance issues as now every time the SDK is initialized, this full list of users need to be pulled in from the Eppo CDN. To help keep the Eppo SDK lightweight, we limit the list of specific values you can target to 50.
+Eppo targeting works based on subject attributes passed into the `get<Type>Assignment` function. It is tempting to use these targeting rules to define a list of specific users to target. However, this can lead to performance issues as now every time the SDK is initialized, this full list of users need to be pulled in from the Eppo CDN. To help keep the Eppo SDK lightweight, we limit the list of specific values you can target to 50.
 
-A better pattern is to define audiences via user-level attributes. For instance, if you would like to target a list of beta users, you can pass an attribute into the `getAssignment` call specifying whether the user is in the beta group.
+A better pattern is to define audiences via user-level attributes. For instance, if you would like to target a list of beta users, you can pass an attribute into the `get<Type>Assignment` call specifying whether the user is in the beta group.
 
 ```javascript
-const variation = eppoClient.getAssignment("userId", "my-flag-key", {
+const variation = eppoClient.getStringAssignment("userId", "my-flag-key", {
   beta_user: "true",
 });
 ```
@@ -104,11 +104,11 @@ Now, simply add allocation logic specifying to target users with `beta_user = 't
 
 ![Add attribute to allocation](/img/feature-flagging/add-attribute-to-allocation.png)
 
-This does require you to determine whether a user is in the beta group before calling `getAssignment`, but it helps to keep the Eppo SDK very light.
+This does require you to determine whether a user is in the beta group before calling `getStringAssignment`, but it helps to keep the Eppo SDK very light.
 
 ## 5. Not explicitly handling `NULL`
 
-Any code that calls the Eppo SDK should gracefully handle the case that `getAssignment` returns a null value. Eppo’s SDK’s initialization functions are not blocking, meaning that it’s possible for `getAssignment` to be evaluated before the config loads from the CDN. While this is typically a rare edge case, it is best practice to have test coverage for the Eppo SDK returning a `NULL` assignment. The exact null value that is returned depends on the language of the SDK, e.g. in Javascript it is `null` whereas in Python it is `None` and in Java it is `Optional.empty()`.
+Any code that calls the Eppo SDK should gracefully handle the case that `get<Type>Assignment` returns a null value. Eppo’s SDK’s initialization functions are not blocking, meaning that it’s possible for `get<Type>Assignment` to be evaluated before the config loads from the CDN. While this is typically a rare edge case, it is best practice to have test coverage for the Eppo SDK returning a `NULL` assignment. The exact null value that is returned depends on the language of the SDK, e.g. in Javascript it is `null` whereas in Python it is `None` and in Java it is `Optional.empty()`.
 
 ## 6. Using `NULL` assignments to track control
 

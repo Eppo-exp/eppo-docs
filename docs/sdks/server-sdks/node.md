@@ -275,14 +275,14 @@ await init({
   assignmentLogger,
 });
 
-// Then every call to getAssignment will also log the event
+// Then every call to getStringAssignment will also log the event
 const user = {
   userid: '1234567890',
   attributes: { country: 'united states', subscription_status: 'gold' }
 }
 
 const eppoClient = EppoSdk.getInstance();
-const variation = eppoClient.getAssignment(
+const variation = eppoClient.getStringAssignment(
   user.userid,
   "new-user-onboarding",
   user.attributes
@@ -325,7 +325,7 @@ It may take up to 10 seconds for changes to Eppo experiments to be reflected by 
 
 ## Typed assignments
 
-Use the following getAssignment method for the type of feature flag created:
+Use the following `get<Type>Assignment` methods for the type of feature flag created:
 
 ```
 getBoolAssignment(...)
@@ -333,7 +333,7 @@ getNumericAssignment(...)
 getJSONStringAssignment(...)
 getParsedJSONAssignment(...)
 ```
-To read more about different flag types, see the page on [Flag Varitions](/feature-flagging/flag-variations).
+To read more about different flag types, see the page on [Flag Variations](/feature-flagging/flag-variations).
 ## Initialization options
 
 How the SDK fetches experiment configurations is configurable via additional optional initialization options:

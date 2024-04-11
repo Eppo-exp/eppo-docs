@@ -111,7 +111,7 @@ const variation = eppoClient.getBoolAssignment(
 return variation ? <NewCheckoutPage /> : <OldCheckoutPage />
 ```
 
-Note that the `getAssignment` methods in Eppo are deterministic, meaning that they will always return the same variant for a given subject (e.g., user) throughout the experiment.
+Note that the `get<Type>Assignment` methods in Eppo are deterministic, meaning that they will always return the same variant for a given subject (e.g., user) throughout the experiment.
 
 ### 7. Turn on the flag to start splitting traffic
 
