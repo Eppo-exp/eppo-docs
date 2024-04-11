@@ -1,3 +1,6 @@
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 # Subject attributes
 
 You can pass Eppo subject attributes to take advantage of advanced targeting conditions, like app versions or country checks. See [targeting rules](/feature-flagging/targeting) for how to configure these in the Eppo application.

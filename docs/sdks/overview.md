@@ -6,7 +6,7 @@ sidebar_position: 1
 
 Eppo's SDK is designed to be lightweight and work alongside your existing stack. By using a "dumb server, smart client" architecture, the SDK can be thought of as a simple JSON delivery service. On initialization, the SDK will make a request to our CDN (built on [Fastly](https://www.fastly.com/)) to get a JSON containing active flags and targeting logic. Server-side SDKs will poll the CDN at a regular cadence to keep this config up to date.
 
-The determination of a given subject's (e.g., user's) variation is done locally within the SDK. For randomized flags, a deterministic hashing function salted with the experiment key is used. This means that for a given experiment a subject (user) will see a consist variant, even across SDKs.
+The determination of a given subject's (e.g., user's) variation is done locally within the SDK. For randomized flags, a deterministic hashing function salted with the experiment key is used. This means that for a given experiment a subject (user) will see a consistent variant, even across SDKs.
 
 Fastly's load balancer handles large spikes in requests, removing the need for a relay proxy within your network. That said, you can also get assignments server side and pass flag variants back the client, all without issuing any request to Eppo.
 

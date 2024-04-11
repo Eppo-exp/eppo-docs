@@ -23,7 +23,7 @@ The object passed into the assignment logger function contains the following fie
 | `featureFlag` (string)    | An Eppo feature flag key                                                                                                 | "recommendation-algo"               |
 | `allocation` (string)     | An Eppo allocation key                                                                                                   | "allocation-17"                     |
 
-Eppo expects that the logger function will take this object and write data back to your warehouse in a format that roughly matched the table below. The specific column names do not matter, but these columns are needed to later [define assignments](/data-management/definitions/assignment-sql.md) in your warehouse.
+Eppo expects that the logger function will take this object and write data back to your warehouse in a format that roughly matches the table below. The specific column names do not matter, but these columns are needed to later [define assignments](/data-management/definitions/assignment-sql.md) in your warehouse.
 
 | experiment                          | subject | variation | timestamp                  | subject_attributes    |
 | :---------------------------------- | :------ | :-------- | :------------------------- | :-------------------- |
