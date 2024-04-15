@@ -60,7 +60,8 @@ const eppoClient = EppoSdk.getInstance();
 // randomize assignment for which exclusion group they will be in
 const exclusion_group = eppoClient.getStringAssignment(
   userId,
-  "mutual_exclusion_group"
+  "mutual_exclusion_group",
+  "<default_variation>"
 )
 
 // user profile
@@ -73,12 +74,14 @@ let user = {
 const copy_variation = eppoClient.getStringAssignment(
 												 user.userId,
 												 "copy_test",
+												 "<default_variation>",
 				                 {"exclusion_group": exclusion_group}
 											 )
 // randomize assignment on what variation the user will receive for the Layout Test
 const layout_variation = eppoClient.getStringAssignment(
 												 user.userId,
 												 "layout_test",
+												 "<default_variation>",
 				                 {"exclusion_group": exclusion_group}
 											 )
 ```

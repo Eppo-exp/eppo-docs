@@ -102,9 +102,10 @@ import * as EppoSdk from "@eppo/js-client-sdk";
 const eppoClient = EppoSdk.getInstance();
 
 const variation = eppoClient.getBoolAssignment(
-  user.id,
-  "new-checkout-page",
-  // if using Eppo to target users, pass in user properties as optional third argument
+  user.id, // subject key
+  "use-new-checkout-page", // flag key
+  false, // default value
+  // if using Eppo to target users, pass in user properties as optional fourth argument
   // userProperties
 );
 
