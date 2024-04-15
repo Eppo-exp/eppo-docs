@@ -23,7 +23,7 @@ The object passed into the assignment logger function contains the following fie
 | `featureFlag` (string)    | An Eppo feature flag key                                                                                                 | "recommendation-algo"               |
 | `allocation` (string)     | An Eppo allocation key                                                                                                   | "allocation-17"                     |
 
-Eppo expects that the logger function will take this object and write data back to your warehouse in a format that roughly matched the table below. The specific column names do not matter, but these columns are needed to later [define assignments](/data-management/definitions/assignment-sql.md) in your warehouse.
+Eppo expects that the logger function will take this object and write data back to your warehouse in a format that roughly matches the table below. The specific column names do not matter, but these columns are needed to later [define assignments](/data-management/definitions/assignment-sql.md) in your warehouse.
 
 | experiment                          | subject | variation | timestamp                  | subject_attributes    |
 | :---------------------------------- | :------ | :-------- | :------------------------- | :-------------------- |
@@ -65,9 +65,9 @@ await init({
   assignmentLogger,
 });
 
-// Then every call to getAssignment will also log the event to Segment
+// Then every call to getStringAssignment will also log the event to Segment
 const eppoClient = EppoSdk.getInstance();
-const variation = eppoClient.getAssignment(
+const variation = eppoClient.getStringAssignment(
   "<SUBJECT-KEY>",
   "<FLAG-KEY>",
   {
@@ -106,9 +106,9 @@ await init({
   assignmentLogger,
 });
 
-// Then every call to getAssignment will also log the event to Rudderstack
+// Then every call to getStringAssignment will also log the event to Rudderstack
 const eppoClient = EppoSdk.getInstance();
-const variation = eppoClient.getAssignment(
+const variation = eppoClient.getStringAssignment(
   "<SUBJECT-KEY>",
   "<FLAG-KEY>",
   {
@@ -152,9 +152,9 @@ await init({
   assignmentLogger,
 });
 
-// Then every call to getAssignment will also log the event to mParticle
+// Then every call to getStringAssignment will also log the event to mParticle
 const eppoClient = EppoSdk.getInstance();
-const variation = eppoClient.getAssignment(
+const variation = eppoClient.getStringAssignment(
   "<SUBJECT-KEY>",
   "<FLAG-KEY>",
   {
@@ -215,9 +215,9 @@ await init({
   assignmentLogger,
 });
 
-// Then every call to getAssignment will also log the event to Snowplow
+// Then every call to getStringAssignment will also log the event to Snowplow
 const eppoClient = EppoSdk.getInstance();
-const variation = eppoClient.getAssignment(
+const variation = eppoClient.getStringAssignment(
   "<SUBJECT-KEY>",
   "<FLAG-KEY>",
   {
@@ -253,9 +253,9 @@ await init({
   assignmentLogger,
 });
 
-// Then every call to getAssignment will also log the event to Amplitude
+// Then every call to getStringAssignment will also log the event to Amplitude
 const eppoClient = EppoSdk.getInstance();
-const variation = eppoClient.getAssignment(
+const variation = eppoClient.getStringAssignment(
   "<SUBJECT-KEY>",
   "<FLAG-KEY>",
   {

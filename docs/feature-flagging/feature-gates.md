@@ -32,7 +32,7 @@ user_attributes = {
     device: user.device
 }
 
-if (eppoClient.getAssignment(user.id, 'new-checkout-page', user_attributes) == 'on'):
+if (eppoClient.getStringAssignment(user.id, 'new-checkout-page', user_attributes) == 'on'):
     # Show new checkout page.
 else:
     # Show old checkout page.
