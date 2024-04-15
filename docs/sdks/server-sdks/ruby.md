@@ -89,7 +89,7 @@ client = EppoClient::Client.instance
 variation = client.get_string_assignment(
   '<SUBJECT-KEY>',
   '<FLAG-KEY>',
-  '<DEFAULT-VARIATION>',
+  '<DEFAULT-VALUE>',
   {
     # Optional map of subject metadata for targeting.
   }
@@ -133,7 +133,7 @@ client = EppoClient::Client.instance
 variation = client.get_string_assignment(
   '<SUBJECT-KEY>',
   '<FLAG-KEY>',
-  '<DEFAULT-VARIATION>',
+  '<DEFAULT-VALUE>',
   {},
   Logger::DEBUG
 )

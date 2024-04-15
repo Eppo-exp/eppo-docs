@@ -77,7 +77,7 @@ For example, for a String-valued flag, use `getStringAssignment`:
 Optional<String> assignedVariation = eppoClient.getStringAssignment(
   "<SUBJECT-KEY>",
   "<FLAG-KEY>",
-  "<DEFAULT-VARIATION>", 
+  "<DEFAULT-VALUE>", 
   {} // Optional map of subject metadata for targeting.
 );
 ```
@@ -86,7 +86,7 @@ The `getStringAssignment` function takes three required and one optional input t
 
 - `subjectKey` - The entity ID that is being experimented on, typically represented by a uuid.
 - `flagKey` - This key is available on the detail page for both flags and experiments. Can also be an experiment key.
-- `defaultVariation` - The variation that will be returned if no allocation matches the subject, if the flag is not enabled, if `getStringAssignment` is invoked before the SDK has finished initializing, or if the SDK was not able to retrieve the flag configuration. Its type must match the `get<Type>Assignment` call.
+- `defaultValue` - The value that will be returned if no allocation matches the subject, if the flag is not enabled, if `getStringAssignment` is invoked before the SDK has finished initializing, or if the SDK was not able to retrieve the flag configuration. Its type must match the `get<Type>Assignment` call.
 - `subjectAttributes` - An optional map of metadata about the subject used for targeting. If you create rules based on attributes on a flag/experiment, those attributes should be passed in on every assignment call.
 
 
@@ -215,7 +215,7 @@ model evolves.
 ```java
 // Flag that has a bandit variation
 String banditTestFlagKey = "bandit-test";
-String defaultVariation = "control";
+String defaultValue = "control";
 
 // Subject information--same as for retrieving simple flag or experiment assignments
 String subjectKey = username;
@@ -240,7 +240,7 @@ Map<String, EppoAttributes> actionsWithAttributes = Map.of(
   "size", EppoValue.valueOf("small")
 ))
 
-Optional<String> banditAssignment = eppoClient.getStringAssignment(subjectKey, flagKey, defaultVariation, subjectAttributes, actionsWithAttributes);
+Optional<String> banditAssignment = eppoClient.getStringAssignment(subjectKey, flagKey, defaultValue, subjectAttributes, actionsWithAttributes);
 ```
 
 ### Logging non-bandit actions (contextual multi-armed bandit assignment only)
@@ -254,7 +254,7 @@ The code below illustrates an example use of this.
 
 ```java
 
-Optional<String> banditAssignment = eppoClient.getStringAssignment(subjectKey, flagKey, defaultVariation, subjectAttributes, actionsWithAttributes);
+Optional<String> banditAssignment = eppoClient.getStringAssignment(subjectKey, flagKey, defaultValue, subjectAttributes, actionsWithAttributes);
 
 boolean doControlAction = banditAssignment.isEmpty() || banditAssignment.get().equals("control");
 

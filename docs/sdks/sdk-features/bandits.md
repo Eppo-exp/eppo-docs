@@ -51,7 +51,7 @@ Map<String, EppoAttributes> actionsWithAttributes = Map.of(
   "size", EppoValue.valueOf("small")
 ))
 
-Optional<String> banditAssignment = eppoClient.getStringAssignment(subjectKey, flagKey, defaultVariation, subjectAttributes, actionsWithAttributes);
+Optional<String> banditAssignment = eppoClient.getStringAssignment(subjectKey, flagKey, defaultValue, subjectAttributes, actionsWithAttributes);
 ```
 
 If the actions don't have attributes for the context, you can simply provide a set of actions without attributes:
@@ -59,7 +59,7 @@ If the actions don't have attributes for the context, you can simply provide a s
 ```java
 Set<String> actions = Set.of("dog", "cat", "bird", "goldfish");
 
-Optional<String> banditAssignment = eppoClient.getStringAssignment(subjectKey, flagKey, defaultVariation, subjectAttributes, actions);
+Optional<String> banditAssignment = eppoClient.getStringAssignment(subjectKey, flagKey, defaultValue, subjectAttributes, actions);
 ```
 
 ## Logging bandit assignments
