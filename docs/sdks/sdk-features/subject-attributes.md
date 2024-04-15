@@ -18,7 +18,8 @@ import * as EppoSdk from "@eppo/js-client-sdk";
 const subjectAttributes = { device: "iOS" };
 const variation = EppoSdk.getInstance().getStringAssignment(
   "<SUBJECT-KEY>",
-  "<EXPERIMENT-KEY>",
+  "<FLAG-KEY>",
+  "<DEFAULT-VARIATION>",
   subjectAttributes
 );
 ```
@@ -33,7 +34,8 @@ import * as EppoSdk from "@eppo/node-server-sdk";
 const subjectAttributes = { device: "iOS" };
 const variation = EppoSdk.getInstance().getStringAssignment(
   "<SUBJECT-KEY>",
-  "<EXPERIMENT-KEY>",
+  "<FLAG-KEY>",
+  "<DEFAULT-VARIATION>",
   subjectAttributes
 );
 ```
@@ -46,7 +48,12 @@ const variation = EppoSdk.getInstance().getStringAssignment(
 import eppo_client
 
 client = eppo_client.get_instance()
-variation = client.get_string_assignment("<SUBJECT-KEY>", "<EXPERIMENT-KEY>", { "device": "iOS" })
+variation = client.get_string_assignment(
+  "<SUBJECT-KEY>",
+  "<FLAG-KEY>",
+  "<DEFAULT-VARIATION>",
+  { "device": "iOS" }
+)
 ```
 
 </TabItem>
