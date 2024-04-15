@@ -40,13 +40,12 @@ The `value` field in `conditions` may or may not be hashed depending on the conf
 | -------------------------- | ------- |
 | is one of                  | hashed  |
 | is not one of              | hashed  |
+| is null                    | hashed  |
 | less than (<)              | encoded |
 | less than or equal (<=)    | encoded |
 | greater than (>)           | encoded |
 | greater than or equal (>=) | encoded |
 | matches regex              | encoded |
-| is null                    | n/a     |
-| is not null                | n/a     |
 
 The targeting rule's `operator` is configured in the UI during allocation setup.
 

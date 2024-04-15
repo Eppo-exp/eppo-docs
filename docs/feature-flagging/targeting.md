@@ -42,7 +42,7 @@ client = eppo_client.get_instance()
 variation = client.get_string_assignment(
   "<SUBJECT-KEY>",
   "<FLAG-KEY>",
-  "<DEFAULT-VARIATION>",
+  "<DEFAULT-VALUE>",
   { "device": "iOS", "appVersion": "28.5.0" }
 )
 ```

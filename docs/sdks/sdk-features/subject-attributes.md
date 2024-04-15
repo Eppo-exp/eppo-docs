@@ -19,7 +19,7 @@ const subjectAttributes = { device: "iOS" };
 const variation = EppoSdk.getInstance().getStringAssignment(
   "<SUBJECT-KEY>",
   "<FLAG-KEY>",
-  "<DEFAULT-VARIATION>",
+  "<DEFAULT-VALUE>",
   subjectAttributes
 );
 ```
@@ -35,7 +35,7 @@ const subjectAttributes = { device: "iOS" };
 const variation = EppoSdk.getInstance().getStringAssignment(
   "<SUBJECT-KEY>",
   "<FLAG-KEY>",
-  "<DEFAULT-VARIATION>",
+  "<DEFAULT-VALUE>",
   subjectAttributes
 );
 ```
@@ -51,7 +51,7 @@ client = eppo_client.get_instance()
 variation = client.get_string_assignment(
   "<SUBJECT-KEY>",
   "<FLAG-KEY>",
-  "<DEFAULT-VARIATION>",
+  "<DEFAULT-VALUE>",
   { "device": "iOS" }
 )
 ```

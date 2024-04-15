@@ -42,7 +42,7 @@ For example, for a String-valued flag, use `get_string_assignment`:
 
 ```python
 …
-variation = client.get_string_assignment("<SUBJECT-KEY>", "<FLAG-KEY>", "<DEFAULT-VARIATION>")
+variation = client.get_string_assignment("<SUBJECT-KEY>", "<FLAG-KEY>", "<DEFAULT-VALUE>")
 if variation == "fast_checkout":
     …
 else:
@@ -50,7 +50,7 @@ else:
 ```
 * `<SUBJECT-KEY>` is the value that identifies each entity in your experiment, typically `user_id`;
 * `<FLAG-KEY>` is the key that you chose when creating a flag; you can find it on the [flag page](https://eppo.cloud/feature-flags). For the rest of this presentation, we’ll use `"test-checkout"`. To follow along, we recommend that you create a test flag in your account, and split users between `"fast_checkout"` and `"standard_checkout"`.
-* `<DEFAULT-VARIATION>` is the value that will be returned if no allocation matches the subject, if the flag is not enabled, if `get_string_assignment` is invoked before the SDK has finished initializing, or if the SDK was not able to retrieve the flag configuration.
+* `<DEFAULT-VALUE>` is the value that will be returned if no allocation matches the subject, if the flag is not enabled, if `get_string_assignment` is invoked before the SDK has finished initializing, or if the SDK was not able to retrieve the flag configuration.
 
 Here's how this configuration looks in the [flag page](https://eppo.cloud/feature-flags):
 
@@ -209,7 +209,7 @@ We introduced `get_string_assignment`’s three required inputs in the [Getting 
 
 - `subject_key`: The Entity ID that is being experimented on, typically represented by a uuid.
 - `flag_key`: This key is available on the detail page for both flags and experiments.
-- `default_variation`: The variation that will be returned if no allocation matches the subject, if the flag is not enabled, if `get_string_assignment` is invoked before the SDK has finished initializing, or if the SDK was not able to retrieve the flag configuration.
+- `default_value`: The value that will be returned if no allocation matches the subject, if the flag is not enabled, if `get_string_assignment` is invoked before the SDK has finished initializing, or if the SDK was not able to retrieve the flag configuration.
 
 But that’s not all: the function also takes an optional input for entity properties.
 
@@ -253,7 +253,7 @@ if request.method == 'POST':
     variation = client.get_string_assignment(
         "<SUBJECT-KEY>",
         "<FLAG-KEY>",
-        "<DEFAULT-VARIATION>",
+        "<DEFAULT-VALUE>",
         session_attributes,
     )
     
@@ -286,7 +286,7 @@ get_string_assignment(...)
 get_json_assignment(...)
 ```
 
-All take the same input: `subject_key`, `flag_key`, `default_variation`, and (optionally) `subject_attributes`.
+All take the same input: `subject_key`, `flag_key`, `default_value`, and (optionally) `subject_attributes`.
 
 ### A. Boolean Assignment
 
