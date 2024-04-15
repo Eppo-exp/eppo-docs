@@ -68,40 +68,33 @@ More details about logging and examples (with Segment, Rudderstack, mParticle, a
 
 ## 3. Assign variations
 
-Assigning users to flags or experiments with a single `GetStringAssignment` function:
+Assign users to flags or experiments using `Get<Type>Assignment`, depending on the type of the flag.
+For example, for a String-valued flag, use `GetStringAssignment`:
 
 ```csharp
-var assignedVariation = eppoClient.GetStringAssignment("<SUBJECT-KEY>", "<FLAG-KEY>", {
-  // Optional Dictionary of subject metadata for targeting.
-});
+var assignedVariation = eppoClient.GetStringAssignment(
+  "<SUBJECT-KEY>",
+  "<FLAG-KEY>",
+  "<DEFAULT-VARIATION>",
+  {} // Optional Dictionary of subject metadata for targeting.
+);
 ```
 
-The `GetStringAssignment` function takes two required and one optional input to assign a variation:
+The `GetStringAssignment` function takes three required and one optional input to assign a variation:
 
 - `subjectKey` - The entity ID that is being experimented on, typically represented by a uuid.
-- `flagOrExperimentKey` - This key is available on the detail page for both flags and experiments.
-- `targetingAttributes` - An optional map of metadata about the subject used for targeting. If you create rules based on attributes on a flag/experiment, those attributes should be passed in on every assignment call.
+- `flagKey` - This key is available on the detail page for both flags and experiments. Can also be an experiment key.
+- `defaultVariation` - The variation that will be returned if no allocation matches the subject, if the flag is not enabled, if `GetStringAssignment` is invoked before the SDK has finished initializing, or if the SDK was not able to retrieve the flag configuration. Its type must match the `Get<Type>Assignment` call.
+- `subjectAttributes` - An optional map of metadata about the subject used for targeting. If you create rules based on attributes on a flag/experiment, those attributes should be passed in on every assignment call.
 
-Starting in version `v2.0.0` typed functions are available:
-
+The following typed functions are available:
 ```
-eppoClient.GetBoolAssignment(string subjectKey, string flagKey, SubjectAttributes? subjectAttributes = null)
-eppoClient.GetNumericAssignment(string subjectKey, string flagKey, SubjectAttributes? subjectAttributes = null)
+GetBoolAssignment(...)
+GetNumericAssignment(...)
+GetIntegerAssignment(...)
+GetStringAssignment(...)
+GetJSONAssignment(...)
 ```
-
-### Handling the null assignment
-
-We recommend always handling the empty assignment case in your code. Here are some examples illustrating when the SDK returns `null`:
-
-1. The **Traffic Exposure** setting on experiments/allocations determines the percentage of subjects the SDK will assign to that experiment/allocation. For example, if Traffic Exposure is 25%, the SDK will assign a variation for 25% of subjects and `null` for the remaining 75% (unless the subject is part of an allow list).
-
-2. Assignments occur within the environments of feature flags. You must enable the environment corresponding to the feature flag's allocation in the user interface before `getStringAssignment` returns variations. It will return `null` if the environment is not enabled.
-
-![Toggle to enable environment](/img/feature-flagging/enable-environment.png)
-
-3.  If `getStringAssignment` is invoked before the SDK has finished initializing, the SDK may not have access to the most recent experiment configurations. In this case, the SDK will assign a variation based on any previously downloaded experiment configurations stored in local storage, or return `null` if no configurations have been downloaded.
-
-<br />
 
 :::note
 It may take up to 10 seconds for changes to Eppo experiments to be reflected by the SDK assignments.

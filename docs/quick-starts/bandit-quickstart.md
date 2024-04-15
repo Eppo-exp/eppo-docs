@@ -164,7 +164,7 @@ If the actions don't have attributes for the context, you can simply provide a s
 ```java
 Set<String> actions = Set.of("dog", "cat", "bird", "goldfish");
 
-Optional<String> banditAssignment = eppoClient.getStringAssignment(subjectKey, flagKey, subjectAttributes, actions);
+Optional<String> banditAssignment = eppoClient.getStringAssignment(subjectKey, flagKey, defaultVariation, subjectAttributes, actions);
 ```
 
 Note that the `getStringAssignment` method in Eppo is deterministic, meaning that it will return the same variant for a given subject (e.g., user) for two consecutive calls. (The variant may change over time as the bandit learns how which variants perform best for different attributes.)

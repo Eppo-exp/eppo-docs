@@ -71,18 +71,20 @@ More details about logging and examples (with Segment, Rudderstack, mParticle, a
 
 ## 3. Assign Variations
 
-Assigning users to flags or experiments with a single getStringAssignment function:
+Assign users to flags or experiments using `get<Type>Assignment`, depending on the type of the flag.
+For example, for a String-valued flag, use `getStringAssigment`:
 
 ```swift
 Task {
     do {
         try await eppoClient.load();
         self.assignment = try self.eppoClient.getStringAssignment(
-            "test-user",
-            "ios-test-app-treatment"
+            "test-user", // subject key
+            "ios-test-app-treatment", // flag key
+            "control" // default variation
         );
     } catch {
-        self.assignment = nil;
+        self.assignment = "control";
     }
 }
 ```
@@ -102,46 +104,36 @@ class AssignmentObserver : ObservableObject {
             do {
                 try await eppoClient.load();
                 self.assignment = try self.eppoClient.getStringAssignment(
-                    "test-user", // identifier to randomize (typically a user id)
-                    "ios-test-app-treatment" // the variation to select from
+                    "test-user", // subject key
+                    "ios-test-app-treatment", // flag key
+                    "control" // default variation
                 );
             } catch {
-                self.assignment = nil;
+                self.assignment = "control";
             }
         }
     }
 }
 ```
 
-The `getStringAssignment` function takes two required and one optional input to assign a variation:
+The `getStringAssignment` function takes three required and one optional input to assign a variation:
 
 - `subjectKey` - The entity ID that is being experimented on, typically represented by a uuid.
 - `flagKey` - This key is available on the detail page for both flags and experiments. Can also be an experiment key.
+- `defaultVariation` - The variation that will be returned if no allocation matches the subject, if the flag is not enabled, if `getStringAssignment` is invoked before the SDK has finished initializing, or if the SDK was not able to retrieve the flag configuration. Its type must match the `get<Type>Assignment` call.
 - `subjectAttributes` - An optional map of metadata about the subject used for targeting. If you create rules based on attributes on a flag/experiment, those attributes should be passed in on every assignment call.
 
 ### Typed assignments
 
-Additional functions are available:
+The following typed functions are available:
 
 ```swift
 getBoolAssignment(...)
 getNumericAssignment(...)
-getJSONStringAssignment(...)
+getIntegerAssignment(...)
+getStringAssignment(...)
+getJSONAssignment(...)
 ```
-
-## 4. Handling `nil`
-
-We recommend always handling the `nil` case in your code. Here are some examples illustrating when the SDK returns `nil`:
-
-1. The Traffic Exposure setting on experiments/allocations determines the percentage of subjects the SDK will assign to that experiment/allocation. For example, if Traffic Exposure is 25%, the SDK will assign a variation for 25% of subjects and `nil` for the remaining 75% (unless the subject is part of an allow list).
-
-2. Assignments occur within the environments of feature flags. You must enable the environment corresponding to the feature flag's allocation in the user interface before `getStringAssignment` returns variations. It will return `nil` if the environment is not enabled.
-
-![Toggle to enable environment](/img/feature-flagging/enable-environment.png)
-
-3. If `getStringAssignment` is invoked before the SDK has finished initializing, the SDK may not have access to the most recent experiment configurations. In this case, the SDK will assign a variation based on any previously downloaded experiment configurations stored in local storage, or return `nil` if no configurations have been downloaded.
-
-<br />
 
 :::note
 It may take up to 10 seconds for changes to Eppo experiments to be reflected by the SDK assignments.
