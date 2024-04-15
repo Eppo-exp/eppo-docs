@@ -2,7 +2,7 @@
 sidebar_position: 9
 ---
 
-# Best practices
+# Common pitfalls
 
 This page walks through some common pitfalls that occur when first implementing Eppo’s SDK.
 
@@ -26,7 +26,7 @@ Suppose we are testing out a new payment experience with users. When implementin
 ```javascript
 export default function PaymentPage({ user: User }): JSX.Element {
   const useNewPaymentFlow =
-    eppoClient.getBoolAssignment(user.email, "new-payment-flow") === true;
+    eppoClient.getBoolAssignment(user.email, "new-payment-flow", false) === true;
 
   return (
     <Container>
@@ -49,11 +49,11 @@ It can be tempting to preemptively compute all possible assignments for a given 
 ```javascript
 const getUserAssignments = (email: string) => ({
   useNewPaymentFlow:
-    eppoClient.getBoolAssignment(email, "new-payment-flow") === true,
+    eppoClient.getBoolAssignment(email, "new-payment-flow", false) === true,
   useNewFeedRanking:
-    eppoClient.getBoolAssignment(email, "new-feed-ranking") === true,
+    eppoClient.getBoolAssignment(email, "new-feed-ranking", false) === true,
   useGreenSubmitButton:
-    eppoClient.getStringAssignment(email, "submit-button-color") === "green",
+    eppoClient.getStringAssignment(email, "submit-button-color", "blue") === "green",
   // ... all possible assignments for user.
 });
 
@@ -95,7 +95,7 @@ Eppo targeting works based on subject attributes passed into the `get<Type>Assig
 A better pattern is to define audiences via user-level attributes. For instance, if you would like to target a list of beta users, you can pass an attribute into the `get<Type>Assignment` call specifying whether the user is in the beta group.
 
 ```javascript
-const variation = eppoClient.getStringAssignment("userId", "my-flag-key", {
+const variation = eppoClient.getStringAssignment("userId", "my-flag-key", "control", {
   beta_user: "true",
 });
 ```
@@ -106,15 +106,11 @@ Now, simply add allocation logic specifying to target users with `beta_user = 't
 
 This does require you to determine whether a user is in the beta group before calling `getStringAssignment`, but it helps to keep the Eppo SDK very light.
 
-## 5. Not explicitly handling `NULL`
+## 5. Using default assignments to track control
 
-Any code that calls the Eppo SDK should gracefully handle the case that `get<Type>Assignment` returns a null value. Eppo’s SDK’s initialization functions are not blocking, meaning that it’s possible for `get<Type>Assignment` to be evaluated before the config loads from the CDN. While this is typically a rare edge case, it is best practice to have test coverage for the Eppo SDK returning a `NULL` assignment. The exact null value that is returned depends on the language of the SDK, e.g. in Javascript it is `null` whereas in Python it is `None` and in Java it is `Optional.empty()`.
+When you are running an AB experiment, it is best practice to explicitly assign users as control. If you have already confirmed that the default value is handled well and serves a default experience, it may be tempting to serve 10% of traffic the new variant, serve the remaining 90% the default value, and then analyze the experiment using the default value as the control group.
 
-## 6. Using `NULL` assignments to track control
-
-When you are running an AB experiment, it is best practice to explicitly assign users as control. If you have already confirmed that null values are handled well and serves a default experience (see above), it may be tempting to serve 10% of traffic the new variant, serve the remaining 90% `NULL`, and then analyze the experiment using `NULL` as the control group.
-
-This however can lead to issues in analyzing an experiment. First, if some traffic receives a `NULL` assignment due to network issues, they will all land in the control group. This breaks the core assumption of AB experimentation: that on average there is no difference between the two groups other than the feature on which you are experimenting.
+This however can lead to issues in analyzing an experiment. First, if some traffic receives the default assignment due to network issues, they will all land in the control group. This breaks the core assumption of AB experimentation: that on average there is no difference between the two groups other than the feature on which you are experimenting.
 
 Further, if the allocation percentage changes over time, additional bias may be introduced. Imagine ramping up an experiment to 50% after one week of smoke testing at 10%. If you were to randomly select a user from the control group, they are now more likely to be from the first week of the experiment. Again, there is a difference between the two groups (control is more likely to be from the first week).
 

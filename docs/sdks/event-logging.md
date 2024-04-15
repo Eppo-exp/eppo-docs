@@ -70,6 +70,7 @@ const eppoClient = EppoSdk.getInstance();
 const variation = eppoClient.getStringAssignment(
   "<SUBJECT-KEY>",
   "<FLAG-KEY>",
+  "<DEFAULT-VARIATION>",
   {
     // Optional metadata about the user to be used for targeting
   }
@@ -111,6 +112,7 @@ const eppoClient = EppoSdk.getInstance();
 const variation = eppoClient.getStringAssignment(
   "<SUBJECT-KEY>",
   "<FLAG-KEY>",
+  "<DEFAULT-VARIATION>",
   {
     // Optional metadata about the user to be used for targeting
   }
@@ -157,6 +159,7 @@ const eppoClient = EppoSdk.getInstance();
 const variation = eppoClient.getStringAssignment(
   "<SUBJECT-KEY>",
   "<FLAG-KEY>",
+  "<DEFAULT-VARIATION>",
   {
     // Optional metadata about the user to be used for targeting
   }
@@ -220,6 +223,7 @@ const eppoClient = EppoSdk.getInstance();
 const variation = eppoClient.getStringAssignment(
   "<SUBJECT-KEY>",
   "<FLAG-KEY>",
+  "<DEFAULT-VARIATION>",
   {
     // Optional metadata about the user to be used for targeting
   }
@@ -258,6 +262,7 @@ const eppoClient = EppoSdk.getInstance();
 const variation = eppoClient.getStringAssignment(
   "<SUBJECT-KEY>",
   "<FLAG-KEY>",
+  "<DEFAULT-VARIATION>",
   {
     // Optional metadata about the user to be used for targeting
   }
