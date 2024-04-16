@@ -13,7 +13,7 @@ Eppo's server-side SDKs may be used to implement flags and run experiments in yo
 ### Language-specific Documentation
 
 - [Node](./node)
-- [Python](./python)
+- [Python](./python.md)
 - [Java](./java)
 - [Dot Net](./dotnet)
 - [Go](./go)
