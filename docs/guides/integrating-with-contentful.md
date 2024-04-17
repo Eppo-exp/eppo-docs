@@ -67,14 +67,11 @@ await init({
     apiKey: <EPPO SDK KEY>
 });
 
-let userId = “user id”
-let flagKey = <EPPO FLAG KEY>
-
 const eppoClient = EppoSdk.getInstance();
 
 const homepage_entry_id = eppoClient.getStringAssignment(
-    userId, // unique identifier for the user
-    flagKey, // flag key from Eppo UI
+    "<USER ID>", // unique identifier for the user
+    "<EPPO FLAG KEY>", // flag key from Eppo UI
     defaultValue,
 )
 console.log(flag_key, homepage_entry_id)
