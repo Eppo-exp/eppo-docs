@@ -61,7 +61,7 @@ While filling out the fields above is usually trivial and can be accomplished by
 To make the integration with in-house tools as seamless as possible, Eppo also provides a [REST API](https://eppo.cloud/api/docs#) and [webhooks](/reference/webhook) to automate the steps above. A typical integration looks like the following:
 
 1. On experiment creation (or update) within the internal system, hit Eppo’s REST API to create (update) a corresponding experiment analysis
-2. Subscribe to an Eppo webhook for changes to experiment status changes and update the internal system appropriately
+2. Subscribe to an Eppo webhook for changes to experiment status and update the internal system appropriately
 
 ### Experiment Analysis API
 
