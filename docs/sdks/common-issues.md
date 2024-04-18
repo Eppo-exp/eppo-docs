@@ -26,7 +26,7 @@ Suppose we are testing out a new payment experience with users. When implementin
 ```javascript
 export default function PaymentPage({ user: User }): JSX.Element {
   const useNewPaymentFlow =
-    eppoClient.getBoolAssignment(user.email, "new-payment-flow", false) === true;
+    eppoClient.getBoolAssignment("new-payment-flow", user.email, {}, false) === true;
 
   return (
     <Container>
@@ -49,11 +49,11 @@ It can be tempting to preemptively compute all possible assignments for a given 
 ```javascript
 const getUserAssignments = (email: string) => ({
   useNewPaymentFlow:
-    eppoClient.getBoolAssignment(email, "new-payment-flow", false) === true,
+    eppoClient.getBoolAssignment("new-payment-flow", email, {}, false) === true,
   useNewFeedRanking:
-    eppoClient.getBoolAssignment(email, "new-feed-ranking", false) === true,
+    eppoClient.getBoolAssignment("new-feed-ranking", email, {}, false) === true,
   useGreenSubmitButton:
-    eppoClient.getStringAssignment(email, "submit-button-color", "blue") === "green",
+    eppoClient.getStringAssignment("submit-button-color", email, {}, "blue") === "green",
   // ... all possible assignments for user.
 });
 
@@ -95,9 +95,7 @@ Eppo targeting works based on subject attributes passed into the `get<Type>Assig
 A better pattern is to define audiences via user-level attributes. For instance, if you would like to target a list of beta users, you can pass an attribute into the `get<Type>Assignment` call specifying whether the user is in the beta group.
 
 ```javascript
-const variation = eppoClient.getStringAssignment("userId", "my-flag-key", "control", {
-  beta_user: "true",
-});
+const variation = eppoClient.getStringAssignment("my-flag-key", "userId", { beta_user: "true" }, "control");
 ```
 
 Now, simply add allocation logic specifying to target users with `beta_user = 'true'`.

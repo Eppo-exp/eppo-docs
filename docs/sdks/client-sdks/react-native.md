@@ -111,21 +111,19 @@ import * as EppoSdk from "@eppo/react-native-sdk";
 
 const eppoClient = EppoSdk.getInstance();
 const variation = eppoClient.getStringAssignment(
-  "<SUBJECT-KEY>",
   "<FLAG-KEY>",
+  "<SUBJECT-KEY>",
+  <SUBJECT-ATTRIBUTES>, // Metadata used for targeting
   "<DEFAULT-VALUE>",
-  {
-    // Optional map of subject metadata for targeting.
-  }
 );
 ```
 
 The `getStringAssignment` function takes three required and one optional input to assign a variation:
 
-- `subjectKey` - The entity ID that is being experimented on, typically represented by a uuid.
 - `flagKey` - This key is available on the detail page for both flags and experiments. Can also be an experiment key.
+- `subjectKey` - The entity ID that is being experimented on, typically represented by a uuid.
+- `subjectAttributes` - A map of metadata about the subject used for targeting. If you create rules based on attributes on a flag/experiment, those attributes should be passed in on every assignment call. If no attributes are needed, pass in an empty object.
 - `defaultValue` - The value that will be returned if no allocation matches the subject, if the flag is not enabled, if `getStringAssignment` is invoked before the SDK has finished initializing, or if the SDK was not able to retrieve the flag configuration. Its type must match the `get<Type>Assignment` call.
-- `subjectAttributes` - An optional map of metadata about the subject used for targeting. If you create rules based on attributes on a flag/experiment, those attributes should be passed in on every assignment call.
 
 
 ### Typed assignments
@@ -199,7 +197,7 @@ After the SDK is initialized, you may assign variations from any child component
 function MyComponent(): JSX.Element {
   const assignedVariation = useMemo(() => {
     const eppoClient = getInstance();
-    return eppoClient.getStringAssignment("<SUBJECT-KEY>", "<EXPERIMENT-KEY>", "<DEFAULT-VALUE>");
+    return eppoClient.getStringAssignment("<FLAG-KEY>", "<SUBJECT-KEY>", <SUBJECT-ATTRIBUTES>, "<DEFAULT-VALUE>");
   }, []);
 
   return (

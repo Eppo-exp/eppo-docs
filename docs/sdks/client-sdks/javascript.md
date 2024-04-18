@@ -137,12 +137,10 @@ import * as EppoSdk from "@eppo/js-client-sdk";
 
 const eppoClient = EppoSdk.getInstance();
 const variation = eppoClient.getStringAssignment(
-  "<SUBJECT-KEY>",
   "<FLAG-KEY>",
+  "<SUBJECT-KEY>",
+  <SUBJECT-ATTRIBUTES>, // Metadata used for targeting
   "<DEFAULT-VALUE>",
-  {
-    // Optional map of subject metadata for targeting.
-  }
 );
 ```
 
@@ -224,7 +222,7 @@ After the SDK is initialized, you may assign variations from any child component
 function MyComponent(): JSX.Element {
   const assignedVariation = useMemo(() => {
     const eppoClient = getInstance();
-    return eppoClient.getStringAssignment("<SUBJECT-KEY>", "<EXPERIMENT-KEY>", "<DEFAULT-VALUE>");
+    return eppoClient.getStringAssignment("<FLAG-KEY>", "<SUBJECT-KEY>", <SUBJECT-ATTRIBUTES>, "<DEFAULT-VALUE>");
   }, []);
 
   return (

@@ -33,10 +33,10 @@ import * as EppoSdk from "@eppo/node-server-sdk";
 
 const subjectAttributes = { device: "iOS" };
 const variation = EppoSdk.getInstance().getStringAssignment(
-  "<SUBJECT-KEY>",
   "<FLAG-KEY>",
+  "<SUBJECT-KEY>",
+  subjectAttributes,
   "<DEFAULT-VALUE>",
-  subjectAttributes
 );
 ```
 
@@ -49,10 +49,10 @@ import eppo_client
 
 client = eppo_client.get_instance()
 variation = client.get_string_assignment(
-  "<SUBJECT-KEY>",
   "<FLAG-KEY>",
+  "<SUBJECT-KEY>",
+  { "device": "iOS" },
   "<DEFAULT-VALUE>",
-  { "device": "iOS" }
 )
 ```
 

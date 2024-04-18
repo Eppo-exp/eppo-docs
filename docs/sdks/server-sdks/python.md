@@ -42,14 +42,15 @@ For example, for a String-valued flag, use `get_string_assignment`:
 
 ```python
 …
-variation = client.get_string_assignment("<SUBJECT-KEY>", "<FLAG-KEY>", "<DEFAULT-VALUE>")
+variation = client.get_string_assignment("<FLAG-KEY>", "<SUBJECT-KEY>", <SUBJECT-ATTRIBUTES>, "<DEFAULT-VALUE>")
 if variation == "fast_checkout":
     …
 else:
     …
 ```
-* `<SUBJECT-KEY>` is the value that identifies each entity in your experiment, typically `user_id`;
 * `<FLAG-KEY>` is the key that you chose when creating a flag; you can find it on the [flag page](https://eppo.cloud/feature-flags). For the rest of this presentation, we’ll use `"test-checkout"`. To follow along, we recommend that you create a test flag in your account, and split users between `"fast_checkout"` and `"standard_checkout"`.
+* `<SUBJECT-KEY>` is the value that identifies each entity in your experiment, typically `user_id`.
+* `<SUBJECT-ATTRIBUTES>` is a dictionary of metadata about the subject used for targeting. If you create targeting rules based on attributes, those attributes must be passed in on every assignment call. If no attributes are needed, pass in an empty dictionary.
 * `<DEFAULT-VALUE>` is the value that will be returned if no allocation matches the subject, if the flag is not enabled, if `get_string_assignment` is invoked before the SDK has finished initializing, or if the SDK was not able to retrieve the flag configuration.
 
 Here's how this configuration looks in the [flag page](https://eppo.cloud/feature-flags):
@@ -100,7 +101,7 @@ client = eppo_client.get_instance()
 # Give the client some time to initialize.
 # Note that the client may get stuck on this step if there are errors.
 # Please refer to the logs.
-while client.get_string_assignment('0', "test-checkout", "standard_checkout") is None:
+while client.get_string_assignment("test-checkout", '0', {}, "standard_checkout") is None:
     print("Waiting for client to initialize. Check the logs if this message persists.")
     sleep(1)
 # In a real-world scenario, other modules would load
@@ -109,7 +110,7 @@ while client.get_string_assignment('0', "test-checkout", "standard_checkout") is
 for _ in range(10):
     # Randomly creating user ids. Note that they might not actually exist in your experiment.
     user_id = str(uuid4())
-    variation = client.get_string_assignment(user_id, "test-checkout", "standard_checkout")
+    variation = client.get_string_assignment("test-checkout", user_id, {}, "standard_checkout")
     if variation == "fast_checkout":
         print(f"{user_id}: Fast checkout")
     elif variation == "standard_checkout":
@@ -251,10 +252,10 @@ if request.method == 'POST':
     }
 
     variation = client.get_string_assignment(
-        "<SUBJECT-KEY>",
         "<FLAG-KEY>",
-        "<DEFAULT-VALUE>",
+        "<SUBJECT-KEY>",
         session_attributes,
+        "<DEFAULT-VALUE>",
     )
     
     if variation == 'checkout_apple_pay':
