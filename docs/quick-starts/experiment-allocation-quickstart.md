@@ -1,11 +1,11 @@
 ---
-slug: /feature-flag-quickstart
-sidebar_position: 2
+slug: /experiment-allocation-quickstart
+sidebar_position: 4
 ---
 
-# Creating your first feature flag
+# Running your first experiment
 
-This 10 minute guide will walk through running your first feature flag with Eppo. In the example we'll imagine that we are testing a new checkout page.
+This 10 minute guide will walk through running your first experiment with Eppo. In the example we'll imagine that we are testing a new checkout page.
 
 While Eppo feature flags can be used for feature gates, kill switches, and targeted rollouts, this guide will focus on using Eppo flags for running randomized experiments.
 
@@ -33,19 +33,19 @@ Give the flag a descriptive human readable name and create variations for each v
 
 ![Feature gate 1](/img/feature-flagging/feature-flag-qs-1.png)
 
-### 3. Create a Feature Gate allocation
+### 3. Create an experiment allocation
 
 After creating the flag, switch into the Test environment:
 
 ![Feature gate 2](/img/feature-flagging/feature-flag-qs-2.png)
 
-Now that you're in the Test environment, add a Feature Gate allocation to your flag. If you want to force certain segments or users into one variant, you can also add a Feature Gate allocation. You can read more about using Eppo for Feature Gates [here](/feature-flagging/feature-gates).
+Now that you're in the Test environment, add an Experiment allocation to your flag. If you want to force certain segments or users into one variant, you can also add a Feature Gate allocation. You can read more about using Eppo for Feature Gates [here](/feature-flagging/feature-gates).
 
-![Feature gate 3](/img/feature-flagging/feature-gate-setup-1.png)
+![Feature gate 3](/img/feature-flagging/feature-flag-qs-3.png)
 
 For this example, we will assign all users to the experiment. If you want to target specific users, you can add targeting rules to the allocation. You can read more about targeting [here](/feature-flagging/targeting).
 
-![Feature gate 4](/img/feature-flagging/feature-gate-setup-3.png)
+![Feature gate 4](/img/feature-flagging/feature-flag-qs-4.png)
 
 ### 4. Connect a logging function to the Eppo SDK
 
@@ -113,11 +113,11 @@ return variation ? <NewCheckoutPage /> : <OldCheckoutPage />
 
 Note that the `get<Type>Assignment` methods in Eppo are deterministic, meaning that they will always return the same variant for a given subject (e.g., user) throughout the experiment.
 
-### 7. Turn on the flag for users
+### 7. Turn on the flag to start splitting traffic
 
-To start randomly assigning traffic to the enabled feature, flip the flag on in the Test environment.
+To start randomly assigning traffic, flip the flag on in the Test environment.
 
-![Feature gate 5](/img/feature-flagging/feature-gate-setup-2.png)
+![Feature gate 5](/img/feature-flagging/feature-flag-qs-5.png)
 
 You should now see assignments coming through the Eppo SDK!
 
