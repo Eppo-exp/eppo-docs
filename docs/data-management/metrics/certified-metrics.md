@@ -160,6 +160,7 @@ metrics:
   numerator:
     fact_name: User ID
     operation: count_distinct
+    filters:
     - fact_property: Page Name 
       operation: equals 
       values: 

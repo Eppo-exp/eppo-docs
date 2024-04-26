@@ -19,9 +19,9 @@ Always place assignment calls as close to your end experience as possible. This 
 While Eppo recommends placing assignment calls as close to the experience as possible, we understand this is not possible in all circumstances. In these cases, we provide the ability to filter analysis results. See [Filter assignments by entry points](/experiment-analysis/filter-assignments-by-entry-point) for more details.
 :::
 
-### An example of how to get assignments correctly
+### Batching assignments example
 
-Suppose we are testing out a new payment experience with users. When implementing the assignment, it’s better to fetch the assignment and deliver the experience as close together in the code as possible:
+Suppose we are testing out a new payment experience with users. When implementing the assignment, it’s best to fetch the assignment and deliver the experience as close together in the code as possible:
 
 ```javascript
 export default function PaymentPage({ user: User }): JSX.Element {
@@ -41,38 +41,6 @@ export default function PaymentPage({ user: User }): JSX.Element {
 ```
 
 Here, assignment and delivery are tightly coupled. Users who are assigned the new payment page always see the new one, and users who are assigned the old payment page always see the old one. There is zero chance for the assignment to occur but the experience not to be delivered.
-
-### An example of how **not** to get assignments
-
-It can be tempting to preemptively compute all possible assignments for a given user.
-
-```javascript
-const getUserAssignments = (email: string) => ({
-  useNewPaymentFlow:
-    eppoClient.getBoolAssignment("new-payment-flow", email, {}, false) === true,
-  useNewFeedRanking:
-    eppoClient.getBoolAssignment("new-feed-ranking", email, {}, false) === true,
-  useGreenSubmitButton:
-    eppoClient.getStringAssignment("submit-button-color", email, {}, "blue") === "green",
-  // ... all possible assignments for user.
-});
-
-export default function PaymentPage({ user: User }): JSX.Element {
-  const { useNewPaymentFlow } = getUserAssignments(user.email);
-
-  return (
-    <Container>
-      {useNewPaymentFlow ? (
-        <PaymentPageV2 user={user} />
-      ) : (
-        <PaymentPage user={user} />
-      )}
-    </Container>
-  );
-}
-```
-
-This is a poor design for getting assignments because when assembling the user assignments object you are logging these assignments to your assignments table. And if the table is used for experiments, the data in the table indicates that the user actually experienced all these variants, when in fact they have not. The value for the flag new-feed-ranking may return true, but unless the user actually saw the new feed ranking then that value is not only wrong, it all also means the logged assignments are unreliable and cannot be used for analysis.
 
 ## 2. Getting assignments via a network
 

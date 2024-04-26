@@ -32,7 +32,7 @@ Validity of experimental results crucially relies on proper randomization of sub
 
 The traffic imbalance diagnostic runs a test to see whether the randomization works as expected and the number of subjects assigned to each variation is as expected. This indicates that there is likely an issue with the randomization of subjects (e.g. a bug in the randomization code), which can invalidate the results of an experiment.
 
-We run this traffic imbalance test by running a [Pearson’s chi-squared test](https://en.wikipedia.org/wiki/Pearson%27s_chi-squared_test) with �=0.001*α*=0.001 on active variations, using the assignment weights for each variant (default is equal split across variations), which we convert to probabilities. This is also known as the sample ratio mismatch test (SRM). We run the test at the more conservative �=0.001*α*=0.001 level because this test is not sequentially valid; the more conservative significance level helps us avoid false positives.
+We run this traffic imbalance test by running a [Pearson’s chi-squared test](https://en.wikipedia.org/wiki/Pearson%27s_chi-squared_test) with $\alpha = 0.001$ on active variations, using the assignment weights for each variant (default is equal split across variations), which we convert to probabilities. This is also known as the sample ratio mismatch test (SRM). We run the test at the more conservative $\alpha = 0.001$ level because this test is not sequentially valid; the more conservative significance level helps us avoid false positives.
 
 Issues with the traffic allocations can come from many sources; here are some common ones we have seen:
 
