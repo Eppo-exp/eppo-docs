@@ -5,7 +5,7 @@ sidebar_position: 10
 
 # Warehouse best practices
 
-As a warehouse native product, Eppo takes managing warehouse costs seriously. While Eppo's SQL-based approach makes integration easy, transparent, and secure, it also means that configuring Eppo properly is important to avoid increasing your warehouse bill.
+Eppo's warehouse native approach makes integration easy, transparent, and secure but it also creates a dependency on the underlying warehouse database structure. Knowing how to configure your tables to work with Eppo properly is important to minimizing run-times and compute used.
 
 This page outlines some best practices to help keep Eppo's pipeline as lightweight as possible.
 
