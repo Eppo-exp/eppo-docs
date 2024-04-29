@@ -113,7 +113,7 @@ return variation ? <NewCheckoutPage /> : <OldCheckoutPage />
 
 Note that the `get<Type>Assignment` methods in Eppo are deterministic, meaning that they will always return the same variant for a given subject (e.g., user) throughout the experiment.
 
-### 7. Turn on the flag for users
+### 7. Turn on the flag
 
 To start randomly assigning traffic to the enabled feature, flip the flag on in the Test environment.
 
