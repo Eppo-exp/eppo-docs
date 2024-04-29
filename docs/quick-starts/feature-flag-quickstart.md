@@ -41,7 +41,7 @@ Now that you're in the Test environment, add a Feature Gate allocation to your f
 
 ![Feature gate 3](/img/feature-flagging/feature-gate-setup-1.png)
 
-For this example, we will assign all users to the experiment. If you want to target specific users, you can add targeting rules to the allocation. You can read more about targeting [here](/feature-flagging/targeting).
+For this example, we will assign all users to the Enabled version of the flag. If you want to target specific users, you can add targeting rules to the allocation. You can read more about targeting [here](/feature-flagging/targeting).
 
 ![Feature gate 4](/img/feature-flagging/feature-gate-setup-3.png)
 
@@ -73,22 +73,20 @@ const eppoClient = EppoSdk.getInstance();
 
 const variation = eppoClient.getBoolAssignment(
   user.id,
-  "new-checkout-page",
-  // if using Eppo to target users, pass in user properties as optional third argument
-  // userProperties
+  "new-checkout-page"
 );
 
 return variation ? <NewCheckoutPage /> : <OldCheckoutPage />
 ```
 
-Note that the `get<Type>Assignment` methods in Eppo are deterministic, meaning that they will always return the same flag status for a given subject (e.g., user) throughout the experiment.
+Note that the `get<Type>Assignment` methods in Eppo are deterministic, meaning that they will always return the same flag status for a given subject (e.g., user) wherever the flag is called.
 
 ### 6. Turn on the flag
 
-Flip the flag on in the Test environment to start serving the new variant.
+Flip the flag on in the Test environment to start serving the new feature.
 
 ![Feature gate 5](/img/feature-flagging/feature-gate-setup-2.png)
 
 You should now see assignments coming through the Eppo SDK!
 
-To deploy to production, create a new SDK key for the production environment, create a production experiment allocation, and enable the flag.
+To deploy to production, create a new SDK key for the production environment, create a production feature gate allocation, and enable the flag.
