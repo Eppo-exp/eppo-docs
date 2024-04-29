@@ -115,7 +115,7 @@ Note that the `get<Type>Assignment` methods in Eppo are deterministic, meaning t
 
 ### 7. Turn on the flag
 
-To start randomly assigning traffic to the enabled feature, flip the flag on in the Test environment.
+Flip the flag on in the Test environment to start serving the new variant.
 
 ![Feature gate 5](/img/feature-flagging/feature-gate-setup-2.png)
 
