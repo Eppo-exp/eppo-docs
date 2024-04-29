@@ -7,7 +7,7 @@ sidebar_position: 2
 
 This 10 minute guide will walk through creating your first feature flag in Eppo. In the example, we'll imagine that we are adding a basic on/off switch for a new onboarding page.
 
-While Eppo feature flags can be used for feature gates, kill switches, and targeted rollouts, this guide will focus on using Eppo flags for running randomized experiments.
+While Eppo's SDK can be used for targeted rollouts, A/B/n experiments, and personalization via Contextual Bandits, this guide will focus on creating a simple on/off switch in Eppo.
 
 Note that if you are using Eppo alongside an existing randomization tool, you can skip right to the [next quick start](/experiment-quickstart).
 
