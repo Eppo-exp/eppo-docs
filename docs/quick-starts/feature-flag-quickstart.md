@@ -5,7 +5,7 @@ sidebar_position: 2
 
 # Creating your first feature flag
 
-This 10 minute guide will walk through running your first feature flag with Eppo. In the example we'll imagine that we are testing a new checkout page.
+This 10 minute guide will walk through creating your first feature flag in Eppo. In the example, we'll imagine that we are adding a basic on/off switch for a new onboarding page.
 
 While Eppo feature flags can be used for feature gates, kill switches, and targeted rollouts, this guide will focus on using Eppo flags for running randomized experiments.
 
