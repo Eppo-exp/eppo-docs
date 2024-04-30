@@ -1,35 +1,89 @@
 ---
-sidebar_position: 3
+sidebar_position: 10
 ---
+
 
 # Warehouse best practices
 
-Eppo sits on top of your data warehouse, allowing you to run automated experimentation analyses with data you know and trust. To do this properly, Eppo expects your data to be formatted in a certain way. Fortunately, these expectations are very simple and are designed to require very little, if any, preparatory work on the user’s side.
+Eppo's warehouse native approach makes integration easy, transparent, and secure but it also creates a dependency on the underlying warehouse database structure. Knowing how to configure your tables to work with Eppo properly is important to minimizing run-times and compute used.
 
-Furthermore, while SQL based approach can be very flexible, not all SQL queries are the same: efficient SQL queries can drastically reduce the time it takes to refresh experiments.
+This page outlines some best practices to help keep Eppo's pipeline as lightweight as possible.
 
-## Minimum Requirements
+## Data modeling
 
-Eppo requires, at a minimum, a table containing a record of every user’s assignment into an experiment and a separate table (or tables) featuring user events that metrics can be calculated from.
+Eppo's SQL editor makes it easy to quickly pilot new SQL logic, but in the steady state all complex logic (joins, aggregations, etc.) should happen upstream of Eppo in your data warehouse's transformation layer. In Eppo, the SQL should then be a simple `SELECT ... FROM` statement (just make sure the table is materialized as table and not a view). 
 
-The assignment table should include a column specifying the unique identifier for the user, the experiment or feature flag the user saw, the variant they were shown, and the timestamp they saw all of this. Immediately below, we can see an example table with the required columns.
+By materializing data upstream of Eppo, you can avoid having Eppo perform complex joins and aggregations separately for each experiment. Simple `WHERE` statements are typically fine to include in Eppo, just avoid `JOIN` and `GROUP BY`. 
 
-![Assignment Table Example](/img/warehouse-tables/assignment_source.png)
+### One metric table vs many
 
-The event tables should have a timestamp associated with the time the event occurred, the unique identifier associated with the user who performed the action, and any columns that aggregations need to be performed on top of to create a metric. For example, in the screenshot below, a purchase_value column indicates the value of the purchase made by the user and will be used to create metrics like Total Value of Goods Purchased.
+The most intensive part of the experiment pipeline is often joining assignments to facts (metric events). By consolidating multiple metric events into one pre-computed table, you can reduce the number of times that Eppo has to perform this join.
 
-![Fact Source Example](/img/warehouse-tables/fact_source.png)
+```sql
+SELECT 
+  ...
+FROM assignments AS a
+LEFT JOIN facts AS f
+  ON f.subject_id = a.subject_id
+ AND f.timestamp >= a.timestamp
+  ...
+```
 
-## Efficient computations
+### Pre-aggregating data
 
-Eppo allows users to create SQL definitions using custom SQL. This means joins, aggregations, and window functions can all be utilized with the SQL definition layer. This enables a large amount of flexibility.
+If your metric sources are extremely large you might want to consider aggregating up to the subject-day grain (e.g., daily user values) before adding to Eppo. If you do opt to do this, make sure you truncate the assignment date to the start of the day as well so that the join above does not remove data from the day of assignment.
 
-However, it is important to consider the implications of performing complex logic within the SQL definition layer. This query will be executed anytime an experiment is refreshed. Accordingly, these complex joins and aggregations will be executed for every experiment separately. So, if for example, you had 10 active experiments all utilizing the same assignment SQL definition, Eppo would run the same query ten times to wrangle assignment data.
+Pre-aggregating to the date level can reduce warehouse usage at the cost of minor dilution to metrics. Specifically, all events that happen on the day of assignment will be included, not just those after the subject is exposed to the experiment. Depending on your business and use cases, this may be a suitable tradeoff to make in order to drastically reduce warehouse costs.
 
-### Push complex logic to the transformation layer
+## Configuring Eppo
 
-For optimal performance, it is recommended to move any complex logic to the transformation layer of your data warehouse as an incremental model. By doing so, the computationally intensive aggregations and joins will only be executed once during each incremental model build.
+In addition to passing in well-modeled data to Eppo, there are also decisions when configuring Eppo that can impact compute costs. This section talks through how to set up Eppo to ensure the pipeline is as efficient as possible.
 
-In addition to efficiency gains, this approach offers the benefit of an additional layer of version control for your SQL definitions. If users wish to modify these definitions, they will need to follow the established internal processes for altering models in the data transformation layer.
 
-Once this model is built and maintained within the transformation layer, you can simply reference it in your Eppo SQL statements using `SELECT * FROM transformed.model`. Eppo will then query the pre-built table without performing any calculations, resulting in significant efficiency improvements.
+### Setting up properties
+
+In order to provide rapid exploration of experiment results, Eppo will pre-compute dimensional breakouts of metrics. This is typically more efficient than computing breakouts live as we can leverage pipeline incrementality and only run the computation once instead of each time a user explores data. That said, it is worth being mindful of how many properties are added to the platform. If there are properties that teams never use, it is better to omit them from Eppo SQL definitions.
+
+It is also worth limiting the number of dimensions with very high cardinality (number of possible values). Two common approaches are to bucket to a higher granularity (instead of country, use region) or to group all but the 10 most common values into an "other" bucket.
+
+Finally, Eppo supports adding properties on both entities and facts. Fact properties should only be used when the property value is not one-to-one with the experiment subject (e.g., user). Common examples include product type, support ticket reason, etc.
+
+
+### Scheduling experiment refreshes
+
+By default, Eppo will refresh results every 24 hours. If you have certain experiments that don't need daily results (for instance, long term marketing holdouts), consider adding a [custom schedule](/administration/experiment-schedule-settings). Eppo's incremental pipeline will automatically adjust to only scan data since the last scheduled run.
+
+### Leveraging partitioning 
+
+Eppo never runs SQL definitions directly but rather uses them to compile a data pipeline that runs in your warehouse. Every query will be wrapped in a date filter to ensure Eppo only scans recent data:
+
+```sql
+select ...
+  from (
+    {{ your SQL definition}}
+  )
+ where {{selected timestamp column}} > current_date - 2
+```
+(A 2 day lookback is the default, your Eppo Support Engineer can configure a custom look back if desired)
+
+If the event timestamp is the partition key, this naturally leads to efficient scans of your data. However, if the table is partitioned on a different column (for instance, event date), some SQL compilers will still scan the full table.
+
+If you'd like to specify a separate column to use in filtering, you can add an optional "Partition Date" column on the SQL definition:
+
+![Partition Date](/img/data-management/best-practices/partition_date.png)
+
+:::info
+Partition dates are disabled by default, if you'd like to enable them in your workspace, please reach out to your Eppo representative or email us at support@geteppo.com.
+:::
+
+## Monitoring
+
+### Identifying problematic sources
+
+When an experiment refresh fails or times out, Eppo will automatically [run diagnostics](/data-management/source-diagnostics) against the fact sources connected to the experiment to help identify poorly configured sources.
+
+Your Eppo support team can provide a custom dashboard showing how long each source is taking to compute. This naturally highlights specific sources that either contain complex logic or do not fully leverage partitioning.
+
+### Setting up notifications
+
+Finally, you can subscribe to [Slack notifications](/administration/slack-notifications) for any time a data pipeline fails. If a SQL source is poorly configured, or an underlying data model changes, these notifications can help guarantee that the pipeline runs smoothly and within the timeout parameters configured within your data warehouse. 
