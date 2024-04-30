@@ -53,7 +53,7 @@ Finally, Eppo supports adding properties on both entities and facts. Fact proper
 
 By default, Eppo will refresh results every 24 hours. If you have certain experiments that don't need daily results (for instance, long term marketing holdouts), consider adding a [custom schedule](/administration/experiment-schedule-settings). Eppo's incremental pipeline will automatically adjust to only scan data since the last scheduled run.
 
-### Leverage partitioning 
+### Leveraging partitioning 
 
 Eppo never runs SQL definitions directly but rather uses them to compile a data pipeline that runs in your warehouse. Every query will be wrapped in a date filter to ensure Eppo only scans recent data:
 
