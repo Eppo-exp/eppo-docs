@@ -12,6 +12,6 @@ curl --header 'X-Eppo-Token: <api key>' https://eppo.cloud/api/v1/experiment-ana
 #### Explore the API Swagger documentation
 https://eppo.cloud/api/docs
 
-::: note
+:::note
 API keys are distinct from SDK keys that are used to connect SDK with our Feature flag and assignment configuration tool.
 :::

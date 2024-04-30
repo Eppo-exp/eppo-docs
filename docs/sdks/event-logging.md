@@ -68,11 +68,10 @@ await init({
 // Then every call to getStringAssignment will also log the event to Segment
 const eppoClient = EppoSdk.getInstance();
 const variation = eppoClient.getStringAssignment(
-  "<SUBJECT-KEY>",
   "<FLAG-KEY>",
-  {
-    // Optional metadata about the user to be used for targeting
-  }
+  "<SUBJECT-KEY>",
+  <SUBJECT-ATTRIBUTES>, // Metadata used for targeting
+  "<DEFAULT-VALUE>",
 );
 ```
 
@@ -109,11 +108,10 @@ await init({
 // Then every call to getStringAssignment will also log the event to Rudderstack
 const eppoClient = EppoSdk.getInstance();
 const variation = eppoClient.getStringAssignment(
-  "<SUBJECT-KEY>",
   "<FLAG-KEY>",
-  {
-    // Optional metadata about the user to be used for targeting
-  }
+  "<SUBJECT-KEY>",
+  <SUBJECT-ATTRIBUTES>, // Metadata used for targeting
+  "<DEFAULT-VALUE>",
 );
 ```
 
@@ -155,11 +153,10 @@ await init({
 // Then every call to getStringAssignment will also log the event to mParticle
 const eppoClient = EppoSdk.getInstance();
 const variation = eppoClient.getStringAssignment(
-  "<SUBJECT-KEY>",
   "<FLAG-KEY>",
-  {
-    // Optional metadata about the user to be used for targeting
-  }
+  "<SUBJECT-KEY>",
+  <SUBJECT-ATTRIBUTES>, // Metadata used for targeting
+  "<DEFAULT-VALUE>",
 );
 ```
 
@@ -218,11 +215,10 @@ await init({
 // Then every call to getStringAssignment will also log the event to Snowplow
 const eppoClient = EppoSdk.getInstance();
 const variation = eppoClient.getStringAssignment(
-  "<SUBJECT-KEY>",
   "<FLAG-KEY>",
-  {
-    // Optional metadata about the user to be used for targeting
-  }
+  "<SUBJECT-KEY>",
+  <SUBJECT-ATTRIBUTES>, // Metadata used for targeting
+  "<DEFAULT-VALUE>",
 );
 ```
 
@@ -256,11 +252,10 @@ await init({
 // Then every call to getStringAssignment will also log the event to Amplitude
 const eppoClient = EppoSdk.getInstance();
 const variation = eppoClient.getStringAssignment(
-  "<SUBJECT-KEY>",
   "<FLAG-KEY>",
-  {
-    // Optional metadata about the user to be used for targeting
-  }
+  "<SUBJECT-KEY>",
+  <SUBJECT-ATTRIBUTES>, // Metadata used for targeting
+  "<DEFAULT-VALUE>",
 );
 ```
 

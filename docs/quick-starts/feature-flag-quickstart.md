@@ -72,8 +72,10 @@ import * as EppoSdk from "@eppo/js-client-sdk";
 const eppoClient = EppoSdk.getInstance();
 
 const variation = eppoClient.getBoolAssignment(
-  user.id,
-  "new-checkout-page"
+  "new-checkout-page" // flag key
+  user.id, // subject key
+  {}, // userProperties
+  false, // default value
 );
 
 return variation ? <NewCheckoutPage /> : <OldCheckoutPage />

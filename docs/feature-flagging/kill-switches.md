@@ -24,9 +24,11 @@ or nothing, no allocation is required:
 Here's how you would use the switch in your code:
 
 ```python
-# The argument user_id is required but doesn't affect assignment in this case.
+# The second argument is the subject key, which doesn't affect assignment in this case.
+# The third argument is the user attributes, which are likewise not needed here.
+# The fourth argument is the default value, which is 'off' in this case.
 
-if (eppoClient.getStringAssignment(user_id, 'twilio-killswitch') == 'on'):
+if (eppoClient.getStringAssignment('twilio-killswitch', user_id, {}, 'off') == 'on'):
     # Code to gracefully handle a Twilio outage.
 else:
     # Normal Twilio code.

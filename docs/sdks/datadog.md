@@ -53,8 +53,10 @@ await init({
 
 const eppoClient = EppoSdk.getInstance();
 const variation = eppoClient.getStringAssignment(
+  "<FEATURE-FLAG-KEY>",
   "<SUBJECT-KEY>",
-  "<FEATURE-FLAG-KEY>"
+  <SUBJECT-ATTRIBUTES>,
+  "<DEFAULT-VALUE>",
 );
 ```
 

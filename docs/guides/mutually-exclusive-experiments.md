@@ -59,26 +59,30 @@ const eppoClient = EppoSdk.getInstance();
 
 // randomize assignment for which exclusion group they will be in
 const exclusion_group = eppoClient.getStringAssignment(
+  "mutual_exclusion_group",
   userId,
-  "mutual_exclusion_group"
-)
+  {}, // user attributes
+  "<default_value>"
+);
 
 // user profile
-let user = {
-	userId: 'unique userid',
+const user = {
+	userId: '<unique userid>',
 	exclusion_group: exclusion_group // make sure this attribute matches with the targeting traits you define in Eppo
-}
+};
 
 // randomize assignment on what variation the user will receive for the Copy Test
 const copy_variation = eppoClient.getStringAssignment(
-												 user.userId,
-												 "copy_test",
-				                 {"exclusion_group": exclusion_group}
-											 )
+	"copy_test",
+	user.userId,
+	{"exclusion_group": exclusion_group},
+	"<default_value>",
+);
 // randomize assignment on what variation the user will receive for the Layout Test
 const layout_variation = eppoClient.getStringAssignment(
-												 user.userId,
-												 "layout_test",
-				                 {"exclusion_group": exclusion_group}
-											 )
+	"layout_test",
+	user.userId,
+	{"exclusion_group": exclusion_group},
+	"<default_value>",
+);
 ```
