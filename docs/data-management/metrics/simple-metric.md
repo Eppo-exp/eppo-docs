@@ -167,6 +167,9 @@ from ...
 where fact_timestamp <= assignment_timestamp + X days 
 ```
 
+Optionally, you can enable filtering out subjects until they are aged. This will only count events once a subject has been assigned to the experiment for the conversion period specified. Using the example above, a subject will only be included once they've been assigned to the experiment for 7 days.
+
+
 #### Threshold
 
 Threshold metrics measure the proportion of entities who meet a user-specified `SUM` or `COUNT` of a fact within an optional time-period. For example, you might want to understand what percent of users spend more than $100 within 7 days of assignment into an experiment.

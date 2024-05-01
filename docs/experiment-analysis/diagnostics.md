@@ -26,7 +26,7 @@ The experiment compute status diagnostic checks that Eppo can reach your warehou
 
 ## Traffic diagnostics
 
-Validity of experimental results crucially relies on proper randomization of subjects. We use the sample ratio mismatch test to verify that subjects are divided across variants as expected.
+Validity of experimental results crucially relies on proper randomization of subjects. We use the sample ratio mismatch test to verify that subjects are divided across variants as expected and additionally check that subjects assigned do not jump between variants.
 
 ### Traffic imbalance diagnostic
 
@@ -47,6 +47,13 @@ Issues with the traffic allocations can come from many sources; here are some co
 Eppo can also detect when the observed split of traffic across variations within one or more dimensions did not match the expected split. We will highlight the top dimensions where we an imbalance occurring so that you can investigate further.
 
 ![Example diagnostic for dimensional assignment imbalance when country is Australia or India](/img/experiments/diagnostics/diagnostics_imbalance_dimensional.png)
+
+### Mixed assignments diagnostic
+Eppo checks if subjects have been exposed to more than one variant and will notify based on the percentage detected. Note that subjects seen in multiple variants will be removed from Eppo analysis.
+
+- Pass - 0-10% mixed assignments detected
+- Warn - 10-60% mixed assignments detected
+- Fail - 60-100% mixed assignments detected
 
 ## Metric diagnostics
 
