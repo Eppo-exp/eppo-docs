@@ -78,12 +78,12 @@ export default function EppoRandomizationProvider({
   return loadingComponent;
 }
 ```
-```
+```jsx
 <EppoRandomizationProvider>
   <CTAComponent />
 </EppoRandomizationProvider>
 ```
-```
+```jsx
 function CTAComponent(): JSX.Element {
   const assignedVariation = useMemo(() => {
     const eppoClient = getInstance();
