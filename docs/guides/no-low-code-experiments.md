@@ -1,6 +1,6 @@
 # Running no and low code experiments in Eppo
 
-Often times there are frequently tested parts of a site or app where teams would like to execute changes in a self-service manner. Running experiments without an additional code is easy to do in Eppo with some initial set up. With a JSON flag and parameterizing parts of the site or app where frequent changes are made, users can create additional experiment allocations on the same flag/
+Often times there are frequently tested parts of a site or app where teams would like to execute changes in a self-service manner. Running experiments without an additional code release is easy to do in Eppo with some initial set up. With a JSON flag and parameterizing parts of the site or app where frequent changes are made, users can create additional experiment allocations on the same flag.
 
 ## Creating multiple experiments on the same flag
 
