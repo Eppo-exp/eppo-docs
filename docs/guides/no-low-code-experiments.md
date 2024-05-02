@@ -33,7 +33,12 @@ You can now run multiple experiments off of this same flag without any additiona
 import * as EppoSdk from '@eppo/node-server-sdk';
 
 const client = EppoSdk.getInstance();
-const variation = client.getAssignment("winter-promo", "<SUBJECT-KEY>", <SUBJECT-ATTRIBUTES>, "<DEFAULT-VALUE>")
+const variation = client.getAssignment(
+    "winter-promo", 
+    "<SUBJECT-KEY>", 
+    <SUBJECT-ATTRIBUTES>, 
+    "<DEFAULT-VALUE>"
+)
 ```
 
 
