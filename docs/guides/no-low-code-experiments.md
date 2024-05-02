@@ -43,7 +43,7 @@ JSON flags can be used to parameterize your app or site to run experiments witho
 
 Below is an example extended from our [React](/sdks/client-sdks/javascript#usage-in-react) documentation.
 
-```
+```jsx
 import { useEffect, useState } from "react";
 
 import { init } from "@eppo/js-client-sdk";
