@@ -21,12 +21,6 @@ After adding an additional Experiment Allocation, the allocation shows up on you
 
 This new allocation logic splits the remaining users 50/50 into the second and third variations if those users do not qualify for the first 2 allocations. The previous experiment allocation can be archived by selecting the ‘bin’ icon on the right hand side of the allocation. Additionally, by clicking the gray side bar on the right hand side of the allocation, allocations can be dragged and dropped to reprioritize the order of logic executed.
 
-:::warning
-
-Eppo does not recommend running two experiments on the same flag at the same time since it can interfere with experiment results. We recommend archiving the experiment allocation after the test is complete before adding a new experiment allocation to the same flag. The example above is to illustrate the ability to have multiple experiments created on the same flag.
-
-:::
-
 You can now run multiple experiments off of this same flag without any additional releases. Continuing this example, this is the code required for this flag regardless of how many experiment allocations or feature gates are created:
 
 ```jsx
