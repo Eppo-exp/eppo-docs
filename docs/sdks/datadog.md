@@ -49,8 +49,8 @@ func IAssignmentLogger(assignment: Assignment) {
 }
 
 let eppoClient = EppoClient(apiKey: "mock-api-key", assignmentLogger: IAssignmentLogger)
-```
 
+```
 </TabItem>
 <TabItem value="android" label="Android">
 Initialize Eppo's SDK and create an assignment logger that additionally reports feature flag evaluations to Datadog using the snippet of code shown below.
@@ -58,6 +58,20 @@ Initialize Eppo's SDK and create an assignment logger that additionally reports 
 For more information about initializing Eppo's SDK, see [Eppo's Android SDK documentation](https://docs.geteppo.com/sdks/client-sdks/android)
 
 
+```java
+AssignmentLogger logger = new AssignmentLogger() {
+    @Override
+    public void logAssignment(Assignment assignment) {
+      GlobalRumMonitor.get().addFeatureFlagEvaluation(assignment.getFeatureFlag(), assignment.getVariation());
+    }
+};
+
+EppoClient eppoClient = new EppoClient.Builder()
+    .apiKey("YOUR_API_KEY")
+    .assignmentLogger(logger)
+    .application(application)
+    .buildAndInit();
+```
 
 </TabItem>
 <TabItem value="react" label="React Native">
