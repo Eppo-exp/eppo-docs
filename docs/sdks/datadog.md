@@ -49,7 +49,6 @@ func IAssignmentLogger(assignment: Assignment) {
 }
 
 let eppoClient = EppoClient(apiKey: "mock-api-key", assignmentLogger: IAssignmentLogger)
-
 ```
 </TabItem>
 <TabItem value="android" label="Android">
