@@ -29,7 +29,7 @@ This example assumes there is a [feature flag](/feature-flagging/feature-gates.m
     const assignmentLogger: IAssignmentLogger = {
       logAssignment(assignment) {
         datadogRum.addFeatureFlagEvaluation(assignment.featureFlag, assignment.variation);
-      },
+      }
     };
     
     await eppoInit({
