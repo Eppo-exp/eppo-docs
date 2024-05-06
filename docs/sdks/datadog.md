@@ -20,76 +20,64 @@ This example assumes there is a [feature flag](/feature-flagging/feature-gates.m
 
 ## Setup
 <Tabs>
-  <TabItem value="browser" label="Browser" default>
-    Initialize Eppo's SDK and create an assignment logger that additionally reports feature flag evaluations to Datadog using the snippet of code shown below.
-    
-    For more information about initializing Eppo's SDK, see [Eppo's JavaScript SDK documentation](https://docs.geteppo.com/sdks/client-sdks/javascript)
-    
-  ```tsx
-    const assignmentLogger: IAssignmentLogger = {
-      logAssignment(assignment) {
-        datadogRum.addFeatureFlagEvaluation(assignment.featureFlag, assignment.variation);
-      },
-    };
-    
-    await eppoInit({
-      apiKey: "<API_KEY>",
-      assignmentLogger,
-    });
-  ```
-  </TabItem>
-  <TabItem value="iOS" label="iOS">
-    Initialize Eppo's SDK and create an assignment logger that additionally reports feature flag evaluations to Datadog using the snippet of code shown below.
-    
-    For more information about initializing Eppo's SDK, see [Eppo's iOS SDK documentation](https://docs.geteppo.com/sdks/client-sdks/ios)
+<TabItem value="javascript" label="Javascript" default>
+Initialize Eppo's SDK and create an assignment logger that additionally reports feature flag evaluations to Datadog using the snippet of code shown below.
 
-  ```swift
-    func IAssignmentLogger(assignment: Assignment) {
-      RUMMonitor.shared().addFeatureFlagEvaluation(featureFlag: assignment.featureFlag, variation: assignment.variation)
-    }
-    
-    let eppoClient = EppoClient(apiKey: "mock-api-key", assignmentLogger: IAssignmentLogger)
-  ```
+For more information about initializing Eppo's SDK, see [Eppo's JavaScript SDK documentation](https://docs.geteppo.com/sdks/client-sdks/javascript)
 
-  </TabItem>
-  <TabItem value="android" label="Android">
-    Initialize Eppo's SDK and create an assignment logger that additionally reports feature flag evaluations to Datadog using the snippet of code shown below.
+```tsx
+const assignmentLogger: IAssignmentLogger = {
+  logAssignment(assignment) {
+    datadogRum.addFeatureFlagEvaluation(assignment.featureFlag, assignment.variation);
+  },
+};
 
-    For more information about initializing Eppo's SDK, see [Eppo's Android SDK documentation](https://docs.geteppo.com/sdks/client-sdks/android)
+await eppoInit({
+  apiKey: "<API_KEY>",
+  assignmentLogger,
+});
+```
+</TabItem>
+<TabItem value="iOS" label="iOS">
+Initialize Eppo's SDK and create an assignment logger that additionally reports feature flag evaluations to Datadog using the snippet of code shown below.
 
-  ```java
-    AssignmentLogger logger = new AssignmentLogger() {
-      @Override
-      public void logAssignment(Assignment assignment) {
-        GlobalRumMonitor.get().addFeatureFlagEvaluation(assignment.getFeatureFlag(), assignment.getVariation());
-      }
-    };
+For more information about initializing Eppo's SDK, see [Eppo's iOS SDK documentation](https://docs.geteppo.com/sdks/client-sdks/ios)
 
-    EppoClient eppoClient = new EppoClient.Builder()
-      .apiKey("YOUR_API_KEY")
-      .assignmentLogger(logger)
-      .application(application)
-      .buildAndInit();
-  ```
-  </TabItem>
-  <TabItem value="react" label="React Native">
-    Initialize Eppo's SDK and create an assignment logger that additionally reports feature flag evaluations to Datadog using the snippet of code shown below.
+```swift
+func IAssignmentLogger(assignment: Assignment) {
+  RUMMonitor.shared().addFeatureFlagEvaluation(featureFlag: assignment.featureFlag, variation: assignment.variation)
+}
 
-    For more information about initializing Eppo's SDK, see [Eppo's React native SDK documentation](https://docs.geteppo.com/sdks/client-sdks/react-native)
+let eppoClient = EppoClient(apiKey: "mock-api-key", assignmentLogger: IAssignmentLogger)
+```
 
-    ```typescript
-    const assignmentLogger: IAssignmentLogger = {
-      logAssignment(assignment) {
-        DdRum.addFeatureFlagEvaluation(assignment.featureFlag, assignment.variation);
-      },
-    };
+</TabItem>
+<TabItem value="android" label="Android">
+Initialize Eppo's SDK and create an assignment logger that additionally reports feature flag evaluations to Datadog using the snippet of code shown below.
 
-    await eppoInit({
-      apiKey: "<API_KEY>",
-      assignmentLogger,
-    });
-    ```
-  </TabItem>
+For more information about initializing Eppo's SDK, see [Eppo's Android SDK documentation](https://docs.geteppo.com/sdks/client-sdks/android)
+
+
+
+</TabItem>
+<TabItem value="react" label="React Native">
+Initialize Eppo's SDK and create an assignment logger that additionally reports feature flag evaluations to Datadog using the snippet of code shown below.
+
+For more information about initializing Eppo's SDK, see [Eppo's React native SDK documentation](https://docs.geteppo.com/sdks/client-sdks/react-native)
+
+```typescript
+const assignmentLogger: IAssignmentLogger = {
+  logAssignment(assignment) {
+    DdRum.addFeatureFlagEvaluation(assignment.featureFlag, assignment.variation);
+  },
+};
+
+await eppoInit({
+  apiKey: "<API_KEY>",
+  assignmentLogger,
+});
+```
+</TabItem>
 </Tabs>
 
 For more information, read Datadog's [Getting Started with Feature Flag Data in RUM documentation.](https://docs.datadoghq.com/real_user_monitoring/guide/setup-feature-flag-data-collection/?tab=browser#eppo-integration)
