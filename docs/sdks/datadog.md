@@ -25,7 +25,7 @@ This example assumes there is a [feature flag](/feature-flagging/feature-gates.m
     
     For more information about initializing Eppo's SDK, see [Eppo's JavaScript SDK documentation](https://docs.geteppo.com/sdks/client-sdks/javascript)
     
-    ```typescript
+    ```tsx
     const assignmentLogger: IAssignmentLogger = {
       logAssignment(assignment) {
         datadogRum.addFeatureFlagEvaluation(assignment.featureFlag, assignment.variation);
