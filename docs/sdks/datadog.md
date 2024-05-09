@@ -94,3 +94,5 @@ await eppoInit({
 </Tabs>
 
 For more information, read Datadog's [Getting Started with Feature Flag Data in RUM documentation.](https://docs.datadoghq.com/real_user_monitoring/guide/setup-feature-flag-data-collection/?tab=browser#eppo-integration)
+
+You can [install Eppo's Datadog integration here](https://app.datadoghq.com/integrations/eppo)
