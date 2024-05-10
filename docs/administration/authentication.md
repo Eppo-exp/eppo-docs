@@ -10,7 +10,7 @@ Eppo supports the following enterprise authentication options:
 
 - SAML
 - OpenID Connect
-  - [Okta](./okta)
+  - [Okta](/administration/okta)
 - Google Workspace
 - Microsoft Azure AD
 - ADFS
