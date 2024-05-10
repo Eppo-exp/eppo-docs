@@ -6,7 +6,7 @@ import TabItem from '@theme/TabItem';
 Eppo's open source Node SDK can be used for both feature flagging and experiment assignment:
 
 - [GitHub repository](https://github.com/Eppo-exp/node-server-sdk)
-- [API Reference](https://eppo-exp.github.io/node-server-sdk/node-server-sdk.html)
+- [SDK Reference](https://eppo-exp.github.io/node-server-sdk/node-server-sdk.html)
 - [NPM package](https://www.npmjs.com/package/@eppo/node-server-sdk)
 
 ## Getting Started
@@ -53,7 +53,6 @@ const assignmentLogger: IAssignmentLogger = {
   },
 };
 ```
-
 </TabItem>
 
 <TabItem value="segment" label="Segment">
@@ -234,26 +233,27 @@ After initialization, the SDK begins polling Eppo’s API at regular intervals t
 
 ### Assign variations
 
-Assigning users to flags or experiments with a single `getStringAssignment` function:
+Assign users to flags or experiments using `get<Type>Assignment`, depending on the type of the flag.
+For example, for a String-valued flag, use `getStringAssignment`:
 
 ```javascript
 import * as EppoSdk from "@eppo/node-server-sdk";
 
 const eppoClient = EppoSdk.getInstance();
 const variation = eppoClient.getStringAssignment(
-  "<SUBJECT-KEY>",
   "<FLAG-KEY>",
-  {
-    // Optional map of subject metadata for targeting.
-  }
+  "<SUBJECT-KEY>",
+  <SUBJECT-ATTRIBUTES>, // Metadata used for targeting
+  "<DEFAULT-VALUE>",
 );
 ```
+The `getStringAssignment` function takes three required and one optional input to assign a variation:
 
-The `getStringAssignment` function takes two required and one optional input to assign a variation:
-
+- `flagKey` - This key is available on the detail page for both flags and experiments. Can also be an experiment key.
 - `subjectKey` - The entity ID that is being experimented on, typically represented by a uuid.
-- `flagOrExperimentKey` - This key is available on the detail page for both flags and experiments.
-- `subjectAttributes` - An optional map of metadata about the subject used for targeting. If you create rules based on attributes on a flag/experiment, those attributes should be passed in on every assignment call.
+- `subjectAttributes` - A map of metadata about the subject used for targeting. If you create rules based on attributes on a flag/experiment, those attributes should be passed in on every assignment call. If no attributes are needed, pass in an empty object.
+- `defaultValue` - The value that will be returned if no allocation matches the subject, if the flag is not enabled, if `getStringAssignment` is invoked before the SDK has finished initializing, or if the SDK was not able to retrieve the flag configuration. Its type must match the `get<Type>Assignment` call.
+
 
 ### Example
 
@@ -276,17 +276,18 @@ await init({
   assignmentLogger,
 });
 
-// Then every call to getAssignment will also log the event
+// Then every call to getStringAssignment will also log the event
 const user = {
   userid: '1234567890',
   attributes: { country: 'united states', subscription_status: 'gold' }
 }
 
 const eppoClient = EppoSdk.getInstance();
-const variation = eppoClient.getAssignment(
-  user.userid,
+const variation = eppoClient.getStringAssignment(
   "new-user-onboarding",
+  user.userid,
   user.attributes
+  "control",
 );
 ```
 ```javascript showLineNumbers
@@ -304,37 +305,22 @@ const variation = eppoClient.getAssignment(
 }
 ```
 
-
-
-## Handling `null`
-
-We recommend always handling the `null` case in your code. Here are some examples illustrating when the SDK returns `null`:
-
-1. The **Traffic Exposure** setting on experiments/allocations determines the percentage of subjects the SDK will assign to that experiment/allocation. For example, if Traffic Exposure is 25%, the SDK will assign a variation for 25% of subjects and `null` for the remaining 75% (unless the subject is part of an allow list).
-
-2. Assignments occur within the environments of feature flags. You must enable the environment corresponding to the feature flag's allocation in the user interface before `getStringAssignment` returns variations. It will return `null` if the environment is not enabled.
-
-![Toggle to enable environment](/img/feature-flagging/enable-environment.png)
-
-3. If `getStringAssignment` is invoked before the SDK has finished initializing, the SDK may not have access to the most recent experiment configurations. In this case, the SDK will assign a variation based on any previously downloaded experiment configurations stored in local storage, or return `null` if no configurations have been downloaded.
-
-<br />
-
 :::note
 It may take up to 10 seconds for changes to Eppo experiments to be reflected by the SDK assignments.
 :::
 
 ## Typed assignments
 
-Use the following getAssignment method for the type of feature flag created:
+The following typed functions are available:
 
 ```
 getBoolAssignment(...)
 getNumericAssignment(...)
-getJSONStringAssignment(...)
-getParsedJSONAssignment(...)
+getIntegerAssignment(...)
+getStringAssignment(...)
+getJSONAssignment(...)
 ```
-To read more about different flag types, see the page on [Flag Varitions](/feature-flagging/flag-variations).
+To read more about different flag types, see the page on [Flag Variations](/feature-flagging/flag-variations).
 ## Initialization options
 
 How the SDK fetches experiment configurations is configurable via additional optional initialization options:

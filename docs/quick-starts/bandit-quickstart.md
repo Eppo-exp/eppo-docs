@@ -1,6 +1,6 @@
 ---
 slug: /bandit-quickstart
-sidebar_position: 5
+sidebar_position: 6
 ---
 
 # Running your first Contextual Bandit
@@ -167,7 +167,7 @@ Set<String> actions = Set.of("dog", "cat", "bird", "goldfish");
 Optional<String> banditAssignment = eppoClient.getStringAssignment(subjectKey, flagKey, subjectAttributes, actions);
 ```
 
-Note that the `getAssignment` methods in Eppo are deterministic, meaning that they will always return the same variant for a given subject (e.g., user) for the life of the bandit.
+Note that the `getStringAssignment` method in Eppo is deterministic, meaning that it will return the same variant for a given subject (e.g., user) for two consecutive calls. (The variant may change over time as the bandit learns how which variants perform best for different attributes.)
 
 ### 7. Train the Bandit 
 :::note

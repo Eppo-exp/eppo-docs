@@ -37,18 +37,21 @@ This generates a singleton client instance that can be reused throughout the app
 
 ### C. Assign variations
 
-This instance can then be called to assign users to flags or experiments using the `get_string_assignment` function:
+Assign users to flags or experiments using `get_<type>_assignment`, depending on the type of the flag.
+For example, for a String-valued flag, use `get_string_assignment`:
 
 ```python
 …
-variation = client.get_string_assignment("<SUBJECT-KEY>", "<FLAG-KEY>")
+variation = client.get_string_assignment("<FLAG-KEY>", "<SUBJECT-KEY>", <SUBJECT-ATTRIBUTES>, "<DEFAULT-VALUE>")
 if variation == "fast_checkout":
     …
 else:
     …
 ```
-* `<SUBJECT-KEY>` is the value that identifies each entity in your experiment, typically `user_id`;
 * `<FLAG-KEY>` is the key that you chose when creating a flag; you can find it on the [flag page](https://eppo.cloud/feature-flags). For the rest of this presentation, we’ll use `"test-checkout"`. To follow along, we recommend that you create a test flag in your account, and split users between `"fast_checkout"` and `"standard_checkout"`.
+* `<SUBJECT-KEY>` is the value that identifies each entity in your experiment, typically `user_id`.
+* `<SUBJECT-ATTRIBUTES>` is a dictionary of metadata about the subject used for targeting. If you create targeting rules based on attributes, those attributes must be passed in on every assignment call. If no attributes are needed, pass in an empty dictionary.
+* `<DEFAULT-VALUE>` is the value that will be returned if no allocation matches the subject, if the flag is not enabled, if `get_string_assignment` is invoked before the SDK has finished initializing, or if the SDK was not able to retrieve the flag configuration.
 
 Here's how this configuration looks in the [flag page](https://eppo.cloud/feature-flags):
 
@@ -98,7 +101,7 @@ client = eppo_client.get_instance()
 # Give the client some time to initialize.
 # Note that the client may get stuck on this step if there are errors.
 # Please refer to the logs.
-while client.get_string_assignment('0', "test-checkout") is None:
+while client.get_string_assignment("test-checkout", '0', {}, "standard_checkout") is None:
     print("Waiting for client to initialize. Check the logs if this message persists.")
     sleep(1)
 # In a real-world scenario, other modules would load
@@ -107,7 +110,7 @@ while client.get_string_assignment('0', "test-checkout") is None:
 for _ in range(10):
     # Randomly creating user ids. Note that they might not actually exist in your experiment.
     user_id = str(uuid4())
-    variation = client.get_string_assignment(user_id, "test-checkout")
+    variation = client.get_string_assignment("test-checkout", user_id, {}, "standard_checkout")
     if variation == "fast_checkout":
         print(f"{user_id}: Fast checkout")
     elif variation == "standard_checkout":
@@ -193,17 +196,6 @@ Changes made to experiments on Eppo’s web interface are almost instantly propa
 
 :::
 
-### C. Handling `None`
-
-To be safe, we recommend always handling the `None` case in your code. Here are some examples illustrating when the SDK might return `None`:
-
-1. The **Traffic Exposure** setting on experiments/allocations determines the percentage of subjects the SDK will assign to that experiment/allocation. For example, if Traffic Exposure is 25%, the SDK will assign a variation for 25% of subjects and `None` for the remaining 75% (unless the subject is part of an allow list).
-
-2. Assignments occur within the environments of feature flags. You must **enable the environment** corresponding to the feature flag’s allocation in the [flag control panel](https://eppo.cloud/feature-flags/) before `getStringAssignment` returns variations. It will return `None` if the environment is not enabled.
-
-![Toggle to enable environment](/img/feature-flagging/enable-environment.png)
-
-3. If `get_string_assignment` is invoked **before the SDK has finished initializing**, the SDK may not have access to the most recent experiment configurations. In this case, the SDK will return `None`.
 
 :::info
 
@@ -214,10 +206,11 @@ By default, the Eppo client initialization is asynchronous to ensure no critical
 
 ## 4. Advanced Configuration with Metadata
 
-We introduced `get_string_assignment`’s two required inputs in the [Getting started](#getting-started) section:
+We introduced `get_string_assignment`’s three required inputs in the [Getting started](#getting-started) section:
 
 - `subject_key`: The Entity ID that is being experimented on, typically represented by a uuid.
 - `flag_key`: This key is available on the detail page for both flags and experiments.
+- `default_value`: The value that will be returned if no allocation matches the subject, if the flag is not enabled, if `get_string_assignment` is invoked before the SDK has finished initializing, or if the SDK was not able to retrieve the flag configuration.
 
 But that’s not all: the function also takes an optional input for entity properties.
 
@@ -259,9 +252,10 @@ if request.method == 'POST':
     }
 
     variation = client.get_string_assignment(
-        "<SUBJECT-KEY>",
         "<FLAG-KEY>",
+        "<SUBJECT-KEY>",
         session_attributes,
+        "<DEFAULT-VALUE>",
     )
     
     if variation == 'checkout_apple_pay':
@@ -283,23 +277,24 @@ If you create rules based on attributes on a flag or an experiment, those attrib
 
 ## 5. Typed Assignment Calls
 
-The SDK also offers assignment calls for other assignment types.
+The following typed functions are available:
 
 ```
 get_boolean_assignment(...)
+get_integer_assignment(...)
 get_numeric_assignment(...)
-get_json_string_assignment(...)
-get_parsed_json_assignment(...)
+get_string_assignment(...)
+get_json_assignment(...)
 ```
 
-Those take the same input as `get_string_assignment`: `subject_key`, `flag_key` and `subject_attributes`.
+All take the same input: `subject_key`, `flag_key`, `default_value`, and (optionally) `subject_attributes`.
 
 ### A. Boolean Assignment
 
 For example, if you configure a flag as a Boolean (`True` or `False`), you can simplify your code:
 
 ```python
-if get_boolean_assignment("<SUBJECT-KEY>", "<FLAG-KEY>"):
+if get_boolean_assignment("<SUBJECT-KEY>", "<FLAG-KEY>", False):
     …
 else:
     …
@@ -309,15 +304,15 @@ That prevents having the option of a third output. However, `“True”` can be 
 
 ### B. Numeric Assignment
 
-If you want to modify a quantity, say, the number of columns of your layout, the number of product recommendations per page or the minimum spent for free delivery, you want to make sure the allocation value is a number. Using a numeric-valued flag and `get_numeric_assignment` guarantees that. When someone edits the assignment, it will remain a number. This is useful if you are using that value in computation, say to process the amount of a promotion. It will capture obvious configuration issues before they are rolled-out.
+If you want to modify a quantity, say, the number of columns of your layout, the number of product recommendations per page or the minimum spent for free delivery, you want to make sure the allocation value is a number. Using a numeric-valued flag and `get_numeric_assignment` guarantees that. (If you want to ensure that the value be specifically an integer, use an integer-valued flag and `get_integer_assignment`.) When someone edits the assignment, it will remain a number. This is useful if you are using that value in computation, say to process the amount of a promotion. It will capture obvious configuration issues before they are rolled out.
 
-### C. Parsed JSON Assignment
+### C. JSON Assignment
 
 A more interesting pattern is to assign a JSON object. This allows us to include structured information, say the text of a marketing copy for a promotional campaign and the address of a hero image. Thanks to this pattern, one developer can configure a very simple landing page; with that in place, whoever has access to the feature flag configuration can decide and change what copy to show to users throughout a promotional period, almost instantly and without them having to release new code.
 
 ```python
 …
-self.campaign_json = get_parsed_json_assignment("<SUBJECT-KEY>", "<FLAG-KEY>")
+self.campaign_json = get_json_assignment("<SUBJECT-KEY>", "<FLAG-KEY>", <DEFAULT-JSON>)
 if self.campaign_json is not None:
     campaign['hero'] = True
     campaign['hero_image'] = self.campaign_json.hero_image
@@ -327,7 +322,3 @@ if self.campaign_json is not None:
 ```
 
 Assuming your service can be configured with many input parameters, that assignment type enables very powerful configuration changes.
-
-### D. String JSON Assignment
-
-`get_json_string_assignment` is similar, but the output is a string. This adds the responsibility of unpacking the JSON from that string.

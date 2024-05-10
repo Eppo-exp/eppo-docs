@@ -26,7 +26,7 @@ http://adoring-yonath-6ecb9d.netlify.app/*  http://docs.geteppo.com/:splat  301!
 /experiments/holdouts /experiment-analysis/holdouts
 /experiments/progress-bar /experiment-analysis/progress-bar
 /experiments/segments /experiment-analysis/segments
-/feature-flags/api-keys /sdks/api-keys
+/feature-flags/api-keys /sdks/sdk-keys
 /feature-flags/latency /sdks/faqs/latency
 /feature-flags/risk /sdks/faqs/risk
 /feature-flags/sdks /sdks
@@ -54,6 +54,7 @@ http://adoring-yonath-6ecb9d.netlify.app/*  http://docs.geteppo.com/:splat  301!
 /how-tos/running-well-powered-experiments /guides/running-well-powered-experiments
 /how-tos/warehouse-migration /guides/warehouse-migration
 /what-is-eppo /
+/sdks/api-keys /sdks/sdk-keys
 /experiment-analysis/creating-experiment-analysis /experiment-analysis/creating-experiments
 
 /feature-flags/flag-variations /feature-flagging/flag-variations

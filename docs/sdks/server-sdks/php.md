@@ -26,7 +26,7 @@ use Eppo\EppoClient;
 require __DIR__ . '/vendor/autoload.php';
 
 $eppoClient = EppoClient::init(
-   "<your_api_key>",
+   "<your_sdk_key>",
    "<base_url>", // optional, default https://eppo.cloud/api
    $assignmentLogger, // optional, must be an instance of Eppo\LoggerInterface
    $cache // optional, must be an instance of PSR-6 CacheInterface. If not passed, FileSystem cache will be used
@@ -34,13 +34,13 @@ $eppoClient = EppoClient::init(
 ```
 
 To make the experience of using the library faster, there is an option to start a background polling for randomization params.
-This way background job will start calling the Eppo api, updating the config in the cache.
+This way background job will start calling the Eppo API, updating the config in the cache.
 
 For this, create a file, e.g. `eppo-poller.php` with the contents:
 
 ```php
 $eppoClient = EppoClient::init(
-   "<your_api_key>",
+   "<your_sdk_key>",
    "<base_url>", // optional, default https://eppo.cloud/api
    $assignmentLogger, // optional, must be an instance of Eppo\LoggerInterface
    $cache // optional, must be an instance of PSD-16 SimpleInterface. If not passed, FileSystem cache will be used
@@ -53,7 +53,7 @@ after this, run this script by:
 
 `php eppo-poller.php`
 
-This will start an indefinite process of polling the Eppo-api.
+This will start an indefinite process of polling the Eppo API.
 
 ### Define an assignment logger (experiment assignment only)
 
@@ -114,7 +114,7 @@ use Eppo\EppoClient;
 require __DIR__ . '/vendor/autoload.php';
 
 $eppoClient = EppoClient::init(
-   "<your_api_key>",
+   "<your_sdk_key>",
    "<base_url>", // optional, default https://eppo.cloud/api
    $assignmentLogger, // optional, must be an instance of Eppo\LoggerInterface
    $cache // optional, must be an instance of PSR-6 CacheInterface. If not passed, FileSystem cache will be used

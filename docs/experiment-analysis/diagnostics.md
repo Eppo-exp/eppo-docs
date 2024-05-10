@@ -26,13 +26,13 @@ The experiment compute status diagnostic checks that Eppo can reach your warehou
 
 ## Traffic diagnostics
 
-Validity of experimental results crucially relies on proper randomization of subjects. We use the sample ratio mismatch test to verify that subjects are divided across variants as expected.
+Validity of experimental results crucially relies on proper randomization of subjects. We use the sample ratio mismatch test to verify that subjects are divided across variants as expected and additionally check that subjects assigned do not jump between variants.
 
 ### Traffic imbalance diagnostic
 
 The traffic imbalance diagnostic runs a test to see whether the randomization works as expected and the number of subjects assigned to each variation is as expected. This indicates that there is likely an issue with the randomization of subjects (e.g. a bug in the randomization code), which can invalidate the results of an experiment.
 
-We run this traffic imbalance test by running a [Pearson’s chi-squared test](https://en.wikipedia.org/wiki/Pearson%27s_chi-squared_test) with �=0.001*α*=0.001 on active variations, using the assignment weights for each variant (default is equal split across variations), which we convert to probabilities. This is also known as the sample ratio mismatch test (SRM). We run the test at the more conservative �=0.001*α*=0.001 level because this test is not sequentially valid; the more conservative significance level helps us avoid false positives.
+We run this traffic imbalance test by running a [Pearson’s chi-squared test](https://en.wikipedia.org/wiki/Pearson%27s_chi-squared_test) with $\alpha = 0.001$ on active variations, using the assignment weights for each variant (default is equal split across variations), which we convert to probabilities. This is also known as the sample ratio mismatch test (SRM). We run the test at the more conservative $\alpha = 0.001$ level because this test is not sequentially valid; the more conservative significance level helps us avoid false positives.
 
 Issues with the traffic allocations can come from many sources; here are some common ones we have seen:
 
@@ -47,6 +47,13 @@ Issues with the traffic allocations can come from many sources; here are some co
 Eppo can also detect when the observed split of traffic across variations within one or more dimensions did not match the expected split. We will highlight the top dimensions where we an imbalance occurring so that you can investigate further.
 
 ![Example diagnostic for dimensional assignment imbalance when country is Australia or India](/img/experiments/diagnostics/diagnostics_imbalance_dimensional.png)
+
+### Mixed assignments diagnostic
+Eppo checks if subjects have been exposed to more than one variant and will notify based on the percentage detected. Note that subjects seen in multiple variants will be removed from Eppo analysis.
+
+- Pass - 0-10% mixed assignments detected
+- Warn - 10-60% mixed assignments detected
+- Fail - 60-100% mixed assignments detected
 
 ## Metric diagnostics
 
