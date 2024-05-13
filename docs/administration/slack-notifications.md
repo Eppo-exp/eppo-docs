@@ -59,7 +59,7 @@ To remove the Slack channel from this feature flag, click on "Configure" and tur
 
 - When an experiment changes status from `DRAFT` &rarr; `RUNNING` &rarr; `WRAP UP` &rarr; `COMPLETED`
 
-See more on <a href="https://docs.geteppo.com/building-experiments/experiment-analysis/experiment-status" target="_blank">experiment statuses</a>.
+See more on <a href="https://docs.geteppo.com/experiment-analysis/experiment-status" target="_blank">experiment statuses</a>.
 
 ### A primary or guardrail metric reached statistical significance on this experiment
 

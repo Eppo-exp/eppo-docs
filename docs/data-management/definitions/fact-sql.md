@@ -42,7 +42,7 @@ You can read more about Fact Properties on the [Properties](/data-management/pro
 
 ![Create Property](/img/building-experiments/add-fact-sql-property.png)
 
-Once you have finished defining your Fact SQL, click **Save & Close**. You can now repeat this process for other fact tables, or continue on to create [Metrics](data-management/metrics/) from your new Facts.
+Once you have finished defining your Fact SQL, click **Save & Close**. You can now repeat this process for other fact tables, or continue on to create [Metrics](https://docs.geteppo.com/metric-quickstart) from your new Facts.
 
 ## Adding Partition keys (optional)
 If your table has a partition on a different column other than the event timestamp (i.e. event date), Eppo can use it for filtering queries more efficiently. 
@@ -54,4 +54,3 @@ To specify a partition key, map the column to the Partition Date field.
 :::info
 Partition dates are disabled by default, if you'd like to enable them in your workspace, please reach out to your Eppo representative or email us at support@geteppo.com.
 :::
-
