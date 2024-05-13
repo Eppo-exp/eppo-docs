@@ -19,7 +19,7 @@ On the side panel, you'll be prompted to enter some information about the experi
 1. A name for the experiment and the Team to which the experiment belongs
 2. The [Entity](/data-management/entities) on which the experiment was randomized (user, device, workspace, etc.)
 3. Which [Assignment Source](/data-management/definitions/assignment-sql) has assignment logs for the experiment
-4. An optional [entry point](/statistics/sample-size-calculator/setup#what-is-an-entry-point) on which to filter experiment assignments. This will limit the experiment analysis to subjects (e.g., users) that hit the specified entry point. You can read more about filtering experiment assignments [here](./filter-assignments-by-entry-point).
+4. An optional [entry point](/statistics/sample-size-calculator/setup#what-is-an-entry-point) on which to filter experiment assignments. This will limit the experiment analysis to subjects (e.g., users) that hit the specified entry point. You can read more about filtering experiment assignments [here](/experiment-analysis/filter-assignments-by-entry-point).
 5. The experiment key of interest. The drop-down will show flags created in Eppo as well as other experiment keys in the selected Assignment Source. If your experiment key does not show up in the drop-down you can also enter it manually. 
 6. For experiments randomized with Eppo's feature flags, you'll also specify the [Allocation](/feature-flagging/#allocations) you want to analyze (one flag can be used to run multiple experiments)
 7. A hypothesis for the experiment. You can also add this later when creating an experiment [report](/experiment-analysis/experiment-reports)
