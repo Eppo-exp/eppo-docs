@@ -17,6 +17,7 @@ async function createConfig () {
     staticDirectories: ['static'],
     onBrokenLinks: 'throw',
     onBrokenMarkdownLinks: 'warn',
+    trailingSlash: true,
     favicon: 'img/favicon.ico',
     organizationName: 'eppo', // Usually your GitHub org/user name.
     projectName: 'eppo', // Usually your repo name.
