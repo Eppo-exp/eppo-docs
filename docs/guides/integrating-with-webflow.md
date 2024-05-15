@@ -69,10 +69,6 @@ function setHeader() {
 
   // Get variation data from Eppo
   const variationData = window.eppo.getInstance().getParsedJSONAssignment(subject, '<FEATURE-FLAG-KEY>') || defaultVariationData;
-  
-  // Add client side analytics tracking call to capture experiment data 
-  // and make sure assignment data is sent to your 
-  // data warehouse that is connected to Eppo.
 
   document.getElementById('header-title').innerText = variationData.title;
   document.getElementById('header-subtitle').innerText = variationData.subtitle;
@@ -85,8 +81,18 @@ function setHeader() {
   headerImageDiv.style.backgroundSize = 'auto 100%';
 }
 
+// Assignment Logger  
+const IAssignmentLogger = {
+  logAssignment(assignment) {
+    // Add client side analytics tracking call to capture experiment data 
+    // and make sure assignment data is sent to your 
+    // data warehouse that is connected to Eppo.
+    console.log(assignment)
+  }
+};
+
 // Init Eppo Client
-opts = {apiKey: '<EPPO-SDK-KEY>'};
+opts = {apiKey: '<EPPO-SDK-KEY>', assignmentLogger: IAssignmentLogger};
 window.eppo.init(opts).then(setHeader);
 </script>
 ```
