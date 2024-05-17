@@ -134,9 +134,9 @@ For the sake of demonstration purposes, there is a display other than control fo
 
 ### Use the component in the application
 
-In this example put the component under the logo in `page.tsx`
+1. Put the offer component under the logo in `page.tsx`
 
-Below is a snippet from what you will see in your `page.tsx` and where you should place the offer compoenent:
+Below is a snippet from what you will see in your `page.tsx` and where you should place the offer component:
 
 ```tsx
 <div className={styles.center}>
@@ -150,25 +150,23 @@ Below is a snippet from what you will see in your `page.tsx` and where you shoul
         />
 </div>
 
-<EppoRandomizationProvider>
-    <OfferComponent />
-</EppoRandomizationProvider>
+// Offer component will go here
 
 ```
 
-1. Include the following code to tell the Next.js app to treat the page as a client component (e.g., it is not server-side rendered, and can use react hooks)
+2. Include the following line at the top of `page.tsx` to tell the Next.js app to treat the page as a client component (e.g., it is not server-side rendered, and can use react hooks)
 
 ```tsx
 "use client"; // Mark this file as a Client Component
 ```
 
-1. Import our offer experiment component
+3. Import our offer experiment component
 
 ```tsx
 import OfferExperiment from "./OfferExperiment";
 ```
 
-2. Add it to the page
+4. Add it to the page
 
 ```tsx
 <div className={styles.center}>
@@ -274,7 +272,7 @@ const subjectKey = '<SUBJECT-KEY>'; // Ideally populated from something like log
 const offerVariation = await getAssignment(subjectKey, '<FLAG-KEY>');
 ```
 
-In the returned elements, we can remove the now unused `<EppoRandomizationProvider>` parent element, and pass the `<OfferExperiment>` it’s variation.
+4. In the returned elements, we can remove the now unused `<EppoRandomizationProvider>` parent element, and pass the `<OfferExperiment>` the variation assigned to the user.
 
 ```tsx
 <div className={styles.center}>
@@ -282,6 +280,6 @@ In the returned elements, we can remove the now unused `<EppoRandomizationProvid
 </div>
 ```
 
-You should now see your experiment running with the new server rendered component.
+5. You should now see your experiment running with the new server rendered component.
 
 ![Server rendered experiment](/img/guides/nextjs/server-rendered-experiment.png)
