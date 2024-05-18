@@ -30,7 +30,7 @@ Open a browser to the location output for `local` (e.g., [http://localhost:3000]
 ## Eppo flag setup
 1. [Create and copy an SDK key](/sdks/sdk-keys.md) in your Eppo app if you don't already have one.
 2. [Create a feature flag](/quick-starts/feature-flag-quickstart.md/#2-create-a-flag) in your Eppo app.
-3. Make sure your flag is turned on the environment that correlates to your SDK key.
+3. Make sure your flag is turned on in the environment that correlates to your SDK key.
 
 ## Client rendered component setup
 
