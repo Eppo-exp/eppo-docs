@@ -83,7 +83,7 @@ const EppoRandomizationProvider = ({
 
 export default EppoRandomizationProvider;
 ```
-4. Replace API key placeholder with your SDK key
+4. Replace `<SDK-KEY>` placeholder with your SDK key
 
 ### Create a component to use the randomization provider
 1. Create a new `/app` file  `OfferExperiment.tsx`
