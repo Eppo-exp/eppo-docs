@@ -42,9 +42,10 @@ yarn add @eppo/js-client-sdk
 
 ### Create a randomization provider
 
-1. Create a provider based off our [Usage in React](/sdks/client-sdks/javascript#usage-in-react) documentation
-2. Create a new `/app` file called `EppoRandomizationProvider.tsx`
-3. Copy and paste the following example code into `EppoRandomizationProvider.tsx`:
+In this section, we will create a provider based off our [Usage in React](/sdks/client-sdks/javascript#usage-in-react) documentation.
+
+1. Create a new `/app` file called `EppoRandomizationProvider.tsx`
+2. Copy and paste the following example code into `EppoRandomizationProvider.tsx`:
 ```tsx
 import { ReactElement, useEffect, useState } from "react";
 
@@ -83,7 +84,7 @@ const EppoRandomizationProvider = ({
 
 export default EppoRandomizationProvider;
 ```
-4. Replace `<SDK-KEY>` placeholder with your SDK key
+3. Replace `<SDK-KEY>` placeholder with your SDK key
 
 ### Create a component to use the randomization provider
 1. Create a new `/app` file  `OfferExperiment.tsx`
@@ -98,7 +99,7 @@ const OfferComponent = () => {
 
     const assignedVariation = useMemo(() => {
       const eppoClient = getInstance();
-      return eppoClient.getStringAssignment("<FLAG-KEY>", subjectKey, <SUBJECT-ATTRIBUTES>, "<DEFAULT-VALUE>");
+      return eppoClient.getStringAssignment(<FLAG-KEY>, subjectKey, <SUBJECT-ATTRIBUTES>, <DEFAULT-VALUE>);
     }, []);
   
     return (
@@ -111,14 +112,6 @@ const OfferComponent = () => {
   }
 
 export default OfferComponent;
-```
-In the example above the disabled/error (`null`) case is handled as well as assigned variations. 
-```tsx
-<h1>
-  {assignedVariation === "control" && <p>50% Off widgets!</p>}
-  {assignedVariation === "test" && <p>Buy one widget, get one free!</p>}
-  {!assignedVariation && <p>Buy a widget today!</p>}
-</h1>
 ```
 
 For the sake of demonstration purposes, there is a display other than control for the disabled/error case which is the "Buy a widget today!" text. In most implementations, we’d default to control in that situation like so:
