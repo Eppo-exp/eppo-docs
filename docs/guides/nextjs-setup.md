@@ -1,6 +1,6 @@
 # Next.js Setup with Eppo Feature Flags
 
-This guide will walk through how to setup an Eppo Feature Flag on a client and server rendered component in a Next.js app. More specifically, this guide will walk through the set up and settings of a sample Next.js app.
+This guide walks through how to setup an Eppo Feature Flag on a client and server rendered component in a Next.js app. More specifically, this guide walks through the set up and settings of a sample Next.js app.
 
 ## Start a new Next.js React App
 
