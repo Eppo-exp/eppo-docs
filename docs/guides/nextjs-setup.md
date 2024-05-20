@@ -99,7 +99,7 @@ const OfferComponent = () => {
 
     const assignedVariation = useMemo(() => {
       const eppoClient = getInstance();
-      return eppoClient.getStringAssignment(<FLAG-KEY>, subjectKey, <SUBJECT-ATTRIBUTES>, <DEFAULT-VALUE>);
+      return eppoClient.getStringAssignment("<FLAG-KEY>", subjectKey, <SUBJECT-ATTRIBUTES>, "<DEFAULT-VALUE>");
     }, []);
   
     return (
@@ -204,7 +204,7 @@ In this file we’ll create a function that uses the Eppo client to determine ex
 import { getInstance, init } from "@eppo/node-server-sdk";
 
 let initializeAttempted = false;
-export async function getAssignment(subjectKey: string, flagKey: string): Promise<String | null> {
+export async function getAssignment(flagKey: string, subjectKey: string): Promise<String | null> {
   if (!initializeAttempted) {
     initializeAttempted = true;
     try {
@@ -221,7 +221,7 @@ export async function getAssignment(subjectKey: string, flagKey: string): Promis
     }
   }
   const eppoClient = getInstance();
-  return eppoClient.getStringAssignment(subjectKey, flagKey);
+  return eppoClient.getStringAssignment(flagKey, subjectKey);
 }
 ```
 
@@ -262,7 +262,7 @@ import { getAssignment } from "@/shared/get-assignment";
 
 ```tsx
 const subjectKey = '<SUBJECT-KEY>'; // Ideally populated from something like login context
-const offerVariation = await getAssignment(subjectKey, '<FLAG-KEY>');
+const offerVariation = await getAssignment('<FLAG-KEY>', subjectKey);
 ```
 
 4. In the returned elements, we can remove the now unused `<EppoRandomizationProvider>` parent element, and pass the `<OfferExperiment>` the variation assigned to the user.
