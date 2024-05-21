@@ -12,7 +12,7 @@ Eppo's open source Java SDK can be used for both feature flagging and experiment
 
 In your pom.xml, add the SDK package as a dependency:
 
-```
+```xml
 <dependency>
   <groupId>cloud.eppo</groupId>
   <artifactId>eppo-server-sdk</artifactId>
