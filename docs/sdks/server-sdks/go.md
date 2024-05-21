@@ -40,13 +40,13 @@ func main() {
 	assignmentLogger := NewExampleAssignmentLogger()
 
 	eppoClient = eppoclient.InitClient(eppoclient.Config{
-		ApiKey:           "<your_api_key>",
+		ApiKey:           "<your_sdk_key>",
 		AssignmentLogger: assignmentLogger,
 	})
 }
 ```
 
-After initialization, the SDK begins polling Eppo’s API at regular intervals to retrieve the most recent experiment configurations such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments thereafter are effectively instant. For more information, see the [architecture overview](/sdks/overview) page.
+After initialization, the SDK begins polling Eppo's API at regular intervals to retrieve the most recent experiment configurations such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments thereafter are effectively instant. For more information, see the [architecture overview](/sdks/overview) page.
 
 If you are using the SDK for experiment assignments, make sure to pass in an assignment logging callback (see [section](#define-an-assignment-logger-experiment-assignment-only) below).
 
@@ -115,7 +115,7 @@ variation := eppoClient.GetStringAssignment("<SUBJECT-KEY>", "<FLAG-KEY>", <TARG
 
 The `GetStringAssignment` function takes two required and one optional input to assign a variation:
 
-- `subjectKey` - The entity ID that is being experimented on, typically represented by a uuid.
+- `subjectKey` - The ID of the entity that is being experimented on, typically represented by a uuid.
 - `flagOrExperimentKey` - This key is available on the detail page for both flags and experiments.
 - `targetingAttributes` - An optional map of metadata about the subject used for targeting. If you create rules based on attributes on a flag/experiment, those attributes should be passed in on every assignment call.
 

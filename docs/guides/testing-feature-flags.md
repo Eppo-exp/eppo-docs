@@ -2,7 +2,7 @@
 
 ## Testing in Staging or Local Environments
 
-Eppo supports separation of feature flags and their allocations between environments. Create an Eppo environment specifically for Staging or QA following this [documentation](/feature-flagging/#environments). Environments are separated by [SDK keys](/sdks/api-keys), and no unique key will be shared across Eppo Environments. Once an Environment is created, create an SDK for that Environment.
+Eppo supports separation of feature flags and their allocations between environments. Create an Eppo environment specifically for Staging or QA following this [documentation](/feature-flagging/#environments). Environments are separated by [SDK keys](/sdks/sdk-keys), and no unique key will be shared across Eppo Environments. Once an Environment is created, create an SDK for that Environment.
 
 After a flag has been created, click **Switch Environment** on the flag page and select the testing Environment the flag should run in.
 
@@ -21,6 +21,10 @@ To test in a Production environment, switch the environment on the flag to the *
 Decide what will indicate an internal user based on what information is available. Create a [Feature Gate](/feature-flagging/feature-gates#create-a-feature-gate) and set up a targeting condition that targets internal users. 
 
 In the example below, we target all users with an internal email address that ends in `@geteppo.com` or a specific user id. 
+
+:::note
+While Eppo does not store any raw data, note that targeting attributes will be passed into the logging callback function. If you do not want your logger to store user emails, you can apply the regex match before calling Eppo and then pass in a simple is_internal_user flag to the SDK call.
+:::
 
 ![Screenshot of targeting of internal audience](/img/guides/testing-feature-flags/qa-flag-internal-audience.png)
 

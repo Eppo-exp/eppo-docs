@@ -26,7 +26,7 @@ Initialize the SDK with a SDK key, which can be generated in the Eppo interface.
 
 ```java
 EppoClientConfig config = EppoClientConfig.builder()
-        .apiKey("<api-key>")
+        .apiKey("<sdk-key>")
         .assignmentLogger((data) -> System.out.println(data.toString()))
         .build();
 EppoClient eppoClient = EppoClient.init(config);
@@ -113,3 +113,171 @@ We recommend always handling the empty assignment case in your code. Here are so
 :::note
 It may take up to 10 seconds for changes to Eppo experiments to be reflected by the SDK assignments.
 :::
+
+## 4. Usage with Contextual Multi-Armed Bandits
+
+If using the SDK to train and request actions from a contextual multi-armed bandit, you will need to:
+1. Define a bandit assignment logger
+2. Pass bandit actions to request a bandit assignment
+3. (Optional) Log non-bandit actions
+
+### Define a bandit assignment logger
+
+When using the Eppo SDK for assignments from a contextual multi-armed bandit, you will need to pass in a callback 
+bandit logging function on SDK initialization. The SDK invokes the callback to capture bandit assignment data whenever a 
+bandit chooses an action and assigns it.
+
+The SDK will invoke the `logBanditAction` function with an `logData` object that contains the following fields:
+
+| Field                                                | Description                                                                                                     | Example                             |
+|------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|-------------------------------------|
+| `timestamp` (Date)                                   | The time when the subject was assigned to the variation                                                         | 2024-03-22T14:26:55.000Z            |
+| `experiment` (String)                                | An Eppo experiment key                                                                                          | "bandit-test-allocation-4"          |
+| `key` (String)                                       | The key (unique identifier) of the bandit                                                                       | "ad-bandit-1"                       |
+| `subject` (String)                                   | An identifier of the subject or user assigned to the experiment variation                                       | "ed6f85019080"                      |
+| `subjectNumericAttributes` (Map<String, Double>)     | Metadata about numeric attributes of the subject. Map of the name of attributes their numeric values            | `Map.of("accountAgeDays", 43.0)`    |
+| `subjectCategoricalAttributes` (Map<String, String>) | Metadata about non-numeric attributes of the subject. Map of the name of attributes their string values         | `Map.of("loyaltyTier", "gold")`     |
+| `action` (String)                                    | The action assigned by the bandit                                                                               | "promo-20%-off"                     |
+| `actionNumericAttributes` (Map<String, Double>)      | Metadata about numeric attributes of the assigned action. Map of the name of attributes their numeric values    | `Map.of("discountPercent", 20.0)`   |
+| `actionCategoricalAttributes` (Map<String, String>)  | Metadata about non-numeric attributes of the assigned action. Map of the name of attributes their string values | `Map.of("promoTextColor", "white")` |
+| `actionProbability` (Double)                         | The weight between 0 and 1 the bandit valued the assigned action                                                | 0.25                                |
+| `modelVerison` (String)                              | Unique identifier for the version (iteration) of the bandit parameters used to determine the action probability | "falcon v123"                       |
+
+The code below illustrates an example implementation of a bandit logging callback that writes to Snowflake.
+
+```java
+import com.eppo.sdk.dto.IBanditLogger;
+import com.eppo.sdk.dto.BanditLogData;
+import Java.sql.Connection;
+
+public class BanditLoggerImpl implements IBanditLogger {
+
+  private final Connection snowflakeConnection;
+
+  public BanditLoggerImpl(Connection snowflakeConnection) {
+    this.snowflakeConnection = snowflakeConnection;
+  }
+  public void logBanditAction(BanditLogData logData) {
+    String sql = "INSERT INTO bandit_assignments " +
+      "(timestamp, experiment, variation_value, subject," +
+      " action, action_probability, model_version," +
+      " subject_numeric_attributes, subject_categorical_attributes," +
+      " action_numeric_attributes, action_categorical_attributes) " +
+      "SELECT ?, ?, ?, ?," +
+      " ?, ?, ?," +
+      " parse_json(?), parse_json(?)," +
+      " parse_json(?), parse_json(?)";
+
+    try (PreparedStatement statement = snowflakeConnection.prepareStatement(sql)) {
+      statement.setTimestamp(1, new Timestamp(logData.timestamp.getTime()));
+      statement.setString(2, logData.experiment);
+      statement.setString(3, logData.banditKey);
+      statement.setString(4, logData.subject);
+      statement.setString(5, logData.action);
+      statement.setDouble(6, logData.actionProbability);
+      statement.setString(7, logData.modelVersion);
+      if (logData.subjectNumericAttributes == null) {
+        statement.setNull(8, Types.NULL);
+      } else {
+        statement.setString(8, EppoAttributes.serializeNonNullAttributesToJSONString(logData.subjectNumericAttributes));
+      }
+      if (logData.subjectCategoricalAttributes == null) {
+        statement.setNull(9, Types.NULL);
+      } else {
+        statement.setString(9, EppoAttributes.serializeNonNullAttributesToJSONString(logData.subjectCategoricalAttributes));
+      }
+      if (logData.actionNumericAttributes == null) {
+        statement.setNull(10, Types.NULL);
+      } else {
+        statement.setString(10, EppoAttributes.serializeNonNullAttributesToJSONString(logData.actionNumericAttributes));
+      }
+      if (logData.actionNumericAttributes == null) {
+        statement.setNull(11, Types.NULL);
+      } else {
+        statement.setString(11, EppoAttributes.serializeNonNullAttributesToJSONString(logData.actionCategoricalAttributes));
+      }
+
+      statement.executeUpdate();
+    } catch (SQLException e) {
+      throw new RuntimeException("Unable to log bandit assignment "+e.getMessage(), e);
+    }
+  }
+}
+```
+
+Note that `experiment`, `actionProbability` and `modelVersion` are not used for bandit training and do not need to be
+saved to the bandit assignments table. However, they can be useful for transparency around the bandit, so we recommend
+saving them along with the other information.
+
+### Pass bandit actions to request a bandit assignment
+
+If the flag or experiment has a variation whose value is decided by a contextual multi-armed bandit, you can provide the
+bandit the set of actions it should consider as a fourth optional argument to `getStringAssignment()`:
+- `actions` - An optional `Set<String>` of action names (if no action attributes) or `Map<String, EppoAttributes>` of 
+action names to their attributes
+
+If the user is assigned the bandit variation, the bandit will then score and weight each action using the attributes of 
+the action and subject, and then randomly assign an action. Note that the action assigned may change as the bandit's 
+model evolves.
+
+```java
+// Flag that has a bandit variation
+String banditTestFlagKey = "bandit-test";
+
+// Subject information--same as for retrieving simple flag or experiment assignments
+String subjectKey = username;
+EppoAttributes subjectAttributes = userAttributes;
+
+// Action set for bandits
+Map<String, EppoAttributes> actionsWithAttributes = Map.of(
+  "dog", new EppoAttributes(Map.of(
+  "legs", EppoValue.valueOf(4),
+  "size", EppoValue.valueOf("large")
+)),
+  "cat", new EppoAttributes(Map.of(
+  "legs", EppoValue.valueOf(4),
+  "size", EppoValue.valueOf("medium")
+)),
+  "bird", new EppoAttributes(Map.of(
+  "legs", EppoValue.valueOf(2),
+  "size", EppoValue.valueOf("medium")
+)),
+  "goldfish", new EppoAttributes(Map.of(
+  "legs", EppoValue.valueOf(0),
+  "size", EppoValue.valueOf("small")
+))
+
+Optional<String> banditAssignment = eppoClient.getStringAssignment(subjectKey, flagKey, subjectAttributes, actionsWithAttributes);
+```
+
+### Logging non-bandit actions (contextual multi-armed bandit assignment only)
+
+If the control variation (i.e., not the bandit) was assigned, but the control variation still resulted in an action being
+assigned via some other mechanism, the bandit can still learn from this non-bandit assignment.
+
+To record this event, you can use the `logNonBanditAction()` method.
+
+The code below illustrates an example use of this.
+
+```java
+
+Optional<String> banditAssignment = eppoClient.getStringAssignment(subjectKey, flagKey, subjectAttributes, actionsWithAttributes);
+
+boolean doControlAction = banditAssignment.isEmpty() || banditAssignment.get().equals("control");
+
+if (doControlAction) {
+  String controlAction = "promo 10% off";
+  EppoAttributes controlActionAttributes = new EppoAttributes(Map.of(
+    "percentOff", EppoValue.valueOf("20"),
+    "textColor", EppoValue.valueOf("white")
+  ));
+
+  handlePromoAction(controlAction);
+  
+  // Log we are taking this action--even though the bandit didn't assign it--to help the bandit learn
+  eppoClient.logNonBanditAction(subjectKey, flagKey, subjectAttributes, controlAction, controlActionAttributes);
+} else {
+  handlePromoAction(banditAssignment.get());
+  // Bandit will have automatically logged the assignment
+}
+```

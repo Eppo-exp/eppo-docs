@@ -2,7 +2,7 @@
 
 **Assignment SQLs** tell Eppo where to find a log of every time a subject (e.g., user) was enrolled into an experiment, the name of that experiment, and the variant that was assigned. Assignment SQLs can point to either logs from Eppo's SDK or from existing internal or third party randomization tools. You can also create multiple assignment sources if you use a combination of assignment methods.
 
-Assignment SQLs can also include any [properties](./property-sql.md) by which you want to split results.
+Assignment SQLs can also include [properties](/data-management/properties) to use to filter or split results.
 
 ```sql
 SELECT
@@ -63,3 +63,19 @@ Holdout columns are also defined here. More information is available on the [ded
 ![Write Assignment SQL Query](/img/experiments/holdouts/holdouts-assignment-sql.png)
 
 8. Click **Save & Close**
+
+## Handling duplicate assignments
+
+Eppo has built in filtering to handle scenarios where there are multiple assignment events for a subject with different data. Here are a few common scenariios that you may encounter and how Eppo handles them:
+
+**1. Subject has multiple assignment events where they received multiple variations.**
+
+Example: A subject received both the `Control` and `Treatment` within an experiment. 
+
+Eppo will automatically filter these subjects out of that experiment's results.
+
+**2. Subject has a property that is recorded in the assignment table change during the experiment.**
+
+Example: A subject in their first assignment has property called `country` that initially is recorded as `Canada` and in a subsequent assignment the `country` property is recorded as `France`.
+
+Eppo will use the first recorded property in the experiment. When looking at an Explore chart using the example above, the user would show up under the `Canada` property value.

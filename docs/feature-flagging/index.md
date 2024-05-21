@@ -28,7 +28,7 @@ The presence of a feature flag unlocks multiple paths:
 ```python
 # After, show different prices to different users based on a flag.
 
-group = get_assignment(user_id, 'pricing_gate')
+group = get_string_assignment('pricing_gate', user_id, user_attributes, 'do_not_round_down')
 
 if (group == "round_down_to_cents"):
     price_of_shoes = 9.99

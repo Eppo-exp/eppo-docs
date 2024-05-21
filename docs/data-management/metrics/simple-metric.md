@@ -167,6 +167,9 @@ from ...
 where fact_timestamp <= assignment_timestamp + X days 
 ```
 
+Optionally, you can enable filtering out subjects until they are aged. This will only count events once a subject has been assigned to the experiment for the conversion period specified. Using the example above, a subject will only be included once they've been assigned to the experiment for 7 days.
+
+
 #### Threshold
 
 Threshold metrics measure the proportion of entities who meet a user-specified `SUM` or `COUNT` of a fact within an optional time-period. For example, you might want to understand what percent of users spend more than $100 within 7 days of assignment into an experiment.
@@ -191,6 +194,10 @@ Eppo allows you to further refine metrics by adding a time frame. For example, w
 :::note
 Consider adding a time frame metric to experiments where you believe the intervention has a short term effect.
 For example, sending a promotional email may boost engagement for one week. If the experiment runs for 4 weeks, adding a time frame to the metric prevents that one week of boosted engagement from being diluted.
+:::
+
+:::note
+If you are using an [Entry Point](/experiment-analysis/filter-assignments-by-entry-point), the starting point of the time frame is the Entry Point timestamp.
 :::
 
 ### Metric properties

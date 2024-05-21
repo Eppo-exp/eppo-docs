@@ -139,9 +139,8 @@ s^2_{ratio} &= \left(
 \end{align}
 $$
 
-The below analysis then simply uses these values for ratio metrics instead of
-the simple sample means and variances for each variation.
-
+The remaining calculations are the same for both simple and ratio metrics, noting that $m_{ratio}$ is treated as the sample mean, so it is used in place of $m$ in the lines below.
+Also, $s^2_{ratio}$ is used in place of the variance of the sample _mean_, $\frac{s^2}{n}$, not in place of $s^2$.
 :::
 
 ### Frequentist analysis

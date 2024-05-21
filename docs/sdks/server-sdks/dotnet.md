@@ -99,7 +99,7 @@ We recommend always handling the empty assignment case in your code. Here are so
 
 ![Toggle to enable environment](/img/feature-flagging/enable-environment.png)
 
-3.  If `GetAssignment` is invoked before the SDK has finished initializing, the SDK may not have access to the most recent experiment configurations. In this case, the SDK will assign a variation based on any previously downloaded experiment configurations stored in local storage, or return `null` if no configurations have been downloaded.
+3.  If `getStringAssignment` is invoked before the SDK has finished initializing, the SDK may not have access to the most recent experiment configurations. In this case, the SDK will assign a variation based on any previously downloaded experiment configurations stored in local storage, or return `null` if no configurations have been downloaded.
 
 <br />
 

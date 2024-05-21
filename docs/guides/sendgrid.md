@@ -138,7 +138,7 @@ Set the `template_id` as the Sendgrid template id—this id determines which tem
 
 ### Code example
 
-The Sendgrid Mail API is what ultimately sends this email. Below is the example code to assign users a variation and send the email with the variable values determined from Eppo. This is also where targeting conditions are put in place.  If the experiment is targeting users on “iOS devices”, or users with “gold status”, an object that defines those attributes can be passed in with the `.getAssignment()` method. See Eppo’s documentation on targeting in Eppo feature flags.
+The Sendgrid Mail API is what ultimately sends this email. Below is the example code to assign users a variation and send the email with the variable values determined from Eppo. This is also where targeting conditions are put in place. If the experiment is targeting users on “iOS devices”, or users with “gold status”, an object that defines those attributes can be passed in with the `.get<Type>Assignment()` method. See Eppo’s documentation on targeting in Eppo feature flags.
 
 ```jsx
 import sgMail from "@sendgrid/mail";

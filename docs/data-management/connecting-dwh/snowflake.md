@@ -6,16 +6,19 @@ Before you connect Eppo to your data warehouse, it is recommended that you creat
 
 Additionally, you will need to create a schema for Eppo to write intermediary tables to, as well as grant the service User read access to tables you'd like Eppo to query SQL definitions from.
 
+Eppo supports connecting via a service account password, [key-pair or encrypted key-pair authentication](https://docs.snowflake.com/en/user-guide/key-pair-auth).
+
 ### 1. Create a Service User for Eppo
 
 1. Log into Snowflake with a user that has `ACCOUNTADMIN` privileges.
-2. Create a user with the following command, replacing `<password>` with a unique, secure password:
+2. Create a user with the following command. If using a password, replacing `<password>` with a unique, secure password:
 
 ```sql
 USE ROLE ACCOUNTADMIN;
 CREATE ROLE IF NOT EXISTS eppo_role;
 CREATE USER IF NOT EXISTS eppo_user
-PASSWORD = ‘<password>’;
+PASSWORD = ‘<password>’;         -- If using a password
+RSA_PUBLIC_KEY = '<public_key>'; -- If using key-pair authentication
 GRANT ROLE eppo_role TO USER eppo_user;
 ALTER USER eppo_user
 SET DEFAULT_ROLE = eppo_role;
@@ -98,11 +101,43 @@ Now that you have a proper Service User created for Eppo, you can use it to conn
 - **Database** - **Database name** from step 3 in the previous section
 - **Schema** - `eppo_output`
 - **Username** - `eppo_user`
-- **Password** - the `<password>` you chose
-
-4. Enter the values into the form (which should look like the screenshot below), then click `Test Connection`. Once this test succeeds, save your settings by clicking `Test and Save Connection`.
+- **Role** - `eppo_role`
 
 ![Snowflake warehouse connection](/img/connecting-data/snowflake-connection.png)
+
+#### Authentication with Password:
+
+- **Password** - the `<password>` you chose
+
+#### Authentication with Key-pair:
+
+Include the header and footers.
+
+```
+-----BEGIN PRIVATE KEY-----
+MIIEv...
+...
+-----END PRIVATE KEY-----
+```
+
+![encrypted key-pair authentication](/img/connecting-data/snowflake-connection-keypair.png)
+
+#### Authentication with Encrypted Key-pair:
+
+Include the header and footers.
+
+```
+-----BEGIN ENCRYPTED PRIVATE KEY-----
+MIIFJDBWBg...
+...
+-----END ENCRYPTED PRIVATE KEY-----
+```
+
+- **Passcode** - the `<passcode>` for the encrypted key-pair
+
+![encrypted key-pair authentication](/img/connecting-data/snowflake-connection-encrypted-keypair.png)
+
+4. Enter the values into the form (which should look like the screenshot below), then click `Test Connection`. Once this test succeeds, save your settings by clicking `Test and Save Connection`.
 
 **Note**: Eppo uses [Google Secret Manager](https://cloud.google.com/secret-manager) to store and manage your credentials. Credentials are never stored in plaintext, and Secret Manager can only be accessed via authorized roles in GCP, where all usage is monitored and logged.
 

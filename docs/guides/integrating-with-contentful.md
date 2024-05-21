@@ -67,16 +67,15 @@ await init({
     apiKey: <EPPO SDK KEY>
 });
 
-let userid = “user id”
-let flag_key = <EPPO FLAG KEY>
-
 const eppoClient = EppoSdk.getInstance();
 
-const homepage_entry_id = eppoClient.getStringAssignment(
-    userid, // unique identifier for the user
-    flag_key, // flag key from Eppo UI
+const homepageEntryId = eppoClient.getStringAssignment(
+    "<EPPO FLAG KEY>", // flag key from Eppo UI
+    "<USER ID>", // unique identifier for the user
+    {}, // user attributes, if any (otherwise pass an empty object)
+    defaultValue,
 )
-console.log(flag_key, homepage_entry_id)
+console.log("<EPPO FLAG KEY>", homepageEntryId)
 
 // Contentful specific methods
 const contentfulClient = await contentful.createClient({
