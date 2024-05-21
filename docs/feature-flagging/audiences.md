@@ -23,7 +23,7 @@ Both editing and deletion have the potential to impact enabled flags. To reduce 
 ### Archiving
 The old Audience will be converted to targeting rules on their Flags. The Audience will be archived.
 
-![Archiving confirmation](/img/feature-flagging/audiences/audience-deletion.png)
+![Archiving confirmation](/img/feature-flagging/audiences/audience-archive.png)
 
 ## Adding an Audience to an allocation
 
