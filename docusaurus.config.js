@@ -75,7 +75,7 @@ async function createConfig () {
         src: "https://cdn.jsdelivr.net/npm/@runllm/search-widget@stable/dist/run-llm-search-widget.es.js",
         "runllm-server-address": "https://api.runllm.com",
         "runllm-assistant-id": "112",
-        "runllm-position": "pick one of: BOTTOM_RIGHT | BOTTOM_LEFT | TOP_RIGHT | TOP_LEFT",
+        "runllm-position": "TOP_RIGHT",
         "runllm-keyboard-shortcut": "Mod+j",
         version: "stable",
         "runllm-preset": "docusaurus",
