@@ -68,6 +68,24 @@ async function createConfig () {
       require.resolve('./src/rudderstack.config.js')
     ],
 
+    scripts: [
+      {
+        id: "runllm-widget-script",
+        type: "module",
+        src: "https://cdn.jsdelivr.net/npm/@runllm/search-widget@stable/dist/run-llm-search-widget.es.js",
+        "runllm-server-address": "https://api.runllm.com",
+        "runllm-assistant-id": "112",
+        "runllm-position": "pick one of: BOTTOM_RIGHT | BOTTOM_LEFT | TOP_RIGHT | TOP_LEFT",
+        "runllm-keyboard-shortcut": "Mod+j",
+        version: "stable",
+        "runllm-preset": "docusaurus",
+        "runllm-name": "RunLLM",
+        "runllm-theme-color": "#7964d3",
+        "runllm-brand-logo": "https://assets-global.website-files.com/6171016af5f2c517ec1ac76c/63652b8ea453c50dabdf33d2_favicon-1.png",
+        async: true,
+      },
+    ],
+
     themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
