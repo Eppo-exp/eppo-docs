@@ -80,7 +80,6 @@ FROM anon_visitor_to_user_mapping t1
 WHERE t2.user_id IS NOT NULL
 ```
 
-
 Once this model is built, it can be joined to any fact table within the data warehouse. It should be joined onto these fact tables by User ID wherever a fact event’s timestamp is between a given user’s `ts_start_window` and `ts_end_window`. By doing this, all fact tables at the user level can now have an inferred Anonymous ID. This inferred Anonymous ID can then be used by Eppo to link Assignment SQL definitions at the Anonymous ID level to these fact tables.
 
 ```sql
