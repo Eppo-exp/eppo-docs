@@ -356,7 +356,7 @@ We automatically log the following data:
 | `subjectNumericAttributes` (Dict[str, float])     | Metadata about numeric attributes of the subject. Dictionary of the name of attributes their numeric values            | `{"age": 30}`    |
 | `subjectCategoricalAttributes` (Dict[str, str]) | Metadata about non-numeric attributes of the subject. Dictionary of the name of attributes their string values         | `{"loyalty_tier": "gold"}`     |
 | `actionNumericAttributes` (Dict[str, float])      | Metadata about numeric attributes of the assigned action. Dictionary of the name of attributes their numeric values    | `{"discount": 0.1}`   |
-| `actionCategoricalAttributes` (Dict[str, str])  | Metadata about non-numeric attributes of the assigned action. Map of the name of attributes their string values | {"promoTextColor": "white"}` |
+| `actionCategoricalAttributes` (Dict[str, str])  | Metadata about non-numeric attributes of the assigned action. Map of the name of attributes their string values | `{"promoTextColor": "white"}` |
 | `actionProbability` (Double)                         | The weight between 0 and 1 the bandit valued the assigned action                                                | 0.25                                |
 | `modelVersion` (String)                              | Unique identifier for the version (iteration) of the bandit parameters used to determine the action probability | "v123"                       |
 
@@ -406,9 +406,9 @@ The subject context has type `Attributes` which has two fields:
 - `numeric_attributes` (Dict[str, float]): A dictionary of numeric attributes (such as "age")
 - `categorical_attributes` (Dict[str, str]): A dictionary of categorical attributes (such as "country")
 
-'''info
+:::note
 The `categerical_attributes` are also used for targeting rules for the feature flag similar to how `subject_attributes` are used for that with regular feature flags. 
-'''
+:::
 
 #### Action Contexts
 
@@ -443,7 +443,7 @@ In both of those cases, the `action` is `None`, and you should use the status-qu
 
 When `action` is not `None`, the bandit has selected that action to be shown to the user.
 
-### Status quo algorithm
+#### Status quo algorithm
 
 In order to accurately measure the performance of the bandit, we need to compare it to the status quo algorithm using an experiment.
 This status quo algorithm could be a complicated algorithm to that selects an action according to a different model, or a simple baseline such as selecting a fixed or random action.
