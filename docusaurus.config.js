@@ -104,8 +104,8 @@ async function createConfig () {
       navbar: {
         // title: 'Eppo',
         logo: {
-          alt: 'eppo logo',
-          src: 'img/eppo_logo.svg'
+          alt: 'Eppo logo',
+          src: 'img/eppologo2024.svg'
         },
         items: [
         ]
