@@ -105,7 +105,7 @@ async function createConfig () {
         // title: 'Eppo',
         logo: {
           alt: 'Eppo logo',
-          src: 'img/eppologo2024.svg'
+          src: 'img/eppo_logo2024.svg'
         },
         items: [
         ]
