@@ -17,7 +17,7 @@ To start, navigate to the **Analysis** page, click **Create**, and select **Expe
 On the side panel, you'll be prompted to enter some information about the experiment:
 
 1. A name for the experiment and the Team to which the experiment belongs
-2. The [Entity](/data-management/entities) on which the experiment was randomized (user, device, workspace, etc.)
+2. The [Entity](/data-management/definitions/entities) on which the experiment was randomized (user, device, workspace, etc.)
 3. Which [Assignment Source](/data-management/definitions/assignment-sql) has assignment logs for the experiment
 4. An optional [entry point](/statistics/sample-size-calculator/setup#what-is-an-entry-point) on which to filter experiment assignments. This will limit the experiment analysis to subjects (e.g., users) that hit the specified entry point. You can read more about filtering experiment assignments [here](./filter-assignments-by-entry-point).
 5. The experiment key of interest. The drop-down will show flags created in Eppo as well as other experiment keys in the selected Assignment Source. If your experiment key does not show up in the drop-down you can also enter it manually. 
@@ -63,7 +63,7 @@ Note that if you can’t find the metric that you are looking for, anyone with t
 
 ![Picking metrics to add](/img/building-experiments/picking_metrics.png)
 
-You can also add [collections of metrics](/data-management/collections.md) to add a curated set of metrics in one go.
+You can also add [collections of metrics](/data-management/organizing-metrics/collections.md) to add a curated set of metrics in one go.
 
 ## Adding screenshots
 

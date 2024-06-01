@@ -1,4 +1,8 @@
-# Fact SQL
+---
+sidebar_position: 4
+---
+
+# Facts
 
 Fact SQL queries define the metric events to analyze in Eppo. Each Fact SQL should return the following columns:
 
@@ -38,7 +42,7 @@ If your facts have properties that you'd like to use either to filter events, or
 
 Note that only properties that are many-to-one with experiment subjects (e.g., users) should be included in the Fact SQL definition. Properties that are one-to-one with experiment subjects should be added to an Entity Properties SQL (if the properties are static), or to and Assignment SQL (if they vary over time).
 
-You can read more about Fact Properties on the [Properties](/data-management/properties#metric-properties) page.
+You can read more about Fact Properties on the [Properties](/data-management/definitions/properties#metric-properties) page.
 
 ![Create Property](/img/building-experiments/add-fact-sql-property.png)
 

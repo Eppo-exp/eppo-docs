@@ -19,7 +19,7 @@ Follow the steps below to create your first Fact SQL definition.
 
 1. Navigate to the **Definitions** page, click **+Create Definition SQL**, then click **Fact SQL**
 2. Name your Fact SQL
-3. Write SQL to return event data from within your data warehouse. At a minimum, the SQL should return a unique identifier (e.g., `user_id`) and a timestamp. You can optionally include numeric values (e.g., purchase price) and [fact properties](/data-management/properties#metric-properties) to later slice results (e.g., device type).
+3. Write SQL to return event data from within your data warehouse. At a minimum, the SQL should return a unique identifier (e.g., `user_id`) and a timestamp. You can optionally include numeric values (e.g., purchase price) and [fact properties](/data-management/definitions/properties#metric-properties) to later slice results (e.g., device type).
 4. Specify the timestamp and entity id columns
 5. Create Facts for any columns from which you plan to build metrics, or select "Each Record"
 6. Click **Save and close**

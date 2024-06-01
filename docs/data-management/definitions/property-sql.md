@@ -1,4 +1,8 @@
-# Entity Property SQL
+---
+sidebar_position: 5
+---
+
+# Entity Properties
 
 **Entity Property SQLs** define entity-level properties that do not change as a result of experiments. Examples include original traffic source and primary country:
 

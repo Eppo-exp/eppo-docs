@@ -1,8 +1,12 @@
-# Assignment SQL
+---
+sidebar_position: 3
+---
+
+# Assignments
 
 **Assignment SQLs** tell Eppo where to find a log of every time a subject (e.g., user) was enrolled into an experiment, the name of that experiment, and the variant that was assigned. Assignment SQLs can point to either logs from Eppo's SDK or from existing internal or third party randomization tools. You can also create multiple assignment sources if you use a combination of assignment methods.
 
-Assignment SQLs can also include [properties](/data-management/properties) to use to filter or split results.
+Assignment SQLs can also include [properties](/data-management/definitions/properties) to use to filter or split results.
 
 ```sql
 SELECT
@@ -28,7 +32,7 @@ In this example, `user_id` is assigned to `experiment_name` in the `variant_name
 
 ![Create Assignment SQL](/img/building-experiments/create-assignment-sql.png)
 
-3. Select the subject (randomized unit) of the Assignment SQL. To learn more about specifying multiple randomization units Eppo, see the [entities page](/data-management/entities).
+3. Select the subject (randomized unit) of the Assignment SQL. To learn more about specifying multiple randomization units Eppo, see the [entities page](/data-management/definitions/entities).
 
 ![Select user as entity](/img/building-experiments/select-user-as-entity.png)
 

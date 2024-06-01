@@ -40,7 +40,7 @@ Finally, we add Canada, Mexico, and the United States as property values.
 This defines the North America segment. However, it is easy to create more fine-grained segments (such as North American Mobile users) by adding additional filters to the segment.
 
 :::info
-When using a property filter based on an [assignment property](/data-management/properties#assignment-properties), only experiments that use that particular assignment definition are able to leverage that segments.  
+When using a property filter based on an [assignment property](/data-management/definitions/properties#assignment-properties), only experiments that use that particular assignment definition are able to leverage that segments.  
 :::
 
 ### Analyzing results by segment

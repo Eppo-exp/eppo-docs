@@ -1,42 +1,18 @@
 ---
-sidebar_position: 4
+sidebar_position: 1
 ---
 
-# Certified metrics
+# Using Eppo's YAML Schema
 
-Certified Metrics are a type of metric that are synced to Eppo from an outside source. This allows teams to use metrics that are stored in GitHub or other centralized repositories. Certified Metrics sit alongside metrics created in Eppo's UI to provide teams with maximum flexibility in the metrics they can track in experiments.
-
-Certified Metrics allow you to define both [fact sources](/data-management/definitions/fact-sql) and [metrics](/data-management/metrics/) in code. For example, a simple revenue metric might look like this:
-
-```yaml
-fact_sources:
-- name: Revenue
-  sql: |
-    SELECT * from analytics_prod.revenue
-  timestamp_column: revenue_timestamp
-  entities:
-  - entity_name: User
-    column: user_id
-  facts:
-  - name: Purchase Revenue
-    column: revenue
-
-metrics:
-- name: Total Revenue per User
-  entity: User 
-  numerator:
-    fact_name: Purchase Revenue
-    operation: sum
-```
-
-Metrics are certified via the [metric sync API](https://eppo.cloud/api/docs#/Metrics%20Sync/syncMetrics). You can either post to that endpoint directly or use the `eppo_metrics_sync` [python package](https://github.com/Eppo-exp/eppo-metrics-sync) to post a directory of yaml files to Eppo's API. See [Syncing Metrics](#syncing-metrics) below for details. 
-
-Any metric or fact source created through the metric sync API will have a Certified badge and will not be editable in the UI:
-
-![Certified metric example](/img/metrics/certified-metrics-1.png)
+Eppo's YAML schema allows you to define certified metrics with the same flexibility as when creating in the UI. This page walks through the basics of defining metrics in yaml as well as syncing metrics from either your local environment or from a version control system like GitHub.
 
 ## Certified Metric schema
-Eppo supports a yaml schema to describe Facts and Metrics. Each yaml file can define fact sources, metrics, or both. This section describes the yaml schema in detail and provides a few [examples](#examples).
+
+Each yaml file can define fact sources, metrics, or both. This section describes the yaml schema in detail and provides a few [examples](#examples).
+
+:::note
+We recommend familiarizing yourself with Eppo's [data](/data-management/definitions/overview) and [metric](/data-management/metrics/) models before writing yaml files from scratch.
+:::
 
 ### Fact sources 
 
@@ -47,9 +23,9 @@ Certified metric files can define one or more [fact sources](/data-management/de
 | `name` | A name for the source to display in the Eppo UI | Purchases |
 | `sql` | The SQL definition for the source | <pre><code>select * <br></br>  from analytics_prod.purchases </code></pre> |
 | `timestamp_column` | The column that represents the time the fact occurred | `purchase_timestamp` |
-| `entities` | A list of [entities](/data-management/entities) in the table, each element containing the name of an existing entity created in the Eppo UI and the corresponding column | <pre><code>- entity_name: User <br></br>  column: user_id </code></pre> |
+| `entities` | A list of [entities](/data-management/definitions/entities) in the table, each element containing the name of an existing entity created in the Eppo UI and the corresponding column | <pre><code>- entity_name: User <br></br>  column: user_id </code></pre> |
 | `facts` | A list of fact values in the table, their corresponding column, and optionally, a description and desired change (either `increase` or `decrease`) | <pre><code>- name: Purchase Revenue <br></br>  column: purchase_revenue <br></br>  description: ... <br></br>  desired_change: increase </code></pre> |
-| `properties` (optional) | An optional list of [fact properties](/data-management/properties#metric-properties) in the table, their corresponding column, and an optional description | <pre><code>- name: Purchase Type <br></br>  column: purchase_type <br></br>  description: ... </code></pre> |
+| `properties` (optional) | An optional list of [fact properties](/data-management/definitions/properties#metric-properties) in the table, their corresponding column, and an optional description | <pre><code>- name: Purchase Type <br></br>  column: purchase_type <br></br>  description: ... </code></pre> |
 | `reference_url` (optional) | An optional URL to link to in the Eppo UI | `github.com/<my_repo>` |
 
 ### Metrics
@@ -60,7 +36,7 @@ Each certified metric yaml file can also define one or more metrics (either [sim
 | -------- |  ----------- | ------- |
 | `name` | A name for the metric to show in the Eppo UI. Note that this is the unique identifier for the metric used when syncing metrics | Purchase Revenue |
 | `description` <br></br>(optional) | An optional description for the metric | All non-subscription revenue | 
-| `entity` | The [entity](/data-management/entities) that the metric connects to | User | 
+| `entity` | The [entity](/data-management/definitions/entities) that the metric connects to | User | 
 | `numerator` | An aggregation object (see below) to specify how to compute the metric numerator | <pre><code>fact_name: Purchase Revenue <br></br>operation: sum </code></pre> | 
 | `denominator` <br></br> (optional)| An aggregation object (see below) that, if set, will specify the metric as a ratio | <pre><code>fact_name: Purchase Revenue <br></br>operation: count </code></pre>| 
 | `is_guardrail` <br></br> (optional)| Whether the metric should be analyzed for every experiment run on this entity (default is false) | `true` or `false`| 
@@ -208,7 +184,7 @@ Further, we recommend setting up a separate Eppo workspace for staging changes t
 
 To connect a GitHub repository, you’ll need to complete the following steps:
 1. Create an API key in both your production and staging Eppo workspaces. This can be done by going to **Admin** >> **API Keys** in each workspace. Make sure that the keys have read/write access to the Certified Metrics Sync permission
-2. Add the API keys as a GitHub secrets named `EPPO_API_KEY` and `EPPO_API_KEY_STAGING`. (Alternatively, you can use GitHub environments, but will need to adjust the workflow yaml below slightly)
+2. Add the API keys as a [GitHub secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions) named `EPPO_API_KEY` and `EPPO_API_KEY_STAGING`. (Alternatively, you can use GitHub environments, but will need to adjust the workflow yaml below slightly)
 3. Create a new branch on the repository you want to connect, and add metric yaml files to a directory called `eppo_metrics` (you can name this whatever you like, you’ll just need to adjust the directory name referenced in the GitHub workflow below)
 4. Copy the following GitHub workflow yaml into a new file `.github/workflows/run_eppo_metric_sync.yaml` . Replace `demo_company_metric_repository` with something that applies to your business and the set of metrics you are syncing (e.g., `business_north_star_metrics`)
 
