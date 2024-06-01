@@ -335,7 +335,7 @@ We have a simple end-to-end example in the [Python SDK repository](https://githu
 
 In order for the bandit to learn an optimized policy, we need to capture and log the bandit actions.
 This requires adding a bandit action logging callback to the AssignmentLogger class
-```
+```python
 class MyLogger(AssignmentLogger):
     def log_assignment(self, assignment):
         ...
@@ -348,7 +348,7 @@ We automatically log the following data:
 
 | Field                                                | Description                                                                                                     | Example                             |
 |------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|-------------------------------------|
-| `timestamp` (Date)                                   | The time when the action is taken in UTC  variation                                                         | 2024-03-22T14:26:55.000Z            |
+| `timestamp` (Date)                                   | The time when the action is taken in UTC  | 2024-03-22T14:26:55.000Z            |
 | `flagKey` (String)                                | The key of the feature flag corresponding to the bandit                                                                                           | "bandit-test-allocation-4"          |
 | `banditKey` (String)                                       | The key (unique identifier) of the bandit                                                                       | "ad-bandit-1"                       |
 | `subject` (String)                                   | An identifier of the subject or user assigned to the experiment variation                                       | "ed6f85019080"                      |
@@ -447,5 +447,6 @@ When `action` is not `None`, the bandit has selected that action to be shown to 
 
 In order to accurately measure the performance of the bandit, we need to compare it to the status quo algorithm using an experiment.
 This status quo algorithm could be a complicated algorithm to that selects an action according to a different model, or a simple baseline such as selecting a fixed or random action.
+When you create an analysis allocation for the bandit and the `action` in `BanditResult` is `None`, implement the desired status quo algorithm based on the `variation` value.
 
 
