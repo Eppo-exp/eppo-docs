@@ -1,3 +1,7 @@
+---
+sidebar_position: 1
+---
+
 # Approvals
 
 Approvals add an extra layer of security to minimize the risk of production changes. When enabled, all Non-admins who make changes in production will have their changes reviewed and approved by Admins.
