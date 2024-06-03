@@ -32,7 +32,7 @@ For more information, see the [architecture overview](/sdks/overview) page.
 
 This SDK also leverages cached configurations from previous fetches. During initialization, if a previously-cached configuration 
 is successfully loaded, it will complete initialization with that configuration. Updates will take effect once the fetch from CDN completes.
-When initialization completes, it will call the optionally-provided `InitializationCallback`.
+When initialization completes from either source, it will call the optionally-provided `InitializationCallback`.
 
 If you are using the SDK for experiment assignments, make sure to pass in an assignment logging callback (see [section](#define-an-assignment-logger-experiment-assignment-only) below).
 
@@ -107,7 +107,7 @@ More details about logging and examples (with Segment, Rudderstack, mParticle, a
 
 ## 3. Assign variations
 
-Assigning users to flags or experiments using the assignment function that corresponds with the value type of the variation 
+Assign users to flags or experiments using the assignment function that corresponds with the value type of the flag's variations 
 as set up in the Eppo web application.
 
 ```java
@@ -118,15 +118,14 @@ String variation = eppoClient.getStringAssignment("<FLAG KEY>", "<SUBJECT KEY>",
 ```
 
 The assignment functions take three required and one optional parameter to assign a variation:
-- 
 - `flagKey` - This key is available on the detail page for both flags and experiments. Can also be an experiment key.
-- `subjectKey` - The entity ID that is being experimented on, typically represented by an uuid.
+- `subjectKey` - The entity ID that is being experimented on, such as a user identifier, typically represented by an uuid.
 - `subjectAttributes` - An optional map of metadata about the subject used for targeting. If you create rules based on attributes on a flag/experiment, those attributes should be passed in on every assignment call.
 - `defaultValue` - The value to return if no variation is assigned, or an error is encountered making an assignment. Often this is the same as the control variation.
 
 The following typed functions are available:
 
-```
+```java
 eppoClient.getBooleanAssignment(...)
 eppoClient.getIntegerAssignment(...)
 eppoClient.getDoubleAssignment(...)
