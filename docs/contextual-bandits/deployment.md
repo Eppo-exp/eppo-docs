@@ -22,7 +22,7 @@ Fill out the form with the following information:
 - **Name**: The name of the contextual bandit. This is the name that will be displayed throughout the Eppo UI.
 - **Key**: Reference this key when you query the Eppo SDK for a bandit action. Note that this key cannot be changed once the bandit has been created.
 - **Bandit entity**: this is the entity used to track the bandit, such as the `User` or `Session` entity
-- **Bandit actions logging**: Provide the name of the table in your data warehouse where bandit actions are logged, leveraging [the contextual bandit logger](sdks/sdk-features/bandits).
+- **Bandit actions logging**: Provide the name of the table in your data warehouse where bandit actions are logged, leveraging [the contextual bandit logger](https://docs.geteppo.com/sdks/sdk-features/bandits).
 - **Metric for optimization**: Choose the metric that you want the contextual bandit to optimize for. Note that this metric has to match the entity selected for the bandit entity.
 - **Lookback window**: Select the lookback window, which is how many days of data the bandit will use to update its model. Choose a short time window when the problem is dynamic and historic data is less relevant to optimize the experience today.
 
@@ -42,7 +42,7 @@ Once the Contextual Bandit has been created, you are directed to the bandit's fe
 Similar to any other feature flag, this page allows you to control the bandit across environments.
 
 :::info
-To learn more about how to set up the Contextual Bandit using the Eppo SDK, check the [Contextual Bandit SDK page](/sdks/sdk-features/bandits).
+To learn more about how to set up the Contextual Bandit using the Eppo SDK, check the [Contextual Bandit SDK page](https://docs.geteppo.com/sdks/sdk-features/bandits).
 :::
 
 For a newly created Bandit, Eppo provides templates to help guide you through setting up the bandit based on the most common pattern. You can dismiss these templates or add to the configuration as you deem fit.
