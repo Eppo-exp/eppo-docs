@@ -18,7 +18,7 @@ async function createConfig () {
     onBrokenLinks: 'throw',
     onBrokenMarkdownLinks: 'warn',
     trailingSlash: true,
-    favicon: 'img/favicon.ico',
+    favicon: 'img/newfavicon.ico',
     organizationName: 'eppo', // Usually your GitHub org/user name.
     projectName: 'eppo', // Usually your repo name.
 
