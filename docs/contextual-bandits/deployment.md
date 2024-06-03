@@ -42,7 +42,7 @@ Once the Contextual Bandit has been created, you are directed to the bandit's fe
 Similar to any other feature flag, this page allows you to control the bandit across environments.
 
 :::info
-To learn more about how to set up the Contextual Bandit using the Eppo SDK, check the [Contextual Bandit SDK page](sdks/sdk-features/bandits).
+To learn more about how to set up the Contextual Bandit using the Eppo SDK, check the [Contextual Bandit SDK page](/sdks/sdk-features/bandits).
 :::
 
 For a newly created Bandit, Eppo provides templates to help guide you through setting up the bandit based on the most common pattern. You can dismiss these templates or add to the configuration as you deem fit.
