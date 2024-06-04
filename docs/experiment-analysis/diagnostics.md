@@ -76,5 +76,5 @@ Eppo detects when pre-experiment metric averages differ significantly across var
 This issue is most often driven by the non-random assignment of users into variations within the experiment. Consult with your engineering team to diagnose potential issues with your randomization tool.
 
 :::info
-The pre-experiment data diagnostic is only run when CUPED is enabled. This setting can be changed in the Admin panel across all experiments, or on a per-experiment basis in the Configure tab under Statistal Analysis Plan
+The pre-experiment data diagnostic is only run when CUPED is enabled. This setting can be changed in the Admin panel across all experiments, or on a per-experiment basis in the Configure tab under Statistical Analysis Plan.
 :::
