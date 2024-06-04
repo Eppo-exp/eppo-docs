@@ -1,3 +1,7 @@
+---
+sidebar_position: 7
+---
+
 # Running no and low code experiments in Eppo
 
 Often times there are frequently tested parts of a site or app where teams would like to execute changes in a self-service manner. Running experiments without an additional code release is easy to do in Eppo with some initial set up. With a JSON flag and parameterizing parts of the site or app where frequent changes are made, users can create additional experiment allocations on the same flag.
@@ -38,7 +42,7 @@ const variation = client.getAssignment(
 
 ## Using JSON flags to parameterize frequently tested areas
 
-JSON flags can be used to parameterize your app or site to run experiments without an additional release. By using a [JSON flag](/feature-flagging/flag-variations#json-flags), values from Eppo dynamically update predefined values in your code. Extending the feature flag example above, variables in your code can be created to accept a value defined in the JSON object defined in Eppo.
+JSON flags can be used to parameterize your app or site to run experiments without an additional release. By using a [JSON flag](/feature-flagging/concepts/flag-variations#json-flags), values from Eppo dynamically update predefined values in your code. Extending the feature flag example above, variables in your code can be created to accept a value defined in the JSON object defined in Eppo.
 
 Below is an example extended from our [React](/sdks/client-sdks/javascript#usage-in-react) documentation.
 

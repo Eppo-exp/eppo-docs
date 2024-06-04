@@ -34,7 +34,7 @@ You can make the values of the variation whatever makes sense for your use case,
 
 ![Setting up Eppo Feature Flag with JSON](/img/guides/integrating-with-webflow/setting-up-feature-flag.png)
 
-Once you have your feature flag setup, set your [feature flag up as an experiment](/experiment-analysis/creating-experiments). Once you have data flowing to your data warehouse from your feature flag, you will be able to analyze your results.
+Once you have your feature flag setup, set your [feature flag up as an experiment](/experiment-analysis/configuration). Once you have data flowing to your data warehouse from your feature flag, you will be able to analyze your results.
 
 ## Setting up Webflow
 

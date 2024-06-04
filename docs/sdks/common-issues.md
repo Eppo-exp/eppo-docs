@@ -16,7 +16,7 @@ Always place assignment calls as close to your end experience as possible. This 
 
 :::note
 
-While Eppo recommends placing assignment calls as close to the experience as possible, we understand this is not possible in all circumstances. In these cases, we provide the ability to filter analysis results. See [Filter assignments by entry points](/experiment-analysis/filter-assignments-by-entry-point) for more details.
+While Eppo recommends placing assignment calls as close to the experience as possible, we understand this is not possible in all circumstances. In these cases, we provide the ability to filter analysis results. See [Filter assignments by entry points](/experiment-analysis/configuration/filter-assignments-by-entry-point) for more details.
 :::
 
 ### Batching assignments example

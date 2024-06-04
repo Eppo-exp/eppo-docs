@@ -23,7 +23,7 @@ In this allocation, we divert some traffic, similar to a holdout group, and spli
 
 ## Creating an experiment
 
-Creating experiment based on this bandit analysis is identical to creating a [regular experiment from a feature flag](/feature-flagging/experiment-assignment).
+Creating experiment based on this bandit analysis is identical to creating a [regular experiment from a feature flag](/feature-flagging/concepts/experiment-assignment).
 Once the experiment is created, the held-out bandit and control groups are compared in an A/B experiment.
 
 ![Bandit experiment analysis](/img/contextual-bandits/bandit-analysis.png)

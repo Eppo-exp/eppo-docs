@@ -108,7 +108,7 @@ factors:
    will be representative of the population as a whole (and therefore the more
    confident we can be that the true lift is close to the lift from our sample).
 
-3. **The [<Term>confidence level</Term>](/experiment-analysis/analysis-plans.md#confidence-level) specified for the experiment (which is 95% by default), which dictates _how_ confident we want to be.**
+3. **The [<Term>confidence level</Term>](/experiment-analysis/configuration/analysis-plans.md#confidence-level) specified for the experiment (which is 95% by default), which dictates _how_ confident we want to be.**
 
    The <Term>confidence level</Term> represents how often we want the true lift to be inside
    the <Term>confidence interval</Term>, and thus the confidence interval needs to be wide

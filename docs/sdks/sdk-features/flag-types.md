@@ -1,6 +1,6 @@
 # Typed assignments
 
-The SDKs provide functions for getting assignments by different types. Visit [this page](/feature-flagging/flag-variations) to learn how to configure flag variations in the Eppo application.
+The SDKs provide functions for getting assignments by different types. Visit [this page](/feature-flagging/concepts/flag-variations) to learn how to configure flag variations in the Eppo application.
 
 The [Javascript client SDK](/sdks/client-sdks/javascript) for example has the following 5 functions:
 

@@ -2,7 +2,7 @@
 sidebar_position: 1
 ---
 
-# Creating an Experiment Analysis
+# Creating Experiment Analyses
 
 Experiment analyses in Eppo allow you to measure how new treatments impact subject-level (e.g., user) metrics. This page walks through creating a new experiment analysis.
 
@@ -19,10 +19,10 @@ On the side panel, you'll be prompted to enter some information about the experi
 1. A name for the experiment and the Team to which the experiment belongs
 2. The [Entity](/data-management/entities) on which the experiment was randomized (user, device, workspace, etc.)
 3. Which [Assignment Source](/data-management/definitions/assignment-sql) has assignment logs for the experiment
-4. An optional [entry point](/statistics/sample-size-calculator/setup#what-is-an-entry-point) on which to filter experiment assignments. This will limit the experiment analysis to subjects (e.g., users) that hit the specified entry point. You can read more about filtering experiment assignments [here](/experiment-analysis/filter-assignments-by-entry-point).
+4. An optional [entry point](/statistics/sample-size-calculator/setup#what-is-an-entry-point) on which to filter experiment assignments. This will limit the experiment analysis to subjects (e.g., users) that hit the specified entry point. You can read more about filtering experiment assignments [here](/experiment-analysis/configuration/filter-assignments-by-entry-point).
 5. The experiment key of interest. The drop-down will show flags created in Eppo as well as other experiment keys in the selected Assignment Source. If your experiment key does not show up in the drop-down you can also enter it manually. 
 6. For experiments randomized with Eppo's feature flags, you'll also specify the [Allocation](/feature-flagging/#allocations) you want to analyze (one flag can be used to run multiple experiments)
-7. A hypothesis for the experiment. You can also add this later when creating an experiment [report](/experiment-analysis/experiment-reports)
+7. A hypothesis for the experiment. You can also add this later when creating an experiment [report](/experiment-analysis/reporting/experiment-reports)
 
 
 ![Fill experiment form](/img/building-experiments/fill-create-experiment-form.png)
@@ -42,12 +42,12 @@ Use this section to tell Eppo the different variants that were a part of the exp
 ![Add variants](/img/building-experiments/name-variants.png)
 
 3. **Allocation (externally randomized experiments only)**
-If your experiment has a custom traffic split or was only rolled out to a subset of eligible users (with the remainder not tracked in your assignment table), you can specify that in this section. The traffic exposure powers the [Global Lift](/experiment-analysis/global-lift) calculator. In most use cases it is appropriate to keep this exposure at 100% and the traffic split even.
+If your experiment has a custom traffic split or was only rolled out to a subset of eligible users (with the remainder not tracked in your assignment table), you can specify that in this section. The traffic exposure powers the [Global Lift](/experiment-analysis/reading-results/global-lift) calculator. In most use cases it is appropriate to keep this exposure at 100% and the traffic split even.
 
 ![Percent Traffic](/img/building-experiments/define-traffic-allocation.png)
 
 4. **Experiment Analysis Plan (optional)**
-Default analysis options are set to make it easy to start using Eppo without diving deep into the details of our statistics engine. For the majority of our customers, the default settings are appropriate. If you want to dive deeper into what these settings do, please see the [Analysis Plan section of our docs](/experiment-analysis/analysis-plans).  
+Default analysis options are set to make it easy to start using Eppo without diving deep into the details of our statistics engine. For the majority of our customers, the default settings are appropriate. If you want to dive deeper into what these settings do, please see the [Analysis Plan section of our docs](/experiment-analysis/configuration/analysis-plans).  
 
 Once you have configured your experiment, hit **Save Changes** and continue on to add metrics.
 

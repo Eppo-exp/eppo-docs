@@ -320,7 +320,7 @@ getIntegerAssignment(...)
 getStringAssignment(...)
 getJSONAssignment(...)
 ```
-To read more about different flag types, see the page on [Flag Variations](/feature-flagging/flag-variations).
+To read more about different flag types, see the page on [Flag Variations](/feature-flagging/concepts/flag-variations).
 ## Initialization options
 
 How the SDK fetches experiment configurations is configurable via additional optional initialization options:

@@ -12,7 +12,7 @@ In particular, you can set company-wide defaults for the following settings:
 
 Each of these can be overridden for individual experiments, if need be. For more
 on what each setting is and how to choose the right settings, see
-[Analysis Plans](../experiment-analysis/analysis-plans.md).
+[Analysis Plans](/experiment-analysis/configuration/analysis-plans.md).
 
 ### Experiment Progress Settings
 
@@ -32,6 +32,6 @@ The settings defined at the Admin level will be the company-wide defaults for
 any “draft”, “running”, and “wrap up” experiments that have not opted out of
 using the defaults. Individual experiments can choose to opt out of the
 company-wide defaults and use different settings. See how to set the
-[statistical analysis plan at the experiment level](../experiment-analysis/creating-experiments.md#analysis-plan-settings).
+[statistical analysis plan at the experiment level](/experiment-analysis/configuration/analysis-plans).
 
 ![Minimum Threshold](/img/administration/company-analysis-plan.gif)

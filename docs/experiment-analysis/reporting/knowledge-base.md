@@ -1,6 +1,6 @@
 # Knowledge Base
 
-The Knowledge Base is the central repository for experimentation learnings. It contains all experiments with a `concluded` status that did not have a misconfiguration. Because the content is based on [experiment reports](/experiment-analysis/experiment-reports) built in Eppo, they are forever indexed and available to future teams for meta-analysis. For teams using Eppo, the Knowledge Base can help find past learnings and generate new insights for future experiments.
+The Knowledge Base is the central repository for experimentation learnings. It contains all experiments with a `concluded` status that did not have a misconfiguration. Because the content is based on [experiment reports](/experiment-analysis/reporting/experiment-reports) built in Eppo, they are forever indexed and available to future teams for meta-analysis. For teams using Eppo, the Knowledge Base can help find past learnings and generate new insights for future experiments.
 
 ![Eppo Knowledge Base](/img/interpreting-experiments/knowledge-base.png)
 

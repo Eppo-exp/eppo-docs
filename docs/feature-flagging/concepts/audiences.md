@@ -9,7 +9,7 @@ Audiences allow you to easily define reusable targeting criteria such that you d
 ![Audience page](/img/feature-flagging/audiences/audience-overview.png)
 
 ## Creating an Audience
-In the Configuration section, click the "Create" button and select "Audience". Input a title, description (optional), and the [targeting rules](/feature-flagging/targeting.md). 
+In the Configuration section, click the "Create" button and select "Audience". Input a title, description (optional), and the [targeting rules](/feature-flagging/concepts/targeting.md). 
 
 ![Creating an Audience](/img/feature-flagging/audiences/create-audience.png)
 

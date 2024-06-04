@@ -9,7 +9,7 @@ The Eppo App for Slack allows you to receive notifications for important updates
 
 ## Allow Permissions to a Slack Workspace
 
-Follow the directions to [setup Slack notifications in your workspace](../administration/slack-notifications.md).
+Follow the directions to [setup Slack notifications in your workspace](/administration/slack-notifications.md).
 
 ## Configure System Wide Slack Notifications
 
