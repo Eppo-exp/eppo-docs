@@ -75,6 +75,6 @@ Data quality diagnostics check that experiment data matches what we would expect
 Eppo detects when pre-experiment metric averages differ significantly across variations for one or more metrics. Eppo will highlight the top metrics where we see this differentiation.
 This issue is most often driven by the non-random assignment of users into variations within the experiment. Consult with your engineering team to diagnose potential issues with your randomization tool.
 
-:::warning
+:::info
 The pre-experiment data diagnostic is only run when CUPED is enabled. This setting can be changed in the Admin panel across all experiments, or on a per-experiment basis in the Configure tab under Statistal Analysis Plan
 :::
