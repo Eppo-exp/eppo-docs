@@ -25,10 +25,9 @@ Fact SQL queries define the metric events to analyze in Eppo. Each Fact SQL shou
 Once entity IDs and timestamps have been added, click "Add Fact" to map fact value columns. If each row should be treated as one event, select `Each Record` instead of a column name.
 
 :::note
-Fact columns should either be numeric (to support metric aggregations such as SUM) or categorical (to support metric aggregations such as COUNT DISTINCT).
+Fact columns should either be numeric (to support metric aggregations such as SUM) or a string (to support metric aggregations such as COUNT DISTINCT).
 If the desired metric is a count of records, conversion rate, or a retention rate, consider using `Each Record` rather than a specific column.
 :::
-
 
 When adding Facts, you can also add a description and the fact's desired change. This will determine whether statistically significant increases in the fact will be highlighted in green or red. For example, support tickets or model timeouts should have desired change set to "Decreasing".
 
