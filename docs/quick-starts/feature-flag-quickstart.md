@@ -62,7 +62,7 @@ If you are using React, we have some [React specific recommendations](/sdks/clie
 
 ### 5. Embed the flag in your code
 
-Once the SDK is initialized, use `getBoolAssignment` to check whether a user should see the new page:
+Once the SDK is initialized, use `getBooleanAssignment` to check whether a user should see the new page:
 
 ```jsx
 // Wherever you render the checkout page...
@@ -71,8 +71,8 @@ import * as EppoSdk from "@eppo/js-client-sdk";
 
 const eppoClient = EppoSdk.getInstance();
 
-const variation = eppoClient.getBoolAssignment(
-  "new-checkout-page" // flag key
+const variation = eppoClient.getBooleanAssignment(
+  "new-checkout-page", // flag key
   user.id, // subject key
   {}, // userProperties
   false, // default value

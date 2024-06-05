@@ -131,7 +131,7 @@ The `getStringAssignment` function takes three required and one optional input t
 The following typed functions are available:
 
 ```javascript
-getBoolAssignment(...)
+getBooleanAssignment(...)
 getNumericAssignment(...)
 getIntegerAssignment(...)
 getStringAssignment(...)

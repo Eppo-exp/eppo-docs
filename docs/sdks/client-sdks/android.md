@@ -43,7 +43,7 @@ If you are using the Eppo SDK for experiment assignment (i.e., randomization), p
 The code below illustrates an example implementation of a logging callback using Segment. You could also use your own logging system, the only requirement is that the SDK receives a `logAssignment` function which sends data into a table in your warehouse which Eppo has read access to. Here we create an instance of an `AssignmentLogger` and configure the `EppoClient` to use this logger with the `EppoClient.Builder` helper class:
 
 ```java
-AssignmentLogger logger = new AssignmentLogger() {
+AssignmentLogger assignmentLogger = new AssignmentLogger() {
     @Override
     public void logAssignment(Assignment assignment) {
         analytics.enqueue(TrackMessage.builder("Eppo Randomized Assignment")
@@ -54,7 +54,7 @@ AssignmentLogger logger = new AssignmentLogger() {
                         .put("subject", assignment.getSubject())
                         .put("variation", assignment.getVariation())
                         .build()
-                );
+                )
         );
     }
 };
