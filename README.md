@@ -14,4 +14,4 @@ $ yarn build    # Generates static content into the `build` directory and can be
 
 # Deploying
 
-Deploy happens automatically when changes are pushed to `main`. Netlity monitors the repository and publishes them to https://docs.geteppo.com
+Deploy happens automatically when changes are pushed to `main`. Netlify monitors the repository and publishes them to https://docs.geteppo.com
