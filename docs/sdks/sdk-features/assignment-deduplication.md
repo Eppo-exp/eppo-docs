@@ -1,7 +1,7 @@
 # Assignment deduplication
 
 Each invocation of the `get*Assignment` methods triggers the logging callback function. 
-If you have connected it to transmit events to your Data Warehouse this 
+If you have connected it to transmit events to your Data Warehouse, this
 will store duplicate data and increase associated costs unnecessarily.
 
 Eppo's SDK deduplicates assignment events using an internal cache
