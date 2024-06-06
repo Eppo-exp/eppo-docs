@@ -224,6 +224,14 @@ For example, if the entity is a customer session ,`subject_attributes` might loo
 
 Those can be used by the feature flag or the experiment for targeting, through the **Allocations** setting on the configuration page.
 
+:::warning
+
+The `MATCHES`, `ONE_OF`, and `NOT_ONE_OF` operators are evaluated on string representations of the subject attributes. To be consistent with other SDKs, note that conversion of subject attributes from floats and booleans is different from the standard Python conversion.
+
+In particular, `True` and `False` are converted to the string values `"true"` and `"false`". Integer floats are converted to integers before converting to a string. That is, `10.0` becomes `"10"`, whereas `10.1` becomes `"10.1"`.
+
+:::
+
 ### B. Example Payment Configuration
 
 Let’s say you are running a Django service with the User-Agent package. You want to use feature flags to offer a payment method that adapt to the browser (only Safari users should be offered to use Apple Pay), the country (Dutch users can use iDEAL), and loyalty status (members might use their points). You can use a feature flag to configure what is possible in which country, for which users, etc. 
