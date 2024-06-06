@@ -314,7 +314,7 @@ It may take up to 10 seconds for changes to Eppo experiments to be reflected by 
 The following typed functions are available:
 
 ```
-getBoolAssignment(...)
+getBooleanAssignment(...)
 getNumericAssignment(...)
 getIntegerAssignment(...)
 getStringAssignment(...)

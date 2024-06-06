@@ -14,6 +14,4 @@ $ yarn build    # Generates static content into the `build` directory and can be
 
 # Deploying
 
-```sh
-$ USE_SSH=true yarn deploy    # Deploy using docusaurus.
-```
+Deploy happens automatically when changes are pushed to `main`. Netlify monitors the repository and publishes them to https://docs.geteppo.com

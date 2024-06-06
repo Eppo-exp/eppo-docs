@@ -26,7 +26,7 @@ Suppose we are testing out a new payment experience with users. When implementin
 ```javascript
 export default function PaymentPage({ user: User }): JSX.Element {
   const useNewPaymentFlow =
-    eppoClient.getBoolAssignment("new-payment-flow", user.email, {}, false) === true;
+    eppoClient.getBooleanAssignment("new-payment-flow", user.email, {}, false) === true;
 
   return (
     <Container>

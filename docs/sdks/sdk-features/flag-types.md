@@ -4,9 +4,9 @@ The SDKs provide functions for getting assignments by different types. Visit [th
 
 The [Javascript client SDK](/sdks/client-sdks/javascript) for example has the following 5 functions:
 
-```
+```javascript
 getStringAssignment(...)
-getBoolAssignment(...)
+getBooleanAssignment(...)
 getIntegerAssignment(...)
 getNumericAssignment(...)
 getJSONAssignment(...)

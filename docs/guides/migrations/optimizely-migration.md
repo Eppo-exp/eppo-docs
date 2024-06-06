@@ -76,7 +76,7 @@
           let isEnabled = false;
           try {
             // For grouping values with a single flag, JSON-typed variations are used
-            isEnabled = getInstance().getBoolAssignment(
+            isEnabled = getInstance().getBooleanAssignment(
               userId,
               featureKey,
               attributes
@@ -146,7 +146,7 @@
           userId: string,
           attributes?: Record<string, string | number | boolean | null>
         ) {
-          return getInstance().getBoolAssignment(userId, featureKey, attributes) ?? false;
+          return getInstance().getBooleanAssignment(userId, featureKey, attributes) ?? false;
         }
         ```
         
@@ -217,7 +217,7 @@
     
     ```tsx
     const enabled = 
-      getInstance().getBoolAssignment(userId, featureKey, attributes) ?? false;
+      getInstance().getBooleanAssignment(userId, featureKey, attributes) ?? false;
     ```
     
     ### Getting a String Value
