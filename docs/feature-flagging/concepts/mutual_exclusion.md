@@ -53,7 +53,7 @@ Click on the Experiment allocations to add a new experiment to the Layer
 Here you are able to define the Experiment name, the Variations to include in the experiment (there must be at least two), and how much traffic in the layer your experiment will use. If there are no other experiments configured, a new experiment can use up to 100% of the layer and as little as 2%.
 ![Creating an experiment allocation](/img/feature-flagging/layer-create-allocation.png)
 
-Once your Experiment allocation is created, you'll want to add an Experiment Analysis to it to understand how it's performing. Do this by clicking on the `Create Analysis` button and filling out information about the Analysis. See [Creating Experiments](/experiment-analysis/creating-experiments) for more information.
+Once your Experiment allocation is created, you'll want to add an Experiment Analysis to it to understand how it's performing. Do this by clicking on the `Create Analysis` button and filling out information about the Analysis. See [Creating Experiments](/experiment-analysis/configuration) for more information.
 ![Creating an experiment analysis](/img/feature-flagging/layer-experiment-analysis.png)
 
 ## Concluding an Experiment and Rolling out a Winning Variation

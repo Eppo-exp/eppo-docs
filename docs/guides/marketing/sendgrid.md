@@ -23,7 +23,7 @@ To use Eppo to analyze the results an A/B test of Single Send set up in Sendgrid
 - An Assignment SQL set up in Eppo that has the Sendgrid assignment data in it.
 - A [webhook set up in Sendgrid](https://docs.sendgrid.com/for-developers/tracking-events/getting-started-event-webhook) that sends events to a source that eventually ETL or send events to your data warehouse.
 
-Once you have this, you can set up an [experiment analysis](/experiment-analysis/creating-experiments) in Eppo to measure the impact of a Sendgrid experiment against your data warehouse metrics. The step-by-step process is outlined below.
+Once you have this, you can set up an [experiment analysis](/experiment-analysis/configuration) in Eppo to measure the impact of a Sendgrid experiment against your data warehouse metrics. The step-by-step process is outlined below.
 
 **1. Set up your data warehouse table for Sendgrid data to be used in Eppo.**
 
@@ -103,7 +103,7 @@ An added benefit of using Eppo’s feature flags to split traffic for an email e
 - A B2B SaaS company sending out an email to trial users nudging them to use a new feature in their account where the control is a regular trial email and the treatment is a new email explaining the benefits of a new feature.
 - An eCommerce company sending a promotional campaign advertising a certain category of clothing; once the user hits the site, that category of clothing is highlighted.
 
-In this section, we walk through how to set up an Eppo [JSON feature flag](/feature-flagging/flag-variations#json-flags) to experiment on content in [pre-defined variables](https://docs.sendgrid.com/for-developers/sending-email/using-handlebars) in a Sendgrid Dynamic Template. 
+In this section, we walk through how to set up an Eppo [JSON feature flag](/feature-flagging/concepts/flag-variations#json-flags) to experiment on content in [pre-defined variables](https://docs.sendgrid.com/for-developers/sending-email/using-handlebars) in a Sendgrid Dynamic Template. 
 
 :::note
 

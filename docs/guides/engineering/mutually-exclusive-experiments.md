@@ -6,7 +6,7 @@ sidebar_position: 8
 
 Research from Microsoft has shown that in practice [interaction effects are vanishingly rare](https://www.microsoft.com/en-us/research/group/experimentation-platform-exp/articles/a-b-interactions-a-call-to-relax/). Given this, we recommend only using mutual exclusion when the overlap of two new treatments critically degrades the user experience. For instance, a design team might want to run a homepage redesign test while a marketing team might want to experiment on the headline messaging on the same page. If the new layout removes the messaging altogether or makes it unreadable, these experiments should clearly not overlap.
 
-If you do find yourself running an experiment where there would be a true interaction effect, we recommend setting up nested feature flags with [targeting rules](/feature-flagging/targeting). Using the same homepage example where each experiment has a control and one treatment, you would create 3 feature flags total:
+If you do find yourself running an experiment where there would be a true interaction effect, we recommend setting up nested feature flags with [targeting rules](/feature-flagging/concepts/targeting). Using the same homepage example where each experiment has a control and one treatment, you would create 3 feature flags total:
 
 - one flag called `exclusion_group` will randomize the users into being in either the `copy_test` or `layout_out` test
 - one flag called `copy_test` will randomize users into the variations set up to test the new messaging against the control

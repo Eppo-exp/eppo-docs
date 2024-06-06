@@ -13,9 +13,9 @@ If you're planning to transition to a new data warehouse, Eppo simplifies this p
 1. **Create a New Workspace:**
     - Contact Eppo support to initiate the creation of your new Workspace.
 2. **Connect Your New Data Warehouse:**
-    - In your new Workspace, link your new data warehouse following our [Setup Quickstart Guide](../quick-starts/setup-quickstart.md).
+    - In your new Workspace, link your new data warehouse following our [Setup Quickstart Guide](/quick-starts/setup-quickstart.md).
 3. **Export Facts & Metrics from Your Old Workspace:**
     - Reach out to Eppo support to facilitate the export of your existing Facts and Metrics in YML format.
 4. **Import Facts & Metrics into Your New Workspace:**
-    - Sync the exported YML files into your new workspace using [Eppo’s Certified Metrics API](../data-management/metrics/certified-metrics.md).
+    - Sync the exported YML files into your new workspace using [Eppo’s Certified Metrics API](/data-management/metrics/certified-metrics.md).
     - **Important:** Ensure the SQL in the YML files aligns with the syntax requirements of your new warehouse vendor.

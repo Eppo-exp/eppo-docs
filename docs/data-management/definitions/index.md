@@ -11,4 +11,4 @@ experiment. These assignments can be created by Eppo's SDK or by any existing ra
 
 3. [**Entity Property SQL**](/data-management/definitions/property-sql) - entity models with static properties.
 
-4. [**Entry Point SQL**](/statistics/sample-size-calculator/setup#entry-points) - a list of qualifying events used to [size experiments](/statistics/sample-size-calculator/) and [filter experiment assignments](/experiment-analysis/filter-assignments-by-entry-point).
+4. [**Entry Point SQL**](/statistics/sample-size-calculator/setup#entry-points) - a list of qualifying events used to [size experiments](/statistics/sample-size-calculator/) and [filter experiment assignments](/experiment-analysis/configuration/filter-assignments-by-entry-point).

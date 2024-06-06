@@ -27,7 +27,7 @@ Start by creating a flag for the new page:
 
 ![Feature gate 0](/img/feature-flagging/feature-flag-qs-0.png)
 
-Give the flag a descriptive human readable name and create variations for each version of the checkout page. In this example we only have two states: enabled and disabled. If your flag is more involved, you can change the flag type to be string, numeric, or JSON-valued. Read more about flag types [here](/feature-flagging/flag-variations).
+Give the flag a descriptive human readable name and create variations for each version of the checkout page. In this example we only have two states: enabled and disabled. If your flag is more involved, you can change the flag type to be string, numeric, or JSON-valued. Read more about flag types [here](/feature-flagging/concepts/flag-variations).
 
 ![Feature gate 1](/img/feature-flagging/feature-flag-qs-1.png)
 
@@ -41,7 +41,7 @@ Now that you're in the Test environment, add a Feature Gate allocation to your f
 
 ![Feature gate 3](/img/feature-flagging/feature-gate-setup-1.png)
 
-For this example, we will assign all users to the Enabled version of the flag. If you want to target specific users, you can add targeting rules to the allocation. You can read more about targeting [here](/feature-flagging/targeting).
+For this example, we will assign all users to the Enabled version of the flag. If you want to target specific users, you can add targeting rules to the allocation. You can read more about targeting [here](/feature-flagging/concepts/targeting).
 
 ![Feature gate 4](/img/feature-flagging/feature-gate-setup-3.png)
 

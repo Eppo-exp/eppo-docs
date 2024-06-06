@@ -14,7 +14,7 @@ Enhancing your real-user monitoring data with feature flag information allows yo
 
 :::info
 
-This example assumes there is a [feature flag](/feature-flagging/feature-gates.md) set up in Eppo and the [Datadog RUM SDK](https://docs.datadoghq.com/real_user_monitoring/browser/#setup) set up.  
+This example assumes there is a [feature flag](/feature-flagging/concepts/feature-gates.md) set up in Eppo and the [Datadog RUM SDK](https://docs.datadoghq.com/real_user_monitoring/browser/#setup) set up.  
 
 :::
 

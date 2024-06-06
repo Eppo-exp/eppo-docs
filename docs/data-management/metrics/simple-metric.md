@@ -209,7 +209,7 @@ For example, sending a promotional email may boost engagement for one week. If t
 :::
 
 :::note
-If you are using an [Entry Point](/experiment-analysis/filter-assignments-by-entry-point), the starting point of the time frame is the Entry Point timestamp.
+If you are using an [Entry Point](/experiment-analysis/configuration/filter-assignments-by-entry-point), the starting point of the time frame is the Entry Point timestamp.
 :::
 
 ### Metric properties
@@ -222,7 +222,7 @@ To apply a property filter, select **Specify metric properties**, select the pro
 
 ### Outlier handling
 
-Eppo handles outliers through a technique called [winsorization](/guides/running-well-powered-experiments#handling-outliers-using-winsorization). The percentiles used for lower and upper bounds can be configured per metric. For example, in the screenshot below, we are setting the upper bound for winsorization at the 99.9th percentile. This means that any user with a value above the 99.9th percentile will be replaced with the 99.9th percentile value.
+Eppo handles outliers through a technique called [winsorization](/guides/advanced-experimentation/running-well-powered-experiments#handling-outliers-using-winsorization). The percentiles used for lower and upper bounds can be configured per metric. For example, in the screenshot below, we are setting the upper bound for winsorization at the 99.9th percentile. This means that any user with a value above the 99.9th percentile will be replaced with the 99.9th percentile value.
 
 Note that winsorization is only available for `SUM`, `COUNT`, and `COUNT DISTINCT` aggregations. This is because conversion and retention metrics are binary variables that are not prone to influence from outliers. As a result, winsorization is not needed for these metric types.
 
@@ -230,7 +230,7 @@ Note that winsorization is only available for `SUM`, `COUNT`, and `COUNT DISTINC
 
 ### Set a default precision target
 
-[Precision](/experiment-analysis/progress-bar#precision) refers to the uncertainty within which you want to measure. You can set a default at the metric level, which will be used to measure an experiment's [progress](/experiment-analysis/progress-bar). Note that this default can be overridden at the experiment level.
+[Precision](/experiment-analysis/reading-results/progress-bar#precision) refers to the uncertainty within which you want to measure. You can set a default at the metric level, which will be used to measure an experiment's [progress](/experiment-analysis/reading-results/progress-bar). Note that this default can be overridden at the experiment level.
 
 ### Set formatting options
 

@@ -37,10 +37,10 @@ else:
 ```
 
 Feature flags are applicable for a number of use cases:
-- [Feature gates](/feature-flagging/feature-gates)
-- [Experiment assignment](/feature-flagging/experiment-assignment)
-- [Progressive rollouts](/feature-flagging/progressive-rollouts)
-- [Kill switches](/feature-flagging/kill-switches)
+- [Feature gates](/feature-flagging/concepts/feature-gates)
+- [Experiment assignment](/feature-flagging/concepts/experiment-assignment)
+- [Progressive rollouts](/feature-flagging/use-cases/progressive-rollouts)
+- [Kill switches](/feature-flagging/use-cases/kill-switches)
 
 ### Variations
 
@@ -52,7 +52,7 @@ In this case, the feature flag may be called `checkout_page_buy_now_button_color
 ### Allocations
 
 Allocations govern how users get assigned to different variations of a feature flag in a flexible way.
-An allocation is a logical grouping of [targeting rules](/feature-flagging/targeting) and variation weights associated with a flag.
+An allocation is a logical grouping of [targeting rules](/feature-flagging/concepts/targeting) and variation weights associated with a flag.
 
 Eppo supports two types of allocations: Feature Gates and Experiment allocations.
 

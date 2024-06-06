@@ -1,3 +1,7 @@
+---
+sidebar_position: 5
+---
+
 # Audiences
 
 Audiences allow you to easily define reusable targeting criteria such that you don't have to recreate the same targeting rules for every flag. Audiences are also built to minimize risk. When creating new flag allocations, using Audiences minimizes the number of free entry fields that can contain errors. Eppo has also made Audiences resilient such that changes to Audiences in active flags require proper permissions, are clearly communicated, and are non-destructive.
@@ -5,7 +9,7 @@ Audiences allow you to easily define reusable targeting criteria such that you d
 ![Audience page](/img/feature-flagging/audiences/audience-overview.png)
 
 ## Creating an Audience
-In the Configuration section, click the "Create" button and select "Audience". Input a title, description (optional), and the [targeting rules](/feature-flagging/targeting.md). 
+In the Configuration section, click the "Create" button and select "Audience". Input a title, description (optional), and the [targeting rules](/feature-flagging/concepts/targeting.md). 
 
 ![Creating an Audience](/img/feature-flagging/audiences/create-audience.png)
 

@@ -41,7 +41,7 @@ To turn off email notifications, return to the profile menu and toggle notificat
 
 - When an experiment changes status from `DRAFT` &rarr; `RUNNING` &rarr; `READY TO REVIEW` &rarr; `COMPLETED`
 
-See more on <a href="https://docs.geteppo.com/experiment-analysis/experiment-status" target="_blank">experiment statuses</a>.
+See more on <a href="https://docs.geteppo.com/experiment-analysis/reading-results/experiment-status" target="_blank">experiment statuses</a>.
 
 ### A primary or guardrail metric reached statistical significance on this experiment
 
