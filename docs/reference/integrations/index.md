@@ -6,7 +6,7 @@ You can use Eppo for end-to-end experimentation, or only for analysis. To integr
 | :-- | :-- | :-- | :-- |
 | `2021-06-22T17:35:12.000Z` | `6342` | `checkout-button-color` | `purple` |
 
-This row represents the fact that the user with ID `6342` was assigned to the variation `blue` of the experiment `checkout-button-color` on June 22nd, which Eppo needs to properly analyze that
+This row represents the fact that the user with ID `6342` was assigned to the variation `purple` of the experiment `checkout-button-color` on June 22nd, which Eppo needs to properly analyze that
 experiment.
 
 See below for tool-specific examples:
