@@ -10,12 +10,10 @@ The above sketch illustrates how CUPED helps reduce the variance in an effect es
 
 :::info
 
-Note that we only use CUPED to reduce variance on the metrics overview page.
-In particular, note that there are no CUPED estimates for:
+Since CUPED models are computationally intensive, we only use CUPED to reduce variance on the metrics overview page. In particular, there are no CUPED estimates for:
 
-- filtered results (including segments)
-- explores
-  This is due to the fact that CUPED models are computationally intense and hence we do not want to use them indiscriminately.
+- [filtered results](https://docs.geteppo.com/experiment-analysis/deep-dive/segments/) (including segments)
+- [explores](https://docs.geteppo.com/experiment-analysis/deep-dive/explores)
 
 :::
 
