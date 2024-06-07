@@ -226,9 +226,9 @@ Those can be used by the feature flag or the experiment for targeting, through t
 
 :::warning
 
-The `MATCHES`, `ONE_OF`, and `NOT_ONE_OF` operators are evaluated on string representations of the subject attributes. To be consistent with other SDKs, note that conversion of subject attributes from floats and booleans is different from the standard Python conversion.
+The `MATCHES`, `ONE_OF`, and `NOT_ONE_OF` operators are evaluated on string representations of the subject attributes. To be consistent with other SDKs, note that conversion of subject attributes from floats, booleans, and None is different from the standard Python conversion.
 
-In particular, `True` and `False` are converted to the string values `"true"` and `"false`". Integer floats are converted to integers before converting to a string. That is, `10.0` becomes `"10"`, whereas `10.1` becomes `"10.1"`.
+In particular, `True` and `False` are converted to the string values `"true"` and `"false`". Integer floats are converted to integers before converting to a string. That is, `10.0` becomes `"10"`, whereas `10.1` becomes `"10.1"`. Finally, `None` is converted to the string `null`.
 
 :::
 
