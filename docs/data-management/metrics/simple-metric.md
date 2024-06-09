@@ -138,8 +138,8 @@ Examples: number of unique videos watched per user (if the same video is watched
 Count Distinct is a more expensive operation than Count, especially when there are many unique values in the fact column. **You should only use Count Distinct when it is crucial for the definition of your metric to ignore repeated values.** When repeated values are naturally rare, a Count metric will give similar results to a Count Distinct metric and will incur lower warehouse costs.
 
 For example, consider a podcast app with a fact that logs **podcast listen events**, each with an episode id and a show id. We are interested in two types of outcomes:
-* _Unique shows listened per user_ – an increase in this metric is good news about diversity of content consumed. `Count Distinct` on the show id is needed to measure this correctly. `Count` would not be an adeguate replacement, because it would also increase when users listen to more episodes from the same set of shows.
-* _Episodes listened per user_ – an increase in this metric is good news about overall usage of the app. This can be captured correctly with a `Count` metric. Since repeated listens to the same episode are rare, using `Count Distinct` on episode id would give similar results but incur higher warehouse costs.
+* _Unique shows listened per user_, to measure diversity of content consumption. `Count Distinct` on the show id is needed to capture this correctly. `Count` would not be an adeguate replacement, because it would also increase when users listen to more episodes from shows they already listen to.
+* _Episodes listened per user_, to measure overall content consumption. This can be captured correctly with a `Count` metric. Since repeated listens to the same episode are rare, using `Count Distinct` on episode id would give similar results but incur higher warehouse costs.
 :::
 
 #### Retention
