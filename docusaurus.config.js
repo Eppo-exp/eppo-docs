@@ -170,7 +170,24 @@ async function createConfig () {
         copyright: `Copyright © ${new Date().getFullYear()} Eppo, Inc.`
       },
       prism: {
-        additionalLanguages: ['java', 'groovy', 'ruby'],
+        additionalLanguages: [
+          'bash',
+          'csharp',
+          'go',
+          'groovy',
+          'java',
+          'javascript',
+          'json',
+          'php',
+          'python',
+          'ruby',
+          'rust',
+          'sql',
+          'swift',
+          'tsx',
+          'typescript',
+          'yaml',
+        ],
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme
       },
