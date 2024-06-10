@@ -5,27 +5,26 @@ http://adoring-yonath-6ecb9d.netlify.app/*  http://docs.geteppo.com/:splat  301!
 /experiment-analysis/connecting-your-data/data-warehouses/connecting-to-databricks /data-management/connecting-dwh/databricks
 /experiment-analysis/connecting-your-data/data-warehouses/connecting-to-redshift   /data-management/connecting-dwh/redshift
 /experiment-analysis/planning-experiments/ /statistics/sample-size-calculator/
-/experiment-analysis/building-experiments/ /experiment-analysis/creating-experiments
+/experiment-analysis/building-experiments/ /experiment-analysis/configuration
 /experiment-analysis/interpreting-experiments/ /statistics/confidence-intervals/
-/experiment-analysis/interpreting-experiments/exploring-metrics /experiment-analysis/explores
+/experiment-analysis/interpreting-experiments/exploring-metrics /experiment-analysis/deep-dive/explores
 /experiment-analysis/interpreting-experiments/lift-estimates-and-confidence-intervals/statistical-nitty-gritty/ /statistics/confidence-intervals/statistical-nitty-gritty
 /experiment-analysis/interpreting-experiments/traffic /experiment-analysis/diagnostics#traffic-diagnostics
 /experiments/ /experiment-analysis
-/experiments/analysis-plans/ /experiment-analysis/analysis-plans
+/experiments/analysis-plans/ /experiment-analysis/configuration/analysis-plans
 /experiments/best-practices/ /experiment-analysis/best-practices
-/experiments/copy-sql/ /experiment-analysis/copy-sql
-/experiments/creating-experiments /experiment-analysis/creating-experiment-analysis
+/experiments/copy-sql/ /experiment-analysis/deep-dive/copy-sql
+/experiments/creating-experiments /experiment-analysis/configuration
 /experiments/data-pipeline /experiment-analysis/data-pipeline
 /experiments/diagnostics /experiment-analysis/diagnostics
-/experiments/experiment-metrics /experiment-analysis/experiment-metrics
-/experiments/experiment-reports /experiment-analysis/experiment-reports
-/experiments/experiment-status /experiment-analysis/experiment-status
-/experiments/explores /experiment-analysis/explores
-/experiments/filter-assignments-by-entry-point /experiment-analysis/filter-assignments-by-entry-point
-/experiments/global-lift /experiment-analysis/global-lift
+/experiments/experiment-reports /experiment-analysis/reporting/experiment-reports
+/experiments/experiment-status /experiment-analysis/reading-results/experiment-status
+/experiments/explores /experiment-analysis/deep-dive/explores
+/experiments/filter-assignments-by-entry-point /experiment-analysis/configuration/filter-assignments-by-entry-point
+/experiments/global-lift /experiment-analysis/reading-results/global-lift
 /experiments/holdouts /experiment-analysis/holdouts
-/experiments/progress-bar /experiment-analysis/progress-bar
-/experiments/segments /experiment-analysis/segments
+/experiments/progress-bar /experiment-analysis/reading-results/progress-bar
+/experiments/segments /experiment-analysis/deep-dive/segments
 /feature-flags/api-keys /sdks/sdk-keys
 /feature-flags/latency /sdks/faqs/latency
 /feature-flags/risk /sdks/faqs/risk
@@ -122,3 +121,5 @@ http://adoring-yonath-6ecb9d.netlify.app/*  http://docs.geteppo.com/:splat  301!
 /data-management/properties /data-management/definitions/properties
 /data-management/metrics/guardrails /data-management/organizing-metrics/guardrails
 /data-management/entities /data-management/definitions/entities
+
+/experiments/creating-experiments/#experiments-with-custom-event-dates
