@@ -70,16 +70,34 @@ If you are using the SDK for experiment assignments, make sure to pass in an ass
 
 ### Initialization options
 
-How the SDK fetches experiment configurations is configurable via additional optional initialization options:
+How the SDK fetches, serves, and caches experiment configurations is configurable via additional optional initialization options:
 
-| Option | Description | Default |
-| ------ | ----------- | ------- | 
-| **`requestTimeoutMs`** (number) | Timeout in milliseconds for HTTPS requests for the experiment configurations. | `5000` |
-| **`numInitialRequestRetries`** (number) | Number of _additional_ times the initial configurations request will be attempted if it fails. This is the request typically synchronously waited (via `await`) for completion. A small wait will be done between requests. | `1` |
-| **`pollAfterSuccessfulInitialization`** (boolean) | Poll for new configurations (every 30 seconds) after successfully requesting the initial configurations. | `false` |
-| **`pollAfterFailedInitialization`** (boolean) | Poll for new configurations even if the initial configurations request failed. | `false` |
-| **`throwOnFailedInitialization`** (boolean) | Throw an error (reject the promise) if unable to fetch initial configurations during initialization. | `true` |
-| **`numPollRequestRetries`** (number) | If polling for updated configurations after initialization, the number of additional times a request will be attempted before giving up. Subsequent attempts are done using an exponential backoff. | `7` |
+| Option                                            | Description                                                                                                                                                                                                                                                                                                                            | Default         |
+|---------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------| 
+| **`requestTimeoutMs`** (number)                   | Timeout in milliseconds for HTTPS requests for the experiment configurations.                                                                                                                                                                                                                                                          | `5000`          |
+| **`numInitialRequestRetries`** (number)           | Number of _additional_ times the initial configurations request will be attempted if it fails. This is the request typically synchronously waited (via `await`) for completion. A small wait will be done between requests.                                                                                                            | `1`             |
+| **`pollAfterSuccessfulInitialization`** (boolean) | Poll for new configurations (every 30 seconds) after successfully requesting the initial configurations.                                                                                                                                                                                                                               | `false`         |
+| **`pollAfterFailedInitialization`** (boolean)     | Poll for new configurations even if the initial configurations request failed.                                                                                                                                                                                                                                                         | `false`         |
+| **`throwOnFailedInitialization`** (boolean)       | Throw an error (reject the promise) if unable to fetch initial configurations during initialization.                                                                                                                                                                                                                                   | `true`          |
+| **`numPollRequestRetries`** (number)              | If polling for updated configurations after initialization, the number of additional times a request will be attempted before giving up. Subsequent attempts are done using an exponential backoff.                                                                                                                                    | `7`             |
+| **`skipInitialRequest`** (boolean)                | Skip the initial request for a new configuration during initialization (if polling is enabled, this will still take place later)                                                                                                                                                                                                       | `false`         |
+| **`persistentStore`** (IAsyncStore)               | A custom implementation of an asynchronous, persistent storage for caching flag configurations                                                                                                                                                                                                                                         | _Eppo provided_ |
+| **`maxCacheAgeSeconds`** (number)                 | Maximum age, in seconds, previously cached configurations are considered valid until new ones will be fetched                                                                                                                                                                                                                          | `0`             |
+| **`useExpiredCache`** (boolean)                   | Consider initialization successfully complete without fetching updates, even if the configuration loaded from the cache is expired                                                                                                                                                                                                     | `false`         |
+| **`updateOnFetch`** (always\|expired\|empty)      | Sets how the configuration is updated after a successful fetch:<br/>• always - immediately start using the new configuration<br/>• expired - immediately start using the new configuration only if the current one has expired<br/>• empty - only use the new configuration if the current one is both expired and uninitialized/empty | `'always'`      |
+
+#### Configuration cache
+The SDK can cache previously loaded configurations for use in subsequent sessions, speeding up the time for the SDK to initialize.
+By default, a Local Storage-based cache is used in a browser environment and a Chrome Storage-based cache is used in a Chrome extension environment.
+A custom cache can be provided as the `persistentStore` initialization option.
+
+Caches have a concept of being "expired," dictated by the `maxCacheAgeSeconds` initialization option, and also overridable by the implementation of `isExpired()` for a custom persistent store.
+When the cached configuration is not expired, it is considered valid and no fetches will be made for updated configurations.
+
+When fetches are made--either from initialization or regular polling--you can control when the changes take effect with the `updateOnFetch` initialization option.
+It's default of `'always'` will start serving values from the most up-to-date configuration immediately. `'expired'` will only update if the cached configuration--now being used to serve assignments--has expired. 
+This is useful in combination with polling to prevent configurations in long-lived sessions from getting too stale. `'empty'` will only update if there is no pre-existing configuration (expired or not) and is 
+useful for quickly initializing using a cached configuration and maintaining consistent assignments throughout the session even when the configuration is old. It is essentially prefetching an updated configuration for the next session. 
 
 ### Define an assignment logger (experiment assignment only)
 
@@ -108,16 +126,16 @@ const assignmentLogger: IAssignmentLogger = {
 
 The SDK will invoke the `logAssignment` function with an `assignment` object that contains the following fields:
 
-| Field                     | Description                                                                                                              | Example                             |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------- |
-| `experiment` (string)     | An Eppo experiment key                                                                                                   | "recommendation-algo-allocation-17" |
-| `subject` (string)        | An identifier of the subject or user assigned to the experiment variation                                                | UUID                                |
-| `variation` (string)      | The experiment variation the subject was assigned to                                                                     | "control"                           |
-| `timestamp` (string)      | The time when the subject was assigned to the variation                                                                  | 2021-06-22T17:35:12.000Z            |
-| `subjectAttributes` (map) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `{ "country": "US" }`               |
-| `featureFlag` (string)    | An Eppo feature flag key                                                                                                 | "recommendation-algo"               |
-| `allocation` (string)     | An Eppo allocation key                                                                                                   | "allocation-17"                     |
-
+| Field                              | Description                                                                                                              | Example                                                                          |
+|------------------------------------|--------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| `timestamp` (string)               | The time when the subject was assigned to the variation                                                                  | 2021-06-22T17:35:12.000Z                                                         |
+| `featureFlag` (string)             | An Eppo feature flag key                                                                                                 | "recommendation-algo"                                                            |
+| `allocation` (string)              | An Eppo allocation key                                                                                                   | "allocation-17"                                                                  |
+| `experiment` (string)              | An Eppo experiment key                                                                                                   | "recommendation-algo-allocation-17"                                              |
+| `subject` (string)                 | An identifier of the subject or user assigned to the experiment variation                                                | UUID                                                                             |
+| `subjectAttributes` (map)          | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `{ "country": "US" }`                                                            |
+| `variation` (string)               | The experiment variation the subject was assigned to                                                                     | "control"                                                                        |
+| `metaData` (Record<string,string>) | Metadata around the assignment, such as the version of the SDK                                                           | `{ "obfuscated: "true", "sdkLanguage": "javascript", "sdkLibVersion": "3.2.1" }` |
 :::note
 More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/sdks/event-logging/) page.
 :::
