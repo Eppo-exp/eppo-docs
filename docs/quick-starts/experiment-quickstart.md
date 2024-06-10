@@ -21,7 +21,7 @@ At the core of Eppo's data model is a log of every time a subject (e.g., user) w
 
 To add an assignment log, navigate to the **Assignments** section on the **Definitions** tab and click **+Create Assignment Table**. Give the Assignment SQL a name (e.g., "Eppo Randomized Assignments") and write SQL to return the following fields from your data warehouse:
 
-1. A unique identifier tied to the [entity](/data-management/entities) you created in the Initial Setup quick start (e.g., `user_id`)
+1. A unique identifier tied to the [entity](/data-management/definitions/entities) you created in the Initial Setup quick start (e.g., `user_id`)
 2. An experiment key specifying the experiment into which the subject (user) was enrolled
 3. The variant the subject (user) received
 4. The timestamp that the assignment occurred 

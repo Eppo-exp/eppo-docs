@@ -100,7 +100,7 @@ POST https://eppo.cloud/api/v1/experiments/
 }
 ```
 
-This request will create an analysis in the UI and automatically add [guardrail metrics](/data-management/metrics/guardrails). 
+This request will create an analysis in the UI and automatically add [guardrail metrics](/data-management/organizing-metrics/guardrails). 
 
 In the request above, you’ll need to provide two internal Eppo identifiers: `entity_id` and `assignment_source_id`. `entity_id` tells Eppo the unit on which this experiment is randomized (e.g., a B2B company may experiment at the user or the company grain). To get a list of entities within your workspace you can use the entities endpoint:
 

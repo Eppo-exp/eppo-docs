@@ -6,7 +6,7 @@ Once this setup is complete, we can now create metrics based on the event data, 
 
 ## Data annotation
 
-The following diagram illustrates how the core concepts of [entities](/data-management/entities), [assignments](/data-management/definitions/assignment-sql), [facts](/data-management/definitions/fact-sql), and [properties](/data-management/definitions/property-sql) relate.
+The following diagram illustrates how the core concepts of [entities](/data-management/definitions/entities), [assignments](/data-management/definitions/assignment-sql), [facts](/data-management/definitions/fact-sql), and [properties](/data-management/definitions/property-sql) relate.
 
 ![data annotation illustration](/img/data-management/data-annotation.jpg)
 
@@ -14,7 +14,7 @@ Note that the assignment and properties tables have properties at the entity lev
 
 ### Entities
 
-[Entities](/data-management/entities) are the subjects (aka randomization unit) of your experiments.
+[Entities](/data-management/definitions/entities) are the subjects (aka randomization unit) of your experiments.
 Most commonly, there is a single entity: the _User_ (or _Client_, _Customer_, etc.)
 However, in some cases there are multiple entities.
 For example, if you are a food delivery app, and you want to run experiments on _Restaurants_, _Customers_, and _Drivers_, you would have a restaurant entity, a customer entity, and a driver entity.
@@ -35,4 +35,4 @@ However, it is equally easy to configure more [complex](/data-management/metrics
 
 ### Metric collections
 
-Finally, we can group similar metrics in a [metric collection](/data-management/collections), which allows us to effortlessly add all of them to a particular experiment at once.
+Finally, we can group similar metrics in a [metric collection](/data-management/organizing-metrics/collections), which allows us to effortlessly add all of them to a particular experiment at once.

@@ -22,7 +22,7 @@ Since CUPED models are computationally intensive, we only use CUPED to reduce va
 When CUPED is enabled, Eppo automatically ingests aggregated data about each subjects in the following ways:
 
 - For each (applicable) experiment metric, we look at the pre-experiment values during a lookback window which defaults to 30 days.
-- Furthermore, we also leverage the [assignment properties](/data-management/properties) for the subject (e.g. country, browser, etc.)
+- Furthermore, we also leverage the [assignment properties](/data-management/definitions/properties) for the subject (e.g. country, browser, etc.)
 
 :::note
 As a concrete example, consider an e-commerce website that runs an experiment with 3 metrics:
@@ -71,7 +71,7 @@ CUPED can be turned on in the admin panel, and in the overview page of an experi
 
 **What data does CUPED use?**
 - Pre-experiment data from _all_ [eligible metrics](/data-management/metrics/simple-metric#metric-aggregation-types) (sum, count, unique entities, and these aggregations for ratio metrics)
-- [Assignment properties](/data-management/properties#assignment-properties) from the AssignmentSQL used for this experiment. These are interpreted as categorical features.
+- [Assignment properties](/data-management/definitions/properties#assignment-properties) from the AssignmentSQL used for this experiment. These are interpreted as categorical features.
 
 To avoid confusion, it is useful to keep in mind that the above refers to the input data. CUPED produces improved results across all metrics.
 

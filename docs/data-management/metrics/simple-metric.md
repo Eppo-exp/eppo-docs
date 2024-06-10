@@ -222,7 +222,7 @@ If you are using an [Entry Point](/experiment-analysis/configuration/filter-assi
 
 ### Metric properties
 
-Metric properties allow you to filter events based on [properties associated with the fact](/data-management/properties#metric-properties).
+Metric properties allow you to filter events based on [properties associated with the fact](/data-management/definitions/properties#metric-properties).
 For example, a streaming platform may run an experiment with watch time as the primary metric. We may be interested in understanding the impact not just on total watch time, but also on movie watch time and series watch time separately. In this case, you can add video type as a property on the Fact SQL and create separate metrics for movies and shows.
 
 To apply a property filter, select **Specify metric properties**, select the property of interest, and the specific values of interest. Eppo will run a scheduled job to determine the different values a property may take, but if your specific value is not yet available, you can add it manually by clicking **Create New**.

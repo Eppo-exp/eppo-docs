@@ -1,9 +1,9 @@
 https://adoring-yonath-6ecb9d.netlify.app/* https://docs.geteppo.com/:splat 301!
 http://adoring-yonath-6ecb9d.netlify.app/*  http://docs.geteppo.com/:splat  301!
-/experiment-analysis/connecting-your-data/data-warehouses/connecting-to-snowflake  /guides/connecting-dwh/snowflake
-/experiment-analysis/connecting-your-data/data-warehouses/connecting-to-bigquery   /guides/connecting-dwh/bigquery
-/experiment-analysis/connecting-your-data/data-warehouses/connecting-to-databricks /guides/connecting-dwh/databricks
-/experiment-analysis/connecting-your-data/data-warehouses/connecting-to-redshift   /guides/connecting-dwh/redshift
+/experiment-analysis/connecting-your-data/data-warehouses/connecting-to-snowflake  /data-management/connecting-dwh/snowflake
+/experiment-analysis/connecting-your-data/data-warehouses/connecting-to-bigquery   /data-management/connecting-dwh/bigquery
+/experiment-analysis/connecting-your-data/data-warehouses/connecting-to-databricks /data-management/connecting-dwh/databricks
+/experiment-analysis/connecting-your-data/data-warehouses/connecting-to-redshift   /data-management/connecting-dwh/redshift
 /experiment-analysis/planning-experiments/ /statistics/sample-size-calculator/
 /experiment-analysis/building-experiments/ /experiment-analysis/creating-experiments
 /experiment-analysis/interpreting-experiments/ /statistics/confidence-intervals/
@@ -116,3 +116,9 @@ http://adoring-yonath-6ecb9d.netlify.app/*  http://docs.geteppo.com/:splat  301!
 /guides/sendgrid /guides/marketing/sendgrid
 /guides/testing-feature-flags /guides/testing-feature-flags
 /guides/warehouse-migration /guides/migrations/warehouse-migration
+
+/data-management/collections /data-management/organizing-metrics/collections
+/data-management/metrics/certified-metrics /data-management/certified-metrics
+/data-management/properties /data-management/definitions/properties
+/data-management/metrics/guardrails /data-management/organizing-metrics/guardrails
+/data-management/entities /data-management/definitions/entities

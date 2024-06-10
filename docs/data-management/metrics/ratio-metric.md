@@ -4,7 +4,7 @@ sidebar_position: 2
 
 # Ratio metrics
 ## Overview
-Ratio metrics allow you to calculate the ratio of two fact aggregations. Unlike [Simple metrics](/data-management/metrics/simple-metric), which normalize a fact aggregation by the number of unique [entities](https://docs.geteppo.com/data-management/entities) (e.g., users) in the experiment, 
+Ratio metrics allow you to calculate the ratio of two fact aggregations. Unlike [Simple metrics](/data-management/metrics/simple-metric), which normalize a fact aggregation by the number of unique [entities](https://docs.geteppo.com/data-management/definitions/entities) (e.g., users) in the experiment, 
 ratio metrics normalize a fact aggregation by another user-defined fact aggregation. To make this concrete, let's consider a few examples.
 
 ### Example 1: Average Order Value (AOV)

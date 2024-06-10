@@ -4,7 +4,7 @@ Metrics serve as the foundation for evaluating experiments and determining the e
 
 # Entities and aggregations
 
-Metrics in Eppo are created at the [entity](/data-management/entities) level (such as a user), allowing you to define specific measurement criteria for different aspects of their experiments. An entity can be any meaningful unit of analysis, such as a user, session, or page view. To capture meaningful insights, metrics combine a [fact](/data-management/definitions/fact-sql) and an [aggregation](/data-management/metrics/simple-metric#metric-aggregation-types). The fact represents the event or action being measured, while the aggregation defines how the data is summarized (e.g., _sum_, _count_, _conversion_, and _retention_) across the specified entity.
+Metrics in Eppo are created at the [entity](/data-management/definitions/entities) level (such as a user), allowing you to define specific measurement criteria for different aspects of their experiments. An entity can be any meaningful unit of analysis, such as a user, session, or page view. To capture meaningful insights, metrics combine a [fact](/data-management/definitions/fact-sql) and an [aggregation](/data-management/metrics/simple-metric#metric-aggregation-types). The fact represents the event or action being measured, while the aggregation defines how the data is summarized (e.g., _sum_, _count_, _conversion_, and _retention_) across the specified entity.
 
 ## Ratio Metrics
 
@@ -23,7 +23,7 @@ $$
 
 ## Guardrail metrics
 
-Furthermore, you can set metrics as [guardrail metrics](/data-management/metrics/guardrails), which means they are automatically added to every experiment. This feature ensures that specific metrics are consistently tracked across experiments, providing a standardized measurement framework. By setting metrics as guard rails, you can maintain a unified approach to experimentation and easily compare results across different tests.
+Furthermore, you can set metrics as [guardrail metrics](/data-management/organizing-metrics/guardrails), which means they are automatically added to every experiment. This feature ensures that specific metrics are consistently tracked across experiments, providing a standardized measurement framework. By setting metrics as guard rails, you can maintain a unified approach to experimentation and easily compare results across different tests.
 
 # Metric detail view
 
