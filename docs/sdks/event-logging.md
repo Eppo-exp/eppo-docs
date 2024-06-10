@@ -31,7 +31,7 @@ Eppo expects that the logger function will take this object and write data back 
 
 It's ok for this table to contain duplicate rows for the same subject. If a subject is assigned to multiple variants, Eppo will automatically remove them from the analysis.
 
-The `experiment` key is simply a concatenation of the `featureFlag` an `allocation` fields. By appending a unique identifier of the allocation to the flag key, we can separate traffic that saw a variant due to a rule set (Feature Gate allocation) or as part of randomized assignment (Experiment allocation). The `featureFlag` and `allocation` fields are not required for analysis but are provided for convenience.
+The `experiment` key is simply a concatenation of the `featureFlag` and `allocation` fields. By appending a unique identifier of the allocation to the flag key, we can separate traffic that saw a variant due to a rule set (Feature Gate allocation) or as part of randomized assignment (Experiment allocation). The `featureFlag` and `allocation` fields are not required for analysis but are provided for convenience.
 
 ### Examples for common logging systems
 

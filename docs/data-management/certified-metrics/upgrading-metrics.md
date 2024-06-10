@@ -14,7 +14,7 @@ To upgrade an individual fact sources as yaml, navigate to the fact source page 
 
 ![Copy Fact Source Yaml](/img/metrics/copy-fact-source-yaml.png)
 
-Paste the resulting YAML into a new file in your certified metric repository (or create a new git repository if this is your first Certified Metrics):
+Paste the resulting YAML into a new file in your certified metric repository (or create a new git repository if this is your first Certified Metric):
 
 ```yaml title="sessions.yml"
 name: Sessions

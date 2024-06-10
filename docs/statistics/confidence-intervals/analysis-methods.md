@@ -105,7 +105,7 @@ underlying each method on the [statistical nitty-gritty](statistical-nitty-gritt
 
 If you want to learn more about what you might want to consider when choosing an
 analysis method, you can find some
-[discussion of that on the Analysis Plans](/experiment-analysis/analysis-plans.md#considerations-for-setting-an-analysis-plan)
+[discussion of that on the Analysis Plans](/experiment-analysis/configuration/analysis-plans.md#considerations-for-setting-an-analysis-plan)
 page.
 
 [^failures]:
@@ -368,7 +368,7 @@ interval.
 :::
 
 The prior we use is described specifically on the
-[Statistical nitty-gritty](statistics/confidence-intervals/statistical-nitty-gritty) page, but in essence
+[Statistical nitty-gritty](statistical-nitty-gritty.md) page, but in essence
 we set our pre-experiment belief to be that the lift on any given metric will
 be, on average, zero, and that there will be random fluctuations around that
 average such that for 50% of experiments the lift will fall between -21% and
@@ -432,7 +432,7 @@ results: if the confidence interval is above zero, there was a positive lift,
 and the experiment gets shipped. In some ways, that negates key benefits of a
 Bayesian approach, and since that approach depends so much on a choice of prior
 it's often prudent to think more about
-[_what happens if I'm wrong_](/experiment-analysis/analysis-plans.md#whats-the-best-way-to-be-wrong)
+[_what happens if I'm wrong_](/experiment-analysis/configuration/analysis-plans.md#whats-the-best-way-to-be-wrong)
 than with frequentist methods (luckily, Bayesian methods make it much easier to
 think about exactly that question). However, even if you apply a simple decision
 rule to Bayesian experiment results, there are a number of ways where Bayesian

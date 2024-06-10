@@ -152,6 +152,9 @@ where fact_timestamp >= assignment_timestamp + X days
 and assignment_timestamp < current_date - X days 
 ```
 
+Additionally, a maximum number of days (Y) can be set on the retention period by enabling "add a timeframe to aggregate". When this is enabled, the aggregation will include events by subjects after the minimum number of days defined by the retention period (>=X) and before the max timeframe to aggregate (<Y). 
+
+
 #### Conversion
 
 Conversion metrics measure the proportion of entities with at least one fact event within a fixed number of days (X) from experiment assignment. For example, a 7-day conversion metric would measure the proportion of users who sign up for a free trial within 7 days of being assigned to the experiment.
@@ -185,11 +188,20 @@ group by <entity_id>
 having sum(<fact_col>) > {threshold}
 ```
 
-### Time frames
+### Time windows
 
-Eppo allows you to further refine metrics by adding a time frame. For example, we may be interested in a metric that only considers purchases within one week of the user's assignment to an experiment.
+Eppo allows you to further refine metrics by adding a time window. For example, we may be interested in a metric that only considers purchases starting two days after and within seven days of the user's assignment to an experiment.
 
 ![Adding a time frame to a metric](/img/data-management/metrics/create-metric-timeframe.png)
+
+Eppo offers time units of minutes, hours, days (from initial assignment), calendar days, and weeks.
+* Days from assignment starts at the time the subject is assigned. Every 24 hours since assignment counts as a new day. For example, if a subject is assigned at 9 AM on January 1, the next calendar say will start at 9 AM January 2.
+* Calendar days counts a new day at midnight on the clock. For example, if a subject is assigned at 9 AM on January 1, the next calendar say will start at 12 AM January 2.
+
+#### Counting aged subjects
+You can define how metrics with a time window are calculated by enabling the option to "only include in calculation after subject reaches end of time range".
+* When this option is disabled, all subjects assigned to the experiment will be counted. For example, a seven-day revenue metric will count all subjects who have been assigned into the experiment, including those who have been in the experiment for less than seven days.
+* When this option is enabled, only subjects who have reached the maximum exposure time of the metric window will be counted. For example, a seven-day revenue metric will count only subjects who have been assigned into the experiment for seven or more days, excluding those who have been in the experiment for less than seven days.
 
 :::note
 Consider adding a time frame metric to experiments where you believe the intervention has a short term effect.
@@ -197,7 +209,7 @@ For example, sending a promotional email may boost engagement for one week. If t
 :::
 
 :::note
-If you are using an [Entry Point](/experiment-analysis/filter-assignments-by-entry-point), the starting point of the time frame is the Entry Point timestamp.
+If you are using an [Entry Point](/experiment-analysis/configuration/filter-assignments-by-entry-point), the starting point of the time frame is the Entry Point timestamp.
 :::
 
 ### Metric properties
@@ -210,7 +222,7 @@ To apply a property filter, select **Specify metric properties**, select the pro
 
 ### Outlier handling
 
-Eppo handles outliers through a technique called [winsorization](/guides/running-well-powered-experiments#handling-outliers-using-winsorization). The percentiles used for lower and upper bounds can be configured per metric. For example, in the screenshot below, we are setting the upper bound for winsorization at the 99.9th percentile. This means that any user with a value above the 99.9th percentile will be replaced with the 99.9th percentile value.
+Eppo handles outliers through a technique called [winsorization](/guides/advanced-experimentation/running-well-powered-experiments#handling-outliers-using-winsorization). The percentiles used for lower and upper bounds can be configured per metric. For example, in the screenshot below, we are setting the upper bound for winsorization at the 99.9th percentile. This means that any user with a value above the 99.9th percentile will be replaced with the 99.9th percentile value.
 
 Note that winsorization is only available for `SUM`, `COUNT`, and `COUNT DISTINCT` aggregations. This is because conversion and retention metrics are binary variables that are not prone to influence from outliers. As a result, winsorization is not needed for these metric types.
 
@@ -218,7 +230,7 @@ Note that winsorization is only available for `SUM`, `COUNT`, and `COUNT DISTINC
 
 ### Set a default precision target
 
-[Precision](/experiment-analysis/progress-bar#precision) refers to the uncertainty within which you want to measure. You can set a default at the metric level, which will be used to measure an experiment's [progress](/experiment-analysis/progress-bar). Note that this default can be overridden at the experiment level.
+[Precision](/experiment-analysis/reading-results/progress-bar#precision) refers to the uncertainty within which you want to measure. You can set a default at the metric level, which will be used to measure an experiment's [progress](/experiment-analysis/reading-results/progress-bar). Note that this default can be overridden at the experiment level.
 
 ### Set formatting options
 

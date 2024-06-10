@@ -1,3 +1,7 @@
+---
+sidebar_position: 6
+---
+
 # Testing Feature Flags
 
 ## Testing in Staging or Local Environments
@@ -18,7 +22,7 @@ Set your flag to **On** to have it run in the selected environment.
 
 To test in a Production environment, switch the environment on the flag to the **Production Environment**. 
 
-Decide what will indicate an internal user based on what information is available. Create a [Feature Gate](/feature-flagging/feature-gates#create-a-feature-gate) and set up a targeting condition that targets internal users. 
+Decide what will indicate an internal user based on what information is available. Create a [Feature Gate](/feature-flagging/concepts/feature-gates#create-a-feature-gate) and set up a targeting condition that targets internal users. 
 
 In the example below, we target all users with an internal email address that ends in `@geteppo.com` or a specific user id. 
 

@@ -141,7 +141,7 @@ The SDK will invoke the `logBanditAction` function with an `logData` object that
 | `actionNumericAttributes` (Map<String, Double>)      | Metadata about numeric attributes of the assigned action. Map of the name of attributes their numeric values    | `Map.of("discountPercent", 20.0)`   |
 | `actionCategoricalAttributes` (Map<String, String>)  | Metadata about non-numeric attributes of the assigned action. Map of the name of attributes their string values | `Map.of("promoTextColor", "white")` |
 | `actionProbability` (Double)                         | The weight between 0 and 1 the bandit valued the assigned action                                                | 0.25                                |
-| `modelVerison` (String)                              | Unique identifier for the version (iteration) of the bandit parameters used to determine the action probability | "falcon v123"                       |
+| `modelVersion` (String)                              | Unique identifier for the version (iteration) of the bandit parameters used to determine the action probability | "falcon v123"                       |
 
 The code below illustrates an example implementation of a bandit logging callback that writes to Snowflake.
 

@@ -23,7 +23,7 @@ You do not need to include all metrics you intend to add later to your experimen
 
 Instead, only include metrics for which you need to reach the target precision to make a ship/no-ship decision. These will typically be:
 - your primary metric, to verify that the effect size you anticipate from the experiment is greater than or equal to the Minimum Detectable Effect;
-- any guardrail metrics for which you need precise estimates to establish that the guardrail is met (possibly using a [non-inferiority test](/guides/non-inferiority-tests)).
+- any guardrail metrics for which you need precise estimates to establish that the guardrail is met (possibly using a [non-inferiority test](/guides/advanced-experimentation/non-inferiority-tests)).
 :::
 
 After you have selected the metrics you're interested in, click _Run Calculation_. The setup is now saved and the calculation will begin in the background. You will receive an email when the calculation is completed, and the page will automatically refresh when completed. You are free to leave this page and come back later, without losing any work.

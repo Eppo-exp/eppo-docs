@@ -29,7 +29,7 @@ Start by creating a flag for the new page:
 
 ![Feature gate 0](/img/feature-flagging/feature-flag-qs-0.png)
 
-Give the flag a descriptive human readable name and create variations for each version of the checkout page. In this example we only have two states: enabled and disabled. If your flag is more involved, you can change the flag type to be string, numeric, or JSON-valued. Read more about flag types [here](/feature-flagging/flag-variations).
+Give the flag a descriptive human readable name and create variations for each version of the checkout page. In this example we only have two states: enabled and disabled. If your flag is more involved, you can change the flag type to be string, numeric, or JSON-valued. Read more about flag types [here](/feature-flagging/concepts/flag-variations).
 
 ![Feature gate 1](/img/feature-flagging/feature-flag-qs-1.png)
 
@@ -39,11 +39,11 @@ After creating the flag, switch into the Test environment:
 
 ![Feature gate 2](/img/feature-flagging/feature-flag-qs-2.png)
 
-Now that you're in the Test environment, add an Experiment allocation to your flag. If you want to force certain segments or users into one variant, you can also add a Feature Gate allocation. You can read more about using Eppo for Feature Gates [here](/feature-flagging/feature-gates).
+Now that you're in the Test environment, add an Experiment allocation to your flag. If you want to force certain segments or users into one variant, you can also add a Feature Gate allocation. You can read more about using Eppo for Feature Gates [here](/feature-flagging/concepts/feature-gates).
 
 ![Feature gate 3](/img/feature-flagging/feature-flag-qs-3.png)
 
-For this example, we will assign all users to the experiment. If you want to target specific users, you can add targeting rules to the allocation. You can read more about targeting [here](/feature-flagging/targeting).
+For this example, we will assign all users to the experiment. If you want to target specific users, you can add targeting rules to the allocation. You can read more about targeting [here](/feature-flagging/concepts/targeting).
 
 ![Feature gate 4](/img/feature-flagging/feature-flag-qs-4.png)
 
@@ -92,7 +92,7 @@ If you are using React, we have some [React specific recommendations](/sdks/clie
 
 ### 6. Embed the flag in your code
 
-Once the SDK is initialized, use `getBoolAssignment` to check whether a user should see the new page:
+Once the SDK is initialized, use `getBooleanAssignment` to check whether a user should see the new page:
 
 ```jsx
 // Wherever you render the checkout page...
@@ -101,8 +101,8 @@ import * as EppoSdk from "@eppo/js-client-sdk";
 
 const eppoClient = EppoSdk.getInstance();
 
-const variation = eppoClient.getBoolAssignment(
-  "new-checkout-page" // flag key
+const variation = eppoClient.getBooleanAssignment(
+  "new-checkout-page", // flag key
   user.id, // subject key
   {}, // userProperties
   false, // default value

@@ -28,6 +28,11 @@ Fact SQL queries define the metric events to analyze in Eppo. Each Fact SQL shou
 
 Once entity IDs and timestamps have been added, click "Add Fact" to map fact value columns. If each row should be treated as one event, select `Each Record` instead of a column name.
 
+:::note
+Fact columns should either be numeric (to support metric aggregations such as SUM) or a string (to support metric aggregations such as COUNT DISTINCT).
+If the desired metric is a count of records, conversion rate, or a retention rate, consider using `Each Record` rather than a specific column.
+:::
+
 When adding Facts, you can also add a description and the fact's desired change. This will determine whether statistically significant increases in the fact will be highlighted in green or red. For example, support tickets or model timeouts should have desired change set to "Decreasing".
 
 ![Create Fact](/img/building-experiments/add-fact-sql-fact.png)
@@ -46,7 +51,7 @@ You can read more about Fact Properties on the [Properties](/data-management/def
 
 ![Create Property](/img/building-experiments/add-fact-sql-property.png)
 
-Once you have finished defining your Fact SQL, click **Save & Close**. You can now repeat this process for other fact tables, or continue on to create [Metrics](data-management/metrics/) from your new Facts.
+Once you have finished defining your Fact SQL, click **Save & Close**. You can now repeat this process for other fact tables, or continue on to create [Metrics](https://docs.geteppo.com/metric-quickstart) from your new Facts.
 
 ## Adding Partition keys (optional)
 If your table has a partition on a different column other than the event timestamp (i.e. event date), Eppo can use it for filtering queries more efficiently. 
@@ -58,4 +63,3 @@ To specify a partition key, map the column to the Partition Date field.
 :::info
 Partition dates are disabled by default, if you'd like to enable them in your workspace, please reach out to your Eppo representative or email us at support@geteppo.com.
 :::
-

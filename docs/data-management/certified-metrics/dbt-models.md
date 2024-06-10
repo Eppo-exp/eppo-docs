@@ -81,7 +81,7 @@ Now, call the eppo_metrics_sync module and point it at a directory of yaml files
 python3 -m eppo_metrics_sync models --schema=dbt-model --dbt-model-prefix="my_database.my_schema"
 ```
 
-Not that this assumes the DBT yaml files live in the `models` directory. If they live somewhere in your repository, simply replace `models` with the path to your DBT yaml files.
+Note that this assumes the DBT yaml files live in the `models` directory. If they live somewhere in your repository, simply replace `models` with the path to your DBT yaml files.
 
 You should now see your DBT models in your Eppo workspace under **Definitions** >> **Facts** tab. To push updated fact source definitions, simply call the eppo_metrics_sync module again.
 
@@ -141,7 +141,7 @@ jobs:
         python3 -m eppo_metrics_sync models --schema=dbt-model --dbt-model-prefix="my_database.my_schema"
 ```
 
-5. Push this to your new GitHub branch and confirm that the new metrics are showing up in your staging environment. You can view the metric sync logs on the **Admin** page under **Metric Sync Log**
+5. Push this to your new GitHub branch and confirm that the new metrics are showing up in your staging environment. You can view the metric sync logs on the **Admin** page under **Metric Sync Log**:
 
 ![Certified metrics logs](/img/metrics/certified-metrics-2.png)
 

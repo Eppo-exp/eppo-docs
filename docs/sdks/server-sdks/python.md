@@ -224,6 +224,14 @@ For example, if the entity is a customer session ,`subject_attributes` might loo
 
 Those can be used by the feature flag or the experiment for targeting, through the **Allocations** setting on the configuration page.
 
+:::warning
+
+The `MATCHES`, `ONE_OF`, and `NOT_ONE_OF` operators are evaluated on string representations of the subject attributes. To be consistent with other SDKs, note that conversion of subject attributes from floats, booleans, and None is different from the standard Python conversion.
+
+In particular, `True` and `False` are converted to the string values `"true"` and `"false`". Integer floats are converted to integers before converting to a string. That is, `10.0` becomes `"10"`, whereas `10.1` becomes `"10.1"`. Finally, `None` is converted to the string `null`.
+
+:::
+
 ### B. Example Payment Configuration
 
 Let’s say you are running a Django service with the User-Agent package. You want to use feature flags to offer a payment method that adapt to the browser (only Safari users should be offered to use Apple Pay), the country (Dutch users can use iDEAL), and loyalty status (members might use their points). You can use a feature flag to configure what is possible in which country, for which users, etc. 
@@ -322,3 +330,131 @@ if self.campaign_json is not None:
 ```
 
 Assuming your service can be configured with many input parameters, that assignment type enables very powerful configuration changes.
+
+## 6. Contextual Bandits
+
+To leverage Eppo's contextual bandits using the Python SDK, there are two additional steps over regular feature flags:
+1. Add a bandit action logger to the assignment logger
+2. Querying the bandit for an action
+
+We have a simple end-to-end example in the [Python SDK repository](https://github.com/Eppo-exp/python-sdk/blob/main/example/03_bandit.py).
+
+### A. Add a bandit action logger to the assignment logger
+
+In order for the bandit to learn an optimized policy, we need to capture and log the bandit actions.
+This requires adding a bandit action logging callback to the AssignmentLogger class
+```python
+class MyLogger(AssignmentLogger):
+    def log_assignment(self, assignment):
+        ...
+
+    def log_bandit_action(self, bandit_action):
+        # implement me
+```
+
+We automatically log the following data:
+
+| Field                                                | Description                                                                                                     | Example                             |
+|------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|-------------------------------------|
+| `timestamp` (Date)                                   | The time when the action is taken in UTC  | 2024-03-22T14:26:55.000Z            |
+| `flagKey` (String)                                | The key of the feature flag corresponding to the bandit                                                                                           | "bandit-test-allocation-4"          |
+| `banditKey` (String)                                       | The key (unique identifier) of the bandit                                                                       | "ad-bandit-1"                       |
+| `subject` (String)                                   | An identifier of the subject or user assigned to the experiment variation                                       | "ed6f85019080"                      |
+| `action` (String)                                    | The action assigned by the bandit                                                                               | "promo-20%-off"                     |
+| `subjectNumericAttributes` (Dict[str, float])     | Metadata about numeric attributes of the subject. Dictionary of the name of attributes their numeric values            | `{"age": 30}`    |
+| `subjectCategoricalAttributes` (Dict[str, str]) | Metadata about non-numeric attributes of the subject. Dictionary of the name of attributes their string values         | `{"loyalty_tier": "gold"}`     |
+| `actionNumericAttributes` (Dict[str, float])      | Metadata about numeric attributes of the assigned action. Dictionary of the name of attributes their numeric values    | `{"discount": 0.1}`   |
+| `actionCategoricalAttributes` (Dict[str, str])  | Metadata about non-numeric attributes of the assigned action. Map of the name of attributes their string values | `{"promoTextColor": "white"}` |
+| `actionProbability` (Double)                         | The weight between 0 and 1 the bandit valued the assigned action                                                | 0.25                                |
+| `modelVersion` (String)                              | Unique identifier for the version (iteration) of the bandit parameters used to determine the action probability | "v123"                       |
+
+### B. Querying the bandit for an action
+
+To query the bandit for an action, you can use the `get_bandit_action` function. This function takes the following parameters:
+- `flag_key` (str): The key of the feature flag corresponding to the bandit
+- `subject_key` (str): The key of the subject or user assigned to the experiment variation
+- `subject_context` (Attributes): The context of the subject 
+- `actions_with_contexts` (List[ActionContext]): The list of action contexts
+- `default` (str): The default variation to return if the bandit cannot be queried
+
+The following code queries the bandit for an action:
+```python
+import eppo_client.bandit
+
+client = eppo_client.get_instance()
+bandit_result = client.get_bandit_action(
+    "shoe-bandit",
+    name,
+    eppo_client.bandit.Attributes(
+        numeric_attributes={"age": age}, categorical_attributes={"country": country}
+    ),
+    [
+        eppo_client.bandit.ActionContext.create(
+            "nike",
+            numeric_attributes={"brand_affinity": 2.3},
+            categorical_attributes={"image_aspect_ratio": "16:9"},
+        ),
+        eppo_client.bandit.ActionContext.create(
+            "adidas",
+            numeric_attributes={"brand_affinity": 0.2},
+            categorical_attributes={"image_aspect_ratio": "16:9"},
+        ),
+    ],
+    "control",
+)
+```
+
+#### Subject Context
+
+The subject context contains contextual information about the subject that is independent of bandit actions.
+For example, the subject's age or country.
+
+The subject context has type `Attributes` which has two fields:
+
+- `numeric_attributes` (Dict[str, float]): A dictionary of numeric attributes (such as "age")
+- `categorical_attributes` (Dict[str, str]): A dictionary of categorical attributes (such as "country")
+
+:::note
+The `categerical_attributes` are also used for targeting rules for the feature flag similar to how `subject_attributes` are used for that with regular feature flags. 
+:::
+
+#### Action Contexts
+
+Next, supply a list with actions and their contexts: `actions_with_contexts: List[ActionContext]`.
+If the user is assigned to the bandit, the bandit selects one of the actions supplied here,
+and all actions supplied are considered to be valid; if an action should not be shown to a user, it should be filtered out of this list.
+
+`ActionContexts` contain the action key, as well as the `Attributes` for the action. This is similar to the `subject_context`, but it is for the action.
+They are conveniently constructed using the `ActionContext.create` method:
+```python
+eppo_client.bandit.ActionContext.create(
+    "puma",
+    numeric_attributes={"brand_affinity": 2.3},
+    categorical_attributes={"image_aspect_ratio": "16:9"},
+)
+```
+
+Note that action contexts can contain two kinds of information:
+- Action specific context: e.g. the image aspect ratio of image corresponding to this action
+- User-action interaction context: e.g. there could be a "brand-affinity" model that computes brand affinties of users to brands, and scores of this model can be added to the action context to provide additional context for the bandit.
+
+#### Result
+
+The `bandit_result` is an instance of `BanditResult`, which has two fields:
+
+- `variation` (str): The variation that was assigned to the subject
+- `action` (Optional[str]): The action that was assigned to the subject
+
+The variation returns the feature flag variation, this can be the bandit itself, or the "status quo" variation if the user is not assigned to the bandit.
+If we are unable to generate a variation, for example when the flag is turned off, then the `default` variation is returned. 
+In both of those cases, the `action` is `None`, and you should use the status-quo algorithm to select an action.
+
+When `action` is not `None`, the bandit has selected that action to be shown to the user.
+
+#### Status quo algorithm
+
+In order to accurately measure the performance of the bandit, we need to compare it to the status quo algorithm using an experiment.
+This status quo algorithm could be a complicated algorithm to that selects an action according to a different model, or a simple baseline such as selecting a fixed or random action.
+When you create an analysis allocation for the bandit and the `action` in `BanditResult` is `None`, implement the desired status quo algorithm based on the `variation` value.
+
+

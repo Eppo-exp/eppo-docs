@@ -57,14 +57,62 @@ http://adoring-yonath-6ecb9d.netlify.app/*  http://docs.geteppo.com/:splat  301!
 /sdks/api-keys /sdks/sdk-keys
 /experiment-analysis/creating-experiment-analysis /experiment-analysis/creating-experiments
 
-/feature-flags/flag-variations /feature-flagging/flag-variations
+/feature-flags/flag-variations /feature-flagging/concepts/flag-variations
 /feature-flags/use-cases/feature-gates /feature-flagging/use-cases/feature-gates
 /feature-flags/use-cases/experiment-assignment /feature-flagging/use-cases/experiment-assignment
-/feature-flags/targeting /feature-flagging/targeting
+/feature-flags/targeting /feature-flagging/concepts/targeting
 /feature-flagging/use-cases/dynamic-config /feature-flagging/dynamic-config
 
 /experiments/connecting-your-data/data-warehouses/connecting-to-databricks/ /data-management/connecting-dwh/databricks
 /experiments/connecting-your-data/data-warehouses/connecting-to-redshift/ /data-management/connecting-dwh/redshift
 
-/data-management/definitions/entities /data-management/definitions/entities
-/data-management/definitions/properties /data-management/definitions/properties
+/experiment-analysis/analysis-plans /experiment-analysis/configuration/analysis-plans
+/experiment-analysis/filter-assignments-by-entry-point /experiment-analysis/configuration/filter-assignments-by-entry-point
+/experiment-analysis/creating-experiments /experiment-analysis/creating-experiment-analyses
+/experiment-analysis/AI-explores /experiment-analysis/deep-dive/AI-explores
+/experiment-analysis/copy-sql /experiment-analysis/deep-dive/copy-sql
+/experiment-analysis/explores /experiment-analysis/deep-dive/explores
+/experiment-analysis/segments /experiment-analysis/deep-dive/segments
+
+/experiment-analysis/experiment-reports /experiment-analysis/reporting/experiment-reports
+/experiment-analysis/experiment-status /experiment-analysis/reading-results/experiment-status
+/experiment-analysis/explores /experiment-analysis/deep-dive/explores/
+/experiment-analysis/filter-assignments-by-entry-point /experiment-analysis/configuration/filter-assignments-by-entry-point
+/experiment-analysis/global-lift /experiment-analysis/reading-results/global-lift
+/experiment-analysis/knowledge-base /experiment-analysis/reporting/knowledge-base
+/experiment-analysis/progress-bar /experiment-analysis/reading-results/progress-bar
+/experiment-analysis/real-time /experiment-analysis/reading-results/real-time
+/experiment-analysis/segments /experiment-analysis/deep-dive/segments
+
+/feature-flagging/audiences /feature-flagging/concepts/audiences
+/feature-flagging/audit-log /feature-flagging/workflow/audit-log
+/feature-flagging/dynamic-config /feature-flagging/use-cases/dynamic-config
+/feature-flagging/experiment-assignment /feature-flagging/concepts/experiment-assignment
+/feature-flagging/feature-flag-approvals /feature-flagging/workflow/feature-flag-approvals
+/feature-flagging/feature-gates /feature-flagging/concepts/feature-gates
+/feature-flagging/flag-notifications /feature-flagging/workflow/flag-notifications
+/feature-flagging/flag-scheduling /feature-flagging/workflow/flag-scheduling
+/feature-flagging/flag-variations /feature-flagging/concepts/flag-variations
+/feature-flagging/kill-switches /feature-flagging/use-cases/kill-switches
+/feature-flagging/mutual_exclusion /feature-flagging/concepts/mutual_exclusion
+/feature-flagging/progressive-rollouts /feature-flagging/use-cases/progressive-rollouts
+/feature-flagging/stale-flags /feature-flagging/workflow/stale-flags
+/feature-flagging/sticky-flags /feature-flagging/concepts/sticky-flags
+/feature-flagging/targeting /feature-flagging/concepts/targeting
+
+/guides/analyzing-clustered-experiments /guides/advanced-experimentation/analyzing-clustered-experiments
+/guides/anonymous-explainer /guides/advanced-experimentation/anonymous-explainer
+/guides/entry_points /guides/advanced-experimentation/entry_points
+
+/guides/integrating-internal-flags /guides/engineering/integrating-internal-flags
+/guides/integrating-with-contentful /guides/marketing/integrating-with-contentful
+/guides/integrating-with-webflow /guides/marketing/integrating-with-webflow
+/guides/mutually-exclusive-experiments /guides/engineering/mutually-exclusive-experiments
+/guides/nextjs-setup /guides/engineering/nextjs-setup
+/guides/no-low-code-experiments /guides/advanced-experimentation/no-low-code-experiments
+/guides/non-inferiority-tests /guides/advanced-experimentation/non-inferiority-tests
+/guides/optimizely-migration /guides/migrations/optimizely-migration
+/guides/running-well-powered-experiments /guides/advanced-experimentation/running-well-powered-experiments
+/guides/sendgrid /guides/marketing/sendgrid
+/guides/testing-feature-flags /guides/testing-feature-flags
+/guides/warehouse-migration /guides/migrations/warehouse-migration

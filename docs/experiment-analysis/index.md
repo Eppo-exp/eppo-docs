@@ -160,11 +160,11 @@ will be in <GreenHighlight>green</GreenHighlight>.
 
 :::
 
-The confidence level is set as part of the [analysis plan](/experiment-analysis/analysis-plans),
+The confidence level is set as part of the [analysis plan](/experiment-analysis/configuration/analysis-plans),
 and you can change the company-wide default on the
 [Admin tab](/administration/setting-statistical-analysis-plan-defaults.md)
 or set an experiment-specific confidence level on the
-[experiment Set Up page](/experiment-analysis/creating-experiments.md#10-optional-the-statistical-analysis-plan).
+[experiment Set Up page](/experiment-analysis/configuration/analysis-plans).
 The confidence level being used for any experiment is displayed on the experiment
 detail page below the table of metric results:
 
@@ -183,7 +183,7 @@ but you may want to understand the treatment effect _globally_; a large
 lift in an experiment that targets a tiny portion of your users might have a
 negligible business impact.
 
-You can click on the [**Impact accounting**](/experiment-analysis/global-lift)
+You can click on the [**Impact accounting**](/experiment-analysis/reading-results/global-lift)
 icon (<Icon src="/img/interpreting-experiments/global-lift-icon.svg" />)
 to show, for each metric,
 the <Term def={true}>coverage</Term> (the share of all events that are part of the
@@ -316,7 +316,7 @@ results.
 
 You can also further investigate the performance of an individual metric by
 clicking on navigator icon the next to the metric name. This will take you to
-the [Metric explore](/experiment-analysis/explores) page where you can further slice
+the [Metric explore](/experiment-analysis/deep-dive/explores) page where you can further slice
 the experiment results by different properties that have been configured, for
 example user persona, or browser, etc.
 
