@@ -373,9 +373,9 @@ We automatically log the following data:
 To query the bandit for an action, you can use the `get_bandit_action` function. This function takes the following parameters:
 - `flag_key` (str): The key of the feature flag corresponding to the bandit
 - `subject_key` (str): The key of the subject or user assigned to the experiment variation
-- `subject_context` (Attributes): The context of the subject 
-- `actions_with_contexts` (List[ActionContext]): The list of action contexts
-- `default` (str): The default variation to return if the bandit cannot be queried
+- `subject_attributes` (Attributes): The context of the subject 
+- `actions` (Dict[str, Attributes]): A dictionary that maps available actions to their attributes
+- `default` (str): The default *variation* to return if the bandit cannot be queried
 
 The following code queries the bandit for an action:
 ```python
@@ -388,18 +388,16 @@ bandit_result = client.get_bandit_action(
     eppo_client.bandit.Attributes(
         numeric_attributes={"age": age}, categorical_attributes={"country": country}
     ),
-    [
-        eppo_client.bandit.ActionContext.create(
-            "nike",
+    {
+        "nike": Attributes(
             numeric_attributes={"brand_affinity": 2.3},
             categorical_attributes={"image_aspect_ratio": "16:9"},
         ),
-        eppo_client.bandit.ActionContext.create(
-            "adidas",
+        "adidas": Attributes(
             numeric_attributes={"brand_affinity": 0.2},
             categorical_attributes={"image_aspect_ratio": "16:9"},
         ),
-    ],
+    },
     "control",
 )
 ```
@@ -420,19 +418,13 @@ The `categerical_attributes` are also used for targeting rules for the feature f
 
 #### Action Contexts
 
-Next, supply a list with actions and their contexts: `actions_with_contexts: List[ActionContext]`.
+Next, supply a dictionary with actions and their attributes: `actions: Dict[str, Attributes]`.
 If the user is assigned to the bandit, the bandit selects one of the actions supplied here,
-and all actions supplied are considered to be valid; if an action should not be shown to a user, it should be filtered out of this list.
+and all actions supplied are considered to be valid; if an action should not be shown to a user, do not include it in this dictionary.
 
-`ActionContexts` contain the action key, as well as the `Attributes` for the action. This is similar to the `subject_context`, but it is for the action.
-They are conveniently constructed using the `ActionContext.create` method:
-```python
-eppo_client.bandit.ActionContext.create(
-    "puma",
-    numeric_attributes={"brand_affinity": 2.3},
-    categorical_attributes={"image_aspect_ratio": "16:9"},
-)
-```
+
+The action attributes are similar to the `subject_attributes` but hold action specific information.
+Note that we can use `Attrubutes.empty()` to create an empty attribute context.
 
 Note that action contexts can contain two kinds of information:
 - Action specific context: e.g. the image aspect ratio of image corresponding to this action
