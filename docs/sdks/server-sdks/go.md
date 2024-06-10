@@ -14,14 +14,14 @@ In your `go.mod`, add the SDK package as a dependency:
 
 ```
 require (
-	github.com/Eppo-exp/golang-sdk/v2
+	github.com/Eppo-exp/golang-sdk/v3
 )
 ```
 
 Or you can install the SDK from the command line with:
 
 ```
-go get github.com/Eppo-exp/golang-sdk/v2
+go get github.com/Eppo-exp/golang-sdk/v3
 ```
 
 ## 2. Initialize the SDK
@@ -31,7 +31,7 @@ Initialize the SDK with a SDK key, which can be generated in the Eppo interface.
 ```go
 
 import (
-	"github.com/Eppo-exp/golang-sdk/v2/eppoclient"
+	"github.com/Eppo-exp/golang-sdk/v3/eppoclient"
 )
 
 var eppoClient = &eppoclient.EppoClient{}
@@ -40,7 +40,7 @@ func main() {
 	assignmentLogger := NewExampleAssignmentLogger()
 
 	eppoClient = eppoclient.InitClient(eppoclient.Config{
-		ApiKey:           "<your_sdk_key>",
+		SdkKey:           "<your_sdk_key>",
 		AssignmentLogger: assignmentLogger,
 	})
 }
@@ -58,7 +58,7 @@ The code below illustrates an example implementation of a logging callback using
 
 ```go
 import (
-	"github.com/Eppo-exp/golang-sdk/v2/eppoclient"
+	"github.com/Eppo-exp/golang-sdk/v3/eppoclient"
   "gopkg.in/segmentio/analytics-go.v3"
 )
 
@@ -86,15 +86,18 @@ func main() {
 
 The SDK will invoke the `LogAssignment` function with an `event` object that contains the following fields:
 
-| Field                     | Description                                                                                                              | Example                             |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------- |
-| `experiment` (string)     | An Eppo experiment key                                                                                                   | "recommendation-algo-allocation-17" |
-| `subject` (string)        | An identifier of the subject or user assigned to the experiment variation                                                | UUID                                |
-| `variation` (string)      | The experiment variation the subject was assigned to                                                                     | "control"                           |
-| `timestamp` (string)      | The time when the subject was assigned to the variation                                                                  | 2021-06-22T17:35:12.000Z            |
-| `subjectAttributes` (map) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `{ "country": "US" }`               |
-| `featureFlag` (string)    | An Eppo feature flag key                                                                                                 | "recommendation-algo"               |
-| `allocation` (string)     | An Eppo allocation key                                                                                                   | "allocation-17"                     |
+| Field                     | Type                        | Description                                                                                                                                                           | Example                             |
+| ------------------------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------- |
+| `experiment`              | string                      | An Eppo experiment key                                                                                                   | "recommendation-algo-allocation-17" |
+| `subject`                 | string                      | An identifier of the subject or user assigned to the experiment variation                                                | UUID                                |
+| `variation`               | string                      | The experiment variation the subject was assigned to                                                                     | "control"                           |
+| `timestamp`               | string                      | The time when the subject was assigned to the variation                                                                  | 2021-06-22T17:35:12.000Z            |
+| `subjectAttributes`       | map                         | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `{ "country": "US" }`               |
+| `featureFlag`             | string                      | An Eppo feature flag key                                                                                                 | "recommendation-algo"               |
+| `allocation`              | string                      | An Eppo allocation key                                                                                                   | "allocation-17"                     |
+| `metaData`                | map       | Metadata around the assignment, such as the version of the SDK                                                           | `{ "obfuscated": "true", "sdkLanguage": "javascript", "sdkLibVersion": "3.2.1" }` |
+| `extraLogging`                | map       | Metadata about the allocation.                 | `{ "owner": "samanta@company.ai" }` |
+
 
 :::note
 More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/sdks/event-logging/) page.
@@ -106,7 +109,7 @@ Assigning users to flags or experiments with a single `GetStringAssignment` func
 
 ```go
 import (
-	"github.com/Eppo-exp/golang-sdk/v2/eppoclient"
+	"github.com/Eppo-exp/golang-sdk/v3/eppoclient"
 )
 
 var eppoClient = &eppoclient.EppoClient{} // in global scope
