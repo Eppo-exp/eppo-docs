@@ -17,5 +17,5 @@ If you're planning to transition to a new data warehouse, Eppo simplifies this p
 3. **Export Facts & Metrics from Your Old Workspace:**
     - Reach out to Eppo support to facilitate the export of your existing Facts and Metrics in YML format.
 4. **Import Facts & Metrics into Your New Workspace:**
-    - Sync the exported YML files into your new workspace using [Eppo’s Certified Metrics API](/data-management/metrics/certified-metrics.md).
+    - Sync the exported YML files into your new workspace using [Eppo’s Certified Metrics API](/data-management/certified-metrics).
     - **Important:** Ensure the SQL in the YML files aligns with the syntax requirements of your new warehouse vendor.
