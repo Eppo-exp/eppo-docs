@@ -4,6 +4,10 @@ sidebar_position: 7
 
 # Mutual exclusion (Layers)
 
+:::note
+Layers are only available on v3 of Eppo SDKs or higher
+:::
+
 There are situations when you want to run concurrent experiments on the same surface. Eppo offers Layers as an option to keep your experiments mutual exclusive.
 
 :::info
