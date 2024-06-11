@@ -272,7 +272,7 @@ export default async function getStringAssignment(
   subjectKey: string,
   subjectAttributes: Record<string, string> = {},
   defaultValue: string = ''
-): Promise<String | null> {
+): Promise<string> {
   const eppoClient = await getEppoClient();
   return (
     eppoClient?.getStringAssignment(
@@ -293,7 +293,7 @@ Next, we'll need to create a component that uses our flag variation. Create a ne
 import type { FunctionComponent } from 'react';
 
 interface OfferExperimentProps {
-  variation: String | null;
+  variation: string;
 }
 
 export const OfferExperiment: FunctionComponent<OfferExperimentProps> = ({
