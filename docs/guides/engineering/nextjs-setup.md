@@ -204,35 +204,6 @@ Follow the instructions to create your Next.js app as outlined in the previous s
 yarn add @eppo/node-server-sdk
 ```
 
-### Create a server function to get assignments
-
-Next, we'll need to initialize the Eppo SDK. The `init` function is called at the top level outside of the `getEppoClient` function so that it's only called once.
-
-```tsx
-import { getInstance, init } from "@eppo/node-server-sdk";
-
-let initializeAttempted = false;
-export async function getAssignment(flagKey: string, subjectKey: string): Promise<String | null> {
-  if (!initializeAttempted) {
-    initializeAttempted = true;
-    try {
-      await init({
-        apiKey: "<SDK-KEY>"
-        assignmentLogger: {
-          logAssignment(assignment) {
-            console.log("TODO: log ", assignment);
-          },
-        },
-      });
-    } catch (error) {
-      console.error("Error initializing Eppo SDK:", error);
-    }
-  }
-  const eppoClient = getInstance();
-  return eppoClient.getStringAssignment(flagKey, subjectKey);
-}
-```
-
 ### SDK initialization
 
 Create a new `app/shared/get-eppo-client.ts` file to handling SDK initialization. This file will reside in a new `app/shared` folder that will contain helpers for server-rendered components. Copy the code snippet below. The init function is called outside of the `getEppoClient` scope so that it's only called once.
