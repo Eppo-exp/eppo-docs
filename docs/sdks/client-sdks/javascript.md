@@ -91,22 +91,22 @@ The SDK can cache previously loaded configurations for use in subsequent session
 By default, a Local Storage-based cache is used in a browser environment and a Chrome Storage-based cache is used in a Chrome extension environment.
 A custom cache can be provided as the `persistentStore` initialization option.
 
-Caches have a concept of being "expired," dictated by the `maxCacheAgeSeconds` initialization option, and also overridable by the implementation of `isExpired()` for a custom persistent store.
+Caches have a concept of being "expired", dictated by the `maxCacheAgeSeconds` initialization option, and also overridable by the implementation of `isExpired()` for a custom persistent store.
 When the cached configuration is not expired, it is considered valid and no fetches will be made for updated configurations.
 
 When fetches are made--either from initialization or regular polling--you can control when the changes take effect with the `updateOnFetch` initialization option.
-It's default of `'always'` will start serving values from the most up-to-date configuration immediately. `'expired'` will only update if the cached configuration--now being used to serve assignments--has expired. 
+The default of `'always'` will start serving values from the most up-to-date configuration immediately. `'expired'` will only update if the cached configuration--now being used to serve assignments--has expired. 
 This is useful in combination with polling to prevent configurations in long-lived sessions from getting too stale. `'empty'` will only update if there is no pre-existing configuration (expired or not) and is 
 useful in combination with `useExpiredCache` for quickly initializing using a cached configuration and maintaining consistent assignments throughout the session even when the configuration is old. 
 It is essentially prefetching an updated configuration for the next session. 
 
 #### Example configuration options
 
-For example, if you want to optimize for always using the latest flag values, you would consider anything cached expired, leave the default of not using expired cached configurations, tell it to poll after successful and failed initializations, and leave the default of always updating after a fetch.
+For example, if you want to optimize for always using the latest flag values, you would consider anything cached expired, leave the default of not using expired cached configurations, configuring the SDK to poll after successful and failed initializations, and leave the default of `'always'` updating after a fetch.
 ```ts
 // Default settings left alone
 maxCacheAgeSeconds: 0, // Always consider cached configurations expired
-useExpiredCache: false, // Wait for an updated configuration to be fetched before initialization is considered sucessful
+useExpiredCache: false, // Wait for an updated configuration to be fetched before initialization is considered successful
 updateOnFetch: 'always', // Immediately start using the new configuration after it is fetched
 requestTimeoutMs: 5000, // Don't time out the initial configuration request until five seconds has passed
 numInitialRequestRetries: 1, // If the initial configuration request fails, try one more time  
