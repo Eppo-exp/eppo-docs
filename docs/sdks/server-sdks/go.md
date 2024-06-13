@@ -31,15 +31,15 @@ Initialize the SDK with a SDK key, which can be generated in the Eppo interface.
 ```go
 
 import (
-	"github.com/Eppo-exp/golang-sdk/v3/eppoclient"
+  "github.com/Eppo-exp/golang-sdk/v3/eppoclient"
 )
 
 var eppoClient = &eppoclient.EppoClient{}
 
 func main() {
-	eppoClient = eppoclient.InitClient(eppoclient.Config{
-		SdkKey: "<your_sdk_key>",
-	})
+  eppoClient = eppoclient.InitClient(eppoclient.Config{
+    SdkKey: "<your_sdk_key>",
+  })
 }
 ```
 
