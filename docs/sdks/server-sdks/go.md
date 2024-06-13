@@ -63,7 +63,7 @@ Example implementation:
 
 ```go
 import (
-	"github.com/Eppo-exp/golang-sdk/v3/eppoclient"
+  "github.com/Eppo-exp/golang-sdk/v3/eppoclient"
   "gopkg.in/segmentio/analytics-go.v3"
 )
 
