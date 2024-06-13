@@ -55,7 +55,7 @@ Here we define an implementation of the Eppo `IAssignmentLogger` interface:
 
 ```go
 type IAssignmentLogger interface {
-	LogAssignment(event eppoclient.AssignmentEvent)
+  LogAssignment(event eppoclient.AssignmentEvent)
 }
 ```
 
@@ -75,10 +75,10 @@ type ExampleAssignmentLogger struct {
 
 func (eal *ExampleAssignmentLogger) LogAssignment(event eppoclient.AssignmentEvent) {
   eal.client.Enqueue(analytics.Track{
-		UserId:     event.Subject,
-		Event:      "Eppo Randomization Event",
-		Properties: analytics.Properties(event),
-	})
+    UserId:     event.Subject,
+    Event:      "Eppo Randomization Event",
+    Properties: analytics.Properties(event),
+  })
 }
 
 func main() {
@@ -87,11 +87,11 @@ func main() {
   defer client.Close()
 
   eppoClient = eppoclient.InitClient(eppoclient.Config{
-		SdkKey:           "<your_sdk_key>",
-		AssignmentLogger: &ExampleAssignmentLogger{
+    SdkKey:           "<your_sdk_key>",
+    AssignmentLogger: &ExampleAssignmentLogger{
       client: client,
     },
-	})
+  })
 }
 ```
 
