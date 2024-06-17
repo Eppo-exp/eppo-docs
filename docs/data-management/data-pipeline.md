@@ -1,4 +1,8 @@
-# Experiment data pipeline
+# Data Pipeline
+
+The Eppo data pipeline is a directed acyclic graph (DAG) of tasks that run within your data warehouse to power Eppo's UI. Only data from the final stage of the pipeline (anonymized experiment aggregates) is egressed into Eppo's backend. 
+
+## Experiment pipeline
 
 At a high level, the Eppo experiment data pipeline has four main branches along with an assignment summarization that is a predecessor for each of those branches.
 
@@ -10,7 +14,27 @@ At a high level, the Eppo experiment data pipeline has four main branches along 
 
 ![Experiment data pipeline diagram](/img/experiments/data-pipeline/experiment_pipeline_visualization.png)
 
-## Assignment summarization
+### Monitoring pipeline performance
+
+To see how compute resources are used across the different sections of the experiment pipeline, navigate to the warehouse tab on the left navbar. Here you can see a recent trend of pipeline runtime by section:
+
+![Data pipeline chart](/img/data-management/pipeline/warehouse-by-task.png)
+
+Note that the y axis shows the total time accrued by that task type. That is, if two queries run at the same time for 5 minutes, that would contribute 10 minutes to the y axis.
+
+### Incremental refreshes
+
+Eppo's nightly job will run an incremental refresh that only scans recent data. By default, this lookback window will include data starting 48 hours before the last successful run (to change this time window, reach out to your Eppo contact or email support@geteppo.com). 
+
+You can also trigger a refresh in the UI. To force a manual refresh, click "update now" under "results last updated". If you'd only like to re-run the pipeline for recently added metrics, you can click "refresh results" on the metric scorecard:
+
+![Data pipeline chart](/img/data-management/pipeline/refresh.png)
+
+
+
+### Pipeline steps
+
+#### Assignment summarization
 
 1. **Incremental daily assignments**: As part of the incremental process, we first delete the last two days worth of data. We then select all assignments from the past two days for this experiment and insert them into a daily table, recording the first variant, assigned timestamp, and whether or not a subject was exposed to more than one variant for each day. 
 2. **Assignments summary**: We recompute the assignment summary from scratch each run. There's one record for every subject, including the observed variant, timestamp of assignment, and whether or not they were exposed to multiple variants. This table is used downstream by all four pipeline branches.
@@ -19,7 +43,7 @@ Any subject that was exposed to more than one variant over the course of the exp
 :::
 
 
-## Core Pipeline
+#### Core Pipeline
 
 The core pipeline starts with the assignments, incrementally joins event data from your metrics/facts, aggregates the data, and computes winsorized aggregates.
 
@@ -29,26 +53,27 @@ The core pipeline starts with the assignments, incrementally joins event data fr
 4. **Dimensionalized summaries**: We convert our subject-level winsorized data frame to an overall summary with dimensional values included.
 5. **Dimensionalized summaries reduced**: For high cardinality dimensions, we cap dimension values to 50 (by assignment volume) to minimize the data we transfer to our operational Postgres database.
 
-## CUPED pipeline
+#### CUPED pipeline
 
 1. **CUPED lookback**: We summarize the prior 30-days of data for each subject for each metric.
 2. **CUPED dataframe**: We join the last day of data from the winsorized data frame from the core pipeline to the lookback data to create a unified CUPED data frame.
 3. **CUPED estimate means**: Our regression engine runs in your warehouse and estimates the lift for each metric.
 
-## Metric dimensions/properties pipeline
+#### Metric dimensions/properties pipeline
 
 We compute metric dimension (also called metric properties) metric values as part of our pipeline to enable exploration by metric dimensions.
 
 1. **Metric dimensions daily**: An incremental step, very similar to the core pipeline daily data frame step. Every metric dimension value is treated as a separate metric with its own column. If you have high cardinality along several dimensions, this can make this step fairly slow (though we do cap cardinality at 50 to guard against this).
 2. **Metric dimensions cumulative**: Very similar to the cumulative data frame step from the core pipeline, we generate summarized metric dimension values for each subject and day.
 
-## Funnel metrics pipeline
+#### Funnel metrics pipeline
 
 Funnel metrics require their own pipeline because of the complicated logic that must be performed over the relevant events.
 
 1. **Incremental funnel metric events**: We incrementally join assignment data to the event sources for your funnel metrics.
 2. **Funnel metrics data frame**: We generate a data frame for each subject and day for each funnel metric.
 3. **Funnel metrics summaries**: We summarize the values for your funnel metrics.
+
 
 ## Privacy
 
