@@ -16,15 +16,15 @@ At a high level, the Eppo experiment data pipeline has four main branches along 
 
 ### Monitoring pipeline performance
 
-To see how compute resources are used across the different sections of the experiment pipeline, navigate to the warehouse tab on the left navbar. Here you can see a recent trend of pipeline runtime by section:
+To see how compute resources are used across the different sections of the experiment pipeline, navigate to the Warehouse tab on the left navbar. Here you can see a recent trend of pipeline runtime by section:
 
 ![Data pipeline chart](/img/data-management/pipeline/warehouse-by-task.png)
 
-Note that the y axis shows the total time accrued by that task type. That is, if two queries run at the same time for 5 minutes, that would contribute 10 minutes to the y axis.
+Note that the y axis shows the compute time accrued by that task type. That is, if two queries run at the same time for 5 minutes, that would contribute 10 minutes to the y axis.
 
 ### Incremental refreshes
 
-Eppo's nightly job will run an incremental refresh that only scans recent data. By default, this lookback window will include data starting 48 hours before the last successful run (to change this time window, reach out to your Eppo contact or email support@geteppo.com). 
+Eppo's scheduled jobs will run an incremental refresh that only scans recent data. By default, this lookback window will include data starting 48 hours before the last successful run (to change this time window, reach out to your Eppo contact or email support@geteppo.com). New metrics and metric/facts with an updated definition will automatically be computed from scratch.
 
 You can also trigger a refresh in the UI. To force a manual refresh, click "update now" under "results last updated". If you'd only like to re-run the pipeline for recently added metrics, you can click "refresh results" on the metric scorecard:
 
