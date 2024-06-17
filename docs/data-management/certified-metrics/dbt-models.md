@@ -2,17 +2,17 @@
 sidebar_position: 3
 ---
 
-# Syncing DBT Models
+# Syncing dbt Models
 
-You can import existing DBT models as [Fact Sources](/data-management/definitions/fact-sql) by adding tags to your dbt configuration file. This helps Eppo stay in sync with changes in your DBT project.
+You can import existing dbt models as [Fact Sources](/data-management/definitions/fact-sql) by adding tags to your dbt configuration file. This helps Eppo stay in sync with changes in your dbt project.
 
 :::info
-This page discusses integrating with DBT models, not DBT's semantic layer. If you are interested in integrating with a semantic layer, please reach out to support@geteppo.com
+This page discusses integrating with dbt models, not dbt's semantic layer. If you are interested in integrating with a semantic layer, please reach out to support@geteppo.com
 :::
 
-## Adding tags to DBT models
+## Adding tags to dbt models
 
-To specify a DBT model as an Eppo Fact Source, first add a tag `eppo_fact_source` to the model specification to indicate that the model should be interpreted as an Eppo Fact Source:
+To specify a dbt model as an Eppo Fact Source, first add a tag `eppo_fact_source` to the model specification to indicate that the model should be interpreted as an Eppo Fact Source:
 
 ```yaml
 version: 2
@@ -61,7 +61,7 @@ tags:
 
 ## Syncing 
 
-Eppo provides a [python package](https://github.com/Eppo-exp/eppo-metrics-sync) to sync metrics to your Eppo workspace. This section walks through syncing your DBT models either manually from your local environment, or as part of a CI/CD workflow that automatically keeps metrics in sync with your existing version control system (e.g., GitHub).
+Eppo provides a [python package](https://github.com/Eppo-exp/eppo-metrics-sync) to sync metrics to your Eppo workspace. This section walks through syncing your dbt models either manually from your local environment, or as part of a CI/CD workflow that automatically keeps metrics in sync with your existing version control system (e.g., GitHub).
 
 ### From your local environment
 
@@ -81,9 +81,9 @@ Now, call the eppo_metrics_sync module and point it at a directory of yaml files
 python3 -m eppo_metrics_sync models --schema=dbt-model --dbt-model-prefix="my_database.my_schema"
 ```
 
-Note that this assumes the DBT yaml files live in the `models` directory. If they live somewhere in your repository, simply replace `models` with the path to your DBT yaml files.
+Note that this assumes the dbt yaml files live in the `models` directory. If they live somewhere in your repository, simply replace `models` with the path to your dbt yaml files.
 
-You should now see your DBT models in your Eppo workspace under **Definitions** >> **Facts** tab. To push updated fact source definitions, simply call the eppo_metrics_sync module again.
+You should now see your dbt models in your Eppo workspace under **Definitions** >> **Facts** tab. To push updated fact source definitions, simply call the eppo_metrics_sync module again.
 
 :::note
 If you would like an additional workspace for testing, please reach out to support@geteppo.com
@@ -94,10 +94,10 @@ If you would like an additional workspace for testing, please reach out to suppo
 We recommend setting up a separate Eppo workspace for staging changes to Certified Metrics. Please contact your Eppo support representative or email support@geteppo.com to have this created.
 
 To connect a GitHub repository, you’ll need to complete the following steps:
-1. Add tags to your DBT model configuration files as described above
+1. Add tags to your dbt model configuration files as described above
 2. Create an API key in both your production and staging Eppo workspaces. This can be done by going to **Admin** >> **API Keys** in each workspace. Make sure that the keys have read/write access to the Certified Metrics Sync permission
-3. Add the API keys as a [GitHub secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions) named `EPPO_API_KEY` and `EPPO_API_KEY_STAGING` to your DBT project. (Alternatively, you can use GitHub environments, but will need to adjust the workflow yaml below slightly)
-4. Copy the following GitHub workflow yaml into a new file `.github/workflows/run_eppo_metric_sync.yaml` . Replace `my_database.my_schema` with the location of your DBT models within your data warehouse.
+3. Add the API keys as a [GitHub secrets](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions) named `EPPO_API_KEY` and `EPPO_API_KEY_STAGING` to your dbt project. (Alternatively, you can use GitHub environments, but will need to adjust the workflow yaml below slightly)
+4. Copy the following GitHub workflow yaml into a new file `.github/workflows/run_eppo_metric_sync.yaml` . Replace `my_database.my_schema` with the location of your dbt models within your data warehouse.
 
 ```yaml
 name: Sync Eppo Metrics
