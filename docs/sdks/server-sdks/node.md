@@ -35,7 +35,7 @@ npm install @eppo/node-server-sdk
 
 ### Define an assignment logger
 
-Eppo encourages centralizing application logging as much as possible. Accordingly, instead of implementing a new logging framework, Eppo's SDK integrates with your existing logging system via a logging callback function defined at SDK initialization.
+Eppo encourages centralizing application logging as much as possible. Accordingly, instead of implementing a new logging framework, Eppo's SDK integrates with your existing logging system via a logging callback function defined at SDK initialization. This logger takes an[ analytic event](/sdks/server-sdks/node/#assignment-logger-schema) created by Eppo, `assignment`, and writes in to a table in the data warehouse (Snowflake, Databricks, BigQuery, or Redshift).
 
 The code below illustrates an example implementation of a logging callback to the console and other event platforms. You could also use your own logging system, the only requirement is that the SDK receives a `logAssignment` function. Here we define an implementation of the Eppo `IAssignmentLogger` interface containing a single function named `logAssignment`:
 
@@ -53,6 +53,10 @@ const assignmentLogger: IAssignmentLogger = {
   },
 };
 ```
+:::note
+This example writes to your local machine and is useful for development in your local environment. In production, these logs will need to get written to a table in your data warehouse.
+:::
+
 </TabItem>
 
 <TabItem value="segment" label="Segment">
@@ -209,7 +213,7 @@ const assignmentLogger: IAssignmentLogger = {
 
 
 
-#### Avoiding duplicated assignment logs
+#### Deduplicating assignment logs
 
 Eppo's SDK uses an internal cache to ensure that duplicate assignment events are not logged to the data warehouse. While Eppo's analytic engine will automatically deduplicate assignment records, this internal cache prevents firing unnecessary events and can help minimize costs associated with event logging. 
 
@@ -234,7 +238,7 @@ After initialization, the SDK begins polling Eppo’s API at regular intervals t
 ### Assign variations
 
 Assign users to flags or experiments using `get<Type>Assignment`, depending on the type of the flag.
-For example, for a String-valued flag, use `getStringAssignment`:
+For example, for a string-valued flag, use `getStringAssignment`:
 
 ```javascript
 import * as EppoSdk from "@eppo/node-server-sdk";
@@ -247,13 +251,14 @@ const variation = eppoClient.getStringAssignment(
   "<DEFAULT-VALUE>",
 );
 ```
-The `getStringAssignment` function takes three required and one optional input to assign a variation:
+The `getStringAssignment` function takes four inputs to assign a variation:
 
-- `flagKey` - This key is available on the detail page for both flags and experiments. Can also be an experiment key.
-- `subjectKey` - The entity ID that is being experimented on, typically represented by a uuid.
-- `subjectAttributes` - A map of metadata about the subject used for targeting. If you create rules based on attributes on a flag/experiment, those attributes should be passed in on every assignment call. If no attributes are needed, pass in an empty object.
+- `flagKey` - The key for the flag you are evaluating. This key is available on the feature flag detail page (see below).
+- `subjectKey` - The entity ID that is being experimented on, typically represented by a UUID. This key is used to deterministically assign subjects to variants.
+- `subjectAttributes` - A map of metadata about the subject used for [targeting](/feature-flagging/concepts/targeting/). If targeting is not needed, pass in an empty object.
 - `defaultValue` - The value that will be returned if no allocation matches the subject, if the flag is not enabled, if `getStringAssignment` is invoked before the SDK has finished initializing, or if the SDK was not able to retrieve the flag configuration. Its type must match the `get<Type>Assignment` call.
 
+![Example flag key](/img/feature-flagging/flag-key.png)
 
 ### Example
 
