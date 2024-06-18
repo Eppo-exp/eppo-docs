@@ -41,5 +41,5 @@ There are several ways that you can leverage Certified Metrics into your workflo
 
 1. You can write Eppo yaml files from scratch. To get started, see the page on the [Eppo YAML schema](/data-management/certified-metrics/eppo-schema)
 2. You can export metrics created in the UI as yaml. To learn more, read [Upgrading Metrics to Certified](/data-management/certified-metrics/upgrading-metrics)
-3. You can tag models or columns in your DBT configuration files. To get started, see [Syncing DBT Models](/data-management/certified-metrics/dbt-models)
+3. You can tag models or columns in your dbt configuration files. To get started, see [Syncing dbt Models](/data-management/certified-metrics/dbt-models)
 
