@@ -10,14 +10,20 @@ Eppo's open source Java SDK can be used for both feature flagging and experiment
 
 ## 1. Install the SDK
 
-In your pom.xml, add the SDK package as a dependency:
+In your `pom.xml`, add the SDK package as a dependency:
 
 ```xml
 <dependency>
   <groupId>cloud.eppo</groupId>
   <artifactId>eppo-server-sdk</artifactId>
-  <version>2.0.0</version>
+  <version>2.4.6</version>
 </dependency>
+```
+
+If you're using Gradle instead, add it to your `build.gradle` file:
+
+```groovy
+implementation 'cloud.eppo:eppo-server-sdk:2.4.6'
 ```
 
 ## 2. Initialize the SDK
@@ -48,7 +54,7 @@ import com.eppo.sdk.dto.AssignmentLogData;
 
 public class AssignmentLoggerImpl implements IAssignmentLogger {
   public void logAssignment(AssignmentLogData event) {
-    ...
+    // ...
   }
 }
 ```
@@ -245,7 +251,7 @@ Map<String, EppoAttributes> actionsWithAttributes = Map.of(
   "goldfish", new EppoAttributes(Map.of(
   "legs", EppoValue.valueOf(0),
   "size", EppoValue.valueOf("small")
-))
+)));
 
 Optional<String> banditAssignment = eppoClient.getStringAssignment(subjectKey, flagKey, subjectAttributes, actionsWithAttributes);
 ```
