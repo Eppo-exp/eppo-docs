@@ -30,7 +30,7 @@ The following are the central feature flagging concepts in Eppo:
 - [Variations](/feature-flagging/concepts/flag-variations)
 - [Allocations](/feature-flagging/concepts/flag-allocations)
 - [Environments](/feature-flagging/concepts/environments)
-- [Targeting Rules](/feature-flagging/concepts/targeting)
+- [Targeting rules](/feature-flagging/concepts/targeting)
 - [Audiences](/feature-flagging/concepts/audiences)
 - [Mutual exclusion](/feature-flagging/concepts/mutual_exclusion)
 - [Dynamic configuration](/feature-flagging/use-cases/dynamic-config)
