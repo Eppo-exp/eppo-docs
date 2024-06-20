@@ -33,7 +33,6 @@ The following are the central feature flagging concepts in Eppo:
 - [Targeting rules](/feature-flagging/concepts/targeting)
 - [Audiences](/feature-flagging/concepts/audiences)
 - [Mutual exclusion](/feature-flagging/concepts/mutual_exclusion)
-- [Dynamic configuration](/feature-flagging/use-cases/dynamic-config)
 
 ## Use cases
 
@@ -42,3 +41,4 @@ Feature flags are applicable for a number of use cases:
 - [Experiment assignment](/feature-flagging/concepts/experiment-assignment)
 - [Progressive rollouts](/feature-flagging/use-cases/progressive-rollouts)
 - [Kill switches](/feature-flagging/use-cases/kill-switches)
+- [Dynamic configuration](/feature-flagging/use-cases/dynamic-config)
