@@ -38,8 +38,7 @@ async function createConfig () {
           blog: {
             showReadingTime: true,
             // Please change this to your repo.
-            editUrl:
-            'https://github.com/Eppo-exp/eppo-docs/tree/main'
+            editUrl: 'https://github.com/Eppo-exp/eppo-docs/tree/main'
           },
           theme: {
             customCss: require.resolve('./src/css/custom.css')
@@ -105,7 +104,8 @@ async function createConfig () {
         // title: 'Eppo',
         logo: {
           alt: 'Eppo logo',
-          src: 'img/eppo_logo2024.svg'
+          src: 'img/eppo_logo2024.svg',
+          srcDark: 'img/eppo_logo2024_dark.svg'
         },
         items: [
         ]
@@ -193,8 +193,8 @@ async function createConfig () {
       },
       colorMode: {
         defaultMode: 'light',
-        disableSwitch: true,
-        respectPrefersColorScheme: false
+        disableSwitch: false,
+        respectPrefersColorScheme: true
       }
     })
   }
