@@ -16,14 +16,14 @@ In your `pom.xml`, add the SDK package as a dependency:
 <dependency>
   <groupId>cloud.eppo</groupId>
   <artifactId>eppo-server-sdk</artifactId>
-  <version>2.4.6</version>
+  <version>2.4.5</version>
 </dependency>
 ```
 
 If you're using Gradle instead, add it to your `build.gradle` file:
 
 ```groovy
-implementation 'cloud.eppo:eppo-server-sdk:2.4.6'
+implementation 'cloud.eppo:eppo-server-sdk:2.4.5'
 ```
 
 ## 2. Initialize the SDK
