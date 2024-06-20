@@ -12,17 +12,25 @@ Eppo's open source Java SDK can be used for both feature flagging and experiment
 
 ### Install the SDK
 
-In your pom.xml, add the SDK package as a dependency:
+In your `pom.xml`, add the SDK package as a dependency:
 
 ```xml
 <dependency>
   <groupId>cloud.eppo</groupId>
   <artifactId>eppo-server-sdk</artifactId>
-  <version>2.0.0</version>
+  <version>2.4.5</version>
 </dependency>
 ```
 
 ### Define an assignment logger
+
+If you're using Gradle instead, add it to your `build.gradle` file:
+
+```groovy
+implementation 'cloud.eppo:eppo-server-sdk:2.4.5'
+```
+
+## 2. Initialize the SDK
 
 Eppo encourages centralizing application logging as much as possible. Accordingly, instead of implementing a new logging framework, Eppo's SDK integrates with your existing logging system via a logging callback function defined at SDK initialization. This logger takes an [analytic event](/sdks/server-sdks/java/#assignment-logger-schema) created by Eppo, `assignment`, and writes in to a table in the data warehouse (Snowflake, Databricks, BigQuery, or Redshift).
 
@@ -266,7 +274,7 @@ Map<String, EppoAttributes> actionsWithAttributes = Map.of(
   "goldfish", new EppoAttributes(Map.of(
   "legs", EppoValue.valueOf(0),
   "size", EppoValue.valueOf("small")
-))
+)));
 
 Optional<String> banditAssignment = eppoClient.getStringAssignment(subjectKey, flagKey, subjectAttributes, actionsWithAttributes);
 ```
