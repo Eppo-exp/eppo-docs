@@ -7,8 +7,8 @@ In each case, a service account is used to connect Eppo to your warehouse. This 
 Specifically Eppo needs to read:
 * [Assignment logs](/data-management/definitions/assignment-sql) - logs of every time a subject was enrolled into an experiment, the name of that experiment, and the variant that was assigned
 * [Fact events](/data-management/definitions/fact-sql) - logs of metric events to analyze in Eppo by subject
-* [Properties](/data-management/definitions/property-sql) - subject-level tables of properties that do not change as a result of experiments
-* [Entry points](/statistics/sample-size-calculator/setup/#defining-an-entry-point) - logs of events that correspond to an “entry” into the experiment
+* [Properties (optional)](/data-management/definitions/property-sql) - subject-level tables of properties that do not change as a result of experiments
+* [Entry points (optional)](/statistics/sample-size-calculator/setup/#defining-an-entry-point) - logs of events that correspond to an “entry” into the experiment
 
 Eppo writes experiment results along with intermediate tables used to calculate those final results. Please visit the [data pipeline page](/data-management/data-pipeline) to learn more about how the pipeline works and the intermediate tables we write to your data warehouse.
 
