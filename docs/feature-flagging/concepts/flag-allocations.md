@@ -7,7 +7,7 @@ sidebar_position: 1
 Allocations govern how users get assigned to different variations of a feature flag in a flexible way.
 An allocation is a logical grouping of [targeting rules](/feature-flagging/concepts/targeting) and variation weights associated with a flag.
 
-Eppo supports two types of allocations: Feature Gates and Experiment allocations.
+Eppo supports two types of allocations: [Feature Gates](/feature-flagging/concepts/feature-gates/) and [Experiment assignment](/feature-flagging/concepts/experiment-assignment/) allocations.
 
 In Eppo, allocations are stacked in a vertical waterfall as seen below:
 
