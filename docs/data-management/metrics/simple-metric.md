@@ -137,7 +137,7 @@ Examples: number of unique videos watched per user (if the same video is watched
 By default, we use a naive array-based algorithm for count distinct metrics which is 100% accurate but can be resource-intensive and time-consuming. We also support the [**HyperLogLog**](https://docs.snowflake.com/en/user-guide/querying-approximate-cardinality) algorithm, which is much more efficient but can incur a small loss of precision. Contact Eppo support if you would like to use HyperLogLog instead of Array.
 
 :::note
-For **Redshift**, the only available algorithm is HyperLogLog. The necessary methods for array-based algorithms were not supported at the time of implementation.
+For customers on **Redshift** we only support HyperLogLog. The necessary methods for array-based algorithms are not currently supported.
 :::
 
 :::tip
