@@ -56,9 +56,6 @@ There are three options:
 ## Analysis of funnel metrics
 
 To analyze the effects of an experiment on a funnel, add it as a metric to an experiment as usual.
-Initially, the funnel will show up in a collapsed format, but can be expanded by clicking the carrot.
-
-![Funnel metric analysis](/img/data-management/metrics/funnel-analysis-collapsed.png)
 
 The results show the conversion rate from assignment to each particular step; the overall results thus are the same as the results for the last step.
 The popover shows additional details:
