@@ -86,7 +86,7 @@ The stylized example below illustrates how changes in conversion from prior step
 
 The variant is effective for both high-intent and low-intent users. At every stage, and for both user types, it increases the conversion rate to the next step. This can be checked by looking at the rows for a single user type: in all of them, the variant has a higher % from prior step compared to the control.
 
-The variant also changes the composition of users who complete the address form, from majority high-intent to majority low-intent. Because of this compositional change, it lowers the overall conversion rate from address form to checkout. This can be misinterpreted as the variant hurting the conversion rate at this stip. It is not; in fact it improved it for all users. The proper way to analyze this result to look at conversion rate **from assignment**, which improved from 6.4% to 8.9%.
+The variant also changes the composition of users who complete the address form, from majority high-intent to majority low-intent. Because of this compositional change, it lowers the overall conversion rate from address form to checkout. This can be misinterpreted as the variant hurting the conversion rate at this step. It is not; in fact it improved it for all users. The proper way to analyze this result to look at conversion rate **from assignment**, which improved from 6.4% to 8.9%.
 :::
  
 
