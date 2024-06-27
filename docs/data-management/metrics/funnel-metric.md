@@ -66,7 +66,7 @@ The popover shows additional details:
 ![Funnel metric analysis](/img/data-management/metrics/funnel-analysis.png)
 
 :::warning
-Comparing conversion rate from prior step across variants is fraught. The difference does _not_ show the direct effect of the treatment on that step in the funnel alone, as might be expected. Instead, it also includes the indirect effects of changing the composition of users who reach the prior step. These indirect effects are often larger than the direct effect.
+For steps beyond the first, comparing conversion rate from prior step across variants is fraught. The difference does _not_ show the direct effect of the treatment on that step in the funnel alone, as might be expected. Instead, it also includes the indirect effects of changing the composition of users who reach the prior step. These indirect effects are often larger than the direct effect.
 
 Because this is a common source of confusion, we do not display the lift in conversion rate from prior step nor its confidence interval. The only safe way to interpret treatment effects on funnel metrics is using the lift in conversion rate **from assignment**. This guarantees a valid comparison: at assignment, A and B groups are balanced because of randomization; after the first step, they are different and the comparison is apples-to-oranges.
 
