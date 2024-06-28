@@ -166,7 +166,7 @@ $$
 \hat{\mu}_{\tiny{\Delta}} =&~~ \frac{m_T}{m_C} - 1
 \\[1em]
 \hat{\sigma}^2_{\tiny{\Delta}} =&~~ \frac{m_T^2}{m_C^2}\left(
-  \frac{s^2_C}{n m_C^2} + \frac{s^2_T}{n m_T^2}
+  \frac{s^2_C}{n_C m_C^2} + \frac{s^2_T}{n_T m_T^2}
 \right)
 \end{align}
 $$
