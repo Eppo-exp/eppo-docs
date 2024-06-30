@@ -24,9 +24,9 @@ Note that the y axis shows the compute time accrued by that task type. That is, 
 
 ### Incremental refreshes
 
-Eppo's scheduled jobs will run an incremental refresh that only scans recent data. By default, this lookback window will include data starting 48 hours before the last successful run (to change this time window, reach out to your Eppo contact or email support@geteppo.com). New metrics and metric/facts with an updated definition will automatically be computed from scratch.
+Eppo's scheduled jobs will run an incremental refresh that only scans recent data. By default, this lookback window will include data starting 48 hours before the last successful run (to change this time window, reach out to your Eppo contact or email support@geteppo.com). New metrics and metrics/facts with an updated definition will automatically be backfilled from the start of the experiment. Further, if a job fails on a given day, the next scheduled job will automatically go back and re-run metrics for that day.
 
-You can also trigger a refresh in the UI. To force a manual refresh, click "update now" under "results last updated". If you'd only like to re-run the pipeline for recently added metrics, you can click "refresh results" on the metric scorecard:
+You can also trigger a refresh in the UI by clicking "refresh experiment results" on the metric scorecard. This will compute new metrics from scratch and update existing metrics based on the incremental logic described above. If you'd instead like to force a full refresh and recompute all metrics from the start of the experiment, click "update now" under "results last updated".
 
 ![Data pipeline chart](/img/data-management/pipeline/refresh.png)
 
