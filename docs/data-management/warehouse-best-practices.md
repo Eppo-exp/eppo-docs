@@ -3,7 +3,7 @@ sidebar_position: 10
 ---
 
 
-# Warehouse best practices
+# Warehouse Best Practices
 
 Eppo's warehouse native approach makes integration easy, transparent, and secure but it also creates a dependency on the underlying warehouse database structure. Knowing how to configure your tables to work with Eppo properly is important to minimizing run-times and compute used.
 

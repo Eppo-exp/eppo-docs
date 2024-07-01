@@ -12,7 +12,7 @@ Eppo's open source PHP SDK can be used for both feature flagging and experiment 
 
 Run
 
-```
+```bash
 composer require eppo/php-sdk
 ```
 

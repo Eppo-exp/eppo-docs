@@ -27,6 +27,10 @@ We run this traffic imbalance test by running a [Pearson’s chi-squared test](h
 using the assignment weights for each variant (default is equal split across variations), which we convert to probabilities.
 This is also known as the sample ratio mismatch test (SRM).
 
+We also perform dimensional SRM checks (see _Dimensional imbalance diagnostic_ in the [Experiment Diagnostics](/experiment-analysis/diagnostics.md)). For example, in a user randomized experiment, the user's platform (e.g., "desktop" or "mobile")
+may be recorded as an Assignment property. In this case, we would check for SRM for each value of the property. For this case, we use a Bonferroni
+correction to account for multiple comparisons.
+
 :::note
 The choice of $\alpha=0.001$ may appear low, but is appropriate for a sample ratio mismatch test. It limits false positives while retaining statistical power near 100%.
 1. The SRM diagnostic is performed every time experiment results are updated, yet the test is not a sequentially valid. Because of the continuous ``peeking'', the effective $\alpha$ is higher.

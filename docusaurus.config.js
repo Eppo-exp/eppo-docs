@@ -18,7 +18,7 @@ async function createConfig () {
     onBrokenLinks: 'throw',
     onBrokenMarkdownLinks: 'warn',
     trailingSlash: true,
-    favicon: 'img/favicon.ico',
+    favicon: 'img/newfavicon.ico',
     organizationName: 'eppo', // Usually your GitHub org/user name.
     projectName: 'eppo', // Usually your repo name.
 
@@ -38,8 +38,7 @@ async function createConfig () {
           blog: {
             showReadingTime: true,
             // Please change this to your repo.
-            editUrl:
-            'https://github.com/Eppo-exp/eppo-docs/tree/main'
+            editUrl: 'https://github.com/Eppo-exp/eppo-docs/tree/main'
           },
           theme: {
             customCss: require.resolve('./src/css/custom.css')
@@ -80,8 +79,8 @@ async function createConfig () {
         version: "stable",
         "runllm-preset": "docusaurus",
         "runllm-name": "Eppo",
-        "runllm-theme-color": "#7964d3",
-        "runllm-brand-logo": "https://assets-global.website-files.com/6171016af5f2c517ec1ac76c/63652b8ea453c50dabdf33d2_favicon-1.png",
+        "runllm-theme-color": "#6C55D4",
+        "runllm-brand-logo": "https://cdn.prod.website-files.com/6171016af5f2c517ec1ac76c/665a6c2d40484c5fa36d55b0_Untitled%20design%20(1).png",
         async: true,
       },
     ],
@@ -104,8 +103,9 @@ async function createConfig () {
       navbar: {
         // title: 'Eppo',
         logo: {
-          alt: 'eppo logo',
-          src: 'img/eppo_logo.svg'
+          alt: 'Eppo logo',
+          src: 'img/eppo_logo2024.svg',
+          srcDark: 'img/eppo_logo2024_dark.svg'
         },
         items: [
         ]
@@ -170,14 +170,31 @@ async function createConfig () {
         copyright: `Copyright © ${new Date().getFullYear()} Eppo, Inc.`
       },
       prism: {
-        additionalLanguages: ['java', 'groovy', 'ruby'],
+        additionalLanguages: [
+          'bash',
+          'csharp',
+          'go',
+          'groovy',
+          'java',
+          'javascript',
+          'json',
+          'php',
+          'python',
+          'ruby',
+          'rust',
+          'sql',
+          'swift',
+          'tsx',
+          'typescript',
+          'yaml',
+        ],
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme
       },
       colorMode: {
         defaultMode: 'light',
-        disableSwitch: true,
-        respectPrefersColorScheme: false
+        disableSwitch: false,
+        respectPrefersColorScheme: true
       }
     })
   }

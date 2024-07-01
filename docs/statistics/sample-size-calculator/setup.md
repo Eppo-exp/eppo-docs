@@ -25,7 +25,7 @@ An Entry Point is a simulated experiment assignment; in other words, it is an ev
 
 Every Entry Point event must include two key pieces of data:
 
-- An [Entity](/data-management/entities) identifier (such as User ID or Visitor Cookie)
+- An [Entity](/data-management/definitions/entities) identifier (such as User ID or Visitor Cookie)
 - A timestamp
 
 ### How the Sample Size Calculator uses an Entry Point
@@ -38,7 +38,7 @@ A second issue with traditional sample size calculators is that the mean and var
 
 ### Defining an Entry Point
 
-To create your first Entry Point, first ensure that you have the appropriate [Entity](/data-management/entities) set up in Eppo. The Entity defines the subject over which you will be running your experiment.
+To create your first Entry Point, first ensure that you have the appropriate [Entity](/data-management/definitions/entities) set up in Eppo. The Entity defines the subject over which you will be running your experiment.
 
 Next, visit the Definitions tab, and click the _Create Definition SQL_ button.
 

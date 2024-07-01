@@ -19,3 +19,4 @@ Eppo's server-side SDKs may be used to implement flags and run experiments in yo
 - [Go](/sdks/server-sdks/go)
 - [Ruby](/sdks/server-sdks/ruby)
 - [PHP](/sdks/server-sdks/php)
+- [Rust](/sdks/server-sdks/rust)

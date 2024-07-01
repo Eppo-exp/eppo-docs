@@ -21,7 +21,7 @@ At the core of Eppo's data model is a log of every time a subject (e.g., user) w
 
 To add an assignment log, navigate to the **Assignments** section on the **Definitions** tab and click **+Create Assignment Table**. Give the Assignment SQL a name (e.g., "Eppo Randomized Assignments") and write SQL to return the following fields from your data warehouse:
 
-1. A unique identifier tied to the [entity](/data-management/entities) you created in the Initial Setup quick start (e.g., `user_id`)
+1. A unique identifier tied to the [entity](/data-management/definitions/entities) you created in the Initial Setup quick start (e.g., `user_id`)
 2. An experiment key specifying the experiment into which the subject (user) was enrolled
 3. The variant the subject (user) received
 4. The timestamp that the assignment occurred 
@@ -69,16 +69,16 @@ Once you have created an experiment analysis, you'll land on the configuration p
 The setup flow will walk you through several sections:
 
 1. **Assignment & Analysis Date Range**
-Use this section to tell Eppo what date range of assignments to use. You can also set a different date range for the metric events you want to include the experiment. See [here](/experiment-analysis/creating-experiments#experiments-with-custom-event-dates) for more information.
+Use this section to tell Eppo what date range of assignments to use. You can also set a different date range for the metric events you want to include the experiment. See [here](/experiment-analysis/configuration#experiments-with-custom-event-dates) for more information.
 
 2. **Variations (externally randomized experiments only)**
 Use this section to tell Eppo the different variants that were a part of the experiment and the expected traffic allocation across groups. Eppo uses these allocation ratios to perform [sample ratio mismatch checks](/statistics/sample-ratio-mismatch). Eppo will scan assignment logs in a scheduled batch job, but if you don't yet see your variant values you can enter them manually.
 
 3. **Allocation (externally randomized experiments only)**
-If your experiment has a custom traffic split or was only rolled out to a subset of eligible users (with the remainder not tracked in your assignment table), you can specify that in this section. The traffic exposure powers the [Global Lift](/experiment-analysis/global-lift) calculator. In most use cases it is appropriate to keep this exposure at 100% and the traffic split even.
+If your experiment has a custom traffic split or was only rolled out to a subset of eligible users (with the remainder not tracked in your assignment table), you can specify that in this section. The traffic exposure powers the [Global Lift](/experiment-analysis/reading-results/global-lift) calculator. In most use cases it is appropriate to keep this exposure at 100% and the traffic split even.
 
 4. **Experiment Analysis Plan (optional)**
-Default analysis options are set to make it easy to start using Eppo without diving deep into the details of our statistics engine. For the majority of our customers, the default settings are appropriate. If you want to dive deeper into what these settings do, please see the [Analysis Plan section of our docs](/experiment-analysis/analysis-plans).  
+Default analysis options are set to make it easy to start using Eppo without diving deep into the details of our statistics engine. For the majority of our customers, the default settings are appropriate. If you want to dive deeper into what these settings do, please see the [Analysis Plan section of our docs](/experiment-analysis/configuration/analysis-plans).  
 
 Once you have configured your experiment, click **Save Changes** and continue on to adding metrics.
 

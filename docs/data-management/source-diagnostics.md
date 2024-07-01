@@ -1,4 +1,4 @@
-# Source diagnostics
+# Source Diagnostics
 
 Eppo runs simple checks of your definitions to ensure they are running correctly and efficiently. 
 

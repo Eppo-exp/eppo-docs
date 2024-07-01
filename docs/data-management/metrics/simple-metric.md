@@ -134,6 +134,20 @@ group by 1
 
 Examples: number of unique videos watched per user (if the same video is watched twice, it only counts once), number of unique articles viewed per visitor, number of unique items ordered (if an item is ordered multiple times, it only counts once).
 
+By default, we use a naive array-based algorithm for count distinct metrics which is 100% accurate but can be resource-intensive and time-consuming. We also support the [**HyperLogLog**](https://docs.snowflake.com/en/user-guide/querying-approximate-cardinality) algorithm, which is much more efficient but can incur a small loss of precision. Contact Eppo support if you would like to use HyperLogLog instead of Array.
+
+:::note
+For customers on **Redshift** we only support HyperLogLog. The necessary methods for array-based algorithms are not currently supported.
+:::
+
+:::tip
+Count Distinct is a more expensive operation than Count, especially when there are many unique values in the fact column. **You should only use Count Distinct when it is crucial for the definition of your metric to ignore repeated values.** When repeated values are naturally rare, a Count metric will give similar results to a Count Distinct metric and will incur lower warehouse costs.
+
+For example, consider a podcast app with a fact that logs **podcast listen events**, each with an episode id and a show id. We are interested in two types of outcomes:
+* _Unique shows listened per user_, to measure diversity of content consumption. `Count Distinct` on the show id is needed to capture this correctly. `Count` would not be an adeguate replacement, because it would also increase when users listen to more episodes from shows they already listen to.
+* _Episodes listened per user_, to measure overall content consumption. This can be captured correctly with a `Count` metric. Since repeated listens to the same episode are rare, using `Count Distinct` on episode id would give similar results but incur higher warehouse costs.
+:::
+
 #### Retention
 
 Retention metrics measure the proportion of entities with at least one event after a fixed number of days (X) from experiment assignment. For example, a 7-day retention metric on website visits would measure the proportion of users who visit the website at least 7 days after being assigned to the experiment.
@@ -151,6 +165,9 @@ from ...
 where fact_timestamp >= assignment_timestamp + X days  
 and assignment_timestamp < current_date - X days 
 ```
+
+Additionally, a maximum number of days (Y) can be set on the retention period by enabling "add a timeframe to aggregate". When this is enabled, the aggregation will include events by subjects after the minimum number of days defined by the retention period (>=X) and before the max timeframe to aggregate (<Y). 
+
 
 #### Conversion
 
@@ -185,11 +202,20 @@ group by <entity_id>
 having sum(<fact_col>) > {threshold}
 ```
 
-### Time frames
+### Time windows
 
-Eppo allows you to further refine metrics by adding a time frame. For example, we may be interested in a metric that only considers purchases within one week of the user's assignment to an experiment.
+Eppo allows you to further refine metrics by adding a time window. For example, we may be interested in a metric that only considers purchases starting two days after and within seven days of the user's assignment to an experiment.
 
 ![Adding a time frame to a metric](/img/data-management/metrics/create-metric-timeframe.png)
+
+Eppo offers time units of minutes, hours, days (from initial assignment), calendar days, and weeks.
+* Days from assignment starts at the time the subject is assigned. Every 24 hours since assignment counts as a new day. For example, if a subject is assigned at 9 AM on January 1, the next calendar say will start at 9 AM January 2.
+* Calendar days counts a new day at midnight on the clock. For example, if a subject is assigned at 9 AM on January 1, the next calendar say will start at 12 AM January 2.
+
+#### Counting aged subjects
+You can define how metrics with a time window are calculated by enabling the option to "only include in calculation after subject reaches end of time range".
+* When this option is disabled, all subjects assigned to the experiment will be counted. For example, a seven-day revenue metric will count all subjects who have been assigned into the experiment, including those who have been in the experiment for less than seven days.
+* When this option is enabled, only subjects who have reached the maximum exposure time of the metric window will be counted. For example, a seven-day revenue metric will count only subjects who have been assigned into the experiment for seven or more days, excluding those who have been in the experiment for less than seven days.
 
 :::note
 Consider adding a time frame metric to experiments where you believe the intervention has a short term effect.
@@ -197,12 +223,12 @@ For example, sending a promotional email may boost engagement for one week. If t
 :::
 
 :::note
-If you are using an [Entry Point](/experiment-analysis/filter-assignments-by-entry-point), the starting point of the time frame is the Entry Point timestamp.
+If you are using an [Entry Point](/experiment-analysis/configuration/filter-assignments-by-entry-point), the starting point of the time frame is the Entry Point timestamp.
 :::
 
 ### Metric properties
 
-Metric properties allow you to filter events based on [properties associated with the fact](/data-management/properties#metric-properties).
+Metric properties allow you to filter events based on [properties associated with the fact](/data-management/definitions/properties#metric-properties).
 For example, a streaming platform may run an experiment with watch time as the primary metric. We may be interested in understanding the impact not just on total watch time, but also on movie watch time and series watch time separately. In this case, you can add video type as a property on the Fact SQL and create separate metrics for movies and shows.
 
 To apply a property filter, select **Specify metric properties**, select the property of interest, and the specific values of interest. Eppo will run a scheduled job to determine the different values a property may take, but if your specific value is not yet available, you can add it manually by clicking **Create New**.
@@ -210,7 +236,7 @@ To apply a property filter, select **Specify metric properties**, select the pro
 
 ### Outlier handling
 
-Eppo handles outliers through a technique called [winsorization](/guides/running-well-powered-experiments#handling-outliers-using-winsorization). The percentiles used for lower and upper bounds can be configured per metric. For example, in the screenshot below, we are setting the upper bound for winsorization at the 99.9th percentile. This means that any user with a value above the 99.9th percentile will be replaced with the 99.9th percentile value.
+Eppo handles outliers through a technique called [winsorization](/guides/advanced-experimentation/running-well-powered-experiments#handling-outliers-using-winsorization). The percentiles used for lower and upper bounds can be configured per metric. For example, in the screenshot below, we are setting the upper bound for winsorization at the 99.9th percentile. This means that any user with a value above the 99.9th percentile will be replaced with the 99.9th percentile value.
 
 Note that winsorization is only available for `SUM`, `COUNT`, and `COUNT DISTINCT` aggregations. This is because conversion and retention metrics are binary variables that are not prone to influence from outliers. As a result, winsorization is not needed for these metric types.
 
@@ -218,7 +244,7 @@ Note that winsorization is only available for `SUM`, `COUNT`, and `COUNT DISTINC
 
 ### Set a default precision target
 
-[Precision](/experiment-analysis/progress-bar#precision) refers to the uncertainty within which you want to measure. You can set a default at the metric level, which will be used to measure an experiment's [progress](/experiment-analysis/progress-bar). Note that this default can be overridden at the experiment level.
+[Precision](/experiment-analysis/reading-results/progress-bar#precision) refers to the uncertainty within which you want to measure. You can set a default at the metric level, which will be used to measure an experiment's [progress](/experiment-analysis/reading-results/progress-bar). Note that this default can be overridden at the experiment level.
 
 ### Set formatting options
 
