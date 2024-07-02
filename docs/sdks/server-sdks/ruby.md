@@ -16,6 +16,12 @@ Install the SDK with gem:
 gem install eppo-server-sdk
 ```
 
+or add to you `Gemfile`:
+
+```
+gem 'eppo-server-sdk, '~> 0.3.0'
+```
+
 ## 2. Initialize the SDK
 
 Initialize the SDK with a SDK key, which can be generated in the Eppo interface. Initialization the SDK when your application starts up to generate a singleton client instance, once per application lifecycle:
