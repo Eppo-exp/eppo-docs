@@ -53,7 +53,7 @@ By making sure our elements are “blank” to start with, we can completely red
 :::
 
 ```html
-<script src="https://cdn.jsdelivr.net/npm/@eppo/js-client-sdk@1.4.0/dist/eppo-sdk.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@eppo/js-client-sdk@latest/dist/eppo-sdk.min.js"></script>
 
 <script>  
 // Prep post-assignment code
@@ -67,8 +67,17 @@ function setHeader() {
     cta: "default call to action"
   };
 
+  // Update with your own user context
+  const subjectId = "<SUBJECT-ID>"; // Ideally this would be an ID managed by your analytics tool such as GA, Rudderstack, or Segment id to name a few
+  const subjectAttributes = {};
+
   // Get variation data from Eppo
-  const variationData = window.eppo.getInstance().getParsedJSONAssignment(subject, '<FEATURE-FLAG-KEY>') || defaultVariationData;
+  const variationData = window.eppo.getInstance().getJSONAssignment(
+    '<FEATURE-FLAG-KEY>', 
+    subjectId, 
+    subjectAttributes,
+    defaultVariationData
+  );
 
   document.getElementById('header-title').innerText = variationData.title;
   document.getElementById('header-subtitle').innerText = variationData.subtitle;
@@ -98,6 +107,7 @@ window.eppo.init(opts).then(setHeader);
 ```
 
 - Provide your SDK key and Feature Flag key in the `'<SDK-KEY>'` and `'<FEATURE-FLAG-KEY>'` placeholders above.
+- Provide the id you are going to use for analytics logging to `'<SUBJECT-ID>'`. Ideally this would be an id from a managed platform such as Segment, Rudderstack, Google Analytics, or an internal platform.
 - Add your client side analytics tracking call once the assignment has been made. Make sure your analytics platform is sending data to your data warehouse connected to Eppo. This will ensure that assignments made by Eppo will be tracked and can be used for experiment analysis. For more information on Eppo's event logging integrations with popular platforms like Segment, mParticle, Rudderstack, and Snowplow, see our documentation [here](/sdks/event-logging).
 
 ## Demo
