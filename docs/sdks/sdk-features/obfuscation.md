@@ -63,4 +63,5 @@ Information about allocations is not hashed, which includes percent exposure and
 | ------------------------------------------------------------------- | ----------- | ------------------------------------ |
 | [Android](https://search.maven.org/artifact/cloud.eppo/android-sdk) | v0.3.0      | feature flag key                     |
 | [Javascript](https://www.npmjs.com/package/@eppo/js-client-sdk)     | v1.3.0      | feature flag key and targeting rules |
-
+| [React Native](https://www.npmjs.com/package/@eppo/react-native-sdk)     | v1.1.0      | feature flag key and targeting rules |
+| [iOS](https://github.com/Eppo-exp/eppo-ios-sdk)                     | v3.0.0      | feature flag key and targeting rules |
