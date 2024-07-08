@@ -2,7 +2,7 @@
 sidebar_position: 5
 ---
 
-# Debugging metrics
+# Debugging Metrics
 
 When configuring a new experiment—especially when using a new metric or assignment source—it is possible that calculating the results of an experiment may lead to no results.
 
