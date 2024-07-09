@@ -49,8 +49,8 @@ import { IAssignmentLogger, init } from "@eppo/node-server-sdk";
 // Define logAssignment so that it logs events
 const assignmentLogger: IAssignmentLogger = {
   logAssignment(assignment) {
-		console.log(assignment)
-  },
+	console.log(assignment);
+  }
 };
 ```
 :::note
@@ -77,7 +77,7 @@ const assignmentLogger: IAssignmentLogger = {
       event: "Eppo Randomization Event",
       properties: assignment,
     });
-  },
+  }
 };
 ```
 
@@ -91,7 +91,7 @@ import { IAssignmentLogger, init } from "@eppo/node-server-sdk";
 // Connect to Rudderstack
 const Analytics = require("@rudderstack/rudder-sdk-node");
 const analytics = new Analytics("<RUDDERSTACK_WRITE_KEY>", {
-  dataPlaneUrl: DATA_PLANE_URL,
+  dataPlaneUrl: DATA_PLANE_URL
 });
 
 // Define logAssignment so that it logs events to Rudderstack
@@ -100,7 +100,7 @@ const assignmentLogger: IAssignmentLogger = {
     analytics.track({
       userId: assignment.subject,
       event: "Eppo Randomization Event",
-      properties: assignment,
+      properties: assignment
     });
   },
 };
@@ -174,12 +174,12 @@ const assignmentLogger: IAssignmentLogger = {
           schema: "iglu:com.example_company/eppo-event/jsonschema/1-0-2",
           data: {
             userId: assignment.subject,
-            properties: assignment,
-          },
-        },
+            properties: assignment
+          }
+        }
       })
     );
-  },
+  }
 };
 
 ```
@@ -200,7 +200,7 @@ import { track } from '@amplitude/analytics-node';
 const assignmentLogger: IAssignmentLogger = {
   logAssignment(assignment) {
     track('Experiment Viewed', assignment, {
-		  user_id: assignment.subject,
+	  user_id: assignment.subject
     });
   },
 };
@@ -226,7 +226,7 @@ import { init } from "@eppo/node-server-sdk";
 
 await init({
   apiKey: "<SDK_KEY>",
-  assignmentLogger,
+  assignmentLogger
 });
 ```
 
@@ -247,8 +247,8 @@ const eppoClient = EppoSdk.getInstance();
 const variation = eppoClient.getStringAssignment(
   "<FLAG-KEY>",
   "<SUBJECT-KEY>",
-  <SUBJECT-ATTRIBUTES>, // Metadata used for targeting
-  "<DEFAULT-VALUE>",
+  {<SUBJECT-ATTRIBUTES>}, // Metadata used for targeting
+  "<DEFAULT-VALUE>"
 );
 ```
 The `getStringAssignment` function takes four inputs to assign a variation:
@@ -271,14 +271,14 @@ import { IAssignmentLogger, init } from "@eppo/node-server-sdk";
 // Define logAssignment so that it logs events
 const assignmentLogger: IAssignmentLogger = {
   logAssignment(assignment) {
-		console.log(assignment)
-  },
+	console.log(assignment);
+  }
 };
 
 // Initialize the client
 await init({
   apiKey: "<SDK_KEY>",
-  assignmentLogger,
+  assignmentLogger
 });
 
 // Then every call to getStringAssignment will also log the event
@@ -291,8 +291,8 @@ const eppoClient = EppoSdk.getInstance();
 const variation = eppoClient.getStringAssignment(
   "new-user-onboarding",
   user.userid,
-  user.attributes
-  "control",
+  user.attributes,
+  "control"
 );
 ```
 ```javascript showLineNumbers
@@ -330,33 +330,186 @@ To read more about different flag types, see the page on [Flag Variations](/feat
 
 How the SDK fetches experiment configurations is configurable via additional optional initialization options:
 
-| Option | Description | Default |
-| ------ | ----------- | ------- | 
-| **`requestTimeoutMs`** (number) | Timeout in milliseconds for HTTPS requests for the experiment configurations. | `5000` |
-| **`numInitialRequestRetries`** (number) | Number of _additional_ times the initial configurations request will be attempted if it fails. This is the request typically synchronously waited (via `await`) for completion. A small wait will be done between requests. | `1` |
-| **`pollAfterFailedInitialization`** (boolean) | Poll for new configurations even if the initial configurations request failed. | `false` |
-| **`throwOnFailedInitialization`** (boolean) | Throw an error (reject the promise) if unable to fetch initial configurations during initialization. | `true` |
-| **`numPollRequestRetries`** (number) | If polling for updated configurations after initialization, the number of additional times a request will be attempted before giving up. Subsequent attempts are done using an exponential backoff. | `7` |
+| Option                                        | Description                                                                                                                                                                                                                 | Default |
+|-----------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------| 
+| **`requestTimeoutMs`** (number)               | Timeout in milliseconds for HTTPS requests for the experiment configurations.                                                                                                                                               | `5000`  |
+| **`numInitialRequestRetries`** (number)       | Number of _additional_ times the initial configurations request will be attempted if it fails. This is the request typically synchronously waited (via `await`) for completion. A small wait will be done between requests. | `1`     |
+| **`pollAfterFailedInitialization`** (boolean) | Poll for new configurations even if the initial configurations request failed.                                                                                                                                              | `false` |
+| **`throwOnFailedInitialization`** (boolean)   | Throw an error (reject the promise) if unable to fetch initial configurations during initialization.                                                                                                                        | `true`  |
+| **`numPollRequestRetries`** (number)          | If polling for updated configurations after initialization, the number of additional times a request will be attempted before giving up. Subsequent attempts are done using an exponential backoff.                         | `7`     |
 
 ## Assignment Logger schema
 
 The SDK will invoke the `logAssignment` function with an `assignment` object that contains the following fields:
 
-| Field                     | Description                                                                                                              | Example                             |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------- |
-| `experiment` (string)     | An Eppo experiment key                                                                                                   | "recommendation-algo-allocation-17" |
-| `subject` (string)        | An identifier of the subject or user assigned to the experiment variation                                                | UUID                                |
-| `variation` (string)      | The experiment variation the subject was assigned to                                                                     | "control"                           |
-| `timestamp` (string)      | The time when the subject was assigned to the variation                                                                  | 2021-06-22T17:35:12.000Z            |
-| `subjectAttributes` (map) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `{ "country": "US" }`               |
-| `featureFlag` (string)    | An Eppo feature flag key                                                                                                 | "recommendation-algo"               |
-| `allocation` (string)     | An Eppo allocation key                                                                                                   | "allocation-17"                     |
-| `holdout` (string)    | An Eppo holdout group key                                                                                                 | "q1-holdout"               |
-| `holdoutVariation` (string)     | An Eppo holdout variation if experiment is eligible for analysis key                                                                                                   | "status_quo", "all_shipped_variations", or null                    |
+| Field                            | Description                                                                                                              | Example                                         |
+|----------------------------------|--------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------|
+| `experiment` (string)            | An Eppo experiment key                                                                                                   | "recommendation-algo-allocation-17"             |
+| `subject` (string)               | An identifier of the subject or user assigned to the experiment variation                                                | UUID                                            |
+| `variation` (string)             | The experiment variation the subject was assigned to                                                                     | "control"                                       |
+| `timestamp` (string)             | The time when the subject was assigned to the variation                                                                  | 2021-06-22T17:35:12.000Z                        |
+| `subjectAttributes` (Attributes) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `{ "country": "US" }`                           |
+| `featureFlag` (string)           | An Eppo feature flag key                                                                                                 | "recommendation-algo"                           |
+| `allocation` (string)            | An Eppo allocation key                                                                                                   | "allocation-17"                                 |
+| `holdout` (string)               | An Eppo holdout group key                                                                                                | "q1-holdout"                                    |
+| `holdoutVariation` (string)      | An Eppo holdout variation if experiment is eligible for analysis key                                                     | "status_quo", "all_shipped_variations", or null |
+
+:::note
+The `Attributes` type represents a mapping of an attribute name to its value, which could be a string, number or boolean (`Record<string, string | number | boolean>`).
+:::
 
 :::note
 More details about logging and examples (with Segment, Rudderstack, mParticle, Snowplow, Amplitude) can be found in the [event logging](/sdks/event-logging/) page.
 :::
+
+## Usage with Contextual Multi-Armed Bandits
+
+To leverage Eppo's contextual bandits using the Node SDK, there are two additional steps over regular feature flags:
+1. Add a bandit action logger to the assignment logger
+2. Querying the bandit for an action
+
+### Define a bandit assignment logger
+
+In order for the bandit to learn an optimized policy, we need to capture and log the bandit actions.
+This requires defining a bandit logger in addition to an assignment logger.
+```ts
+// Import Eppo's logger interfaces and client initializer
+import { IAssignmentLogger, IBanditLogger, init } from "@eppo/node-server-sdk";
+
+// Define an assignment logger for recording variation assignments
+const assignmentLogger: IAssignmentLogger = {
+  logAssignment(assignment: IAssignmentEvent) {
+    console.log('TODO: save assignment information to data warehouse', assignment);
+  }
+};
+
+// Define a bandit logger for recording bandit action assignments
+const banditLogger: IBanditLogger = {
+  logBanditAction (banditEvent: IBanditEvent) {
+    console.log('TODO: save bandit action information to the data warehouse', banditEvent);
+  }
+};
+
+// Initialize the SDK with both loggers defined
+await init({
+  apiKey: "<SDK_KEY>",
+  assignmentLogger,
+  banditLogger
+});
+```
+
+The SDK will invoke the `logBanditAction()` function with an object that contains the following fields:
+
+| Field                                       | Description                                                                                                          | Example                       |
+|---------------------------------------------|----------------------------------------------------------------------------------------------------------------------|-------------------------------|
+| `timestamp` (string)                        | The time when the action is taken in UTC as an ISO string                                                            | 2024-03-22T14:26:55.000Z      |
+| `featureFlag` (string)                      | The key of the feature flag corresponding to the bandit                                                              | "bandit-test-allocation-4"    |
+| `bandit` (string)                           | The key (unique identifier) of the bandit                                                                            | "ad-bandit-1"                 |
+| `subject` (string)                          | An identifier of the subject or user assigned to the experiment variation                                            | "ed6f85019080"                |
+| `subjectNumericAttributes` (Attributes)     | Metadata about numeric attributes of the subject. Map of the name of attributes their provided values                | `{"age": 30}`                 |
+| `subjectCategoricalAttributes` (Attributes) | Metadata about non-numeric attributes of the subject. Map of the name of attributes their provided values            | `{"loyalty_tier": "gold"}`    |
+| `action` (string)                           | The action assigned by the bandit                                                                                    | "promo-20%-off"               |
+| `actionNumericAttributes` (Attributes)      | Metadata about numeric attributes of the assigned action. Dictionary of the name of attributes their provided values | `{"discount": 0.1}`           |
+| `actionCategoricalAttributes` (Attributes)  | Metadata about non-numeric attributes of the assigned action. Map of the name of attributes their provided values    | `{"promoTextColor": "white"}` |
+| `actionProbability` (number)                | The weight between 0 and 1 the bandit valued the assigned action                                                     | 0.25                          |
+| `optimalityGap` (number)                    | The difference between the score of the selected action and the highest-scored action                                | 456                           | 
+| `modelVersion` (string)                     | Unique identifier for the version (iteration) of the bandit parameters used to determine the action probability      | "v123"                        |
+| `metaData` Record<string, unknown>          | Any additional freeform meta data, such as the version of the SDK                                                    | { "sdkLibVersion": "3.5.1" }  |
+
+### Querying the bandit for an action
+
+To query the bandit for an action, you can use the `getBanditAction()` function. This function takes the following parameters:
+- `flagKey` (string): The key of the feature flag corresponding to the bandit
+- `subjectKey` (string): The key of the subject or user assigned to the experiment variation
+- `subjectAttributes` (Attributes | ContextAttributes): The context of the subject
+- `actions` (string[] | Record<string, Attributes | ContextAttributes>): Available actions, optionally mapped to their respective contexts
+- `defaultValue` (str): The default *variation* to return if the bandit cannot be queried
+
+:::note
+The `ContextAttributes` type represents attributes which have already been explicitly bucketed into categorical and numeric attributes (`{ numericAttributes: Attributes,
+categoricalAttributes: Attributes }`).
+:::
+
+The following code queries the bandit for an action:
+```ts
+import { getInstance as getEppoSdkInstance } from "@eppo/node-server-sdk";
+import { Attributes, BanditActions } from "@eppo/js-client-sdk-common";
+
+const flagKey = "shoe-bandit";
+const subjectKey = "user3";
+const subjectAttributes: Attributes = { age: 25, country: country };
+const defaultValue = "control";
+const actions: BanditActions = {
+  nike: { 
+    numericAttributes: { brandAffinity: 2.3 }, 
+    categoricalAttributes: { imageAspectRatio: "16:9" } 
+  },
+  adidas: {
+    numericAttributes: { brandAffinity: 0.2 },
+    categoricalAttributes: { imageAspectRatio: "16:9" }
+  },
+};
+const { variation, action } = getEppoSdkInstance().getBanditAction(
+  flagKey,
+  subjectKey,
+  subjectAttributes,
+  actions,
+  defaultValue,
+);
+
+if ( variation === "control" ) {
+  renderDefaultShoeAd();
+} else {
+  renderShoeAd(action);
+}
+```
+
+#### Subject Context
+
+The subject context contains contextual information about the subject that is independent of bandit actions.
+For example, the subject's age or country.
+
+The subject context has type `Attributes` which has two fields:
+
+- `numeric_attributes` (Dict[str, float]): A dictionary of numeric attributes (such as "age")
+- `categorical_attributes` (Dict[str, str]): A dictionary of categorical attributes (such as "country")
+
+:::note
+The `categerical_attributes` are also used for targeting rules for the feature flag similar to how `subject_attributes` are used for that with regular feature flags.
+:::
+
+#### Action Contexts
+
+Next, supply a dictionary with actions and their attributes: `actions: Dict[str, Attributes]`.
+If the user is assigned to the bandit, the bandit selects one of the actions supplied here,
+and all actions supplied are considered to be valid; if an action should not be shown to a user, do not include it in this dictionary.
+
+
+The action attributes are similar to the `subject_attributes` but hold action specific information.
+Note that we can use `Attrubutes.empty()` to create an empty attribute context.
+
+Note that action contexts can contain two kinds of information:
+- Action specific context: e.g. the image aspect ratio of image corresponding to this action
+- User-action interaction context: e.g. there could be a "brand-affinity" model that computes brand affinties of users to brands, and scores of this model can be added to the action context to provide additional context for the bandit.
+
+#### Result
+
+The `bandit_result` is an instance of `BanditResult`, which has two fields:
+
+- `variation` (str): The variation that was assigned to the subject
+- `action` (Optional[str]): The action that was assigned to the subject
+
+The variation returns the feature flag variation, this can be the bandit itself, or the "status quo" variation if the user is not assigned to the bandit.
+If we are unable to generate a variation, for example when the flag is turned off, then the `default` variation is returned.
+In both of those cases, the `action` is `None`, and you should use the status-quo algorithm to select an action.
+
+When `action` is not `None`, the bandit has selected that action to be shown to the user.
+
+#### Status quo algorithm
+
+In order to accurately measure the performance of the bandit, we need to compare it to the status quo algorithm using an experiment.
+This status quo algorithm could be a complicated algorithm to that selects an action according to a different model, or a simple baseline such as selecting a fixed or random action.
+When you create an analysis allocation for the bandit and the `action` in `BanditResult` is `None`, implement the desired status quo algorithm based on the `variation` value.
 
 ## Debugging
 
