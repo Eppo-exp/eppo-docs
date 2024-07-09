@@ -6,7 +6,7 @@ sidebar_position: 6
 
 :::note
 
-"Evaluation Details" are only available in `js-client-sdk`, `node-server-sdk`, and `react-native-sdk`
+Currently, "Evaluation Details" are only available in `js-client-sdk`, `node-server-sdk`, and `react-native-sdk`
 
 :::
 
@@ -14,18 +14,18 @@ You may encounter a siutation where a flag assignment produces a value that you 
 
 ## Evaluation Details
 
-New "Details" functions (e.g. `getStringAssignmentDetails`) now exist that will produce an object containing an `evaluationDetails` field as part of the returned value. The `evaluationDetails` will contain information that allows you to better understand how a variation was assigned.
+New "Details" functions (e.g. `getStringAssignmentDetails()`) now exist that will produce an object containing an `evaluationDetails` field as part of the returned value. The `evaluationDetails` will contain information that allows you to better understand how a variation was assigned.
 
 The full list of these functions are as follows:
 
-- `getBanditActionDetails`
-- `getBooleanAssignmentDetails`
-- `getIntegerAssignmentDetails`
-- `getJSONAssignmentDetails`
-- `getNumericAssignmentDetails`
-- `getStringAssignmentDetails`
+- `getBooleanAssignmentDetails()`
+- `getIntegerAssignmentDetails()`
+- `getNumericAssignmentDetails()`
+- `getStringAssignmentDetails()`
+- `getJSONAssignmentDetails()`
+- `getBanditActionDetails()`
 
-Additionally, `evaluationDetails` will be available in your `assignmentLogger` when you initialize the Eppo client.
+Additionally, `evaluationDetails` will be available in your `assignmentLogger` (and, if used, `banditLogger`), defined when initializing the Eppo client.
 
 ```typescript
 init({
@@ -60,7 +60,7 @@ getStringAssignment(flagKey, subjectKey, subjectAttributes, defaultValue);
 
 ### Scenario: An allocation was matched
 
-In the next example, we call `getStringAssignmentDetails` to better understand how an allocation was matched. We can see that the `flagEvaluationCode` is `MATCH`, which tells us that there was a matched allocation. The `matchedAllocation` value contains `"orderPosition": 2`, which tells us that the 2nd allocation in our configuration was matched, which is our **A/B Experiment** allocation. We can also see that the **Alpha Testers** allocation with `"orderPosition": 1` was not matched, since it was specified in the `unmatchedAllocations` field. Finally, we can also see that our **Default allocation** with `"orderPosition": 3` was not evaluated at all, since we already had match in the 2nd allocation.
+In the next example, we call `getStringAssignmentDetails()` to better understand how an allocation was matched. We can see that the `flagEvaluationCode` is `MATCH`, which tells us that there was a matched allocation. The `matchedAllocation` value contains `"orderPosition": 2`, which tells us that the 2nd allocation in our configuration was matched, which is our **A/B Experiment** allocation. We can also see that the **Alpha Testers** allocation with `"orderPosition": 1` was not matched, since it was specified in the `unmatchedAllocations` field. Finally, we can also see that our **Default allocation** with `"orderPosition": 3` was not evaluated at all, since we already had match in the 2nd allocation.
 
 The `flagEvaluationDescription` field gives us more information about why the flag was matched. In this case, we have a 50% to 50% split on our traffic, and `subject-123` happens to fall in the group for variation `control`.
 
@@ -169,7 +169,7 @@ getStringAssignmentDetails(flagKey, subjectKey, subjectAttributes, defaultValue)
 
 ### Scenario: Your flag is disabled
 
-When your flag is disabled, your `flagEvaluationCode` will be `FLAG_UNRECOGNIZED_OR_DISABLED`, and your supplied `defaultValue` will be assigned to `value`. Pay attention to your `environmentName` in this scenario since you may not be working in the environment you used to define your allocations.
+When your flag is disabled, your `flagEvaluationCode` will be `FLAG_UNRECOGNIZED_OR_DISABLED`, and your supplied `defaultValue` will be assigned to `value`. Pay attention to your `environmentName` in this scenario since you may not be working in the environment you used to define your flags.
 
 ```typescript
 const flagKey = 'some-disabled-flag';
