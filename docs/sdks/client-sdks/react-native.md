@@ -211,3 +211,7 @@ function MyComponent(): JSX.Element {
 ### Local Storage
 
 The SDK uses `@react-native-async-storage` to store experiment configurations downloaded from Eppo. This makes lookup by the `get<Type>Assignment` functions very fast. The configuration data stored contains the experiment key, experiment variation values, and allocations.
+
+### Debugging
+
+You may encounter a situation where a flag assignment produces a value that you did not expect. There are functions [detailed here](/sdks/sdk-feature/debugging-flag-assignment/) to help you understand how flags are assigned, which will allow you to take corrective action on potential configuration issues. 

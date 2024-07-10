@@ -123,7 +123,7 @@ updateOnFetch: 'always', // Immediately start using the new configuration once i
 maxCacheAgeSeconds: 300, // Don't even bother fetching updated configurations unless the last one is more than five minutes old
 useExpiredCache: true, // If the cached configuration is expired, use it to serve assignments until an updated one is fetched
 requestTimeoutMs: 500, // Give up on fetching updated configurations after half a second and--if this is the first-ever initialization--just serve default values
-numInitialRequestRetries: 0, // Don't retry a failed initialzation fetch
+numInitialRequestRetries: 0, // Don't retry a failed initialization fetch
 ```
 
 Note that when new configurations are loaded, the same flag may start getting a different assignment for the same session. If you want to avoid this, and have consistent assignments until the next initialization, change `updateOnFetch` to `empty`.
@@ -135,7 +135,7 @@ maxCacheAgeSeconds: 0, // Always consider cached configurations expired
 updateOnFetch: 'empty', // Immediately start using the new configuration once it is fetched
 useExpiredCache: true, // Always used the previously cached assignments
 requestTimeoutMs: 500, // Give up on fetching updated configurations after half a second and--if this is the first-ever initialization--just serve default values
-numInitialRequestRetries: 0, // Don't retry a failed initialzation fetch
+numInitialRequestRetries: 0, // Don't retry a failed initialization fetch
 ```
 
 ### Define an assignment logger (experiment assignment only)
@@ -297,3 +297,7 @@ The SDK is supported on all modern browsers. It relies on JavaScript promises, w
 ### Local Storage
 
 The SDK uses browser local storage to store experiment configurations downloaded from Eppo. This allows for quick lookup by the `getStringAssignment` function. The configuration data stored contains the experiment key, experiment variation values, traffic allocation, and any allow-list overrides.
+
+### Debugging
+
+You may encounter a situation where a flag assignment produces a value that you did not expect. There are functions [detailed here](/sdks/sdk-feature/debugging-flag-assignment/) to help you understand how flags are assigned, which will allow you to take corrective action on potential configuration issues. 

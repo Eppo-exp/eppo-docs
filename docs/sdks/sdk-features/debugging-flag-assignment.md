@@ -6,7 +6,7 @@ Currently, "Evaluation Details" are only available in `js-client-sdk`, `node-ser
 
 :::
 
-You may encounter a siutation where a flag assignment produces a value that you did not expect. There are functions now available in `js-client-sdk`, `node-server-sdk`, and `react-native-sdk` to help you understand how flags are assigned, which will allow you to take corrective action on potential configuration issues.
+You may encounter a situation where a flag assignment produces a value that you did not expect. There are functions now available in `js-client-sdk`, `node-server-sdk`, and `react-native-sdk` to help you understand how flags are assigned, which will allow you to take corrective action on potential configuration issues.
 
 ## Evaluation Details
 
@@ -63,7 +63,7 @@ The `flagEvaluationDescription` field gives us more information about why the fl
 ```typescript
 const flagKey = 'my-flag';
 const subjectKey = 'subject-123';
-const subectAttributes = {};
+const subjectAttributes = {};
 const defaultValue = 'default';
 
 getStringAssignmentDetails(
@@ -111,12 +111,12 @@ getStringAssignmentDetails(
 
 Let's see what happens when we specify `{ companyId: 11 }` as the `subjectAttributes`. This should match the **Alpha Testers** allocation, which ensures `test` is assigned for `companyId` values of `11` or `13`.
 
-In this case, the `matchedAllocation` field contains `"orderPosition": 1`, which means that the **Alpha Testers** allocation was matched, since that's the first allocation defined in our configuration. The `matchedRule` field gives us information about which rule was matched, and `flagEvaluationDescription` tells us that the match happened due to matching rules. In this scenario, all remaining allocations that are defined in our configration will be listed in `unevaluatedAllocations`, since the first allocation was matched.
+In this case, the `matchedAllocation` field contains `"orderPosition": 1`, which means that the **Alpha Testers** allocation was matched, since that's the first allocation defined in our configuration. The `matchedRule` field gives us information about which rule was matched, and `flagEvaluationDescription` tells us that the match happened due to matching rules. In this scenario, all remaining allocations that are defined in our configuration will be listed in `unevaluatedAllocations`, since the first allocation was matched.
 
 ```typescript
 const flagKey = 'some-disabled-flag';
 const subjectKey = 'subject-123'
-const subectAttributes = { companyId: 11 }; // companyId of 11 includes alpha testers
+const subjectAttributes = { companyId: 11 }; // companyId of 11 includes alpha testers
 const defaultValue = 'default'
 
 getStringAssignmentDetails(flagKey, subjectKey, subjectAttributes, defaultValue)
@@ -170,7 +170,7 @@ When your flag is disabled, your `flagEvaluationCode` will be `FLAG_UNRECOGNIZED
 ```typescript
 const flagKey = 'some-disabled-flag';
 const subjectKey = 'subject-123'
-const subectAttributes = {};
+const subjectAttributes = {};
 const defaultValue = 'default';
 
 getStringAssignmentDetails(flagKey, subjectKey, subjectAttributes, defaultValue)
