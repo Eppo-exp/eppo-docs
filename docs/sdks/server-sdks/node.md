@@ -357,3 +357,7 @@ The SDK will invoke the `logAssignment` function with an `assignment` object tha
 :::note
 More details about logging and examples (with Segment, Rudderstack, mParticle, Snowplow, Amplitude) can be found in the [event logging](/sdks/event-logging/) page.
 :::
+
+## Debugging
+
+You may encounter a situation where a flag assignment produces a value that you did not expect. There are functions [detailed here](/sdks/sdk-features/debugging-flag-assignment/) to help you understand how flags are assigned, which will allow you to take corrective action on potential configuration issues. 

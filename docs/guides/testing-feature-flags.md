@@ -1,5 +1,5 @@
 ---
-sidebar_position: 6
+sidebar_position: 7
 ---
 
 # Testing Feature Flags
@@ -20,11 +20,11 @@ Set your flag to **On** to have it run in the selected environment.
 
 ## Testing in Production
 
-To test in a Production environment, switch the environment on the flag to the **Production Environment**. 
+To test in a Production environment, switch the environment on the flag to the **Production Environment**.
 
-Decide what will indicate an internal user based on what information is available. Create a [Feature Gate](/feature-flagging/concepts/feature-gates#create-a-feature-gate) and set up a targeting condition that targets internal users. 
+Decide what will indicate an internal user based on what information is available. Create a [Feature Gate](/feature-flagging/concepts/feature-gates#create-a-feature-gate) and set up a targeting condition that targets internal users.
 
-In the example below, we target all users with an internal email address that ends in `@geteppo.com` or a specific user id. 
+In the example below, we target all users with an internal email address that ends in `@geteppo.com` or a specific user id.
 
 :::note
 While Eppo does not store any raw data, note that targeting attributes will be passed into the logging callback function. If you do not want your logger to store user emails, you can apply the regex match before calling Eppo and then pass in a simple is_internal_user flag to the SDK call.
