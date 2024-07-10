@@ -473,7 +473,7 @@ The subject context can be provided as `Attributes`, which will then assume anyt
 attribute, and everything else is a categorical attribute.
 
 You can also explicitly bucket the attribute types by providing the context as `ContextAttributes`. For example, you may have an attribute named `priority`, with 
-possible values `0`, `1`, and `2` that you want to be treated categorically rather than numeric. These have two nested sets of attributes:
+possible values `0`, `1`, and `2` that you want to be treated categorically rather than numeric. `ContextAttributes` have two nested sets of attributes:
 - `numericAttributes` (Attributes): A mapping of attribute names to their numeric values (e.g., `age: 30`)
 - `categoricalAttributes` (Attributes): A mapping of attribute names to their categorical values (e.g., `country`)
 
