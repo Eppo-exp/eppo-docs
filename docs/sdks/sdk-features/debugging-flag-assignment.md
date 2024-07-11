@@ -74,7 +74,7 @@ getStringAssignmentDetails(
 );
 // returns =>
 {
-  "variation": "test", // the assigned variation value
+  "variation": "control", // the assigned variation value
   "action": null, // the assigned bandit action only applies to `getBanditActionDetails()`
   "evaluationDetails": {
     "environmentName": "Production",
@@ -182,7 +182,7 @@ const defaultValue = 'default';
 getStringAssignmentDetails(flagKey, subjectKey, subjectAttributes, defaultValue)
 // returns =>
 {
-  "variation": "test", // since there was no match, `variation` is set to the provided `defaultValue`
+  "variation": "default", // since there was no match, `variation` is set to the provided `defaultValue`
   "action": null,
   "evaluationDetails": {
     "environmentName": "Development",
