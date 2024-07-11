@@ -2,7 +2,7 @@
 
 :::note
 
-Currently, "Evaluation Details" are only available in `js-client-sdk`, `node-server-sdk`, and `react-native-sdk`
+Currently, "Evaluation Details" are only available in the `js-client-sdk`, `node-server-sdk`, and `react-native-sdk` SDKs
 
 :::
 
@@ -74,13 +74,16 @@ getStringAssignmentDetails(
 );
 // returns =>
 {
-  "value": "control",
+  "variation": "test", // the assigned variation value
+  "action": null, // the assigned bandit action only applies to `getBanditActionDetails()`
   "evaluationDetails": {
     "environmentName": "Production",
     "flagEvaluationCode": "MATCH",
     "flagEvaluationDescription": "tester-123 belongs to the range of traffic assigned to \"control\" defined in allocation \"allocation-5055\".",
     "variationKey": "control",
     "variationValue": "control",
+    "banditKey": null,
+    "banditAction": null,
     "configFetchedAt": "2024-07-09T13:45:06.569Z",
     "configPublishedAt": "2024-07-09T13:44:02.584Z",
     "matchedRule": null,
@@ -122,13 +125,16 @@ const defaultValue = 'default'
 getStringAssignmentDetails(flagKey, subjectKey, subjectAttributes, defaultValue)
 // returns =>
 {
-  "value": "test",
+  "variation": "test", // the assigned variation value
+  "action": null, // the assigned bandit action only applies to `getBanditActionDetails()`
   "evaluationDetails": {
     "environmentName": "Production",
     "flagEvaluationCode": "MATCH",
     "flagEvaluationDescription": "Supplied attributes match rules defined in allocation \"allocation-6647\".",
     "variationKey": "test",
     "variationValue": "test",
+    "banditKey": null,
+    "banditAction": null,
     "configFetchedAt": "2024-07-09T14:25:44.441Z",
     "configPublishedAt": "2024-07-09T13:44:02.584Z",
     "matchedRule": {
@@ -165,7 +171,7 @@ getStringAssignmentDetails(flagKey, subjectKey, subjectAttributes, defaultValue)
 
 ### Scenario: Your flag is disabled
 
-When your flag is disabled, your `flagEvaluationCode` will be `FLAG_UNRECOGNIZED_OR_DISABLED`, and your supplied `defaultValue` will be assigned to `value`. Pay attention to your `environmentName` in this scenario since you may not be working in the environment you used to define your flags.
+When your flag is disabled, your `flagEvaluationCode` will be `FLAG_UNRECOGNIZED_OR_DISABLED`, and the supplied `defaultValue` argument will be assigned to `variation`. Pay attention to your `environmentName` in this scenario, since you may not be working in the environment you used to configure your flag.
 
 ```typescript
 const flagKey = 'some-disabled-flag';
@@ -176,13 +182,16 @@ const defaultValue = 'default';
 getStringAssignmentDetails(flagKey, subjectKey, subjectAttributes, defaultValue)
 // returns =>
 {
-  "value": "default",
+  "variation": "test", // since there was no match, `variation` is set to the provided `defaultValue`
+  "action": null,
   "evaluationDetails": {
     "environmentName": "Development",
     "flagEvaluationCode": "FLAG_UNRECOGNIZED_OR_DISABLED",
     "flagEvaluationDescription": "Unrecognized or disabled flag: my-flag",
     "variationKey": null,
     "variationValue": null,
+    "banditKey": null,
+    "banditAction": null,
     "configFetchedAt": "2024-07-09T13:18:09.192Z",
     "configPublishedAt": "2024-07-08T09:11:04.103Z",
     "matchedRule": null,
