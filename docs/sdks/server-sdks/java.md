@@ -148,7 +148,6 @@ More details about logging and examples (with Segment, Rudderstack, mParticle, a
 If using the SDK to train and request actions from a contextual multi-armed bandit, you will need to:
 1. Define a bandit assignment logger
 2. Pass bandit actions to request a bandit assignment
-3. (Optional) Log non-bandit actions
 
 ### Define a bandit assignment logger
 
@@ -173,6 +172,8 @@ The SDK will invoke the `logBanditAction` function with an `logData` object that
 | `modelVersion` (String)                              | Unique identifier for the version (iteration) of the bandit parameters used to determine the action probability | "falcon v123"                       |
 
 The code below illustrates an example implementation of a bandit logging callback that writes to Snowflake.
+Note that this is illustrative, as writing directly to Snowflake is not a best practice for scalability, and use of
+a data pipeline is recommended.
 
 ```java
 import com.eppo.sdk.dto.IBanditLogger;
@@ -277,36 +278,4 @@ Map<String, EppoAttributes> actionsWithAttributes = Map.of(
 )));
 
 Optional<String> banditAssignment = eppoClient.getStringAssignment(subjectKey, flagKey, subjectAttributes, actionsWithAttributes);
-```
-
-### Logging non-bandit actions (contextual multi-armed bandit assignment only)
-
-If the control variation (i.e., not the bandit) was assigned, but the control variation still resulted in an action being
-assigned via some other mechanism, the bandit can still learn from this non-bandit assignment.
-
-To record this event, you can use the `logNonBanditAction()` method.
-
-The code below illustrates an example use of this.
-
-```java
-
-Optional<String> banditAssignment = eppoClient.getStringAssignment(subjectKey, flagKey, subjectAttributes, actionsWithAttributes);
-
-boolean doControlAction = banditAssignment.isEmpty() || banditAssignment.get().equals("control");
-
-if (doControlAction) {
-  String controlAction = "promo 10% off";
-  EppoAttributes controlActionAttributes = new EppoAttributes(Map.of(
-    "percentOff", EppoValue.valueOf("20"),
-    "textColor", EppoValue.valueOf("white")
-  ));
-
-  handlePromoAction(controlAction);
-  
-  // Log we are taking this action--even though the bandit didn't assign it--to help the bandit learn
-  eppoClient.logNonBanditAction(subjectKey, flagKey, subjectAttributes, controlAction, controlActionAttributes);
-} else {
-  handlePromoAction(banditAssignment.get());
-  // Bandit will have automatically logged the assignment
-}
 ```
