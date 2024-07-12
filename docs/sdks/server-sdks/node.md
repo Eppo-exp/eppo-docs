@@ -364,6 +364,10 @@ More details about logging and examples (with Segment, Rudderstack, mParticle, S
 
 ## Usage with Contextual Multi-Armed Bandits
 
+Eppo also supports contextual multi-armed bandits. You can read more about them in the [high-level documentation](../../contextual-bandits).
+Bandit flag configuration--including setting up the flag key, status quo variation, bandit variation, and targeting rules--are configured within
+the Eppo application. However, available actions are supplied to the SDK in the code when querying the bandit.
+
 To leverage Eppo's contextual multi-armed bandits using the Node SDK, there are two additional steps over regular feature flags:
 1. Add a bandit action logger to the SDK client instance
 2. Query the bandit for an action
@@ -386,7 +390,7 @@ const assignmentLogger: IAssignmentLogger = {
 // Define a bandit logger for recording bandit action assignments
 const banditLogger: IBanditLogger = {
   logBanditAction (banditEvent: IBanditEvent) {
-    console.log("TODO: save bandit action information to the data warehouse", banditEvent);
+    console.log("TODO: save bandit action information to the data warehouse, ensuring the column names are as expected", banditEvent);
   }
 };
 

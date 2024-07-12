@@ -172,6 +172,8 @@ The SDK will invoke the `logBanditAction` function with an `logData` object that
 | `modelVersion` (String)                              | Unique identifier for the version (iteration) of the bandit parameters used to determine the action probability | "falcon v123"                       |
 
 The code below illustrates an example implementation of a bandit logging callback that writes to Snowflake.
+Note that this is illustrative, as writing directly to Snowflake is not a best practice for scalability, and use of
+a data pipeline is recommended.
 
 ```java
 import com.eppo.sdk.dto.IBanditLogger;
