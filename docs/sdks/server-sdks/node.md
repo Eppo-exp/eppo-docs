@@ -364,7 +364,7 @@ More details about logging and examples (with Segment, Rudderstack, mParticle, S
 
 ## Usage with Contextual Multi-Armed Bandits
 
-Eppo also supports contextual multi-armed bandits. You can read more about them in the [high-level documentation](../../contextual-bandits).
+Eppo also supports contextual multi-armed bandits. You can read more about them in the [high-level documentation](../../../contextual-bandits).
 Bandit flag configuration--including setting up the flag key, status quo variation, bandit variation, and targeting rules--are configured within
 the Eppo application. However, available actions are supplied to the SDK in the code when querying the bandit.
 
