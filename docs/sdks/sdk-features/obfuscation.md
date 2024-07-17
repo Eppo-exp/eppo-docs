@@ -1,7 +1,3 @@
----
-sidebar_position: 9
----
-
 # Configuration obfuscation
 
 During SDK initialization, a configuration file is retrieved from Eppo's CDN, which includes information about the feature flag/experiment variations, traffic allocations, and targeting rules. The SDK stores these configurations locally for rapid lookup. However, when the SDK is initialized in certain mobile and browser clients, this configuration may be accessible by users, and so Eppo hashes data in the configuration to obfuscate it. The configuration cannot be hashed entirely without compromising functionality, so the hashed fields in the configuration that can be used without leaking sensitive data are shown below.
@@ -63,4 +59,5 @@ Information about allocations is not hashed, which includes percent exposure and
 | ------------------------------------------------------------------- | ----------- | ------------------------------------ |
 | [Android](https://search.maven.org/artifact/cloud.eppo/android-sdk) | v0.3.0      | feature flag key                     |
 | [Javascript](https://www.npmjs.com/package/@eppo/js-client-sdk)     | v1.3.0      | feature flag key and targeting rules |
-
+| [React Native](https://www.npmjs.com/package/@eppo/react-native-sdk)     | v1.1.0      | feature flag key and targeting rules |
+| [iOS](https://github.com/Eppo-exp/eppo-ios-sdk)                     | v3.0.0      | feature flag key and targeting rules |

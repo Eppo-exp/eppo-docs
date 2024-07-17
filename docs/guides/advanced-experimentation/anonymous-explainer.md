@@ -14,29 +14,29 @@ By performing a small amount of data transformation within the data warehouse an
 
 ## Warehouse Setup
 
-To build an anonymous visitor-to-user attribution model, begin with a table similar to the one described above. From this table, build a model that identifies the minimum and maximum time in which an Anonymous ID was associated with a specific User ID. A template query to do this can be viewed below.
+To build an anonymous visitor-to-user attribution model, begin with a table similar to the one described above. From this table, build a model that identifies the minimum and maximum time in which a User ID was associated with a specific Anonymous ID. A template query to do this can be viewed below.
 
 ```sql
 WITH
-users_lag AS (
+anonymous_id_lag AS (
     SELECT
         user_id
         , anonymous_id
-        , LAG(user_id) OVER (PARTITION BY anonymous_id ORDER BY ts) as last_user_id
-        , LAG(ts) OVER (PARTITION BY anonymous_id ORDER BY ts) as last_ts
-        , LEAD(ts) OVER (PARTITION BY anonymous_id ORDER BY ts) as next_ts
+        , LAG(anonymous_id) OVER (PARTITION BY user_id ORDER BY ts) as last_anonymous_id
+        , LAG(ts) OVER (PARTITION BY user_id ORDER BY ts) as last_ts
+        , LEAD(ts) OVER (PARTITION BY user_id ORDER BY ts) as next_ts
     FROM event_table
 )
 
-, user_switch AS (
+, anonymous_id_switch AS (
     SELECT
       *
-      , SUM(IF(last_user_id != user_id, 1, 0)) OVER (
-          PARTITION BY anonymous_id
+      , SUM(IF(last_anonymous_id != anonymous_id, 1, 0)) OVER (
+          PARTITION BY user_id
           ORDER BY ts
           BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW
         ) AS cumulative_switch
-  FROM users_lag
+  FROM anonymous_id_lag
 )
 
 , user_login_windows_collapsed as (
@@ -48,7 +48,7 @@ users_lag AS (
       , LOGICAL_OR(next_ts IS NULL) as is_last
       , MIN(ts) as ts_min
       , MAX(next_ts) as ts_max
-    FROM user_switch
+    FROM anonymous_id_switch
     GROUP BY 1,2,3
 )
 
@@ -58,11 +58,27 @@ SELECT
     , IF(is_first, TIMESTAMP("0001-01-01 00:00:00"), ts_min) as ts_start_window
     , IF(is_last, TIMESTAMP("9999-12-31 23:59:59"), ts_max) as ts_end_window
 FROM user_login_windows_collapsed
-ORDER BY anonymous_id, ts_min;
+ORDER BY user_id, ts_min;
 
 ```
 
 For the first identified relationship between an Anonymous ID and a User ID, a timestamp infinitely far into the past is used for the `ts_start_window` in order to provide an inferred User ID for events prior to a user’s first moment of authentication. Similarly, for the last identified relationship between an Anonymous ID and a User ID, a timestamp far into the future is used for the `ts_end_window` column to ensure that any events created in an unauthenticated state will have an inferred User ID. This association will be used for all unauthenticated events until a new relationship for any given Anonymous ID and User ID is identified. At this point, a new `ts_start_window` is defined for the given Anonymous ID.
+
+Also, because most facts are tied to User IDs rather than Anonymous IDs (the events underlying most metrics are tied to logged-in states), it is recommended to verify that the mapping table has no overlapping intervals. An overlapping interval means that a particular User ID is tied to multiple Anonymous IDs at the same time. In that case, an event completed by a user at that time would be attributed to multiple Anonymous IDs, leading to double-counting. To verify that there are no overlapping intervals, the following query can be used. It should return no rows.
+
+```sql
+SELECT
+    t1.*
+FROM anon_visitor_to_user_mapping t1
+     LEFT JOIN anon_visitor_to_user_mapping t2
+           ON t1.user_id = t2.user_id
+               -- Checking to see if there's an overlapping attribution window for the SAME user_id with a different anonymous id
+               -- If an overlap exists, there is the possibility of double counting fact events
+               AND t1.anonymous_id <> t2.anonymous_id
+               AND t1.ts_end_window > t2.ts_start_window
+               AND t2.ts_end_window > t1.ts_start_window
+WHERE t2.user_id IS NOT NULL
+```
 
 Once this model is built, it can be joined to any fact table within the data warehouse. It should be joined onto these fact tables by User ID wherever a fact event’s timestamp is between a given user’s `ts_start_window` and `ts_end_window`. By doing this, all fact tables at the user level can now have an inferred Anonymous ID. This inferred Anonymous ID can then be used by Eppo to link Assignment SQL definitions at the Anonymous ID level to these fact tables.
 

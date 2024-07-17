@@ -63,3 +63,25 @@ To specify a partition key, map the column to the Partition Date field.
 :::info
 Partition dates are disabled by default, if you'd like to enable them in your workspace, please reach out to your Eppo representative or email us at support@geteppo.com.
 :::
+
+## Updating Facts
+
+You can update facts by clicking the `Edit` button to access the Fact SQL. At this point you can edit the SQL as you like, but the mapping fields will be locked down until the SQL is validated with a run.
+
+Pressing the `Run` button will enable the mapping fields and the `Save & Close` button to save any changes made in either the SQL or mapping.
+
+:::note
+Any running experiments with metrics based on the updated Fact SQL will automatically fully refresh those metrics on the next experiment update.
+:::
+
+## Deleting Facts
+
+You can delete a Fact SQL as well as individual Facts. First, access the Fact SQL by clicking the `Edit` button. 
+
+To delete the Fact SQL, click `Delete Fact SQL` from the overflow menu.
+
+To delete an individual Fact, press the `Run` button to unlock the mapping fields. Then click into the Fact you wish to remove and press `Delete`. Finally, press `Save & Close` to save your action.
+
+If either type of delete action will impact existing metrics or experiments, a confirmation modal will appear detailing the metrics and experiments impacted.
+
+![Delete fact confirmation](/img/data-management/best-practices/delete_fact.png)

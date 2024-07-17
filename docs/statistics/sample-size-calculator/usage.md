@@ -83,3 +83,7 @@ Where:
 - $N$ represents the number of subjects that will be assigned to each variation, using the estimated traffic for the time period, the number of variations, and the traffic allocation percentage.
 
 The sequential version of the Minimum Detectable Effect is similar, but scaled by the width of a sequential confidential interval relative to a fixed-sample confidence interval.
+
+:::note
+If metrics are [winsorized](/guides/advanced-experimentation/running-well-powered-experiments/#handling-outliers-using-winsorization) the sample size computation takes that into account. 
+:::

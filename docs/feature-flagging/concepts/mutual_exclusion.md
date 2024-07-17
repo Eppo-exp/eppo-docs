@@ -8,7 +8,7 @@ sidebar_position: 7
 Layers are only available on v3 of Eppo SDKs or higher
 :::
 
-There are situations when you want to run concurrent experiments on the same surface. Eppo offers Layers as an option to keep your experiments mutual exclusive.
+There are situations when you want to run concurrent experiments on the same surface. Eppo offers Layers as an option to keep your experiments mutually exclusive.
 
 :::info
 Research from Microsoft has shown that in practice [interaction effects are vanishingly rare](https://www.microsoft.com/en-us/research/group/experimentation-platform-exp/articles/a-b-interactions-a-call-to-relax/). Given this, we recommend only using mutual exclusion when the overlap of two new treatments critically degrades the user experience. For instance, a design team might want to run a homepage redesign test while a marketing team might want to experiment on the headline messaging on the same page. If the new layout removes the messaging altogether or makes it unreadable, these experiments should clearly not overlap.

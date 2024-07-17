@@ -134,6 +134,12 @@ group by 1
 
 Examples: number of unique videos watched per user (if the same video is watched twice, it only counts once), number of unique articles viewed per visitor, number of unique items ordered (if an item is ordered multiple times, it only counts once).
 
+By default, we use a naive array-based algorithm for count distinct metrics which is 100% accurate but can be resource-intensive and time-consuming. We also support the [**HyperLogLog**](https://docs.snowflake.com/en/user-guide/querying-approximate-cardinality) algorithm, which is much more efficient but can incur a small loss of precision. Contact Eppo support if you would like to use HyperLogLog instead of Array.
+
+:::note
+For customers on **Redshift** we only support HyperLogLog. The necessary methods for array-based algorithms are not currently supported.
+:::
+
 :::tip
 Count Distinct is a more expensive operation than Count, especially when there are many unique values in the fact column. **You should only use Count Distinct when it is crucial for the definition of your metric to ignore repeated values.** When repeated values are naturally rare, a Count metric will give similar results to a Count Distinct metric and will incur lower warehouse costs.
 
