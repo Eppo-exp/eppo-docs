@@ -13,15 +13,15 @@ This page describes how experiment converage and Global Lift are calculated. For
 
 ### A few definitions
 
-First, let's define TM as the total metric value across all events during the experiment, not just those assigned to the experiment. Further, let's define TEM as the total metric value for only those subjects assigned to the experiment.
+First, let's define $TM$ as the total metric value across all events during the experiment, not just those assigned to the experiment. Further, let's define $TEM$ as the total metric value for only those subjects assigned to the experiment.
 
 ### Coverage
 
 The first number displayed in the Global Impact report is the coverage of the experiment. This is simply the percentage of the total metric that came from subjects in the experiment:
 
-<div style={{textAlign: 'center'}}>
-<i>Coverage = TEM / TM</i>
-</div>
+$$$
+Coverage = TEM / TM
+$$$
 
 <br></br>
 
@@ -71,7 +71,27 @@ We can now estimate how the experiment population's total metric value would hav
 
 ### Adjusting for eligible traffic exposure
 
-In some scenarios not all eligible users will be enrolled into an experiment. Imagine you are running an experiment on iOS and you only enroll 20% of iOS users into the experiment as either test or control. This situation might arise if you are minimizing risk for a long-run experiment, or if you are running [Mutually Exclusive](/feature-flagging/concepts/mutual_exclusion/) experiments.
+In some scenarios not all eligible users will be enrolled into an experiment. Imagine you are running an experiment on iOS and you only enroll 20% of active iOS users into the experiment as either test or control. This situation might arise if you are minimizing risk for a long-run experiment, or if you are running [Mutually Exclusive](/feature-flagging/concepts/mutual_exclusion/) experiments.
+
+To account for this, we first need to compute the aggregated metric value in the target population (e.g., active iOS users) had the treatment been rolled out to all users. To start, like $x_i$ and $n_i$ denote the aggregate metric value and subject count for variant $i$ ($i = T$ denotes treatment, $i = C$ denotes control). Then the value of TEM had the treatment been rolled out can be estimated as: 
+
+$$$
+TEM_{rollout} = x_T \cdot \frac{n_C + n_T}{n_T} \cdot \frac{1}{t_{exp}}
+$$$
+
+where $t_{exp} \in (0, 1]$ denotes the traffic exposure (i.e., the percent of users who where eligible for the experiment that actually got enrolled).
+
+We can similarly estimate the aggregate metric value had the experiment not ran (i.e., all users saw control) as:
+
+$$$
+TEM_{baseline} = x_T \cdot \frac{n_C + n_T}{n_T} \cdot \frac{1}{t_{exp}}.
+$$$
+
+We can now calculate counterfactuals for the total metric value as follows:
+
+
+ 
+
 
 To account for this, we simply divide CRV and TRV by the traffic exposure. In the example above, if 20% of eligible users are part of the experiment, we multiply these adjustments by 5 to estimate what would have happened had the entire eligible population (iOS users) received either variant. Note that since exposure to the experiment is also randomized, the users exposed to the experiment will always be a representative sample of the larger eligible population. 
 
