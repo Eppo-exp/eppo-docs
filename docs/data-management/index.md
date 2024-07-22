@@ -8,7 +8,7 @@ Once this setup is complete, we can now create metrics based on the event data, 
 
 The following diagram illustrates how the core concepts of [entities](/data-management/definitions/entities), [assignments](/data-management/definitions/assignment-sql), [facts](/data-management/definitions/fact-sql), and [properties](/data-management/definitions/property-sql) relate.
 
-![data annotation illustration](/img/data-management/data-annotation.jpg)
+![data annotation illustration](/img/data-management/data-annotation.png)
 
 Note that the assignment and properties tables have properties at the entity level, while the fact table has properties at the event (or metric) level.
 
