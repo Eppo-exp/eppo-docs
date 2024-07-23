@@ -22,7 +22,7 @@ Each rule may have multiple conditions. The rule is only satisfied if all the co
 | :----------------------------------------------------------------------------------------- | :---------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | greater than (>), less than (<), greater than or equal to (>=), less than or equal to (<=) | number, SemVer          | Numeric comparison                                                                                                                                                           |
 | matches regex                                                                              | string                  | Regular expression match                                                                                                                                                     |
-| one of / not one of                                                                        | string, number, boolean | Is one of (or not one of) an array of strings. Non-string inputs (number and boolean) are cast to string before performing the comparison. Comparisons are case-insensitive. |
+| one of / not one of                                                                        | string, number, boolean | Is one of (or not one of) an array of strings. Non-string inputs (number and boolean) are cast to string before performing the comparison. Comparisons are case-sensitive. |
 
 ## Special case: Semantic Versioning
 
