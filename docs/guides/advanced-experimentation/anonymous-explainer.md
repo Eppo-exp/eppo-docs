@@ -28,17 +28,19 @@ anon3 | NULL | 2024-07-03 00:00:00 | new-checkout |control
 anon3 | 2 | 2024-07-03 10:00:00 | new-checkout |control
 anon4 | NULL | 2024-07-02 10:00:00 | new-checkout | treatment
 
+
 This example highlights how in general the relationship between User ID and Anonymous ID is many-to-many. That is, one Anonymous ID can be associated with multiple User IDs (a device is shared across two users) and one User ID might be associated with multiple Anonymous IDs (one user clears their cookies or has two devices).
 
 Eppo can gracefully handle both this many-to-many relationship and assignment data with missing or duplicate records. When processing the assignment data, Eppo will perform the following clean up steps:
 
-1. Filter to each Anonymous ID's first record during the experiment
-2. Check if the Anonymous ID was associated with more than one variant. If it was, remove it from downstream analysis
-3. For each Anonymous ID, determine the unique set of User IDs that was associated with it
-4. Join to both Anonymous ID and User ID metrics using the appropriate join column
-5. Aggregate metric events by Anonymous ID
+1. Filter to each Anonymous ID's first record during the experiment. If the Anonymous ID was associated with more than one variant, remove it from downstream analysis
+2. For each Anonymous ID, determine the unique set of User IDs that was associated with it*
+3. Join to both Anonymous ID and User ID metrics using the appropriate join column, aggregate metric events by Anonymous ID
 
-Note that in step 3 we need to make sure each User ID is associated with only one Anonymous ID to avoid double counting post-authentication events (e.g., purchases). To ensure this, we associate each User ID with its *first* Anonymous ID during the course of the experiment.
+\**In step 3 we need to make sure each User ID is associated with only one Anonymous ID to avoid double counting post-authentication events (e.g., purchases). To ensure this, we associate each User ID with its *first* Anonymous ID during the course of the experiment.*
+
+
+![Anonymous Gif](/img/anonymous-experiments/anonymous-attribution.gif)
 
 ### Assignment SQL set up in Eppo
 
