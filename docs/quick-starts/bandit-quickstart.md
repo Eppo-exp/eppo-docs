@@ -44,7 +44,8 @@ Additional information that is provided to the logger that can optionally--but i
 * action_probability - The probability (weight) given to the assigned action at the time of assignment
 * model_version - The current version identifier of the model used to determine action weights
 
-Below is an example bandit assignment logger for the Java SDK, defined when building the SDK client, that writes to Snowflake:
+Below is an example bandit assignment logger for the Java SDK, defined when building the SDK client, that writes to Snowflake. Note that this is illustrative, as writing directly to Snowflake is not a best practice for scalability. Use of a data pipeline is recommended.
+
 ```java
 .banditLogger(logData -> {
     String sql = "INSERT INTO bandit_assignments " +
