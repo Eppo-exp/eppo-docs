@@ -36,6 +36,7 @@ You can make the values of the variation whatever makes sense for your use case,
 
 Once you have your feature flag setup, set your [feature flag up as an experiment](/experiment-analysis/configuration). Once you have data flowing to your data warehouse from your feature flag, you will be able to analyze your results.
 
+
 ## Setting up Webflow
 
 For the purposes of this tutorial, we will be very explicit on what things to test in your Webflow experiment. Keep in mind that all of the specific elements we’re testing are extendable to anything in your Webflow Environment.
@@ -109,6 +110,13 @@ window.eppo.init(opts).then(setHeader);
 - Provide your SDK key and Feature Flag key in the `'<SDK-KEY>'` and `'<FEATURE-FLAG-KEY>'` placeholders above.
 - Provide the id you are going to use for analytics logging to `'<SUBJECT-ID>'`. Ideally this would be an id from a managed platform such as Segment, Rudderstack, Google Analytics, or an internal platform.
 - Add your client side analytics tracking call once the assignment has been made. Make sure your analytics platform is sending data to your data warehouse connected to Eppo. This will ensure that assignments made by Eppo will be tracked and can be used for experiment analysis. For more information on Eppo's event logging integrations with popular platforms like Segment, mParticle, Rudderstack, and Snowplow, see our documentation [here](/sdks/event-logging).
+
+## Edge cases
+
+### Cookie Policies
+
+If you end up using a subject key or user traits from a cookie, make sure that the experiement is designed around a user's response to your cookie policy. To avoid a user seeing a page that has no data in it because the cookie policy has not been responded to yet, make sure there is a consistent user experience in between the time that the user has not responded to the policy to when they are eligible to see the experiment. As a best practice, we typically recommend using a modal or interstitial to block the rest of the page, and therefore experiment, until the user has responded to your site's cookie policy.
+
 
 ## Demo
 
