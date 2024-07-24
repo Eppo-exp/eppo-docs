@@ -159,16 +159,21 @@ sgMail.setApiKey('<SENDGRID_API_KEY>')
 // User's email
 const recipient_email
 
-const attributes = {
-	device: user.device,
-	loyalty_status: user.status
+// User attributes used for targeting conditions, replace with your own values if needed
+const attributes = {}
+
+// Default value for the SDK to return if no conditions are met, replace with your own values
+const default_value = {
+  template_id: "<DEFAULT_TEMPLATE_ID>",
+  promo_code: "<DEFAULT_PROMO_CODE>"
 }
 
 // Loop through list to send email
-const variation = eppoClient.getParsedJSONAssignment(
-  recipient_email,
+const variation = eppoClient.getJSONAssignment(
   "<FLAG-KEY>",
-  attributes
+  recipient_email,
+  attributes,
+  default_value
 );
   
 const msg = {
