@@ -10,7 +10,7 @@ Provisioning users through SCIM is currently in closed Beta.
 
 ## Configuring Directory Sync (SCIM)
 
-Provisioning users through SCIM (the System for Cross-domain Identity Management) provides a secure and automated way to create and manage Eppo users through your preferred IdP (Okta, Microsoft Entra and others).
+Provisioning users through SCIM (the System for Cross-domain Identity Management) provides a secure and automated way to create and manage Eppo users through your preferred IdP (Okta, Microsoft Entra and others). We partner with [WorkOS](https://workos.com/docs/integrations/scim) to provide a secure SCIM connection using the 2.0 version of the SCIM protocol. Follow the steps from the WorkOS setup guide that you receive from your Eppo.
 
 Eppo offers support for:
 
@@ -18,11 +18,13 @@ Eppo offers support for:
 * Updating user profiles: name & role.
 * De-provisioning users
 
+### Eppo Application
+
 Users created with SCIM can only be updated through your IdP.
 
-We partner with WorkOS to provide a secure SCIM connection.Follow the steps from the WorkOS setup guide that you receive from your Eppo.
-
 ## Okta
+
+[Setup guide from WorkOS](https://workos.com/docs/integrations/okta-scim).
 
 * Create a new Okta app or use an existing one configured for SSO. 
 * Enable SCIM provisioning.
@@ -44,7 +46,7 @@ Fill out the fields as shown in the screenshot above: Paste the base URL from th
 * For Authentication Mode, select HTTP Header and paste the Bearer Token from the WorkOS set up to the field. 
 * Click Save.  
 
-### Attributes and Roles
+### Attributes and Roles on Okta
 
 Set up Attribute Mapping, you will see that we support a custom attribute called `eppoMemberRole`. This optional custom attribute allows an IT admin to set the user's Eppo role from within the IdP.
 
@@ -53,3 +55,25 @@ That attribute can only have the following attributes (strings): `default`, `vie
 The `default` value is useful for migrating to managing roles in the Idp: it will keep the user's role as it is in Eppo, or if the user is new, it will assume the default user role as configured in Eppo.
 
 <img src="/img/administration/scim/scim-custom-attribute.png" alt="configure Okta API Integration" width="600" />
+
+## Microsoft Entra
+
+[Setup guide from WorkOS](https://workos.com/docs/integrations/entra-id-scim/2-select-or-create-your-azure-application).
+
+* Create a new Entra app or use an existing one configured for SSO. 
+* Enable SCIM provisioning.
+
+### Attributes and Roles on Entra
+
+Enable mapping for Microsoft Entra ID Users.
+
+<img src="/img/administration/scim/scim-entra2.png" alt="configure Entra custom attribute" width="600" />
+
+Configure user mapping.
+
+* Add a custom attribute called `eppoMemberRole`. This optional custom attribute allows an IT admin to set the user's Eppo role from within the IdP.
+* Create mapping for the attribute `eppoMemberRole` from your organization or define it with a static value.
+
+<img src="/img/administration/scim/scim-entra1.png" alt="configure Entra custom attribute" width="600" />
+
+
