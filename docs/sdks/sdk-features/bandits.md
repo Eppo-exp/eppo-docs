@@ -22,7 +22,11 @@ are strings, so bandits are used with string-typed flags. Actions and attributes
 When requesting an assignment from a flag with a bandit, the set of actions and their attributes are provided as an
 additional argument to `getStringAssignment()`.
 
-For example, in the Java SDK, the call may look like:
+:::info
+Depending on the SDK you are using, a `getBanditAction()` alternative method may be available. Refer to the [Node](/sdks/server-sdks/node/#usage-with-contextual-multi-armed-bandits) or [Python](https://docs.geteppo.com/sdks/server-sdks/python/#6-contextual-bandits) documentation for more details. 
+:::
+
+In the Java SDK, the call may look like:
 
 ```java
 // Flag that has a bandit variation
@@ -83,8 +87,7 @@ Additional information that is provided to the logger that can optionally--but i
 * `action_probability` - The probability (weight) given to the assigned action at the time of assignment
 * `model_verison` - The current version identifier of the model used to determine action weights 
 
-Below is an example bandit assignment logger for the Java SDK, defined when building the SDK client, that writes to Snowflake. Note that this is illustrative, as writing directly to Snowflake is not a best practice for scalability, Use of a data pipeline is recommended.
-
+Below is an example bandit assignment logger for the Java SDK, defined when building the SDK client. This example writes directly to Snowflake. This is illustrative and not recommended practice. Refer to our [event logging](/sdks/event-logging/) page for recommended options.
 
 ```java
 .banditLogger(logData -> {
@@ -132,17 +135,4 @@ Below is an example bandit assignment logger for the Java SDK, defined when buil
       throw new RuntimeException("Unable to log bandit assignment "+e.getMessage(), e);
     }
 })
-```
-
-### Logging non-bandit assignments 
-
-If the control variation (i.e., not the bandit) was assigned, but the control variation still resulted in an action being
-assigned via some other mechanism, the bandit can still learn from this non-bandit assignment.
-
-To record this event, you can use the `logNonBanditAction()` method.
-
-In Java, this would look like:
-
-```java
-logNonBanditAction(subjectKey, flagKey, subjectAttributes, action, actionAttributes);
 ```

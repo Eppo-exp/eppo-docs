@@ -27,7 +27,7 @@ Store the SDK key securely; it is not possible to view it after closing the moda
 
 Eppo leverages your existing event logging infrastructure to track experiment assignments. Whether you use a third-party system to log events to the data warehouse or have an internally built solution, you'll simply pass in a logging function when initializing the SDK.
 
-The [event logging](/sdks/event-logging/) page has more information on how to set up logging using different logging tools
+The [event logging](/sdks/event-logging/) page has more information on how to set up logging using different logging tools.
 
 This logger should write to a table with columns with the following names (they can be in any order):
 * timestamp - Timestamp of the bandit assignment
@@ -44,7 +44,7 @@ Additional information that is provided to the logger that can optionally--but i
 * action_probability - The probability (weight) given to the assigned action at the time of assignment
 * model_version - The current version identifier of the model used to determine action weights
 
-Below is an example bandit assignment logger for the Java SDK, defined when building the SDK client, that writes to Snowflake. Note that this is illustrative, as writing directly to Snowflake is not a best practice for scalability. Use of a data pipeline is recommended.
+Below is an example bandit assignment logger for the Java SDK, defined when building the SDK client. This example writes directly to Snowflake. This is illustrative and not recommended practice. Refer to our [event logging](/sdks/event-logging/) page for recommended options.
 
 ```java
 .banditLogger(logData -> {
@@ -129,7 +129,11 @@ Note, here is where you use the SDK key generated in step 1.
 
 Once the SDK is initialized, use getStringAssignment() to check what variation a user should see. When requesting an assignment from a flag with a bandit, the set of actions and their attributes are provided as an additional argument.
 
-For example, in the Java SDK, the call may look like:
+:::info
+Depending on the SDK you are using, a `getBanditAction()` alternative method may be available. Refer to the [Node](/sdks/server-sdks/node/#usage-with-contextual-multi-armed-bandits) or [Python](https://docs.geteppo.com/sdks/server-sdks/python/#6-contextual-bandits) documentation for more details. 
+:::
+
+In the Java SDK, the call may look like:
 ```java
 // Flag that has a bandit variation
 String banditTestFlagKey = "bandit-test";
