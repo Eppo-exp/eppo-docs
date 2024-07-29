@@ -26,7 +26,7 @@ gem 'eppo-server-sdk', '~> 3.0.0'
 
 ### B. Initialize the SDK
 
-To initialize the SDK, you will need an SDK key. You can generate one [in the flag interface](https://eppo.cloud/feature-flags/keys).
+Initialize the SDK with a SDK key, which can be generated in the [flags configuration interface](https://eppo.cloud/feature-flags/keys).
 
 ```ruby
 require 'eppo_client'
@@ -53,7 +53,7 @@ variation = client.get_string_assignment(
   '<FLAG-KEY>',
   '<SUBJECT-KEY>',
   {
-    # Optional map of subject metadata for targeting.
+    # Mapping of any subject metadata for targeting.
   },
   '<DEFAULT-VALUE>'
 )
@@ -63,8 +63,8 @@ The `get_string_assignment` function takes four required inputs to assign a vari
 
 * `<FLAG-KEY>` is the key that you chose when creating a flag; you can find it on the [flag page](https://eppo.cloud/feature-flags). For the rest of this presentation, we'll use `"test-checkout"`. To follow along, we recommend that you create a test flag in your account, and split users between `"fast_checkout"` and `"standard_checkout"`.
 * `<SUBJECT-KEY>` is the value that identifies each entity in your experiment, typically `user_id`.
-* `<SUBJECT-ATTRIBUTES>` is a dictionary of metadata about the subject used for targeting. If you create targeting rules based on attributes, those attributes must be passed in on every assignment call. If no attributes are needed, pass in an empty dictionary.
-* `<DEFAULT-VALUE>` is the value that will be returned if no allocation matches the subject, if the flag is not enabled, if `get_string_assignment` is invoked before the SDK has finished initializing, or if the SDK was not able to retrieve the flag configuration.
+* `<SUBJECT-ATTRIBUTES>` is a hash of metadata about the subject used for targeting. If you create targeting rules based on attributes, those attributes must be passed in on every assignment call. If no attributes are needed, pass in an empty hash.
+* `<DEFAULT-VALUE>` is the value that will be returned if no allocation matches the subject, if the flag is not enabled, if `get_string_assignment` is invoked before the SDK has finished initializing, or the SDK encountered an error determining the assignment.
 
 ### Typed assignments
 
@@ -144,7 +144,7 @@ How is this SDK, hosted on your servers, actually getting the relevant informati
 
 ### A. Loading Configuration
 
-At initialization, the SDK polls Eppo's API to retrieve the most recent experiment configuration. The SDK stores that configuration in memory. This is why assignments are effectively instant, as you can see yourself by profiling the code above.
+At initialization, the SDK polls Eppo's CDN to retrieve the most recent experiment configuration. The SDK stores that configuration in memory. This is why assignments are effectively instant, as you can see yourself by profiling the code above.
 
 :::note
 
@@ -160,7 +160,7 @@ After initialization, the SDK continues polling Eppo's API at 30-second interval
 
 :::note
 
-Changes made to experiments on Eppo's web interface are almost instantly propagated through our Content-delivery network (CDN) Fastly. Because of the refresh rate, it may take up to 30 seconds (± 5 seconds fuzzing) for those to be reflected by the SDK assignments.
+Changes made to experiments on Eppo's web interface are almost instantly propagated through our Content-delivery network (CDN) Fastly. Because of the refresh rate, it may take up to 30 seconds (± 5 seconds jitter) for those to be reflected by the SDK assignments.
 
 :::
 
@@ -186,7 +186,7 @@ class MyLogger < EppoClient::AssignmentLogger
     def log_assignment(assignment):
         ...
 
-    def log_bandit_action(self, bandit_action):
+    def log_bandit_action(bandit_action):
         # implement me
 ```
 
@@ -209,11 +209,11 @@ We automatically log the following data:
 ### B. Querying the bandit for an action
 
 To query the bandit for an action, you can use the `get_bandit_action` function. This function takes the following parameters:
-- `flag_key` (str): The key of the feature flag corresponding to the bandit
-- `subject_key` (str): The key of the subject or user assigned to the experiment variation
+- `flag_key` (String): The key of the feature flag corresponding to the bandit
+- `subject_key` (String): The key of the subject or user assigned to the experiment variation
 - `subject_attributes` (Attributes): The context of the subject 
 - `actions` (Hash{String => Attributes}): A hash that maps available actions to their attributes
-- `default` (str): The default *variation* to return if the bandit cannot be queried
+- `default` (String): The default *variation* to return if the bandit cannot be queried
 
 The following code queries the bandit for an action:
 

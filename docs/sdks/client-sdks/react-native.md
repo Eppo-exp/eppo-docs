@@ -33,7 +33,7 @@ npm install @eppo/react-native-sdk
 
 ## 2. Initialize the SDK
 
-Initialize the SDK with a SDK key, which can be generated in the Eppo interface:
+Initialize the SDK with a SDK key, which can be generated in the [flags configuration interface](https://eppo.cloud/feature-flags/keys):
 
 ```javascript
 import { init } from "@eppo/react-native-sdk";
