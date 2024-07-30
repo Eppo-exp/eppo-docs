@@ -19,8 +19,8 @@ const subjectAttributes = { device: "iOS" };
 const variation = EppoSdk.getInstance().getStringAssignment(
   "<FLAG-KEY>",
   "<SUBJECT-KEY>",
-  "<DEFAULT-VALUE>",
-  subjectAttributes
+  subjectAttributes,
+  "<DEFAULT-VALUE>"
 );
 ```
 
