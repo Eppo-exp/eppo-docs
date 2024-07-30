@@ -17,8 +17,8 @@ import * as EppoSdk from "@eppo/js-client-sdk";
 
 const subjectAttributes = { device: "iOS" };
 const variation = EppoSdk.getInstance().getStringAssignment(
-  "<SUBJECT-KEY>",
   "<FLAG-KEY>",
+  "<SUBJECT-KEY>",
   "<DEFAULT-VALUE>",
   subjectAttributes
 );
