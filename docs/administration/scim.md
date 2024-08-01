@@ -78,3 +78,7 @@ Configure user mapping.
 * Create mapping for the attribute `eppoMemberRole` from your organization or define it with a static value.
 
 <img src="/img/administration/scim/scim-entra1.png" alt="configure Entra custom attribute" width="600" />
+
+## Other IdPs
+
+Eppo supports additional IdPs: OneLogin, PingFederate, Rippling and JumpCloud. Please contact Eppo for onboarding guides on these platforms.
