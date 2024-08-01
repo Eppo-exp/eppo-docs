@@ -17,7 +17,6 @@ Eppo offers support for:
 * Updating user profiles: name & role.
 * De-provisioning users
 
-### Eppo Application
 
 Users created with SCIM can only be updated through your IdP.
 
