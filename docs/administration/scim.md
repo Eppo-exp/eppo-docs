@@ -23,6 +23,8 @@ Eppo offers support for:
 Users created with SCIM can only be updated through your IdP.
 :::
 
+Existing users can be populated through a programmatic process; please contact Eppo to request this.
+
 ## Okta
 
 [Setup guide from WorkOS](https://workos.com/docs/integrations/okta-scim).
