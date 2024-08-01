@@ -47,7 +47,7 @@ Fill out the fields as shown in the screenshot above: Paste the base URL from th
 
 ### Attributes and Roles on Okta
 
-Set up Attribute Mapping, you will see that we support a custom attribute called `eppoMemberRole`. This optional custom attribute allows an IT admin to set the user's Eppo role from within the IdP.
+To setup Attribute Mapping, you will see that we support a custom attribute called `eppoMemberRole`. This optional custom attribute allows an IT admin to set the user's Eppo role from within the IdP.
 
 That attribute can only have the following attributes (strings): `default`, `viewer`, `experiment_editor`, `data_owner`, `admin`
 
