@@ -18,7 +18,9 @@ Eppo offers support for:
 * De-provisioning users
 
 
+:::note
 Users created with SCIM can only be updated through your IdP.
+:::
 
 ## Okta
 
