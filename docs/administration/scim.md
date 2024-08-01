@@ -8,15 +8,16 @@ sidebar_position: 4
 Provisioning users through SCIM is currently in closed Beta.
 :::
 
+Provisioning users through SCIM (the System for Cross-domain Identity Management) provides a secure and automated way to create and manage Eppo users through your preferred IdP (Okta, Microsoft Entra and others). 
 
-Provisioning users through SCIM (the System for Cross-domain Identity Management) provides a secure and automated way to create and manage Eppo users through your preferred IdP (Okta, Microsoft Entra and others). We partner with [WorkOS](https://workos.com/docs/integrations/scim) to provide a secure SCIM connection using the 2.0 version of the SCIM protocol.
+We partner with [WorkOS](https://workos.com/docs/integrations/scim) to provide a secure SCIM connection using the 2.0 version of the SCIM protocol. Please contact Eppo with the email of your IT admin; 
+they will receive an onboarding email from WorkOS with an onboarding wizard containing the necessary information to complete the setup tailored to your organization.
 
 Eppo offers support for:
 
 * Provisioning new users
 * Updating user profiles: name & role.
 * De-provisioning users
-
 
 :::note
 Users created with SCIM can only be updated through your IdP.
@@ -58,7 +59,7 @@ The `default` value is useful for migrating to managing roles in the Idp: it wil
 
 ## Microsoft Entra
 
-[Setup guide from WorkOS](https://workos.com/docs/integrations/entra-id-scim/2-select-or-create-your-azure-application).
+[Setup guide from WorkOS](https://workos.com/docs/integrations/entra-id-scim).
 
 * Create a new Entra app or use an existing one configured for SSO. 
 * Enable SCIM provisioning.
@@ -75,5 +76,3 @@ Configure user mapping.
 * Create mapping for the attribute `eppoMemberRole` from your organization or define it with a static value.
 
 <img src="/img/administration/scim/scim-entra1.png" alt="configure Entra custom attribute" width="600" />
-
-
