@@ -9,7 +9,7 @@ Provisioning users through SCIM is currently in closed Beta.
 :::
 
 
-Provisioning users through SCIM (the System for Cross-domain Identity Management) provides a secure and automated way to create and manage Eppo users through your preferred IdP (Okta, Microsoft Entra and others). We partner with [WorkOS](https://workos.com/docs/integrations/scim) to provide a secure SCIM connection using the 2.0 version of the SCIM protocol. Follow the steps from the WorkOS setup guide that you receive from your Eppo.
+Provisioning users through SCIM (the System for Cross-domain Identity Management) provides a secure and automated way to create and manage Eppo users through your preferred IdP (Okta, Microsoft Entra and others). We partner with [WorkOS](https://workos.com/docs/integrations/scim) to provide a secure SCIM connection using the 2.0 version of the SCIM protocol.
 
 Eppo offers support for:
 
