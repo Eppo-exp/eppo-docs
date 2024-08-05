@@ -14,14 +14,14 @@ In your `go.mod`, add the SDK package as a dependency:
 
 ```
 require (
-	github.com/Eppo-exp/golang-sdk/v3
+	github.com/Eppo-exp/golang-sdk/v5
 )
 ```
 
 Or you can install the SDK from the command line with:
 
 ```
-go get github.com/Eppo-exp/golang-sdk/v3
+go get github.com/Eppo-exp/golang-sdk/v5
 ```
 
 ## 2. Initialize the SDK
@@ -31,13 +31,13 @@ Initialize the SDK with a SDK key, which can be generated in the Eppo interface.
 ```go
 
 import (
-  "github.com/Eppo-exp/golang-sdk/v3/eppoclient"
+  "github.com/Eppo-exp/golang-sdk/v5/eppoclient"
 )
 
 var eppoClient = &eppoclient.EppoClient{}
 
 func main() {
-  eppoClient = eppoclient.InitClient(eppoclient.Config{
+  eppoClient, err = eppoclient.InitClient(eppoclient.Config{
     SdkKey: "<your_sdk_key>",
   })
 }
@@ -63,7 +63,7 @@ Example implementation:
 
 ```go
 import (
-  "github.com/Eppo-exp/golang-sdk/v3/eppoclient"
+  "github.com/Eppo-exp/golang-sdk/v5/eppoclient"
   "gopkg.in/segmentio/analytics-go.v3"
 )
 
@@ -97,7 +97,7 @@ func main() {
 
 The SDK will invoke the `LogAssignment` function with an `event` object that contains the following fields:
 
-| Field                     | Type                        | Description                                                                                                                                                           | Example                             |
+| Field                     | Type                        | Description                                                                                                                          | Example                             |
 | ------------------------- | --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------ | ----------------------------------- |
 | `experiment`              | string                      | An Eppo experiment key                                                                                                   | "recommendation-algo-allocation-17" |
 | `subject`                 | string                      | An identifier of the subject or user assigned to the experiment variation                                                | UUID                                |
@@ -106,8 +106,8 @@ The SDK will invoke the `LogAssignment` function with an `event` object that con
 | `subjectAttributes`       | map                         | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `{ "country": "US" }`               |
 | `featureFlag`             | string                      | An Eppo feature flag key                                                                                                 | "recommendation-algo"               |
 | `allocation`              | string                      | An Eppo allocation key                                                                                                   | "allocation-17"                     |
-| `metaData`                | map       | Metadata around the assignment, such as the version of the SDK                                                           | `{ "obfuscated": "true", "sdkLanguage": "javascript", "sdkLibVersion": "3.2.1" }` |
-| `extraLogging`                | map       | Metadata about the allocation.                 | `{ "owner": "sam@company.ai" }` |
+| `metaData`                | map                         | Metadata around the assignment, such as the version of the SDK                                                           | `{ "obfuscated": "true", "sdkLanguage": "javascript", "sdkLibVersion": "3.2.1" }` |
+| `extraLogging`            | map                         | Metadata about the allocation.                 | `{ "owner": "sam@company.ai" }` |
 
 
 :::note
@@ -120,19 +120,19 @@ Assigning users to flags or experiments with a single `GetStringAssignment` func
 
 ```go
 import (
-	"github.com/Eppo-exp/golang-sdk/v3/eppoclient"
+	"github.com/Eppo-exp/golang-sdk/v5/eppoclient"
 )
 
 var eppoClient = &eppoclient.EppoClient{} // in global scope
-variation := eppoClient.GetStringAssignment("<SUBJECT-KEY>", "<FLAG-KEY>", <TARGETING_ATTRIBUTES>, <DEFAULT_VALUE>);
+variation, err := eppoClient.GetStringAssignment("<FLAG-KEY>", "<SUBJECT-KEY>", <TARGETING-ATTRIBUTES>, <DEFAULT-VALUE>);
 ```
 
 The `GetStringAssignment` function takes 4 required inputs to assign a variation:
 
-- `subjectKey` - The ID of the entity that is being experimented on, typically represented by a uuid.
-- `flagKey` - This key is available on the detail page for flags.
-- `targetingAttributes` - An optional map of metadata about the subject used for targeting. If you create rules based on attributes on a flag, those attributes should be passed in on every assignment call.
-- `defaultValue` - An optional default value to return if the SDK does not receive an assignment from the server.
+- `FLAG-KEY` - This key is available on the detail page for flags.
+- `SUBJECT-KEY` - The ID of the entity that is being experimented on, typically represented by a uuid.
+- `TARGETING-ATTRIBUTES` - An optional map of metadata about the subject used for targeting. If you create rules based on attributes on a flag, those attributes should be passed in on every assignment call.
+- `DEFAULT-VALUE` - The default value to return if the SDK does not receive an assignment.
 
 ### Typed assignments
 
@@ -145,18 +145,6 @@ GetIntegerAssignment(...) (int, error)
 GetStringAssignment(...) (string, error)
 GetJSONAssignment(...) (interface{}, error)
 ```
-
-### Handling the empty assignment
-
-We recommend always handling the empty assignment case, when the SDK returns `""`. Here are some examples illustrating when the SDK returns `""`:
-
-1. The **Traffic Exposure** setting on experiments/allocations determines the percentage of subjects the SDK will assign to that experiment/allocation. For example, if Traffic Exposure is 25%, the SDK will assign a variation for 25% of subjects and `""` for the remaining 75% (unless the subject is part of an allow list).
-
-2. Assignments occur within the environments of feature flags. You must enable the environment corresponding to the feature flag's allocation in the user interface before `getStringAssignment` returns variations. It will return the default value if the environment is not enabled.
-
-![Toggle to enable environment](/img/feature-flagging/enable-environment.png)
-
-3.  If `getStringAssignment` is invoked before the SDK has finished initializing, the SDK may not have access to the most recent experiment configurations. In this case, the SDK will assign a variation based on any previously downloaded experiment configurations stored in local storage, or return the default value if no configurations have been downloaded.
 
 <br />
 
