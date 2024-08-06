@@ -55,8 +55,8 @@ of subjects assigned to each variation.
 :::caution
 
 Depending on the metric settings, we may
-[remove outliers](/data-management/metrics/simple-metric#outlier-handling)
-from the raw data in order to improve the quality of our lift estimates,
+[cap outliers](/data-management/metrics/simple-metric#outlier-handling)
+in the raw data in order to improve the quality of our lift estimates,
 and so the average and total values displayed in this popover
 might differ from those displayed in other tools.
 
