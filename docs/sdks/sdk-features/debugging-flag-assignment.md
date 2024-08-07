@@ -72,7 +72,7 @@ variationKey: '3',
 variationValue: 3
 ```
 
-An exception exists for JSON flags where the `variationKey` will be the variation name given in the flag:
+An exception exists for JSON flags where the `variationKey` will be the variation name given in the flag: 
 
 ```typescript
 variationKey: 'model-1',
@@ -81,6 +81,8 @@ variationValue: {
   input: 0.7
 }
 ``` 
+
+Additionally, the string generated for the `varationKey` on a JSON flag will be converted to lower case and spaces will be replaced with `-`'s. `Model 1` as a variation name on the flag will become `model-1` in the evaluation details and the assignment logger `variationKey`. This value is static and will not update if the variation name in the JSON flag is updated. If `Model 1` is updated to `ChatGPT Model`, `model-1` will continue to be logged.
 
 ### Scenario: An allocation was matched
 
