@@ -54,6 +54,34 @@ getStringAssignment(flagKey, subjectKey, subjectAttributes, defaultValue);
 // => "control"
 ```
 
+### Details on Variation Keys for flag types
+
+Eppo will always log the value of `variationKey` in the Evaluation Details object. The `variationValue` represents the value created for that variation on the flag in it's orginal data type. Eppo logs the `variationKey` as a string to make it easier to send those logs to your data warehouse. Since String flags already log the variation value as a string, the `variationKey` and `variationValue` will be the same.
+
+For example a Boolean flag will have:
+
+```typescript
+variationKey: 'true',
+variationValue: true
+```
+
+and a Numeric flag will have:
+
+```typescript
+variationKey: '3',
+variationValue: 3
+```
+
+An exception exists for JSON flags where the `variationKey` will be the variation name given in the flag:
+
+```typescript
+variationKey: 'model-1',
+variationValue: {
+  model: 'chat-gpt',
+  input: 0.7
+}
+``` 
+
 ### Scenario: An allocation was matched
 
 In the next example, we call `getStringAssignmentDetails()` to better understand how an allocation was matched. We can see that the `flagEvaluationCode` is `MATCH`, which tells us that there was a matched allocation. The `matchedAllocation` value contains `"orderPosition": 2`, which tells us that the 2nd allocation in our configuration was matched, which is our **A/B Experiment** allocation. We can also see that the **Alpha Testers** allocation with `"orderPosition": 1` was not matched, since it was specified in the `unmatchedAllocations` field. Finally, we can also see that our **Default allocation** with `"orderPosition": 3` was not evaluated at all, since we already had match in the 2nd allocation.
@@ -109,6 +137,7 @@ getStringAssignmentDetails(
   }
 }
 ```
+
 
 ### Scenario: An allocation was matched due to a matching rule
 
@@ -225,3 +254,4 @@ getStringAssignmentDetails(flagKey, subjectKey, subjectAttributes, defaultValue)
 | An unknown error occurred with graceful error handling enabled                                                | ASSIGNMENT_ERROR               |
 | If your default allocation is matched and is also serving NULL, resulting in the default value being assigned | DEFAULT_ALLOCATION_NULL        |
 | If you called `getBanditActionDetails` without supplying actions                                              | NO_ACTIONS_SUPPLIED_FOR_BANDIT |
+
