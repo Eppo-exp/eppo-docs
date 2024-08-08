@@ -34,26 +34,6 @@ init({
 });
 ```
 
-## Scenarios
-
-To better understand how the new "details" functions help us, let's take a look at specific examples. Assume that we have the following configuration for `my-flag`.
-
-![Example Configuration](/img/guides/debugging-flag-assignment/example-configuration.png)
-
-### Scenario: Without calling the "Details" functions
-
-The original functions (e.g. `getStringAssignment`) will behave just as they did before. These functions will only return the assigned variation value, but the assignment logger can still log `evaluationDetails`.
-
-```typescript
-const flagKey = 'my-flag';
-const subjectKey = 'subject-123';
-const subectAttributes = {};
-const defaultValue = 'default';
-
-getStringAssignment(flagKey, subjectKey, subjectAttributes, defaultValue);
-// => "control"
-```
-
 ### Details on Variation Keys for flag types
 
 Eppo will always log the value of `variationKey` in the Evaluation Details object. The `variationValue` represents the value created for that variation on the flag in it's orginal data type. Eppo logs the `variationKey` as a string to make it easier to send those logs to your data warehouse. Since String flags already log the variation value as a string, the `variationKey` and `variationValue` will be the same.
@@ -83,6 +63,26 @@ variationValue: {
 ``` 
 
 Additionally, the string generated for the `varationKey` on a JSON flag will be converted to lower case and spaces will be replaced with `-`'s. `Model 1` as a variation name on the flag will become `model-1` in the evaluation details and the assignment logger `variationKey`. This value is static and will not update if the variation name in the JSON flag is updated. If `Model 1` is updated to `ChatGPT Model`, `model-1` will continue to be logged.
+
+## Scenarios
+
+To better understand how the new "details" functions help us, let's take a look at specific examples. Assume that we have the following configuration for `my-flag`.
+
+![Example Configuration](/img/guides/debugging-flag-assignment/example-configuration.png)
+
+### Scenario: Without calling the "Details" functions
+
+The original functions (e.g. `getStringAssignment`) will behave just as they did before. These functions will only return the assigned variation value, but the assignment logger can still log `evaluationDetails`.
+
+```typescript
+const flagKey = 'my-flag';
+const subjectKey = 'subject-123';
+const subectAttributes = {};
+const defaultValue = 'default';
+
+getStringAssignment(flagKey, subjectKey, subjectAttributes, defaultValue);
+// => "control"
+```
 
 ### Scenario: An allocation was matched
 
