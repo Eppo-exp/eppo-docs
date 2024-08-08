@@ -115,8 +115,7 @@ window.eppo.init(opts).then(setHeader);
 
 ### Cookie Policies
 
-If you end up using a subject key or user traits from a cookie, make sure that the experiement is designed around a user's response to your cookie policy. To avoid a user seeing a page that has no data in it because the cookie policy has not been responded to yet, make sure there is a consistent user experience in between the time that the user has not responded to the policy to when they are eligible to see the experiment. As a best practice, we typically recommend using a modal or interstitial to block the rest of the page, and therefore experiment, until the user has responded to your site's cookie policy.
-
+If you end up using a subject key or user traits from a cookie, make sure that the experiment is designed around the user's response to your cookie policy. To avoid a user seeing a page with missing components, make sure there is a consistent user experience between initial page load and when they are eligible to see the experiment. As a best practice, we typically recommend using a modal or interstitial to block the rest of the page, and therefore experiment, until the user has responded to your site's cookie policy.
 
 ## Demo
 
