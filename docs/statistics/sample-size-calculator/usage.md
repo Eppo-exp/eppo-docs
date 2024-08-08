@@ -16,7 +16,11 @@ Here you can see a record of all past calculations, which are automatically save
 
 ![Sample size calculator interface](/img/planning-experiments/on_demand_sample_size_calculator_interface.png)
 
-Use the controls on the left to configure the sample size calculation. Select the experiment Entity, the Entry Point, and metrics you want to compute [Minimum Detectable Effects](/statistics/sample-size-calculator/mde) for. Funnel metrics are not supported in the sample size calculator. You can customize the saved calculation name or use the auto-generated name.
+Use the controls on the left to configure the sample size calculation. Select the experiment Entity, the Entry Point, and metrics you want to compute [Minimum Detectable Effects](/statistics/sample-size-calculator/mde) for. You can customize the saved calculation name or use the auto-generated name.
+
+You can optionally set a custom start date for the lookback period. By default, the sample size calculator uses the most recent 10 weeks of data as the lookback period, with all timespans (1 week, 2 weeks, etc.) ending at the current date. With a custom start date lookback period, the historical data for each timespan will instead start at the custom start date you select. This option can be useful when the most recent data has quality issues, or when seasonality makes the most recent data less representative of the traffic patterns that will hold during the experiment.
+
+Funnel metrics are not supported in the sample size calculator.
 
 :::tip
 You do not need to include all metrics you intend to add later to your experiment analysis.
