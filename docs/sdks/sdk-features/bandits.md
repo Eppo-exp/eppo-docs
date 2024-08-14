@@ -72,20 +72,31 @@ Additional information regarding a bandit assignment needs to be logged to the d
 bandit so that it can learn over time. Bandit assignments are logged separately from variation assignments, and require
 an additional bandit assignment logger to be provided.
 
-This logger should write to a table with the following columns (they can be in any order):
-* `timestamp` - Timestamp of the bandit assignment
-* `key` - The key (unique identifier) of the bandit
-* `subject` - The unique identifier for the subject being assigned
-* `subject_numeric_attributes` - Mapping of attribute names to numbers, in JSON format, for the numeric-valued attributes of the subject
-* `subject_categorical_attributes` - Mapping of attribute names to strings, in JSON format, for the non-numeric-valued attributes of the subject
-* `action` - The action assigned by the bandit
-* `action_numeric_attributes` - Mapping of attribute names to numbers, in JSON format, for the numeric-valued attributes of the assigned action
-* `action_categorical_attributes` - Mapping of attribute names to strings, in JSON format, for the non-numeric-valued attributes of the assigned action
+The name of the table can be chosen by you. When setting up the bandit, you will specify the name of the table to use to process its actions.
+However, the columns must have specific names.
 
-Additional information that is provided to the logger that can optionally--but is recommended--be logged includes:
-* `experiment` - The name of the experiment
-* `action_probability` - The probability (weight) given to the assigned action at the time of assignment
-* `model_verison` - The current version identifier of the model used to determine action weights 
+Therefore, the logger should write to the table with the following columns (they can be in any order):
+
+| Column                                | Description                                                                                                       | Example Data                |
+|---------------------------------------|-------------------------------------------------------------------------------------------------------------------|-----------------------------|
+| timestamp (TIMESTAMP)                 | Timestamp of the bandit assignment in UTC                                                                         | 2024-08-14 12:19:25.959     |
+| key (VARCHAR/STRING)                  | The key (unique identifier) of the bandit                                                                         | ad-bandit-1                 |
+| subject (VARCHAR/STRING)              | The unique identifier for the subject being assigned                                                              | ed6f85019080                |
+| subject_numeric_attributes (JSON)     | Metadata about numeric attributes of the subject. Map of the name of attributes their provided values             | {"age": 30}                 |
+| subject_categorical_attributes (JSON) | Mapping of attribute names to strings, in JSON format, for the non-numeric-valued attributes of the subject       | {"loyalty_tier": "gold"}    |
+| action (VARCHAR/STRING)               | The action assigned by the bandit                                                                                 | promo-20%-off               |
+| action_numeric_attributes (JSON)      | Metadata about numeric attributes of the assigned action. Map of the name of attributes their provided values     | {"discount": 0.2}           |
+| action_categorical_attributes (JSON)  | Metadata about non-numeric attributes of the assigned action. Map of the name of attributes their provided values | {"promoTextColor": "white"} |
+ 
+We also recommend storing additional information that is provided to the bandit logger that is not directly used for training the bandit, but is useful for transparency and debugging:
+
+| Column                              | Description                                                                                                     | Example Data                 |
+|-------------------------------------|-----------------------------------------------------------------------------------------------------------------|------------------------------|
+| feature_flag (VARCHAR/STRING)       | The key of the feature flag corresponding to the bandit                                                         | bandit-test-allocation-4     |
+| model_version (VARCHAR/STRING)      | Unique identifier for the version (iteration) of the bandit parameters used to determine the action probability | v123                         |
+| action_probability (NUMBER/NUMERIC) | The weight between 0 and 1 the bandit valued the assigned action                                                | 0.567                        |
+| optimality_gap (NUMBER/NUMERIC)     | The difference between the score of the selected action and the highest-scored action                           | 78.9                         |
+| metadata (JSON)                     | Any additional freeform meta data, such as the version of the SDK                                               | { "sdkLibVersion": "3.5.1" } |
 
 Below is an example bandit assignment logger for the Java SDK, defined when building the SDK client. This example writes directly to Snowflake. This is illustrative and not recommended practice. Refer to our [event logging](/sdks/event-logging/) page for recommended options.
 
