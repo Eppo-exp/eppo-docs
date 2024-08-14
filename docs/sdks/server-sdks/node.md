@@ -413,7 +413,7 @@ The SDK will invoke the `logBanditAction()` function with an `IBanditEvent` obje
 | `subjectNumericAttributes` (Attributes)     | Metadata about numeric attributes of the subject. Map of the name of attributes their provided values             | `{"age": 30}`                  |
 | `subjectCategoricalAttributes` (Attributes) | Metadata about non-numeric attributes of the subject. Map of the name of attributes their provided values         | `{"loyalty_tier": "gold"}`     |
 | `action` (string)                           | The action assigned by the bandit                                                                                 | "promo-20%-off"                |
-| `actionNumericAttributes` (Attributes)      | Metadata about numeric attributes of the assigned action. Map of the name of attributes their provided values     | `{"discount": 0.1}`            |
+| `actionNumericAttributes` (Attributes)      | Metadata about numeric attributes of the assigned action. Map of the name of attributes their provided values     | `{"discount": 0.2}`            |
 | `actionCategoricalAttributes` (Attributes)  | Metadata about non-numeric attributes of the assigned action. Map of the name of attributes their provided values | `{"promoTextColor": "white"}`  |
 | `actionProbability` (number)                | The weight between 0 and 1 the bandit valued the assigned action                                                  | 0.25                           |
 | `optimalityGap` (number)                    | The difference between the score of the selected action and the highest-scored action                             | 456                            | 

@@ -30,19 +30,21 @@ Eppo leverages your existing event logging infrastructure to track experiment as
 The [event logging](/sdks/event-logging/) page has more information on how to set up logging using different logging tools.
 
 This logger should write to a table with columns with the following names (they can be in any order):
-* timestamp - Timestamp of the bandit assignment
-* key - The key (unique identifier) of the bandit
-* subject - The unique identifier for the subject being assigned
-* subject_numeric_attributes - Mapping of attribute names to numbers, in JSON format, for the numeric-valued attributes of the subject
-* subject_categorical_attributes - Mapping of attribute names to strings, in JSON format, for the non-numeric-valued attributes of the subject
-* action - The action assigned by the bandit
-* action_numeric_attributes - Mapping of attribute names to numbers, in JSON format, for the numeric-valued attributes of the assigned action
-* action_categorical_attributes - Mapping of attribute names to strings, in JSON format, for the non-numeric-valued attributes of the assigned action
+* **timestamp** - Timestamp of the bandit assignment
+* **key** - The key (unique identifier) of the bandit
+* **subject** - The unique identifier for the subject being assigned
+* **subject_numeric_attributes** - Mapping of attribute names to numbers, in JSON format, for the numeric-valued attributes of the subject
+* **subject_categorical_attributes** - Mapping of attribute names to strings, in JSON format, for the non-numeric-valued attributes of the subject
+* **action** - The action assigned by the bandit
+* **action_numeric_attributes** - Mapping of attribute names to numbers, in JSON format, for the numeric-valued attributes of the assigned action
+* **action_categorical_attributes** - Mapping of attribute names to strings, in JSON format, for the non-numeric-valued attributes of the assigned action
 
 Additional information that is provided to the logger that can optionally--but is recommended--be logged includes:
-* experiment - The name of the experiment
-* action_probability - The probability (weight) given to the assigned action at the time of assignment
-* model_version - The current version identifier of the model used to determine action weights
+* **feature_flag** - The key of the feature flag corresponding to the bandit
+* **model_version** - The current version identifier of the model used to determine action weights
+* **action_probability** - The probability (weight) given to the assigned action at the time of assignment
+* **optimality_gap** - The difference between the score of the selected action and the highest-scored action
+* **metadata** - Any additional freeform metadata, in JSON format, such as the version of the SDK
 
 Below is an example bandit assignment logger for the Java SDK, defined when building the SDK client. This example writes directly to Snowflake. This is illustrative and not recommended practice. Refer to our [event logging](/sdks/event-logging/) page for recommended options.
 
