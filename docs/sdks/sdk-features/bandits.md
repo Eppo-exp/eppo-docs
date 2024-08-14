@@ -19,43 +19,53 @@ are strings, so bandits are used with string-typed flags. Actions and attributes
 
 ## Requesting a bandit assignment
 
-When requesting an assignment from a flag with a bandit, the set of actions and their attributes are provided as an
-additional argument to `getStringAssignment()`.
+When requesting an assignment from a flag with a bandit, you can use a specialized method that returns the assigned variation and--if the bandit was invoked--the selected action.
+This method is like getting other assignments, but you also provide the set of actions and their attributes that the bandit should consider.
 
-:::info
-Depending on the SDK you are using, a `getBanditAction()` alternative method may be available. Refer to the [Node](/sdks/server-sdks/node/#usage-with-contextual-multi-armed-bandits) or [Python](https://docs.geteppo.com/sdks/server-sdks/python/#6-contextual-bandits) documentation for more details.
-:::
-
-In the Python SDK, the call may look like:
+In the Python, the call may look like:
 
 ```python
-  client = eppo_client.get_instance()
-  bandit_result = client.get_bandit_action(
-      "shoe-bandit",
-      name,
-      eppo_client.bandit.ContextAttributes(
-          numeric_attributes={"age": age}, categorical_attributes={"country": country}
-      ),
-      {
-          "nike": eppo_client.bandit.ContextAttributes(
-              numeric_attributes={"brand_affinity": 2.3},
-              categorical_attributes={"aspect_ratio": "16:9"},
-          ),
-          "adidas": eppo_client.bandit.ContextAttributes(
-              numeric_attributes={"brand_affinity": 0.2},
-              categorical_attributes={"aspect_ratio": "16:9"},
-          ),
-      },
-      "control",
+// Flag that has a bandit variation
+bandit_test_flag_key = "bandit-test";
+
+// Subject information--same as for retrieving simple flag or experiment assignments
+subject_key = user_id;
+subject_attributes = eppo_client.bandit.ContextAttributes(
+  numeric_attributes={"age": age}, categorical_attributes={"country": country}
+)
+
+// Action set for bandits
+actions = {
+  "nike": eppo_client.bandit.ContextAttributes(
+    numeric_attributes={"brand_affinity": 2.3},
+    categorical_attributes={"aspect_ratio": "16:9"}
+  ),
+  "adidas": eppo_client.bandit.ContextAttributes(
+    numeric_attributes={"brand_affinity": 0.2},
+    categorical_attributes={"aspect_ratio": "16:9"}
   )
+}
 
-  if bandit_result.action:
-      print(f"The bandit recommends {bandit_result.action} to {name}")
+// Default variation value to return if the flag is turned off or an error is encountered
+default_value = "control"
 
-  print(f"{name} was assigned to {bandit_result.variation}")
+// Query the flag and bandit for an assignment
+bandit_result = client.get_bandit_action(
+  bandit_test_flag_key,
+  subject_key,
+  subject_attributes,
+  actions,
+  default_value
+)
+
+// Handle the assignment
+print(f"{name} was assigned the {bandit_result.variation} variation")
+
+if bandit_result.action:
+  print(f"The bandit recommends {bandit_result.action} to {name}")
 ```
 
-See the [Python Contextual Bandit example](https://github.com/Eppo-exp/python-sdk/blob/main/example/03_bandit.py) for a simple FastAPI app.
+See the [Python Contextual Bandit example](https://github.com/Eppo-exp/python-sdk/blob/main/example/03_bandit.py) for a simple FastAPI app example.
 
 ## Logging bandit assignments
 
@@ -89,3 +99,21 @@ We also recommend storing additional information that is provided to the bandit 
 | optimality_gap (NUMBER/NUMERIC)     | The difference between the score of the selected action and the highest-scored action                           | 78.9                         |
 | metadata (JSON)                     | Any additional freeform meta data, such as the version of the SDK                                               | { "sdkLibVersion": "3.5.1" } |
 
+The bandit assignment logger should be provided along with the variation assignment logger.
+
+In Python, this could look like:
+
+```python
+EPPO_API_KEY = os.environ.get("EPPO_API_KEY")
+
+class LocalLogger(AssignmentLogger):
+    def log_assignment(self, assignment_event):
+        print("TODO: Send data to data warehouse:", assignment_event)
+
+    def log_bandit_assignment(self, bandit_assignment):
+        print("TODO: Send data to data warehouse:", bandit_assignment)
+        
+client_config = Config(api_key=EPPO_API_KEY, assignment_logger=LocalLogger())
+
+eppo_client.init(client_config)
+```
