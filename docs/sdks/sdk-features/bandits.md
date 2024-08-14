@@ -1,6 +1,6 @@
 # Contextual multi-armed bandits
 
-The SDKs also provide functionality for getting an assignment from a contextual multi-armed bandit.
+The SDKs also provide functionality for getting an assignment from a [contextual multi-armed bandit](/contextual-bandits/).
 
 ## Background
 
@@ -26,45 +26,36 @@ additional argument to `getStringAssignment()`.
 Depending on the SDK you are using, a `getBanditAction()` alternative method may be available. Refer to the [Node](/sdks/server-sdks/node/#usage-with-contextual-multi-armed-bandits) or [Python](https://docs.geteppo.com/sdks/server-sdks/python/#6-contextual-bandits) documentation for more details.
 :::
 
-In the Java SDK, the call may look like:
+In the Python SDK, the call may look like:
 
-```java
-// Flag that has a bandit variation
-String banditTestFlagKey = "bandit-test";
+```python
+  client = eppo_client.get_instance()
+  bandit_result = client.get_bandit_action(
+      "shoe-bandit",
+      name,
+      eppo_client.bandit.ContextAttributes(
+          numeric_attributes={"age": age}, categorical_attributes={"country": country}
+      ),
+      {
+          "nike": eppo_client.bandit.ContextAttributes(
+              numeric_attributes={"brand_affinity": 2.3},
+              categorical_attributes={"aspect_ratio": "16:9"},
+          ),
+          "adidas": eppo_client.bandit.ContextAttributes(
+              numeric_attributes={"brand_affinity": 0.2},
+              categorical_attributes={"aspect_ratio": "16:9"},
+          ),
+      },
+      "control",
+  )
 
-// Subject information--same as for retrieving simple flag or experiment assignments
-String subjectKey = username;
-EppoAttributes subjectAttributes = userAttributes;
+  if bandit_result.action:
+      print(f"The bandit recommends {bandit_result.action} to {name}")
 
-// Action set for bandits
-Map<String, EppoAttributes> actionsWithAttributes = Map.of(
-  "dog", new EppoAttributes(Map.of(
-  "legs", EppoValue.valueOf(4),
-  "size", EppoValue.valueOf("large")
-)),
-  "cat", new EppoAttributes(Map.of(
-  "legs", EppoValue.valueOf(4),
-  "size", EppoValue.valueOf("medium")
-)),
-  "bird", new EppoAttributes(Map.of(
-  "legs", EppoValue.valueOf(2),
-  "size", EppoValue.valueOf("medium")
-)),
-  "goldfish", new EppoAttributes(Map.of(
-  "legs", EppoValue.valueOf(0),
-  "size", EppoValue.valueOf("small")
-))
-
-Optional<String> banditAssignment = eppoClient.getStringAssignment(subjectKey, flagKey, subjectAttributes, actionsWithAttributes);
+  print(f"{name} was assigned to {bandit_result.variation}")
 ```
 
-If the actions don't have attributes for the context, you can simply provide a set of actions without attributes:
-
-```java
-Set<String> actions = Set.of("dog", "cat", "bird", "goldfish");
-
-Optional<String> banditAssignment = eppoClient.getStringAssignment(subjectKey, flagKey, subjectAttributes, actions);
-```
+See the [Python Contextual Bandit example](https://github.com/Eppo-exp/python-sdk/blob/main/example/03_bandit.py) for a simple FastAPI app.
 
 ## Logging bandit assignments
 
