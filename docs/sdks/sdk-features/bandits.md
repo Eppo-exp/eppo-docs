@@ -1,4 +1,4 @@
-# Contextual multi-armed Bandits
+# Contextual multi-armed bandits
 
 The SDKs also provide functionality for getting an assignment from a contextual multi-armed bandit.
 
@@ -6,11 +6,11 @@ The SDKs also provide functionality for getting an assignment from a contextual 
 
 Contextual multi-armed bandits use reinforcement learning to adjust the frequency it serves an action from a set provided
 to the SDK.
-They use the attributes of the subject and assigned action to form a context for the assignment, and they also have a 
+They use the attributes of the subject and assigned action to form a context for the assignment, and they also have a
 metric (set in the Eppo application) that it is optimizing for.
 
 Every 24 hours, the bandit looks at the previous 30 days for changes in the optimization metric for subjects who were given
-assignments. It uses the assignment context and metric data to build a model for using context to optimally balance 
+assignments. It uses the assignment context and metric data to build a model for using context to optimally balance
 "exploring" other actions or "exploiting" the action the data suggests performs the best for a given context.
 
 Bandits are a special type of dynamic variation, whose value depends on the action the bandit selects. Note that for users
@@ -23,7 +23,7 @@ When requesting an assignment from a flag with a bandit, the set of actions and 
 additional argument to `getStringAssignment()`.
 
 :::info
-Depending on the SDK you are using, a `getBanditAction()` alternative method may be available. Refer to the [Node](/sdks/server-sdks/node/#usage-with-contextual-multi-armed-bandits) or [Python](https://docs.geteppo.com/sdks/server-sdks/python/#6-contextual-bandits) documentation for more details. 
+Depending on the SDK you are using, a `getBanditAction()` alternative method may be available. Refer to the [Node](/sdks/server-sdks/node/#usage-with-contextual-multi-armed-bandits) or [Python](https://docs.geteppo.com/sdks/server-sdks/python/#6-contextual-bandits) documentation for more details.
 :::
 
 In the Java SDK, the call may look like:
@@ -68,7 +68,7 @@ Optional<String> banditAssignment = eppoClient.getStringAssignment(subjectKey, f
 
 ## Logging bandit assignments
 
-Additional information regarding a bandit assignment needs to be logged to the data warehouse to support training the 
+Additional information regarding a bandit assignment needs to be logged to the data warehouse to support training the
 bandit so that it can learn over time. Bandit assignments are logged separately from variation assignments, and require
 an additional bandit assignment logger to be provided.
 
@@ -87,7 +87,7 @@ Therefore, the logger should write to the table with the following columns (they
 | action (VARCHAR/STRING)               | The action assigned by the bandit                                                                                 | promo-20%-off               |
 | action_numeric_attributes (JSON)      | Metadata about numeric attributes of the assigned action. Map of the name of attributes their provided values     | {"discount": 0.2}           |
 | action_categorical_attributes (JSON)  | Metadata about non-numeric attributes of the assigned action. Map of the name of attributes their provided values | {"promoTextColor": "white"} |
- 
+
 We also recommend storing additional information that is provided to the bandit logger that is not directly used for training the bandit, but is useful for transparency and debugging:
 
 | Column                              | Description                                                                                                     | Example Data                 |
