@@ -91,13 +91,13 @@ Therefore, the logger should write to a table with the following columns (they c
 
 We also recommend storing additional information that is provided to the bandit logger that is not directly used for training the bandit, but is useful for transparency and debugging:
 
-| Column                              | Description                                                                                                             | Example Data                 |
-|-------------------------------------|-------------------------------------------------------------------------------------------------------------------------|------------------------------|
-| feature_flag (VARCHAR/STRING)       | The key of the feature flag corresponding to the bandit                                                                 | bandit-test-allocation-4     |
-| model_version (VARCHAR/STRING)      | Unique identifier for the version (iteration) of the bandit parameters used to determine the action probability         | v123                         |
-| action_probability (NUMBER/NUMERIC) | The weight between 0 and 1 the bandit valued the assigned action                                                        | 0.567                        |
-| optimality_gap (NUMBER/NUMERIC)     | The difference between the score of the selected action and the highest-scored action                                   | 78.9                         |
-| metadata (JSON)                     | Any additional freeform meta data, such as the version of the SDK; Mapping of the property names to their string values | { "sdkLibVersion": "3.5.1" } |
+| Column                              | Description                                                                                                            | Example Data                 |
+|-------------------------------------|------------------------------------------------------------------------------------------------------------------------|------------------------------|
+| feature_flag (VARCHAR/STRING)       | The key of the feature flag corresponding to the bandit                                                                | bandit-test-allocation-4     |
+| model_version (VARCHAR/STRING)      | Unique identifier for the version (iteration) of the bandit parameters used to determine the action probability        | v123                         |
+| action_probability (NUMBER/NUMERIC) | The weight between 0 and 1 the bandit valued the assigned action                                                       | 0.567                        |
+| optimality_gap (NUMBER/NUMERIC)     | The difference between the score of the selected action and the highest-scored action                                  | 78.9                         |
+| metadata (JSON)                     | Any additional freeform metadata, such as the version of the SDK; Mapping of the property names to their string values | { "sdkLibVersion": "3.5.1" } |
 
 The bandit assignment logger should be provided along with the variation assignment logger.
 
