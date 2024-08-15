@@ -11,6 +11,8 @@ The Performance Scorecard does this through a number of modules:
 ## Top Experiments
 The Top Experiments module shows experiments and the associated impact based on the metric selected.
 
+![Top experiments module](/img/interpreting-experiments/scorecard-top-experiments.png)
+
 Experiments shown in this module are either in a `Concluded` state or have an experiment end date in the past. Concluded experiments will show the impact to the metric based on the variant that was shipped. If the experiment has not been concluded, the variant selected will be based on which one has the largest lift for the primary metric.
 
 Experiments can be filtered in this list based on a number of criteria:
@@ -33,12 +35,16 @@ With Bayesian Aggregate Impact Estimation, Eppo is using our existing Bayesian f
 ## Velocity
 The Velocity module shows the number of experiments run by each team for the selected time period.
 
+![Velocity module](/img/interpreting-experiments/scorecard-velocity.png)
+
 An experiment is counted as active if it has a status of `Running` or `Ready to Review`.
 
 Eppo also reports on how the selected time frame compares to the previous time frame of the same length. The view can be toggled between cumulative (default) and daily. 
 
 ## Quality
 The Quality module reports on the quality of experiments run by each team within the time period selected. This can help understand if a team needs help improving the quality of the experiments they run, helping them save time and increase the number of high quality experiments they run.
+
+![Quality module](/img/interpreting-experiments/scorecard-quality.png)
 
 The Experiment Quality Score measures the completion rate for the following checklist of items:
 - A hypothesis exists for the experiment
@@ -52,5 +58,7 @@ The score looks at the average of past experiments within the timeframe. Misconf
 
 ## Win Rate
 The Win Rate module reports on how often treatments are shipped by team. This helps teams understand if they are playing it too safe by testing hypotheses with obvious winners or if they are being too risky without a well formed hypothesis that results in reverting to control experiences.
+
+![Win rate module](/img/interpreting-experiments/scorecard-win-rate.png)
 
 Winning experiments are based on `Concluded` experiments where a non-control variant is shipped compared to the total number of `Concluded` experiments without a misconfiguration.
