@@ -192,7 +192,6 @@ To connect a GitHub repository, you’ll need to complete the following steps:
 We recommend specifying a specific version of the [eppo-metrics-sync](https://pypi.org/project/eppo-metrics-sync/) Python package to avoid unexpected changes. In the example below, it is set to version 0.0.3.
 :::
 
-
 ```yaml
 name: Sync Eppo Metrics
 
