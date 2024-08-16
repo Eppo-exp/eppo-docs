@@ -188,6 +188,10 @@ To connect a GitHub repository, you’ll need to complete the following steps:
 3. Create a new branch on the repository you want to connect, and add metric yaml files to a directory called `eppo_metrics` (you can name this whatever you like, you’ll just need to adjust the directory name referenced in the GitHub workflow below)
 4. Copy the following GitHub workflow yaml into a new file `.github/workflows/run_eppo_metric_sync.yaml` . Replace `demo_company_metric_repository` with something that applies to your business and the set of metrics you are syncing (e.g., `business_north_star_metrics`)
 
+:::note
+We recommend specifying a specific version of the [eppo-metrics-sync](https://pypi.org/project/eppo-metrics-sync/) Python package to avoid unexpected changes. In the example below, it is set to version 0.0.3.
+:::
+
 ```yaml
 name: Sync Eppo Metrics
 
@@ -212,7 +216,7 @@ jobs:
     - name: Install dependencies
       run: |
         python3 -m pip install --upgrade pip
-        python3 -m pip install eppo_metrics_sync
+        python3 -m pip install eppo-metrics-sync==0.0.3
     
     - name: Sync Eppo Metrics (Prod)
       env:
