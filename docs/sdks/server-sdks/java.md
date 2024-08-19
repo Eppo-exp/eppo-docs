@@ -3,7 +3,7 @@ import TabItem from '@theme/TabItem';
 
 # Java
 
-Eppo's open source Java SDK can be used for both feature flagging and experiment assignment:
+Eppo's open source Java SDK can be used for feature flagging, experiment assignment, and contextual multi-armed bandits:
 
 - [GitHub repository](https://github.com/Eppo-exp/java-server-sdk)
 - [Package](https://s01.oss.sonatype.org/#nexus-search;quick~eppo-server-sdk)
@@ -12,136 +12,135 @@ Eppo's open source Java SDK can be used for both feature flagging and experiment
 
 ### Install the SDK
 
-In your `pom.xml`, add the SDK package as a dependency:
+You can install the SDK using Gradle or Maven
+
+#### Gradle
+
+If you're using Gradle, add it to your `build.gradle` file:
+
+```groovy
+implementation 'cloud.eppo:eppo-server-sdk:3.0.1'
+```
+
+#### Maven
+
+If you're using Maven, in your `pom.xml`, add the SDK package as a dependency:
 
 ```xml
 <dependency>
   <groupId>cloud.eppo</groupId>
   <artifactId>eppo-server-sdk</artifactId>
-  <version>2.4.5</version>
+  <version>3.0.1</version>
 </dependency>
 ```
 
-### Define an assignment logger
-
-If you're using Gradle instead, add it to your `build.gradle` file:
-
-```groovy
-implementation 'cloud.eppo:eppo-server-sdk:2.4.5'
-```
-
-## 2. Initialize the SDK
-
-Eppo encourages centralizing application logging as much as possible. Accordingly, instead of implementing a new logging framework, Eppo's SDK integrates with your existing logging system via a logging callback function defined at SDK initialization. This logger takes an [analytic event](/sdks/server-sdks/java/#assignment-logger-schema) created by Eppo, `assignment`, and writes in to a table in the data warehouse (Snowflake, Databricks, BigQuery, or Redshift).
-
-The code below illustrates an example implementation of a logging callback using Segment. You could also use your own logging system, the only requirement is that the SDK receives a `logAssignment` function. Here we define an implementation of the Eppo `IAssignmentLogger` interface containing a single function named `logAssignment`:
-
-
-```java
-import com.eppo.sdk.dto.IAssignmentLogger;
-import com.eppo.sdk.dto.AssignmentLogData;
-
-public class AssignmentLoggerImpl implements IAssignmentLogger {
-  public void logAssignment(AssignmentLogData event) {
-    analytics.enqueue(TrackMessage.builder("Experiment viewed")
-        .userId(event.subject)
-        .properties(ImmutableMap.builder()
-            .put("experiment", event.experiment)
-            .put("variation", event.variation)
-            .put("timestamp", event.timestamp)
-            .build()
-        )
-    );
-  }
-}
-```
-
-#### Deduplicating assignment logs
-
-Eppo's SDK uses an internal cache to ensure that duplicate assignment events are not logged to the data warehouse. While Eppo's analytic engine will automatically deduplicate assignment records, this internal cache prevents firing unnecessary events and can help minimize costs associated with event logging.
-
-
 ### Initialize the SDK
 
-Initialize the SDK with a SDK key, which can be generated in the [in the Eppo interface](https://eppo.cloud/feature-flags/keys). Initialization should happen when your application starts up to generate a singleton client instance, once per application lifecycle:
+The SDK is initialized using the builder pattern. 
+
+Initialize the SDK with an SDK key, which can be generated within the [Eppo interface](https://eppo.cloud/feature-flags/keys):
 
 ```java
-EppoClientConfig config = EppoClientConfig.builder()
-        .apiKey("<sdk-key>")
-        .assignmentLogger((data) -> System.out.println(data.toString()))
-        .build();
-EppoClient eppoClient = EppoClient.init(config);
+EppoClient.Builder()
+  .apiKey(apiKey)
+  .buildAndInit();
 ```
 
-After initialization, the SDK begins polling Eppo's API at regular intervals to retrieve the most recent experiment configurations such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments thereafter are effectively instant. For more information, see the [architecture overview](/sdks/overview) page.
-
-If you are using the SDK for experiment assignments, make sure to pass in an assignment logging callback (see the Assignment Logger [section](#define-an-assignment-logger)).
-
+Initialization should happen when your application starts up, and generates a singleton client instance to be used 
+throughout the application lifecycle.
 
 ### Assign variations
 
-Assig users to flags or experiments using `get<Type>Assignment`, depending on the type of the flag. For example, for a string-valued flag, use `getStringAssignment`:
+After configuring the flag in the [Eppo Interface](https://eppo.cloud/feature-flags), you can assign subjects variations.
+
+Assign using `get<Type>Assignment`, with `<Type>` depending on the type of the flag.
+For example, for a string-valued flag, use `getStringAssignment`:
 
 ```java
-Optional<String> assignedVariation = eppoClient.getStringAssignment("<SUBJECT-KEY>", "<FLAG-KEY>", {
-  // Optional map of subject metadata for targeting.
-});
+String assignedVariation = eppoClient.getStringAssignment("subjectKey", "flagkey", "defaultValue");
 ```
+
+The above will request an assignment for the flag identified by `flagkey` to give to the subject identified by `subjectKey`.
+If that flag does not exist, is disabled, or an error is encountered evaluating the flag, `"defaultValue"` will be returned.
+
+The flag key can be found within the [Eppo Interface](https://eppo.cloud/feature-flags), in the flag's configuration.
+![Example flag key](/img/feature-flagging/flag-key.png)
+
+You can also pass in an optional third parameter for subject attributes, which contains metadata about the subject. Passing 
+this in will be required for any attribute-based targeting rules you that create to be applied.
+
+```java
+Attributes subjectAttributes = new Attributes(
+  Map.of(
+    "country", EppoValue.valueOf("FR"),
+    "age", EppoValue.valueOf(60)
+  )
+);
+
+String assignedVariation = eppoClient.getStringAssignment("subjectKey", "flagkey", subjectAttributes, "defaultValue");
+```
+
+### Typed assignments
+
+We support getting assignments of five different types:
+
+```
+getBooleanAssignment()
+getIntegerAssignment()
+getDoubleAssignment()
+getStringAssignment()
+getJSONAssignment()
+```
+
+Note that `getJSONAssignment()` returns a `JsonNode` from `com.fasterxml.jackson.databind`. If you prefer to use a
+different JSON library, you can use `getJSONStringAssignment()` to get the unparsed JSON string.
+
+If you request a type that differs from the flag's variations (for example, you called getIntegerAssignment() for a
+flag with string-valued variations), the default value will be returned.
+
+## Define an assignment logger
+
+If you are using the Eppo SDK for **experiment** assignments (i.e., randomization), Eppo will need to know which subject,
+(e.g., which user), passed through an entry point and were exposed to the experiment. You will need to log that 
+information to your data warehouse for analysis.
+
+When initializing the SDK, define an assignment logger which can handle the `logAssignment()` callback:
+
+```java
+EppoClient.Builder()
+  .apiKey(apiKey)
+  .assignmentLogger(assignmentLogData -> {
+    System.out.println("TODO: send assignment event data to data warehouse: " + assignmentLogData);
+  })
+  .buildAndInit();
+```
+
+The properties of the event object passed to the assignment logger, accessible via getters, are as follows:
+
+| Field                                | Description                                                                                                           | Example                                |
+|--------------------------------------|-----------------------------------------------------------------------------------------------------------------------|----------------------------------------|
+| `timestamp` (Date)                   | The time when the subject was assigned to the variation                                                               | Mon Aug 19 21:46:02 UTC 2024           |
+| `experiment` (String)                | The globally unique identifier of the experiment                                                                      | "recommendation-algo-allocation-17"    |
+| `featureFlag` (String)               | The globally unique identifier of the feature flag                                                                    | "recommendation-algo"                  |
+| `allocation` (String)                | The globally unique identifier Eppo allocation key                                                                    | "allocation-17"                        |
+| `variation` (String)                 | The identifier of experiment variation the subject was assigned to (typically the variation value, unless JSON-typed) | "control"                              |
+| `subject` (String)                   | The identifier of the subject (e..g, user) assigned to the experiment variation                                       | "695e8121-96dc-4185-aedd-ef40225a2ef2" |
+| `subjectAttributes` (Attributes)     | A free-form map of metadata about the subject.                                                                        | {country=FR, age=60}                   |
+| `extraLogging` (Map<String, String>) | Any extra information relevant to the assignment                                                                      | {holdout=q1-holdout}                   |
+| `metaData` (Map<String, String>)     | Any additional freeform meta data, such as the version of the SDK                                                     | {sdkLibVersion=3.0.1}                  |
+
+Note that the `Attributes` type is an extension of `Map<String, EppoValue>`, with `EppoValue` being a container for values 
+that have strings, numbers, booleans, or JSON.
+
+:::note
+More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/sdks/event-logging/) page.
+:::
 
 The `getStringAssignment` function takes two required and one optional input to assign a variation:
 
 - `subjectKey` - The entity ID that is being experimented on, typically represented by a uuid.
 - `flagOrExperimentKey` - This key is available on the detail page for both flags and experiments.
 - `targetingAttributes` - An optional map of metadata about the subject used for targeting. If you create rules based on attributes on a flag/experiment, those attributes should be passed in on every assignment call.
-
-![Example flag key](/img/feature-flagging/flag-key.png)
-
-## Typed assignments
-
-Additional functions are available:
-
-```
-getBoolAssignment(...)
-getDoubleAssignment(...)
-getJSONStringAssignment(...)
-getParsedJSONAssignment(...)
-```
-
-## Handling the empty assignment
-
-We recommend always handling the empty assignment case in your code. Here are some examples illustrating when the SDK returns `Optional.empty()`:
-
-1. The **Traffic Exposure** setting on experiments/allocations determines the percentage of subjects the SDK will assign to that experiment/allocation. For example, if Traffic Exposure is 25%, the SDK will assign a variation for 25% of subjects and `Optional.empty()` for the remaining 75% (unless the subject is part of an allow list).
-
-2. Assignments occur within the environments of feature flags. You must enable the environment corresponding to the feature flag's allocation in the user interface before `getStringAssignment` returns variations. It will return `Optional.empty()` if the environment is not enabled.
-
-![Toggle to enable environment](/img/feature-flagging/enable-environment.png)
-
-3.  If `getStringAssignment` is invoked before the SDK has finished initializing, the SDK may not have access to the most recent experiment configurations. In this case, the SDK will assign a variation based on any previously downloaded experiment configurations stored in local storage, or return `Optional.empty()` if no configurations have been downloaded.
-
-<br />
-
-:::note
-It may take up to 10 seconds for changes to Eppo experiments to be reflected by the SDK assignments.
-:::
-
-## Assignment Logger Schema
-
-The SDK will invoke the `logAssignment` function with an `event` object that contains the following fields:
-
-| Field                                        | Description                                                                                                              | Example                                     |
-| -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------- |
-| `experiment` (string)                        | An Eppo experiment key                                                                                                   | "recommendation-algo-allocation-17"         |
-| `subject` (string)                           | An identifier of the subject or user assigned to the experiment variation                                                | UUID                                        |
-| `variation` (string)                         | The experiment variation the subject was assigned to                                                                     | "control"                                   |
-| `timestamp` (Date)                           | The time when the subject was assigned to the variation                                                                  | 2021-06-22T17:35:12.000Z                    |
-| `subjectAttributes` (Map<String, EppoValue>) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `Map.of("device", EppoValue.valueOf("iOS")` |
-| `featureFlag` (string)                       | An Eppo feature flag key                                                                                                 | "recommendation-algo"                       |
-| `allocation` (string)                        | An Eppo allocation key                                                                                                   | "allocation-17"                             |
-
-:::note
-More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/sdks/event-logging/) page.
-:::
 
 ## Usage with Contextual Multi-Armed Bandits
 
