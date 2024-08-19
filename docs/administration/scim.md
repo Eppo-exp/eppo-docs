@@ -4,9 +4,6 @@ sidebar_position: 4
 
 # Provision Eppo users with SCIM
 
-:::note
-Provisioning users through SCIM is currently in closed Beta.
-:::
 
 Provisioning users through SCIM (the System for Cross-domain Identity Management) provides a secure and automated way to create and manage Eppo users through your preferred IdP (Okta, Microsoft Entra and others). 
 
