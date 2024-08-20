@@ -47,7 +47,7 @@ EppoClient.Builder()
 ```
 
 Initialization should happen when your application starts up, and generates a singleton client instance to be used 
-throughout the application lifecycle.
+throughout the application lifecycle. After initialization, you can access the client with `EppoClient.getInstance()`.
 
 ### Assign variations
 
@@ -381,3 +381,24 @@ In order to accurately measure the performance of the bandit, we need to compare
 experiment. This status quo algorithm could be a complicated algorithm to that selects an action according to a different 
 model, or a simple baseline such as selecting a fixed or random action. When you create an analysis allocation for the 
 bandit and the returned `action` is `null`, implement the desired status quo algorithm based on the `variation` value.
+
+## Advanced initialization options and methods
+
+There are options you can use the builder to set when initializing the SDK. In most cases, the default values will be
+what you want. However, in certain situations you may want more fine-tuning.
+
+- `gracefulMode` (boolean) - When on (which is the default), flag evaluation  errors will be caught, and the default   
+  value returned. When off, the errors will be rethrown.
+- `forceReinitialize` (boolean) - If true, a new client will be initialized and a new fetch for configuration will be
+  performed even if the SDK has already been initialized. If false (which is the default), all subsequent initializations
+  will be ignored and the previously initialized client will continue to be used.
+- `pollingIntervalMs` (long) - How often, in milliseconds, the client should check for updated configurations. The default
+  is 30,000 (poll every 30 seconds)
+ - `host` (String) - Where the SDK should fetch configurations. The default is the Eppo-backed Fastly Content Delivery
+   Network (CDN).
+
+Additional potentially useful methods include: 
+- `setIsGracefulFailureMode()` - Method you can call on the client instance to toggle graceful mode (see above) on and off. 
+- `EppoClient.stopPolling()` - Static method to cancel checking for updated configurations.
+- `serializeNonNullAttributesToJSONString()` - Method you can call on an instance of `Attributes` to generate a String
+  containing their representation in JSON. This is useful for transmitting and saving them as JSON. 
