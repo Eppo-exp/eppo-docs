@@ -525,7 +525,8 @@ In both of those cases, the returned `action` will be `null`, and you should use
 When `action` is not `null`, the bandit has selected an action for the subject.
 
 :::note
-If no actions are provided and the flag still has an active bandit, no assignments will be made and the default value will be returned.
+If no actions are provided and the flag still has an active bandit, if the bandit variation is assigned the assigned
+action will be `null`.
 :::
 
 :::note
