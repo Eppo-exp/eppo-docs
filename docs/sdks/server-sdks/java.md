@@ -51,11 +51,11 @@ throughout the application lifecycle. After initialization, you can access the c
 
 ### Assign variations
 
-After configuring the flag in the [Eppo Interface](https://eppo.cloud/feature-flags), you can assign subjects variations.
+After configuring the flag in the [Eppo interface](https://eppo.cloud/feature-flags), you can assign subjects variations.
 
 Assign using `get<Type>Assignment`, with `<Type>` depending on the type of the flag.
 
-These functions take three or four parameters:
+These assignment functions take the following parameters:
 - `flagKey` (String): The key of the feature flag corresponding to the bandit
 - `subjectKey` (String): The identifier of the subject (e.g., user) to be assigned a variation
 - `subjectAttributes` (Attributes): _Optional_ - Attributes of the subject, used by targeting rules
@@ -70,11 +70,11 @@ String assignedVariation = eppoClient.getStringAssignment("subjectKey", "flagkey
 The above will request an assignment for the flag identified by `flagkey` to give to the subject identified by `subjectKey`.
 If that flag does not exist, is disabled, or an error is encountered evaluating the flag, `"defaultValue"` will be returned.
 
-The flag key can be found within the [Eppo Interface](https://eppo.cloud/feature-flags), in the flag's configuration.
+The flag key can be found within the [Eppo interface](https://eppo.cloud/feature-flags), in the flag's configuration.
 ![Example flag key](/img/feature-flagging/flag-key.png)
 
-If you wanted to pass in metadata about the subject, you would include the optional third parameter. Passing this in is
-required for any attribute-based targeting rules you that create to be applied.
+If you wanted to pass in metadata about the subject, you would include the optional `subjectAttributes` parameter. 
+Passing this in is required for any attribute-based targeting rules you that create to be applied.
 
 ```java
 Attributes subjectAttributes = new Attributes(
@@ -102,7 +102,7 @@ getJSONAssignment()
 Note that `getJSONAssignment()` returns a `JsonNode` from `com.fasterxml.jackson.databind`. If you prefer to use a
 different JSON library, you can use `getJSONStringAssignment()` to get the unparsed JSON string.
 
-If you request a type that differs from the flag's variations (for example, you called getIntegerAssignment() for a
+If you request a type that differs from the flag's variations (for example, you called `getIntegerAssignment()` for a
 flag with string-valued variations), the default value will be returned.
 
 ## Define an assignment logger
@@ -124,17 +124,17 @@ EppoClient.Builder()
 
 The properties of the event object passed to the assignment logger, accessible via getters, are as follows:
 
-| Field                                | Description                                                                                                           | Example                                |
-|--------------------------------------|-----------------------------------------------------------------------------------------------------------------------|----------------------------------------|
-| `timestamp` (Date)                   | The time when the subject was assigned to the variation                                                               | Mon Aug 19 21:46:02 UTC 2024           |
-| `experiment` (String)                | The globally unique identifier of the experiment                                                                      | "recommendation-algo-allocation-17"    |
-| `featureFlag` (String)               | The globally unique identifier of the feature flag                                                                    | "recommendation-algo"                  |
-| `allocation` (String)                | The globally unique identifier Eppo allocation key                                                                    | "allocation-17"                        |
-| `variation` (String)                 | The identifier of experiment variation the subject was assigned to (typically the variation value, unless JSON-typed) | "control"                              |
-| `subject` (String)                   | The identifier of the subject (e..g, user) assigned to the experiment variation                                       | "695e8121-96dc-4185-aedd-ef40225a2ef2" |
-| `subjectAttributes` (Attributes)     | A free-form map of metadata about the subject.                                                                        | {country=FR, age=60}                   |
-| `extraLogging` (Map<String, String>) | Any extra information relevant to the assignment                                                                      | {holdout=q1-holdout}                   |
-| `metaData` (Map<String, String>)     | Any additional freeform meta data, such as the version of the SDK                                                     | {sdkLibVersion=3.0.1}                  |
+| Field                                | Description                                                                                                                | Example                                |
+|--------------------------------------|----------------------------------------------------------------------------------------------------------------------------|----------------------------------------|
+| `timestamp` (Date)                   | The time when the subject was assigned to the variation                                                                    | Mon Aug 19 21:46:02 UTC 2024           |
+| `experiment` (String)                | The key (globally unique identifier) of the experiment                                                                     | "recommendation-algo-allocation-17"    |
+| `featureFlag` (String)               | The key of the feature flag                                                                                                | "recommendation-algo"                  |
+| `allocation` (String)                | The key of the allocation                                                                                                  | "allocation-17"                        |
+| `variation` (String)                 | The identifier of experiment variation that the subject was assigned to (typically the variation value, unless JSON-typed) | "control"                              |
+| `subject` (String)                   | The identifier of the subject (e..g, user) assigned to the experiment variation                                            | "695e8121-96dc-4185-aedd-ef40225a2ef2" |
+| `subjectAttributes` (Attributes)     | A free-form map of metadata about the subject.                                                                             | {country=FR, age=60}                   |
+| `extraLogging` (Map<String, String>) | Any extra information relevant to the assignment                                                                           | {holdout=q1-holdout}                   |
+| `metaData` (Map<String, String>)     | Any additional freeform meta data, such as the version of the SDK                                                          | {sdkLibVersion=3.0.1}                  |
 
 Note that the `Attributes` type is an extension of `Map<String, EppoValue>`, with `EppoValue` being a container for values 
 that have strings, numbers, booleans, or JSON.
@@ -175,25 +175,6 @@ EppoClient.Builder()
 
 The properties of the event object passed to the bandit logger, accessible via getters, are as follows:
 
-| Field                                | Description                                                                                                           | Example                                |
-|--------------------------------------|-----------------------------------------------------------------------------------------------------------------------|----------------------------------------|
-| `timestamp` (Date)                   | The time when the subject was assigned to the variation                                                               | Mon Aug 19 21:46:02 UTC 2024           |
-| `experiment` (String)                | The key (globally unique identifier) of the experiment                                                                | "recommendation-algo-allocation-17"    |
-| `featureFlag` (String)               | The key of the feature flag                                                                                           | "recommendation-algo"                  |
-| `allocation` (String)                | The key of the allocation                                                                                             | "allocation-17"                        |
-| `variation` (String)                 | The identifier of experiment variation the subject was assigned to (typically the variation value, unless JSON-typed) | "control"                              |
-| `subject` (String)                   | The identifier of the subject (e..g, user) assigned to the experiment variation                                       | "695e8121-96dc-4185-aedd-ef40225a2ef2" |
-| `subjectAttributes` (Attributes)     | A free-form map of metadata about the subject.                                                                        | {country=FR, age=60}                   |
-| `extraLogging` (Map<String, String>) | Any extra information relevant to the assignment                                                                      | {holdout=q1-holdout}                   |
-| `metaData` (Map<String, String>)     | Any additional freeform meta data, such as the version of the SDK                                                     | {sdkLibVersion=3.0.1}                  |
-
-
-When using the Eppo SDK for assignments from a contextual multi-armed bandit, you will need to pass in a callback 
-bandit logging function on SDK initialization. The SDK invokes the callback to capture bandit assignment data whenever a 
-bandit chooses an action and assigns it.
-
-The SDK will invoke the `logBanditAction` function with an `logData` object that contains the following fields:
-
 | Field                                       | Description                                                                                                       | Example                      |
 |---------------------------------------------|-------------------------------------------------------------------------------------------------------------------|------------------------------|
 | `timestamp` (Date)                          | The time when the action is taken                                                                                 | Mon Aug 19 21:46:03 UTC 2024 |
@@ -220,7 +201,7 @@ To query the bandit for an action, you can use the `getBanditAction()` function.
 - `defaultValue` (String): The default *variation* to return if the flag is not successfully evaluated
 
 The `DiscriminableAttributes` interface represents attributes which can be bucketed into categorical and numeric attributes.
-The concrete implementation `ContextAttributes` can be used for explicitly bucketing categorical and numeric `Attributes`, 
+The concrete implementation `ContextAttributes` can be used for explicitly bucketing categorical and numeric attributes, 
 useful if you want to force a number to be treated as categorical. The concrete implementation`Attributes` can be used for 
 a single collection of attributes that will be implicitly bucketed based on whether the attribute value is numeric or not.
 
@@ -296,8 +277,8 @@ attribute, and everything else is a categorical attribute.
 You can also explicitly bucket the attribute types by providing the context as `ContextAttributes`. For example, you may
 have an attribute named `priority`, with possible values `0`, `1`, and `2` that you want to be treated categorically rather
 than numeric. `ContextAttributes` have two nested sets of attributes:
-- `numericAttributes` (Attributes): A mapping of attribute names to their numeric values (e.g., `age: 30`)
-- `categoricalAttributes` (Attributes): A mapping of attribute names to their categorical values (e.g., `country`)
+- `numericAttributes` (Attributes): A mapping of attribute names to their numeric values (e.g., `age=30`)
+- `categoricalAttributes` (Attributes): A mapping of attribute names to their categorical values (e.g., `country=GB`)
 
 ```java
 Attributes subjectNumericAttributes = new Attributes(
@@ -351,9 +332,9 @@ Like attributes, actions are case-sensitive.
 
 #### Result
 
-`getBanditAction()` has two fields available via getters:
+`getBanditAction()` returns a `BanditResult` which has two fields available via getters:
 - `variation` (String): The variation that was assigned to the subject
-- `action` (String | null): The action that was assigned to the subject by the bandit, or `null` if the bandit was not 
+- `action` (String): The action that was assigned to the subject by the bandit, or `null` if the bandit was not 
   assigned
 
 The variation returns the feature flag variation. This can be the bandit itself, or the "status quo" variation if the 
@@ -384,7 +365,7 @@ bandit and the returned `action` is `null`, implement the desired status quo alg
 
 ## Advanced initialization options and methods
 
-There are options you can use the builder to set when initializing the SDK. In most cases, the default values will be
+There are additional options you can use the builder to set when initializing the SDK. In most cases, the default values will be
 what you want. However, in certain situations you may want more fine-tuning.
 
 - `gracefulMode` (boolean) - When on (which is the default), flag evaluation  errors will be caught, and the default   
@@ -393,7 +374,7 @@ what you want. However, in certain situations you may want more fine-tuning.
   performed even if the SDK has already been initialized. If false (which is the default), all subsequent initializations
   will be ignored and the previously initialized client will continue to be used.
 - `pollingIntervalMs` (long) - How often, in milliseconds, the client should check for updated configurations. The default
-  is 30,000 (poll every 30 seconds)
+  is 30,000 (poll every 30 seconds).
  - `host` (String) - Where the SDK should fetch configurations. The default is the Eppo-backed Fastly Content Delivery
    Network (CDN).
 
