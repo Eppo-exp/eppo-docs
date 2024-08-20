@@ -87,6 +87,9 @@ Attributes subjectAttributes = new Attributes(
 String assignedVariation = eppoClient.getStringAssignment("subjectKey", "flagkey", subjectAttributes, "defaultValue");
 ```
 
+Note that `EppoValue` is a container used so that attribute values can have different types. It can contain a string, 
+number, boolean, or JSON value.
+
 ### Typed assignments
 
 We support getting assignments of five different types:
@@ -136,10 +139,9 @@ The properties of the event object passed to the assignment logger, accessible v
 | `extraLogging` (Map<String, String>) | Any extra information relevant to the assignment                                                                           | {holdout=q1-holdout}                   |
 | `metaData` (Map<String, String>)     | Any additional freeform meta data, such as the version of the SDK                                                          | {sdkLibVersion=3.0.1}                  |
 
-Note that the `Attributes` type is an extension of `Map<String, EppoValue>`, with `EppoValue` being a container for values 
-that have strings, numbers, booleans, or JSON.
+Note that the `Attributes` type is an extension of `Map<String, EppoValue>`.
 
-:::note
+:::info
 More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/sdks/event-logging/) page.
 :::
 
