@@ -67,28 +67,95 @@ Once you've finished [configuring the experiment](/experiment-analysis/configura
 The approach above assumes you have relatively dense assignment data. That is, if an anonymous ID is later associated with a user, there will be a corresponding event in the assignment logs. This can be error prone. If a user is assigned on the initial landing page and then converts on a different page, it's easy to imagine the assignment log not having a record with that association. To solve this, we can simply do a one time join between the raw assignment table and another table with the full set of timestamped associations:
 
 ```sql
-WITH timeboxed_associations AS (
-  SELECT
+WITH timeboxed_associations as (
+ SELECT
         user_id
       , anonymous_id
-      , COALESCE(lag(ts) OVER (PARTITION BY user_id ORDER BY ts), '1970-01-01') as valid_from
-      , COALESCE(lead(ts) OVER (PARTITION BY user_id ORDER BY ts), '9999-01-01') as valid_to
+      , ts
+      , lag(ts) OVER (PARTITION BY anonymous_id ORDER BY ts)  as last_anon_association
+      , lead(ts) OVER (PARTITION BY anonymous_id ORDER BY ts) as next_anon_association
   FROM user_anonymous_associations
 )
 
 SELECT 
       a.anonymous_id
-    , ta.user_id
+    , nvl(a.user_id, ta.user_id) as user_id
     , a.experiment
     , a.variant
-    , a.timestamp
+    , a.ts
    FROM assignments a 
    LEFT JOIN timeboxed_associations ta
      ON a.anonymous_id = ta.anonymous_id
-    AND ta.valid_from <= a.timestamp
-    AND ta.valid_to > a.timestamp
+    AND (ta.last_anon_association is null or a.ts > ta.ts)
+    AND (ta.next_anon_association is null or a.ts <= ta.next_anon_association)
      
 ```
+
+<!---
+
+Test case:
+
+with assignments as (
+
+    select column1 as experiment
+        ,  column2::date as ts
+        ,  column3 as variant
+        ,  column4 as anonymous_id
+        ,  column5 as user_id
+    from VALUES
+        ('exp_001', '2020-01-01', 'variant', 'anon_001', NULL),
+        ('exp_001', '2020-02-01', 'control', 'anon_002', 'user_001'),
+        ('exp_002', '2020-03-01', 'variant', 'anon_003', NULL),
+        ('exp_002', '2020-04-01', 'control', 'anon_002', 'user_001'),
+        ('exp_003', '2020-05-01', 'control', 'anon_002', 'user_002'),
+        ('exp_003', '2020-06-01', 'control', 'anon_004', NULL),
+        ('exp_004', '2020-07-01', 'variant', 'anon_005', NULL),
+        ('exp_004', '2020-08-01', 'variant', 'anon_002', 'user_003'),
+        ('exp_005', '2020-09-01', 'control', 'anon_002', 'user_004'),
+        ('exp_005', '2020-10-01', 'variant', 'anon_005', NULL)
+
+)
+
+, user_anonymous_associations as (
+
+    select column1::date as ts
+        ,  column2 as anonymous_id
+        ,  column3 as user_id
+      from values 
+      ('2020-03-15', 'anon_003', 'user_005'),
+      ('2020-03-15', 'anon_004', 'user_006'),
+      ('2020-06-15', 'anon_005', 'user_007'),
+      ('2020-07-15', 'anon_005', 'user_008'),
+      ('2020-02-15', 'anon_001', 'user_001'),
+      ('2020-03-15', 'anon_002', 'user_001')
+
+)
+
+, timeboxed_associations as (
+ SELECT
+        user_id
+      , anonymous_id
+      , ts
+      , lag(ts) OVER (PARTITION BY anonymous_id ORDER BY ts)  as last_anon_association
+      , lead(ts) OVER (PARTITION BY anonymous_id ORDER BY ts) as next_anon_association
+  FROM user_anonymous_associations
+)
+
+SELECT 
+      a.anonymous_id
+    , nvl(a.user_id, ta.user_id) as user_id
+    , a.experiment
+    , a.variant
+    , a.ts
+   FROM assignments a 
+   LEFT JOIN timeboxed_associations ta
+     ON a.anonymous_id = ta.anonymous_id
+    AND (ta.last_anon_association is null or a.ts > ta.ts)
+    AND (ta.next_anon_association is null or a.ts <= ta.next_anon_association)
+    
+
+-->
+
 
 By adding this to your assignment data model you can be sure to capture every association between anonymous IDs and users.
 
