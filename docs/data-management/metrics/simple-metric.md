@@ -204,7 +204,7 @@ having sum(<fact_col>) > {threshold}
 
 ### Time windows
 
-Eppo allows you to further refine metrics by adding a time window. For example, we may be interested in a metric that only considers purchases starting two days after and within seven days of the user's assignment to an experiment.
+Eppo allows you to further refine metrics by adding a time window. Based on specifying a time window to start after X days within Y days of assignment, the time window is calculated as `X <= event datetime < Y`. For example, we may be interested in a metric that only considers purchases starting two days after and within seven days of the user's assignment to an experiment, which is calculated as `2 days <= event assignment datetime < 7 days`.
 
 ![Adding a time frame to a metric](/img/data-management/metrics/create-metric-timeframe.png)
 
