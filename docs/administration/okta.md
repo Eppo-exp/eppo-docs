@@ -33,6 +33,14 @@ Part 2: Securely send over your new app’s information to the Eppo team.
 5. Click **Create a secret link**.
 6. Once the link has been created, share the link along with the pass code to your Eppo team over Slack or email. The Eppo team will complete the configuration our end and let you know your integration is ready.
 
+### Troubleshooting
+
+If Okta logins aren't working, you may have to enable [FastPass](https://help.okta.com/oie/en-us/content/topics/identity-engine/devices/fp/fp-main.htm):
+- On the app configuration page
+- go to SSO > User Authentication
+- click on `view policy details`
+- make sure FastPass is enabled
+
 :::info
 We currently do not support identity provider-initiated logins. Users must navigate to `https://eppo.cloud` to kick off the login process.
 :::
