@@ -3,9 +3,13 @@ sidebar_position: 4
 ---
 # Authenticating with Okta
 
+:::info
+We currently do not support identity provider-initiated logins. Users must navigate to `https://eppo.cloud` to kick off the login process.
+:::
+
 ## Summary
 
-This short series of steps enables Okta admins to connect their Okta instances to Eppo for single sign on. Upon completion, your employees will be able to login to Eppo via Okta. A **video walk through** of this same sequence is available [here](https://www.loom.com/share/2103c5f66b694e73937d0da3a6ecfcac).
+This short series of steps enables Okta admins to connect their Okta instances to Eppo for single sign on. Upon completion, your employees will be able to login to Eppo with Okta by navigating to `https://eppo.cloud` and entering their email address. A **video walk through** of this same sequence is available [here](https://www.loom.com/share/2103c5f66b694e73937d0da3a6ecfcac).
 
 ## Steps
 
