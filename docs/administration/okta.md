@@ -3,10 +3,6 @@ sidebar_position: 4
 ---
 # Authenticating with Okta
 
-:::info
-We currently do not support identity provider-initiated logins. Users must navigate to `https://eppo.cloud` to kick off the login process.
-:::
-
 ## Summary
 
 This short series of steps enables Okta admins to connect their Okta instances to Eppo for single sign on. Upon completion, your employees will be able to login to Eppo with Okta by navigating to `https://eppo.cloud` and entering their email address. A **video walk through** of this same sequence is available [here](https://www.loom.com/share/2103c5f66b694e73937d0da3a6ecfcac).
@@ -36,3 +32,7 @@ Part 2: Securely send over your new app’s information to the Eppo team.
 4. Below, select **1 Day** as your **Lifetime**.
 5. Click **Create a secret link**.
 6. Once the link has been created, share the link along with the pass code to your Eppo team over Slack or email. The Eppo team will complete the configuration our end and let you know your integration is ready.
+
+:::info
+We currently do not support identity provider-initiated logins. Users must navigate to `https://eppo.cloud` to kick off the login process.
+:::
