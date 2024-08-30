@@ -21,9 +21,14 @@ $$
 
 [Funnels](/data-management/metrics/funnel-metric) are another powerful metric type in Eppo. They allow you to track and analyze multi-step processes or user flows. By defining the sequence of events in a funnel, you can identify bottlenecks, drop-off points, and conversion rates at each step. This facilitates a granular analysis of user behavior and helps optimize the customer journey.
 
-## Guardrail metrics
 
-Furthermore, you can set metrics as [guardrail metrics](/data-management/organizing-metrics/guardrails), which means they are automatically added to every experiment. This feature ensures that specific metrics are consistently tracked across experiments, providing a standardized measurement framework. By setting metrics as guard rails, you can maintain a unified approach to experimentation and easily compare results across different tests.
+## Guardrail cutoffs
+
+You can set metrics to have a [guardrail cutoff](/data-management/organizing-metrics/guardrails), which means they will appear with a downside threshold. When the results for the metric breach the threshold, the metric will display a warning state.
+
+## Add metric to all experiment analyses
+
+You can set metrics to automatically be added to every experiment. This feature ensures that specific metrics are consistently tracked across experiments, providing a standardized measurement framework. By setting metrics to always be added, you can maintain a unified approach to experimentation and easily compare results across different tests.
 
 # Metric detail view
 
