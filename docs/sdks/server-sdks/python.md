@@ -238,7 +238,7 @@ Once you create the configuration object, configure the client like this:
 eppo_client.get_instance().set_configuration(configuration)
 ```
 
-Upon setting the configuration, the client is initialized and will start serving assignments based on the provided configuration. You can update the configuration anytime.
+Upon setting the configuration, the client is initialized and will start serving assignments based on the provided configuration. You can update the configuration anytime and it will be overwritten atomically.
 
 You can also provide an initial configuration during client initialization:
 ```python
