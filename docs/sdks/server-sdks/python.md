@@ -203,6 +203,54 @@ By default, the Eppo client initialization is asynchronous to ensure no critical
 
 :::
 
+### C. Advanced Configuration Control
+
+The default periodic polling setup is suitable for most cases but may not be efficient in short-lived serverless environments like Cloud Functions or Lambdas, where a new configuration is fetched on every function call.
+Starting with v3.7.0, Python SDK exposes an advanced API to allow manual control over configuration.
+
+To disable default polling behavior, set `poll_interval_seconds` to `None` when initializing the client.
+```python
+import eppo_client
+from eppo_client import Config, ApplicationLogger
+
+eppo_client.init(
+    Config(api_key="<api-key>", application_logger=..., poll_interval_seconds=None)
+)
+```
+
+`Configuration` class represents Eppo configuration that defines how the SDK evaluates feature flags.
+It can be initialized from the CDN response bytes (`https://fscdn.eppo.cloud/api/flag-config/v1/config`).
+As a user, you have full control over how this response is retrieved and stored.
+```python
+from eppo_client import Configuration
+
+configuration = Configuration(flags_configuration=b"...bytes...")
+```
+
+:::warning
+
+The response format is subject to change, so you should treat the response as opaque bytes—do not parse, inspect, or modify it in any way.
+
+:::
+
+Once you create the configuration object, configure the client like this:
+```python
+eppo_client.get_instance().set_configuration(configuration)
+```
+
+Upon setting the configuration, the client is initialized and will start serving assignments based on the provided configuration. You can update the configuration anytime.
+
+You can also provide an initial configuration during client initialization:
+```python
+eppo_client.init(
+    Config(
+        api_key="<api-key>",
+        application_logger=...,
+        poll_interval_seconds=None,
+        initial_configuration=configuration,
+    )
+)
+```
 
 ## 4. Advanced Configuration with Metadata
 
@@ -448,5 +496,3 @@ When `action` is not `None`, the bandit has selected that action to be shown to 
 In order to accurately measure the performance of the bandit, we need to compare it to the status quo algorithm using an experiment.
 This status quo algorithm could be a complicated algorithm to that selects an action according to a different model, or a simple baseline such as selecting a fixed or random action.
 When you create an analysis allocation for the bandit and the `action` in `BanditResult` is `None`, implement the desired status quo algorithm based on the `variation` value.
-
-
