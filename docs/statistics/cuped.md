@@ -21,7 +21,7 @@ Since CUPED models are computationally intensive, we only use CUPED to reduce va
 
 When CUPED is enabled, Eppo automatically ingests aggregated data about each subjects in the following ways:
 
-- For each (applicable) experiment metric, we look at the pre-experiment values during a lookback window which defaults to 30 days.
+- For each (applicable) experiment metric, we look at the pre-experiment values during a lookback window. The window is 30 days by default. It ends on the moment each subject is being assigned (or passes an Entry point).
 - Furthermore, we also leverage the [assignment properties](/data-management/definitions/properties) for the subject (e.g. country, browser, etc.)
 
 :::note
