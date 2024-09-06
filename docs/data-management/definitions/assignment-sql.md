@@ -83,3 +83,23 @@ Eppo will automatically filter these subjects out of that experiment's results.
 Example: A subject in their first assignment has property called `country` that initially is recorded as `Canada` and in a subsequent assignment the `country` property is recorded as `France`.
 
 Eppo will use the first recorded property in the experiment. When looking at an Explore chart using the example above, the user would show up under the `Canada` property value.
+
+## Updating Assignments
+
+You can update assignments by clicking the `Edit` button to access the Assignment SQL. At this point you can edit the SQL as you like, but the mapping fields will be locked down until the SQL is validated with a run.
+
+Pressing the `Run` button will enable the mapping fields and the `Save & Close` button to save any changes made in either the SQL or mapping.
+
+:::note
+Any running experiments with assignment based on the updated Assignment SQL will automatically fully refresh on the next experiment update.
+:::
+
+## Deleting Assignments
+
+You can delete or mark as deprecated an Assignment SQL. First, access the Assignment SQL by clicking the `Edit` button. 
+
+If the assignment is being used, you can click `Mark as deprecated`; you will the a list of active experiment using that Assignment. New expriments will not be able to use that fact.
+
+To delete an unused Assignments SQL, click `Delete Assignment SQL` from the overflow menu.
+
+For either action, a confirmation modal will appear detailing the metrics and experiments impacted.
