@@ -1,4 +1,7 @@
-# Next.js Setup with Eppo Feature Flags
+# Next.js Setup with Eppo Feature Flags.
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 
 This guide walks through how to setup an Eppo Feature Flag on a client and server rendered component in a Next.js app. More specifically, this guide walks through the set up and settings of a sample Next.js app.
 
@@ -204,6 +207,15 @@ Follow the instructions to create your Next.js app as outlined in the previous s
 yarn add @eppo/node-server-sdk
 ```
 
+<Tabs>
+<TabItem value="app-router" label="Next.js App Router">
+
+The following assumes that you chose to use App Router when generating your Next.js app.
+
+```
+Would you like to use App Router? (recommended) Yes
+```
+
 ### SDK initialization
 
 Create a new `app/shared/get-eppo-client.ts` file to handling SDK initialization. This file will reside in a new `app/shared` folder that will contain helpers for server-rendered components. Copy the code snippet below. The init function is called outside of the `getEppoClient` scope so that it's only called once.
@@ -213,7 +225,7 @@ Create a new `app/shared/get-eppo-client.ts` file to handling SDK initialization
 
 import { init } from '@eppo/node-server-sdk';
 
-const eppoClient = init({
+const eppoClientPromise = init({
   apiKey: '<SDK-KEY>', // SDK keys defined at https://eppo.cloud/feature-flags/keys
   assignmentLogger: {
     logAssignment(assignment) {
@@ -225,7 +237,7 @@ const eppoClient = init({
 });
 
 export default async function getEppoClient() {
-  return await eppoClient;
+  return await eppoClientPromise;
 }
 ```
 
@@ -310,6 +322,130 @@ export default async function Home() {
   );
 }
 ```
+
+</TabItem>
+
+<TabItem value="pages-router" label="Next.js Pages Router">
+
+The following assumes that you chose **not** to use App Router when generating your Next.js app.
+
+```
+Would you like to use App Router? (recommended) No
+```
+
+### SDK initialization
+
+Create a new `shared/get-eppo-client.ts` file to handling SDK initialization. This file will reside in a new `shared` folder that will contain helpers for server-rendered components. Copy the code snippet below. The init function is called outside of the `getEppoClient` scope so that it's only called once.
+
+```ts
+import { init } from '@eppo/node-server-sdk';
+
+const eppoClientPromise = init({
+  apiKey: '<SDK-KEY>', // SDK keys defined at https://eppo.cloud/feature-flags/keys
+  assignmentLogger: {
+    logAssignment(assignment) {
+      console.log('TODO: log ', assignment);
+    },
+  },
+}).catch((err) => {
+  console.error('Error initializing Eppo SDK:', err);
+});
+
+export default async function getEppoClient() {
+  return await eppoClientPromise;
+}
+```
+
+### String assignment helper
+
+Let's also create a helper function for fetching string assignments. This helper will ensure that the Eppo SDK is initialized before returning a value. To do this, create a new `shared/get-string-assignment.ts` file, and add the code snippet below.
+
+```ts
+import getEppoClient from './get-eppo-client';
+
+export default async function getStringAssignment(
+  flagKey: string,
+  subjectKey: string,
+  subjectAttributes: Record<string, string> = {},
+  defaultValue: string = ''
+): Promise<string> {
+  const eppoClient = await getEppoClient();
+  return (
+    eppoClient?.getStringAssignment(
+      flagKey,
+      subjectKey,
+      subjectAttributes,
+      defaultValue
+    ) ?? defaultValue
+  );
+}
+```
+
+### Rendering the flag assignment
+
+Next, we'll need to create a component that uses our flag variation. Create a new `components/OfferExperement.tsx` file, and add the snippet below. We’ll pass the assigned flag variation to the component, rather than fetching the assigned variation within the component.
+
+```tsx
+import type { FunctionComponent } from 'react';
+
+interface OfferExperimentProps {
+  variation: string;
+}
+
+export const OfferExperiment: FunctionComponent<OfferExperimentProps> = ({
+  variation,
+}) => (
+  <h1>
+    {variation === 'control' && <p>50% Off widgets!</p>}
+    {variation === 'test' && <p>Buy one widget, get one free!</p>}
+    {!variation && <p>Buy a widget today!</p>}
+  </h1>
+);
+
+export default OfferExperiment;
+```
+
+### Putting it all together
+
+In `pages/index.tsx`, add the logic that will retrieve the flag assignment in the `getServerSideProps` function. We'll then render our `OfferExperiment` in the page component. Our `pages/index.tsx` file should look similar to the following example.
+
+```tsx
+import styles from '@/styles/Home.module.css';
+import OfferExperiment from '../components/OfferExperiment';
+import getStringAssignment from '../shared/get-string-assignment';
+
+import type { InferGetServerSidePropsType, GetServerSideProps } from 'next';
+
+export const getServerSideProps = (async () => {
+  const flagKey = '<FLAG-KEY>'; // defined in your flag configuration (https://eppo.cloud/feature-flags)
+  const subjectKey = `<SUBJECT-KEY>`; // ideally populated from something like login context
+  const offerVariation = await getStringAssignment(flagKey, subjectKey);
+  return { props: { offerVariation } };
+}) satisfies GetServerSideProps<{ offerVariation: string }>;
+
+export default function Home({
+  offerVariation,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+  return (
+    <main className={styles.main}>
+      <div className={styles.description}>
+        <p>
+          Get started by editing&nbsp;
+          <code className={styles.code}>pages/index.tsx</code>
+        </p>
+        <div className={styles.center}>
+          <OfferExperiment variation={offerVariation} />
+        </div>
+        {/* (other components) */}
+      </div>
+      {/* (other components) */}
+    </main>
+  );
+}
+```
+
+</TabItem>
+</Tabs>
 
 If your development server is not yet running, run `yarn dev`. You should now see your experiment running with the new server rendered component.
 
