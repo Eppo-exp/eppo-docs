@@ -102,4 +102,4 @@ If the assignment is being used, you can click `Mark as deprecated`; you will th
 
 To delete an unused Assignments SQL, click `Delete Assignment SQL` from the overflow menu.
 
-If either action, a confirmation modal will appear detailing the metrics and experiments impacted.
+For either action, a confirmation modal will appear detailing the metrics and experiments impacted.
