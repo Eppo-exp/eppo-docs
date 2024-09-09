@@ -10,20 +10,20 @@ Configuring clustered analysis is easy in Eppo. It requires two steps: mapping a
 
 ## Configuring subentities
 
-![Map subentity in Assignment SQL](/img/experiments/clustered-analysis/subentity-map.png)
-
 [Assignment SQL](/data-management/definitions/assignment-sql) has an optional `subentity` column. Configure the AssignmentSQL with the main entity and include an additional column with corresponding subentity ids. Select an entity name and select the appropriate column that contains the subentity ids.
+
+![Map subentity in Assignment SQL](/img/experiments/clustered-analysis/subentity-map.png)
 
 ## Creating an experiment with clustered analysis
 
-![Create clustered analysis experiment](/img/experiments/clustered-analysis/clustered-analysis-experiment.png)
-
 When creating an experiment, choose the randomization entity as usual. Then in `Analysis Method` there will be a new option for `Clustered Analysis` with available subentities to choose from.
 
-![Subentities in experiment results](/img/experiments/clustered-analysis/metrics-with-subentities.png)
+![Create clustered analysis experiment](/img/experiments/clustered-analysis/clustered-analysis-experiment.png)
 
 Once created and running, there are a few differences on how experiment results are calculated. Notice that assignment numbers will refer to the entity but subentity numbers will also be available. Metrics will be calculated by using the subentity as the denominator.
 
-![Subentities in Explore charts](/img/experiments/clustered-analysis/explore-with-subentities.png)
+![Subentities in experiment results](/img/experiments/clustered-analysis/metrics-with-subentities.png)
 
 Explore charts behave the same way. Assignment numbers are reported, but metrics and their split bys will use the subentity numbers for the denominator.
+
+![Subentities in Explore charts](/img/experiments/clustered-analysis/explore-with-subentities.png)
