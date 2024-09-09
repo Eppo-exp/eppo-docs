@@ -24,11 +24,13 @@ $$
 
 ## Guardrail cutoffs
 
-You can set metrics to have a [guardrail cutoff](/data-management/organizing-metrics/guardrails), which means they will appear with a downside threshold. When the results for the metric breach the threshold, the metric will display a warning state.
+There are a number of experiments where you want to monitor that a metric is not positively impacted, but you also want to ensure there is no negative effect either.
+
+In this case, you can set metrics to have a [guardrail cutoff](/data-management/organizing-metrics/guardrails), which means they will appear with a downside threshold. When the lower bound of the confidence interval for the metric breaches the threshold, the metric will display a warning state.
 
 ## Add metric to all experiment analyses
 
-You can set metrics to automatically be added to every experiment. This feature ensures that specific metrics are consistently tracked across experiments, providing a standardized measurement framework. By setting metrics to always be added, you can maintain a unified approach to experimentation and easily compare results across different tests.
+Often you want to ensure specific metrics are consistently tracked across experiments, providing a standardized measurement framework. You can do this by setting metrics to automatically be added to every experiment. In doing so, you can maintain a unified approach to experimentation and easily compare results across different tests.
 
 # Metric detail view
 
