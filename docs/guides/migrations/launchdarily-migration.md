@@ -53,16 +53,6 @@
     - Deploy the application to your staging or testing environments and verify the flag's functionality.
     - Once verified, deploy the application to your production environment and test the flag again.
 3. **Identify critical flags in LaunchDarkly**
-    
-    :::note
-    Make a copy of this template to help with identifying critical flags: 
-    | Flag name    | Owner   | Critical (Y/N) |
-    |--------------|---------|----------------|
-    | Example flag | John D. | N              |
-    |              |         |                |
-    |              |         |                |
-    :::note
-    
     - Make a list of all the feature flags currently in use within your application using the provided template
     - Categorize the flags as critical or non-critical based on their importance and impact on your application's functionality.
     - Flags that are disabled or are rolled out to 100% can be categorized as non-critical
