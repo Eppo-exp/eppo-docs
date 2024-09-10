@@ -3,9 +3,9 @@
 1. **Install the Eppo SDK**
     - Login to Eppo with your work email: https://eppo.cloud/
     - [Generate an SDK key](https://docs.geteppo.com/sdks/sdk-keys) by navigating to “SDK Keys” under Configuration
-    - [Define a logging function](https://docs.geteppo.com/sdks/event-logging/) for the Eppo SDK to log assignments so they end up in your data warehouse
-        
-        *TypeScript Example:*
+    - [Define a logging function](https://docs.geteppo.com/sdks/event-logging/) for the Eppo SDK to log assignments so they end up in your data warehouse.
+      
+      *TypeScript Example:*
         
         ```tsx
         const assignmentLogger: IAssignmentLogger = {
@@ -20,9 +20,9 @@
         };
         ```
         
-    - Initialize the SDK in your code using the SDK guides for your language [here](https://docs.geteppo.com/sdks/)
-        
-        *TypeScript Example:*
+    - Initialize the SDK in your code using the SDK guides for your language [here](https://docs.geteppo.com/sdks/).
+      
+      *TypeScript Example:*
         
         ```tsx
         await init({
@@ -35,8 +35,8 @@
     - [Create a new flag in Eppo](https://docs.geteppo.com/feature-flag-quickstart#2-create-a-flag) by navigating to “Feature Flags” under Configuration
     - [Implement the flag](https://docs.geteppo.com/feature-flag-quickstart#6-embed-the-flag-in-your-code) in your application code
     - Test the flag in your local development environment to ensure it works as expected.
-        
-        *TypeScript Example:*
+      
+      *TypeScript Example:*
         
         ```tsx
         const variation = getInstance().getBooleanAssignment(
