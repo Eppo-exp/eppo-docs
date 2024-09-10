@@ -25,7 +25,7 @@ the treatment variant is 5% higher than the average among subjects in the
 control variant.
 
 :::note
-If the estiamte for Control is close to zero, that ratio becomes unreliable.
+If the estimate for Control is close to zero, that ratio becomes unreliable.
 We do not compute the relative lift when Control is less than 1.5 standard deviation around zero.
 :::
 
