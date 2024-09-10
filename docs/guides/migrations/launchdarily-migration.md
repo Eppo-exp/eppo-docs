@@ -55,7 +55,12 @@
 3. **Identify critical flags in LaunchDarkly**
     
     :::note
-    Make a copy of this template to help with identifying critical flags: https://docs.google.com/spreadsheets/d/1uOyZ8Gps8GbbCuEEUN_WMaK8tmIOZvZ5CV2v0hMYZTk/edit#gid=0
+    Make a copy of this template to help with identifying critical flags: 
+    | Flag name    | Owner   | Critical (Y/N) |
+    |--------------|---------|----------------|
+    | Example flag | John D. | N              |
+    |              |         |                |
+    |              |         |                |
     :::note
     
     - Make a list of all the feature flags currently in use within your application using the provided template
