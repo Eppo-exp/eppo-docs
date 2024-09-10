@@ -9,12 +9,16 @@ This guide walks through how to setup an Eppo Feature Flag on a client and serve
 
 Eppo offers the ability to use both client and server side rendering. Assignment can happen on either platform and the client SDK can be initialized with a configuration from your server SDK or from the Eppo CDN.
 
+### Loading flag configuration from CDN
+
 ![Architecture: Loading flag configuration from CDN](/img/guides/nextjs/next-ssr-1.png)
 
 Using Eppo's CDN is the easiest way to get started. Flag configuration is cached at the edge and the architecture requires 
 no additional development beyond integrating the SDK.
 
 See sample code below for how to instantiate these SDKs.
+
+### Loading flag configuration from server SDK
 
 ![Architecture: Loading flag configuration from server SDK](/img/guides/nextjs/next-ssr-2.png)
 
