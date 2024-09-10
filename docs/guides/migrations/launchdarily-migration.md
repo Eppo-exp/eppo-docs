@@ -63,8 +63,8 @@
     - Implement a function that wraps calling Eppo’s SDK to have a fallback mechanism to use the LaunchDarkly flag values if the new service is unavailable or experiences issues.
     - When attempting to retrieve a flag value from Eppo, catch any exceptions or errors that may occur due to service unavailability or issues and return the old value.
     - Eppo SDKs only strongly typed assignment functions (e.g `getBooleanAssignment`), whereas some LaunchDarkly SDKs use a single evaluation function across types. For such SDKs, we recommend moving towards typed usage and creating wrappers for each type. Uses of the generic function can the be replaced with the typed wrappers in your application. Here are two examples:
-        
-        *TypeScript Example:*
+      
+      *TypeScript Example:*
         
         ```tsx
         // After initialization, turn off graceful failure so exceptions are rethrown
@@ -136,7 +136,9 @@
           return assignment;
         }
         ```
-        
+        If you wnat to use JSON or Numeric variants, you will have
+        to define `getJSONAssignment` and `getNumericAssignment` the same way.
+
 6. **Recreate critical flags in Eppo**
     
     :::note
@@ -149,9 +151,9 @@
     - Once you have verified that the Eppo flags are working correctly, switch your application to use the function that checks Eppo for flags instead of the LaunchDarkly ones.
     - Remove the fallback mechanism and the LaunchDarkly flag code once you have confirmed that the Eppo flags are working as expected in production.
     - It’s recommended to keep the wrapper as a facade to make future changes easier, as they will typically only need to be made to the wrapper.
-        
-        *TypeScript Example:*
-        
+      
+      *TypeScript Example:*
+      
         ```tsx
         // FeatureHelper.ts
         
@@ -256,18 +258,22 @@
     
     ```tsx
      
-    // If it's part of a Multivariate flags (How LaunchDarkly organizes values)
+    // If it's part of a Multivariate flags (How LaunchDarkly organizes values), 
+    // you will have to figure out the type of the flag as Eppo uses different calls
+    // for each variant type.
+    // If it's a JSON variation value (Eppo only):
     const value =
     	getInstance().getJSONAssignment(userId, featureKey, attributes)?.[variableKey];
     	
-    // If it's a stand-alone string variation value (Eppo only)
+    // If it's a stand-alone string variation value (Eppo only):
     const value = 
       getInstance().getStringAssignment(userId, featureKey, attributes);
 
-    // If it's a numeric variation value (Eppo only)
+    // If it's a numeric variation value (Eppo only):
     const value = 
       getInstance().getNumericAssignment(userId, featureKey, attributes);
-    ```    
+    ```
+
     ### Getting All Values of a Multi-Valued Flag Variation
     
     For example, getting all variables for a feature
