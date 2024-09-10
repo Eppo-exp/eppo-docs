@@ -1,9 +1,48 @@
-# Next.js Setup with Eppo Feature Flags.
+# Next.js Setup with Eppo Feature Flags
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 This guide walks through how to setup an Eppo Feature Flag on a client and server rendered component in a Next.js app. More specifically, this guide walks through the set up and settings of a sample Next.js app.
+
+## Architecture & support for hybrid rendering
+
+Eppo offers the ability to use both client and server side rendering. Assignment can happen on either platform and the client SDK can be initialized with a configuration from your server SDK or from the Eppo CDN.
+
+### Loading flag configuration from CDN
+
+![Architecture: Loading flag configuration from CDN](/img/guides/nextjs/next-ssr-1.png)
+
+Using Eppo's CDN is the easiest way to get started. Flag configuration is cached at the edge and the architecture requires 
+no additional development beyond integrating the SDK.
+
+See sample code below for how to instantiate these SDKs.
+
+### Loading flag configuration from server SDK
+
+![Architecture: Loading flag configuration from server SDK](/img/guides/nextjs/next-ssr-2.png)
+
+In some cases, you may want to load flag configuration from your server SDK. Serialize and transfer the configuration to the client SDK.
+
+```tsx
+// Client
+import { offlineInit, Flag, ObfuscatedFlag } from "@eppo/js-client-sdk";
+
+// configuration from your server SDK
+const configurationJsonString: string = getConfigurationFromServer();
+// The configuration will be not-obfuscated from your server SDK. If you have obfuscated flag values, you can use the `ObfuscatedFlag` type.
+const flagsConfiguration: Record<string, Flag | ObfuscatedFlag> = JSON.parse(configurationJsonString);
+
+offlineInit({ 
+  flagsConfiguration,
+  // If you have obfuscated flag values, you can use the `ObfuscatedFlag` type.
+  isObfuscated: true,
+ });
+```
+
+This function is synchronous and ready to handle assignments after it returns.
+
+Additional details are available in the [offline initialization documentation](/sdks/client-sdks/javascript#off-line-initialization) for the client SDK.
 
 ## Start a new Next.js React App
 
