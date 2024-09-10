@@ -24,6 +24,11 @@ group_. That is, a lift of 5% means the average metric value among subjects in
 the treatment variant is 5% higher than the average among subjects in the
 control variant.
 
+:::note
+If the estimate for Control is close to zero, that ratio becomes unreliable.
+We do not compute the relative lift when Control is less than 1.5 standard deviation around zero.
+:::
+
 For a lot of metrics, this is pretty straightforward: if the average revenue per
 subject in the control variant was \$10, a 5% lift would mean that the average
 revenue in the treatment variant was \$10.50, a 50-cent increase. For
