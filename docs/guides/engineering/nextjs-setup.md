@@ -1,11 +1,11 @@
-# Next.js Setup with Eppo Feature Flags.
+# Next.js Setup with Eppo Feature Flags
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 This guide walks through how to setup an Eppo Feature Flag on a client and server rendered component in a Next.js app. More specifically, this guide walks through the set up and settings of a sample Next.js app.
 
-## Architecture
+## Architecture & support for hybrid rendering
 
 Eppo offers the ability to use both client and server side rendering. Assignment can happen on either platform and the client SDK can be initialized with a configuration from your server SDK or from the Eppo CDN.
 
