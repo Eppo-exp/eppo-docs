@@ -179,13 +179,13 @@
     
     ### Initialization
     
-    [LaunchDarkly](https://docs.launchdarkly.com/sdk/features/config#javascript)*:*
+    [LaunchDarkly](https://docs.launchdarkly.com/sdk/features/config#javascript):
     
     ```tsx
     LDClient.initialize('client-side-key', context, options)
     ```
     
-    [*Eppo](https://docs.geteppo.com/sdks/client-sdks/javascript#2-initialize-the-sdk):*
+    [*Eppo*](https://docs.geteppo.com/sdks/client-sdks/javascript#2-initialize-the-sdk):
     
     ```tsx
     await init({ 
@@ -195,7 +195,7 @@
     
     ### Wiring Up Assignment Logger
     
-    [LaunchDarkly](https://docs.launchdarkly.com/sdk/features/logging/#javascript)*:*
+    [LaunchDarkly](https://docs.launchdarkly.com/sdk/features/logging/#javascript):
     
     ```tsx
     class CustomAssignmentLogger {
@@ -212,7 +212,7 @@
     LDClient.initialize('client-side-key', context, options)
     ```
     
-    [*Eppo](https://docs.geteppo.com/sdks/client-sdks/javascript#define-an-assignment-logger-experiment-assignment-only):*
+    [*Eppo*](https://docs.geteppo.com/sdks/client-sdks/javascript#define-an-assignment-logger-experiment-assignment-only):
     
     ```tsx
     const assignmentLogger: IAssignmentLogger = {
@@ -228,14 +228,14 @@
     
     For example, checking if a feature is enabled
     
-    [LaunchDarkly](https://docs.launchdarkly.com/sdk/features/evaluating#javascript)*:*
+    [LaunchDarkly](https://docs.launchdarkly.com/sdk/features/evaluating#javascript):
     
     ```tsx
     const enabled = 
       launchDarklyClientInstance.variation(featureKey, false) as boolean;
     ```
     
-    [*Eppo](https://docs.geteppo.com/sdks/client-sdks/javascript#3-assign-variations):*
+    [*Eppo*](https://docs.geteppo.com/sdks/client-sdks/javascript#3-assign-variations):
     
     ```tsx
     const enabled = 
@@ -244,7 +244,7 @@
     
     ### Getting a String Value
     
-    [LaunchDarkly](https://docs.launchdarkly.com/sdk/features/evaluating#javascript)*:*
+    [LaunchDarkly](https://docs.launchdarkly.com/sdk/features/evaluating#javascript):
     
     ```tsx
     const enabled = 
@@ -252,7 +252,7 @@
     
     ```
     
-    [*Eppo](https://docs.geteppo.com/sdks/client-sdks/javascript#typed-assignments):*
+    [*Eppo*](https://docs.geteppo.com/sdks/client-sdks/javascript#typed-assignments):
     
     ```tsx
      
@@ -269,14 +269,14 @@
     
     For example, getting all variables for a feature
     
-    [LaunchDarkly](https://docs.launchdarkly.com/sdk/features/evaluating#javascript)*:*
+    [LaunchDarkly](https://docs.launchdarkly.com/sdk/features/evaluating#javascript):
     
     ```tsx
     const enabled = 
       launchDarklyClientInstance.variation(featureKey, 'default') as object;
     ```
     
-    [*Eppo](https://docs.geteppo.com/sdks/client-sdks/javascript#typed-assignments):*
+    [*Eppo*](https://docs.geteppo.com/sdks/client-sdks/javascript#typed-assignments):
     
     ```tsx
     const values = 
