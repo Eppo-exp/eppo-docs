@@ -66,3 +66,7 @@ The final step is to create a bandit training allocation.
 1. **Targeting rules**: Define targeting rules if you only want to target specific users, for example based on device or country.
 2. **Traffic exposure**: Use the traffic exposure slider to select what percentage of traffic gets allocated and sees the contextual bandit. It is common to start with a small percentage (say 1% or 10%), and gradually increase this percentage.
 3. **Targeting rules testing**: If you have configured targeting rules, test them here by supplying subject attributes.
+
+:::info
+We do not use the same data to train and to evaluate the Bandit. We expect the Bandit traffic to be split in two: an Experiment and a Training allocation.
+:::
