@@ -89,7 +89,7 @@
             );
           } catch (e) {
             logger.warn(
-              'Error encountered evaluating boolean assignment from Eppo SDK; falling back to optimizely',
+              'Error encountered evaluating boolean assignment from Eppo SDK; falling back to LaunchDarkly',
               { featureKey, userId, attributes }
             );
             
@@ -122,7 +122,7 @@
             );
           } catch (e) {
             logger.warn(
-              'Error encountered evaluating boolean assignment from Eppo SDK; falling back to optimizely',
+              'Error encountered evaluating boolean assignment from Eppo SDK; falling back to LaunchDarkly',
               { featureKey, userId, attributes }
             );
             
@@ -242,7 +242,7 @@
       getInstance().getBoolAssignment(userId, featureKey, attributes, false);
     ```
     
-    ### Getting a String Value
+    ### Getting a Multivariate Value: String, JSON, Numeric
     
     [LaunchDarkly](https://docs.launchdarkly.com/sdk/features/evaluating#javascript):
     
@@ -256,15 +256,18 @@
     
     ```tsx
      
-    // If it's part of a multi-valued variation (How Optimizely organizes values)
+    // If it's part of a Multivariate flags (How LaunchDarkly organizes values)
     const value =
     	getInstance().getJSONAssignment(userId, featureKey, attributes)?.[variableKey];
     	
     // If it's a stand-alone string variation value (Eppo only)
     const value = 
       getInstance().getStringAssignment(userId, featureKey, attributes);
-    ```
-    
+
+    // If it's a numeric variation value (Eppo only)
+    const value = 
+      getInstance().getNumericAssignment(userId, featureKey, attributes);
+    ```    
     ### Getting All Values of a Multi-Valued Flag Variation
     
     For example, getting all variables for a feature
