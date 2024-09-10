@@ -53,11 +53,6 @@
     - Deploy the application to your staging or testing environments and verify the flag's functionality.
     - Once verified, deploy the application to your production environment and test the flag again.
 3. **Identify critical flags in LaunchDarkly**
-    
-    :::note
-    Make a copy of this template to help with identifying critical flags: https://docs.google.com/spreadsheets/d/1uOyZ8Gps8GbbCuEEUN_WMaK8tmIOZvZ5CV2v0hMYZTk/edit#gid=0
-    :::note
-    
     - Make a list of all the feature flags currently in use within your application using the provided template
     - Categorize the flags as critical or non-critical based on their importance and impact on your application's functionality.
     - Flags that are disabled or are rolled out to 100% can be categorized as non-critical
@@ -145,7 +140,7 @@
 6. **Recreate critical flags in Eppo**
     
     :::note
-    💡 Eppo can help with migrating flags to the Eppo dashboard. Please reach out to your customer support rep for help.
+    Eppo can help with migrating flags to the Eppo dashboard. Please reach out to your customer support rep for help.
     :::
     
     - In the Eppo dashboard, recreate the critical flags from LaunchDarkly.
@@ -184,13 +179,13 @@
     
     ### Initialization
     
-    [LaunchDarkly](https://docs.launchdarkly.com/sdk/features/config#javascript)*:*
+    [LaunchDarkly](https://docs.launchdarkly.com/sdk/features/config#javascript):
     
     ```tsx
     LDClient.initialize('client-side-key', context, options)
     ```
     
-    [*Eppo](https://docs.geteppo.com/sdks/client-sdks/javascript#2-initialize-the-sdk):*
+    [*Eppo*](https://docs.geteppo.com/sdks/client-sdks/javascript#2-initialize-the-sdk):
     
     ```tsx
     await init({ 
@@ -200,7 +195,7 @@
     
     ### Wiring Up Assignment Logger
     
-    [LaunchDarkly](https://docs.launchdarkly.com/sdk/features/logging/#javascript)*:*
+    [LaunchDarkly](https://docs.launchdarkly.com/sdk/features/logging/#javascript):
     
     ```tsx
     class CustomAssignmentLogger {
@@ -217,7 +212,7 @@
     LDClient.initialize('client-side-key', context, options)
     ```
     
-    [*Eppo](https://docs.geteppo.com/sdks/client-sdks/javascript#define-an-assignment-logger-experiment-assignment-only):*
+    [*Eppo*](https://docs.geteppo.com/sdks/client-sdks/javascript#define-an-assignment-logger-experiment-assignment-only):
     
     ```tsx
     const assignmentLogger: IAssignmentLogger = {
@@ -233,14 +228,14 @@
     
     For example, checking if a feature is enabled
     
-    [LaunchDarkly](https://docs.launchdarkly.com/sdk/features/evaluating#javascript)*:*
+    [LaunchDarkly](https://docs.launchdarkly.com/sdk/features/evaluating#javascript):
     
     ```tsx
     const enabled = 
       launchDarklyClientInstance.variation(featureKey, false) as boolean;
     ```
     
-    [*Eppo](https://docs.geteppo.com/sdks/client-sdks/javascript#3-assign-variations):*
+    [*Eppo*](https://docs.geteppo.com/sdks/client-sdks/javascript#3-assign-variations):
     
     ```tsx
     const enabled = 
@@ -249,7 +244,7 @@
     
     ### Getting a String Value
     
-    [LaunchDarkly](https://docs.launchdarkly.com/sdk/features/evaluating#javascript)*:*
+    [LaunchDarkly](https://docs.launchdarkly.com/sdk/features/evaluating#javascript):
     
     ```tsx
     const enabled = 
@@ -257,7 +252,7 @@
     
     ```
     
-    [*Eppo](https://docs.geteppo.com/sdks/client-sdks/javascript#typed-assignments):*
+    [*Eppo*](https://docs.geteppo.com/sdks/client-sdks/javascript#typed-assignments):
     
     ```tsx
      
@@ -274,14 +269,14 @@
     
     For example, getting all variables for a feature
     
-    [LaunchDarkly](https://docs.launchdarkly.com/sdk/features/evaluating#javascript)*:*
+    [LaunchDarkly](https://docs.launchdarkly.com/sdk/features/evaluating#javascript):
     
     ```tsx
     const enabled = 
       launchDarklyClientInstance.variation(featureKey, 'default') as object;
     ```
     
-    [*Eppo](https://docs.geteppo.com/sdks/client-sdks/javascript#typed-assignments):*
+    [*Eppo*](https://docs.geteppo.com/sdks/client-sdks/javascript#typed-assignments):
     
     ```tsx
     const values = 
