@@ -40,6 +40,8 @@ offlineInit({
  });
 ```
 
+This function is synchronous and ready to handle assignments after it returns.
+
 Additional details are available in the [offline initialization documentation](/sdks/client-sdks/javascript#off-line-initialization) for the client SDK.
 
 ## Start a new Next.js React App
