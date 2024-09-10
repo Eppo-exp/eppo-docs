@@ -140,7 +140,7 @@
 6. **Recreate critical flags in Eppo**
     
     :::note
-    💡 Eppo can help with migrating flags to the Eppo dashboard. Please reach out to your customer support rep for help.
+    Eppo can help with migrating flags to the Eppo dashboard. Please reach out to your customer support rep for help.
     :::
     
     - In the Eppo dashboard, recreate the critical flags from LaunchDarkly.
