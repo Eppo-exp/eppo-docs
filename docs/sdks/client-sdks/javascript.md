@@ -138,6 +138,36 @@ requestTimeoutMs: 500, // Give up on fetching updated configurations after half 
 numInitialRequestRetries: 0, // Don't retry a failed initialization fetch
 ```
 
+## Off-line initialization
+
+The SDK supports off-line initialization if you want to initialize the SDK with a configuration from your server SDK or other external process. In this mode the SDK will not attempt to fetch a configuration from Eppo's CDN, instead only using the provided values.
+
+This function is synchronous and ready to handle assignments after it returns.
+
+```javascript
+import { offlineInit, Flag, ObfuscatedFlag } from "@eppo/js-client-sdk";
+
+// configuration from your server SDK
+const configurationJsonString: string = getConfigurationFromServer();
+// The configuration will be not-obfuscated from your server SDK. If you have obfuscated flag values, you can use the `ObfuscatedFlag` type.
+const flagsConfiguration: Record<string, Flag | ObfuscatedFlag> = JSON.parse(configurationJsonString);
+
+offlineInit({ 
+  flagsConfiguration,
+  // If you have obfuscated flag values, you can use the `ObfuscatedFlag` type.
+  isObfuscated: true,
+ });
+```
+
+The `offlineInit` function accepts the following optional configuration arguments.
+
+| Option | Type | Description | Default |
+| ------ | ----- | ----- | ----- | 
+| **`assignmentLogger`**  | [IAssignmentLogger](https://github.com/Eppo-exp/js-client-sdk-common/blob/75c2ea1d91101d579138d07d46fca4c6ea4aafaf/src/assignment-logger.ts#L55-L62) | A callback that sends each assignment to your data warehouse. Required only for experiment analysis. See [example](#assignment-logger) below. | `null` |
+| **`flagsConfiguration`** | Record<string, Flag \| ObfuscatedFlag> | The flags configuration to use for the SDK. | `null` |
+| **`isObfuscated`** | boolean | Whether the flag values are obfuscated. | `false` |
+| **`throwOnFailedInitialization`** | boolean | Throw an error if an error occurs during initialization. | `true` |
+
 ### Define an assignment logger (experiment assignment only)
 
 If you are using the Eppo SDK for experiment assignment (i.e randomization), pass in a callback logging function to the `init` function on SDK initialization. The SDK invokes the callback to capture assignment data whenever a variation is assigned.
