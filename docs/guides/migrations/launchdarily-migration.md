@@ -136,7 +136,7 @@
           return assignment;
         }
         ```
-        If you wnat to use JSON or Numeric variants, you will have
+        If you want to use JSON or Numeric variants, you will have
         to define `getJSONAssignment` and `getNumericAssignment` the same way.
 
 6. **Recreate critical flags in Eppo**
