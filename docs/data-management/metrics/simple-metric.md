@@ -148,6 +148,28 @@ For example, consider a podcast app with a fact that logs **podcast listen event
 * _Episodes listened per user_, to measure overall content consumption. This can be captured correctly with a `Count` metric. Since repeated listens to the same episode are rare, using `Count Distinct` on episode id would give similar results but incur higher warehouse costs.
 :::
 
+#### Last Value
+
+Last Value computes the most recent value of a fact. It can be interpreted as averages across entities:
+
+$\frac{\text{SUM of most recent fact value}}{\text{Number of unique entities assigned}}$
+
+In SQL:
+
+```
+select 
+  <entity_id>, 
+  last_value(<fact_col>) over (partition by <entity_id> order by <fact_timestamp>)
+from ... 
+```
+
+Examples:
+* Recording changes to the current status of a user, such as if a user has mobile notifications enabled
+* Using ML models to create surrogate or proxy metrics. Each user has a prediction, the prediction changes over time, and the metric should use the most recent prediction for each user.
+* Data that is already aggregated at the subject level, such as purchases by user
+
+Last value is now available in Beta and will be rolled out to all customers shortly. Reach out to support@geteppo.com if you wish to be included in the Beta.
+
 #### Retention
 
 Retention metrics measure the proportion of entities with at least one event after a fixed number of days (X) from experiment assignment. For example, a 7-day retention metric on website visits would measure the proportion of users who visit the website at least 7 days after being assigned to the experiment.
