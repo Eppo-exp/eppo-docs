@@ -61,6 +61,7 @@ Eppo supports the following aggregations:
 - [Unique Entities](#unique-entities)
 - [Count](#count)
 - [Count Distinct](#count-distinct)
+- [Last Value](#last-value)
 - [Retention](#retention)
 - [Conversion](#conversion)
 - [Threshold](#threshold)
