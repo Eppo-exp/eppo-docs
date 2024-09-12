@@ -61,6 +61,7 @@ Eppo supports the following aggregations:
 - [Unique Entities](#unique-entities)
 - [Count](#count)
 - [Count Distinct](#count-distinct)
+- [Last Value](#last-value)
 - [Retention](#retention)
 - [Conversion](#conversion)
 - [Threshold](#threshold)
@@ -147,6 +148,26 @@ For example, consider a podcast app with a fact that logs **podcast listen event
 * _Unique shows listened per user_, to measure diversity of content consumption. `Count Distinct` on the show id is needed to capture this correctly. `Count` would not be an adeguate replacement, because it would also increase when users listen to more episodes from shows they already listen to.
 * _Episodes listened per user_, to measure overall content consumption. This can be captured correctly with a `Count` metric. Since repeated listens to the same episode are rare, using `Count Distinct` on episode id would give similar results but incur higher warehouse costs.
 :::
+
+#### Last Value
+
+Last Value computes the most recent value of a numeric fact. It can be interpreted as averages across entities:
+
+$\frac{\text{SUM of most recent fact value}}{\text{Number of unique entities assigned}}$
+
+In SQL:
+
+```
+select 
+  <entity_id>, 
+  last_value(<fact_col>) over (partition by <entity_id> order by <fact_timestamp>)
+from ... 
+```
+
+Examples:
+* Recording changes to the current status of a user, such as if a user has mobile notifications enabled
+* Using ML models to create surrogate or proxy metrics. Each user has a prediction, the prediction changes over time, and the metric should use the most recent prediction for each user.
+* Data that is already aggregated at the subject level, such as purchases by user
 
 #### Retention
 
