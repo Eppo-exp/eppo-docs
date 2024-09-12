@@ -151,7 +151,7 @@ For example, consider a podcast app with a fact that logs **podcast listen event
 
 #### Last Value
 
-Last Value computes the most recent value of a fact. It can be interpreted as averages across entities:
+Last Value computes the most recent value of a numeric fact. It can be interpreted as averages across entities:
 
 $\frac{\text{SUM of most recent fact value}}{\text{Number of unique entities assigned}}$
 
@@ -168,8 +168,6 @@ Examples:
 * Recording changes to the current status of a user, such as if a user has mobile notifications enabled
 * Using ML models to create surrogate or proxy metrics. Each user has a prediction, the prediction changes over time, and the metric should use the most recent prediction for each user.
 * Data that is already aggregated at the subject level, such as purchases by user
-
-Last value is now available in Beta and will be rolled out to all customers shortly. Reach out to support@geteppo.com if you wish to be included in the Beta.
 
 #### Retention
 
