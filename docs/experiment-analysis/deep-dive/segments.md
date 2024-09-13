@@ -57,6 +57,10 @@ Now, the results indicate that we are analyzing the selected segment
 
 ![experiment results filtered by a segment](/img/experiments/segments/segment_results.png)
 
+:::info 
+If an Assignment Property value includes fewer than five subjects, we will not let you create a Segment with that value for privacy reasons.
+:::
+
 ## Single property filter
 
 The single property filter allows you to quickly explore experiment results based on a specific property.
