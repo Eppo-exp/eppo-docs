@@ -6,7 +6,7 @@ sidebar_position: 2
 
 Eppo makes it easy to convert existing, UI-created metrics to yaml-defined Certified Metrics. You can either upgrade metrics individually by copying metric YAML from the metrics page, or export all of your metrics in bulk from the admin page.
 
-Once you sync your metric yaml files to Eppo, the existing metrics will be upgraded to certified and will no longer be editable in the UI. Experiments that use these metrics will not be effected and will automatically start using the certified version of the metric.
+Once you sync your metric yaml files to Eppo, the existing metrics will be upgraded to certified and will no longer be editable in the UI. Experiments that use these metrics will not be affected and will automatically start using the certified version of the metric.
 
 ## Upgrading individual fact sources and metrics
 
