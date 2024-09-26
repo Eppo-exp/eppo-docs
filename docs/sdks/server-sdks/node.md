@@ -266,7 +266,7 @@ Eppo's SDK uses an internal cache to ensure that duplicate assignment events are
 
 ### Getting variations
 
-Now that the SDK is initialized and connected to your event logger, you can check what variant a specific subject (typically user) should see by calling the `get<Type>Assignment` functions, depending on the type of the flag.
+Now that the SDK is initialized and connected to your event logger, you can check what variant a specific subject (typically user) should see by calling the `get<Type>Assignment` functions.
 
 For example, for a string-valued flag, use `getStringAssignment`:
 
@@ -282,7 +282,7 @@ const variation = eppoClient.getStringAssignment(
 );
 ```
 
-Note that Eppo is designed around a unified API for feature gates, experiments, and mutually exclusive layers. This makes it very easy to turn a flag into an experiment or vice versa, all without having to do a code release.
+Note that Eppo uses a unified API for feature gates, experiments, and mutually exclusive layers. This makes it easy to turn a flag into an experiment or vice versa without having to do a code release.
 
 The `getStringAssignment` function takes four inputs to assign a variation:
 
@@ -368,9 +368,7 @@ const variation = eppoClient.getStringAssignment(
 }
 ```
 
-:::note
-It may take up to 10 seconds for changes to Eppo experiments to be reflected by the SDK assignments.
-:::
+Note that it may take up to 10 seconds for changes to Eppo experiments to be reflected by the SDK assignments.
 
 ## Advanced Options
 
