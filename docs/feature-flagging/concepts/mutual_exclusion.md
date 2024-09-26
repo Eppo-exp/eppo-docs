@@ -64,7 +64,7 @@ A Layer in Eppo will use the `getJSONAssignment()` SDK method along with the Lay
 For example:
 
 ```javascript
-eppoClient.getAssignment(
+eppoClient.getJSONAssignment(
     subjectKey,
     layerKey,
     subjectAttributes,
