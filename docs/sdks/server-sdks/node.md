@@ -72,7 +72,7 @@ The SDK stores these configurations in memory so that assignments thereafter are
 
 ### Connecting an event logger
 
-Eppo is architected so that raw user data never leaves your system. As part of that, instead of pushing subject-level exposure events to Eppo's servers, Eppo's SDKs integrate with you existing logging system. This is done with a logging callback function defined at SDK initialization. 
+Eppo is architected so that raw user data never leaves your system. As part of that, instead of pushing subject-level exposure events to Eppo's servers, Eppo's SDKs integrate with your existing logging system. This is done with a logging callback function defined at SDK initialization. 
 
 ```javascript
 import { init } from "@eppo/node-server-sdk";
@@ -287,7 +287,7 @@ Note that Eppo uses a unified API for feature gates, experiments, and mutually e
 The `getStringAssignment` function takes four inputs to assign a variation:
 
 - `flagKey` - The key for the flag you are evaluating. This key is available on the feature flag detail page (see below).
-- `subjectKey` - The entity ID that is being experimented on, typically represented by a UUID. This key is used to deterministically assign subjects to variants.
+- `subjectKey` - A unique identifier for the subject being experimented on (e.g., user), typically represented by a UUID. This key is used to deterministically assign subjects to variants.
 - `subjectAttributes` - A map of metadata about the subject used for [targeting](/feature-flagging/concepts/targeting/). If targeting is not needed, pass in an empty object.
 - `defaultValue` - The value that will be returned if no allocation matches the subject, if the flag is not enabled, if `getStringAssignment` is invoked before the SDK has finished initializing, or if the SDK was not able to retrieve the flag configuration. Its type must match the `get<Type>Assignment` call.
 
@@ -320,7 +320,7 @@ To read more about different flag types, see the [Flag Variations](/feature-flag
 
 ### Example
 
-See an end-to-end example below of setting up the Eppo Node client and logging events to the console.
+See below for an end-to-end example of setting up the Eppo Node client and logging events to the console.
 
 ```javascript
 // Import Eppo's assignment logger interface and client initializer
@@ -374,9 +374,9 @@ Note that it may take up to 10 seconds for changes to Eppo experiments to be ref
 
 ### Exporting configuration
 
-To support the use-case of needing to bootstrap your front-end client with an Eppo Client SDK, the Eppo NodeJS SDK provides a function to export flag configurations.
+In some situations you may want to fetch flag configurations server side and then use those configurations to initialize a client side SDK without making any additional network calls. Eppo supports this through **offline initialization**. 
 
-Use the `getFlagConfigurations(): Record<string, Flag>` function to export flag configurations, stringify them (or your preferred serialization method), and send it to the front-end client as a part of your routine initialization.
+To start, you can export flag configurations from the Node SDK by using the `getFlagConfigurations(): Record<string, Flag>` function. From there, you can stringify them (or your preferred serialization method) and send it to the front-end client as a part of your routine initialization.
 
 ```javascript
 import express from 'express';
@@ -389,6 +389,25 @@ app.get('/api/flag-configurations', (req, res) => {
   const flagConfigurations = eppoClient.getFlagConfigurations();
   res.json(flagConfigurations);
 });
+```
+
+Using the values in `flagConfigurations`, you can now initialize client side SDKs with the `offlineInit` function. For instance, in the JS client-side SDK:
+
+```javascript
+import { offlineInit, Flag, ObfuscatedFlag } from "@eppo/js-client-sdk";
+
+// configuration from the server SDK
+const configurationJsonString: string = getConfigurationFromServer();
+
+// The configuration will be not-obfuscated from your server SDK. 
+// If you have obfuscated flag values, you can use the `ObfuscatedFlag` type.
+const flagsConfiguration: Record<string, Flag | ObfuscatedFlag> = JSON.parse(configurationJsonString);
+
+offlineInit({ 
+  flagsConfiguration,
+  // If you have obfuscated flag values, you can use the `ObfuscatedFlag` type.
+  isObfuscated: true,
+ });
 ```
 
 ### Initialization options
