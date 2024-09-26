@@ -171,7 +171,7 @@ getBooleanAssignment: (
   flagKey: string,
   subjectKey: string,
   subjectAttributes: Record<string, any>,
-  defaultValue: string,
+  defaultValue: boolean,
 ) => boolean
 ```
 
