@@ -11,7 +11,7 @@ Eppo's open source Node SDK can be used for both feature flagging and experiment
 
 ## Getting Started
 
-### Install the SDK
+### Installation
 
 You can install the SDK with Yarn or NPM:
 
@@ -33,9 +33,55 @@ npm install @eppo/node-server-sdk
 </TabItem>
 </Tabs>
 
-### Define an assignment logger
+### Usage
 
-Eppo encourages centralizing application logging as much as possible. Accordingly, instead of implementing a new logging framework, Eppo's SDK integrates with your existing logging system via a logging callback function defined at SDK initialization. This logger takes an [analytic event](/sdks/server-sdks/node/#assignment-logger-schema) created by Eppo, `assignment`, and writes in to a table in the data warehouse (Snowflake, Databricks, BigQuery, or Redshift).
+Begin by initializing a singleton instance of Eppo's client with an SDK key from the [Eppo interface](https://eppo.cloud/feature-flags/keys). Once initialized, the client can be used to make assignments anywhere in your app. Initialization should happen when your application starts up to generate a singleton client instance, once per application lifecycle:
+
+#### Initialize once
+
+```javascript
+import { init } from "@eppo/node-server-sdk";
+
+await init({ apiKey: "<SDK-KEY>" });
+```
+
+#### Assign anywhere
+
+```javascript
+import * as EppoSdk from "@eppo/node-server-sdk";
+
+const eppoClient = EppoSdk.getInstance();
+
+// Hypothetical user.
+const user = getCurrentUser();
+
+const variation = eppoClient.getStringAssignment(
+  'new-user-onboarding', 
+  user.id, 
+  { country: user.country }, 
+  'control'
+);
+```
+
+After initialization, the SDK begins polling Eppo’s API at regular intervals to retrieve the most recent experiment configurations (variation values, traffic allocation, etc.). You can customize initialization and polling preferences by passing in additional [initialization options](#initialization-options).
+
+The SDK stores these configurations in memory so that assignments thereafter are effectively instant. For more information, see the [architecture overview](/sdks/overview) page.
+
+
+### Connecting an event logger
+
+Eppo is architected so that raw user data never leaves your system. As part of that, instead of pushing subject-level exposure events to Eppo's servers, Eppo's SDKs integrate with your existing logging system. This is done with a logging callback function defined at SDK initialization. 
+
+```javascript
+import { init } from "@eppo/node-server-sdk";
+
+await init({
+  apiKey: "<SDK_KEY>",
+  assignmentLogger
+});
+```
+
+This logger takes an [analytic event](/sdks/server-sdks/node/#assignment-logger-schema) created by Eppo, `assignment`, and writes in to a table in the data warehouse (Snowflake, Databricks, BigQuery, or Redshift). You can read more on the [Event Logging](/sdks/event-logging) page.
 
 The code below illustrates an example implementation of a logging callback to the console and other event platforms. You could also use your own logging system, the only requirement is that the SDK receives a `logAssignment` function. Here we define an implementation of the Eppo `IAssignmentLogger` interface containing a single function named `logAssignment`:
 
@@ -211,33 +257,15 @@ const assignmentLogger: IAssignmentLogger = {
 
 </Tabs>
 
-
-
 #### Deduplicating assignment logs
 
 Eppo's SDK uses an internal cache to ensure that duplicate assignment events are not logged to the data warehouse. While Eppo's analytic engine will automatically deduplicate assignment records, this internal cache prevents firing unnecessary events and can help minimize costs associated with event logging. 
 
-### Initialize the SDK
 
-Initialize the SDK with an SDK key, which can be generated [in the Eppo interface](https://eppo.cloud/feature-flags/keys). Initialization should happen when your application starts up to generate a singleton client instance, once per application lifecycle:
+### Getting variations
 
-```javascript
-import { init } from "@eppo/node-server-sdk";
+Now that the SDK is initialized and connected to your event logger, you can check what variant a specific subject (typically user) should see by calling the `get<Type>Assignment` functions.
 
-await init({
-  apiKey: "<SDK_KEY>",
-  assignmentLogger
-});
-```
-
-After initialization, the SDK begins polling Eppo’s API at regular intervals to retrieve the most recent experiment configurations such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments thereafter are effectively instant. For more information, see the [architecture overview](/sdks/overview) page.
-
-
-
-
-### Assign variations
-
-Assign users to flags or experiments using `get<Type>Assignment`, depending on the type of the flag.
 For example, for a string-valued flag, use `getStringAssignment`:
 
 ```javascript
@@ -251,18 +279,46 @@ const variation = eppoClient.getStringAssignment(
   "<DEFAULT-VALUE>"
 );
 ```
+
+Note that Eppo uses a unified API for feature gates, experiments, and mutually exclusive layers. This makes it easy to turn a flag into an experiment or vice versa without having to do a code release.
+
 The `getStringAssignment` function takes four inputs to assign a variation:
 
 - `flagKey` - The key for the flag you are evaluating. This key is available on the feature flag detail page (see below).
-- `subjectKey` - The entity ID that is being experimented on, typically represented by a UUID. This key is used to deterministically assign subjects to variants.
+- `subjectKey` - A unique identifier for the subject being experimented on (e.g., user), typically represented by a UUID. This key is used to deterministically assign subjects to variants.
 - `subjectAttributes` - A map of metadata about the subject used for [targeting](/feature-flagging/concepts/targeting/). If targeting is not needed, pass in an empty object.
 - `defaultValue` - The value that will be returned if no allocation matches the subject, if the flag is not enabled, if `getStringAssignment` is invoked before the SDK has finished initializing, or if the SDK was not able to retrieve the flag configuration. Its type must match the `get<Type>Assignment` call.
 
 ![Example flag key](/img/feature-flagging/flag-key.png)
 
+### Typed assignments
+
+Every Eppo flag has a return type that is set once on creation in the dashboard. Once a flag is created, assignments in code should be made using the corresponding typed function: 
+
+```javascript
+getBoolAssignment(...)
+getNumericAssignment(...)
+getIntegerAssignment(...)
+getStringAssignment(...)
+getJSONAssignment(...)
+```
+
+Each function has the same signature, but returns the type in the function name. The only exception is `defaultValue`, which should be the same type as the flag. For boolean flags for instance, you should use `getBooleanAssignment`, which has the following signature:
+
+```javascript
+getBoolAssignment: (
+  flagKey: string,
+  subjectKey: string,
+  subjectAttributes: Record<string, any>,
+  defaultValue: boolean,
+) => boolean
+```
+
+To read more about different flag types, see the [Flag Variations](/feature-flagging/concepts/flag-variations) page.
+
 ### Example
 
-See an end-to-end example below of setting up the Eppo Node client and logging events to the console.
+See below for an end-to-end example of setting up the Eppo Node client and logging events to the console.
 
 ```javascript
 // Import Eppo's assignment logger interface and client initializer
@@ -310,23 +366,49 @@ const variation = eppoClient.getStringAssignment(
 }
 ```
 
-:::note
-It may take up to 10 seconds for changes to Eppo experiments to be reflected by the SDK assignments.
-:::
+Note that it may take up to 10 seconds for changes to Eppo experiments to be reflected by the SDK assignments.
 
-## Typed assignments
+## Advanced Options
 
-The following typed functions are available:
+### Exporting configuration
 
+In some situations you may want to fetch flag configurations server side and then use those configurations to initialize a client side SDK without making any additional network calls. Eppo supports this through **offline initialization**. 
+
+To start, you can export flag configurations from the Node SDK by using the `getFlagConfigurations(): Record<string, Flag>` function. From there, you can stringify them (or your preferred serialization method) and send it to the front-end client as a part of your routine initialization.
+
+```javascript
+import express from 'express';
+import * as EppoSdk from "@eppo/node-server-sdk";
+
+const app = express();
+const eppoClient = EppoSdk.getInstance();
+
+app.get('/api/flag-configurations', (req, res) => {
+  const flagConfigurations = eppoClient.getFlagConfigurations();
+  res.json(flagConfigurations);
+});
 ```
-getBooleanAssignment(...)
-getNumericAssignment(...)
-getIntegerAssignment(...)
-getStringAssignment(...)
-getJSONAssignment(...)
+
+Using the values in `flagConfigurations`, you can now initialize client side SDKs with the `offlineInit` function. For instance, in the JS client-side SDK:
+
+```javascript
+import { offlineInit, Flag, ObfuscatedFlag } from "@eppo/js-client-sdk";
+
+// configuration from the server SDK
+const configurationJsonString: string = getConfigurationFromServer();
+
+// The configuration will be not-obfuscated from your server SDK. 
+// If you have obfuscated flag values, you can use the `ObfuscatedFlag` type.
+const flagsConfiguration: Record<string, Flag | ObfuscatedFlag> = JSON.parse(configurationJsonString);
+
+offlineInit({ 
+  flagsConfiguration,
+  // If you have obfuscated flag values, you can use the `ObfuscatedFlag` type.
+  isObfuscated: true,
+ });
 ```
-To read more about different flag types, see the page on [Flag Variations](/feature-flagging/concepts/flag-variations).
-## Initialization options
+
+### Initialization options
 
 How the SDK fetches experiment configurations is configurable via additional optional initialization options:
 
@@ -338,7 +420,7 @@ How the SDK fetches experiment configurations is configurable via additional opt
 | **`throwOnFailedInitialization`** (boolean)   | Throw an error (reject the promise) if unable to fetch initial configurations during initialization.                                                                                                                        | `true`  |
 | **`numPollRequestRetries`** (number)          | If polling for updated configurations after initialization, the number of additional times a request will be attempted before giving up. Subsequent attempts are done using an exponential backoff.                         | `7`     |
 
-## Assignment Logger schema
+## Assignment Logger Schema
 
 The SDK will invoke the `logAssignment` function with an `assignment` object that contains the following fields:
 
@@ -358,9 +440,7 @@ The SDK will invoke the `logAssignment` function with an `assignment` object tha
 The `Attributes` type represents a mapping of an attribute name to its value, which could be a string, number or boolean (`Record<string, string | number | boolean>`).
 :::
 
-:::note
-More details about logging and examples (with Segment, Rudderstack, mParticle, Snowplow, Amplitude) can be found in the [event logging](/sdks/event-logging/) page.
-:::
+More details about logging can be found in the [event logging](/sdks/event-logging/) page.
 
 ## Usage with Contextual Multi-Armed Bandits
 
