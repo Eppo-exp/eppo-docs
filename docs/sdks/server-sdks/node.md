@@ -303,7 +303,7 @@ getStringAssignment(...)
 getJSONAssignment(...)
 ```
 
-Each function has the same signature, but returns the type in the function name. For booleans use `getBooleanAssignment`, which has the following signature:
+Each function has the same signature, but returns the type in the function name. The only exception is `defaultValue`, which should be the same type as the flag. For boolean flags for instance, you should use `getBooleanAssignment`, which has the following signature:
 
 ```javascript
 getBoolAssignment: (
