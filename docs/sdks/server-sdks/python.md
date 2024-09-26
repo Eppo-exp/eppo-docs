@@ -33,7 +33,7 @@ client = eppo_client.get_instance()
 …
 ```
 
-This generates a singleton client instance that can be reused throughout the application lifecycle
+This generates a singleton client instance that can be reused throughout the application lifecycle.
 
 ### C. Assign variations
 
@@ -56,7 +56,6 @@ else:
 Here's how this configuration looks in the [flag page](https://eppo.cloud/feature-flags):
 
 ![Test checkout configuration](/img/feature-flagging/test-checkout-configuration.png)
-
 
 That’s it: You can already start changing the feature flag on the page and see how it controls your code!
 
