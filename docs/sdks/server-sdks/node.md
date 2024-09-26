@@ -11,8 +11,6 @@ Eppo's open source Node SDK can be used for both feature flagging and experiment
 
 ## Getting Started
 
-To use Eppo's SDK, you'll need an Eppo account. You can check if your company has an account by navigating to [eppo.cloud](https://eppo.cloud/) and logging in with your company's SSO. 
-
 ### Installation
 
 You can install the SDK with Yarn or NPM:
