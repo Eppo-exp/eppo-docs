@@ -341,7 +341,6 @@ Significant degradations due to poor user experiences also often have large effe
 
 Conversely, for detecting improvements, it is often helpful to have additional power and to have more reliable estimates of the treatment effect, which are both advantages of the fixed-sample approach. As a result, a sensible approach is to use sequential hybrid's sequential test for early detection of poorly performing variants 
 and its fixed-sample approach for detecting improvements. This approach is effectively two one-sided tests: a sequential test with a significance level $\frac{\alpha}{4}$ is performed continuously on the degradation tail and a fixed-sample test with a significance level $\frac{\alpha}{4}$ is performed on the experiment's end date on the improvement tail.
-
 :::
 
 ## Bayesian analysis {#bayesian-analysis}
