@@ -335,6 +335,15 @@ The sequential hybrid option aims to take the best of both worlds: continuous mo
 
 Of course, there is no free lunch; there is a price to pay: first, the confidence intervals during each of the two phases are slightly wider (about 10-15%), and second it requires setting an end date of the experiment ahead of time. However, we believe this makes for an attractive trade-off.
 
+:::tip Sequential hybrid as two one-sided tests
+Another way to use sequential hybrid to take the best of both worlds is to stop early for degradations only but wait until the pre-planned end date to declare winning variants. The inflexibility of the fixed-sample methodology is often most apparent when the test is doing poorly; if a variant is significantly degrading metrics, you will likely want to pull the plug instead of fulfilling your promise not to peek. 
+Significant degradations due to poor user experiences also often have large effect sizes that offset the loss of power from the sequential methodology. In these cases, the point estimates for the lift are also of less interest compared to experiments with "winning" variants.
+
+Conversely, for detecting improvements, it is often helpful to have additional power and to have more reliable estimates of the treatment effect, which are both advantages of the fixed-sample approach. As a result, a sensible approach is to use sequential hybrid's sequential test for early detection of poorly performing variants 
+and its fixed-sample approach for detecting improvements. This approach is effectively two one-sided tests: a sequential test with a significance level $\frac{\alpha}{4}$ is performed continuously on the degradation tail and a fixed-sample test with a significance level $\frac{\alpha}{4}$ is performed on the experiment's end date on the improvement tail.
+
+:::
+
 ## Bayesian analysis {#bayesian-analysis}
 
 Both fixed-sample and sequential methods described above use a
