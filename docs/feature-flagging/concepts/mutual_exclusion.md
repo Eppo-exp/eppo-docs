@@ -66,27 +66,27 @@ To access a parameter value, you can use the following syntax:
 const subjectKey = '1727303863768';
 const layerKey = 'checkout-page';
 const subjectAttributes = {
-  'app_version': 10.4,
-  'country': 'us'
+  app_version: 10.4,
+  country: 'us',
 };
 const defaultValue = {
-  'sticky_banner': false,
-  'banner_cta': 'Shop now',
-  'shoprunner': false,
-  'promo': null  
-}
+  sticky_banner: false,
+  banner_cta: 'Shop now',
+  shoprunner: false,
+  promo: null,
+};
 
 const layerParameters = eppoClient.getJSONAssignment(
     subjectKey,
     layerKey,
     subjectAttributes,
-    defaultValue
-)
+    defaultValue,
+);
 const stickyBanner = layerParameters.sticky_banner;
 ```
 
 
-Additionally, the assignment logger will return the variation key as the variation to make logging easier:
+Additionally, the assignment logger returns the variation key as the variation to make logging easier:
 
 ```javascript
 {
@@ -113,6 +113,7 @@ Additionally, the assignment logger will return the variation key as the variati
       'shoprunner': true,
       'promo': '$20 off $100'
     }
+  }
 }
 ```
 
