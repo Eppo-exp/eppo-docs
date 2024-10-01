@@ -117,8 +117,6 @@ Additionally, the assignment logger returns the variation key as the variation t
 }
 ```
 
-
-
 ## Concluding an Experiment and Rolling out a Winning Variation
 Once the Experiment concludes, you'll want to free up the space in the layer that the Experiment was occupying and rollout any winners.
 
