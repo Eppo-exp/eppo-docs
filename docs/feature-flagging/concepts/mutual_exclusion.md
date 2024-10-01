@@ -108,10 +108,10 @@ Additionally, the assignment logger returns the variation key as the variation t
     flagEvaluationDescription: '1727303863768 belongs to the range of traffic assigned to "no-banner" defined in allocation "allocation-5561".',
     variationKey: 'no-banner',
     variationValue: {
-      'sticky_banner': false,
-      'banner_cta': 'Sign in for updates on shipping',
-      'shoprunner': true,
-      'promo': '$20 off $100'
+      sticky_banner: false,
+      banner_cta: 'Sign in for updates on shipping',
+      shoprunner: true,
+      promo: '$20 off $100'
     }
   }
 }
