@@ -130,6 +130,10 @@ As our API surface is pretty small, it is now all exposed from a single `eppo_cl
 
 Minimum required Python version has been bumped from 3.6 to 3.8.
 
+## Changes to default polling interval
+
+The default polling interval has been increased from 5 minutes to 30 seconds to be consistent with other SDKs.
+
 ### Stricter validation
 
 As Rust’s type checking is not optional, it forced us to validate the inputs more strictly.
