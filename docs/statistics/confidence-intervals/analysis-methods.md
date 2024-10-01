@@ -340,7 +340,12 @@ Another way to use sequential hybrid to take the best of both worlds is to stop 
 Significant degradations due to poor user experiences also often have large effect sizes that offset the loss of power from the sequential methodology. In these cases, the point estimates for the lift are also of less interest compared to experiments with "winning" variants.
 
 Conversely, for detecting improvements, it is often helpful to have additional power and to have more reliable estimates of the treatment effect, which are both advantages of the fixed-sample approach. As a result, a sensible approach is to use sequential hybrid's sequential test for early detection of poorly performing variants 
-and its fixed-sample approach for detecting improvements. This approach is effectively two one-sided tests: a sequential test with a significance level $\frac{\alpha}{4}$ is performed continuously on the degradation tail and a fixed-sample test with a significance level $\frac{\alpha}{4}$ is performed on the experiment's end date on the improvement tail.
+and its fixed-sample approach for detecting improvements. 
+
+This approach is effectively two one-sided tests: a sequential test with a significance level $\frac{\alpha}{4}$ is performed continuously on the degradation tail and a fixed-sample test with a significance level $\frac{\alpha}{4}$ is performed on the experiment's end date on the improvement tail. To understand where the $\frac{\alpha}{4}$ comes from, first recognize that
+the core idea of the sequential hybrid methodology is that we allocate half of the "alpha budget" to the sequential test and half to the fixed sample test. This means that the two-tailed sequential test has a significance level $\frac{\alpha}{2}$ and half of _that_ alpha is allocated to each tail, leaving $\frac{\alpha}{4}$ for each tail. If we stop the test early only for degradations, 
+we only reject the null hypothesis on the degradation tail, which means that this test is effectively a one-sided test with significance level $\frac{\alpha}{4}$. Similarly, when we run the fixed-sample test at the end of the experiment, the two-sided test has significance level $\frac{\alpha}{2}$ and the one-sided test (improvements only) has significance level $\frac{\alpha}{4}$. Note that if you use this approach, you may want to consider
+setting the confidence level to 90% ($\alpha = 0.1$) to follow the convention of allocating $\alpha$ = 0.025 to each tail, which normally would be achieved by setting the confidence level to 95%.
 :::
 
 ## Bayesian analysis {#bayesian-analysis}
