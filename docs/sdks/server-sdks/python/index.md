@@ -62,7 +62,7 @@ That’s it: You can already start changing the feature flag on the page and see
 
 However, if you want to run experiments, there’s a little extra work to configure it properly.
 
-## 2. Assignment Logging for Experiment 
+## 2. Assignment Logging for Experiment
 
 If you are using the Eppo SDK for **experiment** assignment (i.e., randomization), we will need to know which entity, typically which user, passed through an entry point and was exposed to the experiment. For that, we need to log that information.
 
@@ -134,7 +134,7 @@ You can check that the local logging file `eppo_assignments.csv` contains all th
 
 If you implemented it that way in production, you would need to upload that assignment file to your database. That’s not very convenient. Instead, we recommend you use your usual on-line logging service to do so.
 
-### B. Define an Online Assignment Logger 
+### B. Define an Online Assignment Logger
 
 In the previous example, we used a local logging function to show what it logged. In practice, we recommend that you pass a **callback logging** function when initializing the SDK. Whenever a variation is assigned, the client instance will invoke that callback, capturing assignment data.
 
@@ -262,11 +262,11 @@ We introduced `get_string_assignment`’s three required inputs in the [Getting 
 
 But that’s not all: the function also takes an optional input for entity properties.
 
-### A. Optional Properties for Targeting 
+### A. Optional Properties for Targeting
 
-Most entities on which we run feature flags have properties: sessions have browser types, users have loyalty status, corporate clients have a number of employees, videos have close-caption available or not, sport teams have a league, etc. If you want to decide how a feature flag behaves, or whether an experiment is run on a certain entity based on those, you need to send that information too. When assigning entities, you can pass that additional information through `subject_attributes`: an optional dictionary that details entity properties. 
+Most entities on which we run feature flags have properties: sessions have browser types, users have loyalty status, corporate clients have a number of employees, videos have close-caption available or not, sport teams have a league, etc. If you want to decide how a feature flag behaves, or whether an experiment is run on a certain entity based on those, you need to send that information too. When assigning entities, you can pass that additional information through `subject_attributes`: an optional dictionary that details entity properties.
 
-For example, if the entity is a customer session ,`subject_attributes` might look like this:  
+For example, if the entity is a customer session ,`subject_attributes` might look like this:
   `{country:"Andorra", loyalty:"Gold", browser_type:"Mozilla", device_type:"Macintosh",
      user_agent:"Mozilla/5.0 (Macintosh; Intel Mac OS X x.y; rv:42.0) Gecko/20100101 Firefox/42.0",}`
 
@@ -282,7 +282,7 @@ In particular, `True` and `False` are converted to the string values `"true"` an
 
 ### B. Example Payment Configuration
 
-Let’s say you are running a Django service with the User-Agent package. You want to use feature flags to offer a payment method that adapt to the browser (only Safari users should be offered to use Apple Pay), the country (Dutch users can use iDEAL), and loyalty status (members might use their points). You can use a feature flag to configure what is possible in which country, for which users, etc. 
+Let’s say you are running a Django service with the User-Agent package. You want to use feature flags to offer a payment method that adapt to the browser (only Safari users should be offered to use Apple Pay), the country (Dutch users can use iDEAL), and loyalty status (members might use their points). You can use a feature flag to configure what is possible in which country, for which users, etc.
 
 To make the decision, you can put the relevant information (`country`, `loyalty_tier`, etc.) in a `session_attributes` dictionary:
 
@@ -313,7 +313,7 @@ if request.method == 'POST':
         session_attributes,
         "<DEFAULT-VALUE>",
     )
-    
+
     if variation == 'checkout_apple_pay':
         …
     elif variation == 'checkout_ideal':
@@ -326,7 +326,7 @@ Our approach is highly flexible: it lets you configure properties that match the
 
 :::note
 
-If you create rules based on attributes on a flag or an experiment, those attributes should be passed in on every assignment call. 
+If you create rules based on attributes on a flag or an experiment, those attributes should be passed in on every assignment call.
 
 :::
 
@@ -421,7 +421,7 @@ We automatically log the following data:
 To query the bandit for an action, you can use the `get_bandit_action` function. This function takes the following parameters:
 - `flag_key` (str): The key of the feature flag corresponding to the bandit
 - `subject_key` (str): The key of the subject or user assigned to the experiment variation
-- `subject_attributes` (Attributes): The context of the subject 
+- `subject_attributes` (Attributes): The context of the subject
 - `actions` (Dict[str, Attributes]): A dictionary that maps available actions to their attributes
 - `default` (str): The default *variation* to return if the bandit cannot be queried
 
@@ -461,7 +461,7 @@ The subject context has type `Attributes` which has two fields:
 - `categorical_attributes` (Dict[str, str]): A dictionary of categorical attributes (such as "country")
 
 :::note
-The `categerical_attributes` are also used for targeting rules for the feature flag similar to how `subject_attributes` are used for that with regular feature flags. 
+The `categerical_attributes` are also used for targeting rules for the feature flag similar to how `subject_attributes` are used for that with regular feature flags.
 :::
 
 #### Action Contexts
@@ -486,7 +486,7 @@ The `bandit_result` is an instance of `BanditResult`, which has two fields:
 - `action` (Optional[str]): The action that was assigned to the subject
 
 The variation returns the feature flag variation, this can be the bandit itself, or the "status quo" variation if the user is not assigned to the bandit.
-If we are unable to generate a variation, for example when the flag is turned off, then the `default` variation is returned. 
+If we are unable to generate a variation, for example when the flag is turned off, then the `default` variation is returned.
 In both of those cases, the `action` is `None`, and you should use the status-quo algorithm to select an action.
 
 When `action` is not `None`, the bandit has selected that action to be shown to the user.
