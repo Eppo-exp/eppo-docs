@@ -9,7 +9,7 @@ Variations are the distinct paths that can be taken from a single flag. In the s
 As a simple example, consider a feature flag that controls the button color of the "Buy Now" button on the checkout page.
 In this case, the feature flag may be called `checkout_page_buy_now_button_color` and the variations could be `red`, `green` and `yellow`.
 
-Eppo flags support multiple types: boolean, string, numeric, and JSON.
+Eppo flags support multiple types: boolean, string, integer, numeric, and JSON.
 
 ![Flag types](/img/feature-flagging/flag-types.png)
 
