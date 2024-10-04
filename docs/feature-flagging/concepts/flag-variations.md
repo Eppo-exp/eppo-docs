@@ -25,6 +25,10 @@ String flags have a limit of 65KB. Strings are UTF-8 encoded, so certain charact
 
 You can use escape sequences in string flag values.
 
+## Integer flags
+
+Integer flags are recommended when you want to target variations based on integer operations.
+
 ## Numeric flags
 
 Numeric flags are recommended when you want to target variations based on dates, timeouts, or other numerical operations.
