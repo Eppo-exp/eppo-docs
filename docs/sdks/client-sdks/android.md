@@ -28,7 +28,7 @@ EppoClient eppoClient = EppoClient.init("YOUR_SDK_KEY");
 
 During initialization, the SDK sends an API request to a CDN to retrieve the most recent experiment configurations from Eppo, 
 such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments are effectively instant. 
-For more information, see the [architecture overview](/sdks/overview) page. 
+For more information, see the [architecture overview](/sdks/architecture) page. 
 
 This SDK also leverages cached configurations from previous fetches. During initialization, if a previously-cached configuration 
 is successfully loaded, it will complete initialization with that configuration. Updates will take effect once the fetch from CDN completes.
