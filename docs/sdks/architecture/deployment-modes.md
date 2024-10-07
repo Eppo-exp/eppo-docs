@@ -11,7 +11,7 @@ When weighing the pros and cons of the approaches outlined below, there are seve
 3. **Reliability and redundancy** - How many layers of redundancy do you want to have to ensure user experiences are never interrupted?
 4. **Quality of data capture** - How well does a given deployment pattern guarantee that the data captured will lead to high-quality decision making? What level of confidence do you need that a given architecture will avoid data quality issues like Sample Ratio Mismatch (SRM)?
 
-Each company might weigh each of these consideration differently. The purpose of this page is to highlight common patterns across Eppo customers and discuss the tradeoffs on the dimensions above.
+Each company might weigh each of these considerations differently. The purpose of this page is to highlight common patterns across Eppo customers and discuss the tradeoffs on the dimensions above.
 
 ## Common deployment patterns 
 
