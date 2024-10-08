@@ -101,7 +101,6 @@ sup {
   font-size: 0.9rem;
 }
 
-/* Remove accordion style and add horizontal lines between main sections */
 .theme-doc-sidebar-menu {
   font-size: 0.9rem;
 }
@@ -109,7 +108,7 @@ sup {
 /* Target only top-level categories for horizontal lines */
 .theme-doc-sidebar-menu > .theme-doc-sidebar-item-category {
   margin-bottom: 1rem;
-  padding-bottom: 1rem;
+  padding-bottom: 0.3rem;
   border-bottom: 1px solid var(--ifm-sidebar-border-color);
 }
 
@@ -169,8 +168,8 @@ sup {
   /* Optional: Add some additional styling */
   font-weight: 600;
   text-transform: uppercase;
-  padding-top: 1rem;
-  padding-bottom: 0.5rem;
+  padding-top: 0.1rem;
+  padding-bottom: 0.1rem;
 }
 
 /* Ensure the color doesn't change on hover or when active */
