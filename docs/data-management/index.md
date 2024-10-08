@@ -1,3 +1,8 @@
+---
+title: Introduction
+sidebar_position: 1
+---
+
 # Data management
 
 In this part of the documentation, we dive deep into the plumbing of Eppo: the data management layer.

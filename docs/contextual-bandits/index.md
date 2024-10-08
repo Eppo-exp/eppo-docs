@@ -1,3 +1,9 @@
+---
+title: Introduction
+sidebar_position: 1
+---
+
+
 # Contextual bandits
 
 Eppo's Contextual Bandits allows us to automatically optimize _personalized_ user experiences.

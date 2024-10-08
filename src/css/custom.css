@@ -18,6 +18,7 @@ html {
   --ifm-color-primary-lightest: #7964d3;
   --ifm-code-font-size: 95%;
   --ifm-background-color: #fcfaf7;
+  --ifm-sidebar-border-color: var(--ifm-color-gray-200);
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
@@ -29,6 +30,7 @@ html {
   --ifm-color-primary-light: #7964d3;
   --ifm-color-primary-lighter: #7964d3;
   --ifm-color-primary-lightest: #7964d3;
+  --ifm-sidebar-border-color: var(--ifm-color-gray-800);
 }
 
 [data-theme='light'] .navbar {
@@ -89,3 +91,103 @@ sup {
   margin-right: -0.2em;
   margin-bottom: -0.2em;
 }
+
+/* Reduce sidebar text size */
+.menu__link {
+  font-size: 0.9rem;
+}
+
+.menu__list-item-collapsible .menu__link {
+  font-size: 0.9rem;
+}
+
+/* Remove accordion style and add horizontal lines between main sections */
+.theme-doc-sidebar-menu {
+  font-size: 0.9rem;
+}
+
+/* Target only top-level categories for horizontal lines */
+.theme-doc-sidebar-menu > .theme-doc-sidebar-item-category {
+  margin-bottom: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--ifm-sidebar-border-color);
+}
+
+.theme-doc-sidebar-menu > .theme-doc-sidebar-item-category:last-child {
+  border-bottom: none;
+}
+
+/* Target both types of carets and scale them down */
+.menu__link--sublist-caret::after,
+.clean-btn.menu__caret {
+  transform: scale(0.6) !important;
+  transition: transform 0.2s ease;
+}
+
+/* Rotate menu__link--sublist-caret when collapsed (aria-expanded is false) */
+.menu__link--sublist-caret[aria-expanded="false"]::after {
+  transform: scale(0.6) rotate(90deg) !important;
+}
+
+/* Rotate menu__link--sublist-caret when expanded (aria-expanded is true) */
+.menu__link--sublist-caret[aria-expanded="true"]::after {
+  transform: scale(0.6) rotate(180deg) !important;
+}
+
+/* Handle clean-btn.menu__caret rotation */
+.clean-btn.menu__caret[aria-expanded="false"] {
+  transform: scale(0.6) rotate(0deg) !important;
+}
+
+.clean-btn.menu__caret[aria-expanded="true"] {
+  transform: scale(0.6) rotate(90deg) !important;
+}
+
+/* Adjust spacing for nested items */
+.menu__list .menu__list {
+  margin-left: 0.1rem;
+  margin-top: 0.2rem;
+}
+
+/* Your existing rule, modified to use the new variable */
+.theme-doc-sidebar-item-category-level-1 {
+  border-bottom: 1px solid var(--ifm-sidebar-border-color);
+}
+
+/* Target top-level sidebar items */
+.theme-doc-sidebar-item-category-level-1 > .menu__list-item-collapsible > .menu__link {
+  /* Remove hover behavior */
+  pointer-events: none;
+  cursor: default;
+
+  /* Make the font a light grey */
+  color: var(--ifm-color-gray-600);
+
+  /* Make the text a bit smaller */
+  font-size: 0.7rem;
+
+  /* Optional: Add some additional styling */
+  font-weight: 600;
+  text-transform: uppercase;
+  padding-top: 1rem;
+  padding-bottom: 0.5rem;
+}
+
+/* Ensure the color doesn't change on hover or when active */
+.theme-doc-sidebar-item-category-level-1 > .menu__list-item-collapsible > .menu__link:hover,
+.theme-doc-sidebar-item-category-level-1 > .menu__list-item-collapsible > .menu__link--active {
+  color: var(--ifm-color-gray-600);
+  background: none;
+}
+
+/* For dark mode */
+[data-theme='dark'] .theme-doc-sidebar-item-category-level-1 > .menu__list-item-collapsible > .menu__link {
+  color: var(--ifm-color-gray-400);
+}
+
+[data-theme='dark'] .theme-doc-sidebar-item-category-level-1 > .menu__list-item-collapsible > .menu__link:hover,
+[data-theme='dark'] .theme-doc-sidebar-item-category-level-1 > .menu__list-item-collapsible > .menu__link--active {
+  color: var(--ifm-color-gray-400);
+}
+
+

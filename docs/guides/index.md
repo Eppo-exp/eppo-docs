@@ -1,3 +1,8 @@
+---
+title: Introduction
+sidebar_position: 1
+---
+
 # How to guides
 
 This part of the documentation is dedicated to providing advanced guides on how to accomplish a specific task on a wide variety of topics.

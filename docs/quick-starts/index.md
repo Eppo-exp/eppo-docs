@@ -1,3 +1,8 @@
+---
+title: Introduction
+sidebar_position: 1
+---
+
 # Quickstarts
 
 This section walks you through the initial set up of Eppo. Whether you are using Eppo as an end-to-end experimentation platform, integrating with an existing feature flagging system, or using Eppo solely for feature flagging, this section will get you running on Eppo in a series of 10-minute quickstart guides.
