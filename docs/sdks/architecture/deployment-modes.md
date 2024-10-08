@@ -4,14 +4,16 @@ Eppo's architecture is highly composable and can support a variety of deployment
 
 ## Considerations when integrating a flagging service
 
-When weighing the pros and cons of the approaches outlined below, there are several dimension to consider:
+
+When weighing the pros and cons of the approaches outlined below, there are several dimensions to consider:
 
 1. **Ease of integration and maintenance** - Do you want to use a system out of the box to minimize integration and operational overhead? Or are you comfortable maintaining some additional code on top of the service?
 2. **Performance and latency** - What is your tolerance for load times for flagging and experiment configurations?
 3. **Reliability and redundancy** - How many layers of redundancy do you want to have to ensure user experiences are never interrupted?
 4. **Quality of data capture** - How well does a given deployment pattern guarantee that the data captured will lead to high-quality decision making? What level of confidence do you need that a given architecture will avoid data quality issues like Sample Ratio Mismatch (SRM)?
 
-Each company might weigh each of these consideration differently. The purpose of this page is to highlight common patterns across Eppo customers and discuss the tradeoffs on the dimensions above.
+
+Each company might weigh each of these considerations differently. The purpose of this page is to highlight common patterns across Eppo customers and discuss the tradeoffs on the dimensions above.
 
 ## Common deployment patterns 
 
@@ -138,6 +140,7 @@ A/B/n testing methodology relies on the assumption that we have a clear picture 
 
 2. **Users are more likely to be included in the experiment if they are in control**. Imagine you're experimenting on a new search algorithm and users are flagged as "exposed" once they complete a search. If a new search model has a higher latency, this could lead to more control users being included in the analysis and introduce meaningful bias in experiment results. [Sample Ratio Mismatch](/experiment-analysis/diagnostics/#traffic-imbalance-diagnostic) (SRM) tests are designed to detect this type of issue, but often use a very low p value threshold (typically 0.001). That is, it's easy to imagine a case like this hypothetical search model experiment where SRM alerts are not triggered, but experiment results are still impacted by SRM-related bias.
 
-Both of these issues are in theory solvable if teams are diligent about filtering on the correct exposure event. In practice however, as experimentation programs grow this becomes increasingly hard to enforce and monitor. As you consider different options to deploy Eppo's SDK, make sure that you consider not just immediate implementation costs, but also long term scalability and tech debt. 
+
+Both of these issues are in theory solvable if teams are diligent about filtering on the correct exposure event. However, as experimentation programs grow we have observed that this becomes increasingly hard to enforce and monitor. As you consider different options to deploy Eppo's SDK, make sure that you consider not just immediate implementation costs, but also long term scalability and tech debt. 
 
 For teams that need to fetch variants at session start (say, for fully server-side rendered architectures), Eppo can support this pattern. This is done by exporting a list of flags from the SDK and evaluating each of them in a for loop. That said, for the reasons above it is highly encouraged that teams instead follow one of the other deployment patterns whenever possible.

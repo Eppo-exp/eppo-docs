@@ -43,6 +43,7 @@ Each certified metric yaml file can also define one or more metrics (either [sim
 | `metric_display_style` <br></br> (optional) | How to display the metric, either `decimal` or `percent` (default is `decimal`) | `decimal`| 
 | `minimum_detectable_effect` <br></br> (optional)| The default [MDE](/statistics/sample-size-calculator/mde#what-is-a-minimum-detectable-effect-mde) for the metric | `0.02` | 
 | `reference_url` <br></br> (optional)| An optional URL to link to in the Eppo UI | `github.com/.../<my_metric>` | 
+| `guardrail_cutoff` <br></br> (optional)| A Guardrail cutoff value for a metric, as a decimal representing a percentage. If a metric is expected to increase, this value should be negative, to warn when the metric is decreasing by more than this value. If a metric is expected to decrease, this value should be positive, to warn when the metric is increasing by more than this value. | `-0.05` | 
 
 ### Aggregations
 
@@ -54,7 +55,8 @@ Numerators and denominators follow a similar schema, with some fields only being
 | -------- |  ----------- | ------- |
 | `fact_name` | The name of a fact as specified in `fact_source`* |  Purchase Revenue |
 | `operation` | The [aggregation method](/data-management/metrics/simple-metric#aggregation-methods) to use. <br></br><br></br>For numerator aggregations options are `sum, count, count_distinct, distinct_entity, threshold, conversion, retention`. <br></br><br></br>For denominator aggregations, valid options are `sum, count, count_distinct, distinct_entity` | `sum` |
-| `aggregation_timeframe_value` <br></br> (optional) | How many timeframe units since assignment to include | 7 |
+| `aggregation_timeframe_start_value` <br></br> (optional) | Timeframe units since assignment after which events are included | 2 |
+| `aggregation_timeframe_end_value` <br></br> (optional) | Timeframe units since assignment after which events are excluded | 7 |
 | `aggregation_timeframe_unit` <br></br> (optional) | The time unit to use: `minutes`, `hours`, `days`, or `weeks` | `days` |
 | `winsorization_lower_percentile` <br></br> (optional) | Percentile at which to clip aggregated metrics | 0.001 |
 | `winsorization_upper_percentile` <br></br> (optional) | Percentile at which to clip aggregated metrics | 0.999 |
