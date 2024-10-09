@@ -57,6 +57,66 @@ Here you are able to define the Experiment name, the Variations to include in th
 Once your Experiment allocation is created, you'll want to add an Experiment Analysis to it to understand how it's performing. Do this by clicking on the `Create Analysis` button and filling out information about the Analysis. See [Creating Experiments](/experiment-analysis/configuration) for more information.
 ![Creating an experiment analysis](/img/feature-flagging/layer-experiment-analysis.png)
 
+## Setting up the Eppo SDK for a Layer
+
+A Layer in Eppo uses the `getJSONAssignment()` SDK method along with the Layer key as the Flag key, and will return the parameters associated with the assignment for that user as an object.
+To access a parameter value, you can use the following syntax:
+
+```javascript
+const subjectKey = '1727303863768';
+const layerKey = 'checkout-page';
+const subjectAttributes = {
+  app_version: 10.4,
+  country: 'us',
+};
+const defaultValue = {
+  sticky_banner: false,
+  banner_cta: 'Shop now',
+  shoprunner: false,
+  promo: null,
+};
+
+const layerParameters = eppoClient.getJSONAssignment(
+    subjectKey,
+    layerKey,
+    subjectAttributes,
+    defaultValue,
+);
+const stickyBanner = layerParameters.sticky_banner;
+```
+
+
+Additionally, the assignment logger returns the variation key as the variation to make logging easier:
+
+```javascript
+{
+  allocation: 'allocation-5561',
+  experiment: 'checkout-page-allocation-5561',
+  featureFlag: 'checkout-page',
+  variation: 'no-banner',
+  subject: '1727303863768',
+  timestamp: '2024-09-25T22:37:43.889Z',
+  subjectAttributes: { app_version: 10.4, country: 'us' },
+  metaData: {
+    obfuscated: false,
+    sdkLanguage: 'javascript',
+    sdkLibVersion: '4.0.1'
+  },
+  evaluationDetails: {
+    environmentName: 'Production',
+    flagEvaluationCode: 'MATCH',
+    flagEvaluationDescription: '1727303863768 belongs to the range of traffic assigned to "no-banner" defined in allocation "allocation-5561".',
+    variationKey: 'no-banner',
+    variationValue: {
+      sticky_banner: 'false',
+      banner_cta: 'Sign in for updates on shipping',
+      shoprunner: 'true',
+      promo: '$20 off $100'
+    }
+  }
+}
+```
+
 ## Concluding an Experiment and Rolling out a Winning Variation
 Once the Experiment concludes, you'll want to free up the space in the layer that the Experiment was occupying and rollout any winners.
 

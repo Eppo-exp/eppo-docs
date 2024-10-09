@@ -9,7 +9,7 @@ Variations are the distinct paths that can be taken from a single flag. In the s
 As a simple example, consider a feature flag that controls the button color of the "Buy Now" button on the checkout page.
 In this case, the feature flag may be called `checkout_page_buy_now_button_color` and the variations could be `red`, `green` and `yellow`.
 
-Eppo flags support multiple types: boolean, string, numeric, and JSON.
+Eppo flags support multiple types: boolean, string, integer, numeric, and JSON.
 
 ![Flag types](/img/feature-flagging/flag-types.png)
 
@@ -24,6 +24,10 @@ String flags are the default and cover most use cases.
 String flags have a limit of 65KB. Strings are UTF-8 encoded, so certain characters, like emojis and non-ASCII characters, take more than one byte each.
 
 You can use escape sequences in string flag values.
+
+## Integer flags
+
+Integer flags are recommended when you want to target variations based on integer operations.
 
 ## Numeric flags
 
