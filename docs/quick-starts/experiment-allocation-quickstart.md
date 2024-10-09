@@ -35,17 +35,15 @@ Give the flag a descriptive human readable name and create variations for each v
 
 ### 3. Create an experiment allocation
 
-After creating the flag, switch into the Test environment:
+After creating the flag, you'll see a page where you can define how variants should be allocated in each environment. Make sure you are in the Test environment, and click **Add Allocation** >> **Experiment**.
 
-![Feature gate 2](/img/feature-flagging/feature-flag-qs-2.png)
+![Feature gate 2](/img/feature-flagging/feature-flag-qs-2e.png)
 
-Now that you're in the Test environment, add an Experiment allocation to your flag. If you want to force certain segments or users into one variant, you can also add a Feature Gate allocation. You can read more about using Eppo for Feature Gates [here](/feature-flagging/concepts/feature-gates).
+If you want to force certain segments or users into one variant, you can also add a **Feature Gate** allocation. You can read more about using Eppo for Feature Gates [here](/feature-flagging/concepts/feature-gates).
 
-![Feature gate 3](/img/feature-flagging/feature-flag-qs-3.png)
+For this example, we will assign all users to the experiment. If you want to target specific users, you can add [targeting rules](/feature-flagging/concepts/targeting) to the allocation.
 
-For this example, we will assign all users to the experiment. If you want to target specific users, you can add targeting rules to the allocation. You can read more about targeting [here](/feature-flagging/concepts/targeting).
-
-![Feature gate 4](/img/feature-flagging/feature-flag-qs-4.png)
+![Feature gate 4](/img/feature-flagging/feature-flag-qs-3e.png)
 
 ### 4. Connect a logging function to the Eppo SDK
 

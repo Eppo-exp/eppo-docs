@@ -19,6 +19,11 @@ html {
   --ifm-code-font-size: 95%;
   --ifm-background-color: #fcfaf7;
   --ifm-sidebar-border-color: var(--ifm-color-gray-200);
+  --card-bg: #fff;
+  --card-border: #ddd;
+  --card-shadow: rgba(0, 0, 0, 0.1);
+  --inline-code-bg: #f0f0f0;
+  --inline-code-color: #171717;
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
@@ -31,6 +36,11 @@ html {
   --ifm-color-primary-lighter: #7964d3;
   --ifm-color-primary-lightest: #7964d3;
   --ifm-sidebar-border-color: var(--ifm-color-gray-800);
+  --card-bg: #2d2d2d;
+  --card-border: #444;
+  --card-shadow: rgba(0, 0, 0, 0.3);
+  --inline-code-bg: #2d2d2d;
+  --inline-code-color: #e0e0e0;
 }
 
 [data-theme='light'] .navbar {
@@ -189,4 +199,66 @@ sup {
   color: var(--ifm-color-gray-400);
 }
 
+.feature-card-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
 
+.feature-card-link {
+  text-decoration: none;
+  text-align: center;
+  color: inherit;
+  display: block;
+  width: 32%;
+  margin-bottom: 20px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.feature-card {
+  padding: 20px;
+  border: 1px solid var(--card-border);
+  border-radius: 8px;
+  background-color: var(--card-bg);
+  height: 100%;
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.feature-card-link:hover {
+  text-decoration: none;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px var(--card-shadow);
+}
+
+.feature-card-link:hover .feature-card {
+  border-color: var(--ifm-color-primary);
+}
+
+/* Adjust text color for dark mode */
+[data-theme='dark'] .feature-card-title,
+[data-theme='dark'] .feature-card-description {
+  color: #f0f0f0;
+}
+
+/* Adjust icon color for dark mode */
+[data-theme='dark'] .feature-card-icon {
+  filter: invert(1) grayscale(100%) brightness(80%);
+}
+
+.feature-card-icon {
+  width: 48px;
+  height: 48px;
+  margin-right: 10px;
+  flex-shrink: 0;
+  filter: grayscale(100%) brightness(40%);
+}
+
+code {
+  font-size: 0.9em;
+  padding: 0.2em 0.4em;
+  background-color: var(--inline-code-bg);
+  color: var(--inline-code-color);
+  border-radius: 3px;
+  font-family: 'Courier New', Courier, monospace;
+  font-weight: 550;
+}
