@@ -1,6 +1,6 @@
 ---
 slug: /bandit-quickstart
-sidebar_position: 6
+sidebar_position: 7
 ---
 
 # Running your first Contextual Bandit

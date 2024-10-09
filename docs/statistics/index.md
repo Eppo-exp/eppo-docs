@@ -1,3 +1,8 @@
+---
+title: Introduction
+sidebar_position: 1
+---
+
 # Statistics
 
 Eppo's statistics engine is designed to provide a best-in-class analysis of experiment results.

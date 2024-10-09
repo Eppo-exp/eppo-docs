@@ -1,6 +1,9 @@
+---
+title: Introduction
+sidebar_position: 1
+---
+
 # Eppo's SDKs
-
-
 
 Eppo's SDKs all follow a similar architecture and interface. Whether you are using Eppo for feature gates, progressive rollouts, or randomized experiments, you can determine what variant a specific subject (e.g., user) should see with a call like this:
 

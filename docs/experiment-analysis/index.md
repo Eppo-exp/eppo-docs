@@ -1,10 +1,15 @@
+---
+title: Introduction
+sidebar_position: 1
+---
+
 import GreenHighlight from '@site/src/components/GreenHighlight'
 import RedHighlight from '@site/src/components/RedHighlight'
 import Term from '@site/src/components/glossary/Term'
 import Figure from '@site/src/components/Figure'
 import Icon from '@site/src/components/Icon'
 
-# Experiment overview
+# Experiment Analysis
 
 Once you have started to collect data on some experiments, you'll want to start
 reviewing the results! Eppo allows you to see experiment results across multiple

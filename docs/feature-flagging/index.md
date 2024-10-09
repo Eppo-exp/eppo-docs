@@ -1,4 +1,9 @@
-# Feature flags
+---
+title: Introduction
+sidebar_position: 1
+---
+
+# Eppo Feature Flags
 
 Feature flags enable you to easily toggle features on and off, conduct A/B testing, gradually roll out new functionality, and personalize user experiences — all without the need for extensive code deployments.
 With feature flags, you can empower your team to make dynamic changes, iterate quickly, and deliver enhanced user experiences with ease.
