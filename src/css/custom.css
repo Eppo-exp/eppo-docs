@@ -262,3 +262,10 @@ code {
   font-family: 'Courier New', Courier, monospace;
   font-weight: 550;
 }
+
+/* Adjust title font size for smaller screens */
+@media screen and (max-width: 768px) {
+  .feature-card-title {
+    font-size: 0.7em; /* Adjust this value as needed */
+  }
+}
