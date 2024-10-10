@@ -30,7 +30,7 @@ Start by creating a flag for the new feature:
 
 ![Feature gate 0](/img/feature-flagging/feature-flag-qs-0.png)
 
-Give the flag a descriptive human readable name and create variations for each version of the checkout page. In this example we only have two states: enabled and disabled. If your flag is more involved, you can change the flag type to be string, numeric, or JSON-valued. Read more about flag types [here](/feature-flagging/concepts/flag-variations).
+Give the flag a descriptive human readable name and create variations for each version of the feature. In this example we only have two states: enabled and disabled. If your flag is more involved, you can change the flag type to be string, numeric, or JSON-valued. Read more about flag types [here](/feature-flagging/concepts/flag-variations).
 
 ![Feature gate 1](/img/feature-flagging/feature-flag-qs-1.png)
 
@@ -121,7 +121,6 @@ await init({
   apiKey: '<SDK_KEY>'
 });
 ```
-Note, here is where you use the SDK key generated in step 1.
 
 If you are using React, we have some [React specific recommendations](/sdks/client-sdks/javascript#usage-in-react).
 
@@ -137,12 +136,13 @@ await init({
 });
 ```
 
+
 </TabItem>
 
 <TabItem value="ios" label="iOS">
 
 ```swift
-EppoClient.initialize(sdkKey: "YOUR_EPPO_API_KEY");
+EppoClient.initialize(sdkKey: "SDK_KEY");
 ```
 
 </TabItem>
@@ -152,7 +152,7 @@ EppoClient.initialize(sdkKey: "YOUR_EPPO_API_KEY");
 ```java
 import cloud.eppo.android.EppoClient;
 
-EppoClient eppoClient = EppoClient.init("YOUR_SDK_KEY");
+EppoClient eppoClient = EppoClient.init("SDK_KEY");
 ```
 
 </TabItem>
@@ -163,7 +163,7 @@ EppoClient eppoClient = EppoClient.init("YOUR_SDK_KEY");
 import eppo_client
 from eppo_client.config import Config, AssignmentLogger
 
-client_config = Config(api_key="<YOUR_API_KEY>",
+client_config = Config(api_key="<SDK_KEY>",
                        assignment_logger=AssignmentLogger())
 eppo_client.init(client_config)
 ```
