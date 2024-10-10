@@ -27,7 +27,7 @@ Each rule may have multiple conditions. The rule is only satisfied if all the co
 ## Special case: Semantic Versioning
 
 When rolling out new versions of your product or wishing to deploy custom behavior across a range of releases,
-use Eppo's targeting rules to perform numeric comparisons against strings in the SemVer format.
+use Eppo's targeting rules to perform numeric comparisons against strings in the [SemVer format](https://semver.org/).
 
 1. Create an allocation with your desired mix of rules.
 
