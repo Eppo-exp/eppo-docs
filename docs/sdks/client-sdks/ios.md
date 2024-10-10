@@ -6,7 +6,7 @@ The repository is hosted at [https://github.com/Eppo-exp/eppo-ios-sdk](https://g
 
 ## Getting Started
 
-### Install the SDK
+### Installation
 
 While in XCode:
 
@@ -17,17 +17,17 @@ While in XCode:
 
 ### Usage
 
-Begin by initializing Eppo's client with a key from the [Eppo interface](https://eppo.cloud/feature-flags/keys). It is internally a singleton: it configures itself and performs a network request to fetch the latest flag configurations. Once initialized, the client can be used to make assignments anywhere in your app.
+Begin by initializing a singleton instance of Eppo's client with a key from the [Eppo interface](https://eppo.cloud/feature-flags/keys). The client will configure itself and perform a network request to fetch the latest flag configurations. Once initialized, the client can be used to make assignments anywhere in your app.
 
 #### Initialize once
-
-It is recommended to wrap initialization in a `Task` block in order to perform network request asynchronously.
 
 ```swift
 Task {
     try await EppoClient.initialize(sdkKey: "SDK-KEY-FROM-DASHBOARD");
 }
 ```
+
+(It is recommended to wrap initialization in a `Task` block in order to perform network request asynchronously)
 
 #### Assign anywhere
 
@@ -40,11 +40,9 @@ let assignment = try eppoClient.getStringAssignment(
 );
 ```
 
-During initialization, the SDK sends an API request to Eppo to retrieve the most recent experiment configurations: variation values, traffic allocation, etc. The SDK stores these configurations in memory, meaning assignments are effectively instant (accordingly, assignment is a synchronous operation
-). For more information, see the [architecture overview](/sdks/architecture) page.
+During initialization, the SDK sends an API request to Eppo to retrieve the most recent experiment configurations: variation values, traffic allocation, etc. The SDK stores these configurations in memory, meaning assignments are effectively instant (accordingly, assignment is a synchronous operation). For more information, see the [architecture overview](/sdks/architecture) page.
 
-Eppo's SDK also supports providing the configuation directly at initialization. For more information, see the [initialization modes](#initialization-modes) section below.
-
+Eppo's SDK also supports providing the configuration directly at initialization. For more information, see the [initialization modes](#initialization-modes) section below.
 
 ### Connecting an event logger
 
@@ -57,9 +55,9 @@ eppoClient = try await EppoClient.initialize(
 )
 ```
 
-This logger takes an [analytic event](#assignment-logger-schema) created by Eppo, `assignment`, and writes in to a table in the data warehouse (Snowflake, Databricks, BigQuery, or Redshift). You can read more on the [Event Logging](/sdks/event-logging) page.
+This logger takes an [analytic event](#assignment-logger-schema) created by Eppo, `assignment`, and writes it to a table in the data warehouse (Snowflake, Databricks, BigQuery, or Redshift). You can read more on the [Event Logging](/sdks/event-logging) page.
 
-The code below illustrates an example implementation of a logging callback using Segment. You could also use your own logging system, the only requirement is that the SDK receives a `logAssignment` function. Here we define an implementation of the Eppo `AssignmentLogger` interface containing a single function named `logAssignment`:
+The code below illustrates an example implementation of a logging callback using Segment. You could also use your own logging system, the only requirement is that the SDK receives a function that takes Eppo's `Assignment` object and writes it to your warehouse. For details on the object's schema, see the [Assignment Logger Schema](#assignment-logger-schema) section below.
 
 ```swift
 // Example of a simple assignmentLogger function
@@ -102,7 +100,7 @@ The `getStringAssignment` function takes four inputs to assign a variation:
 - `flagKey` - The key for the flag you are evaluating. This key is available on the feature flag detail page (see below).
 - `subjectKey` - A unique identifier for the subject being experimented on (e.g., user), typically represented by a UUID. This key is used to deterministically assign subjects to variants.
 - `subjectAttributes` - A map of metadata about the subject used for [targeting](/feature-flagging/concepts/targeting/). If targeting is not needed, pass in an empty object.
-- `defaultValue` - The value that will be returned if no allocation matches the subject, if the flag is not enabled, if `getStringAssignment` is invoked before the SDK has finished initializing, or if the SDK was not able to retrieve the flag configuration. Its type must match the `get<Type>Assignment` call.
+- `defaultValue` - The value that will be returned if no allocation matches the subject, if the flag is not enabled, if `getStringAssignment` is invoked before a configuration has been loaded, or if the SDK was not able to retrieve the flag configuration. Its type must match the `get<Type>Assignment` call.
 
 
 #### Considerations
@@ -238,7 +236,7 @@ try EppoClient.initializeOffline(
 
 The `obfuscated` parameter is used to inform the SDK if the flag configuration is obfuscated.
 
-The initialization method is synchronous and allows you to perform assignments immediately.
+This initialization method is synchronous and allows you to perform assignments immediately.
 
 ### Fetching the configuration from the remote source on-demand
 
