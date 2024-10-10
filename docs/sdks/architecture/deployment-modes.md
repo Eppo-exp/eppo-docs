@@ -4,14 +4,12 @@ Eppo's architecture is highly composable and can support a variety of deployment
 
 ## Considerations when integrating a flagging service
 
-
 When weighing the pros and cons of the approaches outlined below, there are several dimensions to consider:
 
 1. **Ease of integration and maintenance** - Do you want to use a system out of the box to minimize integration and operational overhead? Or are you comfortable maintaining some additional code on top of the service?
 2. **Performance and latency** - What is your tolerance for load times for flagging and experiment configurations?
 3. **Reliability and redundancy** - How many layers of redundancy do you want to have to ensure user experiences are never interrupted?
 4. **Quality of data capture** - How well does a given deployment pattern guarantee that the data captured will lead to high-quality decision making? What level of confidence do you need that a given architecture will avoid data quality issues like Sample Ratio Mismatch (SRM)?
-
 
 Each company might weigh each of these considerations differently. The purpose of this page is to highlight common patterns across Eppo customers and discuss the tradeoffs on the dimensions above.
 
