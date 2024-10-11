@@ -13,18 +13,26 @@ Eppo's open source Android SDK can be used for both feature flagging and experim
 You can install the SDK using Gradle by adding to your `build.gradle` file:
 
 ```groovy
-implementation 'cloud.eppo:android-sdk:3.3.0'
+implementation 'cloud.eppo:android-sdk:4.1.0'
 ```
 
 ## 2. Initialize the SDK
 
-Initialize the SDK with an SDK key, which can be created in the Eppo web interface:
+Initialize the SDK with the Android Application and an SDK key, which can be created in the Eppo web interface:
 
 ```java
 import cloud.eppo.android.EppoClient;
 
-EppoClient eppoClient = EppoClient.init("YOUR_SDK_KEY");
+EppoClient eppoClient = new EppoClient.Builder("YOUR_SDK_KEY", getApplication())
+    .buildAndInit();
 ```
+
+There are **blocking** and **non-blocking** initialization methods:
+
+```java
+CompletableFuture<EppoClient> eppoClientFuture = new EppoClient.Builder("YOUR_SDK_KEY", getApplication())
+    .buildAndInitAsync();
+``` 
 
 During initialization, the SDK sends an API request to a CDN to retrieve the most recent experiment configurations from Eppo, 
 such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments are effectively instant. 
@@ -32,7 +40,56 @@ For more information, see the [architecture overview](/sdks/architecture) page.
 
 This SDK also leverages cached configurations from previous fetches. During initialization, if a previously-cached configuration 
 is successfully loaded, it will complete initialization with that configuration. Updates will take effect once the fetch from CDN completes.
-When initialization completes from either source, it will call the optionally-provided `InitializationCallback`.
+
+The initialization methods, `buildAndInit` and `buildAndInitAsync` return or resolve to an `EppoClient` instance with a loaded configuration.
+
+### Initial Configuration
+
+You can pass an initial configuration payload (of type `byte[]`) to the `EppoClient.Builder` class. This prevents the `EppoClient` from loading its initial configuration from a cached source, but **does not prevent an initial fetch**. You must use `offlineMode` to prevent fetching upon initialization.
+
+```java
+    // Example app configuration payload
+    interface MyAppConfig {
+        String getEppoConfig();
+    }
+
+    // Initialize the Eppo Client with the async result of the initial client configuration.
+
+    // 1. Fetch your apps initial configuration
+    CompletableFuture<MyAppConfig> initialconfigFuture = ...;
+
+    // 2. Transoform the result into just the Eppo Configuration string (byte array).
+    CompletableFuture<byte[]> eppoConfigBytes = initialconfigFuture.thenApply(
+        ic-> ic.getEppoConfig().getBytes());
+
+    // 3. Build the client with the asycn initial config
+    CompletableFuture<EppoClient> clientFuture = new EppoClient.Builder(API_KEY, getApplication())
+        .initialConfiguration(eppoConfigBytes)
+        .buildAndInitAsync();
+
+    // 4. Start assigning when the client is ready
+    EppoClient eppoClient = clientFuture.get();
+    String variation = eppoClient.getStringAssignment(...);
+```
+
+### Offline Mode
+Using `offlineMode` mode prevents the `EppoClient` from sending an API request upon initialization. When set to `true`, the `EppoClient` will attempt to load configuration from a cache on the device, or an `initialConfiguration`, if provided. The latest configuration can be pulled from the API server at any time using the `EppoClient.loadConfiguration` and `EppoClient.loadConfigurationAsync` methods.
+
+```java
+    EppoClient eppoClient = new EppoClient.Builder("YOUR_SDK_KEY", getApplication())
+        .initialConfiguration(initialConfigurationPayload)
+        .offlineMode(true)
+        .buildAndInit();
+
+    // Get assignments using initial/cached configuration
+    String variation = eppoClient.getStringAssignment(...);
+
+    // Load the latest (also saves this to the local cache).
+    eppoClient.loadConfiguration();
+
+    // Get assignments using the latest
+    String variation = eppoClient.getStringAssignment(...);
+```
 
 If you are using the SDK for experiment assignments, make sure to pass in an assignment logging callback (see [section](#define-an-assignment-logger-experiment-assignment-only) below).
 
@@ -59,31 +116,18 @@ AssignmentLogger assignmentLogger = new AssignmentLogger() {
     }
 };
 
-CountDownLatch lock = new CountDownLatch(1);
 
-InitializationCallback initializationCallback = new InitializationCallback() {
-    @Override
-    public void onCompleted() {
-        Log.w(TAG, "Eppo client successfully initialized");
-        lock.countDown();
-    }
-
-    @Override
-    public void onError(String errorMessage) {
-        Log.w(TAG, "Eppo client encountered an error initializing: " + errorMessage);
-        Log.w(TAG, "Eppo client will serve default values for assignments");
-        lock.countDown();
-    }
-};
-
-EppoClient eppoClient = new EppoClient.Builder()
-    .application(application)
-    .apiKey("YOUR_SDK_KEY")
+CompletableFuture<EppoClient> eppoClientFuture = new EppoClient.Builder("YOUR_SDK_KEY", getApplication())
     .assignmentLogger(assignmentLogger)
-    .callback(initializationCallback)
-    .buildAndInit();
-    
-lock.await(5000, TimeUnit.MILLISECONDS);
+    .buildAndInitAsync();
+
+EppoClient eppoClient;
+try {
+    eppoClient = eppoClientFuture.get(5000, TimeUnit.MILLISECONDS);
+} catch (ExecutionException | TimeoutException | InterruptedException e) {
+    // Eppo Client failed to initialize within 5 seconds.
+    throw new RuntimeException(e);
+}
 ```
 
 The SDK will invoke the `logAssignment` function with an `Assignment` object that contains the following fields:
