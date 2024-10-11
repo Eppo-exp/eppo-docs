@@ -48,7 +48,7 @@ variation = eppoClient.get_boolean_assignment(
 )
 ```
 
-After initialization, the SDK begins polling Eppo’s API at regular intervals to retrieve the most recent experiment configurations (variation values, traffic allocation, etc.). You can customize initialization and polling preferences by passing in additional [initialization options](#initialization-options). Note that polling happens independently of assignment calls and is non blocking.
+After initialization, the SDK begins polling Eppo’s CDN at regular intervals to retrieve the most recent experiment configurations (variation values, traffic allocation, etc.). You can customize initialization and polling preferences by passing in additional [initialization options](#initialization-options). Note that polling happens independently of assignment calls and is non blocking.
 
 The SDK stores these configurations in memory so that assignments thereafter are effectively instant. For more information, see the [architecture overview](/sdks/architecture) page.
 
@@ -92,9 +92,9 @@ You can configure Eppo's SDK to avoid firing duplicate assignment events by prov
 
 ### Getting variations
 
-Now that the SDK is initialized and connected to your event logger, you can check what variant a specific subject (typically user) should see by calling the `get<Type>Assignment` functions. Each time this function is called, the SDK will invoke the provided logging function to record the assignment.
+Now that the SDK is initialized and connected to your event logger, you can check what variant a specific subject (typically user) should see by calling the `get_<Type>_Assignment` functions. Each time this function is called, the SDK will invoke the provided logging function to record the assignment.
 
-For example, for a string-valued flag, use `getStringAssignment`:
+For example, for a string-valued flag, use `get_string_assignment`:
 
 ```python
 variation = eppoClient.get_string_assignment(
@@ -112,7 +112,7 @@ The `get_string_assignment` function takes four inputs to assign a variation:
 - `flag_key` - The key for the flag you are evaluating. This key is available on the feature flag detail page (see below).
 - `subject_key` - A unique identifier for the subject being experimented on (e.g., user), typically represented by a UUID. This key is used to deterministically assign subjects to variants.
 - `subject_attributes` - A map of metadata about the subject used for [targeting](/feature-flagging/concepts/targeting/). If targeting is not needed, pass in an empty object.
-- `default_value` - The value that will be returned if no allocation matches the subject, if the flag is not enabled, if `get_string_assignment` is invoked before the SDK has finished initializing, or if the SDK was not able to retrieve the flag configuration. Its type must match the `get_string_assignment` call.
+- `default_value` - The value that will be returned if no allocation matches the subject, if the flag is not enabled, if `get_string_assignment` is invoked before the SDK has finished initializing, or if the SDK was not able to retrieve the flag configuration. Its type must match the `get_<Type>_assignment` call.
 
 ![Example flag key](/img/feature-flagging/flag-key.png)
 
@@ -138,6 +138,8 @@ get_boolean_assignment(
     default_value: bool
 ) -> bool:
 ```
+
+To read more about when to use which flag type, see the [flag types](/sdks/sdk-features/flag-types) page.
 
 ## Contextual Bandits
 
@@ -382,6 +384,8 @@ eppo_client.init(
 
 ## Examples
 
+In this section, we will go through a few examples of how to use Eppo's Python SDK in two common situations: batch processing and real-time applications.
+
 ### Usage in a batch process
 
 As a basic example, imagine using Eppo's SDK to randomize users in a batch machine learning evaluation script. Further, imagine we're testing an upgrade from model version `v1.0.0` to `v1.1.0`. First we'd create a feature flag called `ml-model-version` with two variations: `v1.0.0` and `v1.1.0`. The Eppo UI should look like something like this:
@@ -477,7 +481,6 @@ g = GeoIP2()
 # ...
 
 if request.method == 'POST':
-    country_code = ""
     ip, is_routable = get_client_ip(request)
     if is_routable:
         country_code = g.city(ip)["country_code"]
@@ -520,7 +523,7 @@ Then, in the Eppo UI, your experiment assignment should look something like this
 
 ![Experiment allocation configuration](/img/feature-flagging/django_example_allocation_config.png)
 
-These rules are evaluated from top to bottom. That is, in this example an iOS user in the Netherlands will be put into the first category and see iDEAL, but not Apple Pay. If you instead want to other such users both options, consider implementing two flags: one for iDEAL, one for Apple Pay.
+These rules are evaluated from top to bottom. That is, in this example an iOS user in the Netherlands will be put into the first category and see iDEAL, but not Apple Pay. If you instead want to offer such users both options, consider implementing two flags: one for iDEAL, one for Apple Pay.
 
 Our approach is highly flexible: it lets you configure properties that match the relevant entity for your feature flag or experiment. For example, if a user is usually on iOS but they are connecting from a PC browser this time, they probably should not be offered an Apple Pay option, in spite of being labelled an iOS user.
 
