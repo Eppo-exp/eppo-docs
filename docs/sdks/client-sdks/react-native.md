@@ -112,14 +112,16 @@ For example, for a string-valued flag, use `getStringAssignment`:
 import * as EppoSdk from "@eppo/react-native-sdk";
 
 const eppoClient = EppoSdk.getInstance();
+
+// replace this with your own user object
 const user = getCurrentUser();
 
 const variation = eppoClient.getStringAssignment(
-  'show-new-feature', // flag key
-  user.id, // subject key
-  {'country': user.country, 'device': user.device}, // subject attributes
-  'default-value' // default value
-  )
+  'show-new-feature', // flagKey
+  user.id, // subjectKey
+  {'country': user.country, 'device': user.device}, // subjectAttributes
+  'default-value' // defaultValue
+)
 ```
 
 Note that Eppo uses a unified API for feature gates, experiments, and mutually exclusive layers. This makes it easy to turn a flag into an experiment or vice versa without having to do a code release.
