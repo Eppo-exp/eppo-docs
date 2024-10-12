@@ -55,7 +55,7 @@ You can pass an initial configuration payload (of type `byte[]`) to the `EppoCli
 
     // Initialize the Eppo Client with the async result of the initial client configuration.
 
-    // 1. Fetch your apps initial configuration
+    // 1. Fetch your app's initial configuration
     CompletableFuture<MyAppConfig> initialconfigFuture = ...;
 
     // 2. Transoform the result into just the Eppo Configuration string (byte array).
