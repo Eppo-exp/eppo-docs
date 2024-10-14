@@ -282,10 +282,3 @@ The SDK will invoke the `logAssignment` function with an `Assignment` object tha
 More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/sdks/event-logging/) page.
 :::
 
-## Appendix
-
-### Publishing releases
-
-Swift Package Manager relies on semantic versioning without a prefix, such as `v`.
-
-When publishing a release of the Swift SDK, use a git tag such as `3.2.1`.
