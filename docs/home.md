@@ -6,7 +6,7 @@ slug: /
 
 import FeatureCard from '../src/components/FeatureCard';
 
-# What is Eppo?
+# Welcome to the Eppo Docs
 
 Eppo is a composable next-generation feature flagging and experimentation platform focused on tightly integrating with your existing tech stack. 
 
