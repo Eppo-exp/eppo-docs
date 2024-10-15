@@ -3,10 +3,58 @@
  * bundles Infima by default. Infima is a CSS framework designed to
  * work well for content-centric websites.
  */
+
+@font-face {
+  font-family: 'Cofosansmono';
+  src: url('https://cdn.prod.website-files.com/6171016af5f2c517ec1ac76c/666c9814ffed9f88983e5203_CoFoSansMono-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cofosansmono';
+  src: url('https://cdn.prod.website-files.com/6171016af5f2c517ec1ac76c/666c98d04845e5e1209b6d06_CoFoSansMono-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cofosans';
+  src: url('https://cdn.prod.website-files.com/6171016af5f2c517ec1ac76c/666c9aaf5292e6602e947eb9_CoFoSans-Bold.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cofosans';
+  src: url('https://cdn.prod.website-files.com/6171016af5f2c517ec1ac76c/666c9b565292e6602e950607_CoFoSans-Medium.woff2') format('woff2');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cofosans';
+  src: url('https://cdn.prod.website-files.com/6171016af5f2c517ec1ac76c/666c9bc7c52e93faf2108982_CoFoSans-Regular.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Cofosans';
+  src: url('https://cdn.prod.website-files.com/6171016af5f2c517ec1ac76c/666c9c24e79ab4d046adaf3e_CoFoSans-Italic.woff2') format('woff2');
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+
 html {
   scroll-padding-top: 70px; /* height of sticky header */
 }
-
 /* You can override the default Infima variables here. */
 :root {
   --ifm-color-primary: #7964d3;
@@ -17,13 +65,20 @@ html {
   --ifm-color-primary-lighter: #7964d3;
   --ifm-color-primary-lightest: #7964d3;
   --ifm-code-font-size: 95%;
-  --ifm-background-color: #fcfaf7;
+  --ifm-background-color: #fff;
   --ifm-sidebar-border-color: var(--ifm-color-gray-200);
   --card-bg: #fff;
   --card-border: #ddd;
   --card-shadow: rgba(0, 0, 0, 0.1);
   --inline-code-bg: #f0f0f0;
   --inline-code-color: #171717;
+  --ifm-font-family-base: 'Cofosans', Arial, sans-serif;
+  --ifm-font-family-monospace: 'Cofosansmono', Menlo, monospace;
+  --ifm-h1-font-size: 2.25 rem;
+  --ifm-h2-font-size: 2 rem;
+  --ifm-h3-font-size: 1.125 rem;
+  --ifm-heading-font-weight: var(--ifm-font-weight-semibold);
+  --ifm-menu-color: var(--ifm-color-content);
 }
 
 /* For readability concerns, you should choose a lighter palette in dark mode. */
@@ -44,7 +99,10 @@ html {
 }
 
 [data-theme='light'] .navbar {
-  background-color: #fcfaf7;
+  background-color: #fff;
+}
+[data-theme='light'] .menu{
+  background-color: #FCFAF7;
 }
 
 .docusaurus-highlight-code-line {
