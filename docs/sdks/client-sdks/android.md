@@ -58,11 +58,11 @@ You can pass an initial configuration payload (of type `byte[]`) to the `EppoCli
     // 1. Fetch your app's initial configuration
     CompletableFuture<MyAppConfig> initialconfigFuture = ...;
 
-    // 2. Transoform the result into just the Eppo Configuration string (byte array).
+    // 2. Transform the result into just the Eppo Configuration string (byte array).
     CompletableFuture<byte[]> eppoConfigBytes = initialconfigFuture.thenApply(
         ic-> ic.getEppoConfig().getBytes());
 
-    // 3. Build the client with the asycn initial config
+    // 3. Build the client with the asynchronous initial config
     CompletableFuture<EppoClient> clientFuture = new EppoClient.Builder(API_KEY, getApplication())
         .initialConfiguration(eppoConfigBytes)
         .buildAndInitAsync();
