@@ -8,6 +8,10 @@ Eppo's open source Android SDK can be used for both feature flagging and experim
 - [GitHub repository](https://github.com/Eppo-exp/android-sdk)
 - [Maven package](https://search.maven.org/artifact/cloud.eppo/android-sdk)
 
+:::note Prerequisites
+Before using Eppo's SDKs, you'll need to [generate an SDK key](/sdks/sdk-keys) and [create a logging callback function](/sdks/event-logging).
+:::
+
 ## 1. Install the SDK
 
 You can install the SDK using Gradle by adding to your `build.gradle` file:

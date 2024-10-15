@@ -1,4 +1,8 @@
-# Server SDKs {#server-sdks}
+---
+sidebar_position: 1
+sidebar_label: Overview
+---
+# Server SDKs Overview {#server-sdks}
 
 Eppo's server-side SDKs may be used to implement flags and run experiments in your application server code. The below diagram shows the interactions of the SDK with Eppo's server:
 

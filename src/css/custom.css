@@ -253,6 +253,11 @@ sup {
   filter: grayscale(100%) brightness(40%);
 }
 
+/* Remove the grey scale from the .feature-card-icon */
+.feature-card-icon.feature-card-icon--noGrey {
+  filter: none;
+}
+
 code {
   font-size: 0.9em;
   padding: 0.2em 0.4em;
@@ -269,3 +274,54 @@ code {
     font-size: 0.7em; /* Adjust this value as needed */
   }
 }
+
+/* Ensure that the menu list item collapsible doesn't change background colors on hover. */
+.menu__list-item-collapsible:hover {
+  background: none;
+}
+
+/* Sidebar Icons */
+
+.sidebar-icon .menu__link::before {
+  content: '';
+  display: inline-block;
+  width: 20px; /* Adjust size as needed */
+  height: 20px; /* Adjust size as needed */
+  margin-right: 8px; /* Space between icon and text */
+  background-image: url('/img/icons/circle-1.png');
+  background-size: cover; /* Ensure the image is scaled properly */
+  vertical-align: middle; /* Align icon vertically with text */
+}
+
+.sidebar-icon.sidebar-icon--one .menu__link::before {
+  background-image: url('/img/icons/circle-1.png');
+}
+
+.sidebar-icon.sidebar-icon--two .menu__link::before {
+  background-image: url('/img/icons/circle-2.png');
+}
+
+.sidebar-icon.sidebar-icon--ios .menu__link::before {
+  background-image: url('/img/icons/apple.png');
+}
+
+.sidebar-icon.sidebar-icon--android .menu__link::before {
+  background-image: url('/img/icons/android.png');
+}
+
+.sidebar-icon.sidebar-icon--js .menu__link::before {
+  background-image: url('/img/icons/js.png');
+}
+
+.sidebar-icon.sidebar-icon--reactnative .menu__link::before {
+  background-image: url('/img/icons/react-native.png');
+}
+
+/* Make sure the icons appear brighter on dark mode. */
+[data-theme='dark'] .sidebar-icon.sidebar-icon--ios .menu__link::before,
+[data-theme='dark'] .sidebar-icon.sidebar-icon--one .menu__link::before,
+[data-theme='dark'] .sidebar-icon.sidebar-icon--two .menu__link::before
+{
+  filter: invert(100%) brightness(1000%);
+}
+

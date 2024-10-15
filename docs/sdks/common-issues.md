@@ -2,7 +2,7 @@
 sidebar_position: 10
 ---
 
-# Common pitfalls
+# Common Issues
 
 This page walks through some common pitfalls that occur when first implementing Eppo’s SDK.
 

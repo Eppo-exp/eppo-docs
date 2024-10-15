@@ -8,6 +8,10 @@ Eppo's open source React Native SDK can be used for both feature flagging and ex
 - [GitHub repository](https://github.com/Eppo-exp/react-native-sdk)
 - [NPM package](https://www.npmjs.com/package/@eppo/react-native-sdk)
 
+:::note Prerequisites
+Before using Eppo's SDKs, you'll need to [generate an SDK key](/sdks/sdk-keys) and [create a logging callback function](/sdks/event-logging).
+:::
+
 ## 1. Install the SDK
 
 You can install the SDK with Yarn or NPM:

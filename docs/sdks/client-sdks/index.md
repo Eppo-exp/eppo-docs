@@ -1,4 +1,9 @@
-# Client SDKs {#client-sdks}
+---
+sidebar_position: 1
+sidebar_label: Overview
+---
+
+# Client SDKs Overview {#client-sdks}
 
 Eppo's client SDK integrates with client-side applications that run on a user device. The below diagram shows how the SDK interacts with your application code, event tracking system, and Eppo's servers:
 

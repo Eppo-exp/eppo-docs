@@ -4,6 +4,10 @@ Eppo's open source Swift SDK can be used for both feature flagging and experimen
 
 The repository is hosted at [https://github.com/Eppo-exp/eppo-ios-sdk](https://github.com/Eppo-exp/eppo-ios-sdk)
 
+:::note Prerequisites
+Before using Eppo's SDKs, you'll need to [generate an SDK key](/sdks/sdk-keys) and [create a logging callback function](/sdks/event-logging).
+:::
+
 ## Getting Started
 
 ### Installation
