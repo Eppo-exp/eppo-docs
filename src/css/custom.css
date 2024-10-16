@@ -72,6 +72,11 @@ html {
   --card-shadow: rgba(0, 0, 0, 0.1);
   --inline-code-bg: #f0f0f0;
   --inline-code-color: #171717;
+  --toc-background-color: #FCFAF7;
+  --toc-border-color: #e0e0e0;
+  --toc-text-color: #333;
+  --toc-hover-color: #7964d3;
+  --toc-font-family: 'Cofosans', Arial, sans-serif;
   --ifm-font-family-base: 'Cofosans', Arial, sans-serif;
   --ifm-font-family-monospace: 'Cofosansmono', Menlo, monospace;
   --ifm-h1-font-size: 2.25 rem;
@@ -96,6 +101,10 @@ html {
   --card-shadow: rgba(0, 0, 0, 0.3);
   --inline-code-bg: #2d2d2d;
   --inline-code-color: #e0e0e0;
+  --toc-background-color: #282a36;
+  --toc-border-color: #3d3d3d;
+  --toc-text-color: #e0e0e0;
+  --toc-hover-color: #7964d3;
 }
 
 [data-theme='light'] .navbar {
@@ -104,6 +113,7 @@ html {
 [data-theme='light'] .menu{
   background-color: #FCFAF7;
 }
+
 
 .docusaurus-highlight-code-line {
   background-color: rgba(0, 0, 0, 0.1);
@@ -177,7 +187,7 @@ sup {
 .theme-doc-sidebar-menu > .theme-doc-sidebar-item-category {
   margin-bottom: 1rem;
   padding-bottom: 0.3rem;
-  border-bottom: 1px solid var(--ifm-sidebar-border-color);
+  border-bottom: 0px solid var(--ifm-sidebar-border-color);
 }
 
 .theme-doc-sidebar-menu > .theme-doc-sidebar-item-category:last-child {
@@ -231,20 +241,32 @@ sup {
   color: var(--ifm-color-gray-600);
 
   /* Make the text a bit smaller */
-  font-size: 0.7rem;
+  font-size: 0.75rem;
 
   /* Optional: Add some additional styling */
   font-weight: 600;
   text-transform: uppercase;
   padding-top: 0.1rem;
   padding-bottom: 0.1rem;
+
+  /* Remove hover effects */
+  background-color: transparent !important;
 }
 
-/* Ensure the color doesn't change on hover or when active */
-.theme-doc-sidebar-item-category-level-1 > .menu__list-item-collapsible > .menu__link:hover,
-.theme-doc-sidebar-item-category-level-1 > .menu__list-item-collapsible > .menu__link--active {
-  color: var(--ifm-color-gray-600);
-  background: none;
+.theme-doc-sidebar-item-category-level-2 > .menu__list-item-collapsible > .menu__link,
+.theme-doc-sidebar-item-link-level-2 > .menu__link {
+  padding-left: 0;
+}
+
+
+/* Remove hover effects for the parent element as well */
+.theme-doc-sidebar-item-category-level-1 > .menu__list-item-collapsible:hover {
+  background-color: transparent !important;
+}
+
+/* Ensure the text color doesn't change on hover */
+.theme-doc-sidebar-item-category-level-1 > .menu__list-item-collapsible > .menu__link:hover {
+  color: var(--ifm-color-gray-600) !important;
 }
 
 /* For dark mode */
@@ -326,4 +348,47 @@ code {
   .feature-card-title {
     font-size: 0.7em; /* Adjust this value as needed */
   }
+}
+
+/* Adjust these values as needed */
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.5rem;
+}
+
+h3 {
+  font-size: 1.25rem; 
+}
+
+h4 {
+  font-size: 1rem; 
+}
+
+/* Style the Table of Contents */
+.table-of-contents {
+  border-left: none !important;
+  background-color: var(--toc-background-color);
+  border-radius: 8px; /* Rounded corners */
+  padding: 16px; /* Add some padding inside the box */
+}
+
+/* Style the TOC links */
+.table-of-contents__link {
+  color: var(--toc-text-color);
+}
+
+.table-of-contents__link--active {
+  font-weight: bold;
+  color: var(--toc-hover-color)
+}
+
+.theme-doc-sidebar-container {
+  border-right: none !important;
+}
+
+img {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
 }

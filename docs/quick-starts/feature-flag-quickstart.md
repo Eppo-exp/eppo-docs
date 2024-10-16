@@ -184,7 +184,7 @@ import * as EppoSdk from "@eppo/js-client-sdk";
 const eppoClient = EppoSdk.getInstance();
 
 const variation = eppoClient.getBooleanAssignment(
-  "new-checkout-page", // flag key
+  "new-user-onboarding", // flag key
   user.id, // subject key
   {}, // userProperties
   false, // default value
@@ -203,7 +203,7 @@ import * as EppoSdk from "@eppo/node-server-sdk";
 const eppoClient = EppoSdk.getInstance();
 
 const variation = eppoClient.getBooleanAssignment(
-  "new-checkout-page", // flag key
+  "new-user-onboarding", // flag key
   user.id, // subject key
   {}, // userProperties
   false, // default value
@@ -221,10 +221,10 @@ Task {
     do {
         try await EppoClient.initialize(sdkKey: "YOUR_EPPO_API_KEY");
         self.assignment = try EppoClient.shared().getBooleanAssignment(
-            flagKey: "ios-test-app-treatment",
-            subjectKey: "test-user",
-            subjectAttributes: ["country": "US"],
-            defaultVariation: "control"
+            flagKey: "new-user-onboarding", // flag key
+            subjectKey: "test-user", // subject key
+            subjectAttributes: [], // subject attributes
+            defaultVariation: "control" // default value
         );
     } catch {
         self.assignment = nil;
@@ -244,7 +244,11 @@ It is recommended to wrap initialization in a `Task` block in order to perform n
 import cloud.eppo.android.EppoClient;
 
 EppoClient eppoClient = EppoClient.getInstance(); // requires the SDK to have already been initialized
-String variation = eppoClient.getStringAssignment("<FLAG KEY>", "<SUBJECT KEY>", "<DEFAULT VALUE>");
+String variation = eppoClient.getStringAssignment(
+  "new-user-onboarding", // flag key
+  "test-user", // subject key
+  "control" // default value
+);
 ```
 
 </TabItem>
@@ -257,7 +261,7 @@ import eppo_client
 client = eppo_client.get_instance()
 
 variation = eppoClient.get_boolean_assignment(
-  "new-checkout-page", # flag key
+  "new-user-onboarding", # flag key
   user.id, # subject key
   {}, # user properties
   false, # default value
