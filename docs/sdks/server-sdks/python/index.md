@@ -62,13 +62,14 @@ Eppo is architected so that raw user data never leaves your system. As part of t
 
 ```python
 client_config = Config(
-    api_key="<SDK-KEY-FROM-DASHBOARD>", assignment_logger=SegmentAssignmentLogger()
+    api_key="<SDK-KEY>", 
+    assignment_logger=MyAssignmentLogger()
 )
 ```
 
 This logger takes an analytic event created by Eppo, `assignment`, and writes in to a table in the data warehouse (Snowflake, Databricks, BigQuery, or Redshift). You can read more on the [Event Logging](/sdks/event-logging) page.
 
-The code below illustrates an example implementation of a logging callback using Segment. You could also use your own logging system, the only requirement is that the SDK receives a `log_assignment` function that write the Eppo-managed `assignment` event to your data warehouse.
+The code below illustrates an example implementation of a logging callback using Segment. You can provide any logging function, the only requirement is that the SDK receives a `log_assignment` function that write the Eppo-managed `assignment` event to your data warehouse.
 
 Here we define an implementation of the Eppo `AssignmentLogger` class containing a single function named `log_assignment`:
 
@@ -118,7 +119,7 @@ The `get_string_assignment` function takes four inputs to assign a variation:
 
 ### Typed assignments
 
-Every Eppo flag has a return type that is set once on creation in the dashboard. Once a flag is created, assignments in code should be made using the corresponding typed function: 
+Every Eppo flag has a return type that is set on creation in the dashboard. Once a flag is created, assignments in code should be made using the corresponding typed function: 
 
 ```python
 get_boolean_assignment(...)
@@ -128,7 +129,7 @@ get_string_assignment(...)
 get_json_assignment(...)
 ```
 
-Each function has the same signature, but returns the type in the function name. The only exception is `defaultValue`, which should be the same type as the flag. For boolean flags for instance, you should use `getBooleanAssignment`, which has the following signature:
+Each function has the same signature, but returns the type in the function name. The only exception is `default_value`, which should be the same type as the flag. For boolean flags for instance, you should use `getBooleanAssignment`, which has the following signature:
 
 ```python
 get_boolean_assignment(
@@ -468,7 +469,7 @@ In a real-world scenario, you would send these logs to your warehouse of choice.
 
 While Eppo's SDK can be used for batch processing as described above, it is most commonly used in live applications to perform assignment in real time.
 
-Let’s say you are running a Django service with the User-Agent package. You can use feature flags to offer a payment method that adapt to the browser (only Safari users should be offered to use Apple Pay), the country (Dutch users can use iDEAL), and loyalty status (members might use their points). You can use a feature flag to configure what is possible in which country, for which users, etc.
+Let’s say you are running a Django service with the User-Agent package. You can use feature flags to offer a payment method that adapts to the browser (only Safari users should be offered to use Apple Pay), the country (Dutch users can use iDEAL), and loyalty status (members might use their points). You can use a feature flag to configure what is possible in which country, for which users, etc.
 
 To make the decision, you can put the relevant information (`country`, `loyalty_tier`, `device_type`, etc.) in a `session_attributes` dictionary:
 
