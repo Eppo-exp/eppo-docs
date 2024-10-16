@@ -1,4 +1,4 @@
-# Assignment deduplication
+# Assignment Deduplication
 
 Each invocation of the `get*Assignment` methods triggers the logging callback function. 
 If you have connected it to transmit events to your Data Warehouse, this

@@ -1,12 +1,53 @@
 ---
 title: Introduction
+sidebar_label: Get Started
 sidebar_position: 1
 ---
 
-# Eppo's SDKs
+import FeatureCard from '../../src/components/FeatureCard';
 
-Eppo's SDKs all follow a similar architecture and interface. Whether you are using Eppo for feature gates, progressive rollouts, or randomized experiments, you can determine what variant a specific subject (e.g., user) should see with a call like this:
+# Get Started with Eppo's SDKs
 
+Eppo's SDKs offer powerful tools for feature flagging, progressive rollouts, and randomized experiments, designed to work seamlessly across various platforms. Each SDK retrieves flag and experiment configurations, performs local assignments, and logs experiment data for analysis, all while ensuring fast and reliable performance.
+
+You can get started with any of the SDKs below:
+
+## Client SDKs
+
+<div className="feature-card-container">
+  <FeatureCard 
+    title="iOS" 
+    description="Integrate the iOS SDK for feature flags and experiments with instant assignment." 
+    link="/sdks/client-sdks/ios" 
+    iconSrc="/img/icons/apple.png" 
+    noGreyScale 
+  />
+  <FeatureCard 
+    title="Android" 
+    description="Use the Android SDK to manage feature flags and log experiment data." 
+    link="/sdks/client-sdks/android" 
+    iconSrc="/img/icons/android.png" 
+    noGreyScale 
+  />
+  <FeatureCard 
+    title="React Native" 
+    description="Implement feature flags and experiments with the React Native SDK." 
+    link="/sdks/client-sdks/react-native" 
+    iconSrc="/img/icons/react-native.png" 
+    noGreyScale 
+  />
+  <FeatureCard 
+    title="JavaScript" 
+    description="Use the JavaScript SDK for in-browser feature flagging and experiments." 
+    link="/sdks/client-sdks/javascript" 
+    iconSrc="/img/icons/js.png" 
+    noGreyScale 
+  />
+</div>
+
+## Features
+
+With features like typed assignments, configuration caching, and real-time updates, Eppo’s SDKs are optimized for flexible experimentation and rapid deployment in production environments.
 
 ```javascript
 const eppoClient = EppoSdk.getInstance();

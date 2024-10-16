@@ -1,8 +1,13 @@
 ---
 sidebar_position: 3
+sidebar_label: Create SDK Key
 ---
 
 # SDK keys and environments
+
+:::note
+SDK Keys are used to deploy feature flags and experiments. They are distinct from [API Keys](/reference/api/), which are used in Eppo’s REST API.
+:::
 
 To help control feature deployment and configuration across different environments, Eppo supports adding multiple environments. When the SDK is initialized, Eppo will check what environment the provided SDK key belongs to and return variants based on allocations in the corresponding environment. By default Eppo has two environments: Test and Production, but you can add more on the **Environments** page.
 
@@ -17,8 +22,3 @@ When Eppo's SDK is initialized, only configurations from flags enabled in that e
 To create an SDK key, navigate to the **SDK Keys** section of the **Configuration** page and click **New SDK Key**. 
 
 ![SDK key setup](/img/feature-flagging/environments/sdk-keys.png)
-
-
-:::note
-SDK Keys are used to deploy feature flags and experiments. They are distinct from [API Keys](/reference/api/), which are used in Eppo’s REST API.
-:::

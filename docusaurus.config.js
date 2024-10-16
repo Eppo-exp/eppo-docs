@@ -107,7 +107,12 @@ async function createConfig () {
           srcDark: 'img/eppo_logo2024_dark.svg'
         },
         items: [
-        ]
+          {
+            to: '/sdks', // the route for SDKs
+            label: 'SDKs', // the label in the header
+            position: 'left', // position in the navbar
+          }
+        ],
       },
       footer: {
         style: 'dark',

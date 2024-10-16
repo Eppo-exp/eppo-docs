@@ -1,4 +1,4 @@
-# Contextual multi-armed bandits
+# Contextual Multi-armed Bandits
 
 The SDKs also provide functionality for getting an assignment from a [contextual multi-armed bandit](/contextual-bandits/).
 

@@ -15,6 +15,10 @@ Eppo's open source JavaScript SDK can be used for both feature flagging and expe
 - [SDK Reference](https://eppo-exp.github.io/js-client-sdk/js-client-sdk.html)
 - [NPM package](https://www.npmjs.com/package/@eppo/js-client-sdk)
 
+:::note Prerequisites
+Before using Eppo's SDKs, you'll need to [generate an SDK key](/sdks/sdk-keys) and [create a logging callback function](/sdks/event-logging).
+:::
+
 ## Getting Started
 
 ### Installation

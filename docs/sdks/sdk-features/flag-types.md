@@ -1,4 +1,4 @@
-# Typed assignments
+# Typed Assignments
 
 The SDKs provide functions for getting assignments by different types. Visit [this page](/feature-flagging/concepts/flag-variations) to learn how to configure flag variations in the Eppo application.
 

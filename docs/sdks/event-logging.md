@@ -1,5 +1,6 @@
 ---
 sidebar_position: 4
+sidebar_label: Set Up Event Logging
 ---
 
 import Tabs from '@theme/Tabs';
