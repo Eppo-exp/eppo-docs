@@ -8,378 +8,141 @@ Eppo's Python SDK can be used for both feature flagging and experiment assignmen
 - [GitHub repository](https://github.com/Eppo-exp/python-sdk)
 - [PyPI package](https://pypi.org/project/eppo-server-sdk/)
 
-## 1. Getting started
+## Getting Started
 
-### A. Install the SDK
+### Installation
 
-First, install the SDK with PIP:
+To start, install the SDK with PIP:
 
 ```bash
 pip install eppo-server-sdk
 ```
 
-### B. Initialize the SDK
+### Usage
 
-To initialize the SDK, you will need an SDK key. You can generate one [in the flag interface](https://eppo.cloud/feature-flags/keys).
+Begin by initializing a singleton instance of Eppo's client with an SDK key from the [Eppo interface](https://eppo.cloud/feature-flags/keys). Once initialized, the client can be used to make assignments anywhere in your app. Initialization should happen when your application starts up to generate a singleton client instance, once per application lifecycle:
+
+#### Initialize once
 
 ```python
 import eppo_client
 from eppo_client.config import Config, AssignmentLogger
 
-client_config = Config(api_key="<YOUR_API_KEY>",
-                       assignment_logger=AssignmentLogger())
+client_config = Config(api_key="<SDK-KEY-FROM-DASHBOARD>")
 eppo_client.init(client_config)
-client = eppo_client.get_instance()
-…
 ```
 
-This generates a singleton client instance that can be reused throughout the application lifecycle
-
-### C. Assign variations
-
-Assign users to flags or experiments using `get_<type>_assignment`, depending on the type of the flag.
-For example, for a String-valued flag, use `get_string_assignment`:
+#### Assign anywhere
 
 ```python
-…
-variation = client.get_string_assignment("<FLAG-KEY>", "<SUBJECT-KEY>", <SUBJECT-ATTRIBUTES>, "<DEFAULT-VALUE>")
-if variation == "fast_checkout":
-    …
-else:
-    …
-```
-* `<FLAG-KEY>` is the key that you chose when creating a flag; you can find it on the [flag page](https://eppo.cloud/feature-flags). For the rest of this presentation, we’ll use `"test-checkout"`. To follow along, we recommend that you create a test flag in your account, and split users between `"fast_checkout"` and `"standard_checkout"`.
-* `<SUBJECT-KEY>` is the value that identifies each entity in your experiment, typically `user_id`.
-* `<SUBJECT-ATTRIBUTES>` is a dictionary of metadata about the subject used for targeting. If you create targeting rules based on attributes, those attributes must be passed in on every assignment call. If no attributes are needed, pass in an empty dictionary.
-* `<DEFAULT-VALUE>` is the value that will be returned if no allocation matches the subject, if the flag is not enabled, if `get_string_assignment` is invoked before the SDK has finished initializing, or if the SDK was not able to retrieve the flag configuration.
-
-Here's how this configuration looks in the [flag page](https://eppo.cloud/feature-flags):
-
-![Test checkout configuration](/img/feature-flagging/test-checkout-configuration.png)
-
-
-That’s it: You can already start changing the feature flag on the page and see how it controls your code!
-
-However, if you want to run experiments, there’s a little extra work to configure it properly.
-
-## 2. Assignment Logging for Experiment
-
-If you are using the Eppo SDK for **experiment** assignment (i.e., randomization), we will need to know which entity, typically which user, passed through an entry point and was exposed to the experiment. For that, we need to log that information.
-
-### A. Local Logging
-
-To keep our example simple, let’s first use a local function to see what is logged. We’ll use the Python default `logging` package for now.
-
-For the assignment event to send the relevant information, we have to expand the class `AssignmentLogger` by defining the method `log_assignment` with a function that stores the contents of `assignment`.
-
-We have also stored out SDK Key into the environment variable `EPPO_API_KEY` as a common safety practice.
-
-```python
-import logging
-import os
-from uuid import uuid4
-from time import sleep
 import eppo_client
-from eppo_client.config import Config, AssignmentLogger
 
-logging.basicConfig(
-    filename='eppo_assignments.csv',
-    level=logging.INFO,
-    format=f'%(message)s')
-
-
-class LocalAssignmentLogger(AssignmentLogger):
-    def log_assignment(self, assignment):
-        logging.info(assignment)
-
-
-client_config = Config(api_key=os.getenv("EPPO_API_KEY"),
-                       assignment_logger=LocalAssignmentLogger())
-eppo_client.init(client_config)
 client = eppo_client.get_instance()
+user = get_current_user()
 
-# Give the client some time to initialize.
-# Note that the client may get stuck on this step if there are errors.
-# Please refer to the logs.
-while client.get_string_assignment("test-checkout", '0', {}, "standard_checkout") is None:
-    print("Waiting for client to initialize. Check the logs if this message persists.")
-    sleep(1)
-# In a real-world scenario, other modules would load
-# and the client would be initialized in the background.
-
-for _ in range(10):
-    # Randomly creating user ids. Note that they might not actually exist in your experiment.
-    user_id = str(uuid4())
-    variation = client.get_string_assignment("test-checkout", user_id, {}, "standard_checkout")
-    if variation == "fast_checkout":
-        print(f"{user_id}: Fast checkout")
-    elif variation == "standard_checkout":
-        print(f"{user_id}: Standard checkout")
-    else:
-        print(f"{user_id}: Check your configuration")
-
+variation = eppoClient.get_boolean_assignment(
+    'show-new-feature', 
+    user.id, 
+    { 'country': user.country }, 
+    False
+)
 ```
 
-You can check that the local logging file `eppo_assignments.csv` contains all the assignment information.
+After initialization, the SDK begins polling Eppo’s CDN at regular intervals to retrieve the most recent experiment configurations (variation values, traffic allocation, etc.). You can customize initialization and polling preferences by passing in additional [initialization options](#initialization-options). Note that polling happens independently of assignment calls and is non blocking.
 
-| Field                     | Description                                                                                                              | Example                                  |
-|---------------------------|--------------------------------------------------------------------------------------------------------------------------|------------------------------------------|
-| `experiment` (string)     | An Eppo experiment key                                                                                                   | `"checkout_type-allocation-1234"`        |
-| `subject` (string)        | An identifier of the subject or user assigned to the experiment variation                                                | `"60a67ae2-c9d2-4f8a-9be0-3bb4fe0c96ff"` |
-| `variation` (string)      | The experiment variation the subject was assigned to                                                                     | `"fast_checkout"`                        |
-| `timestamp` (string)      | The time when the subject was assigned to the variation                                                                  | `2021-06-22T17:35:12.000Z`               |
-| `subjectAttributes` (map) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `{}`                                     |
-| `featureFlag` (string)    | An Eppo feature flag key                                                                                                 | `"checkout_type"`                        |
-| `allocation` (string)     | An Eppo allocation key                                                                                                   | `"allocation-1234"`                      |
-
-If you implemented it that way in production, you would need to upload that assignment file to your database. That’s not very convenient. Instead, we recommend you use your usual on-line logging service to do so.
-
-### B. Define an Online Assignment Logger
-
-In the previous example, we used a local logging function to show what it logged. In practice, we recommend that you pass a **callback logging** function when initializing the SDK. Whenever a variation is assigned, the client instance will invoke that callback, capturing assignment data.
-
-The code below illustrates an example implementation of a logging callback using **Segment**. You could also use your own logging system, the only requirement is that the SDK receives a `log_assignment` function.
+The SDK stores these configurations in memory so that assignments thereafter are effectively instant. For more information, see the [architecture overview](/sdks/architecture) page.
 
 :::note
-
-More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/sdks/event-logging/) page.
-
+The SDK's initialization is asynchronous to not block other parts of the server spin up process. If you are using Eppo's SDK in a script and prefer a synchronous method, please see the [waiting for configuration](#waiting-for-configuration) section below.
 :::
 
+### Connecting an event logger
+
+Eppo is architected so that raw user data never leaves your system. As part of that, instead of pushing subject-level exposure events to Eppo's servers, Eppo's SDKs integrate with your existing logging system. This is done with a logging callback function defined at SDK initialization. 
+
+```python
+client_config = Config(
+    api_key="<SDK-KEY>", 
+    assignment_logger=MyAssignmentLogger()
+)
+```
+
+This logger takes an analytic event created by Eppo, `assignment`, and writes in to a table in the data warehouse (Snowflake, Databricks, BigQuery, or Redshift). You can read more on the [Event Logging](/sdks/event-logging) page.
+
+The code below illustrates an example implementation of a logging callback using Segment. You can provide any logging function, the only requirement is that the SDK receives a `log_assignment` function that write the Eppo-managed `assignment` event to your data warehouse.
+
+Here we define an implementation of the Eppo `AssignmentLogger` class containing a single function named `log_assignment`:
 
 ```python
 from eppo_client.assignment_logger import AssignmentLogger
 import analytics
 
-# Connect to Segment (or your own event-tracking system)
+# Connect to Segment.
 analytics.write_key = "<SEGMENT_WRITE_KEY>"
-
 
 class SegmentAssignmentLogger(AssignmentLogger):
     def log_assignment(self, assignment):
-        analytics.track(assignment["subject"],
-                        "Eppo Randomization Assignment", assignment)
-
-
-client_config = Config(api_key="<YOUR_API_KEY>",
-                       assignment_logger=SegmentAssignmentLogger())
-
-…
+        analytics.track(
+            assignment["subject"], 
+            "Eppo Randomization Assignment", 
+            assignment
+        )
 ```
 
-The SDK will invoke the `log_assignment` function with an `assignment` object that contains the fields you've seen locally. Make sure the dictionary is parse properly by your tooling.
+You can configure Eppo's SDK to avoid firing duplicate assignment events by providing an optional cache. To learn more, see the [deduplication](#deduplicating-logs) section below.
 
+### Getting variations
 
-## 3. Running the SDK
+Now that the SDK is initialized and connected to your event logger, you can check what variant a specific subject (typically user) should see by calling the `get_<Type>_Assignment` functions. Each time this function is called, the SDK will invoke the provided logging function to record the assignment.
 
-How is this SDK, hosted on your servers, actually getting the relevant information from Eppo?
+For example, for a string-valued flag, use `get_string_assignment`:
 
-### A. Loading Configuration
-
-At initialization, the SDK polls Eppo’s API to retrieve the most recent experiment configuration. The SDK stores that configuration in memory. This is why assignments are effectively instant, as you can see yourself by profiling the code above.
-
-:::note
-
-Your users’ private information doesn’t leave your servers. Eppo only stores your flag and experiment configurations.
-
-:::
-
-For more information on the performance of Eppo's SDKs, see the [latency](/sdks/faqs/latency) and [risk](/sdks/faqs/risk) pages.
-
-### B. Automatically Updating the SDK Configuration
-
-After initialization, the SDK continues polling Eppo’s API at 30-second intervals. This retrieves the most recent flag and experiment configurations such as variation values, targeting rules, and traffic allocation. This happens independently of assignment calls.
-
-:::note
-
-Changes made to experiments on Eppo’s web interface are almost instantly propagated through our Content-delivery network (CDN) Fastly. Because of the refresh rate, it may take up to 30 seconds (± 5 seconds fuzzing) for those to be reflected by the SDK assignments.
-
-:::
-
-
-:::info
-
-By default, the Eppo client initialization is asynchronous to ensure no critical code paths are blocked. For more information on handling non-blocking initialization, see our [documentation here](/sdks/common-issues#3-not-handling-non-blocking-initialization).
-
-:::
-
-### C. Advanced Configuration Control
-
-The default periodic polling setup is suitable for most cases but may not be efficient in short-lived serverless environments like Cloud Functions or Lambdas, where a new configuration is fetched on every function call.
-Starting with v3.7.0, Python SDK exposes an advanced API to allow manual control over configuration.
-
-To disable default polling behavior, set `poll_interval_seconds` to `None` when initializing the client.
 ```python
-import eppo_client
-from eppo_client import Config, ApplicationLogger
-
-eppo_client.init(
-    Config(api_key="<api-key>", application_logger=..., poll_interval_seconds=None)
+variation = eppoClient.get_string_assignment(
+    'show-new-feature', # flag_key
+    user.id, # subject_key
+    { 'country': user.country }, # subject_attributes
+    'control' # default_value
 )
 ```
 
-`Configuration` class represents Eppo configuration that defines how the SDK evaluates feature flags.
-It can be initialized from the CDN response bytes (`https://fscdn.eppo.cloud/api/flag-config/v1/config`).
-As a user, you have full control over how this response is retrieved and stored.
-```python
-from eppo_client import Configuration
+Note that Eppo uses a unified API for feature gates, experiments, and mutually exclusive layers. This makes it easy to turn a flag into an experiment or vice versa without having to do a code release.
 
-configuration = Configuration(flags_configuration=b"...bytes...")
-```
+The `get_string_assignment` function takes four inputs to assign a variation:
 
-:::warning
+- `flag_key` - The key for the flag you are evaluating. This key is available on the feature flag detail page (see below).
+- `subject_key` - A unique identifier for the subject being experimented on (e.g., user), typically represented by a UUID. This key is used to deterministically assign subjects to variants.
+- `subject_attributes` - A map of metadata about the subject used for [targeting](/feature-flagging/concepts/targeting/). If targeting is not needed, pass in an empty object.
+- `default_value` - The value that will be returned if no allocation matches the subject, if the flag is not enabled, if `get_string_assignment` is invoked before the SDK has finished initializing, or if the SDK was not able to retrieve the flag configuration. Its type must match the `get_<Type>_assignment` call.
 
-The response format is subject to change, so you should treat the response as opaque bytes—do not parse, inspect, or modify it in any way.
+![Example flag key](/img/feature-flagging/flag-key.png)
 
-:::
+### Typed assignments
 
-Once you create the configuration object, configure the client like this:
-```python
-eppo_client.get_instance().set_configuration(configuration)
-```
-
-Upon setting the configuration, the client is initialized and will start serving assignments based on the provided configuration. You can update the configuration anytime and it will be overwritten atomically.
-
-You can also provide an initial configuration during client initialization:
-```python
-eppo_client.init(
-    Config(
-        api_key="<api-key>",
-        application_logger=...,
-        poll_interval_seconds=None,
-        initial_configuration=configuration,
-    )
-)
-```
-
-## 4. Advanced Configuration with Metadata
-
-We introduced `get_string_assignment`’s three required inputs in the [Getting started](#getting-started) section:
-
-- `subject_key`: The Entity ID that is being experimented on, typically represented by a uuid.
-- `flag_key`: This key is available on the detail page for both flags and experiments.
-- `default_value`: The value that will be returned if no allocation matches the subject, if the flag is not enabled, if `get_string_assignment` is invoked before the SDK has finished initializing, or if the SDK was not able to retrieve the flag configuration.
-
-But that’s not all: the function also takes an optional input for entity properties.
-
-### A. Optional Properties for Targeting
-
-Most entities on which we run feature flags have properties: sessions have browser types, users have loyalty status, corporate clients have a number of employees, videos have close-caption available or not, sport teams have a league, etc. If you want to decide how a feature flag behaves, or whether an experiment is run on a certain entity based on those, you need to send that information too. When assigning entities, you can pass that additional information through `subject_attributes`: an optional dictionary that details entity properties.
-
-For example, if the entity is a customer session ,`subject_attributes` might look like this:
-  `{country:"Andorra", loyalty:"Gold", browser_type:"Mozilla", device_type:"Macintosh",
-     user_agent:"Mozilla/5.0 (Macintosh; Intel Mac OS X x.y; rv:42.0) Gecko/20100101 Firefox/42.0",}`
-
-Those can be used by the feature flag or the experiment for targeting, through the **Allocations** setting on the configuration page.
-
-:::warning
-
-The `MATCHES`, `ONE_OF`, and `NOT_ONE_OF` operators are evaluated on string representations of the subject attributes. To be consistent with other SDKs, note that conversion of subject attributes from floats, booleans, and None is different from the standard Python conversion.
-
-In particular, `True` and `False` are converted to the string values `"true"` and `"false`". Integer floats are converted to integers before converting to a string. That is, `10.0` becomes `"10"`, whereas `10.1` becomes `"10.1"`. Finally, `None` is converted to the string `null`.
-
-:::
-
-### B. Example Payment Configuration
-
-Let’s say you are running a Django service with the User-Agent package. You want to use feature flags to offer a payment method that adapt to the browser (only Safari users should be offered to use Apple Pay), the country (Dutch users can use iDEAL), and loyalty status (members might use their points). You can use a feature flag to configure what is possible in which country, for which users, etc.
-
-To make the decision, you can put the relevant information (`country`, `loyalty_tier`, etc.) in a `session_attributes` dictionary:
+Every Eppo flag has a return type that is set on creation in the dashboard. Once a flag is created, assignments in code should be made using the corresponding typed function: 
 
 ```python
-…
-from ipware import get_client_ip
-from django.contrib.gis.utils import GeoIP
-g = GeoIP()
-
-…
-
-if request.method == 'POST':
-    country = ""
-    ip, is_routable = get_client_ip(request)
-    if is_routable:
-        country = g.city(ip)["country_code"]
-
-    session_attributes = {
-        'country': country,
-        'loyalty_tier': request.session.loyalty_tier,
-        'browser_type': request.user_agent.browser.family,
-        'device_type': request.user_agent.device.family,
-    }
-
-    variation = client.get_string_assignment(
-        "<FLAG-KEY>",
-        "<SUBJECT-KEY>",
-        session_attributes,
-        "<DEFAULT-VALUE>",
-    )
-
-    if variation == 'checkout_apple_pay':
-        …
-    elif variation == 'checkout_ideal':
-    …
-    else:
-    …
-```
-
-Our approach is highly flexible: it lets you configure properties that match the relevant entity for your feature flag or experiment. For example, if a user is usually on iOS but they are connecting from a PC browser this time, they probably should not be offered an Apple Pay option, in spite of being labelled an iOS user.
-
-:::note
-
-If you create rules based on attributes on a flag or an experiment, those attributes should be passed in on every assignment call.
-
-:::
-
-
-## 5. Typed Assignment Calls
-
-The following typed functions are available:
-
-```
 get_boolean_assignment(...)
-get_integer_assignment(...)
 get_numeric_assignment(...)
+get_integer_assignment(...)
 get_string_assignment(...)
 get_json_assignment(...)
 ```
 
-All take the same input: `subject_key`, `flag_key`, `default_value`, and (optionally) `subject_attributes`.
-
-### A. Boolean Assignment
-
-For example, if you configure a flag as a Boolean (`True` or `False`), you can simplify your code:
+Each function has the same signature, but returns the type in the function name. The only exception is `default_value`, which should be the same type as the flag. For boolean flags for instance, you should use `getBooleanAssignment`, which has the following signature:
 
 ```python
-if get_boolean_assignment("<SUBJECT-KEY>", "<FLAG-KEY>", False):
-    …
-else:
-    …
+get_boolean_assignment(
+    flag_key: str,
+    subject_key: str,
+    subject_attributes: Dict[str, Any],
+    default_value: bool
+) -> bool:
 ```
 
-That prevents having the option of a third output. However, `“True”` can be ambiguous when the allocation names are unclear, like `hide_vs_delete_spam` or `no_collapse_price_breakdown`. We would recommend sticking to strings that offer more explicit naming convention: `keep_and_hide_spam`, `delete_spam`, or `collapse_price_breakdown`, `expand_price_breakdown` and `delete_price_breakdown`.
+To read more about when to use which flag type, see the [flag types](/sdks/sdk-features/flag-types) page.
 
-### B. Numeric Assignment
-
-If you want to modify a quantity, say, the number of columns of your layout, the number of product recommendations per page or the minimum spent for free delivery, you want to make sure the allocation value is a number. Using a numeric-valued flag and `get_numeric_assignment` guarantees that. (If you want to ensure that the value be specifically an integer, use an integer-valued flag and `get_integer_assignment`.) When someone edits the assignment, it will remain a number. This is useful if you are using that value in computation, say to process the amount of a promotion. It will capture obvious configuration issues before they are rolled out.
-
-### C. JSON Assignment
-
-A more interesting pattern is to assign a JSON object. This allows us to include structured information, say the text of a marketing copy for a promotional campaign and the address of a hero image. Thanks to this pattern, one developer can configure a very simple landing page; with that in place, whoever has access to the feature flag configuration can decide and change what copy to show to users throughout a promotional period, almost instantly and without them having to release new code.
-
-```python
-…
-self.campaign_json = get_json_assignment("<SUBJECT-KEY>", "<FLAG-KEY>", <DEFAULT-JSON>)
-if self.campaign_json is not None:
-    campaign['hero'] = True
-    campaign['hero_image'] = self.campaign_json.hero_image
-    campaign['hero_title'] = self.campaign_json.hero_title or ""
-    campaign['hero_description'] = self.campaign_json.hero_description or ""
-…
-```
-
-Assuming your service can be configured with many input parameters, that assignment type enables very powerful configuration changes.
-
-## 6. Contextual Bandits
+## Contextual Bandits
 
 To leverage Eppo's contextual bandits using the Python SDK, there are two additional steps over regular feature flags:
 1. Add a bandit action logger to the assignment logger
@@ -387,10 +150,12 @@ To leverage Eppo's contextual bandits using the Python SDK, there are two additi
 
 We have a simple end-to-end example in the [Python SDK repository](https://github.com/Eppo-exp/python-sdk/blob/main/example/03_bandit.py).
 
-### A. Add a bandit action logger to the assignment logger
+
+### Logging bandit actions
 
 In order for the bandit to learn an optimized policy, we need to capture and log the bandit actions.
 This requires adding a bandit action logging callback to the AssignmentLogger class
+
 ```python
 class MyLogger(AssignmentLogger):
     def log_assignment(self, assignment):
@@ -416,7 +181,7 @@ We automatically log the following data:
 | `actionProbability` (Double)                         | The weight between 0 and 1 the bandit valued the assigned action                                                | 0.25                                |
 | `modelVersion` (String)                              | Unique identifier for the version (iteration) of the bandit parameters used to determine the action probability | "v123"                       |
 
-### B. Querying the bandit for an action
+### Querying the bandit for an action
 
 To query the bandit for an action, you can use the `get_bandit_action` function. This function takes the following parameters:
 - `flag_key` (str): The key of the feature flag corresponding to the bandit
@@ -496,3 +261,292 @@ When `action` is not `None`, the bandit has selected that action to be shown to 
 In order to accurately measure the performance of the bandit, we need to compare it to the status quo algorithm using an experiment.
 This status quo algorithm could be a complicated algorithm to that selects an action according to a different model, or a simple baseline such as selecting a fixed or random action.
 When you create an analysis allocation for the bandit and the `action` in `BanditResult` is `None`, implement the desired status quo algorithm based on the `variation` value.
+
+
+## Advanced Options
+
+### Initialization options
+
+The `init` function accepts the following fields in the configuration argument:
+
+| Option | Type | Description | Default |
+| ------ | ----- | ----- | ----- |
+| **`assignment_logger`**  | [AssignmentLogger](https://github.com/Eppo-exp/python-sdk/blob/ebc1a0b781769fe9d2e2be6fc81779eb8685a6c7/eppo_client/assignment_logger.py#L6-L10) | A callback that sends each assignment to your data warehouse. Required only for experiment analysis. See [example](#assignment-logger) below. | `None` |
+| **`is_graceful_mode`** | bool | When true, gracefully handles all exceptions within the assignment function and returns the default value. | `True` |
+| **`poll_interval_seconds`** | Optional[int] | The interval in seconds at which the SDK polls for configuration updates. If set to `None`, polling is disabled. | `300` |
+| **`poll_jitter_seconds`** | int | The jitter in seconds to add to the poll interval. | `30` |
+| **`initial_configuration`** | Optional[Configuration] | If set, the client will use this configuration until it fetches a fresh one. | `None` |
+
+For instance, to poll for changes any minutes, specify `poll_interval_seconds` as an additional argument to the configuration:
+
+```python
+client_config = Config(
+    api_key=API_KEY,
+    assignment_logger=AssignmentLogger(),
+    poll_interval_seconds=60
+)
+
+eppo_client.init(client_config)
+```
+
+### Exporting configurations
+
+In some situations you may want to fetch flag configurations server side and then use those configurations to initialize a client side SDK without making any additional network calls. Eppo supports this through **offline initialization**. 
+
+To start, you can export flag configurations from the Python SDK by using the `client.get_configuration()` function. From there, you can send them to your front-end client as a part of your routine initialization. This configuration can then be used to initialize one of Eppo's client side SDKs without having to do any additional network calls to Eppo's CDN.
+
+### Deduplicating logs
+
+The SDK may see many duplicate assignments in a short period of time, and if you have configured a logging function, they will be transmitted to your downstream event store. This increases the cost of storage as well as warehouse costs during experiment analysis.
+
+To mitigate this, a caching assignment logger is optionally available with configurable cache behavior.
+
+The caching can be configured individually for assignment logs and bandit action logs using `AssignmentCacheLogger`.
+
+`AssignmentCacheLogger` optionally accepts two caches. We recommend using [`cachetools`](https://pypi.org/project/cachetools/) but any subclass of `MutableMapping` works.
+
+```python
+import cachetools
+from eppo_client.assignment_logger import AssignmentLogger, AssignmentCacheLogger
+
+
+class MyLogger(AssignmentLogger):
+    # implement your logger
+    pass
+
+
+client_config = Config(
+    api_key="<SDK-KEY-FROM-DASHBOARD>",
+    assignment_logger=AssignmentCacheLogger(
+        MyLogger(),
+        # cache 1024 least recently used assignments
+        assignment_cache=cachetools.LRUCache(maxsize=1024),
+        # cache bandit assignment for no longer than 10 minutes
+        bandit_cache=cachetools.TTLCache(maxsize=2048, ttl=600),
+    ),
+)
+```
+
+### Waiting for configuration
+
+Starting in version `v.4.0.0`, the SDK has a new method to wait for the configuration to be fetched, `client.wait_for_initialization()`. This method parks the current Python thread until the client fetches the configuration. It releases Global Interpreter Lock (GIL) while it waits, so it does not block other Python threads.
+
+This is particularly useful for scripting use cases when subsequent calls to Eppo's client will happen immediately after the client starts initializing.
+
+
+### Usage in serverless environments
+
+The default periodic polling setup is suitable for most cases but may not be efficient in short-lived serverless environments like Cloud Functions or Lambdas, where a new configuration is fetched on every function call.
+Starting with `v3.7.0`, Python SDK exposes an advanced API to allow manual control over configuration.
+
+To disable default polling behavior, set `poll_interval_seconds` to `None` when initializing the client.
+```python
+import eppo_client
+from eppo_client import Config, ApplicationLogger
+
+eppo_client.init(
+    Config(api_key="<api-key>", application_logger=..., poll_interval_seconds=None)
+)
+```
+
+`Configuration` class represents Eppo configuration that defines how the SDK evaluates feature flags.
+It can be initialized from the CDN response bytes (`https://fscdn.eppo.cloud/api/flag-config/v1/config`).
+As a user, you have full control over how this response is retrieved and stored.
+```python
+from eppo_client import Configuration
+
+configuration = Configuration(flags_configuration=b"...bytes...")
+```
+
+:::warning
+
+The response format is subject to change, so you should treat the response as opaque bytes—do not parse, inspect, or modify it in any way.
+
+:::
+
+Once you create the configuration object, configure the client like this:
+```python
+eppo_client.get_instance().set_configuration(configuration)
+```
+
+Upon setting the configuration, the client is initialized and will start serving assignments based on the provided configuration. You can update the configuration anytime and it will be overwritten atomically.
+
+You can also provide an initial configuration during client initialization:
+```python
+eppo_client.init(
+    Config(
+        api_key="<api-key>",
+        application_logger=...,
+        poll_interval_seconds=None,
+        initial_configuration=configuration,
+    )
+)
+```
+
+## Examples
+
+In this section, we will go through a few examples of how to use Eppo's Python SDK in two common situations: batch processing and real-time applications.
+
+### Usage in a batch process
+
+As a basic example, imagine using Eppo's SDK to randomize users in a batch machine learning evaluation script. Further, imagine we're testing an upgrade from model version `v1.0.0` to `v1.1.0`. First we'd create a feature flag called `ml-model-version` with two variations: `v1.0.0` and `v1.1.0`. The Eppo UI should look like something like this:
+
+![Feature flag configuration](/img/feature-flagging/script_example_flag_config.png)
+
+:::note
+If you have not set up an experiment in Eppo's UI before, please see the [experiment quickstart guide](/experiment-allocation-quickstart).
+:::
+
+To keep the example simple, let's not worry about logging assignments to a warehouse and instead just write them to a local file using Python's built-in `logging` package.
+
+Your ML model evaluation script might then look something like this:
+
+```python title=script_example.py
+import logging
+import os
+from uuid import uuid4
+import eppo_client
+from eppo_client.config import Config, AssignmentLogger
+
+logging.basicConfig(
+    filename='eppo_assignments.csv',
+    level=logging.INFO,
+    format=f'%(message)s'
+)
+
+
+class LocalAssignmentLogger(AssignmentLogger):
+    def log_assignment(self, assignment):
+        logging.info(assignment)
+
+# initialize the Eppo client
+client_config = Config(
+    api_key=os.getenv("EPPO_API_KEY"),
+    assignment_logger=LocalAssignmentLogger()
+)
+eppo_client.init(client_config)
+
+# get an instance and wait for initialization to complete
+client = eppo_client.get_instance()
+client.wait_for_initialization()
+
+for _ in range(10):
+    # create random user ids for demonstration purposes
+    user_id = str(uuid4())
+
+    model_version = client.get_string_assignment(
+        "ml-model-version", 
+        user_id, 
+        {}, 
+        "v1.0.0"
+    )
+
+    # TODO: Evaluate the appropriate model version for the user
+
+    print(f"{user_id}: {model_version}")
+```
+
+Note that since the `get_string_assignment` call is deterministic, the same `user_id` will always produce the same `variation`. That is, if this script runs at a regular cadence, you don't need to worry about users switching between variations.
+
+After running this, you can inspect the logs in the `eppo_assignments.csv` file:
+
+```json title=eppo_assignments.csv
+{'base': {'featureFlag': 'ml-model-version', 'allocation': 'allocation-10061', 'experiment': 'ml-model-version-allocation-10061', 'variation': 'v1.1.0', 'metaData': {'sdkName': 'python', 'sdkVersion': '4.0.1', 'coreVersion': '4.0.0'}}, 'subject': 'f54ba5f3-90bb-4cdf-bf56-ca0335ede92c', 'subjectAttributes': {}, 'timestamp': '2024-10-11T03:24:12.093538Z'}
+{'base': {'featureFlag': 'ml-model-version', 'allocation': 'allocation-10061', 'experiment': 'ml-model-version-allocation-10061', 'variation': 'v1.0.0', 'metaData': {'sdkName': 'python', 'sdkVersion': '4.0.1', 'coreVersion': '4.0.0'}}, 'subject': '3ccfcb7c-1b5d-4d3b-8513-198ef97c20d0', 'subjectAttributes': {}, 'timestamp': '2024-10-11T03:24:12.094055Z'}
+{'base': {'featureFlag': 'ml-model-version', 'allocation': 'allocation-10061', 'experiment': 'ml-model-version-allocation-10061', 'variation': 'v1.0.0', 'metaData': {'sdkName': 'python', 'sdkVersion': '4.0.1', 'coreVersion': '4.0.0'}}, 'subject': '7d4d81be-e7e5-42b5-b096-79b2dd25a0a1', 'subjectAttributes': {}, 'timestamp': '2024-10-11T03:24:12.094164Z'}
+{'base': {'featureFlag': 'ml-model-version', 'allocation': 'allocation-10061', 'experiment': 'ml-model-version-allocation-10061', 'variation': 'v1.1.0', 'metaData': {'sdkName': 'python', 'sdkVersion': '4.0.1', 'coreVersion': '4.0.0'}}, 'subject': '71435619-b1e5-446c-aabe-18c28c7a96af', 'subjectAttributes': {}, 'timestamp': '2024-10-11T03:24:12.094246Z'}
+{'base': {'featureFlag': 'ml-model-version', 'allocation': 'allocation-10061', 'experiment': 'ml-model-version-allocation-10061', 'variation': 'v1.0.0', 'metaData': {'sdkName': 'python', 'sdkVersion': '4.0.1', 'coreVersion': '4.0.0'}}, 'subject': '10ae9617-7e06-459a-a699-a464e6a9dbb9', 'subjectAttributes': {}, 'timestamp': '2024-10-11T03:24:12.094321Z'}
+{'base': {'featureFlag': 'ml-model-version', 'allocation': 'allocation-10061', 'experiment': 'ml-model-version-allocation-10061', 'variation': 'v1.0.0', 'metaData': {'sdkName': 'python', 'sdkVersion': '4.0.1', 'coreVersion': '4.0.0'}}, 'subject': 'f2f4b2ed-9fdd-4150-af88-27ef17470d45', 'subjectAttributes': {}, 'timestamp': '2024-10-11T03:24:12.094394Z'}
+{'base': {'featureFlag': 'ml-model-version', 'allocation': 'allocation-10061', 'experiment': 'ml-model-version-allocation-10061', 'variation': 'v1.0.0', 'metaData': {'sdkName': 'python', 'sdkVersion': '4.0.1', 'coreVersion': '4.0.0'}}, 'subject': '169d2066-8861-4230-9fce-809a1bb2a3cc', 'subjectAttributes': {}, 'timestamp': '2024-10-11T03:24:12.094463Z'}
+{'base': {'featureFlag': 'ml-model-version', 'allocation': 'allocation-10061', 'experiment': 'ml-model-version-allocation-10061', 'variation': 'v1.0.0', 'metaData': {'sdkName': 'python', 'sdkVersion': '4.0.1', 'coreVersion': '4.0.0'}}, 'subject': '359ff058-c8ad-4d35-8559-44c8ad0c235f', 'subjectAttributes': {}, 'timestamp': '2024-10-11T03:24:12.094530Z'}
+{'base': {'featureFlag': 'ml-model-version', 'allocation': 'allocation-10061', 'experiment': 'ml-model-version-allocation-10061', 'variation': 'v1.0.0', 'metaData': {'sdkName': 'python', 'sdkVersion': '4.0.1', 'coreVersion': '4.0.0'}}, 'subject': 'b13ac779-e639-4367-8afb-7942f789ec12', 'subjectAttributes': {}, 'timestamp': '2024-10-11T03:24:12.094595Z'}
+{'base': {'featureFlag': 'ml-model-version', 'allocation': 'allocation-10061', 'experiment': 'ml-model-version-allocation-10061', 'variation': 'v1.1.0', 'metaData': {'sdkName': 'python', 'sdkVersion': '4.0.1', 'coreVersion': '4.0.0'}}, 'subject': 'a0bc2b98-bfc2-4740-a3e0-18151ca88dcd', 'subjectAttributes': {}, 'timestamp': '2024-10-11T03:24:12.094660Z'}
+```
+
+In a real-world scenario, you would send these logs to your warehouse of choice. From there, you would create an [Assignment SQL Definition](/data-management/definitions/assignment-sql/) and analyze your experiment like any other experiment in Eppo. For more information on analyzing experiments, see our [Experiment Analysis Quickstart](/experiment-quickstart/).
+
+### Targeting users in Django
+
+While Eppo's SDK can be used for batch processing as described above, it is most commonly used in live applications to perform assignment in real time.
+
+Let’s say you are running a Django service with the User-Agent package. You can use feature flags to offer a payment method that adapts to the browser (only Safari users should be offered to use Apple Pay), the country (Dutch users can use iDEAL), and loyalty status (members might use their points). You can use a feature flag to configure what is possible in which country, for which users, etc.
+
+To make the decision, you can put the relevant information (`country`, `loyalty_tier`, `device_type`, etc.) in a `session_attributes` dictionary:
+
+```python
+# ...
+from ipware import get_client_ip
+from django.contrib.gis.utils import GeoIP2
+g = GeoIP2()
+
+# ...
+
+if request.method == 'POST':
+    ip, is_routable = get_client_ip(request)
+    if is_routable:
+        country_code = g.city(ip)["country_code"]
+    else:
+        country_code = "UNKNOWN"
+
+    session_attributes = {
+        'country_code': country_code,
+        'loyalty_tier': request.session.loyalty_tier,
+        'browser_type': request.user_agent.browser.family,
+        'device_type': request.user_agent.device.family,
+    }
+
+    payment_method = client.get_string_assignment(
+        "payment-method", 
+        request.user.id, 
+        session_attributes,
+        "default_checkout"
+    )
+
+    if variation == 'apple_pay':
+        # TODO: Offer Apple Pay
+    elif variation == 'ideal':
+        # TODO: Offer iDEAL
+    else:
+        # TODO: Offer default checkout
+
+```
+
+
+:::note
+
+The `MATCHES`, `ONE_OF`, and `NOT_ONE_OF` operators are evaluated on string representations of the subject attributes. To be consistent with other SDKs, note that conversion of subject attributes from floats, booleans, and None is different from the standard Python conversion.
+
+In particular, `True` and `False` are converted to the string values `"true"` and `"false`". Integer floats are converted to integers before converting to a string. That is, `10.0` becomes `"10"`, whereas `10.1` becomes `"10.1"`. Finally, `None` is converted to the string `null`.
+
+:::
+
+Then, in the Eppo UI, your experiment assignment should look something like this:
+
+![Experiment allocation configuration](/img/feature-flagging/django_example_allocation_config.png)
+
+These rules are evaluated from top to bottom. That is, in this example an iOS user in the Netherlands will be put into the first category and see iDEAL, but not Apple Pay. If you instead want to offer such users both options, consider implementing two flags: one for iDEAL, one for Apple Pay.
+
+Our approach is highly flexible: it lets you configure properties that match the relevant entity for your feature flag or experiment. For example, if a user is usually on iOS but they are connecting from a PC browser this time, they probably should not be offered an Apple Pay option, in spite of being labelled an iOS user.
+
+:::note
+If you create rules based on attributes on a flag or an experiment, those attributes should be passed in on every assignment call.
+:::
+
+
+## Appendix
+
+### Assignment Logger Schema
+
+The Eppo-managed `assignment` analytic event has the following schema:
+
+| Field                     | Description                                                                                                              | Example                                  |
+|---------------------------|--------------------------------------------------------------------------------------------------------------------------|------------------------------------------|
+| `experiment` (string)     | An Eppo experiment key                                                                                                   | `"checkout_type-allocation-1234"`        |
+| `subject` (string)        | An identifier of the subject or user assigned to the experiment variation                                                | `"60a67ae2-c9d2-4f8a-9be0-3bb4fe0c96ff"` |
+| `variation` (string)      | The experiment variation the subject was assigned to                                                                     | `"fast_checkout"`                        |
+| `timestamp` (string)      | The time when the subject was assigned to the variation                                                                  | `2021-06-22T17:35:12.000Z`               |
+| `subjectAttributes` (map) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `{ "country": "US" }`                    |
+| `featureFlag` (string)    | An Eppo feature flag key                                                                                                 | `"checkout_type"`                        |
+| `allocation` (string)     | An Eppo allocation key                                                                                                   | `"allocation-1234"`                      |
+
+
