@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem';
 
 # Running your first experiment
 
-This quickstart guide will walk through running your first experiment with Eppo. Running experiments is a natural use case for feature flags and accordingly, Eppo tightly couples experiment assignment with feature flagging.
+This quickstart guide walks through running your first experiment with Eppo. Running experiments is a natural use case for feature flags and accordingly, Eppo tightly couples experiment assignment with feature flagging.
 
 At the end of this guide, you'll be able to:
 1. Test a new feature in your staging environment
@@ -177,7 +177,7 @@ The Eppo SDK should now be returning the new variant in your pre-prod environmen
 ### QA in production
 
 :::note
-This step is useful for experimenting on in-product features. If you're using Eppo to run Machine Learning or other back end experiments, you may want to skip to the next step.
+This step is useful for experimenting on in-product features. If you're using Eppo to run Machine Learning or other backend experiments, you may want to skip to the next step.
 :::
 
 Once you've verified that the flag is working in your pre-prod environment, you can enable the flag in production. As long as there are no Assignments created in the production environment, your code will be "dark" and not impact any users (i.e., everyone will continue to see the default experience).
@@ -256,7 +256,7 @@ As users are enrolled into the experiment you can start tracking assignment volu
 
 ![Create analysis](/img/feature-flagging/exp-qs-create-analysis-button.png)
 
-Once you've specified the entity on which the experiment was run (typically user), select the assignment SQL you created above and click **Next**. This will take you to a configuration page where you can modify analysis time frames, which variants to include, and the experiment's primary metric. All of these settings have pre-populated defaults, but you can modify them at any time. Once you're happy with the configuration, click **Save Changes**. 
+Once you've specified the entity on which the experiment was run (typically user), select the assignment SQL you created above and click **Next**. This will take you to a configuration page where you can modify analysis timeframes, which variants to include, and the experiment's primary metric. All of these settings have pre-populated defaults, but you can modify them at any time. Once you're happy with the configuration, click **Save Changes**. 
 
 You'll then see an experiment analysis page with your primary metric as well as any company default metrics. You can add any additional metrics you'd like to track by clicking the **+** icon in the top right of the scorecard.
 
