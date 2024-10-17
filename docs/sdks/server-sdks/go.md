@@ -14,14 +14,14 @@ In your `go.mod`, add the SDK package as a dependency:
 
 ```
 require (
-	github.com/Eppo-exp/golang-sdk/v5
+	github.com/Eppo-exp/golang-sdk/v6
 )
 ```
 
 Or you can install the SDK from the command line with:
 
 ```
-go get github.com/Eppo-exp/golang-sdk/v5
+go get github.com/Eppo-exp/golang-sdk/v6
 ```
 
 ## 2. Initialize the SDK
@@ -31,7 +31,7 @@ Initialize the SDK with a SDK key, which can be generated in the Eppo interface.
 ```go
 
 import (
-  "github.com/Eppo-exp/golang-sdk/v5/eppoclient"
+  "github.com/Eppo-exp/golang-sdk/v6/eppoclient"
 )
 
 var eppoClient = &eppoclient.EppoClient{}
@@ -40,8 +40,22 @@ func main() {
   eppoClient, err = eppoclient.InitClient(eppoclient.Config{
     SdkKey: "<your_sdk_key>",
   })
+
+  timedOut := false
+  select {
+    case <-client.Initialized():
+      timedOut = false
+    case <-time.After(2 * time.Second):
+      timedOut = true
+  }
+
+  if timedOut {
+    log.Fatal("Timed out waiting for Eppo SDK to initialize")
+  }
 }
 ```
+
+Depending on your server application's lifecycle, you may need to wait for the SDK to initialize before making assignments: The `Initialized` channel is provided to facilitate this and can optionally be used with a timeout to allow you application to continue.
 
 After initialization, the SDK begins polling Eppo's API at regular intervals to retrieve the most recent experiment configurations such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments thereafter are effectively instant. For more information, see the [architecture overview](/sdks/architecture) page.
 
@@ -63,7 +77,7 @@ Example implementation:
 
 ```go
 import (
-  "github.com/Eppo-exp/golang-sdk/v5/eppoclient"
+  "github.com/Eppo-exp/golang-sdk/v6/eppoclient"
   "gopkg.in/segmentio/analytics-go.v3"
 )
 
@@ -86,7 +100,7 @@ func main() {
   client := analytics.New("YOUR_WRITE_KEY")
   defer client.Close()
 
-  eppoClient = eppoclient.InitClient(eppoclient.Config{
+  eppoClient, _ = eppoclient.InitClient(eppoclient.Config{
     SdkKey:           "<your_sdk_key>",
     AssignmentLogger: &ExampleAssignmentLogger{
       client: client,
@@ -120,7 +134,7 @@ Assigning users to flags or experiments with a single `GetStringAssignment` func
 
 ```go
 import (
-	"github.com/Eppo-exp/golang-sdk/v5/eppoclient"
+	"github.com/Eppo-exp/golang-sdk/v6/eppoclient"
 )
 
 var eppoClient = &eppoclient.EppoClient{} // in global scope
@@ -144,6 +158,7 @@ GetNumericAssignment(...) (float64, error)
 GetIntegerAssignment(...) (int, error)
 GetStringAssignment(...) (string, error)
 GetJSONAssignment(...) (interface{}, error)
+GetJSONBytesAssignment(...) ([]byte, error)
 ```
 
 <br />
