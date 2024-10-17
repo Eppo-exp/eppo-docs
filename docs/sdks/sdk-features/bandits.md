@@ -89,8 +89,7 @@ Therefore, the logger should write to a table with the following columns (they c
 | action_numeric_attributes (JSON)      | Metadata about numeric attributes of the assigned action; Mapping of attribute names to their values     | {"discount": 0.2}           |
 | action_categorical_attributes (JSON)  | Metadata about non-numeric attributes of the assigned action; Mapping of attribute names to their values | {"promoTextColor": "white"} |
 
-> [!TIP]  
-> Assignment attributes must be single-level. Eppo's bandits do not support multiple levels of JSON attributes.
+:::info Assignment attributes must be single-level. Eppo's bandits do not support multiple levels of JSON attributes. :::
 
 We also recommend storing additional information that is provided to the bandit logger that is not directly used for training the bandit, but is useful for transparency and debugging:
 
