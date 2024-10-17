@@ -55,9 +55,31 @@ func main() {
 }
 ```
 
-Depending on your server application's lifecycle, you may need to wait for the SDK to initialize before making assignments: The `Initialized` channel is provided to facilitate this and can optionally be used with a timeout to allow you application to continue.
-
 After initialization, the SDK begins polling Eppo's API at regular intervals to retrieve the most recent experiment configurations such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments thereafter are effectively instant. For more information, see the [architecture overview](/sdks/architecture) page.
+
+### Waiting for initialization
+
+Depending on your server application's lifecycle, you may need to wait for the SDK to initialize before making assignments
+
+Starting with the `6.1.0` tag, the `Initialized` channel is provided to facilitate this and can optionally be used with a timeout to allow you application to continue.
+
+Before this tag, the SDK was initialized asynchronously and assignments could be made immediately but will not be guaranteed to have the most recent experiment configurations, returning the `DEFAULT-VALUE` if the SDK was not initialized in time. If this is not desired in your application, a suggested approach on older versions is to introduce a brief delay after startup to allow the SDK to initialize before making assignments.
+
+```go
+import (
+  "time"
+)
+
+func main() {
+  eppoClient, err = eppoclient.InitClient(eppoclient.Config{
+    SdkKey: "<your_sdk_key>",
+  })
+
+  time.Sleep(2 * time.Second)
+
+  variation, err := eppoClient.GetStringAssignment("<FLAG-KEY>", "<SUBJECT-KEY>", <TARGETING-ATTRIBUTES>, <DEFAULT-VALUE>);
+}
+```
 
 ### Define an assignment logger (experiment assignment only)
 
