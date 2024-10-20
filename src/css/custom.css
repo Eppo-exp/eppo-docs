@@ -60,22 +60,25 @@ html {
   --ifm-color-primary: #7964d3;
   --ifm-color-primary-dark: #7964d3;
   --ifm-color-primary-darker: #7964d3;
-  --ifm-color-primary-darkest: #7964d3;
+  --ifm-color-primary-darkest:#271833;
   --ifm-color-primary-light: #7964d3;
   --ifm-color-primary-lighter: #7964d3;
   --ifm-color-primary-lightest: #7964d3;
+  --ifm-color-gray-100:#FCFAF7; 
+  --ifm-color-gray-200:#F2F0ED; 
+  --ifm-color-gray-300:#EAE6E1; 
+  --ifm-color-gray-600:#90978F; 
+  --ifm-color-gray-800:#605B53; 
+  --ifm-color-gray-1000: #262422;
   --ifm-code-font-size: 95%;
   --ifm-background-color: #fff;
-  --ifm-sidebar-border-color: var(--ifm-color-gray-200);
+  --ifm-sidebar-border-color: var(--ifm-color-gray-300);
   --card-bg: #fff;
   --card-border: #ddd;
   --card-shadow: rgba(0, 0, 0, 0.1);
   --inline-code-bg: #f0f0f0;
   --inline-code-color: #171717;
-  --toc-background-color: #FCFAF7;
-  --toc-border-color: #e0e0e0;
-  --toc-text-color: #333;
-  --toc-hover-color: #7964d3;
+  --ifm-spacing-horizontal: 2rem;
   --toc-font-family: 'Cofosans', Arial, sans-serif;
   --ifm-font-family-base: 'Cofosans', Arial, sans-serif;
   --ifm-font-family-monospace: 'Cofosansmono', Menlo, monospace;
@@ -83,6 +86,15 @@ html {
   --ifm-h2-font-size: 2 rem;
   --ifm-h3-font-size: 1.125 rem;
   --ifm-heading-font-weight: var(--ifm-font-weight-semibold);
+}
+
+[data-theme='light'] {
+  --toc-background-color: var(--ifm-color-gray-200);
+  --toc-border-color: var(--ifm-color-gray-300);
+  --toc-text-color: #333;
+  --toc-hover-color: var(--ifm-color-primary);
+  --ifm-menu-color-background-active: var(--ifm-color-gray-200);
+  --ifm-menu-color-background-hover: var(--ifm-color-gray-200);
   --ifm-menu-color: var(--ifm-color-content);
 }
 
@@ -91,7 +103,6 @@ html {
   --ifm-color-primary: #7964d3;
   --ifm-color-primary-dark: #7964d3;
   --ifm-color-primary-darker: #7964d3;
-  --ifm-color-primary-darkest: #7964d3;
   --ifm-color-primary-light: #7964d3;
   --ifm-color-primary-lighter: #7964d3;
   --ifm-color-primary-lightest: #7964d3;
@@ -105,13 +116,18 @@ html {
   --toc-border-color: #3d3d3d;
   --toc-text-color: #e0e0e0;
   --toc-hover-color: #7964d3;
+  --ifm-menu-color-background-active: #282a36;
+  --ifm-menu-color-background-hover: #282a36;
 }
 
+.footer--dark{
+  --ifm-footer-background-color:#282a36;
+}
 [data-theme='light'] .navbar {
   background-color: #fff;
 }
 [data-theme='light'] .menu{
-  background-color: #FCFAF7;
+  background-color: var(--ifm-color-gray-100);
 }
 
 
@@ -183,6 +199,11 @@ sup {
   font-size: 0.9rem;
 }
 
+/* Fix hover & selected behavior background*/
+.menu{
+  padding-right: 0.5rem !important;
+}
+
 /* Target only top-level categories for horizontal lines */
 .theme-doc-sidebar-menu > .theme-doc-sidebar-item-category {
   margin-bottom: 1rem;
@@ -222,7 +243,6 @@ sup {
 
 /* Adjust spacing for nested items */
 .menu__list .menu__list {
-  margin-left: 0.1rem;
   margin-top: 0.2rem;
 }
 
@@ -369,8 +389,4 @@ code {
 .table-of-contents__link--active {
   font-weight: bold;
   color: var(--toc-hover-color)
-}
-
-.theme-doc-sidebar-container {
-  border-right: none !important;
 }
