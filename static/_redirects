@@ -124,4 +124,6 @@ http://adoring-yonath-6ecb9d.netlify.app/*  http://docs.geteppo.com/:splat  301!
 
 /experiment-analysis/data-pipeline /data-management/data-pipeline
 
-/sdks/overview /sdks/architecture
+/sdks/overview /sdks/architecture/overview
+
+/sdks/architecture /sdks/architecture/overview
