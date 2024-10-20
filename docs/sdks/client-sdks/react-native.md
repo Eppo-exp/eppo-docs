@@ -62,7 +62,7 @@ const variation = eppoClient.getBooleanAssignment('show-new-feature', user.id, {
 
 After initialization, the SDK begins polling Eppo’s API at regular intervals to retrieve the most recent experiment configurations (variation values, traffic allocation, etc.). You can customize initialization and polling preferences by passing in additional [initialization options](#initialization-options).
 
-The SDK stores these configurations in memory so that assignments thereafter are effectively instant. For more information, see the [architecture overview](/sdks/architecture) page.
+The SDK stores these configurations in memory so that assignments thereafter are effectively instant. For more information, see the [architecture overview](/sdks/architecture/overview) page.
 
 ### Connecting an event logger
 

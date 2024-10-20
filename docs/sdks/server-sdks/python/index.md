@@ -50,7 +50,7 @@ variation = eppoClient.get_boolean_assignment(
 
 After initialization, the SDK begins polling Eppo’s CDN at regular intervals to retrieve the most recent experiment configurations (variation values, traffic allocation, etc.). You can customize initialization and polling preferences by passing in additional [initialization options](#initialization-options). Note that polling happens independently of assignment calls and is non blocking.
 
-The SDK stores these configurations in memory so that assignments thereafter are effectively instant. For more information, see the [architecture overview](/sdks/architecture) page.
+The SDK stores these configurations in memory so that assignments thereafter are effectively instant. For more information, see the [architecture overview](/sdks/architecture/overview) page.
 
 :::note
 The SDK's initialization is asynchronous to not block other parts of the server spin up process. If you are using Eppo's SDK in a script and prefer a synchronous method, please see the [waiting for configuration](#waiting-for-configuration) section below.
