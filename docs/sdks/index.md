@@ -5,7 +5,7 @@ sidebar_position: 1
 
 # Eppo's SDKs
 
-Eppo's SDKs are built for simplicity, speed, and reliability, while also supporting everything from simple kill switches to cutting-edge experimentation methods. Developers only need to learn one simple, consistent API for all feature flagging and experiments use cases, abstracting away the complexity of the underlying allocation logic.
+Eppo's SDKs are built for simplicity, speed, and reliability, and support everything from simple kill switches to cutting-edge experimentation methods. Developers only need to learn one simple, consistent API for all feature flagging and experiments use cases, abstracting away the complexity of the underlying allocation logic.
 
 This page provides an introduction to Eppo's SDKs: the basics of keeping configurations in sync for users around the world, how the flag-assignment model supports a wide variety of use cases through simple concepts, and the design principles that help the SDK fit naturally into your tech stack and development workflows.
 
@@ -46,7 +46,7 @@ On initialization, SDK configurations are pulled from Eppo's CDN (hosted on Fast
 
 Targeting attributes are passed in as part of the `get<Type>Assignment` call, meaning that changes in eligibility based on user behavior are reflected immediately. Imagine a use case where you only want to target users once they perform a specific action. Server-side evaluation would require you to do a network call to understand new targeting eligibility each time the user context changes. By doing all evaluations locally, you can get very expressive with realtime targeting, all without any performance degradation. 
 
-For client SDKs, this configuration is obfuscated to ensure that end users cannot reverse engineer what flags are active, or what targeting logic is in place.
+For client SDKs, this [configuration is obfuscated](/sdks/sdk-features/obfuscation/) to ensure that end users cannot reverse engineer what flags are active, or what targeting logic is in place.
 
 
 ### Configurable polling
@@ -64,7 +64,7 @@ Each flag in Eppo has a set of associated **assignments** specifying who should 
 
 ![Intro Flag Example](/img/feature-flagging/intro-flag-example.png)
 
-In this example, when you evaluate the `add-profile-picture-nudge` flag, the SDK will first check if it's an internal user (based on the specified `user_id`). If so, it will return true: specifying to render the new feature. Otherwise, it will check the next condition: whether `has_profile_pic` is false. If so, it will randomly return either treatment or variant. This will continue for the rest of the waterfall and if no targeting conditions are met, it will return whatever is specified as the default value.
+In this example, when you evaluate the `add-profile-picture-nudge` flag, the SDK will first check if it's an internal user (based on the specified `user_id`). If so, it will return true, specifying to render the new feature. Otherwise, it will check the next condition: whether `has_profile_pic` is false. If so, it will randomly return either treatment or variant. This will continue for the rest of the waterfall and if no targeting conditions are met, it will return whatever is specified as the default value.
 
 ### Cascading hash-based randomization
 
@@ -74,7 +74,7 @@ When you call `get<Type>Assignment`, the SDK will evaluate assignments in order 
 
 ### High quality data capture
 
-Experimentation programs depend on high quality analytic data for tracking randomization assignment. Eppo's interface reinforces best practices: tracking *why* a user saw a variant (was it an override or a true randomized assignment?), identifying when a user moves from one target audience to another, and attributing experiment assignments to the precise moment a user was exposed to a new variant.
+Experimentation programs depend on high quality analytic data to track experiment assignments. Eppo's interface reinforces best practices: tracking *why* a user saw a variant (was it an override or a true randomized assignment?), identifying when a user moves from one target audience to another, and attributing experiment assignments to the precise moment a user was exposed to a new variant.
 
 When you use Eppo's SDKs, you'll pass in a logging callback function at initialization: 
 
@@ -87,7 +87,7 @@ await init({
 });
 ```
 
-This `assignmentLogger` function takes a single input: an Eppo-maintained `assignment` analytic event. This function is invoked each time the `get<Type>Assignment` method is called, meaning that once the SDK is installed in your application, engineers don't ever need to think about assignment logging. The `assignment` [analytic event](/sdks/event-logging/) contains all of the fields needed for Eppo's analytic engine, including targeting details and holdout group evaluation.
+This `assignmentLogger` function takes a single input: an Eppo-maintained `assignment` analytic event. This function is invoked each time the `get<Type>Assignment` method is called, meaning that once the SDK is installed in your application, engineers need to think about assignment logging. The `assignment` [analytic event](/sdks/event-logging/) contains all of the fields needed for Eppo's analytic engine, including targeting details and holdout group evaluations.
 
 ## Ergonomic API
 
@@ -102,11 +102,11 @@ get<Type>Assignment: (
 ) => <Type>
 ```
 
-Note that flags in Eppo all have an associated type, specified upon creation in the UI. Each of these types has a corresponding function to evaluate. To read more, see our page of [flag types](/sdks/sdk-features/flag-types).
+Note that flags in Eppo all have an associated type, specified upon creation in the UI. Each of these types has a corresponding function to evaluate. To read more, see our page on [flag types](/sdks/sdk-features/flag-types).
 
 ## Flags for all of your environments
 
-Modern software teams need to manage flag configurations across both different development environments (e.g., local, staging, and production), as well as across multiple surface areas (mobile, web clients, servers, etc.).
+Modern software teams need to manage flags across both environments (local, staging, production, etc.) and across surface areas (mobile apps, web clients, servers, etc.).
 
 Eppo allows you to easily manage flags across both of these dimensions. Unlimited environments can be created in the UI to match your development process. You can then, for instance, turn a flag on for all traffic in your local or staging environments without impacting production.
 
