@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Architecture overview
+# Overview
 
 Eppo's SDK is designed to be lightweight and work alongside your existing stack. By using a "dumb server, smart client" architecture, the SDK can be thought of as a simple JSON delivery service. On initialization, the SDK will make a request to our CDN (built on [Fastly](https://www.fastly.com/)) to get a JSON containing active flags and targeting logic. Server-side SDKs will poll the CDN at a regular cadence to keep this config up to date.
 
