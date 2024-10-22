@@ -86,3 +86,9 @@ As we’ve detailed, Eppo doesn’t export individual data from your warehouse. 
 * **Caching results**: We copy and cache overall results (latest incremental totals, metric patterns) to make our interface snappy. This is any total that you can see on our service: total number of assignments, total number of conversions, total amounts. For ratios, we store the numerator and denominator (for incrementality).
 
 If you have any question about our privacy practices, please reach out.
+
+## Clustered Analysis Pipeline
+
+Clustered analysis experiments have a few more steps in the data pipeline to aggregate from the subentity level to the cluster level.  See diagram below with additional steps highlighted.
+
+![Clustered analysis pipeline diagram](/img/experiments/data-pipeline/data_pipeline_clustered_highlighted_v3.png)
