@@ -13,7 +13,7 @@ Eppo's open source Android SDK can be used for both feature flagging and experim
 You can install the SDK using Gradle by adding to your `build.gradle` file:
 
 ```groovy
-implementation 'cloud.eppo:android-sdk:4.1.0'
+implementation 'cloud.eppo:android-sdk:4.0.0'
 ```
 
 ## 2. Initialize the SDK
