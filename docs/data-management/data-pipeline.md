@@ -66,6 +66,10 @@ We compute metric dimension (also called metric properties) metric values as par
 1. **Metric dimensions daily**: An incremental step, very similar to the core pipeline daily data frame step. Every metric dimension value is treated as a separate metric with its own column. If you have high cardinality along several dimensions, this can make this step fairly slow (though we do cap cardinality at 50 to guard against this).
 2. **Metric dimensions cumulative**: Very similar to the cumulative data frame step from the core pipeline, we generate summarized metric dimension values for each subject and day.
 
+:::info
+The top 50 values are computed in a weekly job (and immediately after saving) that scans the fact SQL for the past month and sorts by the highest volume.
+:::
+
 #### Funnel metrics pipeline
 
 Funnel metrics require their own pipeline because of the complicated logic that must be performed over the relevant events.
