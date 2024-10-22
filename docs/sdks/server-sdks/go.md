@@ -41,16 +41,10 @@ func main() {
     SdkKey: "<your_sdk_key>",
   })
 
-  timedOut := false
   select {
     case <-client.Initialized():
-      timedOut = false
     case <-time.After(2 * time.Second):
-      timedOut = true
-  }
-
-  if timedOut {
-    log.Fatal("Timed out waiting for Eppo SDK to initialize")
+      log.Warn("Timed out waiting for Eppo SDK to initialize")
   }
 }
 ```
