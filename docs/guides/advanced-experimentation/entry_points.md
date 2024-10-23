@@ -18,7 +18,7 @@ Let’s say you have 20,000 visitors per month who make a purchase on your site.
 
 If you A/B test a better customer service experience, you’ll end up splitting the 2,000 who call into 1,000 for Control (about 250 of which should give you a good rating) and 1,000 for Treatment. If the new service is a lot better and three quarters of customers calling you now give you a good rating, that’s 250/1000 vs. 750/1000, i.e. a very clear result. Experiments are noisy so it won’t be exactly 250 and 750, but we should expect to observe values near that amount, with 95% confidence/credible interval of ± 25 or 30 ($1.96 * \sqrt(.25 * .75 / 1000) * 1000$).
 
-Even within a week or two, the distinction should be blattant. You would likely make a decision that the new approach to customer service is better.
+Even within a week or two, the distinction should be blatant. You would likely make a decision that the new approach to customer service is better.
 
 If you include all your customers in the process, then you’ll have 9,000 extra participants in each variant that are not affected but the test, half of which will rate the service highly. The score will be around 4,500 + 250 = 4,750/10,000 vs. 5,250/10,000. The new treatment is still better but results will be noisier, resulting in a wider confidence interval of ±100 ($1.96 * \sqrt(.475 * .525 / 10,000) * 10,000$). The result after one month might not be conclusive. Your decision might have to wait for more evidence, while all you need is to focus on the information you already have.
 
