@@ -51,7 +51,7 @@ Pricing for custom deliveries depends on a multitude of factors (destination, ne
 
 You also can easily imagine offering renting a car, or a valuable asset and needing a quote from your insurance company, based on many factors: information about the person renting, time and duration, etc. 
 
-Let‘s say you want to test asking for fast and cheap options. Or you could be testing a new provider. Alternatively, you might want to test asking both for a quote and let customers compate. Whatever is the change you want to test, you will need to decide which API call to trigger before the customer is guaranteed to see pricing because you have to wait for confirmation, say, that the items are in stock.
+Let‘s say you want to test asking for fast and cheap options. Or you could be testing a new provider. Alternatively, you might want to test asking both for a quote and let customers compare. Whatever is the change you want to test, you will need to decide which API call to trigger before the customer is guaranteed to see pricing because you have to wait for confirmation, say, that the items are in stock.
 
 In this case too, the assignment happens when confirming basket contents and the address, but the Entry Point should be set to a little later, when the customer sees a quote.
 
