@@ -484,21 +484,21 @@ await init({
 
 The SDK will invoke the `logBanditAction()` function with an `IBanditEvent` object that contains the following fields:
 
-| Field                                       | Description                                                                                                       | Example                        |
-|---------------------------------------------|-------------------------------------------------------------------------------------------------------------------|--------------------------------|
-| `timestamp` (string)                        | The time when the action is taken in UTC as an ISO string                                                         | "2024-03-22T14:26:55.000Z"     |
-| `featureFlag` (string)                      | The key of the feature flag corresponding to the bandit                                                           | "bandit-test-allocation-4"     |
-| `bandit` (string)                           | The key (unique identifier) of the bandit                                                                         | "ad-bandit-1"                  |
-| `subject` (string)                          | An identifier of the subject or user assigned to the experiment variation                                         | "ed6f85019080"                 |
-| `subjectNumericAttributes` (Attributes)     | Metadata about numeric attributes of the subject. Map of the name of attributes their provided values             | `{"age": 30}`                  |
-| `subjectCategoricalAttributes` (Attributes) | Metadata about non-numeric attributes of the subject. Map of the name of attributes their provided values         | `{"loyalty_tier": "gold"}`     |
-| `action` (string)                           | The action assigned by the bandit                                                                                 | "promo-20%-off"                |
-| `actionNumericAttributes` (Attributes)      | Metadata about numeric attributes of the assigned action. Map of the name of attributes their provided values     | `{"discount": 0.2}`            |
-| `actionCategoricalAttributes` (Attributes)  | Metadata about non-numeric attributes of the assigned action. Map of the name of attributes their provided values | `{"promoTextColor": "white"}`  |
-| `actionProbability` (number)                | The weight between 0 and 1 the bandit valued the assigned action                                                  | 0.25                           |
-| `optimalityGap` (number)                    | The difference between the score of the selected action and the highest-scored action                             | 456                            | 
-| `modelVersion` (string)                     | Unique identifier for the version (iteration) of the bandit parameters used to determine the action probability   | "v123"                         |
-| `metaData` Record<string, unknown>          | Any additional freeform meta data, such as the version of the SDK                                                 | `{ "sdkLibVersion": "3.5.1" }` |
+| Field                                       | Description                                                                                                       | Example                          |
+|---------------------------------------------|-------------------------------------------------------------------------------------------------------------------|----------------------------------|
+| `timestamp` (string)                        | The time when the action is taken in UTC as an ISO string                                                         | "2024-03-22T14:26:55.000Z"       |
+| `featureFlag` (string)                      | The key of the feature flag corresponding to the bandit                                                           | "bandit-test-allocation-4"       |
+| `bandit` (string)                           | The key (unique identifier) of the bandit                                                                         | "ad-bandit-1"                    |
+| `subject` (string)                          | An identifier of the subject or user assigned to the experiment variation                                         | "ed6f85019080"                   |
+| `subjectNumericAttributes` (Attributes)     | Metadata about numeric attributes of the subject. Map of the name of attributes their provided values             | `{"age": 30}`                    |
+| `subjectCategoricalAttributes` (Attributes) | Metadata about non-numeric attributes of the subject. Map of the name of attributes their provided values         | `{"loyalty_tier": "gold"}`       |
+| `action` (string)                           | The action assigned by the bandit                                                                                 | "promo-20%-off"                  |
+| `actionNumericAttributes` (Attributes)      | Metadata about numeric attributes of the assigned action. Map of the name of attributes their provided values     | `{"brandAffinity": 0.2}`         |
+| `actionCategoricalAttributes` (Attributes)  | Metadata about non-numeric attributes of the assigned action. Map of the name of attributes their provided values | `{"previouslyPurchased": false}` |
+| `actionProbability` (number)                | The weight between 0 and 1 the bandit valued the assigned action                                                  | 0.25                             |
+| `optimalityGap` (number)                    | The difference between the score of the selected action and the highest-scored action                             | 456                              | 
+| `modelVersion` (string)                     | Unique identifier for the version (iteration) of the bandit parameters used to determine the action probability   | "v123"                           |
+| `metaData` Record<string, unknown>          | Any additional freeform meta data, such as the version of the SDK                                                 | `{ "sdkLibVersion": "3.5.1" }`   |
 
 ### Querying the bandit for an action
 
@@ -579,10 +579,9 @@ Similar to subject context, action contexts can be provided as `Attributes`--whi
 attribute, and everything else is a categorical attribute--or as `ContextAttributes`, which have explicit bucketing into `numericAttributes`
 and `categoricalAttributes`.
 
-Note that action contexts can contain two kinds of information:
-- Action-specific context (e.g., the image aspect ratio of image corresponding to this action)
-- Subject-action interaction context (e.g., there could be a "brand-affinity" model that computes brand affinities of users to brands,   
-  and scores of that model can be added to the action context to provide additional context for the bandit)
+Note that relevant action contexts are subject-action interactions. For example, there could be a "brand-affinity" model
+that computes brand affinities of users to brands, and scores of that model can be added to the action context to provide
+additional context for the bandit.
 
 If there is no action context, an array of strings comprising only the actions names can also be passed in.
 
