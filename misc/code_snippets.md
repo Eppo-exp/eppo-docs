@@ -8,7 +8,7 @@ import * as EppoSdk from "@eppo/js-client-sdk";
 const variation = EppoSdk.getInstance().getStringAssignment(
   "my-feature-flag",
   user.id,
-  {"country": user.country},
+  { country: user.country },
   "flag-default-value"
 );
 ```
@@ -20,7 +20,7 @@ import * as EppoSdk from "@eppo/node-server-sdk";
 const variation = EppoSdk.getInstance().getStringAssignment(
   "my-feature-flag",
   user.id,
-  {"country": user.country},
+  { country: user.country },
   "flag-default-value"
 );
 ```
