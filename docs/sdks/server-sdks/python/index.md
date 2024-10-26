@@ -167,19 +167,19 @@ class MyLogger(AssignmentLogger):
 
 We automatically log the following data:
 
-| Field                                                | Description                                                                                                     | Example                             |
-|------------------------------------------------------|-----------------------------------------------------------------------------------------------------------------|-------------------------------------|
-| `timestamp` (Date)                                   | The time when the action is taken in UTC  | 2024-03-22T14:26:55.000Z            |
-| `flagKey` (String)                                | The key of the feature flag corresponding to the bandit                                                                                           | "bandit-test-allocation-4"          |
-| `banditKey` (String)                                       | The key (unique identifier) of the bandit                                                                       | "ad-bandit-1"                       |
-| `subject` (String)                                   | An identifier of the subject or user assigned to the experiment variation                                       | "ed6f85019080"                      |
-| `action` (String)                                    | The action assigned by the bandit                                                                               | "promo-20%-off"                     |
-| `subjectNumericAttributes` (Dict[str, float])     | Metadata about numeric attributes of the subject. Dictionary of the name of attributes their numeric values            | `{"age": 30}`    |
-| `subjectCategoricalAttributes` (Dict[str, str]) | Metadata about non-numeric attributes of the subject. Dictionary of the name of attributes their string values         | `{"loyalty_tier": "gold"}`     |
-| `actionNumericAttributes` (Dict[str, float])      | Metadata about numeric attributes of the assigned action. Dictionary of the name of attributes their numeric values    | `{"discount": 0.1}`   |
-| `actionCategoricalAttributes` (Dict[str, str])  | Metadata about non-numeric attributes of the assigned action. Map of the name of attributes their string values | `{"promoTextColor": "white"}` |
-| `actionProbability` (Double)                         | The weight between 0 and 1 the bandit valued the assigned action                                                | 0.25                                |
-| `modelVersion` (String)                              | Unique identifier for the version (iteration) of the bandit parameters used to determine the action probability | "v123"                       |
+| Field                                           | Description                                                                                                         | Example                          |
+|-------------------------------------------------|---------------------------------------------------------------------------------------------------------------------|----------------------------------|
+| `timestamp` (Date)                              | The time when the action is taken in UTC                                                                            | 2024-03-22T14:26:55.000Z         |
+| `flagKey` (String)                              | The key of the feature flag corresponding to the bandit                                                             | "bandit-test-allocation-4"       |
+| `banditKey` (String)                            | The key (unique identifier) of the bandit                                                                           | "ad-bandit-1"                    |
+| `subject` (String)                              | An identifier of the subject or user assigned to the experiment variation                                           | "ed6f85019080"                   |
+| `action` (String)                               | The action assigned by the bandit                                                                                   | "promo-20%-off"                  |
+| `subjectNumericAttributes` (Dict[str, float])   | Metadata about numeric attributes of the subject. Dictionary of the name of attributes their numeric values         | `{"age": 30}`                    |
+| `subjectCategoricalAttributes` (Dict[str, str]) | Metadata about non-numeric attributes of the subject. Dictionary of the name of attributes their string values      | `{"loyalty_tier": "gold"}`       |
+| `actionNumericAttributes` (Dict[str, float])    | Metadata about numeric attributes of the assigned action. Dictionary of the name of attributes their numeric values | `{"brandAffinity": 0.1}`         |
+| `actionCategoricalAttributes` (Dict[str, str])  | Metadata about non-numeric attributes of the assigned action. Map of the name of attributes their string values     | `{"previouslyPurchased": false}` |
+| `actionProbability` (Double)                    | The weight between 0 and 1 the bandit valued the assigned action                                                    | 0.25                             |
+| `modelVersion` (String)                         | Unique identifier for the version (iteration) of the bandit parameters used to determine the action probability     | "v123"                           |
 
 ### Querying the bandit for an action
 
@@ -204,11 +204,11 @@ bandit_result = client.get_bandit_action(
     {
         "nike": Attributes(
             numeric_attributes={"brand_affinity": 2.3},
-            categorical_attributes={"image_aspect_ratio": "16:9"},
+            categorical_attributes={"previouslyPurchased": true},
         ),
         "adidas": Attributes(
             numeric_attributes={"brand_affinity": 0.2},
-            categorical_attributes={"image_aspect_ratio": "16:9"},
+            categorical_attributes={"previouslyPurchased": false},
         ),
     },
     "control",
@@ -235,13 +235,12 @@ Next, supply a dictionary with actions and their attributes: `actions: Dict[str,
 If the user is assigned to the bandit, the bandit selects one of the actions supplied here,
 and all actions supplied are considered to be valid; if an action should not be shown to a user, do not include it in this dictionary.
 
-
 The action attributes are similar to the `subject_attributes` but hold action specific information.
 Note that we can use `Attrubutes.empty()` to create an empty attribute context.
 
-Note that action contexts can contain two kinds of information:
-- Action specific context: e.g. the image aspect ratio of image corresponding to this action
-- User-action interaction context: e.g. there could be a "brand-affinity" model that computes brand affinties of users to brands, and scores of this model can be added to the action context to provide additional context for the bandit.
+Note that relevant action contexts are subject-action interactions. For example, there could be a "brand-affinity" model
+that computes brand affinities of users to brands, and scores of that model can be added to the action context to provide
+additional context for the bandit.
 
 #### Result
 
