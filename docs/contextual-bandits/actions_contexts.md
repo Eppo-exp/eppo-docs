@@ -62,13 +62,18 @@ Contextual Bandits automatically explore new actions as they are encountered and
 To create a bandit policy that personalizes, you need to provide context. 
 
 Generally, there are two types of context:
-1. Subject context: For example, the subject's past behavior, demographic information, are they on a mobile device, etc.
+1. Subject context: For example, the subject's past behavior, demographic information, whether they are on a mobile device, etc.
 2. Action (Subject-action interaction) context: For example, the brand affinity of the subject to the product (based on past purchases, user reviews, etc.)
 
 Note that the first of these is independent of the actions, while the other is action dependent. 
-For convenience, you can supply the subject attributes once, and they will be used across all actions, while
-separately, you can supply action-specific attributes.
+The subject attributes are provided directly and not tied to a specific action, while separately, you can supply action-specific attributes for each action.
 Behind the scenes, we combine the two to create a single context per action that is used by the underlying model to select which action to pick.
+
+:::info
+Currently, we build models on per-action basis. Any action attributes that are not specific to the subject will end up
+being the same for all subjects and be ignored as they will not be predictive.
+:::
+
 
 #### Subject attributes
 
@@ -77,8 +82,8 @@ Generic attributes such as age (bucket), gender, and device information can be h
 
 #### Action attributes
 
-Action attributes capture information that is unique to a particular action for the subject. For example, the score from an
-internal Machine Learning model that measures brand affinity.
+Action attributes capture information that is unique to a particular action for the subject. For example, the number of
+previous purchases the subject has made of the action's brand or product category.
 
 :::info What context attributes to use
 Selection of which attributes to include in the context is a bit of an art.
