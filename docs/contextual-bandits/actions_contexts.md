@@ -63,14 +63,14 @@ To create a bandit policy that personalizes, you need to provide context.
 
 Generally, there are two types of context:
 1. Subject context: For example, the subject's past behavior, demographic information, whether they are on a mobile device, etc.
-2. Action (Subject-action interaction) context: For example, the brand affinity of the subject to the product (based on past purchases, user reviews, etc.)
+2. Action (Subject-action interaction) context: For example, the number of previous purchases of the action's brand or product category.
 
 Note that the first of these is independent of the actions, while the other is action dependent. 
 The subject attributes are provided directly and not tied to a specific action, while separately, you can supply action-specific attributes for each action.
 Behind the scenes, we combine the two to create a single context per action that is used by the underlying model to select which action to pick.
 
-:::info
-Currently, we build models on per-action basis. Any action attributes that are not specific to the subject will end up
+:::info Currently, we build bandit models on a per-action basis
+Be sure action attributes are subject-specific. Any action attributes that are not specific to the subject will end up
 being the same for all subjects and be ignored as they will not be predictive.
 :::
 
