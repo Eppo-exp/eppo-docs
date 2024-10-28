@@ -19,7 +19,7 @@ gem install eppo-server-sdk
 or add to you `Gemfile`:
 
 ```
-gem 'eppo-server-sdk', '~> 0.3.0'
+gem 'eppo-server-sdk', '~> 3.2.7'
 ```
 
 ## 2. Initialize the SDK
