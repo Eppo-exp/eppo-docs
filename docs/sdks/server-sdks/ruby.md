@@ -5,7 +5,7 @@ import TabItem from '@theme/TabItem';
 
 Eppo's Ruby SDK can be used for both feature flagging and experiment assignment:
 
-- [GitHub repository](https://github.com/Eppo-exp/ruby-sdk)
+- [GitHub repository](https://github.com/Eppo-exp/rust-sdk/tree/main/ruby-sdk)
 - [RubyGems gem](https://rubygems.org/gems/eppo-server-sdk/)
 
 ## 1. Install the SDK
