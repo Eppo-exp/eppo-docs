@@ -58,6 +58,12 @@ In this example, we'll create two "component - Rich image" variants to determine
 
 Once you publish, a message will appear at the top of the screen letting you know that a new feature flag has been created in the Eppo UI. Click on on the link that says **Go to Eppo feature flag** to confirm this worked. From the Eppo UI, you can then enable the flag.
 
+:::danger
+The experiment is not running until the linked fetaure flag is enabled in the Eppo UI. Don't forget to enable the feature flag.
+:::
+
+The experiment also has a linked experiment analysis that is automatically created for you when you publish. This is the experiment in the Eppo UI where metrics can be added and you can monitor the experiment results. Learn more about [configuring your analysis here](/experiment-analysis/index).
+
 That's it! You now have a feature flag and experiment configured for this blog post.
 
 ## Updating your codebase to support Eppo experiments
