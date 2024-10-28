@@ -126,14 +126,28 @@ let variation = EppoClient.shared().getStringAssignment(
 )
 ```
 
+## Java
+```java
+import com.eppo.sdk.EppoClient;
+import cloud.eppo.api.Attributes;
+
+String variation = EppoClient.getInstance().getStringAssignment(
+    "my-feature-flag",
+    user.getId(),
+    new Attributes(Collections.singletonMap("country", user.getCountry())),
+    "flag-default-value"
+);
+```
+
 ## Android (Kotlin)
 ```kotlin
 import cloud.eppo.android.EppoClient
+import cloud.eppo.ufc.dto.SubjectAttributes
 
 val variation = EppoClient.getInstance().getStringAssignment(
     experimentKey = "my-feature-flag",
     subjectId = user.id,
-    subjectAttributes = mapOf("country" to user.country),
+    subjectAttributes = SubjectAttributes(mapOf("country" to user.country)),
     defaultValue = "flag-default-value"
 )
 ```
