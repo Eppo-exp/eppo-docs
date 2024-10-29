@@ -12,7 +12,7 @@ Using a headless CMS like Contentful, and a lightweight, robust feature flagging
 
 Eppo now supports seamless integration with Contentful via the Eppo Contentful marketplace app. This app allows you to create experiements directly within a Contentful blog post.
 
-To get started, search for "Eppo" on Contentful's marketplace. To navigate to the marketplace, click on **Apps** from Contentful's navigation menu, then click **Marketplace**.
+To get started, visit [Eppo's Contentful app page](https://www.contentful.com/marketplace/eppo/) and click the `Get the app` button to install.
 
 When installing the app, you should see a configuration screen that allows you to enter an **Eppo API key** along with various other settings.
 
@@ -59,7 +59,7 @@ In this example, we'll create two "component - Rich image" variants to determine
 Once you publish, a message will appear at the top of the screen letting you know that a new feature flag has been created in the Eppo UI. Click on on the link that says **Go to Eppo feature flag** to confirm this worked. From the Eppo UI, you can then enable the flag.
 
 :::danger
-The experiment is not running until the linked fetaure flag is enabled in the Eppo UI. Don't forget to enable the feature flag.
+The experiment is not running until the linked feature flag is enabled in the Eppo UI. Don't forget to enable the feature flag.
 :::
 
 The experiment also has a linked experiment analysis that is automatically created for you when you publish. This is the experiment in the Eppo UI where metrics can be added and you can monitor the experiment results. Learn more about [configuring your analysis here](/experiment-analysis/index).
