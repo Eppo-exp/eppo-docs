@@ -62,7 +62,7 @@ Once you publish, a message will appear at the top of the screen letting you kno
 The experiment is not running until the linked feature flag is enabled in the Eppo UI. Don't forget to enable the feature flag.
 :::
 
-The experiment also has a linked experiment analysis that is automatically created for you when you publish. This is the experiment in the Eppo UI where metrics can be added and you can monitor the experiment results. Learn more about [configuring your analysis here](/experiment-analysis/index).
+The experiment also has a linked experiment analysis that is automatically created for you when you publish. This is the experiment in the Eppo UI where metrics can be added and you can monitor the experiment results. Learn more about [configuring your analysis here](/experiment-analysis/).
 
 That's it! You now have a feature flag and experiment configured for this blog post.
 
