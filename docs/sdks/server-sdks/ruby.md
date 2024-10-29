@@ -5,7 +5,7 @@ import TabItem from '@theme/TabItem';
 
 Eppo's Ruby SDK can be used for both feature flagging and experiment assignment:
 
-- [GitHub repository](https://github.com/Eppo-exp/ruby-sdk)
+- [GitHub repository](https://github.com/Eppo-exp/rust-sdk/tree/main/ruby-sdk)
 - [RubyGems gem](https://rubygems.org/gems/eppo-server-sdk/)
 
 ## 1. Install the SDK
@@ -39,7 +39,7 @@ If you are using the SDK for experiment assignments, make sure to pass in an ass
 
 :::info
 
-By default the Eppo client initialization is asynchronous to ensure no critical code paths are blocked. For more information on handling non-blocking initialization, see our [documentation here](/sdks/common-issues#3-not-handling-non-blocking-initialization).
+By default the Eppo client initialization is asynchronous to ensure no critical code paths are blocked. For more information on handling non-blocking initialization, see our [documentation here](/sdks/faqs/common-issues/#consider-how-to-best-handle-non-blocking-initialization).
 
 :::
 

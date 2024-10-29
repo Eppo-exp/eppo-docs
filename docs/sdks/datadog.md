@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem';
 
 ## Overview
 This guide will walk through how to send Eppo feature flag assignments as RUM data to Datadog. 
-This functionality enhances your ability to monitor user experience and performance by enabling you to identify which users are exposed to a particular feature and assess whether any introduced change impacts the user experience or degrades performance
+This functionality enhances your ability to monitor user experience and performance by enabling you to identify which users are exposed to a particular feature and assess whether any introduced change impacts the user experience or degrades performance.
 
 Enhancing your real-user monitoring data with feature flag information allows you to verify that new features are launched smoothly, without inadvertently introducing bugs or performance regressions. This added level of visibility enables you to establish connections between feature releases and performance metrics, rapidly identify issues tied to specific releases, and expedite troubleshooting efforts.
 
