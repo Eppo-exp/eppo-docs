@@ -4,24 +4,24 @@ sidebar_position: 6
 
 # Latency
 
-Eppo’s feature flagging architecture enables fast delivery of client-side web experiments. By leveraging a "dumb server, smart client" approach and utilizing the power of the Fastly CDN, Eppo provides low-latency feature flag evaluations with efficient updates.
-
 ## Introduction
 
-Eppo’s feature flagging system is designed as a JSON delivery service. Our CDN maintains a file containing feature flags and their corresponding assignment rules. The SDK client downloads this file and determines which feature flags apply for a specific subject (e.g., user).
+Eppo’s feature flags leverage a "dumb server, smart client" approach. This, paired with using Fastly's Global CDN, allows Eppo to provide low-latency SDK initialization and near instantaneous evaluation of feature flag and experiment variations.
 
-Our architecture follows the "smart client" principle, offloading the evaluation work to the client-side SDKs. This means that once the SDK is initialized, all evaluation happens locally, typically in under 1 ms. Further, if user context changes mid-session, there is no need to reach out to Eppo's servers to understand their new targeting eligibility. All of the targeting happens locally, so Eppo's SDK will always ensure users see the right experiment given their unique targeting attributes.
+The system is designed as a JSON delivery service. Our CDN maintains a file containing feature flags and their corresponding assignment rules. The SDK client then downloads this file and determines what variant to apply for a specific subject (e.g., user).
 
-This page walks through some of the latency considerations associated with building a global feature flagging system, describes options for how to reach your internal SLAs, and presents performance benchmarks numbers.
+Offloading the evaluation work to the SDK means that once the SDK is initialized all evaluation happens locally, typically in under 1 ms. Further, if user context changes mid-session, there is no need to reach out to Eppo's servers to understand their new targeting eligibility. All of the targeting happens locally, so Eppo's SDK will always ensure users see the right experiment given their unique targeting attributes.
+
+This page walks through some of the latency considerations associated with building a global feature flagging system, describes options for how to reach your internal SLAs, and presents performance benchmarks.
 
 ## Latency Considerations
 
-When it comes to feature-flagging services, latency is a crucial factor for client experiences. We distinguish between two types of latency:
+When it comes to feature-flagging services, latency is a crucial factor for end user experiences. We distinguish between two types of latency:
 
 1. **Evaluation Latency**: The time it takes to determine which flag value applies for a specific subject (user).
 2. **Update Latency**: The time it takes for updated rules to reach end users.
 
-Eppo's "smart client" approach allows us to give very impressive evaluation latencies (typically under 1ms), while still providing update latencies that can satisfy internal SLAs for quickly disabling problematic features. 
+Eppo's "smart client" approach allows us to give very impressive evaluation latencies (typically under 1ms), while still providing update latencies that satisfy internal SLAs for disabling problematic features. 
 
 This is in contrast to a server-side evaluation which requires frequent network requests each time a flag is evaluated, or a user's context changes.
 
