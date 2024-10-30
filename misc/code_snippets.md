@@ -29,7 +29,7 @@ const variation = EppoSdk.getInstance().getStringAssignment(
 ```python
 import eppo_client
 
-variation = eppo_client.get_instance().get_boolean_assignment(
+variation = eppo_client.get_instance().get_string_assignment(
     'my-feature-flag', 
     user.id, 
     { 'country': user.country }, 
@@ -126,15 +126,15 @@ let variation = EppoClient.shared().getStringAssignment(
 )
 ```
 
-## Java
+## JVM (Java)
 ```java
 import com.eppo.sdk.EppoClient;
-import cloud.eppo.api.Attributes;
+import cloud.eppo.api.EppoValue;  
 
 String variation = EppoClient.getInstance().getStringAssignment(
     "my-feature-flag",
     user.getId(),
-    new Attributes(Collections.singletonMap("country", user.getCountry())),
+    Map.of("country", EppoValue.valueOf(user.getCountry())),
     "flag-default-value"
 );
 ```
@@ -142,12 +142,13 @@ String variation = EppoClient.getInstance().getStringAssignment(
 ## Android (Kotlin)
 ```kotlin
 import cloud.eppo.android.EppoClient
-import cloud.eppo.ufc.dto.SubjectAttributes
+import cloud.eppo.api.Attributes;  
+import cloud.eppo.api.EppoValue;  
 
 val variation = EppoClient.getInstance().getStringAssignment(
     experimentKey = "my-feature-flag",
     subjectId = user.id,
-    subjectAttributes = SubjectAttributes(mapOf("country" to user.country)),
+    subjectAttributes = Attributes(mapOf("country" to EppoValue.valueOf(user.country))),  
     defaultValue = "flag-default-value"
 )
 ```
