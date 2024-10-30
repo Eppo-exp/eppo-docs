@@ -142,8 +142,8 @@ String variation = EppoClient.getInstance().getStringAssignment(
 ## Android (Kotlin)
 ```kotlin
 import cloud.eppo.android.EppoClient
-import cloud.eppo.api.Attributes;  
-import cloud.eppo.api.EppoValue;  
+import cloud.eppo.api.Attributes
+import cloud.eppo.api.EppoValue
 
 val variation = EppoClient.getInstance().getStringAssignment(
     experimentKey = "my-feature-flag",
