@@ -97,7 +97,7 @@ require 'eppo_client'
 variation = EppoClient::Client.instance.get_string_assignment(
   'my-feature-flag',
   user.id,
-  { country: user.country },
+  { 'country' => user.country },
   'flag-default-value'
 )
 ```
