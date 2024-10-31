@@ -7,7 +7,7 @@ Eppo's open source .NET SDK can be used for feature flagging and experiment assi
 
 - [GitHub repository](https://github.com/Eppo-exp/dot-net-server-sdk)
 - [Package](https://www.nuget.org/packages/Eppo.Sdk)
-- [Nuget Packge](https://www.nuget.org/packages/Eppo.Sdk)
+- [Nuget Package](https://www.nuget.org/packages/Eppo.Sdk)
 
 
 ## Getting Started
@@ -40,7 +40,7 @@ If you are using the SDK for experiment assignments, make sure to pass in an ass
 
 ```cs
 var assignedVariation = eppoClient.GetStringAssignment(
-    'new-user-onboarding', 
+    'fresh-user-onboarding', 
     user.id, 
     user.attributes, 
     'control'
@@ -102,7 +102,7 @@ class SegmentLogger : IAssignmentLogger
 </TabItem>
 
 </Tabs>
-                        |
+
 
 :::note
 More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/sdks/event-logging/) page.
@@ -110,7 +110,7 @@ More details about logging and examples (with Segment, Rudderstack, mParticle, a
 
 ### Assignment functions
 
-Every Eppo flag has a return type that is set once on creation in the dashboard. Once a flag is created, assignments in code should be made using the corresponding typed function: 
+Every Eppo flag has a return type that is set once on creation in the dashboard. Once a flag is created, assignments in code are made using the corresponding typed function: 
 
 ```cs
 GetBooleanAssignment(...)
@@ -120,14 +120,14 @@ GetStringAssignment(...)
 GetJSONAssignment(...)
 ```
 
-Each function has the same signature, but returns the type in the function name. For booleans use `getBooleanAssignment`, which has the following signature:
+Each function has the same signature (except for the type of `defaultValue`) and returns the type in the function name. For booleans use `getBooleanAssignment`, which has the following signature:
 
 ```cs
 public bool GetBooleanAssignment(
     string flagKey, 
     string subjectKey, 
     Dictionary<string, object> subjectAttributes, 
-    string defaultValue
+    bool defaultValue
 )
 ```
 
