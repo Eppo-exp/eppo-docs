@@ -350,13 +350,45 @@ class Program
 
         // Need to reformat user attributes a bit; EppoClient requires `IDictionary<string, object?>`
         var subjectAttributes = subjectTraits.Keys.ToDictionary(key => key, key => (object)subjectTraits[key]);
+
+        // Get assignments
+        var showUpgradeAd = eppoClient.GetBooleanAssignment(
+            "show-upgrade-ad",
+            userID,
+            subjectAttributes,
+            false
+        );
         // Get an assignment for the user
-        var assignedVariation = eppoClient.GetStringAssignment(
-            "new-user-onboarding",
+        var recentUserTip = eppoClient.GetStringAssignment(
+            "recent-user-onboarding",
             userID,
             subjectAttributes,
             "control"
         );
+
+        // Get a bandit action
+        var actions = new List<String>(){"nike", "adidas"};
+        var banditResult = eppoClient.GetBanditAction(
+          "shoe-bandit",
+          ContextAttributes.FromDictionary(userID, subjectAttributes),
+          actions,
+          "default"
+        )
+
+
+        if (showUpgradeAd)
+        {
+          RenderUpgradeAd();
+        }
+
+        RenderRecentUserTip(recentUserTip);
+
+        if (result.Action != null)
+        {
+            RenderShoeAd(result.Action);
+        } else {
+            RenderDefaultShoeAd(result.Variation);
+        }
     }
 }
 
