@@ -34,7 +34,7 @@ var eppoClient = EppoClient.Init(eppoClientConfig);
 
 After initialization, the SDK begins polling Eppo's API at regular intervals to retrieve the most recent experiment configurations such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments thereafter are effectively instant. For more information, see the [architecture overview](/sdks/architecture/overview) page.
 
-If you are using the SDK for experiment assignments, make sure to pass in an assignment logging callback (see [section](#define-an-assignment-logger-experiment-assignment-only) below).
+If you are using the SDK for experiment assignments, make sure to pass in an assignment logging callback (see [section](#define-an-assignment-logger) below).
 
 #### Assign Anywhere
 
@@ -210,21 +210,21 @@ class SegmentLogger : IAssignmentLogger
 The SDK will invoke the `LogBanditAction()` method with a `BanditLogEvent` object that contains the following fields:
 
 
-| Field                                                | Description                                                                                                       | Example                          |
+| Field (Type)                                               | Description                                                                                                       | Example                          |
 | ---------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | -------------------------------- |
 | `Timestamp` (DateTime)                               | The time when the action is taken in UTC as an ISO string                                                         | "2024-03-22T14:26:55.000Z"       |
 | `FlagKey` (string)                                   | The key of the feature flag corresponding to the bandit                                                           | "bandit-test-allocation-4"       |
 | `BanditKey` (string)                                 | The key (unique identifier) of the bandit                                                                         | "ad-bandit-1"                    |
 | `SubjectKey` (string)                                | An identifier of the subject or user assigned to the experiment variation                                         | "ed6f85019080"                   |
-| `SubjectNumericAttributes` (IDict<String,double>)    | Metadata about numeric attributes of the subject. Map of the name of attributes their provided values             | `{"age": 30}`                    |
-| `SubjectCategoricalAttributes` (IDict<String,string) | Metadata about non-numeric attributes of the subject. Map of the name of attributes their provided values         | `{"loyalty_tier": "gold"}`       |
+| `SubjectNumericAttributes` (IDictionary<string, double>)    | Metadata about numeric attributes of the subject. Map of the name of attributes their provided values             | `{"age": 30}`                    |
+| `SubjectCategoricalAttributes` (IDictionary<string, string) | Metadata about non-numeric attributes of the subject. Map of the name of attributes their provided values         | `{"loyalty_tier": "gold"}`       |
 | `Action` (string)                                    | The action assigned by the bandit                                                                                 | "promo-20%-off"                  |
-| `ActionNumericAttributes` (IDict<String,double)      | Metadata about numeric attributes of the assigned action. Map of the name of attributes their provided values     | `{"brandAffinity": 0.2}`         |
-| `ActionCategoricalAttributes` (IDict<String,string)  | Metadata about non-numeric attributes of the assigned action. Map of the name of attributes their provided values | `{"previouslyPurchased": false}` |
+| `ActionNumericAttributes` (IDictionary<string, double)      | Metadata about numeric attributes of the assigned action. Map of the name of attributes their provided values     | `{"brandAffinity": 0.2}`         |
+| `ActionCategoricalAttributes` (IDictionary<string, string)  | Metadata about non-numeric attributes of the assigned action. Map of the name of attributes their provided values | `{"previouslyPurchased": false}` |
 | `ActionProbability` (number)                         | The weight between 0 and 1 the bandit valued the assigned action                                                  | 0.25                             |
 | `OptimalityGap` (number)                             | The difference between the score of the selected action and the highest-scored action                             | 456                              |
 | `ModelVersion` (string)                              | Unique identifier for the version (iteration) of the bandit parameters used to determine the action probability   | "v123"                           |
-| `MetaData` IDict<string, string>                     | Any additional freeform meta data, such as the version of the SDK                                                 | `{ "sdkLibVersion": "3.5.1" }`   |
+| `MetaData` IDictionary<string, string>                     | Any additional freeform meta data, such as the version of the SDK                                                 | `{ "sdkLibVersion": "3.5.1" }`   |
 
 
 ### Querying for a Bandit Action
