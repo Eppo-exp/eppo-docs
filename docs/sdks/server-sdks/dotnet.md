@@ -25,7 +25,7 @@ dotnet add package Eppo.Sdk
 Begin by initializing a singleton instance of Eppo's client with an SDK key from the [Eppo interface](https://eppo.cloud/feature-flags/keys). Once initialized, the client can be used to make assignments anywhere in your app. Initialization should happen when your application starts up to generate a singleton client instance, once per application lifecycle:
 
 
-#### Initialize once
+#### Initialize Once
 
 ```csharp
 var eppoClientConfig = new EppoClientConfig("<SDK_KEY>", null);
@@ -36,7 +36,15 @@ After initialization, the SDK begins polling Eppo's API at regular intervals to 
 
 If you are using the SDK for experiment assignments, make sure to pass in an assignment logging callback (see [section](#define-an-assignment-logger-experiment-assignment-only) below).
 
-#### Assign anywhere
+#### Assign Anywhere
+
+The `GetStringAssignment` method take the following parameters:
+
+- `flagKey` (string): The key of the feature flag
+- `subjectKey` (string): The key of the subject or user assigned to the experiment variation
+- `subjectAttributes` (IDictionary): The subject's attributes
+- `defaultValue` (string): The default *variation* to return if the flag is not successfully evaluated, or, as is more common, the flag is disabled
+
 
 ```cs
 var assignedVariation = eppoClient.GetStringAssignment(
@@ -47,7 +55,7 @@ var assignedVariation = eppoClient.GetStringAssignment(
 );
 ```
 
-### Define an assignment logger
+### Define an Assignment Logger
 
 Eppo is architected so that raw user data never leaves your system. As part of that, instead of pushing subject-level exposure events to Eppo's servers, Eppo's SDKs integrate with your existing logging system. The SDK invokes the callback to capture assignment data whenever a variation is assigned. This is done with a logging callback method defined at SDK initialization.
 
@@ -108,7 +116,7 @@ class SegmentLogger : IAssignmentLogger
 More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/sdks/event-logging/) page.
 :::
 
-### Assignment methods
+### Assignment Methods
 
 Every Eppo flag has a return type that is set once on creation in the dashboard. Once a flag is created, assignments in code are made using the corresponding typed method:
 
@@ -224,8 +232,7 @@ To query the bandit for an action, use the `GetBanditAction()` method. The most 
 - `flagKey` (string): The key of the feature flag corresponding to the bandit
 - `subject` (ContextAttributes): The key of the subject or user assigned to the experiment variation along with the subject's categorical and numeric attributes
 - `actions` (IDictionary<string, ContextAttributes>): Map of actions (by name) to their context (categorical and numeric) attributes
-- `defaultValue` (string): The default *variation* to return if the flag is not successfully evaluated
-
+- `defaultValue` (string): The default *variation* to return if the flag is not successfully evaluated, or, as is more common, the flag is disabled
 
 ```cs
 var subjectAttributes = new Dictionary<string, object?>()
