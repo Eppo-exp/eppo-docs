@@ -277,8 +277,16 @@ if (result.Action != null)
 
 There are a couple of additional overloads of the `GetBanditAction()` method to call, depending on the shape of your input.
 
+For a simple list of actions without attributes:
+```cs
+public BanditResult GetBanditAction(string flagKey,
+                                    string subjectKey,
+                                    IDictionary<String, object?> subjectAttributes,
+                                    string[] actions,
+                                    string defaultValue
+```
 
-For a simple list of actions without attributes (see also [`ContextAttributes`](#contextattributes)):
+For a simple list of actions without attributes, using a [`ContextAttributes`](#contextattributes) subject:
 
 ```cs
 public BanditResult GetBanditAction(string flagKey,
@@ -377,10 +385,11 @@ class Program
         var actions = new List<String>(){"nike", "adidas"};
         var banditResult = eppoClient.GetBanditAction(
           "shoe-bandit",
-          ContextAttributes.FromDictionary(userID, subjectAttributes),
+          userID,
+          subjectAttributes,
           actions,
           "default"
-        )
+        );
 
 
         if (showUpgradeAd)
