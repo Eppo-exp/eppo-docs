@@ -230,8 +230,9 @@ The SDK will invoke the `LogBanditAction()` method with a `BanditLogEvent` objec
 ### Querying for a Bandit Action
 To query the bandit for an action, use the `GetBanditAction()` method. The most specific implementation of `GetBanditAction()` takes the following parameters:
 - `flagKey` (string): The key of the feature flag corresponding to the bandit
-- `subject` (ContextAttributes): The key of the subject or user assigned to the experiment variation along with the subject's categorical and numeric attributes
-- `actions` (IDictionary<string, ContextAttributes>): Map of actions (by name) to their context (categorical and numeric) attributes
+- `subject` (string): The key of the subject or user assigned to the experiment variation
+- `subjectAttributes` (IDictionary<string, object?>): The subject's attributes
+- `actions` (IDictionary<string, IDictionary<string, object?>> ): Map of actions (by name) to their categorical and numeric attributes
 - `defaultValue` (string): The default *variation* to return if the flag is not successfully evaluated, or, as is more common, the flag is disabled
 
 ```cs
