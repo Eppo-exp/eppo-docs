@@ -3,7 +3,7 @@ import TabItem from '@theme/TabItem';
 
 # .NET
 
-Eppo's open source .NET SDK can be used for feature flagging and experiment assignment and Multi-Armed Contextual Bandits:
+Eppo's open source .NET SDK can be used for feature flagging and experiment assignment and multi-armed contextual bandits:
 
 - [GitHub repository](https://github.com/Eppo-exp/dot-net-server-sdk)
 - [Package](https://www.nuget.org/packages/Eppo.Sdk)
@@ -28,7 +28,7 @@ Begin by initializing a singleton instance of Eppo's client with an SDK key from
 #### Initialize once
 
 ```csharp
-var eppoClientConfig = new EppoClientConfig("<SDK_KEY>", new AssignmentLogger()); // Don't worry about the `AssignmentLogger` just yet. More on it below.
+var eppoClientConfig = new EppoClientConfig("<SDK_KEY>", null);
 var eppoClient = EppoClient.Init(eppoClientConfig);
 ```
 
@@ -49,7 +49,7 @@ var assignedVariation = eppoClient.GetStringAssignment(
 
 ### Define an assignment logger
 
-Eppo is architected so that raw user data never leaves your system. As part of that, instead of pushing subject-level exposure events to Eppo's servers, Eppo's SDKs integrate with your existing logging system. The SDK invokes the callback to capture assignment data whenever a variation is assigned. This is done with a logging callback function defined at SDK initialization. 
+Eppo is architected so that raw user data never leaves your system. As part of that, instead of pushing subject-level exposure events to Eppo's servers, Eppo's SDKs integrate with your existing logging system. The SDK invokes the callback to capture assignment data whenever a variation is assigned. This is done with a logging callback method defined at SDK initialization.
 
 
 ```csharp
@@ -58,7 +58,7 @@ var eppoClientConfig = new EppoClientConfig(
   new AssignmentLogger());
 ```
 
-The code below illustrates an example implementation of a logging callback to the console and other event platforms such as Segment.  You could also use your own logging system, the only requirement is that the SDK receives a `LogAssignment(AssignmentLogData assignmentLogData)` function. The `AssignmentLogData` class implements `ISerializable` so most systems should be able to easily log the value.
+The code below illustrates an example implementation of a logging callback to the console and other event platforms such as Segment.  You could also use your own logging system, the only requirement is that the SDK receives a `LogAssignment(AssignmentLogData assignmentLogData)` method. The `AssignmentLogData` class implements `ISerializable` so most systems should be able to easily log the value.
 
 <Tabs>
 <TabItem value="console" label="Console">
@@ -108,9 +108,9 @@ class SegmentLogger : IAssignmentLogger
 More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/sdks/event-logging/) page.
 :::
 
-### Assignment functions
+### Assignment methods
 
-Every Eppo flag has a return type that is set once on creation in the dashboard. Once a flag is created, assignments in code are made using the corresponding typed function: 
+Every Eppo flag has a return type that is set once on creation in the dashboard. Once a flag is created, assignments in code are made using the corresponding typed method:
 
 ```cs
 GetBooleanAssignment(...)
@@ -120,7 +120,7 @@ GetStringAssignment(...)
 GetJSONAssignment(...)
 ```
 
-Each function has the same signature (except for the type of `defaultValue`) and returns the type in the function name. For booleans use `getBooleanAssignment`, which has the following signature:
+Each method has the same signature (except for the type of `defaultValue`) and returns the type in the method name. For booleans use `getBooleanAssignment`, which has the following signature:
 
 ```cs
 public bool GetBooleanAssignment(
@@ -128,7 +128,7 @@ public bool GetBooleanAssignment(
     string subjectKey, 
     Dictionary<string, object> subjectAttributes, 
     bool defaultValue
-)
+);
 ```
 
 ## Advanced Options
@@ -148,17 +148,17 @@ var config = new EppoClientConfig("YOUR-API-KEY", myAssignmentLogger)
 
 
 
-The SDK will invoke the `LogAssignment` function with an `event` object that contains the following fields:
+The SDK will invoke the `LogAssignment` method with an `event` object that contains the following fields:
 
-| Field                                     | Description                                                                                                              | Example                             |
-| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------- |
-| `Experiment` (string)                     | An Eppo experiment key                                                                                                   | "recommendation-algo-allocation-17" |
-| `Subject` (string)                        | An identifier of the subject or user assigned to the experiment variation                                                | UUID                                |
-| `Variation` (string)                      | The experiment variation the subject was assigned to                                                                     | "control"                           |
-| `Timestamp` (DateTime)                    | The time when the subject was assigned to the variation                                                                  | 2021-06-22T17:35:12.000Z            |
-| `SubjectAttributes` (Map<String, object>) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `Map.of("device","iOS")`            |
-| `FeatureFlag` (string)                    | An Eppo feature flag key                                                                                                 | "recommendation-algo"               |
-| `Allocation` (string)                     | An Eppo allocation key                                                                                                   | "allocation-17"                     |
+| Field                                     | Description                                                                                                            | Example                             |
+| ----------------------------------------- | ---------------------------------------------------------------------------------------------------------------------- | ----------------------------------- |
+| `Experiment` (string)                     | An Eppo experiment key                                                                                                 | "recommendation-algo-allocation-17" |
+| `Subject` (string)                        | An identifier of the subject or user assigned to the experiment variation                                              | "ed6f85019080"                      |
+| `Variation` (string)                      | The experiment variation the subject was assigned to                                                                   | "control"                           |
+| `Timestamp` (DateTime)                    | The time when the subject was assigned to the variation                                                                | 2021-06-22T17:35:12.000Z            |
+| `SubjectAttributes` (Map<String, object>) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment method | `Map.of("device","iOS")`            |
+| `FeatureFlag` (string)                    | An Eppo feature flag key                                                                                               | "recommendation-algo"               |
+| `Allocation` (string)                     | An Eppo allocation key                                                                                                 | "allocation-17"                     |
 
 
 ## Usage with Contextual Multi-Armed Bandits
@@ -199,7 +199,7 @@ class SegmentLogger : IAssignmentLogger
 }
 ```
 
-The SDK will invoke the `logBanditAction()` function with a `BanditLogEvent` object that contains the following fields:
+The SDK will invoke the `LogBanditAction()` method with a `BanditLogEvent` object that contains the following fields:
 
 
 | Field                                                | Description                                                                                                       | Example                          |
@@ -220,10 +220,10 @@ The SDK will invoke the `logBanditAction()` function with a `BanditLogEvent` obj
 
 
 ### Querying for a Bandit Action
-To query the bandit for an action, there are multiple overloads of the `getBanditAction()` function you can use.  This function takes the following parameters:
+To query the bandit for an action, use the `GetBanditAction()` method. The most specific implementation of `GetBanditAction()` takes the following parameters:
 - `flagKey` (string): The key of the feature flag corresponding to the bandit
-- `subject` (ContextAttributes): The key of the subject or user assigned to the experiment variation along with the subject's Categorical and Numeric attributes
-- `actions` (IDictionary<string, ContextAttributes>): Map of actions (by name) to their Context (Categorical and Numeric)
+- `subject` (ContextAttributes): The key of the subject or user assigned to the experiment variation along with the subject's categorical and numeric attributes
+- `actions` (IDictionary<string, ContextAttributes>): Map of actions (by name) to their context (categorical and numeric) attributes
 - `defaultValue` (string): The default *variation* to return if the flag is not successfully evaluated
 
 
@@ -234,6 +234,7 @@ var subjectAttributes = new Dictionary<string, object?>()
      ["country"] = "uk", // Categorical Attribute
      ["pricingTier"] = "1"  // NOTE: Deliberately setting to string causes this to be treated as a Categorical Attribute
  };
+
  var actions = new Dictionary<string, IDictionary<string, object?>>()
  {
      ["nike"] = new Dictionary<string, object?>()
@@ -257,13 +258,58 @@ var subjectAttributes = new Dictionary<string, object?>()
 if (result.Action != null)
 {
     // Follow the Bandit action
-    renderShoeAd(result.Action);
+    RenderShoeAd(result.Action);
 } else {
     // User was not selected for a Bandit.
     // A variation is still assigned.
-    renderDefaultShoeAd(result.Variation);
+    RenderDefaultShoeAd(result.Variation);
 }
 ```
+
+### `GetBanditAction` Overloads / Alternative Parameters
+
+There are a couple of additional overloads of the `GetBanditAction()` method to call, depending on the shape of your input.
+
+
+For a simple list of actions without attributes (see also [`ContextAttributes`](#contextattributes)):
+
+```cs
+public BanditResult GetBanditAction(string flagKey,
+                                    ContextAttributes subject,
+                                    string[] actions,
+                                    string defaultValue)
+```
+
+Unsorted attributes for both subject and actions. The `EppoClient` will automatically sort them into numeric (integer and float types), categorical (string, boolean) and emit a warning if other types are passed.
+
+```cs
+public BanditResult GetBanditAction(string flagKey,
+                                    string subjectKey,
+                                    IDictionary<string, object?> subjectAttributes,
+                                    IDictionary<string, IDictionary<string, object?>> actions,
+                                    string defaultValue)
+```
+
+#### `ContextAttributes`
+
+The `ContextAttributes` class bundles a context identifier (ex: `SubjectKey` or `ActionName`) along with the categorical and numeric attributes associated with that context. It can be built from a dictionary of unsorted attributes or from specified categorical/numeric attributes. It also functions like a `Dictionary<string, object>`.
+
+```cs
+public static ContextAttributes FromDict(string key, IDictionary<string, object?> other);
+public static ContextAttributes FromNullableAttributes(string key, IDictionary<string, string?>? categoricalAttributes, IDictionary<string, object?>? numericAttributes);
+
+// Use like an `IDictionary`
+var myUserAttributes = new ContextAttributes("user123")
+{
+    ["age"] = 30,
+    ["country"] = "uk",
+    ["pricingTier"] = "1"  // NOTE: Deliberately setting to string causes this to be treated as a categorical attribute
+};
+
+myUserAttributes["last30DaySpend"] = userService.GetRecentDaysSpend(30);
+myUserAttributes.Add("profileCompletion", 0.50f);
+```
+
 
 
 ## Full Initialization and Assignment Example
