@@ -47,48 +47,7 @@ var assignedVariation = eppoClient.GetStringAssignment(
 );
 ```
 
-#### Select a Bandit Action
-This SDK supports [Multi-armed Contextual Bandits](https://docs.geteppo.com/contextual-bandits/).
-
-```cs
-var subjectAttributes = new Dictionary<string, object?>()
- {
-     ["age"] = 30, // Gets interpreted as a Numeric Attribute
-     ["country"] = "uk", // Categorical Attribute
-     ["pricingTier"] = "1"  // NOTE: Deliberately setting to string causes this to be treated as a Categorical Attribute
- };
- var actions = new Dictionary<string, IDictionary<string, object?>>()
- {
-     ["nike"] = new Dictionary<string, object?>()
-     {
-         ["brandLoyalty"] = 0.4,
-         ["from"] = "usa"
-     },
-     ["adidas"] = new Dictionary<string, object?>()
-     {
-         ["brandLoyalty"] = 2,
-         ["from"] = "germany"
-     }
- };
- var result = client.GetBanditAction(
-     "flagKey",
-     "subjecKey",
-     subjectAttributes,
-     actions,
-     "defaultValue");
-
-if (result.Action != null)
-{
-    // Follow the Bandit action
-    DoAction(result.Action);
-} else {
-    // User was not selected for a Bandit.
-    // A variation is still assigned.
-    DoSomething(result.Variation);
-}
-```
-
-### Define an assignment logger (experiment assignment only)
+### Define an assignment logger
 
 Eppo is architected so that raw user data never leaves your system. As part of that, instead of pushing subject-level exposure events to Eppo's servers, Eppo's SDKs integrate with your existing logging system. The SDK invokes the callback to capture assignment data whenever a variation is assigned. This is done with a logging callback function defined at SDK initialization. 
 
@@ -137,36 +96,19 @@ class SegmentLogger : IAssignmentLogger
     {
         analytics.Track("Eppo Randomization Assignment", assignmentLogData);
     }
-
-    public void LogBanditAction(BanditLogEvent banditLogEvent)
-    {
-        analytics.Track("Eppo Bandit Action", banditLogEvent);
-    }
 }
 ```
 
 </TabItem>
 
 </Tabs>
-
-
-The SDK will invoke the `LogAssignment` function with an `event` object that contains the following fields:
-
-| Field                                        | Description                                                                                                              | Example                                     |
-| -------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------- |
-| `Experiment` (string)                        | An Eppo experiment key                                                                                                   | "recommendation-algo-allocation-17"         |
-| `Subject` (string)                           | An identifier of the subject or user assigned to the experiment variation                                                | UUID                                        |
-| `Variation` (string)                         | The experiment variation the subject was assigned to                                                                     | "control"                                   |
-| `Timestamp` (DateTime)                       | The time when the subject was assigned to the variation                                                                  | 2021-06-22T17:35:12.000Z                    |
-| `SubjectAttributes` (Map<String, object>)    | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `Map.of("device","iOS")`                    |
-| `FeatureFlag` (string)                       | An Eppo feature flag key                                                                                                 | "recommendation-algo"                       |
-| `Allocation` (string)                        | An Eppo allocation key                                                                                                   | "allocation-17"                             |
+                        |
 
 :::note
 More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/sdks/event-logging/) page.
 :::
 
-## Assignment functions
+### Assignment functions
 
 Every Eppo flag has a return type that is set once on creation in the dashboard. Once a flag is created, assignments in code should be made using the corresponding typed function: 
 
@@ -189,7 +131,7 @@ public bool GetBooleanAssignment(
 )
 ```
 
-## Advanced Usage
+## Advanced Options
 ### Polling Interval
 
 For additional control in server deployments, the `EppoClientConfig` class can be initialized with a custom interval to override the default of 30sec.
@@ -201,6 +143,128 @@ var config = new EppoClientConfig("YOUR-API-KEY", myAssignmentLogger)
         PollingIntervalInMillis = 5000
     };
 ```
+
+## Assignment Log Schema
+
+
+
+The SDK will invoke the `LogAssignment` function with an `event` object that contains the following fields:
+
+| Field                                     | Description                                                                                                              | Example                             |
+| ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------- |
+| `Experiment` (string)                     | An Eppo experiment key                                                                                                   | "recommendation-algo-allocation-17" |
+| `Subject` (string)                        | An identifier of the subject or user assigned to the experiment variation                                                | UUID                                |
+| `Variation` (string)                      | The experiment variation the subject was assigned to                                                                     | "control"                           |
+| `Timestamp` (DateTime)                    | The time when the subject was assigned to the variation                                                                  | 2021-06-22T17:35:12.000Z            |
+| `SubjectAttributes` (Map<String, object>) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `Map.of("device","iOS")`            |
+| `FeatureFlag` (string)                    | An Eppo feature flag key                                                                                                 | "recommendation-algo"               |
+| `Allocation` (string)                     | An Eppo allocation key                                                                                                   | "allocation-17"                     |
+
+
+## Usage with Contextual Multi-Armed Bandits
+
+Eppo also supports contextual multi-armed bandits. You can read more about them in the [high-level documentation](../../../contextual-bandits).
+Bandit flag configuration--including setting up the flag key, status quo variation, bandit variation, and targeting rules--are configured within
+the Eppo application. However, available actions are supplied to the SDK in the code when querying the bandit.
+
+To leverage bandits using the Node SDK, there are two additional steps over regular feature flags:
+1. Add a bandit action logger to the SDK client instance
+2. Query the bandit for an action
+
+
+### Defining a Bandit Logger
+
+In order for the bandit to learn an optimized policy, we need to capture and log the bandit's actions.
+This requires defining a bandit logger in addition to an assignment logger.
+
+```cs
+class SegmentLogger : IAssignmentLogger
+{
+    private readonly Analytics analytics;
+
+    public SegmentLogger(Analytics analytics)
+    {
+        this.analytics = analytics;
+    }
+
+    public void LogAssignment(AssignmentLogData assignmentLogData)
+    {
+        analytics.Track("Eppo Randomization Assignment", assignmentLogData);
+    }
+
+    public void LogBanditAction(BanditLogEvent banditLogEvent)
+    {
+        analytics.Track("Eppo Bandit Action", banditLogEvent);
+    }
+}
+```
+
+The SDK will invoke the `logBanditAction()` function with a `BanditLogEvent` object that contains the following fields:
+
+
+| Field                                                | Description                                                                                                       | Example                          |
+| ---------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | -------------------------------- |
+| `Timestamp` (DateTime)                               | The time when the action is taken in UTC as an ISO string                                                         | "2024-03-22T14:26:55.000Z"       |
+| `FlagKey` (string)                                   | The key of the feature flag corresponding to the bandit                                                           | "bandit-test-allocation-4"       |
+| `BanditKey` (string)                                 | The key (unique identifier) of the bandit                                                                         | "ad-bandit-1"                    |
+| `SubjectKey` (string)                                | An identifier of the subject or user assigned to the experiment variation                                         | "ed6f85019080"                   |
+| `SubjectNumericAttributes` (IDict<String,double>)    | Metadata about numeric attributes of the subject. Map of the name of attributes their provided values             | `{"age": 30}`                    |
+| `SubjectCategoricalAttributes` (IDict<String,string) | Metadata about non-numeric attributes of the subject. Map of the name of attributes their provided values         | `{"loyalty_tier": "gold"}`       |
+| `Action` (string)                                    | The action assigned by the bandit                                                                                 | "promo-20%-off"                  |
+| `ActionNumericAttributes` (IDict<String,double)      | Metadata about numeric attributes of the assigned action. Map of the name of attributes their provided values     | `{"brandAffinity": 0.2}`         |
+| `ActionCategoricalAttributes` (IDict<String,string)  | Metadata about non-numeric attributes of the assigned action. Map of the name of attributes their provided values | `{"previouslyPurchased": false}` |
+| `ActionProbability` (number)                         | The weight between 0 and 1 the bandit valued the assigned action                                                  | 0.25                             |
+| `OptimalityGap` (number)                             | The difference between the score of the selected action and the highest-scored action                             | 456                              |
+| `ModelVersion` (string)                              | Unique identifier for the version (iteration) of the bandit parameters used to determine the action probability   | "v123"                           |
+| `MetaData` IDict<string, string>                     | Any additional freeform meta data, such as the version of the SDK                                                 | `{ "sdkLibVersion": "3.5.1" }`   |
+
+
+### Querying for a Bandit Action
+To query the bandit for an action, there are multiple overloads of the `getBanditAction()` function you can use.  This function takes the following parameters:
+- `flagKey` (string): The key of the feature flag corresponding to the bandit
+- `subject` (ContextAttributes): The key of the subject or user assigned to the experiment variation along with the subject's Categorical and Numeric attributes
+- `actions` (IDictionary<string, ContextAttributes>): Map of actions (by name) to their Context (Categorical and Numeric)
+- `defaultValue` (string): The default *variation* to return if the flag is not successfully evaluated
+
+
+```cs
+var subjectAttributes = new Dictionary<string, object?>()
+ {
+     ["age"] = 30, // Gets interpreted as a Numeric Attribute
+     ["country"] = "uk", // Categorical Attribute
+     ["pricingTier"] = "1"  // NOTE: Deliberately setting to string causes this to be treated as a Categorical Attribute
+ };
+ var actions = new Dictionary<string, IDictionary<string, object?>>()
+ {
+     ["nike"] = new Dictionary<string, object?>()
+     {
+         ["brandLoyalty"] = 0.4,
+         ["from"] = "usa"
+     },
+     ["adidas"] = new Dictionary<string, object?>()
+     {
+         ["brandLoyalty"] = 2,
+         ["from"] = "germany"
+     }
+ };
+ var result = client.GetBanditAction(
+     "flag-with-shoe-bandit",
+     "user123",
+     subjectAttributes,
+     actions,
+     "default");
+
+if (result.Action != null)
+{
+    // Follow the Bandit action
+    renderShoeAd(result.Action);
+} else {
+    // User was not selected for a Bandit.
+    // A variation is still assigned.
+    renderDefaultShoeAd(result.Variation);
+}
+```
+
 
 ## Full Initialization and Assignment Example
 
