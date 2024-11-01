@@ -102,7 +102,7 @@ variation = client.get_string_assignment(
 )
 ```
 
-The `get_string_assignment` function takes take the following parameters:
+The `get_string_assignment` function takes the following parameters:
 
 `flag_key` (String): The key of the feature flag corresponding to the bandit
 `subject_key` (String): The identifier of the subject (e.g., user) to be assigned a variation
