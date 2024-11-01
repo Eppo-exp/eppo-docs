@@ -93,19 +93,21 @@ require 'eppo_client'
 
 client = EppoClient::Client.instance
 variation = client.get_string_assignment(
-  '<SUBJECT-KEY>',
   '<FLAG-KEY>',
+  '<SUBJECT-KEY>',
   {
-    # Optional map of subject metadata for targeting.
-  }
+    # Optional map of subject attributes for targeting.
+  },
+  '<DEFAULT-VALUE>
 )
 ```
 
-The `get_string_assignment` function takes two required and one optional input to assign a variation:
+The `get_string_assignment` function takes take the following parameters:
 
-- `subject_key` - The entity ID that is being experimented on, typically represented by a uuid.
-- `flag_or_experiment_key` - This key is available on the detail page for both flags and experiments.
-- `subject_attributes` - An optional map of metadata about the subject used for targeting. If you create rules based on attributes on a flag/experiment, those attributes should be passed in on every assignment call.
+`flag_key` (String): The key of the feature flag corresponding to the bandit
+`subject_key` (String): The identifier of the subject (e.g., user) to be assigned a variation
+`subject_attributes` (Attributes): Optional - Attributes of the subject, used by targeting rules
+`default_value` (String): The default variation to return if the flag is not successfully evaluated
 
 ### Typed assignments
 
@@ -140,9 +142,12 @@ require 'logger'
 
 client = EppoClient::Client.instance
 variation = client.get_string_assignment(
-  '<SUBJECT-KEY>',
   '<FLAG-KEY>',
-  {},
+  '<SUBJECT-KEY>',
+  {
+    # Optional map of subject attributes for targeting.
+  },
+  '<DEFAULT-VALUE>,
   Logger::DEBUG
 )
 ```
