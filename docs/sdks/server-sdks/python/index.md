@@ -69,7 +69,7 @@ client_config = Config(
 
 This logger takes an analytic event created by Eppo, `assignment`, and writes in to a table in the data warehouse (Snowflake, Databricks, BigQuery, or Redshift). You can read more on the [Event Logging](/sdks/event-logging) page.
 
-The code below illustrates an example implementation of a logging callback using Segment. You can provide any logging function, the only requirement is that the SDK receives a `log_assignment` function that write the Eppo-managed `assignment` event to your data warehouse.
+The code below illustrates an example implementation of a logging callback using Segment. You can provide any logging function, the only requirement is that the SDK receives a `log_assignment` function that writes the Eppo-managed `assignment` event to your data warehouse.
 
 Here we define an implementation of the Eppo `AssignmentLogger` class containing a single function named `log_assignment`:
 
@@ -129,7 +129,7 @@ get_string_assignment(...)
 get_json_assignment(...)
 ```
 
-Each function has the same signature, but returns the type in the function name. The only exception is `default_value`, which should be the same type as the flag. For boolean flags for instance, you should use `getBooleanAssignment`, which has the following signature:
+Each function has the same signature, but returns the type in the function name. The only exception is `default_value`, which should be the same type as the flag. For boolean flags for instance, you should use `get_boolean_assignment`, which has the following signature:
 
 ```python
 get_boolean_assignment(
