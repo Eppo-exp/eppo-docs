@@ -107,7 +107,7 @@ The `get_string_assignment` function takes the following parameters:
 - `flag_key` (String): The key of the feature flag corresponding to the bandit
 - `subject_key` (String): The identifier of the subject (e.g., user) to be assigned a variation
 - `subject_attributes` (Attributes): Optional - Attributes of the subject, used by targeting rules
-`default_value` (String): The default variation to return if the flag is not successfully evaluated
+- `default_value` (String): The default variation to return if the flag is not successfully evaluated
 
 ### Typed assignments
 
