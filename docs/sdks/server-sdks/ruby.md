@@ -93,19 +93,21 @@ require 'eppo_client'
 
 client = EppoClient::Client.instance
 variation = client.get_string_assignment(
-  '<SUBJECT-KEY>',
   '<FLAG-KEY>',
+  '<SUBJECT-KEY>',
   {
-    # Optional map of subject metadata for targeting.
-  }
+    # Optional map of subject attributes for targeting.
+  },
+  '<DEFAULT-VALUE>'
 )
 ```
 
-The `get_string_assignment` function takes two required and one optional input to assign a variation:
+The `get_string_assignment` function takes the following parameters:
 
-- `subject_key` - The entity ID that is being experimented on, typically represented by a uuid.
-- `flag_or_experiment_key` - This key is available on the detail page for both flags and experiments.
-- `subject_attributes` - An optional map of metadata about the subject used for targeting. If you create rules based on attributes on a flag/experiment, those attributes should be passed in on every assignment call.
+- `flag_key` (String): The key of the feature flag corresponding to the bandit
+- `subject_key` (String): The identifier of the subject (e.g., user) to be assigned a variation
+- `subject_attributes` (Attributes): Optional - Attributes of the subject, used by targeting rules
+- `default_value` (String): The value that will be returned if no allocation matches the subject, if the flag is not enabled, if get_string_assignment is invoked before the SDK has finished initializing, or if the SDK was not able to retrieve the flag configuration.
 
 ### Typed assignments
 
@@ -118,37 +120,5 @@ get_json_string_assignment(...)
 get_parsed_json_assignment(...)
 ```
 
-### Handling `nil`
-
-We recommend always handling the `nil` case in your code. Here are some examples of when the SDK returns `nil`:
-
-1. The **Traffic Exposure** setting on experiments/allocations determines the percentage of subjects the SDK will assign to that experiment/allocation. For example, if Traffic Exposure is 25%, the SDK will assign a variation for 25% of subjects and `nil` for the remaining 75% (unless the subject is part of an allow list).
-
-2. Assignments occur within the environments of feature flags. You must enable the environment corresponding to the feature flag's allocation in the user interface before `getStringAssignment` returns variations. It will return `nil` if the environment is not enabled.
-
-![Toggle to enable environment](/img/feature-flagging/enable-environment.png)
-
-3. If `get_string_assignment` is invoked before the SDK has finished initializing, the SDK may not have access to the most recent experiment configurations. In this case, the SDK will assign a variation based on any previously downloaded experiment configurations stored in local storage, or return `nil` if no configurations have been downloaded.
-
-### Debugging `nil`
-
-If you need more visibility into why `get_string_assignment` is returning `nil`, you can change the logging level to `Logger::DEBUG` to see more details in the standard output.
-
-```ruby
-require 'eppo_client'
-require 'logger'
-
-client = EppoClient::Client.instance
-variation = client.get_string_assignment(
-  '<SUBJECT-KEY>',
-  '<FLAG-KEY>',
-  {},
-  Logger::DEBUG
-)
-```
-
 <br />
 
-:::note
-It may take up to 10 seconds for changes to Eppo experiments to be reflected by the SDK assignments.
-:::
