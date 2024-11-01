@@ -210,27 +210,27 @@ class SegmentLogger : IAssignmentLogger
 The SDK will invoke the `LogBanditAction()` method with a `BanditLogEvent` object that contains the following fields:
 
 
-| Field (Type)                                               | Description                                                                                                       | Example                          |
-| ---------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | -------------------------------- |
-| `Timestamp` (DateTime)                               | The time when the action is taken in UTC as an ISO string                                                         | "2024-03-22T14:26:55.000Z"       |
-| `FlagKey` (string)                                   | The key of the feature flag corresponding to the bandit                                                           | "bandit-test-allocation-4"       |
-| `BanditKey` (string)                                 | The key (unique identifier) of the bandit                                                                         | "ad-bandit-1"                    |
-| `SubjectKey` (string)                                | An identifier of the subject or user assigned to the experiment variation                                         | "ed6f85019080"                   |
-| `SubjectNumericAttributes` (IDictionary<string, double>)    | Metadata about numeric attributes of the subject. Map of the name of attributes their provided values             | `{"age": 30}`                    |
-| `SubjectCategoricalAttributes` (IDictionary<string, string) | Metadata about non-numeric attributes of the subject. Map of the name of attributes their provided values         | `{"loyalty_tier": "gold"}`       |
-| `Action` (string)                                    | The action assigned by the bandit                                                                                 | "promo-20%-off"                  |
-| `ActionNumericAttributes` (IDictionary<string, double)      | Metadata about numeric attributes of the assigned action. Map of the name of attributes their provided values     | `{"brandAffinity": 0.2}`         |
-| `ActionCategoricalAttributes` (IDictionary<string, string)  | Metadata about non-numeric attributes of the assigned action. Map of the name of attributes their provided values | `{"previouslyPurchased": false}` |
-| `ActionProbability` (number)                         | The weight between 0 and 1 the bandit valued the assigned action                                                  | 0.25                             |
-| `OptimalityGap` (number)                             | The difference between the score of the selected action and the highest-scored action                             | 456                              |
-| `ModelVersion` (string)                              | Unique identifier for the version (iteration) of the bandit parameters used to determine the action probability   | "v123"                           |
-| `MetaData` IDictionary<string, string>                     | Any additional freeform meta data, such as the version of the SDK                                                 | `{ "sdkLibVersion": "3.5.1" }`   |
+| Field (Type)                                                 | Description                                                                                                       | Example                          |
+| ------------------------------------------------------------ | ----------------------------------------------------------------------------------------------------------------- | -------------------------------- |
+| `Timestamp` (DateTime)                                       | The time when the action is taken in UTC as an ISO string                                                         | "2024-03-22T14:26:55.000Z"       |
+| `FlagKey` (string)                                           | The key of the feature flag corresponding to the bandit                                                           | "bandit-test-allocation-4"       |
+| `BanditKey` (string)                                         | The key (unique identifier) of the bandit                                                                         | "ad-bandit-1"                    |
+| `SubjectKey` (string)                                        | An identifier of the subject or user assigned to the experiment variation                                         | "ed6f85019080"                   |
+| `SubjectNumericAttributes` (IDictionary<string, double>)     | Metadata about numeric attributes of the subject. Map of the name of attributes their provided values             | `{"age": 30}`                    |
+| `SubjectCategoricalAttributes` (IDictionary<string, string>) | Metadata about non-numeric attributes of the subject. Map of the name of attributes their provided values         | `{"loyalty_tier": "gold"}`       |
+| `Action` (string)                                            | The action assigned by the bandit                                                                                 | "promo-20%-off"                  |
+| `ActionNumericAttributes` (IDictionary<string, double>)      | Metadata about numeric attributes of the assigned action. Map of the name of attributes their provided values     | `{"brandAffinity": 0.2}`         |
+| `ActionCategoricalAttributes` (IDictionary<string, string>)  | Metadata about non-numeric attributes of the assigned action. Map of the name of attributes their provided values | `{"previouslyPurchased": false}` |
+| `ActionProbability` (number)                                 | The weight between 0 and 1 the bandit valued the assigned action                                                  | 0.25                             |
+| `OptimalityGap` (number)                                     | The difference between the score of the selected action and the highest-scored action                             | 456                              |
+| `ModelVersion` (string)                                      | Unique identifier for the version (iteration) of the bandit parameters used to determine the action probability   | "v123"                           |
+| `MetaData` IDictionary<string, string>                       | Any additional freeform meta data, such as the version of the SDK                                                 | `{ "sdkLibVersion": "3.5.1" }`   |
 
 
 ### Querying for a Bandit Action
 To query the bandit for an action, use the `GetBanditAction()` method. The most specific implementation of `GetBanditAction()` takes the following parameters:
 - `flagKey` (string): The key of the feature flag corresponding to the bandit
-- `subject` (string): The key of the subject or user assigned to the experiment variation
+- `subjectKey` (string): The key of the subject or user assigned to the experiment variation
 - `subjectAttributes` (IDictionary<string, object?>): The subject's attributes
 - `actions` (IDictionary<string, IDictionary<string, object?>> ): Map of actions (by name) to their categorical and numeric attributes
 - `defaultValue` (string): The default *variation* to return if the flag is not successfully evaluated, or, as is more common, the flag is disabled
@@ -296,7 +296,16 @@ public BanditResult GetBanditAction(string flagKey,
                                     string defaultValue)
 ```
 
-Unsorted attributes for both subject and actions. The `EppoClient` will automatically sort them into numeric (integer and float types), categorical (string, boolean) and emit a warning if other types are passed.
+Using [`ContextAttributes`](#contextattributes) objects for subject and actions:
+
+```cs
+public BanditResult GetBanditAction(string flagKey,
+                                    ContextAttributes subject,
+                                    IDictionary<string, ContextAttributes> actions,
+                                    string defaultValue)
+```
+
+Unsorted attributes for both subject and actions. The `EppoClient` will automatically sort them into numeric (integer and float types), categorical (string, boolean) and emit a warning if other types are passed:
 
 ```cs
 public BanditResult GetBanditAction(string flagKey,
@@ -311,8 +320,12 @@ public BanditResult GetBanditAction(string flagKey,
 The `ContextAttributes` class bundles a context identifier (ex: `SubjectKey` or `ActionName`) along with the categorical and numeric attributes associated with that context. It can be built from a dictionary of unsorted attributes or from specified categorical/numeric attributes. It also functions like a `Dictionary<string, object>`.
 
 ```cs
-public static ContextAttributes FromDict(string key, IDictionary<string, object?> other);
-public static ContextAttributes FromNullableAttributes(string key, IDictionary<string, string?>? categoricalAttributes, IDictionary<string, object?>? numericAttributes);
+public static ContextAttributes FromDict(string key,
+                                         IDictionary<string, object?> other);
+
+public static ContextAttributes FromNullableAttributes(string key,
+                                                       IDictionary<string, string?>? categoricalAttributes,
+                                                       IDictionary<string, object?>? numericAttributes);
 
 // Use like an `IDictionary`
 var myUserAttributes = new ContextAttributes("user123")
