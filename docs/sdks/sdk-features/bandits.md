@@ -22,7 +22,7 @@ are strings, so bandits are used with string-typed flags. Actions and attributes
 When requesting an assignment from a flag with a bandit, you can use a specialized method that returns the assigned variation and, if the bandit was invoked, the selected action.
 This method is like getting other assignments, but you also provide the set of actions and their attributes that the bandit should consider.
 
-In the Python, the call may look like:
+In Python, the call may look like:
 
 ```python
 # Flag that has a bandit variation
