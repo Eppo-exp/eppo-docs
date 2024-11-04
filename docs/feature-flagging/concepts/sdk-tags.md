@@ -2,7 +2,7 @@
 
 Tags allow you to organize your flags in the Eppo UI, but SDK tags include an additional benefit.
 
-Eppo creates a configuration file for the client, but when your program is using hundreds of flags across multiple applications, there may be a concern that you're unnecessarily increasing the size of the configuration file. SDK tags allow you to indicate which flags you'd like to include in the configuration file, reducing each the configuration file size.
+Eppo creates a configuration file for the client, but when your program is using hundreds of flags across multiple applications, there may be a concern that you're unnecessarily increasing the size of the configuration file. SDK tags allow you to indicate which flags you'd like to include in the configuration file, reducing the configuration file size.
 
 ## Creating and managing tags
 
