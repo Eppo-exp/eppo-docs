@@ -4,7 +4,7 @@ For some experiments, subjects are assigned to a variant in one place, but are n
 
 ## Entry point for an experiment
 
-Eppo provides the ability to filter an assignment source by an [Entry Point](/statistics/sample-size-calculator/setup#creating-entry-points) when configuring an experiment. This ensures that only the subjects assigned to that entry point are analyzed in the experiment, based on the logged events for that entry point. All decisions (inclusion into the experiment, time-framed metrics) are based on the timestamp of the entry point.
+Eppo provides the ability to filter an assignment source by an [Entry Point](/statistics/sample-size-calculator/setup#creating-entry-points) (also known as a qualifying event) when configuring an experiment. This ensures that only the subjects assigned to that entry point are analyzed in the experiment, based on the logged events for that entry point. All decisions (inclusion into the experiment, time-framed metrics) are based on the timestamp of the entry point.
 
 First you’ll need both an assignment source and an entry point source configured. Then, when setting up an experiment, check the box marked “Filter assignments by entry points” in the **Logging & Experiment Key** section:
 
@@ -18,4 +18,4 @@ The filtering will take place during the next experiment calculation (either dur
 
 ## Entry point for a sample size calculation
 
-Before you run a test, we recommend that you check how sensitive that experiment can be using our [Sample size calculator](/statistics/sample-size-calculator/). Knowing how large an effect you can detect let you prioritise testing impactful, detectable changes. When the change will only be visible after the assignment, you can define an [Entry Point](/statistics/sample-size-calculator/setup#creating-entry-points) to measure the sensitivity of the test more accurately.
+Before you run a test, we recommend that you check how sensitive that experiment can be using our [Sample size calculator](/statistics/sample-size-calculator/). Knowing how large an effect you can detect let you prioritize testing impactful, detectable changes. When the change will only be visible after the assignment, you can define an [Entry Point](/statistics/sample-size-calculator/setup#creating-entry-points) to measure the sensitivity of the test more accurately.
