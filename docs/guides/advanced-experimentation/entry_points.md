@@ -18,7 +18,7 @@ Let’s say you have 20,000 visitors per month who make a purchase on your site.
 
 If you A/B test a better customer service experience, you’ll end up splitting the 2,000 who call into 1,000 for Control (about 250 of which should give you a good rating) and 1,000 for Treatment. If the new service is a lot better and three quarters of customers calling you now give you a good rating, that’s 250/1000 vs. 750/1000, i.e. a very clear result. Experiments are noisy so it won’t be exactly 250 and 750, but we should expect to observe values near that amount, with 95% confidence/credible interval of ± 25 or 30 ($1.96 * \sqrt(.25 * .75 / 1000) * 1000$).
 
-Even within a week or two, the distinction should be blattant. You would likely make a decision that the new approach to customer service is better.
+Even within a week or two, the distinction should be blatant. You would likely make a decision that the new approach to customer service is better.
 
 If you include all your customers in the process, then you’ll have 9,000 extra participants in each variant that are not affected but the test, half of which will rate the service highly. The score will be around 4,500 + 250 = 4,750/10,000 vs. 5,250/10,000. The new treatment is still better but results will be noisier, resulting in a wider confidence interval of ±100 ($1.96 * \sqrt(.475 * .525 / 10,000) * 10,000$). The result after one month might not be conclusive. Your decision might have to wait for more evidence, while all you need is to focus on the information you already have.
 
@@ -51,7 +51,7 @@ Pricing for custom deliveries depends on a multitude of factors (destination, ne
 
 You also can easily imagine offering renting a car, or a valuable asset and needing a quote from your insurance company, based on many factors: information about the person renting, time and duration, etc. 
 
-Let‘s say you want to test asking for fast and cheap options. Or you could be testing a new provider. Alternatively, you might want to test asking both for a quote and let customers compate. Whatever is the change you want to test, you will need to decide which API call to trigger before the customer is guaranteed to see pricing because you have to wait for confirmation, say, that the items are in stock.
+Let‘s say you want to test asking for fast and cheap options. Or you could be testing a new provider. Alternatively, you might want to test asking both for a quote and let customers compare. Whatever is the change you want to test, you will need to decide which API call to trigger before the customer is guaranteed to see pricing because you have to wait for confirmation, say, that the items are in stock.
 
 In this case too, the assignment happens when confirming basket contents and the address, but the Entry Point should be set to a little later, when the customer sees a quote.
 

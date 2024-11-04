@@ -92,7 +92,7 @@ The docs are organized into the following sections:
 - [**Flag and experiment configuration**](/feature-flagging) - Learn the core concepts, workflows, and use cases for Eppo feature flags and how to configure them in the UI, as well as details on advanced concepts like targeting, mutual exclusion, and global holdouts.
 - [**SDKs**](/sdks) - Learn about how to install and use Eppo's SDKs into your environment(s), as well as more details on the Eppo architecture and supported deployment patterns.
 - [**Data Management**](/data-management) - Learn about Eppo's data and metric model, how to connect your data warehouse, and how to use Eppo to manage data governance across experimentation use cases.
-- [**Experiment Analysis**](/experiment-analysis) - Learn about how to create experiment analysis in Eppo's UI, as well as how to deep dive into experiment results and curate custom experiment reports to communicate and track learnings.
+- [**Experiment Analysis**](/experiment-analysis) - Learn how to create experiment analysis in Eppo's UI, as well as how to deep dive into experiment results and curate custom experiment reports to communicate and track learnings.
 - [**Contextual Bandits**](/contextual-bandits) - Learn how to use Eppo to personalize user experiences with contextual bandits.
 
 #### Reference

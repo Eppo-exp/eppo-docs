@@ -11,7 +11,7 @@ At a high level, to select a particular action, the Contextual Bandit performs t
 
 There are two processes at play that make the Contextual Bandit work:
 
-1. **Real-time decision making**: based on provided actions and contexts, select an action
+1. **Real-time decision-making**: based on provided actions and contexts, select an action
 2. **Model updating**: periodically, update the parameters of the Contextual Bandit based on outcome data.
 
 ## Bandit objective
@@ -32,7 +32,7 @@ Consider optimizing across multiple product promotions that we can show the user
 We can leverage the built-in [experiment analysis](/contextual-bandits/analysis) to verify that the selected objective is well-aligned with improving long term outcomes.
 :::
 
-## Real-time decision making
+## Real-time decision-making
 
 In order to make real-time decisions, you provide Eppo with actions and contexts that are relevant to personalize the experience.
 The Eppo SDK then uses the underlying Contextual Bandit model to select an action, balancing exploration and exploitation; learning and optimizing at the same time.
@@ -61,15 +61,19 @@ Contextual Bandits automatically explore new actions as they are encountered and
 
 To create a bandit policy that personalizes, you need to provide context. 
 
-Generally, there are three types of context:
-1. Subject context: For example, the subjects's past behavior, demographic information, are they on a mobile device, etc.
-2. Action context: For example, the size of the discount, the type of product, the price, etc.
-3. Subject-action interaction context: For example, the brand affinity of the subject to the product (based on past purchases, user reviews, etc.)
+Generally, there are two types of context:
+1. Subject context: For example, the subject's past behavior, demographic information, whether they are on a mobile device, etc.
+2. Action (Subject-action interaction) context: For example, the number of previous purchases of the action's brand or product category.
 
-Note that the first of these is independent of the actions, while the other two are action dependent. 
-For convenience, you can supply the subject attributes once and they will be used across all actions, while
-separately, you can supply action specific attributes.
+Note that the first of these is independent of the actions, while the other is action dependent. 
+The subject attributes are provided directly and not tied to a specific action, while separately, you can supply action-specific attributes for each action.
 Behind the scenes, we combine the two to create a single context per action that is used by the underlying model to select which action to pick.
+
+:::info Currently, we build bandit models on a per-action basis
+Be sure action attributes are subject-specific. Any action attributes that are not specific to the subject will end up
+being the same for all subjects and be ignored as they will not be predictive.
+:::
+
 
 #### Subject attributes
 
@@ -78,14 +82,14 @@ Generic attributes such as age (bucket), gender, and device information can be h
 
 #### Action attributes
 
-Action attributes capture information that is unique to a particular action. For example, the discount offered in a promotion, the price of a product, etc.
-Furthermore, you can also leverage action attributes to include information that is specific to the subject-action pair. For example, you can leverage an internal Machine Learning model that measures brand affinity.
+Action attributes capture information that is unique to a particular action for the subject. For example, the number of
+previous purchases the subject has made of the action's brand or product category.
 
 :::info What context attributes to use
 Selection of which attributes to include in the context is a bit of an art.
 
 In general, there are two types of attributes that will help the Contextual Bandit efficiently learn a strong policy:
-1. Attributes that provide a strong signal on personalization: For example, the brand affinity of the subject to the product, the price, etc.
+1. Attributes that provide a strong signal on personalization: For example, the brand affinity of the subject to the product.
 2. Attributes that predict the outcome of an action: For example, when optimizing for purchases, whether a user is a new or returning user might not affect which action is best, but it can help reduce variance (similar to CUPED), helping the contextual bandit learn more efficiently
 :::
 

@@ -186,8 +186,8 @@ The properties of the event object passed to the bandit logger, accessible via g
 | `subjectNumericAttributes` (Attributes)     | Metadata about numeric attributes of the subject. Map of the name of attributes their provided values             | {age=60}                     |
 | `subjectCategoricalAttributes` (Attributes) | Metadata about non-numeric attributes of the subject. Map of the name of attributes their provided values         | {country=FR}                 |
 | `action` (String)                           | The action assigned by the bandit                                                                                 | "promo-20%-off"              |
-| `actionNumericAttributes` (Attributes)      | Metadata about numeric attributes of the assigned action. Map of the name of attributes their provided values     | {discount=0.2}               |
-| `actionCategoricalAttributes` (Attributes)  | Metadata about non-numeric attributes of the assigned action. Map of the name of attributes their provided values | {promoTextColor=white}       |
+| `actionNumericAttributes` (Attributes)      | Metadata about numeric attributes of the assigned action. Map of the name of attributes their provided values     | {brandAffinity=0.3}          |
+| `actionCategoricalAttributes` (Attributes)  | Metadata about non-numeric attributes of the assigned action. Map of the name of attributes their provided values | {previouslyPurchased=false}  |
 | `actionProbability` (Double)                | The weight between 0 and 1 the bandit valued the assigned action                                                  | 0.25                         |
 | `optimalityGap` (Double)                    | The difference between the score of the selected action and the highest-scored action                             | 456                          |
 | `modelVersion` (String)                     | The key for the version (iteration) of the bandit parameters used to determine the action probability             | "v123"                       |
@@ -233,14 +233,14 @@ Actions actions = new BanditActions(
     new Attributes(
       Map.of(
         "brandAffinity", EppoValue.valueOf(2.3),
-        "imageAspectRatio", EppoValue.valueOf("16:9")
+        "previouslyPurchased", EppoValue.valueOf(true)
       )
     ),
     "adidas",
     new Attributes(
       Map.of(
         "brandAffinity", EppoValue.valueOf(0.2),
-        "imageAspectRatio",  EppoValue.valueOf("16:9")
+        "previouslyPurchased", EppoValue.valueOf(false)
       )
     )
   )
@@ -318,10 +318,9 @@ Similar to subject context, action contexts can be provided as `Attributes`--whi
 is a numeric attribute, and everything else is a categorical attribute--or as `ContextAttributes`, which have explicit 
 bucketing into `numericAttributes` and `categoricalAttributes`.
 
-Note that action contexts can contain two kinds of information:
-- Action-specific context (e.g., the image aspect ratio of image corresponding to this action)
-- Subject-action interaction context (e.g., there could be a "brand-affinity" model that computes brand affinities of users  
-  to brands, and scores of that model can be added to the action context to provide additional context for the bandit)
+Note that relevant action contexts are subject-action interactions. For example, there could be a "brand-affinity" model 
+that computes brand affinities of users to brands, and scores of that model can be added to the action context to provide 
+additional context for the bandit.
 
 If there is no action context, you can use a `Set<String>` of all the action names when constructing `BanditActions` to
 pass in.
