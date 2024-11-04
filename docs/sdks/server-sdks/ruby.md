@@ -133,7 +133,7 @@ The `get_string_assignment` function takes four inputs to assign a variation:
 
 Every Eppo flag has a return type that is set on creation in the dashboard. Once a flag is created, assignments in code should be made using the corresponding typed function: 
 
-```python
+```ruby
 get_boolean_assignment(...)
 get_numeric_assignment(...)
 get_integer_assignment(...)
