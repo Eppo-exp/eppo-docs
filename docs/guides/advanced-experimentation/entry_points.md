@@ -4,7 +4,7 @@ sidebar_position: 11
 
 # When to add Entry Point filters
 
-This guide walks through scenarios of when and why to consider using Entry Points. If you want to learn how to configure an Entry Point in Eppo, refer to [this page](/experiment-analysis/configuration/filter-assignments-by-entry-point).
+This guide walks through scenarios of when and why to consider using Entry Points (also known as qualifying events). If you want to learn how to configure an Entry Point in Eppo, refer to [this page](/experiment-analysis/configuration/filter-assignments-by-entry-point).
 
 ## Why exclude some users from an experiment?
 
@@ -20,7 +20,7 @@ If you A/B test a better customer service experience, you’ll end up splitting 
 
 Even within a week or two, the distinction should be blatant. You would likely make a decision that the new approach to customer service is better.
 
-If you include all your customers in the process, then you’ll have 9,000 extra participants in each variant that are not affected but the test, half of which will rate the service highly. The score will be around 4,500 + 250 = 4,750/10,000 vs. 5,250/10,000. The new treatment is still better but results will be noisier, resulting in a wider confidence interval of ±100 ($1.96 * \sqrt(.475 * .525 / 10,000) * 10,000$). The result after one month might not be conclusive. Your decision might have to wait for more evidence, while all you need is to focus on the information you already have.
+If you include all your customers in the process, then you’ll have 9,000 extra participants in each variant that are not affected but the test, half of which will rate the service highly. The score will be around 4,500 + 250 = 4,750/10,000 vs. 5,250/10,000. The new treatment is still better but results will be noisier, resulting in a wider confidence interval of ±100 ($1.96 * \sqrt(.475 * .525 / 10,000) * 10,000$). The result after one month might not be conclusive. Your decision might have to wait for more evidence, while all you need is to focus on the information you already have by adding a qualifying event as an entry point.
 
 ## Examples when an Entry Point is useful
 
@@ -36,7 +36,7 @@ When testing, should you assign all users? You need to decide whether to trigger
 
 There’s one concern, though: while all visitors will be assigned in the experiment, only the visitors who see the recommendation carousel are exposed to a different experience. (We’ll ignore the impact of triggering an expensive computation for now.) Therefore, the two-thirds of visitors who were assigned but never scrolled down the homepage should not be included in that experiment.
 
-For cases like that, we let you define an **Entry Point**: what event needs to happen for visitors to be exposed to a different experience, and considered enrolled to the experiment. It remains up to you to decide if this should be when the carousel enters the viewport, is fully or partially visible; it’s also up to your front-end developpers to trigger and log that event. But once that information is in your data warehouse, then you can use it to filter out which users participate in the experiment.
+For cases like that, we let you define an **Entry Point**: what qualified event needs to happen for visitors to be exposed to a different experience, and considered enrolled to the experiment. It remains up to you to decide if this should be when the carousel enters the viewport, is fully or partially visible; it’s also up to your front-end developpers to trigger and log that event. But once that information is in your data warehouse, then you can use it to filter out which users participate in the experiment.
 
 :::note
 If you define an Entry Point, all the time-limted metrics (“Conversion 7 days after assignment”) are based on the timestamp of the Entry Point, not the assignment. 
