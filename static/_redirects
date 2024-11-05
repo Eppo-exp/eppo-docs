@@ -96,7 +96,6 @@ http://adoring-yonath-6ecb9d.netlify.app/*  http://docs.geteppo.com/:splat  301!
 /feature-flagging/mutual_exclusion /feature-flagging/concepts/mutual_exclusion
 /feature-flagging/progressive-rollouts /feature-flagging/use-cases/progressive-rollouts
 /feature-flagging/stale-flags /feature-flagging/workflow/stale-flags
-/feature-flagging/sticky-flags /feature-flagging/concepts/sticky-flags
 /feature-flagging/targeting /feature-flagging/concepts/targeting
 
 /guides/analyzing-clustered-experiments /guides/advanced-experimentation/analyzing-clustered-experiments
