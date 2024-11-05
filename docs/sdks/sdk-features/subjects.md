@@ -1,18 +1,36 @@
+---
+sidebar_position: 1
+---
+
 # Subjects
 
-The subject key is a unique identifier for the entity being experimented on (e.g., a user). This key is used to deterministically assign subjects to variations. Randomization can be implemented on any unit (user ID, team ID, company ID, etc.).
+## Introduction
 
-## Anonymous subjects
+When calling Eppo's SDK to get assignments, you'll need to provide a `subjectKey`. This key represents a unique identifier for the entity being targeted and/or experimented on (e.g., a user). When Eppo evaluates randomized targeting logic (experiment assignment, limited traffic exposure, etc.), this ID will be hashed and used to bucket subjects. That is, subsequent calls to `get<Type>Assignment` will always return the same variant for the same `subjectKey`, as long as targeting eligibility does not change. 
 
-A key that is unique and persistent for each subject entity is ideal for assigning variations fully according to the feature flag's configuration on Eppo. Therefore, anonymous subjects that lack such an identifier necessitate special provisions and caveats. 
+For experiment analysis, `subjectKey` is also used to join assignment events to outcome events. 
 
-1. Option 1: Set the subject key to a constant value for all anonymous users. If feature gate assignments with targeting rules and traffic exposures percentiles at exactly 0% or 100% are the only required configurations, then this is a viable option. However, the subject key is used to randomize variation assignment, so fractional traffic percentages for rollouts and experiment randomization would not work as intended.
-2. Option 2: Use a proxy identifier for the subject. Such identifiers are not ideal, but may suffice depending on the budget for inconsistent assignments and the available capabilities for tracking subjects.
-    * Accessing a cookie id from a third-party analytics service, which often persist across sessions and automatically associate with signed-in users.
-    * Using a [browser fingerprinting](https://en.wikipedia.org/wiki/Device_fingerprint#Browser_fingerprint) library.
-    * Using the session ID. However, these IDs are discarded at the ends of sessions, so this approach would require stitching the sessions and IDs together.
+This page walks through several common choices for `subjectKey` and considerations for each.
 
-It is also necessary to provide a key that is unique and persistent for the subject to properly randomize subjects in experiments. In the case of anonymous subjects, a lack of a unique and persistent identifier does not necessarily negate the ability to run experiments.
+## Examples 
 
-1. The aforementioned identifiers can be used as a proxy so that experiment analysis is still possible. Eppo can be configured [to associate multiple identifiers for the same subject together while processing assignment data](/guides/advanced-experimentation/anonymous-explainer/#assignment-logs-with-multiple-identifiers).
-2. [Sticky assignments](/feature-flagging/concepts/sticky-flags) can be used to maintain deterministic assignments. A mapping of associated subject keys to assigned variations can be constructed in the post-assignment hook, and the pre-assignment hook can be used to consistently assign the same subject to the same variation.
+### Authenticated users
+
+A simple example of an experiment subject is an authenticated user, typically identified with a `userId`. In this case, simply pass that value in as the `subjectKey`. Downstream analysis should be simple: just add other tables from your data warehouse that also track `userId`. There's no need to instrument new events specifically for Eppo.
+
+### Unauthenticated users
+
+It's common to run experiments before a persistent `userId` has been created. For instance, any pre-authentication traffic on your site that does not yet have an associated `userId`. Fortunately there are several options for what to use as a `subjectKey` in this case.
+
+Common solutions include storing an identifier in `localStorage`, accessing device-level identifiers, or leveraging a consistent identifier from a managed analytics platform like Segment, Amplitude, or Rudderstack.
+
+For more details on each of these options, see our guide on choosing a [subject key for pre-auth experiments](/guides/engineering/preauth-experiments).
+
+
+### Company (for B2B businesses)
+
+B2B companies may want to guarantee that users from the same company see a consistent experience. This is easily achieved by simplying passing `companyId` in as the `subjectKey`. Subsequent analysis can either use company-level data or user-level data via [clustered experiment analysis](/experiment-analysis/clustered-analysis/).
+
+### No subject
+
+In cases where you want all traffic to see the same variant you can simply pass in a hardcoded value as the `subjectKey`. This may make sense for situations where you want to simply toggle a feature on or off for 100% of traffic.
