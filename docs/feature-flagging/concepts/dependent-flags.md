@@ -4,7 +4,7 @@ There are times when you want your flag targeting rules driven by what the user 
 
 For example, if you have a redesigned UI you're rolling out, you may want iterations on this redesign as their own feature flags that are only applicable to users who are eligible to see this UI revamp. Only users who are enabled for the new UI should also be enrolled in this new flag.
 
-In Eppo, this is now extremely easy when using targeting rules for Dependent Flags.
+In Eppo, this is extremely easy when using targeting rules for Dependent Flags.
 
 ## Using Dependent Flags in a Targeting Rule
 
