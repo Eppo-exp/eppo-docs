@@ -46,6 +46,15 @@ You should also check if you're using an analytics platform like Segment or Ampl
 
 In this case, you can either continue to use a device identifier for randomization and use the analytic platform ID for analysis, or use the analytics platform ID for both randomization and analysis.
 
+Here's a partial list of analytics platforms that manage identities that Eppo has worked with. In most cases we will support using any analytics platform's identities for flagging. If you are using a vendor not on this list, please reach out to your Eppo account team:
+
+- [Amplitude](https://amplitude.com/docs/data/sources/instrument-track-unique-users)
+- [Segment](https://segment.com/docs/connections/spec/best-practices-identify/)
+- [Mixpanel](https://docs.mixpanel.com/docs/tracking-methods/id-management/migrating-to-simplified-id-merge-system#understanding-simplified-id-merge)
+- [Heap](https://developers.heap.io/docs/using-identify)
+- [GA4 (Google Analytics)](https://support.google.com/analytics/answer/11397207?hl=en)
+- [Rudderstack](https://www.rudderstack.com/docs/event-spec/standard-events/identify/)
+
 #### Option 1 - Device ID for Randomization, Resolved ID for Analysis
 
 If you pass a stable `deviceID` into Eppo's SDK, the same device will always see the same experience. This may be helpful if variant hopping on the same device causes a meaningful degradation to user experience. If you point Eppo's analytic engine at the resolved ID, it will automatically connect two devices that were later determined to be the same user. If this user was exposed to both variants, they will be removed from the analysis.
