@@ -5,7 +5,7 @@ import TabItem from '@theme/TabItem';
 
 Eppo's Ruby SDK can be used for feature flagging, randomized experiment assignment, and contextual multi armed bandits:
 
-- [GitHub repository](https://github.com/Eppo-exp/rust-sdk/tree/main/ruby-sdk)
+- [GitHub repository](https://github.com/Eppo-exp/eppo-multiplatform)
 - [RubyGems gem](https://rubygems.org/gems/eppo-server-sdk/)
 
 ## Getting Started
