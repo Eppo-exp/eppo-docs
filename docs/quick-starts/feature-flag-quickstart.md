@@ -260,7 +260,7 @@ import eppo_client
 
 client = eppo_client.get_instance()
 
-variation = eppoClient.get_boolean_assignment(
+variation = client.get_boolean_assignment(
   "new-user-onboarding", # flag key
   user.id, # subject key
   {}, # user properties
