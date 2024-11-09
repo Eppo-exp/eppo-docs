@@ -32,7 +32,7 @@ if (variant === "version-a") {
 
 ### Boolean Flags
 
-Boolean flags can help simple code for simple on/off toggles:
+Boolean flags support simple on/off toggles:
 
 ```javascript
 if getBooleanAssignment(...) {
