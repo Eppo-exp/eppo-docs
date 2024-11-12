@@ -56,6 +56,10 @@ INITIALLY_SUSPENDED = true;
 GRANT ALL PRIVILEGES ON WAREHOUSE eppo_wh TO ROLE eppo_role;
 ```
 
+:::note
+While giving Eppo a dedicated warehouse is optional, please ensure that Eppo has access to at least one warehouse to use for computing results. This warehouse will need to be provided when adding Snowflake credentials to Eppo's UI in the steps below.
+:::
+
 3. (Optional) Add Eppo’s static IP addresses to your [Network Policy](https://docs.snowflake.com/en/user-guide/network-policies.html) if you have one:
 
 | IP Address |
