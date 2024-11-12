@@ -5,7 +5,7 @@ import TabItem from '@theme/TabItem';
 
 Eppo's Python SDK can be used for both feature flagging and experiment assignment:
 
-- [GitHub repository](https://github.com/Eppo-exp/rust-sdk/tree/main/python-sdk)
+- [GitHub repository](https://github.com/Eppo-exp/eppo-multiplatform)
 - [PyPI package](https://pypi.org/project/eppo-server-sdk/)
 
 ## Getting Started

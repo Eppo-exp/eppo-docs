@@ -5,7 +5,7 @@ import TabItem from '@theme/TabItem';
 
 Eppo's Rust SDK can be used for feature flagging and experiment assignment in Rust applications.
 
-- [GitHub repository](https://github.com/Eppo-exp/rust-sdk)
+- [GitHub repository](https://github.com/Eppo-exp/eppo-multiplatform)
 - [Crate](https://crates.io/crates/eppo)
 - [Crate documentation](https://docs.rs/eppo/latest/eppo/)
 
