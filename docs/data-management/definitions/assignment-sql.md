@@ -4,6 +4,8 @@ sidebar_position: 3
 
 # Assignments
 
+## Introduction
+
 **Assignment SQLs** tell Eppo where to find a log of every time a subject (e.g., user) was enrolled into an experiment, the name of that experiment, and the variant that was assigned. Assignment SQLs can point to either logs from Eppo's SDK or from existing internal or third party randomization tools. You can also create multiple assignment sources if you use a combination of assignment methods.
 
 Assignment SQLs can also include [properties](/data-management/definitions/properties) to use to filter or split results.
@@ -22,67 +24,146 @@ FROM mydb.myschema.assignments
 
 In this example, `user_id` is assigned to `experiment_name` in the `variant_name` treatment group.
 
+## Assignment table schema
+
+This section documents the columns that Eppo expects an assignment SQL definition to return. Note that the specific names of these columns do not matter as you will map them into Eppo's data model when you create the assignment definition.
+
+### Basic data model
+
+For most use cases, Eppo only requires the following columns: 
+
+|       | Description | Examples |
+|-------|-------------|---------|
+| Experiment Subject ID | A unique identifier for the subject of an experiment. Used to join to fact SQL definitions. | `user_id`, `anonymous_id`, `company_id`,  |
+| Timestamp | The time at which the subject was assigned. | `assigned_at_timestamp` |
+| Experiment key | A unique identifier for the experiment that this assignment corresponds to. | `experiment_id`, `flag_name`, `campaign_group` |
+| Variant | A unique identifier for the experience served. | `variant_name`, `flag_value`, `campaign_subgroup` | 
+| Assignment property (optional) | Additional categorical information about the experiment subject at time of assignment. Used to provide result breakouts, diagnose Sample Ratio Mismatch (SRM), and perform variance reduction with CUPED++ | `device_type`, `app_version`, `churn_risk_bucket`, `user_persona` |
+
+### Optional columns for advanced use cases
+
+Some advanced use cases require additional columns. Examples include performing cross-entity analysis, optimizing data partitioning, and tracking and measuring holdouts. The table below summarized the columns required to support these use cases.
+
+|       | Description | Examples |
+|-------|-------------|---------|
+| Secondary ID (optional) | An optional entity ID to use to join on metrics belonging to a different entity than that tracking in the Experiment Subject ID column. Can be a many-to-many relationship, in which case secondary IDs will be attributed to the first observed primary experiment subject ID. See the [Pre-authentication experiments](#pre-authentication-experiments) section below for an example. | `user_id`, `campaign_user_id`, `search_id` |
+| Subentity ID (optional) | An optional entity ID to specify a subentity of the primary assignment entity, used for clustered analysis. In this case, the Experiment Subject can be thought of as a cluster (randomization unit) and the subentity ID can be thought of as the analysis unit. | `user_id`, `session_id` |
+| Holdout (optional) | A unique identifier for the holdout of interest. For instance, "2024 Q1 ML holdout". You can read more about holdouts in Eppo [here](/experiment-analysis/holdouts/) | `holdout_id` |
+| Holdout variant (optional) | An indicator of whether the user was in the "Status Quo" or "Winning Variants" bucket. | `holdout_variant` |
+| Partition date (optional) | An optional second timestamp used to filter rows using a column other than the assignment event timestamp. Useful if your assignment timestamp column differs from the table's partition timestamp column | `date` |
+
+:::note
+Advanced features like secondary IDs, subentity IDs, holdouts, and partition date columns are disabled by default. If you would like to enable them, please reach out to your Eppo point of contact or email support@geteppo.com. Enabling these features will have no impact on billing.
+:::
+
 ## Creating an Assignment SQL
 
-1. Navigate to **Definitions** and click **Create Definition SQL**
+To create an assignment SQL, follow the following steps:
+
+1. Navigate to **Definitions**, click **Create Definition SQL**, and select **Assignment SQL**
 
 ![Create Definition SQL](/img/building-experiments/create-definition-sql.png)
 
-2. Click **Assignment SQL**
-
-![Create Assignment SQL](/img/building-experiments/create-assignment-sql.png)
-
-3. Select the subject (randomized unit) of the Assignment SQL. To learn more about specifying multiple randomization units Eppo, see the [entities page](/data-management/definitions/entities).
-
-![Select user as entity](/img/building-experiments/select-user-as-entity.png)
-
-4. Name your Assignment SQL
-
-5. Write SQL in the SQL editor to pull assignments from your data warehouse and click **Run**
-
-At a minimum, this query should return a unique identifier for the subject (e.g., `user_id`), a unique identifier for the experiment, the variant the subject received, and a timestamp. You can also add optional subject properties such as browser or country.
-
-If you do not yet have assignment logs in your warehouse, see the [Event Logging page](/sdks/event-logging).
+2. Select the entity (randomized unit) corresponding to unit on which your assignments are randomized: user, anonymous ID, company, etc. To learn more about specifying multiple randomization units in Eppo, see the [entities page](/data-management/definitions/entities).
+3. Name your Assignment SQL
+4. Write SQL in the SQL editor that returns assignment data from your data warehouse and click **Run**. At a minimum, this query should return a unique identifier for the subject (e.g., `user_id`), a unique identifier for the experiment, the variant the subject received, and a timestamp. You can also add optional subject properties such as browser or country.
 
 ![Write Assignment SQL Query](/img/building-experiments/add-assignment-sql-query.png)
 
-Then click **Run**, and the rows from that assignment table should appear in the bottom left.
+:::info
+If you do not yet have assignment logs in your warehouse, see the [Event Logging page](/sdks/event-logging).
+:::
 
-6. Annotate the columns that you've selected from the data warehouse
+5. After clicking **Run**, you'll see some sample data. Annotate these columns into Eppo's data model using the right panel:
 
-In case there's any ambiguity as to which properties the columns correspond to, we annotate them here.
 
 ![Annotate assignment SQL columns](/img/building-experiments/annotate-assignment-sql-columns.png)
 
-7. Adding optional properties
+6. Once you've finished annotating columns, click **Save & Close**
 
-Your feature flag tooling may have logged additional data about the user, like what country they're from or which browser they're using. You can annotate these additional properties here, and they will show up under the **Entity Property SQL** tab.
+## Examples
 
-<!-- <img src="https://firebasestorage.googleapis.com/v0/b/eppo-documentation-images.appspot.com/o/add-assignment-sql-dimensions.png?alt=media&token=dfd583db-4ea7-4013-b5fc-d90612118738" width="500" height="200"/> -->
+### Randomized feature flag logs (most common)
 
-![Add Assignment SQL Properties](/img/building-experiments/add-assignment-sql-dimensions.png)
+As a simple example, imagine the logs from a feature flagging randomization service. In this case the assignment SQL might return data that looks like this:
 
-Holdout columns are also defined here. More information is available on the [dedicated page](/experiment-analysis/holdouts).
+| Column | Type in Eppo |
+|--------|--------------|
+| `assignment_timestamp` | Timestamp |
+| `user_id` | Experiment subject ID |
+| `experiment` | Experiment key |
+| `variant` | Variant |
+| `device_type` | Assignment property |
+| `churn_risk_tier` | Assignment property |
 
-![Write Assignment SQL Query](/img/experiments/holdouts/holdouts-assignment-sql.png)
+This example highlights how we can add assignment property from both the assignment event itself (e.g., `device_type`) along with further analytical models that may only be available in the warehouse (e.g., `churn_risk_tier`).
 
-8. Click **Save & Close**
+When the Eppo analysis pipeline runs, this table will be filtered to records with the a specific `experiment` value, deduplicated across users, joined to fact SQL definitions, and aggregated into Eppo' statistical engine.
 
-## Handling duplicate assignments
+If SRM is detected, Eppo will check for correlations with `device_type` and `churn_risk_tier`, which can help identify the root cause. Further, both `device_type` and `churn_risk_tier` will be used as control variables in Eppo's CUPED model, providing increase variance reduction compared to a standard univariate model.
 
-Eppo has built in filtering to handle scenarios where there are multiple assignment events for a subject with different data. Here are a few common scenariios that you may encounter and how Eppo handles them:
+The vast majority of experiments will fit into this category.
 
-**1. Subject has multiple assignment events where they received multiple variations.**
+### B2B clustered experiments
 
-Example: A subject received both the `Control` and `Treatment` within an experiment. 
+Most B2B companies have the constraint that experiments must be randomized by company, not by user. Nonetheless, you may want to understand the impact on user-level metrics (engagement, etc.) as well as company-level metrics. In this case you can leverage Eppo's clustered experiment analysis by adding both `company_id` and `user_id` to the assignment SQL definition:
 
-Eppo will automatically filter these subjects out of that experiment's results.
+| Column | Type in Eppo |
+|--------|--------------|
+| `assignment_timestamp` | Timestamp |
+| `company_id` | Experiment subject ID |
+| `experiment` | Experiment key |
+| `variant` | Variant |
+| `user_id` | Subentity ID |
 
-**2. Subject has a property that is recorded in the assignment table change during the experiment.**
+Here we've specified `company_id` as the randomization unit and `user_id` as the analysis (subentity) unit. Any experiment analysis created using this Assignment SQL Definition can have both user-level or company-level metrics added to it. User-level metrics will analyzed with a method equivalent to [clustered standard errors](https://en.wikipedia.org/wiki/Clustered_standard_errors).
 
-Example: A subject in their first assignment has property called `country` that initially is recorded as `Canada` and in a subsequent assignment the `country` property is recorded as `France`.
+For more details, see the page on [clustered experiments](/experiment-analysis/clustered-analysis/)
 
-Eppo will use the first recorded property in the experiment. When looking at an Explore chart using the example above, the user would show up under the `Canada` property value.
+### Pre-authentication experiments
+
+In many real world use cases, a stable `user_id` is not available at time of assignment. In this case, a cookie or device ID (generally referred to as `anonymous_id`) is used to track experiment assignments. You may however want to connect down-funnel metrics only tracked by `user_id`.
+
+Secondary IDs can help here. In addition to adding `anonymous_id` as the subject key ID, you can add `user_id` as a secondary ID:
+
+| Column | Type in Eppo |
+|--------|--------------|
+| `assignment_timestamp` | Timestamp |
+| `anonymous_id` | Experiment subject ID |
+| `experiment` | Experiment key |
+| `variant` | Variant |
+| `user_id` | Secondary ID |
+
+Any experiment analysis that uses this assignment SQL definition will have both anonymous ID and user-level metrics available. User metrics will be attributed back to the first associated anonymous ID in the assignment table. For more details, see [analyzing anonymous user experiments](/guides/advanced-experimentation/anonymous-explainer/).
+
+### Email marketing experiments
+
+When analyzing email marketing experiments, it's common to measure both overall user level metrics (engagement, revenue, retention, etc.) and campaign-specific metrics (click through rate, unsubscribes, etc.). In this case you may want to join only on `user_id` in some cases, and `send_id` in other cases. This is also supported by secondary IDs:
+
+| Column | Type in Eppo |
+|--------|--------------|
+| `assignment_timestamp` | Timestamp |
+| `user_id` | Experiment subject ID |
+| `experiment` | Experiment key |
+| `variant` | Variant |
+| `send_id` | Secondary ID |
+
+Similar to the pre-authentication use case described above, experiment analyses that use this assignment source can measure both user-level metrics and email specific metrics.
+
+
+## Assignments de-duplication
+
+Eppo will automatically de-duplicate assignment logs from the same subject-experiment pair. Eppo will also gracefully handle scenarios where assignment data varies over time for the same subject. Details are described below.
+
+#### Scenario 1: Subject has assignment events corresponding to more than one variation
+
+In some situations a subject might receive both the `Control` and `Treatment` within the same experiment. This should be seldom occur in Eppo-randomized experiments, but may happen in experiments randomized externally from Eppo. In this case, Eppo will automatically filter these subjects out of the experiment results. If the number of subjects filters exceeds a threshold, a diagnostic alert will appear on the experiment results page.
+
+#### Scenario 2: Assignment property values that change over the course of the  experiment
+
+A more common situation is that a subject moves from one segment to another over the course of an experiment. Examples include users that travel from one geographical region to another, or users that move from one user persona to another.
+
+When this occurs, Eppo will use the property's value at the time the subject was first assigned to the experiment.
 
 ## Updating Assignments
 
