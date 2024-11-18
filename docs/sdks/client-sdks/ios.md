@@ -40,6 +40,8 @@ let assignment = try eppoClient.getStringAssignment(
 );
 ```
 
+Flags and other features become available to the SDK after initialization. 
+
 During initialization, the SDK sends an API request to Eppo to retrieve the most recent experiment configurations: variation values, traffic allocation, etc. The SDK stores these configurations in memory, meaning assignments are effectively instant (accordingly, assignment is a synchronous operation). For more information, see the [architecture overview](/sdks/architecture/overview) page.
 
 Eppo's SDK also supports providing the configuration directly at initialization. For more information, see the [initialization modes](#initialization-modes) section below.

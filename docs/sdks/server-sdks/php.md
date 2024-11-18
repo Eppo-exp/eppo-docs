@@ -33,6 +33,8 @@ $eppoClient = EppoClient::init(
 );
 ```
 
+Flags and other features become available to the SDK after initialization. 
+
 To make the experience of using the library faster, there is an option to start a background polling for randomization params.
 This way background job will start calling the Eppo API, updating the config in the cache.
 

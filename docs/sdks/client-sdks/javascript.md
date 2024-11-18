@@ -79,6 +79,8 @@ const variation = eppoClient.getBooleanAssignment('show-new-feature', user.id, {
 }, false);
 ```
 
+Flags and other features become available to the SDK after initialization. 
+
 During initialization, the SDK sends an API request to Eppo to retrieve the most recent experiment configurations (variation values, traffic allocation, etc.). The SDK stores these configurations in memory so that assignments are effectively instant. For more information, see the [architecture overview](/sdks/architecture/overview) page.
 
 You can customize initialization and polling preferences by passing in additional [initialization options](#initialization-options).

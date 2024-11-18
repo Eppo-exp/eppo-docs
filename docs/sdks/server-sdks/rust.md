@@ -32,6 +32,8 @@ client.start_poller_thread();
 
 This creates a client instance that can be reused throughout the application lifecycle, and starts a poller thread to periodically fetch latest feature flag configuration from Eppo server.
 
+Flags and other features become available to the SDK after initialization. 
+
 #### Assign variations
 
 Assign users to flags or experiments using the appropriate `get_*_assignment` function, depending on the type of the flag. For example, to get a string value from a flag, use `get_string_assignment`:
