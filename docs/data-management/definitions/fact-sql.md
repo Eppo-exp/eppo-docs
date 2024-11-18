@@ -6,33 +6,36 @@ sidebar_position: 4
 
 ## Introduction
 
-**Fact SQL definitions** are short SQL snippets you'll provide to tell Eppo how to use the data in your data warehouse. When you create [metrics](/data-management/metrics/) in Eppo, you specify one (or more) facts and an aggregation method. For instance, if you have a fact `revenue`, you could have a metric `Total Revenue` that computes the sum of revenue facts.
+**Fact SQL Definitions** are short SQL snippets that tell Eppo how to use the data in your data warehouse. When you create [metrics](/data-management/metrics/) in Eppo, you specify one (or more) facts and an aggregation method. For instance, if you have a fact `revenue`, you could have a metric `Total Revenue` that computes the sum of revenue facts.
 
 Eppo uses these SQL snippets to compile a data pipeline that performs the specified aggregations and uses Eppo's stats engine to measure experiments' impact.
 
-At a minimum, a fact SQL definition needs to return a timestamp and a column to join back to assignment records (for instance, `user_id`). That said, fact SQL definitions can point at anything from simple raw event logs to fully modeled aggregated data. 
+At a minimum, a Fact SQL Definition needs to return a timestamp and a column to join to [assignment records](/data-management/definitions/assignment-sql) (for instance, `user_id`). That said, Fact SQL Definitions can point at anything from simple raw event logs to fully modeled aggregated data. One Fact SQL Definition can also contain multiple facts. For instance, a purchases table might contain a `gross_revenue` fact and a `net_revenue` fact.
 
 ## Fact table schema
 
-Each fact definition should return the following columns. Note that the specific names of these columns do not matter as you will map them into Eppo's data model when you create the fact definition.
+Each Fact SQL Definition should return the following columns. Note that the specific names of these columns do not matter as you will map them into Eppo's data model when you create the fact definition.
 
 |           | Description| Examples |
 |-----------|------------|--------|
 | Timestamp | The time at which the event occurred, or the time dimension for aggregated data                            | `event_timestamp` , `session_timestamp` , `daydate` |
-| Entity ID | An ID to use to join to assignment SQL sources. You can add multiple of these if you have multiple entities | `user_id` , `device_id` , `company_id`|
+| Entity ID | An ID for joining to assignment SQL sources. You can add multiple of these if the fact corresponds to multiple entities. | `user_id` , `device_id` , `company_id`|
 | Fact value (optional) | A numeric quantity associated with the fact. You can add several if an event has multiple associated values (e.g., net revenue and gross revenue) | `gross_revenue` , `items_added_to_cart` , `support_ticket_count` |
-| Fact property (optional) | A categorical variable associated with the event. This can be used to filter events in metric creation, or to break out experiment results. Note that properties that are 1:1 with subjects should be defined in the [Assignment](/data-management/definitions/assignment-sql) or [Entity Property](/data-management/definitions/property-sql) SQL definition. | `revenue_category` , `support_ticket_reason` , `event_name` |
-| Partition date (optional) | An optional second timestamp used to filter rows using a column other than the event timestamp. Useful if your event timestamp column differs from the table's partition timestamp column | `date` |
+| Fact property (optional) | A categorical variable associated with the event. This can be used to filter events in metric creation, or to break out experiment results. Note that properties that are 1:1 with experiment subjects should be defined in an [Assignment](/data-management/definitions/assignment-sql) or [Entity Property](/data-management/definitions/property-sql) SQL definition. | `revenue_category` , `support_ticket_reason` , `event_name` |
+| Partition date (optional) | An optional additional timestamp for filtering rows with a column other than the event timestamp. Useful if your event timestamp column differs from the table's partition timestamp column | `date` |
 
+:::info
+Partition date columns are disabled by default. If you would like to enable them, please reach out to your Eppo point of contact or email support@geteppo.com. Enabling this feature will have no impact on billing.
+:::
 
 ## Creating a Fact SQL
 
-There are two ways to create Fact SQLs in Eppo:
+There are two ways to create Fact SQL Definitions in Eppo:
 
-1. Adding them via the SQL definition UI
-2. Defining in code and integrating CI/CD to sync with Eppo
+1. Adding them via the SQL definition UI.
+2. Defining in code and integrating with Eppo's metric sync API.
 
-When first familiarizing yourself with Eppo's fact-metric model, we generally recommend starting with UI-defined fact sources. Facts (and associated metrics) can later be [exported as code](/data-management/certified-metrics/upgrading-metrics/) and managed within a source-control system like GitHub.
+When first familiarizing yourself with Eppo's fact-metric model, we recommend starting with UI-defined fact sources. Facts (and associated metrics) can later be [exported as code](/data-management/certified-metrics/upgrading-metrics/) and managed within a source-control system like GitHub.
 
 ### Defining in the UI
 
@@ -76,7 +79,7 @@ You can read more about Fact Properties on the [Properties](/data-management/def
 Once you have finished defining your Fact SQL, click **Save & Close**. You can now repeat this process for other fact tables, or continue on to create [Metrics](https://docs.geteppo.com/metric-quickstart) from your new Facts.
 
 #### Adding Partition Keys (optional)
-If your table has a partition on a different column other than the event timestamp (i.e. event date), Eppo can use it for filtering queries more efficiently. 
+If your table is partitioned on a different column than the event timestamp (i.e. event date), Eppo can leverage the partition column to create more efficient queries.
 
 To specify a partition key, map the column to the Partition Date field.
 
@@ -94,7 +97,7 @@ You can also chose to define Fact SQL Definitions in code and then sync to Eppo 
 
 ### Data mart tables
 
-If you have well established analytic data models in your warehouse, you can create a fact source based on that table. For instance, imagine you work at a ride share app and have a table tracking reviews. The mapping into Eppo might look something like:
+If you have well established analytic data models in your warehouse, you can create a Fact SQL Definition based on that table. For instance, imagine you work at a ride share app and have a table tracking reviews. The mapping into Eppo might look something like:
 
 ```
 select * from analytics.reviews
@@ -109,11 +112,11 @@ select * from analytics.reviews
 | `review_has_photo` | Fact property |
 | `review_is_disputed` | Fact property | 
 
-Since we've added entity columns, this table will be able to power metrics for both passenger-randomized and driver-randomized experiments. We'll be able to create metrics based on both the number of rows in this table (i.e., the number of reviews) and the average rating. We'll also be able to leverage fact properties to build metrics like "Reviews with Dispute", and to break out impact across reviews with and without photos.
+Since we've added multiple entity columns, this table will be able to power metrics for both passenger-randomized and driver-randomized experiments. We'll be able to create metrics based on both the number of rows in this table (i.e., the number of reviews) and the average rating. We'll also be able to leverage fact properties to build metrics like "Reviews with Dispute", and break out measurements by whether the review had a photo.
 
 ### Event stream data
 
-Next, imagine are working at an ecommerce website and have a log of every button click on the site. This data might look something like this in Eppo's data model:
+Next, imagine you are working at an ecommerce website and have a log of every button click on the site. This data might look something like this in Eppo's data model:
 
 | Column | Type in Eppo |
 |--------|--------------|
@@ -121,7 +124,7 @@ Next, imagine are working at an ecommerce website and have a log of every button
 | `event_timestamp` | Timestamp | 
 | `event_name` | Fact property |
 
-In this case, you might have many different `event_name` values corresponding to different buttons that could be clicked in your app. By marking `event_name` as a fact property, you can filter metrics to look at specific button clicks (for instance, add to cart clicks).
+In this case, you could have many different `event_name` values corresponding to different buttons in your app. By marking `event_name` as a fact property, you can filter metrics to look at specific button clicks (for instance, add to cart clicks).
 
 ### Pre-aggregated data
 
@@ -147,7 +150,7 @@ If you opt to use aggregated data as facts, make sure that assignment data times
 
 You can update facts by clicking the `Edit` button to access the Fact SQL. At this point you can edit the SQL as you like, but the mapping fields will be locked down until the SQL is validated with a run.
 
-Pressing the `Run` button will enable the mapping fields and the `Save & Close` button to save any changes made in either the SQL or mapping.
+Pressing the `Run` button will enable the mapping fields. Click `Save & Close` button to save any changes made in either the SQL or mapping.
 
 :::note
 Any running experiments with metrics based on the updated Fact SQL will automatically fully refresh those metrics on the next experiment update.
