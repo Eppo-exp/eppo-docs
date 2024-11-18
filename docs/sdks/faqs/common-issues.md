@@ -70,16 +70,24 @@ Now, simply add allocation logic specifying to target users with `beta_user = 't
 This does require you to determine whether a user is in the beta group before calling `get<Type>Assignment`, but it helps to keep the Eppo SDK very light.
 
 
+## Wait for SDK Initialization
 
+Eppo's SDK initialization is non-blocking by default. This means your application can continue running while the SDK initializes in the background. However, if you call `get<Type>Assignment` before initialization completes, you may get unexpected results due to race conditions.
 
+### What Happens If You Don't Wait
+When you call `get<Type>Assignment` before initialization completes, one of two things will happen:
 
+1. If the SDK has a cached configuration in persistent storage (like localStorage in JavaScript):
+   - It will use the previous configuration
+   - This might not include your latest changes
 
-## Consider how to best handle non-blocking initialization
+2. If there's no cached configuration:
+   - The SDK will return your specified default value
+   - Your feature flags won't work as expected
 
-Most initialization methods in Eppo’s SDKs are non-blocking in order to minimize their footprint on the applications in which they are run. One consequence of this, however, is that it is possible to invoke the `get<Type>Assignment` method before the SDK has finished initializing. If `get<Type>Assignment` is invoked before the SDK has finished initializing, the SDK may not have access to the most recent configurations. There are two possible outcomes when `get<Type>Assignment` is invoked before the SDK has finished initializing:
+### Best Practice
+Take advantage of your programming language's tools for waiting for asynchronous operations to complete. For example, the `await` keyword in JavaScript can be used to wait for an async operation to complete.
 
-1. If the SDK downloads configurations to a persistent store, e.g. the JavaScript client SDK uses local storage, and a configuration was previously downloaded, then the SDK will assign a variation based on a previously downloaded configuration.
-
-2. If no configurations were previously downloaded or the SDK stores the configuration in memory and loses it during re-initialization, then the SDK will return the default value when `get<Type>Assignment` is invoked.
-
-Most SDKs have an option to `waitForInitialization`, as well as flexible initialization options that you can pass in at initialization.
+:::tip
+Check your specific SDK's documentation for initialization options and best practices for your programming language.
+:::
