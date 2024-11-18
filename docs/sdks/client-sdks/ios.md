@@ -27,7 +27,9 @@ Task {
 }
 ```
 
-(It is recommended to wrap initialization in a `Task` block in order to perform network request asynchronously)
+:::tip
+Wrap initialization in a `Task` block in order to perform network request asynchronously.
+:::
 
 #### Assign anywhere
 
@@ -39,6 +41,8 @@ let assignment = try eppoClient.getStringAssignment(
     defaultValue: "control"
 );
 ```
+
+Flags and other features become available to the SDK after initialization. 
 
 During initialization, the SDK sends an API request to Eppo to retrieve the most recent experiment configurations: variation values, traffic allocation, etc. The SDK stores these configurations in memory, meaning assignments are effectively instant (accordingly, assignment is a synchronous operation). For more information, see the [architecture overview](/sdks/architecture/overview) page.
 

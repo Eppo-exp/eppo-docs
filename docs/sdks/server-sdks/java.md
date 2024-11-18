@@ -46,6 +46,8 @@ EppoClient.Builder()
   .buildAndInit();
 ```
 
+Flags and other features become available to the SDK after initialization. 
+
 Initialization should happen when your application starts up, and generates a singleton client instance to be used 
 throughout the application lifecycle. After initialization, you can access the client with `EppoClient.getInstance()`.
 

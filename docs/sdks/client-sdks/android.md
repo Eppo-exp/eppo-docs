@@ -34,6 +34,8 @@ CompletableFuture<EppoClient> eppoClientFuture = new EppoClient.Builder("YOUR_SD
     .buildAndInitAsync();
 ``` 
 
+Flags and other features become available to the SDK after initialization. 
+
 During initialization, the SDK sends an API request to a CDN to retrieve the most recent experiment configurations from Eppo, 
 such as variation values and traffic allocation. The SDK stores these configurations in memory so that assignments are effectively instant. 
 For more information, see the [architecture overview](/sdks/architecture/overview) page. 

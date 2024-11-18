@@ -53,6 +53,8 @@ variation = client.get_string_assignment(
 )
 ```
 
+Flags and other features become available to the SDK after initialization. 
+
 After initialization, the SDK begins polling Eppo’s CDN every 30 seconds to retrieve the most recent experiment configurations (variation values, traffic allocation, etc.). Note that polling happens independently of assignment calls and is non blocking.
 
 The SDK stores these configurations in memory so that assignments thereafter are effectively instant. For more information, see the [architecture overview](/sdks/architecture/overview) page.
