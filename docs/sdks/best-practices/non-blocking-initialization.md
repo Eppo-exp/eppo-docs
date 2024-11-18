@@ -1,18 +1,30 @@
 ---
 sidebar_position: 10
+title: Initialize before assigning
 ---
 
-# Non-blocking initialization
+# Finish initialization before using assignments
 
 :::note
 Don't be blocked! We're here to help you get up and running with Eppo. Contact us at [support@geteppo.com](mailto:support@geteppo.com).
 :::
 
-Most initialization methods in Eppo’s SDKs are non-blocking in order to minimize their footprint on the applications in which they are run. One consequence of this, however, is that it is possible to invoke the `get<Type>Assignment` method before the SDK has finished initializing. If `get<Type>Assignment` is invoked before the SDK has finished initializing, the SDK may not have access to the most recent configurations. There are two possible outcomes when `get<Type>Assignment` is invoked before the SDK has finished initializing:
+Eppo's SDK initialization is non-blocking by default. This means your application can continue running while the SDK initializes in the background. However, if you call `get<Type>Assignment` before initialization completes, you may get unexpected results due to race conditions.
 
-1. If the SDK downloads configurations to a persistent store, e.g. the JavaScript client SDK uses local storage, and a configuration was previously downloaded, then the SDK will assign a variation based on a previously downloaded configuration.
+### What Happens If You Don't Wait
+When you call `get<Type>Assignment` before initialization completes, one of two things will happen:
 
-2. If no configurations were previously downloaded or the SDK stores the configuration in memory and loses it during re-initialization, then the SDK will return the default value when `get<Type>Assignment` is invoked.
+1. If the SDK has a cached configuration in persistent storage (like localStorage in JavaScript):
+   - It will use the previous configuration
+   - This might not include your latest changes
 
-Most SDKs have an option to `waitForInitialization`, as well as flexible initialization options that you can pass in at initialization.
+2. If there's no cached configuration:
+   - The SDK will return your specified default value
+   - Your feature flags won't work as expected
 
+### Best Practice
+Take advantage of your programming language's tools for waiting for asynchronous operations to complete. For example, the `await` keyword in JavaScript can be used to wait for an async operation to complete.
+
+:::tip
+Check your specific SDK's documentation for initialization options and best practices for your programming language.
+:::
