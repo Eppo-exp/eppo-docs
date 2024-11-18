@@ -27,7 +27,9 @@ Task {
 }
 ```
 
-(It is recommended to wrap initialization in a `Task` block in order to perform network request asynchronously)
+:::tip
+Wrap initialization in a `Task` block in order to perform network request asynchronously.
+:::
 
 #### Assign anywhere
 
