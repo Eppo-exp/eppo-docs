@@ -4,7 +4,6 @@ sidebar_position: 3
 
 # Avoid round trips to internal servers
 
-
 It may be tempting to implement to centralize experiment assignment on an internal server. This would remove the need to fetch flag configurations from Eppo's network independently for each individual who uses your application. This however either incurs latency each time a flag is evaluated (from doing a round trip to your internal server), or encourages implementing a "fetch all flags at initialization" approach, in direct conflict with the previous best practice.
 
 Eppo's client-side SDKs are designed to mitigate both of these problems. By pre-fetching an obfuscated flag configuration, the full assignment logic can happen locally without any network calls. Further, by only evaluating flag values when the feature is rendered, we guarantee high-quality analytic data.
