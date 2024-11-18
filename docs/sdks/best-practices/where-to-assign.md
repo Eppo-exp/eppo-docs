@@ -8,10 +8,17 @@ sidebar_position: 1
 Don't be blocked! We're here to help you get up and running with Eppo. Contact us at [support@geteppo.com](mailto:support@geteppo.com).
 :::
 
+### Best Practice
+Strive to place assignment calls as close to code split as possible. This reduces the likelihood of logging an assignment but not delivering the corresponding experience.
 
-In general, strive to place assignment calls as close to code split as possible. This reduces the likelihood of logging an assignment but not delivering the corresponding experience, leading to analysis issues such as impact dilution.
+### Why It Matters
+When assignment and delivery are not tightly coupled, you may encounter:
+- Impact dilution in your analysis
+- Inconsistent user experiences
+- Difficulty tracking experiment results
 
-Suppose we are testing a new payment experience with users. It’s best to fetch the assignment and deliver the experience as close together in the code as possible:
+### Example Implementation
+Here's how to properly implement assignment placement in a payment flow test by fetching the assignment and delivering the experience as close together in the code as possible:
 
 ```javascript
 export default function PaymentPage({ user: User }): JSX.Element {
@@ -30,7 +37,10 @@ export default function PaymentPage({ user: User }): JSX.Element {
 }
 ```
 
-In this example, assignment and delivery are tightly coupled. Users who are assigned the new payment page always see the new one, and users who are assigned the old payment page always see the old one. There is very little chance for an assignment to be logged without the user experiencing the new variant.
+In this example, assignment and delivery are tightly coupled:
+- Users assigned to the new payment page always see the new version
+- Users assigned to the old payment page always see the old version
+- There is minimal chance for assignment-experience mismatch
 
 :::info
 While Eppo recommends placing assignment calls as close to the code split as possible, we understand this is not possible in all circumstances. In these cases, we provide the ability to filter analysis results. See [filtering assignments by entry points](/experiment-analysis/configuration/filter-assignments-by-entry-point) for more details.
