@@ -4,10 +4,38 @@ sidebar_position: 3
 
 # Avoid round trips to internal servers
 
-It may be tempting to implement to centralize experiment assignment on an internal server. This would remove the need to fetch flag configurations from Eppo's network independently for each individual who uses your application. This however either incurs latency each time a flag is evaluated (from doing a round trip to your internal server), or encourages implementing a "fetch all flags at initialization" approach, in direct conflict with the previous best practice.
+:::note
+Don't be blocked! We're here to help you get up and running with Eppo. Contact us at [support@geteppo.com](mailto:support@geteppo.com).
+:::
 
-Eppo's client-side SDKs are designed to mitigate both of these problems. By pre-fetching an obfuscated flag configuration, the full assignment logic can happen locally without any network calls. Further, by only evaluating flag values when the feature is rendered, we guarantee high-quality analytic data.
+Centralizing experiment assignment on an internal server can lead to performance issues and poor user experience. Eppo's client-side SDKs work best when they can evaluate assignments locally without additional network calls.
 
-Accordingly, Eppo recommends using the client-side SDK for most use cases. The main exception is when the experience originates from the backend, e.g. A/B testing machine learning models whose predictions are generated server-side.
+### What Happens With Internal Server Round Trips
+When implementing centralized experiment assignment on internal servers, you'll face two main challenges:
 
-Eppo's SDK will by default fetch configurations from our global CDN hosted on Fastly. In most situations, this round trip completes in [under 20ms](/sdks/faqs/latency), but some teams may prefer to remove the dependency all together. In this case, you can fetch Eppo's configuration file independently and then pass that to the client as part of routine app initialization. To read more about that, please see the [deployment modes](/sdks/architecture/deployment-modes#local-flag-evaluation-using-configurations-from-internal-server) page.
+1. Performance Impact:
+   - Each call to the server adds latency for each flag evaluation
+   - Additional server load and maintenance
+   - More complex application architecture
+
+2. Implementation Compromises:
+   - Pressure to implement "fetch all flags at initialization"
+   - Potential conflicts with other best practices
+   - Reduced quality of analytic data
+
+### Best Practice
+Use Eppo's client-side SDKs for most use cases. They:
+- Pre-fetch obfuscated flag configurations
+- Perform assignment logic locally
+- Evaluate flags only when features are rendered
+- Typically complete round trips in [under 20ms](/sdks/architecture/latency)
+
+### Exception Cases
+Server-side assignment can be useful in the following cases:
+- Experiences originate from the backend
+- A/B testing machine learning models with server-side predictions
+- Other scenarios requiring server-side logic
+
+:::tip
+If you need to remove the CDN dependency entirely, you can fetch Eppo's configuration file independently and pass it to the client during app initialization. See our [deployment modes](/sdks/architecture/deployment-modes#local-flag-evaluation-using-configurations-from-internal-server) documentation for details.
+:::
