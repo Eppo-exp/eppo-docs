@@ -52,7 +52,7 @@ Some advanced use cases require additional columns. Examples include performing 
 | Subentity ID (optional) | An optional entity ID to specify a subentity of the primary assignment entity, used for clustered analysis. In this case, the experiment subject can be thought of as a cluster (randomization unit) and the subentity can be thought of as the analysis unit. | `user_id`, `session_id` |
 | Holdout (optional) | A unique identifier for the holdout of interest. For instance, "2024 Q1 ML holdout". You can read more about holdouts in Eppo [here](/experiment-analysis/holdouts/). | `holdout_id` |
 | Holdout variant (optional) | An indicator of whether the user was in the "Status Quo" or "Winning Variants" bucket. | `holdout_variant` |
-| Partition date (optional) | An optional additional timestamp used to filter rows using a column other than the assignment event timestamp. Useful if your assignment timestamp column differs from the table's partition timestamp column | `date` |
+| Partition date (optional) | An optional additional timestamp used to filter rows using a column other than the assignment event timestamp. Useful if your assignment timestamp column differs from the table's partition timestamp column. See [here](/data-management/warehouse-best-practices/#leveraging-partitioning) for more information about leveraging partitioning. | `date` |
 
 :::info
 The advanced features mentioned above are disabled by default. If you would like to enable them, please reach out to your Eppo point of contact or email support@geteppo.com. Enabling these features will have no impact on billing.
@@ -157,7 +157,7 @@ Similar to the pre-authentication use case described above, experiment analyses 
 
 ## Assignment deduplication
 
-Eppo will automatically deduplicate assignment logs from the same subject-experiment pair by only considering the first record. Eppo will also gracefully handle scenarios where assignment data varies over time for the same subject. Details are described below.
+Eppo will automatically deduplicate assignment logs from the same subject-experiment pair by only considering the first record in the experiment's date range. Eppo will also gracefully handle scenarios where assignment data varies over time for the same subject. Details are described below.
 
 #### Scenario 1: Subject has assignment events corresponding to more than one variation
 

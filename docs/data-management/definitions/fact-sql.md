@@ -22,7 +22,7 @@ Each Fact SQL Definition should return the following columns. Note that the spec
 | Entity ID | An ID for joining to assignment SQL sources. You can add multiple of these if the fact corresponds to multiple entities. | `user_id` , `device_id` , `company_id`|
 | Fact value (optional) | A numeric quantity associated with the fact. You can add several if an event has multiple associated values (e.g., net revenue and gross revenue) | `gross_revenue` , `items_added_to_cart` , `support_ticket_count` |
 | Fact property (optional) | A categorical variable associated with the event. This can be used to filter events in metric creation, or to break out experiment results. Note that properties that are 1:1 with experiment subjects should be defined in an [Assignment](/data-management/definitions/assignment-sql) or [Entity Property](/data-management/definitions/property-sql) SQL definition. | `revenue_category` , `support_ticket_reason` , `event_name` |
-| Partition date (optional) | An optional additional timestamp for filtering rows with a column other than the event timestamp. Useful if your event timestamp column differs from the table's partition timestamp column | `date` |
+| Partition date (optional) | An optional additional timestamp for filtering rows with a column other than the event timestamp. Useful if your event timestamp column differs from the table's partition timestamp column. See [here](/data-management/warehouse-best-practices/#leveraging-partitioning) for more information about leveraging partitioning. | `date` |
 
 :::info
 Partition date columns are disabled by default. If you would like to enable them, please reach out to your Eppo point of contact or email support@geteppo.com. Enabling this feature will have no impact on billing.
