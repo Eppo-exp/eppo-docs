@@ -18,11 +18,11 @@ After filling out the required sections, you can publish the Protocol to make it
 
 ### Analysis settings
 
-![Protocol analysis setting screen](/img/experiments/protocols/protocol-analysis-settings.png)
-
 Analysis setting determine the entity tested, the logging table to reference, the stats regime to use, and experiment run time.
 
 For more information on the right statistical analysis plan to use please refer to the [documentation on analysis plans.](/experiment-analysis/configuration/analysis-plans)
+
+![Protocol analysis setting screen](/img/experiments/protocols/protocol-analysis-settings.png)
 
 When a default run time is set, the experiment analysis end date will automatically be set to run for the defined number of days. This does not impact the assignment, which must be managed in your feature flagging tool. The end user can also override this end date.
 
