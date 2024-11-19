@@ -1,6 +1,10 @@
 
-# {{SDK_NAME}} Guide
-
+---
+weight: 1
+title: {{SDK_NAME}} Guide
+---
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
 ## Overview
 
 <div className="feature-card-container">
@@ -36,5 +40,55 @@
 
 ## Installation
 
-## Usage
+### Install the SDK
+This section of the guide walks the user through the process of installing the SDK via the available package manager(s) for the SDK language.
+
+<Tabs>
+<TabItem value="yarn" label="Yarn">
+
+```bash
+yarn add @eppo/js-client-sdk
+```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm install @eppo/js-client-sdk
+```
+
+</TabItem>
+
+<TabItem value="bun" label="Bun">
+
+```bash
+bun add @eppo/js-client-sdk
+```
+
+</TabItem>
+
+<TabItem value="script" label="Script">
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@eppo/js-client-sdk@latest/dist/eppo-sdk.min.js"></script>
+```
+
+If you install via a `<script>` tag, include a version in the URL to install a specific version of the SDK (or use `latest` as the version to install the latest SDK version):
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@eppo/js-client-sdk@{version}/dist/eppo-sdk.min.js"></script>
+```
+
+</TabItem>
+</Tabs>
+
+### Initialize the SDK
+
+### Create a feature flag
+
+This section of the guide will walk you through the process of creating a feature flag using the {{SDK_NAME}} SDK.
+
+```
+```
 

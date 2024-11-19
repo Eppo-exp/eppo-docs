@@ -1,0 +1,37 @@
+---
+title: SDK Guide
+sidebar_position: 1
+---
+import FeatureCard from '/src/components/FeatureCard';
+
+<div className="feature-card-container">
+  <FeatureCard 
+    title="SDK Quickstart" 
+    description="Install the SDK and create a basic feature flag"
+    link=""
+    iconSrc=""
+  />
+  <FeatureCard 
+    title="API Reference"
+    description="Reference for all SDK methods."
+    link=""
+    iconSrc=""
+  />
+  
+  <FeatureCard 
+    title="Github"
+    description="View the source code on Github."
+    link=""
+    iconSrc=""
+  />
+  {/* Adjust this to match the package manager used for the SDK language.
+  For example, if the SDK is in Python, the package manager is PyPI.
+  If the SDK is in JavaScript, the package manager is NPM. */}
+  <FeatureCard 
+    title="{{PACKAGE_MANAGER}} documentation"
+    description="Install the SDK via {{PACKAGE_MANAGER}}"
+    link=""
+    iconSrc=""
+  />
+</div>
+
