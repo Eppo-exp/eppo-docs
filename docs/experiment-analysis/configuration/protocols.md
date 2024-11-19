@@ -32,7 +32,7 @@ The decision criteria sets the key metrics to be measured in the experiment and 
 
 ![Protocol select metrics screen](/img/experiments/protocols/protocol-select-metrics.png)
 
-Specifying a Primary metric is required. This is the metric that your experiment hypothesis is testing. The Primary Metric will be used to determine the status of the experiment and, ultimately, it's outcome. 
+Specifying a Primary Metric is required. This is the metric that your experiment hypothesis is testing. The Primary Metric will be used to determine the status of the experiment and, ultimately, it's outcome. 
 
 You are also able to specify optional [guardrail metrics](/data-management/organizing-metrics/guardrails). Guardrail metrics provide a level of governance and are primarily useful to track metrics that an experiment is not supposed to positively impact, but you want to ensure that there is no negative effect either. Guardrail metrics can use any cutoff bounds previously set or can have custom cutoffs set for the Protocol.
 
