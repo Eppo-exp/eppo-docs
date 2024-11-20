@@ -12,7 +12,7 @@ Fastly's load balancer handles large spikes in requests, removing the need for a
 
 Building on top of Fastly also means that if Eppo ever had an outage, all of our SDKs will continue to work based on config files cached in Fastly.
 
-For more information on Eppo SDK performance see the FAQs on [latency](/sdks/faqs/latency) and [risk](/sdks/faqs/risk).
+For more information on Eppo SDK performance see the FAQs on [latency](/sdks/architecture/latency) and [risk](/sdks/architecture/risk).
 
 ## Event capture
 
