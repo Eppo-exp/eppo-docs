@@ -21,6 +21,9 @@ $$
 
 [Funnels](/data-management/metrics/funnel-metric) are another powerful metric type in Eppo. They allow you to track and analyze multi-step processes or user flows. By defining the sequence of events in a funnel, you can identify bottlenecks, drop-off points, and conversion rates at each step. This facilitates a granular analysis of user behavior and helps optimize the customer journey.
 
+## Percentiles
+
+[Percentile metrics](/data-management/metrics/percentile-metric) enable measurement of product and website performance. Page load time is a good example of when you want to use a percentile metric. For example, average page load time is heavily influenced by outliers, such as when the page didn’t load properly or at all and the load time is very high. The goal instead is to reduce load time for slow loads. Percentile metrics solve for this by using p75 (the 75th percentile), p90, or p95 page load time to measure tail behavior.
 
 ## Guardrail cutoffs
 
