@@ -60,7 +60,7 @@ After initialization, the SDK begins polling Eppo’s CDN every 30 seconds to re
 The SDK stores these configurations in memory so that assignments thereafter are effectively instant. For more information, see the [architecture overview](/sdks/architecture/overview) page.
 
 :::info
-By default, the Eppo client initialization is asynchronous to ensure no critical code paths are blocked. For more information on handling non-blocking initialization, see our [documentation here](/sdks/faqs/common-issues#consider-how-to-best-handle-non-blocking-initialization).
+By default, the Eppo client initialization is asynchronous to ensure no critical code paths are blocked. For more information on handling non-blocking initialization, see our [documentation here](/sdks/best-practices/non-blocking-initialization).
 :::
 
 ### Connecting an event logger
