@@ -53,8 +53,10 @@ How the SDK fetches, serves, and caches experiment configurations is configurabl
 | **`useExpiredCache`** (boolean)                   | Consider initialization successfully complete without fetching updates, even if the configuration loaded from the cache is expired                                                                                                                                                                                                     | `false`         |
 | **`updateOnFetch`** (always\|expired\|empty)      | Sets how the configuration is updated after a successful fetch:<br/>• always - immediately start using the new configuration<br/>• expired - immediately start using the new configuration only if the current one has expired<br/>• empty - only use the new configuration if the current one is both expired and uninitialized/empty | `'always'`      |
 
-#### Configuration cache
-The SDK can cache previously loaded configurations for use in subsequent sessions, speeding up the time for the SDK to initialize.
+### Configuration Caching
+The SDK can cache previously loaded configurations for use in future sessions. 
+This makes the SDK initialize faster.
+
 By default, a Local Storage-based cache is used in a browser environment and a Chrome Storage-based cache is used in a Chrome extension environment.
 A custom cache can be provided as the `persistentStore` initialization option.
 
