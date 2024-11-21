@@ -48,7 +48,7 @@ http://adoring-yonath-6ecb9d.netlify.app/*  http://docs.geteppo.com/:splat  301!
 /how-tos/event-logging /sdks/event-logging
 /how-tos/integrating-with-contentful /guides/integrating-with-contentful
 /how-tos/integrating-with-webflow /guides/integrating-with-webflow
-/how-tos/mutually-exclusive-experiments /guides/mutually-exclusive-experiments
+/how-tos/mutually-exclusive-experiments /feature-flagging/concepts/mutual_exclusion
 /how-tos/non-inferiority-tests /guides/non-inferiority-tests
 /how-tos/running-well-powered-experiments /guides/running-well-powered-experiments
 /how-tos/warehouse-migration /guides/warehouse-migration
@@ -105,7 +105,7 @@ http://adoring-yonath-6ecb9d.netlify.app/*  http://docs.geteppo.com/:splat  301!
 /guides/integrating-internal-flags /guides/engineering/integrating-internal-flags
 /guides/integrating-with-contentful /guides/marketing/integrating-with-contentful
 /guides/integrating-with-webflow /guides/marketing/integrating-with-webflow
-/guides/mutually-exclusive-experiments /guides/engineering/mutually-exclusive-experiments
+/guides/mutually-exclusive-experiments /feature-flagging/concepts/mutual_exclusion
 /guides/nextjs-setup /guides/engineering/nextjs-setup
 /guides/no-low-code-experiments /guides/advanced-experimentation/no-low-code-experiments
 /guides/non-inferiority-tests /guides/advanced-experimentation/non-inferiority-tests
