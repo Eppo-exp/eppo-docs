@@ -3,11 +3,11 @@ title: SDK Initialization
 sidebar_po sition: 3
 ---
 
-At first glance this section of the docs will have a lot of overlap with the Quickstart guide. The difference is that this section will go into more detail about the initialization options and advanced configuration options.
+The Eppo JavaScript SDK is simple to initialize but provides a number of options for customization that makes it flexible for a wide range of use cases including offline mode, custom caching requirements, and extremely low latency initialization.
 
 ## Initialize the SDK
 
-This section of the guide will walk through initializing the SDK. A full initialization section will be available elsewhere in the docs that will talk about the different initialization options, advanced configuration, and other topics. For now, we just want to provide an example of the best practice initialization for the most common use case.
+To complete basic initialization, you only need to provide your SDK key which you can find in the Eppo UI under **Admin** > **API Keys**. 
 
 ```js
 const eppo = new Eppo({
@@ -16,6 +16,8 @@ const eppo = new Eppo({
 ``` 
 
 ## Assign a variant
+After initialization, you can assign a variation to a subject using any of the getAssignment functions.
+
 ```javascript
 import * as EppoSdk from "@eppo/js-client-sdk";
 
