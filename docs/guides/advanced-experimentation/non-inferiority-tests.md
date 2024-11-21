@@ -1,7 +1,7 @@
 # Running Non-inferiority Tests
 
 :::info
-Eppo now support Non-inferiority tests with the [Guardrail cutoffs](data-management/organizing-metrics/guardrails/).
+Eppo now support Non-inferiority tests with the [Guardrail cutoffs](/data-management/organizing-metrics/guardrails).
 :::
 
 This How To guide walks you through how to run non-inferiority tests in Eppo. This evaluation allows you to measure that a new treatment is not significantly worse than an existing or standard treatment in terms of effectiveness or safety.
