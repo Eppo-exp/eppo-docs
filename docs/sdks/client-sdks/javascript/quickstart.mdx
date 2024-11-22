@@ -56,7 +56,13 @@ If you install via a `<script>` tag, include a version in the URL to install a s
 </TabItem>
 </Tabs>
 
-## Initialize the SDK
+
+Depending on whether you are running a feature flag, an experiment, or a bandit, the initialization code will be slightly different.
+
+## Feature Flags
+Feature flags are a way to toggle features on and off without needing to deploy code.
+
+### Initialize the SDK
 
 [Create an SDK key](/sdks/sdk-key) if you don't already have one. 
 
@@ -75,7 +81,7 @@ const eppo = new Eppo({
 The SDK key is different from the project API key. You can find your SDK key in the [SDK Keys section of the Eppo interface](https://eppo.cloud/configuration/environments/keys).
 :::
 
-## Assign a variant
+### Assign a variant
 
 Once the SDK is initialized, it will live as a singleton instance that you can access and use to make assignments anywhere in your app. Make an assignment by importing the SDK and calling the `.getInstance()` method. After that, you will want to use a function to get a user identifier from the current user session.
   
@@ -107,3 +113,27 @@ return variation ? <new_variant /> : <old_variant />
 That's all the code you need to make a basic assignment. After that, you can do the rest of the work running the experiment from the Eppo UI. This is awesome both because it allows you to iterate quickly and because it gives you the ability to change the experiment configuration without redeploying your code.
 
 You can see the full steps for running an experiment including UI steps in the [feature flag quickstart](/quick-starts/feature-flag-quickstart).
+
+
+## Experiments
+
+Experiments are a way to compare two or more variants of a feature to determine which one performs better. They are similar to feature flags but they require that you include a function that logs events from your application to a data store you control.
+
+```javascript
+// Import Eppo's assignment logger interface and client initializer
+import { IAssignmentLogger, init } from "@eppo/js-client-sdk";
+
+// Define logAssignment so that it logs events
+const assignmentLogger: IAssignmentLogger = {
+  logAssignment(assignment) {
+    console.log(assignment);
+  }
+};
+
+// Initialize the SDK
+await init({
+  apiKey: "<SDK_KEY>",
+  assignmentLogger,
+});
+
+```
