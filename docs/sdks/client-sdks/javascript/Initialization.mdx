@@ -169,18 +169,3 @@ The `offlineInit` function accepts the following optional configuration argument
 | **`flagsConfiguration`** | Record<string, Flag \| ObfuscatedFlag> | The flags configuration to use for the SDK. | `null` |
 | **`isObfuscated`** | boolean | Whether the flag values are obfuscated. | `false` |
 | **`throwOnFailedInitialization`** | boolean | Throw an error if an error occurs during initialization. | `true` |
-
-
-## Appendix
-
-### Browser Support
-
-The SDK is supported on all modern browsers. It relies on JavaScript promises, which may not be supported on older browsers including IE. If you need to run the SDK on a browser that does not support promises, it is possible to use a [polyfill library](https://www.npmjs.com/package/promise-polyfill).
-
-### Local Storage
-
-The SDK uses browser local storage to store experiment configurations downloaded from Eppo. This allows for quick lookup by the `getStringAssignment` function. The configuration data stored contains the experiment key, experiment variation values, traffic allocation, and any allow-list overrides.
-
-### Debugging
-
-You may encounter a situation where a flag assignment produces a value that you did not expect. There are functions [detailed here](/sdks/sdk-features/debugging-flag-assignment) to help you understand how flags are assigned, which will allow you to take corrective action on potential configuration issues. 

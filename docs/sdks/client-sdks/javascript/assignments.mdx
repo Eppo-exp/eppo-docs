@@ -5,6 +5,14 @@ sidebar_position: 4
 
 This section will cover the different types of assignments that you can make with the Eppo SDK.
 
+
+{/* How assignments work. */}
+### Local Storage
+
+The SDK uses browser local storage to store experiment configurations downloaded from Eppo. This allows for quick lookup by the `getStringAssignment` function. The configuration data stored contains the experiment key, experiment variation values, traffic allocation, and any allow-list overrides.
+
+
+
 ## Boolean Assignments
 Explain the assingment.
 
@@ -32,3 +40,192 @@ Explain the assingment.
 ```
 code sample goes here
 ```
+
+## Assignment Logger Schema
+
+The SDK will invoke the `logAssignment` function with an `assignment` object that contains the following fields:
+
+| Field                              | Description                                                                                                              | Example                                                                          |
+|------------------------------------|--------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| `timestamp` (string)               | The time when the subject was assigned to the variation                                                                  | 2021-06-22T17:35:12.000Z                                                         |
+| `featureFlag` (string)             | An Eppo feature flag key                                                                                                 | "recommendation-algo"                                                            |
+| `allocation` (string)              | An Eppo allocation key                                                                                                   | "allocation-17"                                                                  |
+| `experiment` (string)              | An Eppo experiment key                                                                                                   | "recommendation-algo-allocation-17"                                              |
+| `subject` (string)                 | An identifier of the subject or user assigned to the experiment variation                                                | UUID                                                                             |
+| `subjectAttributes` (map)          | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function | `{ "country": "US" }`                                                            |
+| `variation` (string)               | The experiment variation the subject was assigned to                                                                     | "control"                                                                        |
+| `metaData` (Record<string,string>) | Metadata around the assignment, such as the version of the SDK                                                           | `{ "obfuscated: "true", "sdkLanguage": "javascript", "sdkLibVersion": "3.2.1" }` |
+
+More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/sdks/event-logging/) page.
+
+<Tabs>
+<TabItem value="console" label="Console">
+
+```javascript
+// Import Eppo's assignment logger interface and client initializer
+import { IAssignmentLogger, init } from "@eppo/node-server-sdk";
+
+// Define logAssignment so that it logs events
+const assignmentLogger: IAssignmentLogger = {
+  logAssignment(assignment) {
+	console.log(assignment);
+  }
+};
+```
+:::note
+This example writes to your local machine and is useful for development in your local environment. In production, these logs will need to get written to a table in your data warehouse.
+:::
+
+</TabItem>
+
+<TabItem value="segment" label="Segment">
+
+```javascript
+// Import Eppo's assignment logger interface and client initializer
+import { IAssignmentLogger, init } from "@eppo/node-server-sdk";
+
+// Connect to Segment
+const { Analytics } = require('@segment/analytics-node');
+const analytics = new Analytics({ writeKey: '<SEGMENT_WRITE_KEY>'});
+
+// Define logAssignment so that it logs events to Segment
+const assignmentLogger: IAssignmentLogger = {
+  logAssignment(assignment) {
+    analytics.track({
+      userId: assignment.subject,
+      event: "Eppo Randomization Event",
+      properties: assignment,
+    });
+  }
+};
+```
+
+</TabItem>
+<TabItem value="rudderstack" label="Rudderstack">
+
+```javascript
+// Import Eppo's assignment logger interface and client initializer
+import { IAssignmentLogger, init } from "@eppo/node-server-sdk";
+
+// Connect to Rudderstack
+const Analytics = require("@rudderstack/rudder-sdk-node");
+const analytics = new Analytics("<RUDDERSTACK_WRITE_KEY>", {
+  dataPlaneUrl: DATA_PLANE_URL
+});
+
+// Define logAssignment so that it logs events to Rudderstack
+const assignmentLogger: IAssignmentLogger = {
+  logAssignment(assignment) {
+    analytics.track({
+      userId: assignment.subject,
+      event: "Eppo Randomization Event",
+      properties: assignment
+    });
+  },
+};
+```
+
+</TabItem>
+<TabItem value="mparticle" label="mParticle">
+
+```javascript
+// Import Eppo's assignment logger interface and client initializer
+import { IAssignmentLogger, init } from "@eppo/node-server-sdk";
+
+// Initialize mParticle
+const mParticle = require("mparticle");
+const api = new mParticle.EventsApi(
+  new mParticle.Configuration("<MPARTICLE_API_KEY>", "<MPARTICLE_API_SECRET>")
+);
+
+// Define logAssignment so that it logs events to mParticle
+const assignmentLogger: IAssignmentLogger = {
+  logAssignment(assignment) {
+    const batch = new mParticle.Batch(mParticle.Batch.Environment.development);
+    batch.user_identities = new mParticle.UserIdentities();
+    batch.user_identities.customerid = assignment.subject;
+    const event = new mParticle.AppEvent(
+      mParticle.AppEvent.CustomEventType.navigation,
+      "Eppo Randomization Event"
+    );
+    event.custom_attributes = assignment;
+    batch.addEvent(event);
+    api.uploadEvents([batch]);
+  },
+};
+```
+
+</TabItem>
+<TabItem value="snowplow" label="Snowplow">
+
+This example shows the setup for Snowplow's Node.js Tracker v3 SDK.
+
+```javascript
+// Import Eppo's assignment logger interface and client initializer
+import { IAssignmentLogger, init } from "@eppo/node-server-sdk";
+
+// Initialize Snowplow
+import {
+  tracker,
+  gotEmitter,
+  buildSelfDescribingEvent,
+} from "@snowplow/node-tracker";
+const emit = gotEmitter(
+  "collector.mydomain.net", // Collector endpoint
+  snowplow.HttpProtocol.HTTPS,
+  8080,
+  snowplow.HttpMethod.POST,
+  1
+);
+const track = tracker(
+  [emit],
+  "Eppo Randomization Events",
+  "<SNOWPLOW_APP_ID>",
+  false
+);
+
+// Define logAssignment so that it logs events to Snowplow
+const assignmentLogger: IAssignmentLogger = {
+  logAssignment(assignment) {
+    track.track(
+      buildSelfDescribingEvent({
+        event: {
+          schema: "iglu:com.example_company/eppo-event/jsonschema/1-0-2",
+          data: {
+            userId: assignment.subject,
+            properties: assignment
+          }
+        }
+      })
+    );
+  }
+};
+
+```
+
+</TabItem>
+
+<TabItem value="amplitude" label="Amplitude">
+
+```javascript
+// Import Eppo's assignment logger interface and client initializer
+import { IAssignmentLogger, init } from "@eppo/node-server-sdk";
+
+// Initialize Amplitude
+import { track } from '@amplitude/analytics-node';
+
+
+// Define logAssignment so that it logs events to Amplitude
+const assignmentLogger: IAssignmentLogger = {
+  logAssignment(assignment) {
+    track('Experiment Viewed', assignment, {
+	  user_id: assignment.subject
+    });
+  },
+};
+
+```
+
+</TabItem>
+
+</Tabs>
