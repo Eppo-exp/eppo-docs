@@ -15,8 +15,8 @@ const eppo = new Eppo({
 });
 ``` 
 
-## Assign a variant
-After initialization, you can assign a variation to a subject using any of the getAssignment functions.
+## Use the SDK instance
+After initialization, you can use the SDK instance by importing the SDK at the scope you will use it in and calling `getInstance()`. You can then use the SDK instance to assign a variation to a subject using the `get*Assignment` functions.
 
 ```javascript
 import * as EppoSdk from "@eppo/js-client-sdk";
@@ -24,16 +24,11 @@ import * as EppoSdk from "@eppo/js-client-sdk";
 const eppoClient = EppoSdk.getInstance();
 const user = getCurrentUser();
 
-const variation = eppoClient.getBooleanAssignment('show-new-feature', user.id, { 
-  'country': user.country,
-  'device': user.device,
-}, false);
 ```
 
+
 ## Advanced Configuration
-
-
-## Advanced Options
+Basic initialization is great for most use cases, but the SDK provides options that you can use during initialization to customize the behavior of the SDK.
 
 ### Initialization Options
 
@@ -60,51 +55,86 @@ This makes the SDK initialize faster.
 By default, a Local Storage-based cache is used in a browser environment and a Chrome Storage-based cache is used in a Chrome extension environment.
 A custom cache can be provided as the `persistentStore` initialization option.
 
-Caches have a concept of being "expired", dictated by the `maxCacheAgeSeconds` initialization option, and also overridable by the implementation of `isExpired()` for a custom persistent store.
+#### Why cache configurations?
+Caching experiment configurations locally improves your application by making it faster and giving it a fallback value when network requests fail.
+
+#### How configuration Caching Works
+The SDK automatically caches configurations using:
+- Local Storage in browser environments
+- Chrome Storage in extension environments
+
+You can also implement your own custom cache by providing a `persistentStore`:
+
+```javascript
+const eppo = new Eppo({
+  apiKey: 'YOUR_API_KEY',
+  persistentStore: myCustomStore
+});
+```
+#### Expiration
+Caching settings depend on the concept of expiration. Expiration is controlled by the `maxCacheAgeSeconds` initialization option. This setting is overridable by the implementation of `isExpired()` for a custom persistent store.
+
 When the cached configuration is not expired, it is considered valid and no fetches will be made for updated configurations.
 
-When fetches are made--either from initialization or regular polling--you can control when the changes take effect with the `updateOnFetch` initialization option.
-The default of `'always'` will start serving values from the most up-to-date configuration immediately. `'expired'` will only update if the cached configuration--now being used to serve assignments--has expired. 
-This is useful in combination with polling to prevent configurations in long-lived sessions from getting too stale. `'empty'` will only update if there is no pre-existing configuration (expired or not) and is 
-useful in combination with `useExpiredCache` for quickly initializing using a cached configuration and maintaining consistent assignments throughout the session even when the configuration is old. 
-It is essentially prefetching an updated configuration for the next session. 
 
 #### Example configuration options
+There are a few common configurations that you might want to use depending on what type of performance and consistency characteristics you want for your application.
 
-For example, if you want to optimize for always using the latest flag values, you would consider anything cached expired, leave the default of not using expired cached configurations, configuring the SDK to poll after successful and failed initializations, and leave the default of `'always'` updating after a fetch.
+##### Prioritize flag value freshness
+If you want to always using the latest flag values, you'd want settings that:
+- Consider anything cached expired
+- Do not use expired cached configurations
+- Immediately start using the new configuration after it is fetched
+- Do not retry a failed initialization fetch
+
+Use the following configuration to achieve this:
+
 ```ts
-// Default settings left alone
-maxCacheAgeSeconds: 0, // Always consider cached configurations expired
-useExpiredCache: false, // Wait for an updated configuration to be fetched before initialization is considered successful
-updateOnFetch: 'always', // Immediately start using the new configuration after it is fetched
-requestTimeoutMs: 5000, // Don't time out the initial configuration request until five seconds has passed
-numInitialRequestRetries: 1, // If the initial configuration request fails, try one more time  
-// Settings set to non-default values
-pollAfterSuccessfulInitialization: true, // Check for updated configurations every 30 seconds
-pollAfterFailedInitialization: false, // Check for updated configurations even if initialization wasn't able to load one
+const eppo = new Eppo({
+  apiKey: 'YOUR_API_KEY',
+  maxCacheAgeSeconds: 0, // Always consider cached configurations expired
+  useExpiredCache: false, // Wait for an updated configuration to be fetched before initialization is considered successful
+  updateOnFetch: 'always', // Immediately start using the new configuration after it is fetched
+  requestTimeoutMs: 5000, // Don't time out the initial configuration request until five seconds have passed
+  numInitialRequestRetries: 1, // If the initial configuration request fails, try one more time 
+  pollAfterSuccessfulInitialization: true, // Check for updated configurations every 30 seconds
+  pollAfterFailedInitialization: false, // Check for updated configurations even if initialization wasn't able to load one
+});
 ```
+This configuration ensures the SDK will use the lastest assignment values immediately but may be slower to initialize than other approaches.
 
-However, if you want to optimize for the quickest time to initialization and serving assignments--even if those assignments are old, you would allow initializing with older configurations. You also could reduce the initial fetch timeout and retries to quickly fall back to default values.
+###### Prioritize fast initialization
+If you want to optimize for the quickest time to initialization and serving assignments--even if those assignments may be out of date, you would want settings that:
+- Immediately start using the new configuration after it is fetched
+- Allow initializing with older configurations
+- Reduce the initial fetch timeout and retries to quickly fall back to default values
+
+Use the following configuration to achieve those goals:
+
 ```ts
-// Default settings left alone
-updateOnFetch: 'always', // Immediately start using the new configuration once it is fetched
-// Settings set to non-default values
-maxCacheAgeSeconds: 300, // Don't even bother fetching updated configurations unless the last one is more than five minutes old
-useExpiredCache: true, // If the cached configuration is expired, use it to serve assignments until an updated one is fetched
-requestTimeoutMs: 500, // Give up on fetching updated configurations after half a second and--if this is the first-ever initialization--just serve default values
-numInitialRequestRetries: 0, // Don't retry a failed initialization fetch
+const eppo = new Eppo({
+  apiKey: 'YOUR_API_KEY',
+  updateOnFetch: 'always', // Immediately start using the new configuration once it is fetched
+  maxCacheAgeSeconds: 300, // Don't even bother fetching updated configurations unless the last one is more than five minutes old
+  useExpiredCache: true, // If the cached configuration is expired, use it to serve assignments until an updated one is fetched
+  requestTimeoutMs: 500, // Give up on fetching updated configurations after half a second and--if this is the first-ever initialization--just serve default values
+  numInitialRequestRetries: 0, // Don't retry a failed initialization fetch
+});
 ```
 
 Note that when new configurations are loaded, the same flag may start getting a different assignment for the same session. If you want to avoid this, and have consistent assignments until the next initialization, change `updateOnFetch` to `empty`.
 You could consider caches always expired so that it non-blocking loads an updated configuration to be used in the next session.
+
 ```ts
-// Default settings left alone
-maxCacheAgeSeconds: 0, // Always consider cached configurations expired
-// Settings set to non-default values
-updateOnFetch: 'empty', // Immediately start using the new configuration once it is fetched
-useExpiredCache: true, // Always used the previously cached assignments
-requestTimeoutMs: 500, // Give up on fetching updated configurations after half a second and--if this is the first-ever initialization--just serve default values
-numInitialRequestRetries: 0, // Don't retry a failed initialization fetch
+const eppo = new Eppo({
+  apiKey: 'YOUR_API_KEY',
+  maxCacheAgeSeconds: 0, // Always consider cached configurations expired
+  // Settings set to non-default values
+  updateOnFetch: 'empty', // Immediately start using the new configuration once it is fetched
+  useExpiredCache: true, // Always used the previously cached assignments
+  requestTimeoutMs: 500, // Give up on fetching updated configurations after half a second and--if this is the first-ever initialization--just serve default values
+  numInitialRequestRetries: 0, // Don't retry a failed initialization fetch
+});
 ```
 
 ### Offline initialization
