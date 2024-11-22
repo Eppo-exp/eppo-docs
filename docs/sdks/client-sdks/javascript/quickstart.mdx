@@ -6,11 +6,15 @@ sidebar_position: 2
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
+The Eppo JavaScript SDK enables feature flags and experiments in your JavaScript applications with only a few lines of code.
+
+The SDK handles all the complexity of feature flag evaluation and experiment assignment locally in your application, with no network calls required after initial setup. This guide will walk you through installing the SDK and implementing your first feature flag.
 
 ## Installation
 
-### Install the SDK
-This section of the guide walks the user through the process of installing the SDK via the available package manager(s) for the SDK language.
+First, install the SDK into your current project.
+
+The Eppo JavaScript SDK is available via a number of package managers or via a CDN. Use whichever one you prefer.
 
 <Tabs>
 <TabItem value="yarn" label="Yarn">
@@ -54,7 +58,10 @@ If you install via a `<script>` tag, include a version in the URL to install a s
 
 ## Initialize the SDK
 
-This section of the guide will walk through initializing the SDK. A full initialization section will be available elsewhere in the docs that will talk about the different initialization options, advanced configuration, and other topics. For now, we just want to provide an example of the best practice initialization for the most common use case.
+[Create an SDK key](/sdks/sdk-key) if you don't already have one. 
+
+First, initialize the SDK using your SDK key. The SDK key is different from the project API key. 
+
 
 ```js
 const eppo = new Eppo({
@@ -62,15 +69,39 @@ const eppo = new Eppo({
 });
 ``` 
 
+:::note
+The SDK key is different from the project API key. You can find your SDK key in the [SDK Keys section of the Eppo interface](https://eppo.cloud/configuration/environments/keys).
+:::
+
 ## Assign a variant
+
+Once the SDK is initialized, it will live as a singleton instance that you can access and use to make assignments anywhere in your app. Make an assignment by importing the SDK and calling the `.getInstance()` method. After that, you will want to use a function to get a user identifier from the current user session.
+  
 ```javascript
 import * as EppoSdk from "@eppo/js-client-sdk";
 
+// Created the client instance
 const eppoClient = EppoSdk.getInstance();
+
+// Get the current user information
 const user = getCurrentUser();
 
-const variation = eppoClient.getBooleanAssignment('show-new-feature', user.id, { 
-  'country': user.country,
-  'device': user.device,
-}, false);
+// Make an assignment
+const variation = eppoClient.getBooleanAssignment(
+  'show-new-feature', // feature flag key
+  user.id, // subject key
+  { 
+    // userProperties
+    'country': user.country,
+    'device': user.device,
+  }, 
+  false, //default value
+);
+
+// Render the appropriate component based on the assignment
+return variation ? <new_variant /> : <old_variant />
 ```
+
+That's all the code you need to make a basic assignment. After that, you can do the rest of the work running the experiment from the Eppo UI. This is awesome both because it allows you to iterate quickly and because it gives you the ability to change the experiment configuration without redeploying your code.
+
+You can see the full steps for running an experiment including UI steps in the [feature flag quickstart](/quick-starts/feature-flag-quickstart).
