@@ -95,4 +95,4 @@ If you have any question about our privacy practices, please reach out.
 
 Clustered analysis experiments have a few more steps in the data pipeline to aggregate from the subentity level to the cluster level.  See diagram below with additional steps highlighted.
 
-![Clustered analysis pipeline diagram](/img/experiments/data-pipeline/data_pipeline_clustered_highlighted_v4.png)
+![Clustered analysis pipeline diagram](/img/experiments/data-pipeline/data_pipeline_clustered_highlighted_v5.png)
