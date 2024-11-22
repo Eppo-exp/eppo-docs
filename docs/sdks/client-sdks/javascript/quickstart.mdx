@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem';
 
 The Eppo JavaScript SDK enables feature flags and experiments in your JavaScript applications with only a few lines of code.
 
-The SDK handles all the complexity of feature flag evaluation and experiment assignment locally in your application, with no network calls required after initial setup. This guide will walk you through installing the SDK and implementing your first feature flag.
+The SDK handles all the complexity of feature flag evaluation and experiment assignment locally in your application, with no network calls required after initial setup. This guide will walk you through installing the SDK and implementing your first feature flag, experiment, and contextual bandit.
 
 ## Installation
 
@@ -112,12 +112,16 @@ return variation ? <new_variant /> : <old_variant />
 
 That's all the code you need to make a basic assignment. After that, you can do the rest of the work running the experiment from the Eppo UI. This is awesome both because it allows you to iterate quickly and because it gives you the ability to change the experiment configuration without redeploying your code.
 
-You can see the full steps for running an experiment including UI steps in the [feature flag quickstart](/quick-starts/feature-flag-quickstart).
+You can see the full steps for setting up a feature flag including UI steps in the [feature flag quickstart](/feature-flag-quickstart).
 
 
 ## Experiments
 
-Experiments are a way to compare two or more variants of a feature to determine which one performs better. They are similar to feature flags but they require that you include a function that logs events from your application to a data store you control.
+While feature flags are useful, they do not send you any information about how your users are interacting with the feature. Experiments provide a way to collect data about these interactions using the same event logging system that you 
+
+To log events through the SDK, you need to define a `logAssignment()` function using the `IAssignmentLogger` interface to pass to the `init()` function.
+
+For simplicity, we'll create a `logAssignment()` function that logs the assignment data to the console.
 
 ```javascript
 // Import Eppo's assignment logger interface and client initializer
@@ -137,3 +141,33 @@ await init({
 });
 
 ```
+
+
+:::note
+In a production application, you would want to replace the `console.log()` statement with an actual logging system. We have documentation on how to set up logging with multiple popular data warehouses and logging systems in the [Assignment page](/sdks/client-sdks/javascript/assignments/#logging-data-to-your-data-warehouse).
+:::
+
+### Assign a variant
+
+After initializing the SDK with the `logAssignment()` function, you can make assignments in the same way you can for feature flags.
+
+```js
+// Get the current user information
+const user = getCurrentUser();
+
+// Make an assignment
+const variation = eppoClient.getBooleanAssignment(
+  'show-new-feature', // feature flag key
+  user.id, // subject key
+  { 
+    // userProperties
+    'country': user.country,
+    'device': user.device,
+  }, 
+  false, //default value
+);
+```
+
+You can see the full steps for running an experiment including UI steps in the [experiment quick start](/experiment-allocation-quickstart/).
+
+

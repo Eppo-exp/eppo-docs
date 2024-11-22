@@ -3,6 +3,9 @@ title: Assignments
 sidebar_position: 4
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
 This section will cover the different types of assignments that you can make with the Eppo SDK.
 
 
@@ -155,6 +158,12 @@ const assignmentLogger: IAssignmentLogger = {
 };
 ```
 
+### Logging data to your data warehouse
+
+Eppo's unique architecture make it so Eppo never has access to your data. This means that you can use the assignment logging functions to send data to any data warehouse or logging system you want.
+
+All you need to do is adjust the way you define the `logAssignment()` function within the `IAssignmentLogger` interface at initialization.
+
 </TabItem>
 <TabItem value="snowplow" label="Snowplow">
 
@@ -229,3 +238,5 @@ const assignmentLogger: IAssignmentLogger = {
 </TabItem>
 
 </Tabs>
+
+More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/sdks/event-logging/) page.
