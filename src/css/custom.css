@@ -404,6 +404,7 @@ code {
   align-items: center;
   gap: 1rem;
   margin-bottom: 0.5rem;
+  flex-wrap: wrap;
 }
 
 .api-option__name {
@@ -435,3 +436,18 @@ code {
   border-color: var(--card-border);
 }
 
+
+.api-option__type {
+  font-size: 0.9rem;
+  color: var(--ifm-color-gray-600);
+  font-family: var(--ifm-font-family-monospace);
+}
+
+.api-option__type a {
+  color: var(--ifm-color-primary);
+  text-decoration: none;
+}
+
+.api-option__type a:hover {
+  text-decoration: underline;
+}
