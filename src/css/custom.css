@@ -390,3 +390,48 @@ code {
   font-weight: bold;
   color: var(--toc-hover-color)
 }
+
+.api-option {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  border: 1px solid var(--ifm-color-gray-300);
+  border-radius: 8px;
+  background-color: var(--card-bg);
+}
+
+.api-option__header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 0.5rem;
+}
+
+.api-option__name {
+  font-size: 1.1rem;
+  color: var(--ifm-color-primary);
+  background: none;
+  padding: 0;
+}
+
+.api-option__default {
+  font-size: 0.9rem;
+  color: var(--ifm-color-gray-600);
+}
+
+.api-option__description {
+  margin: 0;
+}
+
+.api-option__description > div > * {
+  margin-bottom: 1rem;
+}
+
+.api-option__description > div > *:last-child {
+  margin-bottom: 0;
+}
+
+/* Dark mode adjustments */
+[data-theme='dark'] .api-option {
+  border-color: var(--card-border);
+}
+
