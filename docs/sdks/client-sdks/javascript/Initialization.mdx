@@ -42,7 +42,8 @@ How the SDK fetches, serves, and caches experiment configurations is configurabl
   type="number"
   defaultValue="5000"
 >
-  Timeout in milliseconds for HTTPS requests for the experiment configurations.
+
+**Timeout** in milliseconds for HTTPS requests for the experiment configurations.
 </ApiOptionRef>
 
 <ApiOptionRef 
@@ -50,9 +51,10 @@ How the SDK fetches, serves, and caches experiment configurations is configurabl
   type="number"
   defaultValue="1"
 >
-  Number of _additional_ times the initial configurations request will be attempted if it fails. 
-  This is the request typically synchronously waited (via `await`) for completion. 
-  A small wait will be done between requests.
+
+Number of *additional* times the initial configurations request will be attempted if it fails. 
+This is the request typically synchronously waited (via `await`) for completion. 
+A small wait will be done between requests.
 </ApiOptionRef>
 
 <ApiOptionRef 
@@ -60,7 +62,8 @@ How the SDK fetches, serves, and caches experiment configurations is configurabl
   type="boolean"
   defaultValue="false"
 >
-  Poll for new configurations (every 30 seconds) after successfully requesting the initial configurations.
+
+Poll for new **configurations** (every 30 seconds) after successfully requesting the initial configurations.
 </ApiOptionRef>
 
 <ApiOptionRef 
@@ -68,7 +71,8 @@ How the SDK fetches, serves, and caches experiment configurations is configurabl
   type="boolean"
   defaultValue="false"
 >
-  Poll for new configurations even if the initial configurations request failed.
+
+Poll for new configurations even if the initial configurations request failed.
 </ApiOptionRef>
 
 <ApiOptionRef 
@@ -76,7 +80,8 @@ How the SDK fetches, serves, and caches experiment configurations is configurabl
   type="boolean"
   defaultValue="true"
 >
-  Throw an error (reject the promise) if unable to fetch initial configurations during initialization.
+
+Throw an error (reject the promise) if unable to fetch initial configurations during initialization.
 </ApiOptionRef>
 
 <ApiOptionRef 
@@ -84,8 +89,8 @@ How the SDK fetches, serves, and caches experiment configurations is configurabl
   type="number"
   defaultValue="7"
 >
-  If polling for updated configurations after initialization, the number of additional times a request 
-  will be attempted before giving up. Subsequent attempts are done using an exponential backoff.
+
+If polling for updated configurations after initialization, the number of additional times a request will be attempted before giving up. Subsequent attempts are done using an exponential backoff.
 </ApiOptionRef>
 
 <ApiOptionRef 
@@ -93,8 +98,8 @@ How the SDK fetches, serves, and caches experiment configurations is configurabl
   type="boolean"
   defaultValue="false"
 >
-  Skip the initial request for a new configuration during initialization (if polling is enabled, 
-  this will still take place later)
+
+Skip the initial request for a new configuration during initialization (if polling is enabled, this will still take place later)
 </ApiOptionRef>
 
 <ApiOptionRef 
@@ -102,7 +107,8 @@ How the SDK fetches, serves, and caches experiment configurations is configurabl
   type="IAsyncStore"
   defaultValue="Eppo provided"
 >
-  An asynchronous, persistent storage for caching fetched flag configurations for use in subsequent sessions
+
+An asynchronous, persistent storage for caching fetched flag configurations for use in subsequent sessions
 </ApiOptionRef>
 
 <ApiOptionRef 
@@ -110,8 +116,8 @@ How the SDK fetches, serves, and caches experiment configurations is configurabl
   type="number"
   defaultValue="0"
 >
-  Maximum age, in seconds, that a previously cached configuration is considered valid and the 
-  wait-time before fetching a fresh configuration
+
+Maximum age, in seconds, that a previously cached configuration is considered valid and the wait-time before fetching a fresh configuration
 </ApiOptionRef>
 
 <ApiOptionRef 
@@ -119,8 +125,8 @@ How the SDK fetches, serves, and caches experiment configurations is configurabl
   type="boolean"
   defaultValue="false"
 >
-  Consider initialization successfully complete without fetching updates, even if the configuration 
-  loaded from the cache is expired
+
+Consider initialization successfully complete without fetching updates, even if the configuration loaded from the cache is expired
 </ApiOptionRef>
 
 <ApiOptionRef 
@@ -128,10 +134,13 @@ How the SDK fetches, serves, and caches experiment configurations is configurabl
   type="'always' | 'expired' | 'empty'"
   defaultValue="'always'"
 >
-  Sets how the configuration is updated after a successful fetch:
+
+Sets how the configuration is updated after a successful fetch:
+
   - **always** - immediately start using the new configuration
   - **expired** - immediately start using the new configuration only if the current one has expired
   - **empty** - only use the new configuration if the current one is both expired and uninitialized/empty
+
 </ApiOptionRef>
 
 ### Configuration caching
@@ -257,14 +266,16 @@ The `offlineInit` function accepts the following optional configuration argument
   typeUrl="https://github.com/Eppo-exp/js-client-sdk-common/blob/75c2ea1d91101d579138d07d46fca4c6ea4aafaf/src/assignment-logger.ts#L55-L62"
   defaultValue="null"
 >
-  A callback that sends each assignment to your data warehouse. Required only for experiment analysis. 
+
+A callback that sends each assignment to your data warehouse. Required only for experiment analysis. 
 </ApiOptionRef>
 <ApiOptionRef 
   name="flagsConfiguration"
   type="Record <string, Flag | ObfuscatedFlag>"
   defaultValue="null"
 >
-  The flags configuration to use for the SDK.
+
+The flags configuration to use for the SDK.
 </ApiOptionRef>
 
 <ApiOptionRef 
@@ -272,12 +283,14 @@ The `offlineInit` function accepts the following optional configuration argument
   type="boolean"
   defaultValue="false"
 >
-  Whether the flag values are obfuscated.
+
+Whether the flag values are obfuscated.
 </ApiOptionRef>
 <ApiOptionRef 
   name="throwOnFailedInitialization"
   type="boolean"
   defaultValue="true"
 >
-  Throw an error if an error occurs during initialization.
+
+Throw an error if an error occurs during initialization.
 </ApiOptionRef>
