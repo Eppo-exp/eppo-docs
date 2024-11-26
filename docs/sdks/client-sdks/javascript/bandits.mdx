@@ -7,99 +7,187 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import ApiOptionRef from '@site/src/components/ApiOptionRef';
 
-Contextual Multi-Armed Bandits are a powerful feature of the Eppo SDK that allows for dynamic decision-making based on user context. This guide will walk you through the setup and usage of bandits in the JavaScript SDK.
+## Usage with Contextual Multi-Armed Bandits
 
-## Background
+Eppo also supports contextual multi-armed bandits. You can read more about them in the [high-level documentation](../../../contextual-bandits).
+Bandit flag configuration--including setting up the flag key, status quo variation, bandit variation, and targeting rules--are configured within
+the Eppo application. However, available actions are supplied to the SDK in the code when querying the bandit.
 
-Contextual Multi-Armed Bandits use reinforcement learning to optimize the selection of actions based on user attributes and past performance data. They balance exploration of new actions with exploitation of known successful actions to maximize a specified metric.
+To leverage bandits using the Node SDK, there are two additional steps over regular feature flags:
+1. Add a bandit action logger to the SDK client instance
+2. Query the bandit for an action
 
-## Requesting a Bandit Assignment
+### Define a bandit assignment logger
 
-To request an assignment from a bandit, you need to provide the flag key, subject information, and a set of actions with their attributes. The SDK will return the assigned variation and the selected action if the bandit is invoked.
+In order for the bandit to learn an optimized policy, we need to capture and log the bandit's actions.
+This requires defining a bandit logger in addition to an assignment logger.
+```ts
+// Import Eppo's logger interfaces and client initializer
+import { IAssignmentLogger, IBanditLogger, init } from "@eppo/node-server-sdk";
 
-```javascript
-import * as EppoSdk from "@eppo/js-client-sdk";
-
-const client = EppoSdk.getInstance();
-
-const banditTestFlagKey = "bandit-test";
-const subjectKey = getUserId() || "user-123";
-const subjectAttributes = {
-  numericAttributes: { age: 30 },
-  categoricalAttributes: { country: "US" }
-};
-
-// The actions object contains the attributes for each action in the bandit.
-const actions = {
-  nike: {
-    numericAttributes: { brandAffinity: 2.3 },
-    categoricalAttributes: { previouslyPurchased: true }
-  },
-  adidas: {
-    numericAttributes: { brandAffinity: 0.2 },
-    categoricalAttributes: { previouslyPurchased: false }
+// Define an assignment logger for recording variation assignments
+const assignmentLogger: IAssignmentLogger = {
+  logAssignment(assignment: IAssignmentEvent) {
+    console.log("TODO: save assignment information to data warehouse", assignment);
   }
 };
 
-const defaultValue = "control";
+// Define a bandit logger for recording bandit action assignments
+const banditLogger: IBanditLogger = {
+  logBanditAction (banditEvent: IBanditEvent) {
+    console.log("TODO: save bandit action information to the data warehouse, ensuring the column names are as expected", banditEvent);
+  }
+};
 
-const banditResult = client.getBanditAction(
-  banditTestFlagKey,
+// Initialize the SDK with both loggers provided
+await init({
+  apiKey: "<SDK_KEY>",
+  assignmentLogger,
+  banditLogger
+});
+```
+
+The SDK will invoke the `logBanditAction()` function with an `IBanditEvent` object that contains the following fields:
+
+| Field                                       | Description                                                                                                       | Example                          |
+|---------------------------------------------|-------------------------------------------------------------------------------------------------------------------|----------------------------------|
+| `timestamp` (string)                        | The time when the action is taken in UTC as an ISO string                                                         | "2024-03-22T14:26:55.000Z"       |
+| `featureFlag` (string)                      | The key of the feature flag corresponding to the bandit                                                           | "bandit-test-allocation-4"       |
+| `bandit` (string)                           | The key (unique identifier) of the bandit                                                                         | "ad-bandit-1"                    |
+| `subject` (string)                          | An identifier of the subject or user assigned to the experiment variation                                         | "ed6f85019080"                   |
+| `subjectNumericAttributes` (Attributes)     | Metadata about numeric attributes of the subject. Map of the name of attributes their provided values             | `{"age": 30}`                    |
+| `subjectCategoricalAttributes` (Attributes) | Metadata about non-numeric attributes of the subject. Map of the name of attributes their provided values         | `{"loyalty_tier": "gold"}`       |
+| `action` (string)                           | The action assigned by the bandit                                                                                 | "promo-20%-off"                  |
+| `actionNumericAttributes` (Attributes)      | Metadata about numeric attributes of the assigned action. Map of the name of attributes their provided values     | `{"brandAffinity": 0.2}`         |
+| `actionCategoricalAttributes` (Attributes)  | Metadata about non-numeric attributes of the assigned action. Map of the name of attributes their provided values | `{"previouslyPurchased": false}` |
+| `actionProbability` (number)                | The weight between 0 and 1 the bandit valued the assigned action                                                  | 0.25                             |
+| `optimalityGap` (number)                    | The difference between the score of the selected action and the highest-scored action                             | 456                              | 
+| `modelVersion` (string)                     | Unique identifier for the version (iteration) of the bandit parameters used to determine the action probability   | "v123"                           |
+| `metaData` Record<string, unknown>          | Any additional freeform meta data, such as the version of the SDK                                                 | `{ "sdkLibVersion": "3.5.1" }`   |
+
+### Querying the bandit for an action
+
+To query the bandit for an action, you can use the `getBanditAction()` function. This function takes the following parameters:
+- `flagKey` (string): The key of the feature flag corresponding to the bandit
+- `subjectKey` (string): The key of the subject or user assigned to the experiment variation
+- `subjectAttributes` (Attributes | ContextAttributes): The context of the subject
+- `actions` (string[] | Record<string, Attributes | ContextAttributes>): Available actions, optionally mapped to their respective contexts
+- `defaultValue` (string): The default *variation* to return if the flag is not successfully evaluated
+
+:::note
+The `ContextAttributes` type represents attributes which have already been explicitly bucketed into categorical and numeric attributes (`{ numericAttributes: Attributes,
+categoricalAttributes: Attributes }`). There is more detail on this in the Subject Context section.
+:::
+
+The following code queries the bandit for an action:
+
+```ts
+import { getInstance as getEppoSdkInstance } from "@eppo/node-server-sdk";
+import { Attributes, BanditActions } from "@eppo/js-client-sdk-common";
+
+const flagKey = "shoe-bandit";
+const subjectKey = "user123";
+const subjectAttributes: Attributes = { age: 25, country: "GB" };
+const defaultValue = "default";
+const actions: BanditActions = {
+  nike: { 
+    numericAttributes: { brandAffinity: 2.3 }, 
+    categoricalAttributes: { imageAspectRatio: "16:9" } 
+  },
+  adidas: {
+    numericAttributes: { brandAffinity: 0.2 },
+    categoricalAttributes: { imageAspectRatio: "16:9" }
+  }
+};
+const { variation, action } = getEppoSdkInstance().getBanditAction(
+  flagKey,
   subjectKey,
   subjectAttributes,
   actions,
   defaultValue
 );
 
-console.log(`${subjectKey} was assigned the ${banditResult.variation} variation`);
-if (banditResult.action) {
-  console.log(`The bandit recommends ${banditResult.action} to ${subjectKey}`);
+if (action) {
+  renderShoeAd(action);
+} else {
+  renderDefaultShoeAd();
 }
 ```
 
-## Logging Bandit Assignments
+#### Subject context
 
-To support the training of bandits, additional logging is required. You need to implement a logger that records bandit assignments to your data warehouse.
+The subject context contains contextual information about the subject that is independent of bandit actions.
+For example, the subject's age or country.
 
-```javascript
-import { IAssignmentLogger, init } from "@eppo/js-client-sdk";
+The subject context can be provided as `Attributes`, which will then assume anything that is number is a numeric
+attribute, and everything else is a categorical attribute.
 
-const banditLogger = {
-  logBanditAssignment(banditAssignment) {
-    console.log("Logging bandit assignment:", banditAssignment);
-    // TODO: Send data to your data warehouse
-  }
-};
+You can also explicitly bucket the attribute types by providing the context as `ContextAttributes`. For example, you may have an attribute named `priority`, with 
+possible values `0`, `1`, and `2` that you want to be treated categorically rather than numeric. `ContextAttributes` have two nested sets of attributes:
+- `numericAttributes` (Attributes): A mapping of attribute names to their numeric values (e.g., `age: 30`)
+- `categoricalAttributes` (Attributes): A mapping of attribute names to their categorical values (e.g., `country`)
 
-const clientConfig = {
-  apiKey: 'YOUR_SDK_KEY',
-  assignmentLogger: banditLogger
-};
+Any non-numeric values explicitly passed in as values for numeric attributes will be ignored.
 
-EppoSdk.init(clientConfig);
-```
+Attribute names and values are case-sensitive.
 
-## Advanced Configuration
+:::note
+The subject context, passed in as the `subjectAttributes` parameter, is also still used for targeting rules for the feature flag,
+just like with non-bandit assignment methods.
+:::
 
-The JavaScript SDK provides several options for customizing the behavior of bandits, including caching and offline initialization. Refer to the [Initialization](/sdks/client-sdks/javascript/Initialization) page for more details.
+#### Action contexts
 
-### Example Configuration
+The action context contains contextual information about each action. They can be provided as a mapping of attribute names 
+to their contexts. 
 
-```javascript
-const eppo = new Eppo({
-  apiKey: 'YOUR_API_KEY',
-  maxCacheAgeSeconds: 300,
-  useExpiredCache: true,
-  updateOnFetch: 'always',
-  requestTimeoutMs: 5000,
-  numInitialRequestRetries: 1,
-  pollAfterSuccessfulInitialization: true
-});
-```
+Similar to subject context, action contexts can be provided as `Attributes`--which will then assume anything that is number is a numeric
+attribute, and everything else is a categorical attribute--or as `ContextAttributes`, which have explicit bucketing into `numericAttributes`
+and `categoricalAttributes`.
 
-## Conclusion
+Note that relevant action contexts are subject-action interactions. For example, there could be a "brand-affinity" model
+that computes brand affinities of users to brands, and scores of that model can be added to the action context to provide
+additional context for the bandit.
 
-Contextual Multi-Armed Bandits offer a sophisticated way to optimize user experiences by dynamically selecting actions based on real-time data. By integrating bandits into your application, you can leverage Eppo's powerful reinforcement learning capabilities to drive better outcomes.
+If there is no action context, an array of strings comprising only the actions names can also be passed in.
 
-For more information, refer to the [Eppo documentation](https://docs.geteppo.com) and explore the [Python Contextual Bandit example](https://github.com/Eppo-exp/python-sdk/blob/main/example/03_bandit.py) for additional insights.
+If the subject is assigned to the variation associated with the bandit, the bandit selects one of the supplied actions.
+All actions supplied are considered to be valid. If an action should not be available to a subject, do not include it for that call.
+
+Like attributes, actions are case-sensitive.
+
+#### Result
+
+`getBanditAction()` returns two fields:
+- `variation` (string): The variation that was assigned to the subject
+- `action` (string | null): The action that was assigned to the subject by the bandit, or `null` if the bandit was not assigned
+
+The variation returns the feature flag variation. This can be the bandit itself, or the "status quo" variation if the subject is not assigned to the bandit.
+
+If we are unable to generate a variation, for example when the flag is turned off, then the provided `default` variation is returned.
+In both of those cases, the returned `action` will be `null`, and you should use the status-quo algorithm to select an action (more on this below).
+
+When `action` is not `null`, the bandit has selected an action for the subject.
+
+:::note
+If no actions are provided and the flag still has an active bandit, if the bandit variation is assigned the assigned
+action will be `null`.
+:::
+
+:::note
+If the flag no longer has any allocations with bandits, this function will behave the same as `getStringAssignment()`, with
+the provided actions being ignored and the assigned variation being returned along with a `null` action.
+:::
+
+#### Status quo algorithm
+
+In order to accurately measure the performance of the bandit, we need to compare it to the status quo algorithm using an experiment.
+This status quo algorithm could be a complicated algorithm to that selects an action according to a different model, or a simple baseline such as selecting a fixed or random action.
+When you create an analysis allocation for the bandit and the returned `action` is `null`, implement the desired status quo algorithm based on the `variation` value.
+
+## Debugging
+
+You may encounter a situation where a flag assignment produces a value that you did not expect. There are functions [detailed here](/sdks/sdk-features/debugging-flag-assignment/) to help you understand how flags are assigned, which will allow you to take corrective action on potential configuration issues. 
+
+
 
