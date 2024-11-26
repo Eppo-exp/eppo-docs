@@ -73,7 +73,7 @@ First, initialize the SDK using your SDK key. The SDK key is different from the 
 import Eppo from "@eppo/js-client-sdk";
 
 const eppo = new Eppo({
-  apiKey: 'YOUR_SDK_KEY',
+  apiKey: 'SDK_KEY',
 });
 ``` 
 
@@ -83,31 +83,80 @@ The SDK key is different from the project API key. You can find your SDK key in 
 
 ### Assign a variant
 
-Once the SDK is initialized, it will live as a singleton instance that you can access and use to make assignments anywhere in your app. Make an assignment by importing the SDK and calling the `.getInstance()` method. After that, you will want to use a function to get a user identifier from the current user session.
-  
-```javascript
+Once initialized, the SDK uses a singleton pattern, making it accessible from anywhere in your application. To make assignments, import the SDK and use `getInstance()` to access the SDK instance.
+
+### How assignments work
+
+The SDK periodically retrieves configuration rules from the Eppo server that define how subjects should be allocated to variants. When you call an assignment function, the SDK evaluates these rules locally without making additional network requests.
+
+Each assignment requires:
+
+- **Flag Key**: Identifies which set of configuration rules to use
+- **Subject Key**: A unique identifier for the subject (usually a user ID)
+- **Subject Attributes**: Optional key-value pairs containing additional information used for rule evaluation
+- **Default Value**: Fallback value if assignment fails or rules don't match
+
+```js
 import * as EppoSdk from "@eppo/js-client-sdk";
 
-// Created the client instance
+// Get SDK instance
 const eppoClient = EppoSdk.getInstance();
 
-// Get the current user information
-const user = getCurrentUser();
-
-// Make an assignment
-const variation = eppoClient.getBooleanAssignment(
-  'show-new-feature', // feature flag key
-  user.id, // subject key
-  { 
-    // userProperties
+// Define assignment parameters
+const featureKey = "my-neat-feature";
+const subjectKey = getCurrentUser() || "anonymous";
+const subjectAttributes = {
     'country': user.country,
     'device': user.device,
-  }, 
-  false, //default value
+};
+const defaultValue = "default-value";
+
+// Make an assignment
+const variation = eppoClient.getStringAssignment(
+  featureKey,
+  subjectKey,
+  subjectAttributes,
+  defaultValue
+);
+```
+
+### Assignment Types
+
+The SDK provides different assignment functions based on the type of value you need:
+
+| Function | Return Type |
+|----------|-------------|
+| `getStringAssignment()` | String |
+| `getBooleanAssignment()` | Boolean |
+| `getJSONAssignment()` | JSON object |
+| `getIntegerAssignment()` | Integer |
+| `getNumericAssignment()` | Float |
+
+:::note
+See more details about assignment functions in the [Assignments](/sdks/client-sdks/javascript/assignments) page.
+:::
+
+### Using Assignments
+
+After receiving an assignment, your application should implement logic to modify the user experience accordingly:
+
+```javascript
+// Example using a boolean assignment
+const variation = eppoClient.getStringAssignment(
+  featureKey,
+  subjectKey,
+  subjectAttributes,
+  defaultValue
 );
 
-// Render the appropriate component based on the assignment
-return variation ? <new_variant /> : <old_variant />
+// Render different components based on assignment
+if (variation === "landing-page-a") {
+    return <LandingPageA />
+} else if (variation === "landing-page-b") {
+    return <LandingPageB />
+} else {
+    return <LandingPageC />
+}
 ```
 
 That's all the code you need to make a basic assignment. After that, you can do the rest of the work running the experiment from the Eppo UI. This is awesome both because it allows you to iterate quickly and because it gives you the ability to change the experiment configuration without redeploying your code.
@@ -152,22 +201,93 @@ In a production application, you would want to replace the `console.log()` state
 After initializing the SDK with the `logAssignment()` function, you can make assignments in the same way you can for feature flags.
 
 ```js
-// Get the current user information
-const user = getCurrentUser();
+import * as EppoSdk from "@eppo/js-client-sdk";
 
-// Make an assignment
-const variation = eppoClient.getBooleanAssignment(
-  'show-new-feature', // feature flag key
-  user.id, // subject key
-  { 
-    // userProperties
+// Get SDK instance
+const eppoClient = EppoSdk.getInstance();
+
+// Define assignment parameters
+const featureKey = "my-neat-feature";
+const subjectKey = getCurrentUser() || "anonymous";
+const subjectAttributes = {
     'country': user.country,
     'device': user.device,
-  }, 
-  false, //default value
+};
+const defaultValue = "default-value";
+
+// Make an assignment
+const variation = eppoClient.getStringAssignment(
+  featureKey,
+  subjectKey,
+  subjectAttributes,
+  defaultValue
 );
+
+if (variation === "landing-page-a") {
+    return <LandingPageA />
+} else if (variation === "landing-page-b") {
+    return <LandingPageB />
+} else {
+    return <LandingPageC />
+}
 ```
 
 You can see the full steps for running an experiment including UI steps in the [experiment quick start](/experiment-allocation-quickstart/).
 
 
+## Contextual Bandits
+
+Contextual Multi-Armed Bandits are a way to dynamically optimize assignments based on user context. A bandit balances exploration of new actions with exploitation of known successful actions to maximize a specified metric.
+
+### Bandit Setup
+
+Setting up a bandit is very similar to setting up an experiment but with an additional logging function.
+
+```js
+// Import Eppo's logger interfaces and client initializer
+import { IAssignmentLogger, IBanditLogger, init } from "@eppo/node-server-sdk";
+
+// Define an assignment logger for recording variation assignments
+const assignmentLogger: IAssignmentLogger = {
+  logAssignment(assignment: IAssignmentEvent) {
+    console.log("TODO: save assignment information to data warehouse", assignment);
+  }
+};
+
+// Define a bandit logger for recording bandit action assignments
+const banditLogger: IBanditLogger = {
+  logBanditAction (banditEvent: IBanditEvent) {
+    console.log("TODO: save bandit action information to the data warehouse, ensuring the column names are as expected", banditEvent);
+  }
+};
+
+// Initialize the SDK with both loggers provided
+await init({
+  apiKey: "<SDK_KEY>",
+  assignmentLogger,
+  banditLogger
+});
+```
+
+:::note
+In a production application, you would want to replace the `console.log()` statement with an actual logging system. We have documentation on how to set up logging with multiple popular data warehouses and logging systems in the [Assignment page](/sdks/client-sdks/javascript/assignments/#logging-data-to-your-data-warehouse).
+:::
+
+### Assign a variant
+
+After that, just make assignments the same way you would for an experiment. Eppo will optimize the configuration for assignments based on the user's context and handle the logging based on the function you provided.
+
+
+:::note
+For full steps to create a bandit including UI steps, see the [bandit quickstart](/bandit-quickstart).
+:::
+
+## Next Steps
+
+Now that you've seen how to make assignments with the Eppo JavaScript SDK, we strongly recommend familiarizing yourself with the following topics:
+
+- [High Level concepts for the client API](/sdks/client-sdks/index)
+- [Initialization Configuration](/sdks/client-sdks/javascript/initialization)
+- [Assignment details](/sdks/client-sdks/javascript/assignments)
+- [Using the SDK with React](/sdks/client-sdks/javascript/react) if you are using React
+- [Using the SDK with Next.js](/sdks/client-sdks/javascript/nextjs) if you are using Next.js
