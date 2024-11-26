@@ -3,4 +3,103 @@ title: Contextual Bandits
 sidebar_position: 5
 ---
 
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import ApiOptionRef from '@site/src/components/ApiOptionRef';
+
+Contextual Multi-Armed Bandits are a powerful feature of the Eppo SDK that allows for dynamic decision-making based on user context. This guide will walk you through the setup and usage of bandits in the JavaScript SDK.
+
+## Background
+
+Contextual Multi-Armed Bandits use reinforcement learning to optimize the selection of actions based on user attributes and past performance data. They balance exploration of new actions with exploitation of known successful actions to maximize a specified metric.
+
+## Requesting a Bandit Assignment
+
+To request an assignment from a bandit, you need to provide the flag key, subject information, and a set of actions with their attributes. The SDK will return the assigned variation and the selected action if the bandit is invoked.
+
+```javascript
+import * as EppoSdk from "@eppo/js-client-sdk";
+
+const client = EppoSdk.getInstance();
+
+const banditTestFlagKey = "bandit-test";
+const subjectKey = getUserId() || "user-123";
+const subjectAttributes = {
+  numericAttributes: { age: 30 },
+  categoricalAttributes: { country: "US" }
+};
+
+// The actions object contains the attributes for each action in the bandit.
+const actions = {
+  nike: {
+    numericAttributes: { brandAffinity: 2.3 },
+    categoricalAttributes: { previouslyPurchased: true }
+  },
+  adidas: {
+    numericAttributes: { brandAffinity: 0.2 },
+    categoricalAttributes: { previouslyPurchased: false }
+  }
+};
+
+const defaultValue = "control";
+
+const banditResult = client.getBanditAction(
+  banditTestFlagKey,
+  subjectKey,
+  subjectAttributes,
+  actions,
+  defaultValue
+);
+
+console.log(`${subjectKey} was assigned the ${banditResult.variation} variation`);
+if (banditResult.action) {
+  console.log(`The bandit recommends ${banditResult.action} to ${subjectKey}`);
+}
+```
+
+## Logging Bandit Assignments
+
+To support the training of bandits, additional logging is required. You need to implement a logger that records bandit assignments to your data warehouse.
+
+```javascript
+import { IAssignmentLogger, init } from "@eppo/js-client-sdk";
+
+const banditLogger = {
+  logBanditAssignment(banditAssignment) {
+    console.log("Logging bandit assignment:", banditAssignment);
+    // TODO: Send data to your data warehouse
+  }
+};
+
+const clientConfig = {
+  apiKey: 'YOUR_SDK_KEY',
+  assignmentLogger: banditLogger
+};
+
+EppoSdk.init(clientConfig);
+```
+
+## Advanced Configuration
+
+The JavaScript SDK provides several options for customizing the behavior of bandits, including caching and offline initialization. Refer to the [Initialization](/sdks/client-sdks/javascript/Initialization) page for more details.
+
+### Example Configuration
+
+```javascript
+const eppo = new Eppo({
+  apiKey: 'YOUR_API_KEY',
+  maxCacheAgeSeconds: 300,
+  useExpiredCache: true,
+  updateOnFetch: 'always',
+  requestTimeoutMs: 5000,
+  numInitialRequestRetries: 1,
+  pollAfterSuccessfulInitialization: true
+});
+```
+
+## Conclusion
+
+Contextual Multi-Armed Bandits offer a sophisticated way to optimize user experiences by dynamically selecting actions based on real-time data. By integrating bandits into your application, you can leverage Eppo's powerful reinforcement learning capabilities to drive better outcomes.
+
+For more information, refer to the [Eppo documentation](https://docs.geteppo.com) and explore the [Python Contextual Bandit example](https://github.com/Eppo-exp/python-sdk/blob/main/example/03_bandit.py) for additional insights.
 
