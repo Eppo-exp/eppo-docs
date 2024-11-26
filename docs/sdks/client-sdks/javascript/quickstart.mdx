@@ -273,10 +273,47 @@ await init({
 In a production application, you would want to replace the `console.log()` statement with an actual logging system. We have documentation on how to set up logging with multiple popular data warehouses and logging systems in the [Assignment page](/sdks/client-sdks/javascript/assignments/#logging-data-to-your-data-warehouse).
 :::
 
-### Assign a variant
+### Query the bandit for actions
 
-After that, just make assignments the same way you would for an experiment. Eppo will optimize the configuration for assignments based on the user's context and handle the logging based on the function you provided.
+Instead of making simple assignments with a bandit, you will want to query the bandit for actions. 
 
+```js
+import * as EppoSdk from "@eppo/js-client-sdk";
+import { Attributes, BanditActions } from "@eppo/js-client-sdk-common";
+
+const eppoClient = EppoSdk.getInstance();
+
+const flagKey = "shoe-bandit";
+const subjectKey = getCurrentUser() || "anonymous";
+const subjectAttributes: Attributes = { age: 25, country: "GB" };
+const defaultValue = "default";
+const actions: BanditActions = {
+  nike: { 
+    numericAttributes: { brandAffinity: 2.3 }, 
+    categoricalAttributes: { imageAspectRatio: "16:9" } 
+  },
+  adidas: {
+    numericAttributes: { brandAffinity: 0.2 },
+    categoricalAttributes: { imageAspectRatio: "16:9" }
+  }
+};
+
+
+
+const { variation, action } = eppoClient.getBanditAction(
+  flagKey,
+  subjectKey,
+  subjectAttributes,
+  actions,
+  defaultValue
+);
+
+if (action) {
+  renderShoeAd(action);
+} else {
+  renderDefaultShoeAd();
+}
+```
 
 :::note
 For full steps to create a bandit including UI steps, see the [bandit quickstart](/bandit-quickstart).
