@@ -9,7 +9,7 @@ This guide will walk you through how to integrate Eppo’s feature flags with yo
 
 ### **Shopify Classic (Liquid Templates)**
 
-In a Shopify Classic site, you’ll mostly be working with Liquid templates and JavaScript, which means you'll want to implement feature flags using a combination of backend control (via Liquid) and frontend logic.
+In a Shopify Classic site, you’ll mostly be working with Liquid templates and JavaScript, which means you will implement feature flags using a combination of backend control (via Liquid) and frontend logic.
 
 ### Steps to Implement:
 
@@ -32,44 +32,44 @@ You can use JavaScript to initialize the SDK and check the status of the feature
         const IAssignmentLogger = {
           logAssignment(assignment) {
             // Your analytics tracking code here
-            console.log('Assignment logged:', assignment);
+            console.log("Assignment logged:", assignment);
           }
         };
     
         // Initialize Eppo Client
         const opts = {
-          apiKey: 'YOUR-SDK-KEY', 
+          apiKey: "<YOUR-SDK-KEY>", 
           assignmentLogger: IAssignmentLogger,
           maxCacheAgeSeconds: 180 // Adjust to an interval that makes sense for your use case
         };
     
         window.eppo.init(opts)
           .then(() => {
-            console.log('Eppo SDK initialized successfully');
+            console.log("Eppo SDK initialized successfully");
               const defaultVariationData = "default";
     
               // User context
-              const userId = "SUBJECT-KEY" // This can be any id
+              const userId = "<SUBJECT-KEY>" // This can be any id
               const subjectAttributes = {}; // Optional: Add additional attributes for targeting
         
               // Get variation data from Eppo
               const variationData = window.eppo.getInstance().getStringAssignment(
-                '<YOUR-FLAG-KEY>', // Replace with your actual feature flag key
+                "<YOUR-FLAG-KEY>", // Replace with your actual feature flag key
                 userId,
                 subjectAttributes,
                 defaultVariationData
               );      
           })
           .catch((error) => {
-            console.error('Eppo SDK initialization failed:', error);
+            console.error("Eppo SDK initialization failed:", error);
           });
       });
     </script>
 ```
 
-- Replace `'<YOUR-SDK-KEY>'` with the [SDK key](/sdks/sdk-keys/) you've have created in Eppo.    
-- Replace `'<YOUR-FLAG-KEY>'` with the specific [flag key](/feature-flag-quickstart/#create-a-flag) you've configured in Eppo for the feature. 
-- Replace `"SUBJECT-KEY"` with the id you are using to randomize users. This can be a cookie id, device id, or an id from your analytics platform such as Heap or Rudderstack to name a few. We encourage our customers to keep this id consistent to ensure that bucketing remains consistent. If you will randomizing users who are logged out, see our guidance here on [Subject Keys in a Pre-Authenticated Experiment](/guides/engineering/preauth-experiments/).
+- Replace `"<YOUR-SDK-KEY>"` with the [SDK key](/sdks/sdk-keys/) you created in Eppo.    
+- Replace `"<YOUR-FLAG-KEY>"` with the specific [flag key](/feature-flag-quickstart/#create-a-flag) you configured in Eppo for the feature. 
+- Replace `"<SUBJECT-KEY>"` with the id you are using to randomize users. This can be a cookie id, device id, or an id from your analytics platform such as Heap or Rudderstack to name a few. We encourage our customers to keep this id consistent to ensure that bucketing remains consistent. If you will randomizing users who are logged out, see our guidance here on [Subject Keys in a Pre-Authenticated Experiment](/guides/engineering/preauth-experiments/).
 - The Eppo client stores your flag configuration locally; it remains available for as many calls, flags and users as you need. You can refresh the cached configuration as often as you need to update flags by setting the `intervalmaxCacheAgeSeconds`. Shopify Classic is not a single-page app. You do not need to re-instantiate the client for every page, but by refreshing the local client, you keep each new page load up-to-date with your configuration. In this example we have arbitrarily set `intervalmaxCacheAgeSeconds` to `180` seconds, which will wait 180 seconds before refreshing the Eppo configuration from our CDN. Feel free to update this interval whatever time frame makes sense for your use case. Read more about the advanced initialization options [here](/sdks/client-sdks/javascript/#initialization-options).
 
 ### **Shopify Hydrogen (React-Based Storefront)**
@@ -88,7 +88,7 @@ Start by installing the Eppo client SDK into your Hydrogen app.
 2. **Initialize Eppo**:
 Set up the Eppo client, preferably in a global file or context, so it can be accessed easily across different components. Our [Usage in React documentation](/sdks/server-sdks/node/) covers how to set up an Eppo provider and how to use to assign variations to any child component.
 3. **Manage Feature Flags Using React State**:
-    - Use the `useEffect` hook to determine the user's assignment when the component loads. You can read more about the Javascript SDK’s usage in React [here](/sdks/client-sdks/javascript/#usage-in-react).
+    - Use the `useEffect` hook to determine the user's assignment when the component loads. Read more about the Javascript SDK’s usage in React [here](/sdks/client-sdks/javascript/#usage-in-react).
     - Depending on the feature flag assignment, you can conditionally render different parts of your React components.
 4. **Server-Side Rendering Considerations**:
 If you’re server-side rendering (SSR) parts of your Hydrogen store, make sure to account for how you want to handle feature flag evaluation on the server. You might need to fetch assignments during server rendering, especially if flags need to influence SEO or static content. [Eppo’s Node SDK](/sdks/server-sdks/node/) can be used for server rendered flag evaluations.
@@ -96,11 +96,11 @@ If you’re server-side rendering (SSR) parts of your Hydrogen store, make sure 
 ### **Other Considerations:**
 
 **Keeping the subject key consistent to persist the same variation.**
-We recommend using a consistent id from a CDP or analytics provider you’re using for the `subject-key` you pass in to `getAssignment`. This will ensure consistent bucketing even when a user may be logged into Shopify. Read more on how to ensure [consistent bucketing in pre-authenticated experiments.](/guides/engineering/preauth-experiments.md)
+We recommend using a consistent id from a CDP or analytics provider you’re using for the `"<SUBJECT-KEY>"` you pass in to `getAssignment`. This will ensure consistent bucketing even when a user may be logged into Shopify. Read more on how to ensure [consistent bucketing in pre-authenticated experiments.](/guides/engineering/preauth-experiments.md)
 
 **Limited testing on ‘closed’ aspects of Shopify sites.**
 
-There are portions of Shopify sites that ‘closed’ and can not be changed by code such as the Shop checkout page. While there are settings you can customize in your Shopify Admin portal, changing the overall look and feel or adding a banner won’t be editable.
+There are portions of Shopify sites that ‘closed’ and can not be changed by code such as the Shop checkout page. While there are settings you can customize in your Shopify Admin portal, changing the overall look and feel or adding a banner will not be editable.
 
 
 ### **Summary**
