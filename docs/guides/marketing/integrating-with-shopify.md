@@ -49,7 +49,7 @@ You can use JavaScript to initialize the SDK and check the status of the feature
               const defaultVariationData = "default";
     
               // User context
-              const userId = "SUBJECT-KEY"
+              const userId = "SUBJECT-KEY" // This can be any id
               const subjectAttributes = {}; // Optional: Add additional attributes for targeting
         
               // Get variation data from Eppo
@@ -66,9 +66,11 @@ You can use JavaScript to initialize the SDK and check the status of the feature
       });
     </script>
 ```
-    
-- Replace `'<YOUR-FLAG-KEY>'` with the specific key you've configured in Eppo for the feature.
-- Since Shopify classic is not a single page app and reloads every page, you can set the `maxCacheAgeSeconds` to an interval to ensure a wait-time before fetching a fresh configuration. The Eppo client instance will reference the cached configuration in local storage until it is time to fetch a fresh configuration. You read more about the advanced initialization options [here](/sdks/client-sdks/javascript/#initialization-options).
+
+- Replace `'<YOUR-SDK-KEY>'` with the [SDK key](/sdks/sdk-keys/) you've have created in Eppo.    
+- Replace `'<YOUR-FLAG-KEY>'` with the specific [flag key](/feature-flag-quickstart/#create-a-flag) you've configured in Eppo for the feature. 
+- Replace `"SUBJECT-KEY"` with the id you are using to randomize users. This can be a cookie id, device id, or an id from your analytics platform such as Heap or Rudderstack to name a few. We encourage our customers to keep this id consistent to ensure that bucketing remains consistent. If you will randomizing users who are logged out, see our guidance here on [Subject Keys in a Pre-Authenticated Experiment](/guides/engineering/preauth-experiments/).
+- The Eppo client stores your flag configuration locally; it remains available for as many calls, flags and users as you need. You can refresh the cached configuration as often as you need to update flags by setting the `intervalmaxCacheAgeSeconds`. Shopify Classic is not a single-page app. You do not need to re-instantiate the client for every page, but by refreshing the local client, you keep each new page load up-to-date with your configuration. In this example we have arbitrarily set `intervalmaxCacheAgeSeconds` to `180` seconds, which will wait 180 seconds before refreshing the Eppo configuration from our CDN. Feel free to update this interval whatever time frame makes sense for your use case. Read more about the advanced initialization options [here](/sdks/client-sdks/javascript/#initialization-options).
 
 ### **Shopify Hydrogen (React-Based Storefront)**
 
@@ -99,6 +101,7 @@ We recommend using a consistent id from a CDP or analytics provider you’re usi
 **Limited testing on ‘closed’ aspects of Shopify sites.**
 
 There are portions of Shopify sites that ‘closed’ and can not be changed by code such as the Shop checkout page. While there are settings you can customize in your Shopify Admin portal, changing the overall look and feel or adding a banner won’t be editable.
+
 
 ### **Summary**
 
