@@ -6,7 +6,7 @@ sidebar_position: 3
 
 ## Introduction
 
-**Assignment SQL Definitions** tell Eppo when subjects (e.g., user) are enrolled into experiments, the name of the experiment, and the variant that was assigned. Assignment SQLs either point to logs from Eppo's SDK or another randomization systems tracked in your data warehouse. You can create multiple assignment sources if you use a combination of assignment methods.
+**Assignment SQL Definitions** tell Eppo when subjects (e.g., user) are enrolled into experiments, the name of the experiment, and the variant that was assigned. Assignment SQLs either point to logs from Eppo's SDK or another randomization system tracked in your data warehouse. You can create multiple assignment sources if you use a combination of assignment methods.
 
 An example Assignment SQL Definition might looks something like this:
 
