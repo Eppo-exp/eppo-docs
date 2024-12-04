@@ -131,4 +131,10 @@ sdks/faqs/risk /sdks/architecture/risk
 sdks/faqs/latency /sdks/architecture/latency
 sdks/faqs/common-issues /sdks/common-issues/non-blocking-initialization
 
-sdks/client-sdks/javascript /sdks/client-sdks/javascript/intro
+sdks/client-sdks/javascript/ /sdks/client-sdks/javascript/intro
+/sdks/client-sdks/javascript/#usage-in-react /sdks/client-sdks/javascript/react
+/sdks/client-sdks/javascript/#2-initialize-the-sdk /sdks/client-sdks/javascript/initialization
+/sdks/client-sdks/javascript/#define-an-assignment-logger-experiment-assignment-only /sdks/client-sdks/javascript/assignments
+/sdks/client-sdks/javascript/#3-assign-variations /sdks/client-sdks/javascript/assignments
+/sdks/client-sdks/javascript/#typed-assignments /sdks/client-sdks/javascript/assignments
+/sdks/client-sdks/javascript/#offline-initialization /sdks/client-sdks/javascript/initialization#offline-initialization
