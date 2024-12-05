@@ -70,12 +70,10 @@ First, initialize the SDK using your SDK key. The SDK key is different from the 
 
 
 ```js
-import Eppo from "@eppo/js-client-sdk";
+import { init } from "@eppo/js-client-sdk";
 
-const eppo = new Eppo({
-  apiKey: 'SDK_KEY',
-});
-``` 
+await init({ apiKey: "<SDK-KEY-FROM-DASHBOARD>" });
+```
 
 :::note
 The SDK key is different from the project API key. You can find your SDK key in the [SDK Keys section of the Eppo interface](https://eppo.cloud/configuration/environments/keys).
@@ -118,6 +116,7 @@ const variation = eppoClient.getStringAssignment(
   subjectAttributes,
   defaultValue
 );
+
 ```
 
 ### Assignment Types
