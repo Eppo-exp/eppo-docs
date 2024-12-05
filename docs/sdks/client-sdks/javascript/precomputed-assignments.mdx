@@ -26,11 +26,11 @@ On client initialization, you must have the subject key and all available subjec
 
 ## Assignment logging
 
-Using the non-precomputed Eppo client, when a variation is matched, the SDK executes the provided logging callback.
+Using the non-precomputed Eppo client, flag evaluation and assignments both occur together in the client.
 
-When using the precomputed Eppo client, flag evaluation and assignments occur at different times.
+When using the precomputed Eppo client, flag evaluation occurs up front during initialization and assignments occur afterwards.
 
-In both case, exposure events are logged when `get*Assignment` is invoked.
+In both case, assignment events are only logged by the provided logging callback when `get*Assignment` is invoked.
 
 ## Initialize precomputed client
 
