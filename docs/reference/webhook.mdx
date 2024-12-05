@@ -1,0 +1,88 @@
+# Experiment Update Webhook
+
+Webhooks let your integrations take action in response to events that occur in Eppo. The Experiment Update Webhook is a good solution when a custom application needs to display or take action on the most up to date state of an experiment.
+
+## Webhook Events
+The webhook sends four types of experiment update events. If you only want to take action based on certain types of events, you can filter to just the events you are interested in subscribing to based on their event type in the request body.
+
+### Experiment Metric Updated
+**Triggers when:**
+- Metric is added or removed
+- Metric collection is added or removed
+
+**Request body:**
+
+```json
+{
+  "event": "experiment.metric.updated",
+  "data": {
+    "experiment_id": "<experiment_id>",
+    "experiment_key": "<experiment_key>"
+  },
+  "signature": "<signature>"
+}
+```
+
+### Experiment Configuration Updated
+**Triggers when:**
+- User edits any configuration
+
+**Request body:**
+
+```json
+{
+  "event": "experiment.configuration.updated",
+  "data": {
+    "experiment_id": "<experiment_id>",
+    "experiment_key": "<experiment_key>"
+  },
+  "signature": "<signature>"
+}
+```
+
+### Experiment Status Updated
+**Triggers when:**
+- Experiment's status changes
+
+**Request body:**
+
+```json
+{
+  "event": "experiment.status.updated",
+  "data": {
+    "experiment_id": "<experiment_id>",
+    "experiment_key": "<experiment_key>"
+  },
+  "signature": "<signature>"
+}
+```
+
+### Experiment Calculated Metrics Updated
+**Triggers when:**
+- Data pipeline run irrespective of success or failure and mode of trigger manual or scheduled
+
+
+**Request body:**
+
+```json
+{
+  "event": "experiment.calculated_metrics.updated",
+  "data": {
+    "experiment_id": "<experiment_id>",
+    "experiment_key": "<experiment_key>",
+    "meta_data": {
+      "status": "<success | failure>",
+      "is_manual_refresh": "<boolean>",
+      "is_data_updated": "<boolean>",
+      "time_taken_seconds": "<number>",
+      "is_traffic_imbalance": "<boolean>",
+      "assignments_scan_start_date": "<date>",
+      "assignments_scan_end_date": "<date>"
+}
+},
+  "signature": "<signature>"
+}
+```
+
+## Configuring the webhook
+To use the webhook, you first need to setup a URL on your side to receive the webhook payload. Once that is done, contact [Eppo support](emailto:support@geteppo.com) to set and enable the webhook.
