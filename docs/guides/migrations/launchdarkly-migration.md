@@ -187,7 +187,7 @@
     LDClient.initialize('client-side-key', context, options)
     ```
     
-    [*Eppo*](https://docs.geteppo.com/sdks/client-sdks/javascript#2-initialize-the-sdk):
+    [*Eppo*](https://docs.geteppo.com/sdks/client-sdks/javascript/initialization):
     
     ```tsx
     await init({ 
@@ -237,7 +237,7 @@
       launchDarklyClientInstance.variation(featureKey, false) as boolean;
     ```
     
-    [*Eppo*](https://docs.geteppo.com/sdks/client-sdks/javascript#3-assign-variations):
+    [*Eppo*](https://docs.geteppo.com/sdks/client-sdks/javascript/assignments):
     
     ```tsx
     const enabled = 

@@ -173,7 +173,7 @@
     });
     ```
     
-    *[Eppo](/sdks/client-sdks/javascript#2-initialize-the-sdk):*
+    *[Eppo](/sdks/client-sdks/javascript/initialization):*
     
     ```tsx
     await init({ 
@@ -191,7 +191,7 @@
     })  
     ```
     
-    *[Eppo](/sdks/client-sdks/javascript#define-an-assignment-logger-experiment-assignment-only):*
+    *[Eppo](/sdks/client-sdks/javascript/assignments#Logging-data-to-your-data-warehouse):*
     
     ```tsx
     const assignmentLogger: IAssignmentLogger = {
@@ -213,7 +213,7 @@
       optimizelyClientInstance.isFeatureEnabled(featureKey, userId, attributes);
     ```
     
-    [*Eppo](/sdks/client-sdks/javascript#3-assign-variations):*
+    [*Eppo](/sdks/client-sdks/javascript/assignments):*
     
     ```tsx
     const enabled = 
@@ -230,7 +230,7 @@
     
     ```
     
-    *[Eppo](/sdks/client-sdks/javascript#typed-assignments):*
+    *[Eppo](/sdks/client-sdks/javascript/assignments):*
     
     ```tsx
      
@@ -254,7 +254,7 @@
       optimizelyClient.getAllFeatureVariables(featureKey, userId, attributes);
     ```
     
-    *[Eppo](/sdks/client-sdks/javascript#typed-assignments):*
+    *[Eppo](/sdks/client-sdks/javascript/assignments):*
 
     ```tsx
     const values = 

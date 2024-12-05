@@ -63,7 +63,7 @@ The JavaScript SDK is intended for use in browser applications. For server-side 
 yarn add @eppo/js-client-sdk
 ```
 
-You can also install the SDK with NPM or via a script tag. For more information, see the [JavaScript SDK](/sdks/client-sdks/javascript) documentation.
+You can also install the SDK with NPM or via a script tag. For more information, see the [JavaScript SDK](/sdks/client-sdks/javascript/intro) documentation.
 
 </TabItem>
 
@@ -122,7 +122,7 @@ await init({
 });
 ```
 
-If you are using React, we have some [React specific recommendations](/sdks/client-sdks/javascript#usage-in-react).
+If you are using React, we have some [React specific recommendations](/sdks/client-sdks/javascript/react).
 
 </TabItem>
 

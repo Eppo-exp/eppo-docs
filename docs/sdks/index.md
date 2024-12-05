@@ -121,7 +121,7 @@ The read more about our specific SDKs, check out the SDK-specific docs below:
 
 ### Client SDKs
 
-- [JavaScript](client-sdks/javascript)
+- [JavaScript](client-sdks/javascript/intro)
 - [React Native](client-sdks/react-native)
 - [Android](client-sdks/android)
 - [iOS](client-sdks/ios)
@@ -140,7 +140,7 @@ The read more about our specific SDKs, check out the SDK-specific docs below:
 
 ### Hybrid implementations
 
-If you'd like to explore managing the Eppo configuration file yourself, or other advanced deployment options, check out our [deployment modes page](/sdks/architecture/deployment-modes). If you are using Next JS, see our [Next JS setup guide](/guides/engineering/nextjs-setup).
+If you'd like to explore managing the Eppo configuration file yourself, or other advanced deployment options, check out our [deployment modes page](/sdks/architecture/deployment-modes). If you are using Next JS, see our [Next JS setup guide](/sdks/client-sdks/javascript/nextjs-setup).
 
 ## Getting help
 

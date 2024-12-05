@@ -1,0 +1,48 @@
+---
+title: SDK Initialization
+sidebar_po sition: 3
+---
+
+At first glance this section of the docs will have a lot of overlap with the Quickstart guide. The difference is that this section will go into more detail about the initialization options and advanced configuration options.
+
+## Initialize the SDK
+
+This section of the guide will walk through initializing the SDK. A full initialization section will be available elsewhere in the docs that will talk about the different initialization options, advanced configuration, and other topics. For now, we just want to provide an example of the best practice initialization for the most common use case.
+
+```js
+const eppo = new Eppo({
+  apiKey: 'YOUR_API_KEY',
+});
+``` 
+
+## Assign a variant
+```javascript
+import * as EppoSdk from "@eppo/js-client-sdk";
+
+const eppoClient = EppoSdk.getInstance();
+const user = getCurrentUser();
+
+const variation = eppoClient.getBooleanAssignment('show-new-feature', user.id, { 
+  'country': user.country,
+  'device': user.device,
+}, false);
+```
+
+## Advanced Configuration
+
+### Config Options
+This section will give a table or other structured format for the initialization options.
+
+It will also include a set of child headings that will work like an initialization options cookbook and provide examples of how to customize the initialization for different use cases.
+
+
+#### Initialization Options 1
+
+#### Initialization Options 2
+
+### Synchronous vs Asynchronous Initialization
+Walk through the pros and cons of each initialization method. For languages that support good async/await support, recommend using the async initialization. For languages that don't, walk through the tradeoffs and considerations for using the sync initialization.
+
+### Offline Mode
+
+### 
