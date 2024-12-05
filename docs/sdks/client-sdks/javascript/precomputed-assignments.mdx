@@ -5,35 +5,50 @@ sidebar_position: 100
 
 ## Overview
 
-Precomputed assignments is a feature that allows you to receive assignments for all flags for a given user.
+Precomputed assignments is an execution mode that allows you to receive assignments for all flags for a given user.
 
-The computation happens with a remote call to an Eppo Edge Function which is globally distributed to be as close to the user as possible. 
+The computation happens with a remote call to an Eppo Edge Function which is 
+globally distributed to be as close to the user as possible. 
 Availability is backed by Eppo's global CDN.
 
-The new SDK methods are available in Eppo's Javascript SDK version `3.8.0` and above.
+This mode is best suited for applications that require a smaller response payload,
+more predictable latency, and removal of private targeting rules over the public internet.
+
+The new SDK methods are available in Eppo's Javascript SDK version `3.8.2` and above.
 
 ## Advantages
 
 - Private and secure handling of targeting rules.
 - High availability and low latency due to global distribution with the CDN.
 
+## Prerequisites
+
+On client initialization, you must have the subject key and all available subject attributes available.
+
 ## Assignment logging
 
-During classic flag evaluation, the SDK executes the user provided logging callback if one is defined
-when a variation is matched.
+Using the non-precomputed Eppo client, when a variation is matched, the SDK executes the provided logging callback.
 
-For precomputed assignments, evaluation and exposure are separated.
-Evaluation happens when the assignments are fetched. Exposure happens when the assignments are used. 
-The execution of `getAssignment` triggers exposure logging.
+When using the precomputed Eppo client, flag evaluation and assignments occur at different times.
+
+In both case, exposure events are logged when `get*Assignment` is invoked.
 
 ## Initialize precomputed client
 
-```
+```javascript
 import * as EppoSdk from "@eppo/js-client-sdk";
 
+// Define logAssignment so that it logs events
+const assignmentLogger: IAssignmentLogger = {
+  logAssignment(assignment) {
+	console.log(assignment);
+  }
+};
+
+// Initialize the client
 const client = await EppoSdk.precomputedInit({
-    apiKey: 'dummy',
-    assignmentLogger: mockLogger,
+    apiKey: 'YOUR_SDK_KEY',
+    assignmentLogger: assignmentLogger,
     subjectKey: 'test-subject',
     subjectAttributes: { attr1: 'value1' },
 });
