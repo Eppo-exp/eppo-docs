@@ -1,0 +1,42 @@
+---
+title: Precomputed Assignments
+sidebar_position: 100
+---
+
+## Overview
+
+Precomputed assignments is a feature that allows you to receive assignments for all flags for a given user.
+
+The computation happens with a remote call to an Eppo Edge Function which is globally distributed to be as close to the user as possible. 
+Availability is backed by Eppo's global CDN.
+
+The new SDK methods are available in Eppo's Javascript SDK version `3.8.0` and above.
+
+## Advantages
+
+- Private and secure handling of targeting rules.
+- High availability and low latency due to global distribution with the CDN.
+
+## Assignment logging
+
+During classic flag evaluation, the SDK executes the user provided logging callback if one is defined
+when a variation is matched.
+
+For precomputed assignments, evaluation and exposure are separated.
+Evaluation happens when the assignments are fetched. Exposure happens when the assignments are used. 
+The execution of `getAssignment` triggers exposure logging.
+
+## Initialize precomputed client
+
+```
+import * as EppoSdk from "@eppo/js-client-sdk";
+
+const client = await EppoSdk.precomputedInit({
+    apiKey: 'dummy',
+    assignmentLogger: mockLogger,
+    subjectKey: 'test-subject',
+    subjectAttributes: { attr1: 'value1' },
+});
+
+const variant = client.getStringAssignment(flagKey, 'default-value');
+```
