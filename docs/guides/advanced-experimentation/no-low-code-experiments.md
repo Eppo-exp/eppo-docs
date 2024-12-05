@@ -44,7 +44,7 @@ const variation = client.getAssignment(
 
 JSON flags can be used to parameterize your app or site to run experiments without an additional release. By using a [JSON flag](/feature-flagging/concepts/flag-variations#json-flags), values from Eppo dynamically update predefined values in your code. Extending the feature flag example above, variables in your code can be created to accept a value defined in the JSON object defined in Eppo.
 
-Below is an example extended from our [React](/sdks/client-sdks/javascript#usage-in-react) documentation.
+Below is an example extended from our [React](/sdks/client-sdks/javascript/react) documentation.
 
 ```jsx
 import { useEffect, useState } from "react";

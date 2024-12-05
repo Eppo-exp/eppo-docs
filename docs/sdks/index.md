@@ -121,7 +121,7 @@ The read more about our specific SDKs, check out the SDK-specific docs below:
 
 ### Client SDKs
 
-- [JavaScript](client-sdks/javascript)
+- [JavaScript](client-sdks/javascript/intro)
 - [React Native](client-sdks/react-native)
 - [Android](client-sdks/android)
 - [iOS](client-sdks/ios)

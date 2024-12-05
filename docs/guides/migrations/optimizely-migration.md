@@ -191,7 +191,7 @@
     })  
     ```
     
-    *[Eppo](/sdks/client-sdks/javascript#define-an-assignment-logger-experiment-assignment-only):*
+    *[Eppo](/sdks/client-sdks/javascript/assignments#Logging-data-to-your-data-warehouse):*
     
     ```tsx
     const assignmentLogger: IAssignmentLogger = {
@@ -230,7 +230,7 @@
     
     ```
     
-    *[Eppo](/sdks/client-sdks/javascript#typed-assignments):*
+    *[Eppo](/sdks/client-sdks/javascript/assignments):*
     
     ```tsx
      
@@ -254,7 +254,7 @@
       optimizelyClient.getAllFeatureVariables(featureKey, userId, attributes);
     ```
     
-    *[Eppo](/sdks/client-sdks/javascript#typed-assignments):*
+    *[Eppo](/sdks/client-sdks/javascript/assignments):*
 
     ```tsx
     const values = 

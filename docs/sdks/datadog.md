@@ -23,7 +23,7 @@ This example assumes there is a [feature flag](/feature-flagging/concepts/featur
 <TabItem value="javascript" label="Javascript" default>
 Initialize Eppo's SDK and create an assignment logger that additionally reports feature flag evaluations to Datadog using the snippet of code shown below.
 
-For more information about initializing Eppo's SDK, see [Eppo's JavaScript SDK documentation](https://docs.geteppo.com/sdks/client-sdks/javascript)
+For more information about initializing Eppo's SDK, see [Eppo's JavaScript SDK documentation](https://docs.geteppo.com/sdks/client-sdks/javascript/intro)
 
 ```tsx
 const assignmentLogger: IAssignmentLogger = {
