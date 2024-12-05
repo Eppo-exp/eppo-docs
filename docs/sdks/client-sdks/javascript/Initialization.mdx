@@ -12,8 +12,10 @@ The Eppo JavaScript SDK is easy to initialize while offering robust customizatio
 
 To complete basic initialization, you only need to provide an SDK key which you can created in the Eppo UI under **Configuration** > **Environments** > **API Keys**. 
 
-```js
-const eppo = new Eppo({
+```javascript
+import * as EppoSdk from "@eppo/js-client-sdk";
+
+const eppo = await EppoSdk.init({
   apiKey: 'YOUR_SDK_KEY',
 });
 ``` 
@@ -161,8 +163,10 @@ The SDK automatically caches configurations using:
 You can also implement your own custom cache by providing a `persistentStore`:
 
 ```javascript
-const eppo = new Eppo({
-  apiKey: 'YOUR_API_KEY',
+import * as EppoSdk from "@eppo/js-client-sdk";
+
+const eppo = await EppoSdk.init({
+  apiKey: 'YOUR_SDK_KEY',
   persistentStore: myCustomStore
 });
 ```
@@ -186,7 +190,7 @@ If you want to always using the latest flag values, you'd want settings that:
 Use the following configuration to achieve this:
 
 ```ts
-const eppo = new Eppo({
+const eppo = await EppoSdk.init({
   apiKey: 'YOUR_API_KEY',
   maxCacheAgeSeconds: 0, // Always consider cached configurations expired
   useExpiredCache: false, // Wait for an updated configuration to be fetched before initialization is considered successful
@@ -208,7 +212,7 @@ If you want to optimize for the quickest time to initialization and serving assi
 Use the following configuration to achieve those goals:
 
 ```ts
-const eppo = new Eppo({
+const eppo = await EppoSdk.init({
   apiKey: 'YOUR_API_KEY',
   updateOnFetch: 'always', // Immediately start using the new configuration once it is fetched
   maxCacheAgeSeconds: 300, // Don't even bother fetching updated configurations unless the last one is more than five minutes old
@@ -222,7 +226,7 @@ Note that when new configurations are loaded, the same flag may start getting a 
 You could consider caches always expired so that it non-blocking loads an updated configuration to be used in the next session.
 
 ```ts
-const eppo = new Eppo({
+const eppo = await EppoSdk.init({
   apiKey: 'YOUR_API_KEY',
   maxCacheAgeSeconds: 0, // Always consider cached configurations expired
   // Settings set to non-default values
