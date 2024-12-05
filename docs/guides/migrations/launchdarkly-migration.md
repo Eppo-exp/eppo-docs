@@ -237,7 +237,7 @@
       launchDarklyClientInstance.variation(featureKey, false) as boolean;
     ```
     
-    [*Eppo*](https://docs.geteppo.com/sdks/client-sdks/javascript#3-assign-variations):
+    [*Eppo*](https://docs.geteppo.com/sdks/client-sdks/javascript/assignments):
     
     ```tsx
     const enabled = 

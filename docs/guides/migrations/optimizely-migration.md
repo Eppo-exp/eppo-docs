@@ -213,7 +213,7 @@
       optimizelyClientInstance.isFeatureEnabled(featureKey, userId, attributes);
     ```
     
-    [*Eppo](/sdks/client-sdks/javascript#3-assign-variations):*
+    [*Eppo](/sdks/client-sdks/javascript/assignments):*
     
     ```tsx
     const enabled = 
