@@ -51,6 +51,16 @@ const client = await EppoSdk.precomputedInit({
     subjectKey: 'test-subject',
     subjectAttributes: { attr1: 'value1' },
 });
+```
 
+## Perform evaluation
+
+The precomputed client can be accessed anywhere in your application.
+
+Flag evaluation simply looks up the precomputed assignment and returns quickly,
+returning the default value if missing.
+
+```javascript
+const client = EppoSdk.getPrecomputedInstance();
 const variant = client.getStringAssignment(flagKey, 'default-value');
 ```
