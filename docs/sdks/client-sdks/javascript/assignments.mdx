@@ -36,11 +36,17 @@ const client = EppoSdk.getInstance();
 
 const flagKey = "flag-key-123";
 const subjectKey = getUserId() || "user-123";
-const defaultAssignment = "version-a"; 
+const defaultAssignment = "version-a";
+const subjectAttributes = {
+  "country": "US",
+  "age": 30,
+  "isReturningUser": true
+};
 
 const variant = client.getStringAssignment(
   flagKey,
   subjectKey,
+  subjectAttributes,
   defaultAssignment
 
 );
@@ -66,10 +72,16 @@ const client = EppoSdk.getInstance();
 const flagKey = "flag-key-123";
 const subjectKey = getUserId() || "user-123";
 const defaultAssignment = false; 
+const subjectAttributes = {
+  "country": "US",
+  "age": 30,
+  "isReturningUser": true
+};
 
 const variant = client.getBooleanAssignment(
   flagKey,
   subjectKey,
+  subjectAttributes,
   defaultAssignment
 );
 
@@ -105,10 +117,16 @@ const defaultAssignment = {
     heroTitle: "Placeholder Hero Title",
     heroDescription: "Placeholder Hero Description"
 }; 
+const subjectAttributes = {
+  "country": "US",
+  "age": 30,
+  "isReturningUser": true
+};
 
 const campaignJson = client.getJSONAssignment(
   flagKey,
   subjectKey,
+  subjectAttributes,
   defaultAssignment
 );
 
@@ -134,11 +152,16 @@ const client = EppoSdk.getInstance();
 const flagKey = "flag-key-123";
 const subjectKey = getUserId() || "user-123";
 const defaultAssignment = 0; 
-
+const subjectAttributes = {
+  "country": "US",
+  "age": 30,
+  "isReturningUser": true
+};
 // example of getting an integer assignment
 const numberOfItems = client.getIntegerAssignment(
   flagKey,
   subjectKey,
+  subjectAttributes,
   defaultAssignment
 );
 
@@ -146,6 +169,7 @@ const numberOfItems = client.getIntegerAssignment(
 const price = client.getNumericAssignment(
   flagKey,
   subjectKey,
+  subjectAttributes,
   defaultAssignment
 );
 
