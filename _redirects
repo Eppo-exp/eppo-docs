@@ -1,0 +1,132 @@
+https://adoring-yonath-6ecb9d.netlify.app/* https://docs.geteppo.com/:splat 301!
+http://adoring-yonath-6ecb9d.netlify.app/*  http://docs.geteppo.com/:splat  301!
+/experiment-analysis/connecting-your-data/data-warehouses/connecting-to-snowflake  /data-management/connecting-dwh/snowflake
+/experiment-analysis/connecting-your-data/data-warehouses/connecting-to-bigquery   /data-management/connecting-dwh/bigquery
+/experiment-analysis/connecting-your-data/data-warehouses/connecting-to-databricks /data-management/connecting-dwh/databricks
+/experiment-analysis/connecting-your-data/data-warehouses/connecting-to-redshift   /data-management/connecting-dwh/redshift
+/experiment-analysis/planning-experiments/ /statistics/sample-size-calculator/
+/experiment-analysis/building-experiments/ /experiment-analysis/configuration
+/experiment-analysis/interpreting-experiments/ /statistics/confidence-intervals/
+/experiment-analysis/interpreting-experiments/exploring-metrics /experiment-analysis/deep-dive/explores
+/experiment-analysis/interpreting-experiments/lift-estimates-and-confidence-intervals/statistical-nitty-gritty/ /statistics/confidence-intervals/statistical-nitty-gritty
+/experiment-analysis/interpreting-experiments/traffic /experiment-analysis/diagnostics#traffic-diagnostics
+/experiments/ /experiment-analysis
+/experiments/analysis-plans/ /experiment-analysis/configuration/analysis-plans
+/experiments/best-practices/ /experiment-analysis/best-practices
+/experiments/copy-sql/ /experiment-analysis/deep-dive/copy-sql
+/experiments/creating-experiments /experiment-analysis/configuration
+/experiments/data-pipeline /experiment-analysis/data-pipeline
+/experiments/diagnostics /experiment-analysis/diagnostics
+/experiments/experiment-reports /experiment-analysis/reporting/experiment-reports
+/experiments/experiment-status /experiment-analysis/reading-results/experiment-status
+/experiments/explores /experiment-analysis/deep-dive/explores
+/experiments/filter-assignments-by-entry-point /experiment-analysis/configuration/filter-assignments-by-entry-point
+/experiments/global-lift /experiment-analysis/reading-results/global-lift
+/experiments/holdouts /experiment-analysis/holdouts
+/experiments/progress-bar /experiment-analysis/reading-results/progress-bar
+/experiments/segments /experiment-analysis/deep-dive/segments
+/feature-flags/api-keys /sdks/sdk-keys
+/feature-flags/latency /sdks/faqs/latency
+/feature-flags/risk /sdks/faqs/risk
+/feature-flags/sdks /sdks
+/feature-flags/sdks/javascript /sdks/client-sdks/javascript
+/feature-flags/sdks/node /sdks/server-sdks/node
+/feature-flags/sdks/node /sdks/server-sdks/node
+/feature-flags/sdks/php /sdks/server-sdks/php
+/feature-flags/sdks/python /sdks/server-sdks/python
+/feature-flags/sdks/react-native /sdks/client-sdks/react-native
+/feature-flags/sdks/ruby /sdks/server-sdks/ruby
+/feature-flags/sdks/dotnet /sdks/server-sdks/dotnet
+/how-tos /guides
+/how-tos/anonymous-explainer /guides/anonymous-explainer
+/how-tos/connecting-dwh /data-management/connecting-dwh
+/how-tos/connecting-dwh/bigquery /data-management/connecting-dwh/bigquery
+/how-tos/connecting-dwh/databricks /data-management/connecting-dwh/databricks
+/how-tos/connecting-dwh/redshift /data-management/connecting-dwh/redshift
+/how-tos/connecting-dwh/snowflake /data-management/connecting-dwh/snowflake
+/how-tos/debugging-metrics /guides/debugging-metrics
+/how-tos/event-logging /sdks/event-logging
+/how-tos/integrating-with-contentful /guides/integrating-with-contentful
+/how-tos/integrating-with-webflow /guides/integrating-with-webflow
+/how-tos/mutually-exclusive-experiments /feature-flagging/concepts/mutual_exclusion
+/how-tos/non-inferiority-tests /guides/non-inferiority-tests
+/how-tos/running-well-powered-experiments /guides/running-well-powered-experiments
+/how-tos/warehouse-migration /guides/warehouse-migration
+/what-is-eppo /
+/sdks/api-keys /sdks/sdk-keys
+/experiment-analysis/creating-experiment-analysis /experiment-analysis/creating-experiments
+
+/feature-flags/flag-variations /feature-flagging/concepts/flag-variations
+/feature-flags/use-cases/feature-gates /feature-flagging/use-cases/feature-gates
+/feature-flags/use-cases/experiment-assignment /feature-flagging/use-cases/experiment-assignment
+/feature-flags/targeting /feature-flagging/concepts/targeting
+/feature-flagging/use-cases/dynamic-config /feature-flagging/dynamic-config
+
+/experiments/connecting-your-data/data-warehouses/connecting-to-databricks/ /data-management/connecting-dwh/databricks
+/experiments/connecting-your-data/data-warehouses/connecting-to-redshift/ /data-management/connecting-dwh/redshift
+
+/experiment-analysis/analysis-plans /experiment-analysis/configuration/analysis-plans
+/experiment-analysis/filter-assignments-by-entry-point /experiment-analysis/configuration/filter-assignments-by-entry-point
+/experiment-analysis/creating-experiments /experiment-analysis/creating-experiment-analyses
+/experiment-analysis/AI-explores /experiment-analysis/deep-dive/AI-explores
+/experiment-analysis/copy-sql /experiment-analysis/deep-dive/copy-sql
+/experiment-analysis/explores /experiment-analysis/deep-dive/explores
+/experiment-analysis/segments /experiment-analysis/deep-dive/segments
+
+/experiment-analysis/experiment-reports /experiment-analysis/reporting/experiment-reports
+/experiment-analysis/experiment-status /experiment-analysis/reading-results/experiment-status
+/experiment-analysis/explores /experiment-analysis/deep-dive/explores/
+/experiment-analysis/filter-assignments-by-entry-point /experiment-analysis/configuration/filter-assignments-by-entry-point
+/experiment-analysis/global-lift /experiment-analysis/reading-results/global-lift
+/experiment-analysis/knowledge-base /experiment-analysis/reporting/knowledge-base
+/experiment-analysis/progress-bar /experiment-analysis/reading-results/progress-bar
+/experiment-analysis/real-time /experiment-analysis/reading-results/real-time
+/experiment-analysis/segments /experiment-analysis/deep-dive/segments
+
+/feature-flagging/audiences /feature-flagging/concepts/audiences
+/feature-flagging/audit-log /feature-flagging/workflow/audit-log
+/feature-flagging/dynamic-config /feature-flagging/use-cases/dynamic-config
+/feature-flagging/experiment-assignment /feature-flagging/concepts/experiment-assignment
+/feature-flagging/feature-flag-approvals /feature-flagging/workflow/feature-flag-approvals
+/feature-flagging/feature-gates /feature-flagging/concepts/feature-gates
+/feature-flagging/flag-notifications /feature-flagging/workflow/flag-notifications
+/feature-flagging/flag-scheduling /feature-flagging/workflow/flag-scheduling
+/feature-flagging/flag-variations /feature-flagging/concepts/flag-variations
+/feature-flagging/kill-switches /feature-flagging/use-cases/kill-switches
+/feature-flagging/mutual_exclusion /feature-flagging/concepts/mutual_exclusion
+/feature-flagging/progressive-rollouts /feature-flagging/use-cases/progressive-rollouts
+/feature-flagging/stale-flags /feature-flagging/workflow/stale-flags
+/feature-flagging/targeting /feature-flagging/concepts/targeting
+
+/guides/analyzing-clustered-experiments /guides/advanced-experimentation/analyzing-clustered-experiments
+/guides/anonymous-explainer /guides/advanced-experimentation/anonymous-explainer
+/guides/entry_points /guides/advanced-experimentation/entry_points
+
+/guides/integrating-internal-flags /guides/engineering/integrating-internal-flags
+/guides/integrating-with-contentful /guides/marketing/integrating-with-contentful
+/guides/integrating-with-webflow /guides/marketing/integrating-with-webflow
+/guides/mutually-exclusive-experiments /feature-flagging/concepts/mutual_exclusion
+/guides/nextjs-setup /guides/engineering/nextjs-setup
+/guides/no-low-code-experiments /guides/advanced-experimentation/no-low-code-experiments
+/guides/non-inferiority-tests /guides/advanced-experimentation/non-inferiority-tests
+/guides/optimizely-migration /guides/migrations/optimizely-migration
+/guides/running-well-powered-experiments /guides/advanced-experimentation/running-well-powered-experiments
+/guides/sendgrid /guides/marketing/sendgrid
+/guides/testing-feature-flags /guides/testing-feature-flags
+/guides/warehouse-migration /guides/migrations/warehouse-migration
+
+/data-management/collections /data-management/organizing-metrics/collections
+/data-management/metrics/certified-metrics /data-management/certified-metrics
+/data-management/properties /data-management/definitions/properties
+/data-management/metrics/guardrails /data-management/organizing-metrics/guardrails
+/data-management/entities /data-management/definitions/entities
+
+/experiment-analysis/data-pipeline /data-management/data-pipeline
+
+/sdks/overview /sdks/architecture/overview
+
+/sdks/architecture /sdks/architecture/overview
+
+/sdks/faqs/risk /sdks/architecture/risk
+/sdks/faqs/latency /sdks/architecture/latency
+/sdks/faqs/common-issues /sdks/common-issues/non-blocking-initialization
