@@ -55,10 +55,9 @@ const client = await EppoSdk.precomputedInit({
 
 ## Perform evaluation
 
-The precomputed client can be accessed anywhere in your application.
+After the precomputed Eppo client is initialized, the client instance can be accessed anywhere in your application.
 
-Flag evaluation simply looks up the precomputed assignment and returns quickly,
-returning the default value if missing.
+`get*Assignment` looks up the precomputed assignment and returns it immediately, or returns the default value if the precomputed assignment is missing.
 
 ```javascript
 const client = EppoSdk.getPrecomputedInstance();
