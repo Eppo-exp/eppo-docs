@@ -63,7 +63,7 @@ The SDK will invoke the `logBanditAction()` function with an `IBanditEvent` obje
 | `actionProbability` (number)                | The weight between 0 and 1 the bandit valued the assigned action                                                  | 0.25                             |
 | `optimalityGap` (number)                    | The difference between the score of the selected action and the highest-scored action                             | 456                              | 
 | `modelVersion` (string)                     | Unique identifier for the version (iteration) of the bandit parameters used to determine the action probability   | "v123"                           |
-| `metaData` Record<string, unknown>          | Any additional freeform meta data, such as the version of the SDK                                                 | `{ "sdkLibVersion": "3.5.1" }`   |
+| `metaData` Record\<string, unknown\>          | Any additional freeform meta data, such as the version of the SDK                                                 | `{ "sdkLibVersion": "3.5.1" }`   |
 
 ### Querying the bandit for an action
 
