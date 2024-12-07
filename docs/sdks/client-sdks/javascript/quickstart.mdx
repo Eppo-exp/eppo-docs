@@ -70,11 +70,9 @@ First, initialize the SDK using your SDK key. The SDK key is different from the 
 
 
 ```js
-import Eppo from "@eppo/js-client-sdk";
+import init from "@eppo/js-client-sdk";
 
-const eppo = new Eppo({
-  apiKey: 'SDK_KEY',
-});
+await init({apiKey: 'SDK_KEY'});
 ``` 
 
 :::note
