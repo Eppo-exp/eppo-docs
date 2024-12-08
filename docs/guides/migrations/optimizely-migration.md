@@ -173,7 +173,7 @@
     });
     ```
     
-    *[Eppo](/sdks/client-sdks/javascript/initialization):*
+    *[Eppo](/sdks/client-sdks/javascript/Initialization):*
     
     ```tsx
     await init({ 
