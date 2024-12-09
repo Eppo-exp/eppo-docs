@@ -6,7 +6,7 @@ sidebar_position: 2
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-The Eppo JavaScript SDK enables feature flags and experiments in your JavaScript applications with only a few lines of code.
+The Eppo Node.js SDK enables feature flags and experiments in your JavaScript applications with only a few lines of code.
 
 The SDK handles all the complexity of feature flag evaluation and experiment assignment locally in your application, with no network calls required after initial setup. This guide will walk you through installing the SDK and implementing your first feature flag, experiment, and contextual bandit.
 
@@ -14,13 +14,13 @@ The SDK handles all the complexity of feature flag evaluation and experiment ass
 
 First, install the SDK into your current project.
 
-The Eppo JavaScript SDK is available via a number of package managers or via a CDN. Use whichever one you prefer.
+The Eppo Node SDK is available via a number of package managers.
 
 <Tabs>
 <TabItem value="yarn" label="Yarn">
 
 ```bash
-yarn add @eppo/js-client-sdk
+yarn add @eppo/js-server-sdk
 ```
 
 </TabItem>
@@ -28,7 +28,7 @@ yarn add @eppo/js-client-sdk
 <TabItem value="npm" label="NPM">
 
 ```bash
-npm install @eppo/js-client-sdk
+npm install @eppo/js-server-sdk
 ```
 
 </TabItem>
@@ -36,7 +36,7 @@ npm install @eppo/js-client-sdk
 <TabItem value="bun" label="Bun">
 
 ```bash
-bun add @eppo/js-client-sdk
+bun add @eppo/js-server-sdk
 ```
 
 </TabItem>
@@ -57,7 +57,7 @@ First, initialize the SDK using your SDK key. The SDK key is different from the 
 
 
 ```js
-import init from "@eppo/js-client-sdk";
+import init from "@eppo/js-server-sdk";
 
 await init({apiKey: 'SDK_KEY'});
 ``` 
@@ -82,7 +82,7 @@ Each assignment requires:
 - **Default Value**: Fallback value if assignment fails or rules don't match
 
 ```js
-import * as EppoSdk from "@eppo/js-client-sdk";
+import * as EppoSdk from "@eppo/js-server-sdk";
 
 // Get SDK instance
 const eppoClient = EppoSdk.getInstance();
@@ -159,7 +159,7 @@ For simplicity, we'll create a `logAssignment()` function that logs the assignme
 
 ```javascript
 // Import Eppo's assignment logger interface and client initializer
-import { IAssignmentLogger, init } from "@eppo/js-client-sdk";
+import { IAssignmentLogger, init } from "@eppo/js-server-sdk";
 
 // Define logAssignment so that it logs events
 const assignmentLogger: IAssignmentLogger = {
@@ -186,7 +186,7 @@ In a production application, you would want to replace the `console.log()` state
 After initializing the SDK with the `logAssignment()` function, you can make assignments in the same way as for feature flags.
 
 ```js
-import * as EppoSdk from "@eppo/js-client-sdk";
+import * as EppoSdk from "@eppo/js-server-sdk";
 
 // Get SDK instance
 const eppoClient = EppoSdk.getInstance();
@@ -209,11 +209,11 @@ const variation = eppoClient.getStringAssignment(
 );
 
 if (variation === "landing-page-a") {
-    return <LandingPageA />
+    return handleLandingPageA();
 } else if (variation === "landing-page-b") {
-    return <LandingPageB />
+    return handleLandingPageB();
 } else {
-    return <LandingPageC />
+    return handleLandingPageDefault();
 }
 ```
 
@@ -263,7 +263,7 @@ In a production application, you would want to replace the `console.log()` state
 Instead of making simple assignments with a bandit, you will want to query the bandit for actions. 
 
 ```js
-import * as EppoSdk from "@eppo/js-client-sdk";
+import * as EppoSdk from "@eppo/js-server-sdk";
 import { Attributes, BanditActions } from "@eppo/js-client-sdk-common";
 
 const eppoClient = EppoSdk.getInstance();
@@ -308,8 +308,6 @@ For full steps to create a bandit including UI steps, see the [bandit quickstart
 
 Now that you've seen how to make assignments with the Eppo JavaScript SDK, we strongly recommend familiarizing yourself with the following topics:
 
-- [High Level concepts for the client API](/sdks/client-sdks)
-- [Initialization Configuration](/sdks/client-sdks/javascript/Initialization)
-- [Assignment details](/sdks/client-sdks/javascript/assignments)
-- [Using the SDK with React](/sdks/client-sdks/javascript/react) 
-- [Using the SDK with Next.js](/sdks/client-sdks/javascript/nextjs-setup) if you are using Next.js
+- [High Level concepts for the client API](/sdks/server-sdks)
+- [Initialization Configuration](/sdks/server-sdks/node/initialization)
+- [Assignment details](/sdks/server-sdks/node/assignments)
