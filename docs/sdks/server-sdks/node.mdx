@@ -500,7 +500,7 @@ The SDK will invoke the `logBanditAction()` function with an `IBanditEvent` obje
 | `actionProbability` (number)                | The weight between 0 and 1 the bandit valued the assigned action                                                  | 0.25                             |
 | `optimalityGap` (number)                    | The difference between the score of the selected action and the highest-scored action                             | 456                              | 
 | `modelVersion` (string)                     | Unique identifier for the version (iteration) of the bandit parameters used to determine the action probability   | "v123"                           |
-| `metaData` Record<string, unknown>          | Any additional freeform meta data, such as the version of the SDK                                                 | `{ "sdkLibVersion": "3.5.1" }`   |
+| `metaData` Record\<string, unknown\>          | Any additional freeform meta data, such as the version of the SDK                                                 | `{ "sdkLibVersion": "3.5.1" }`   |
 
 ### Querying the bandit for an action
 
@@ -508,7 +508,7 @@ To query the bandit for an action, you can use the `getBanditAction()` function.
 - `flagKey` (string): The key of the feature flag corresponding to the bandit
 - `subjectKey` (string): The key of the subject or user assigned to the experiment variation
 - `subjectAttributes` (Attributes | ContextAttributes): The context of the subject
-- `actions` (string[] | Record<string, Attributes | ContextAttributes>): Available actions, optionally mapped to their respective contexts
+- `actions` (string\[\] | Record\<string, Attributes | ContextAttributes\>): Available actions, optionally mapped to their respective contexts
 - `defaultValue` (string): The default *variation* to return if the flag is not successfully evaluated
 
 :::note

@@ -137,9 +137,9 @@ The properties of the event object passed to the assignment logger, accessible v
 | `allocation` (String)                | The key of the allocation                                                                                                  | "allocation-17"                        |
 | `variation` (String)                 | The identifier of experiment variation that the subject was assigned to (typically the variation value, unless JSON-typed) | "control"                              |
 | `subject` (String)                   | The identifier of the subject (e..g, user) assigned to the experiment variation                                            | "695e8121-96dc-4185-aedd-ef40225a2ef2" |
-| `subjectAttributes` (Attributes)     | A free-form map of metadata about the subject.                                                                             | {country=FR, age=60}                   |
-| `extraLogging` (Map<String, String>) | Any extra information relevant to the assignment                                                                           | {holdout=q1-holdout}                   |
-| `metaData` (Map<String, String>)     | Any additional freeform meta data, such as the version of the SDK                                                          | {sdkLibVersion=3.0.1}                  |
+| `subjectAttributes` (Attributes)     | A free-form map of metadata about the subject.                                                                             | \{country=FR, age=60\}                   |
+| `extraLogging` (Map\<String, String\>) | Any extra information relevant to the assignment                                                                           | \{holdout=q1-holdout\}                   |
+| `metaData` (Map\<String, String\>)     | Any additional freeform meta data, such as the version of the SDK                                                          | \{sdkLibVersion=3.0.1\}                  |
 
 Note that the `Attributes` type is an extension of `Map<String, EppoValue>`.
 
@@ -185,15 +185,15 @@ The properties of the event object passed to the bandit logger, accessible via g
 | `featureFlag` (String)                      | The key (globally unique identifier) of the feature flag corresponding to the bandit                              | "bandit-test-allocation-4"   |
 | `bandit` (String)                           | The key of the bandit                                                                                             | "ad-bandit-1"                |
 | `subject` (String)                          | The identifier of the subject (e.g., user) assigned to the bandit variation                                       | "ed6f85019080"               |
-| `subjectNumericAttributes` (Attributes)     | Metadata about numeric attributes of the subject. Map of the name of attributes their provided values             | {age=60}                     |
-| `subjectCategoricalAttributes` (Attributes) | Metadata about non-numeric attributes of the subject. Map of the name of attributes their provided values         | {country=FR}                 |
+| `subjectNumericAttributes` (Attributes)     | Metadata about numeric attributes of the subject. Map of the name of attributes their provided values             | \{age=60\}                     |
+| `subjectCategoricalAttributes` (Attributes) | Metadata about non-numeric attributes of the subject. Map of the name of attributes their provided values         | \{country=FR\}                 |
 | `action` (String)                           | The action assigned by the bandit                                                                                 | "promo-20%-off"              |
-| `actionNumericAttributes` (Attributes)      | Metadata about numeric attributes of the assigned action. Map of the name of attributes their provided values     | {brandAffinity=0.3}          |
-| `actionCategoricalAttributes` (Attributes)  | Metadata about non-numeric attributes of the assigned action. Map of the name of attributes their provided values | {previouslyPurchased=false}  |
+| `actionNumericAttributes` (Attributes)      | Metadata about numeric attributes of the assigned action. Map of the name of attributes their provided values     | \{brandAffinity=0.3\}          |
+| `actionCategoricalAttributes` (Attributes)  | Metadata about non-numeric attributes of the assigned action. Map of the name of attributes their provided values | \{previouslyPurchased=false\}  |
 | `actionProbability` (Double)                | The weight between 0 and 1 the bandit valued the assigned action                                                  | 0.25                         |
 | `optimalityGap` (Double)                    | The difference between the score of the selected action and the highest-scored action                             | 456                          |
 | `modelVersion` (String)                     | The key for the version (iteration) of the bandit parameters used to determine the action probability             | "v123"                       |
-| `metaData` Map<String, String>              | Any additional freeform meta data, such as the version of the SDK                                                 | {sdkLibVersion=3.0.1}        |
+| `metaData` Map\<String, String\>              | Any additional freeform meta data, such as the version of the SDK                                                 | \{sdkLibVersion=3.0.1\}        |
 
 ### Querying the bandit for an action
 

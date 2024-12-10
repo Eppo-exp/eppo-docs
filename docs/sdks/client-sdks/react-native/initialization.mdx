@@ -5,15 +5,14 @@ sidebar_position: 3
 
 import ApiOptionRef from '@site/src/components/ApiOptionRef';
 
-
 The Eppo JavaScript SDK is easy to initialize while offering robust customization options, making it adaptable to various use cases such as offline mode, custom caching requirements, and ultra-low-latency initialization.
 
 ## Initialize the SDK
 
-To complete basic initialization, you only need to provide an SDK key which you can created in the Eppo UI under **Configuration** > **Environments** > **API Keys**. 
+To complete basic initialization, you only need to provide an SDK key. [Create an SDK key](/sdks/sdk-keys) if you don't already have one. 
 
 ```javascript
-import { init } from "@eppo/js-client-sdk";
+import { init } from "@eppo/react-native-sdk";
 
 await init({
   apiKey: 'YOUR_SDK_KEY',
@@ -24,7 +23,7 @@ await init({
 After initialization, you can use the SDK instance by importing the SDK at the scope you will use it in and calling `getInstance()`. You can then use the SDK instance to assign a variation to a subject using the `get*Assignment` functions.
 
 ```javascript
-import * as EppoSdk from "@eppo/js-client-sdk";
+import * as EppoSdk from "@eppo/react-native-sdk";
 
 const eppoClient = EppoSdk.getInstance();
 const user = getCurrentUser();
@@ -163,7 +162,7 @@ The SDK automatically caches configurations using:
 You can also implement your own custom cache by providing a `persistentStore`:
 
 ```javascript
-import { init } from "@eppo/js-client-sdk";
+import { init } from "@eppo/react-native-sdk";
 
 await init({
   apiKey: 'YOUR_SDK_KEY',
@@ -190,7 +189,7 @@ If you want to always using the latest flag values, you'd want settings that:
 Use the following configuration to achieve this:
 
 ```ts
-import { init } from "@eppo/js-client-sdk";
+import { init } from "@eppo/react-native-sdk";
 
 await init({
   apiKey: 'YOUR_API_KEY',
@@ -214,7 +213,7 @@ If you want to optimize for the quickest time to initialization and serving assi
 Use the following configuration to achieve those goals:
 
 ```ts
-import { init } from "@eppo/js-client-sdk";
+import { init } from "@eppo/react-native-sdk";
 
 await init({
   apiKey: 'YOUR_API_KEY',
@@ -230,7 +229,7 @@ Note that when new configurations are loaded, the same flag may start getting a 
 You could consider caches always expired so that it non-blocking loads an updated configuration to be used in the next session.
 
 ```ts
-import { init } from "@eppo/js-client-sdk";
+import { init } from "@eppo/react-native-sdk";
 
 await init({
   apiKey: 'YOUR_API_KEY',
@@ -250,7 +249,7 @@ Eppo's SDK supports offline initialization. This is useful if you want to initia
 This function is synchronous and ready to handle assignments after it returns.
 
 ```javascript
-import { offlineInit, Flag, ObfuscatedFlag } from "@eppo/js-client-sdk";
+import { offlineInit, Flag, ObfuscatedFlag } from "@eppo/react-native-sdk";
 
 // configuration from your server SDK
 const configurationJsonString: string = getConfigurationFromServer();
