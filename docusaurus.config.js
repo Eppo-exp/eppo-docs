@@ -1,10 +1,9 @@
 // @ts-check
 // Note: type annotations allow type checking and IDEs autocompletion
 
-const lightCodeTheme = require('prism-react-renderer/themes/github')
-const darkCodeTheme = require('prism-react-renderer/themes/dracula')
+const lightCodeTheme = require('prism-react-renderer').themes.github
+const darkCodeTheme = require('prism-react-renderer').themes.dracula
 
-const math = require('remark-math')
 const footnote = require('remark-numbered-footnote-labels')
 
 async function createConfig () {
@@ -32,8 +31,10 @@ async function createConfig () {
             sidebarPath: require.resolve('./sidebars.js'),
             // Please change this to your repo.
             editUrl: 'https://github.com/Eppo-exp/eppo-docs/tree/main',
-            remarkPlugins: [math, footnote],
-            rehypePlugins: [katex]
+            path: 'docs',
+            remarkPlugins: [(await import('remark-math')).default, footnote],
+            rehypePlugins: [(await import('rehype-katex')).default],
+
           },
           blog: {
             showReadingTime: true,

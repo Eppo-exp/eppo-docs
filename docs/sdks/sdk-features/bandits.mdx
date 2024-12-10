@@ -83,11 +83,11 @@ Therefore, the logger should write to a table with the following columns (they c
 | timestamp (TIMESTAMP)                 | Timestamp of the bandit assignment in UTC                                                                | 2024-08-14 12:19:25.959     |
 | key (VARCHAR/STRING)                  | The key (unique identifier) of the bandit                                                                | ad-bandit-1                 |
 | subject (VARCHAR/STRING)              | The unique identifier for the subject being assigned                                                     | ed6f85019080                |
-| subject_numeric_attributes (JSON)     | Metadata about numeric attributes of the subject; Mapping of attribute names to their values             | {"age": 30}                 |
-| subject_categorical_attributes (JSON) | Metadata about non-numeric attributes of the subject; Mapping of attribute names to their values         | {"loyalty_tier": "gold"}    |
+| subject_numeric_attributes (JSON)     | Metadata about numeric attributes of the subject; Mapping of attribute names to their values             | \{"age": 30\}                 |
+| subject_categorical_attributes (JSON) | Metadata about non-numeric attributes of the subject; Mapping of attribute names to their values         | \{"loyalty_tier": "gold"\}    |
 | action (VARCHAR/STRING)               | The action assigned by the bandit                                                                        | promo-20%-off               |
-| action_numeric_attributes (JSON)      | Metadata about numeric attributes of the assigned action; Mapping of attribute names to their values     | {"discount": 0.2}           |
-| action_categorical_attributes (JSON)  | Metadata about non-numeric attributes of the assigned action; Mapping of attribute names to their values | {"promoTextColor": "white"} |
+| action_numeric_attributes (JSON)      | Metadata about numeric attributes of the assigned action; Mapping of attribute names to their values     | \{"discount": 0.2\}           |
+| action_categorical_attributes (JSON)  | Metadata about non-numeric attributes of the assigned action; Mapping of attribute names to their values | \{"promoTextColor": "white"\} |
 
 :::note
 Assignment attributes must be single-level. Eppo's bandits do not support multiple levels of JSON attributes.
@@ -101,7 +101,7 @@ We also recommend storing additional information that is provided to the bandit 
 | model_version (VARCHAR/STRING)      | Unique identifier for the version (iteration) of the bandit parameters used to determine the action probability        | v123                         |
 | action_probability (NUMBER/NUMERIC) | The weight between 0 and 1 the bandit valued the assigned action                                                       | 0.567                        |
 | optimality_gap (NUMBER/NUMERIC)     | The difference between the score of the selected action and the highest-scored action                                  | 78.9                         |
-| metadata (JSON)                     | Any additional freeform metadata, such as the version of the SDK; Mapping of the property names to their string values | { "sdkLibVersion": "3.5.1" } |
+| metadata (JSON)                     | Any additional freeform metadata, such as the version of the SDK; Mapping of the property names to their string values | \{ "sdkLibVersion": "3.5.1" \} |
 
 The bandit assignment logger should be provided along with the variation assignment logger.
 
