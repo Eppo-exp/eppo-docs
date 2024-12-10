@@ -1,0 +1,305 @@
+---
+title: Initialization
+sidebar_position: 3
+---
+
+import ApiOptionRef from '@site/src/components/ApiOptionRef';
+
+The Eppo JavaScript SDK is easy to initialize while offering robust customization options, making it adaptable to various use cases such as offline mode, custom caching requirements, and ultra-low-latency initialization.
+
+## Initialize the SDK
+
+To complete basic initialization, you only need to provide an SDK key. [Create an SDK key](/sdks/sdk-keys) if you don't already have one. 
+
+```javascript
+import { init } from "@eppo/react-native-sdk";
+
+await init({
+  apiKey: 'YOUR_SDK_KEY',
+});
+``` 
+
+## Use the SDK instance
+After initialization, you can use the SDK instance by importing the SDK at the scope you will use it in and calling `getInstance()`. You can then use the SDK instance to assign a variation to a subject using the `get*Assignment` functions.
+
+```javascript
+import * as EppoSdk from "@eppo/react-native-sdk";
+
+const eppoClient = EppoSdk.getInstance();
+const user = getCurrentUser();
+
+```
+
+
+## Advanced Configuration
+Basic initialization is great for most use cases, but the SDK provides options that you can use during initialization to customize the behavior of the SDK.
+
+### Initialization Options
+
+How the SDK fetches, serves, and caches experiment configurations is configurable via additional optional initialization options:
+
+<ApiOptionRef 
+  name="requestTimeoutMs"
+  type="number"
+  defaultValue="5000"
+>
+
+**Timeout** in milliseconds for HTTPS requests for the experiment configurations.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="numInitialRequestRetries"
+  type="number"
+  defaultValue="1"
+>
+
+Number of *additional* times the initial configurations request will be attempted if it fails. 
+This is the request typically synchronously waited (via `await`) for completion. 
+A small wait will be done between requests.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="pollAfterSuccessfulInitialization"
+  type="boolean"
+  defaultValue="false"
+>
+
+Poll for new **configurations** (every 30 seconds) after successfully requesting the initial configurations.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="pollAfterFailedInitialization"
+  type="boolean"
+  defaultValue="false"
+>
+
+Poll for new configurations even if the initial configurations request failed.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="throwOnFailedInitialization"
+  type="boolean"
+  defaultValue="true"
+>
+
+Throw an error (reject the promise) if unable to fetch initial configurations during initialization.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="numPollRequestRetries"
+  type="number"
+  defaultValue="7"
+>
+
+If polling for updated configurations after initialization, the number of additional times a request will be attempted before giving up. Subsequent attempts are done using an exponential backoff.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="skipInitialRequest"
+  type="boolean"
+  defaultValue="false"
+>
+
+Skip the initial request for a new configuration during initialization (if polling is enabled, this will still take place later)
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="persistentStore"
+  type="IAsyncStore"
+  defaultValue="Eppo provided"
+>
+
+An asynchronous, persistent storage for caching fetched flag configurations for use in subsequent sessions
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="maxCacheAgeSeconds"
+  type="number"
+  defaultValue="0"
+>
+
+Maximum age, in seconds, that a previously cached configuration is considered valid and the wait-time before fetching a fresh configuration
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="useExpiredCache"
+  type="boolean"
+  defaultValue="false"
+>
+
+Consider initialization successfully complete without fetching updates, even if the configuration loaded from the cache is expired
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="updateOnFetch"
+  type="'always' | 'expired' | 'empty'"
+  defaultValue="'always'"
+>
+
+Sets how the configuration is updated after a successful fetch:
+
+  - **always** - immediately start using the new configuration
+  - **expired** - immediately start using the new configuration only if the current one has expired
+  - **empty** - only use the new configuration if the current one is both expired and uninitialized/empty
+
+</ApiOptionRef>
+
+### Configuration caching
+The SDK can cache previously loaded configurations for use in future sessions. 
+This makes the SDK initialize faster.
+
+By default, a Local Storage-based cache is used in a browser environment and a Chrome Storage-based cache is used in a Chrome extension environment.
+A custom cache can be provided as the `persistentStore` initialization option.
+
+#### Why cache configurations?
+Caching experiment configurations locally improves your application by making it faster and giving it a fallback value when network requests fail.
+
+#### How configuration Caching Works
+The SDK automatically caches configurations using:
+- Local Storage in browser environments
+- Chrome Storage in extension environments
+
+You can also implement your own custom cache by providing a `persistentStore`:
+
+```javascript
+import { init } from "@eppo/react-native-sdk";
+
+await init({
+  apiKey: 'YOUR_SDK_KEY',
+  persistentStore: myCustomStore
+});
+```
+
+#### Expiration
+Caching settings depend on the concept of expiration. Expiration is controlled by the `maxCacheAgeSeconds` initialization option. This setting is overridable by the implementation of `isExpired()` for a custom persistent store.
+
+When the cached configuration is not expired, it is considered valid and no fetches will be made for updated configurations.
+
+
+#### Example configuration options
+There are a few common configurations that you might want to use depending on what type of performance and consistency characteristics you want for your application.
+
+##### Prioritize flag value freshness
+If you want to always using the latest flag values, you'd want settings that:
+- Consider anything cached expired
+- Do not use expired cached configurations
+- Immediately start using the new configuration after it is fetched
+- Do not retry a failed initialization fetch
+
+Use the following configuration to achieve this:
+
+```ts
+import { init } from "@eppo/react-native-sdk";
+
+await init({
+  apiKey: 'YOUR_API_KEY',
+  maxCacheAgeSeconds: 0, // Always consider cached configurations expired
+  useExpiredCache: false, // Wait for an updated configuration to be fetched before initialization is considered successful
+  updateOnFetch: 'always', // Immediately start using the new configuration after it is fetched
+  requestTimeoutMs: 5000, // Don't time out the initial configuration request until five seconds have passed
+  numInitialRequestRetries: 1, // If the initial configuration request fails, try one more time 
+  pollAfterSuccessfulInitialization: true, // Check for updated configurations every 30 seconds
+  pollAfterFailedInitialization: false, // Check for updated configurations even if initialization wasn't able to load one
+});
+```
+This configuration ensures the SDK will use the lastest assignment values immediately but may be slower to initialize than other approaches.
+
+###### Prioritize fast initialization
+If you want to optimize for the quickest time to initialization and serving assignments--even if those assignments may be out of date, you would want settings that:
+- Immediately start using the new configuration after it is fetched
+- Allow initializing with older configurations
+- Reduce the initial fetch timeout and retries to quickly fall back to default values
+
+Use the following configuration to achieve those goals:
+
+```ts
+import { init } from "@eppo/react-native-sdk";
+
+await init({
+  apiKey: 'YOUR_API_KEY',
+  updateOnFetch: 'always', // Immediately start using the new configuration once it is fetched
+  maxCacheAgeSeconds: 300, // Don't even bother fetching updated configurations unless the last one is more than five minutes old
+  useExpiredCache: true, // If the cached configuration is expired, use it to serve assignments until an updated one is fetched
+  requestTimeoutMs: 500, // Give up on fetching updated configurations after half a second and--if this is the first-ever initialization--just serve default values
+  numInitialRequestRetries: 0, // Don't retry a failed initialization fetch
+});
+```
+
+Note that when new configurations are loaded, the same flag may start getting a different assignment for the same session. If you want to avoid this, and have consistent assignments until the next initialization, change `updateOnFetch` to `empty`.
+You could consider caches always expired so that it non-blocking loads an updated configuration to be used in the next session.
+
+```ts
+import { init } from "@eppo/react-native-sdk";
+
+await init({
+  apiKey: 'YOUR_API_KEY',
+  maxCacheAgeSeconds: 0, // Always consider cached configurations expired
+  // Settings set to non-default values
+  updateOnFetch: 'empty', // Immediately start using the new configuration once it is fetched
+  useExpiredCache: true, // Always used the previously cached assignments
+  requestTimeoutMs: 500, // Give up on fetching updated configurations after half a second and--if this is the first-ever initialization--just serve default values
+  numInitialRequestRetries: 0, // Don't retry a failed initialization fetch
+});
+```
+
+### Offline initialization
+
+Eppo's SDK supports offline initialization. This is useful if you want to initialize the SDK with a configuration from your server SDK or other external process. In this mode the SDK will not attempt to fetch a configuration from Eppo's CDN, instead only using the provided values.
+
+This function is synchronous and ready to handle assignments after it returns.
+
+```javascript
+import { offlineInit, Flag, ObfuscatedFlag } from "@eppo/react-native-sdk";
+
+// configuration from your server SDK
+const configurationJsonString: string = getConfigurationFromServer();
+
+// The configuration will be not-obfuscated from your server SDK.
+// If you have obfuscated flag values, you can use the `ObfuscatedFlag` type.
+const flagsConfiguration: Record<string, Flag | ObfuscatedFlag> = JSON.parse(configurationJsonString);
+
+offlineInit({ 
+  flagsConfiguration,
+  // If you have obfuscated flag values, you can use the `ObfuscatedFlag` type.
+  isObfuscated: true,
+ });
+```
+
+The `offlineInit` function accepts the following optional configuration arguments.
+
+### Offline Initialization Options
+
+<ApiOptionRef 
+  name="assignmentLogger"
+  type="IAssignmentLogger"
+  typeUrl="https://github.com/Eppo-exp/js-client-sdk-common/blob/75c2ea1d91101d579138d07d46fca4c6ea4aafaf/src/assignment-logger.ts#L55-L62"
+  defaultValue="null"
+>
+
+A callback that sends each assignment to your data warehouse. Required only for experiment analysis. 
+</ApiOptionRef>
+<ApiOptionRef 
+  name="flagsConfiguration"
+  type="Record <string, Flag | ObfuscatedFlag>"
+  defaultValue="null"
+>
+
+The flags configuration to use for the SDK.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="isObfuscated"
+  type="boolean"
+  defaultValue="false"
+>
+
+Whether the flag values are obfuscated.
+</ApiOptionRef>
+<ApiOptionRef 
+  name="throwOnFailedInitialization"
+  type="boolean"
+  defaultValue="true"
+>
+
+Throw an error if an error occurs during initialization.
+</ApiOptionRef>
