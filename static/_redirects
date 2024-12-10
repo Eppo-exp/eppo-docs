@@ -136,3 +136,5 @@ http://adoring-yonath-6ecb9d.netlify.app/*  http://docs.geteppo.com/:splat  301!
 /sdks/client-sdks/javascript/ /sdks/client-sdks/javascript/intro 301!
 /sdks/client-sdks/javascript/#offline-initialization /sdks/client-sdks/javascript/initialization#offline-initialization 301!
 /sdks/client-sdks/javascript/#usage-in-react /sdks/client-sdks/javascript/react 301!
+
+/guides/engineering/nextjs-setup/ /sdks/client-sdks/javascript/nextjs-setup
