@@ -1,0 +1,170 @@
+---
+title: Quickstart
+sidebar_position: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+
+The Eppo Android SDK enables feature flags and experiments in your Android applications with just a few lines of code. It handles flag evaluation and experiment assignments locally on the device, making it fast and reliable for your users.
+
+The SDK handles all the complexity of feature flag evaluation and experiment assignment locally in your application, with no network calls required after initial setup. This guide will walk you through installing the SDK and implementing your first feature flag and experiment.
+
+## Installation
+
+Add the Eppo SDK to your Android project by including it in your app's `build.gradle` file:
+
+```groovy
+dependencies {
+    implementation 'cloud.eppo:android-sdk:4.0.0'
+}
+```
+
+## Feature Flags
+Feature flags are a way to toggle features on and off without needing to deploy code.
+
+### Initialize the SDK
+
+First, initialize the SDK with your API key. You'll need to do this early in your application lifecycle, typically in your Application class:
+
+```java
+import cloud.eppo.android.EppoClient;
+
+public class MyApplication extends Application {
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        
+        // Initialize the SDK
+        try {
+            EppoClient eppoClient = new EppoClient.Builder("YOUR_SDK_KEY", this)
+                .buildAndInit();
+        } catch (Exception e) {
+            // Handle initialization error
+            Log.e("Eppo", "Failed to initialize SDK", e);
+        }
+    }
+}
+```
+
+:::tip
+Get your SDK key from the [Eppo web interface](https://eppo.cloud/feature-flags/keys).
+:::
+
+### Feature Flags
+
+Once initialized, you can start using feature flags anywhere in your app:
+
+```java
+import cloud.eppo.android.EppoClient;
+
+// Get the SDK instance
+EppoClient eppoClient = EppoClient.getInstance();
+
+// Check if a feature should be enabled
+String userId = getCurrentUserId(); // Your user identification logic
+Map<String, Object> attributes = new HashMap<>();
+attributes.put("userType", "premium");
+attributes.put("country", "US");
+
+boolean isEnabled = eppoClient.getBooleanAssignment(
+    "new-feature", // Feature flag key
+    userId,        // Subject/user identifier
+    attributes,    // Optional targeting attributes
+    false          // Default value if flag is not found
+);
+
+if (isEnabled) {
+    // Show new feature
+    showNewFeature();
+} else {
+    // Show existing feature
+    showExistingFeature();
+}
+```
+
+### Running Experiments
+
+To run experiments, you'll need to add a logging callback during initialization to track assignments:
+
+```java
+import cloud.eppo.android.EppoClient;
+import cloud.eppo.android.dto.Assignment;
+
+public class MyApplication extends Application {
+    @Override
+    public void onCreate() {
+        super.onCreate();
+        
+        // Create assignment logger
+        AssignmentLogger logger = new AssignmentLogger() {
+            @Override
+            public void logAssignment(Assignment assignment) {
+                // Log assignment to your analytics system
+                analytics.track("Eppo Experiment Assignment",
+                    new Properties()
+                        .putValue("experiment", assignment.getExperiment())
+                        .putValue("variation", assignment.getVariation())
+                        .putValue("subject", assignment.getSubject())
+                );
+            }
+        };
+
+        // Initialize with logger
+        EppoClient eppoClient = new EppoClient.Builder("YOUR_SDK_KEY", this)
+            .assignmentLogger(logger)
+            .buildAndInit();
+    }
+}
+```
+
+Then use the SDK to make experiment assignments:
+
+```java
+String variation = eppoClient.getStringAssignment(
+    "recommendation-algo",    // Experiment key
+    userId,                   // Subject identifier
+    attributes,              // Targeting attributes
+    "control"                // Default variation
+);
+
+switch (variation) {
+    case "variant-a":
+        showRecommendationAlgoA();
+        break;
+    case "variant-b":
+        showRecommendationAlgoB();
+        break;
+    default:
+        showDefaultRecommendations();
+}
+```
+
+### Assignment Types
+
+The SDK provides different methods based on your flag/experiment value type:
+
+```java
+// Boolean flags/experiments
+boolean value = eppoClient.getBooleanAssignment(key, subject, attributes, false);
+
+// Numeric values
+int intValue = eppoClient.getIntegerAssignment(key, subject, attributes, 0);
+double doubleValue = eppoClient.getDoubleAssignment(key, subject, attributes, 0.0);
+
+// String values
+String stringValue = eppoClient.getStringAssignment(key, subject, attributes, "default");
+
+// JSON configuration
+JSONObject config = eppoClient.getJSONAssignment(key, subject, attributes, defaultJson);
+```
+
+## Next Steps
+
+Now that you have the basics working, here are some advanced topics to explore:
+
+- [Advanced SDK Configuration](/sdks/client-sdks/android/configuration)
+- [Assignment Logging Setup](/sdks/event-logging)
+- [Offline Mode & Caching](/sdks/client-sdks/android/offline-mode)
+- [Debugging Flag Assignments](/sdks/sdk-features/debugging-flag-assignment)

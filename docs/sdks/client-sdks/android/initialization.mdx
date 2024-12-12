@@ -1,0 +1,190 @@
+---
+title: Initialization
+sidebar_position: 3
+---
+
+import ApiOptionRef from '@site/src/components/ApiOptionRef';
+
+The Eppo Android SDK is easy to initialize while offering robust customization options, making it adaptable to various use cases such as offline mode, custom caching requirements, and ultra-low-latency initialization.
+
+## Initialize the SDK
+
+To complete basic initialization, you only need to provide an SDK key which you can create in the Eppo UI under **Configuration** > **Environments** > **API Keys**. 
+
+```java
+import cloud.eppo.android.EppoClient;
+
+EppoClient eppoClient = new EppoClient.Builder("YOUR_SDK_KEY", getApplication())
+    .buildAndInit();
+```
+
+## Use the SDK instance
+
+After initialization, you can use the SDK instance by calling `getInstance()`. You can then use the SDK instance to assign a variation to a subject using the `get*Assignment` functions.
+
+```java
+import cloud.eppo.android.EppoClient;
+
+EppoClient eppoClient = EppoClient.getInstance();
+String userId = getCurrentUser();
+```
+
+## Advanced Configuration
+
+Basic initialization is great for most use cases, but the SDK provides options that you can use during initialization to customize the behavior of the SDK.
+
+### Initialization Options
+
+<ApiOptionRef 
+  name="assignmentLogger"
+  type="AssignmentLogger"
+  defaultValue="null"
+>
+
+A callback that sends each assignment to your data warehouse. Required only for experiment analysis.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="initialConfiguration"
+  type="byte[]"
+  defaultValue="null"
+>
+
+Initial configuration payload to use instead of loading from cache.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="offlineMode"
+  type="boolean"
+  defaultValue="false"
+>
+
+When true, prevents the SDK from making HTTP requests to fetch configurations.
+</ApiOptionRef>
+
+### Configuration Caching
+
+The SDK can cache previously loaded configurations for use in future sessions. This makes the SDK initialize faster and provides fallback values when network requests fail.
+
+#### How Configuration Caching Works
+
+The SDK automatically caches configurations on the device. You can also implement your own custom cache by providing a custom storage implementation.
+
+```java
+EppoClient eppoClient = new EppoClient.Builder("YOUR_SDK_KEY", getApplication())
+    .initialConfiguration(initialConfigurationPayload)
+    .buildAndInit();
+```
+
+### Offline Mode
+
+Using `offlineMode` prevents the `EppoClient` from sending an API request upon initialization. When set to `true`, the `EppoClient` will attempt to load configuration from a cache on the device, or an `initialConfiguration`, if provided.
+
+```java
+EppoClient eppoClient = new EppoClient.Builder("YOUR_SDK_KEY", getApplication())
+    .initialConfiguration(initialConfigurationPayload)
+    .offlineMode(true)
+    .buildAndInit();
+
+// Get assignments using initial/cached configuration
+String variation = eppoClient.getStringAssignment(...);
+
+// Load the latest (also saves this to the local cache)
+eppoClient.loadConfiguration();
+
+// Get assignments using the latest
+String variation = eppoClient.getStringAssignment(...);
+```
+
+### Blocking vs Non-blocking Initialization
+
+The SDK provides both blocking and non-blocking initialization methods:
+
+```java
+// Blocking initialization
+EppoClient eppoClient = new EppoClient.Builder("YOUR_SDK_KEY", getApplication())
+    .buildAndInit();
+
+// Non-blocking initialization
+CompletableFuture<EppoClient> eppoClientFuture = new EppoClient.Builder("YOUR_SDK_KEY", getApplication())
+    .buildAndInitAsync();
+```
+
+The initialization methods, `buildAndInit` and `buildAndInitAsync` return or resolve to an `EppoClient` instance with a loaded configuration.
+
+### Assignment Logger Schema
+
+The SDK will invoke the `logAssignment` function with an `Assignment` object that contains the following fields:
+
+<ApiOptionRef 
+  name="timestamp"
+  type="string"
+  defaultValue="undefined"
+>
+
+The time when the subject was assigned to the variation. Example: `"2021-06-22T17:35:12.000Z"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="featureFlag"
+  type="string"
+  defaultValue="undefined"
+>
+
+An Eppo feature flag key. Example: `"recommendation-algo"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="allocation"
+  type="string"
+  defaultValue="undefined"
+>
+
+An Eppo allocation key. Example: `"allocation-17"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="experiment"
+  type="string"
+  defaultValue="undefined"
+>
+
+An Eppo experiment key. Example: `"recommendation-algo-allocation-17"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="subject"
+  type="string"
+  defaultValue="undefined"
+>
+
+An identifier of the subject or user assigned to the experiment variation. Example: UUID
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="subjectAttributes"
+  type="Map<String, Object>"
+  defaultValue="{}"
+>
+
+A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="variation"
+  type="string"
+  defaultValue="undefined"
+>
+
+The experiment variation the subject was assigned to. Example: `"control"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="metaData"
+  type="Map<String, String>"
+  defaultValue="{}"
+>
+
+Metadata around the assignment, such as the version of the SDK.
+</ApiOptionRef>
+``` 
