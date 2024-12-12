@@ -1,0 +1,169 @@
+---
+title: Quickstart
+sidebar_position: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+The Eppo Java SDK enables feature flags and experiments in your Java applications with only a few lines of code.
+
+## Installation
+
+You can install the SDK using Gradle or Maven:
+
+<Tabs>
+<TabItem value="gradle" label="Gradle">
+
+```groovy
+implementation 'cloud.eppo:eppo-server-sdk:3.0.1'
+```
+
+</TabItem>
+<TabItem value="maven" label="Maven">
+
+```xml
+<dependency>
+  <groupId>cloud.eppo</groupId>
+  <artifactId>eppo-server-sdk</artifactId>
+  <version>3.0.1</version>
+</dependency>
+```
+
+</TabItem>
+</Tabs>
+
+## Feature Flags
+
+### Initialize the SDK
+
+[Create an SDK key](/sdks/sdk-keys) if you don't already have one.
+
+Initialize the SDK with your SDK key:
+
+```java
+EppoClient.Builder()
+  .apiKey(apiKey)
+  .buildAndInit();
+```
+
+### Assign a variant
+
+After initialization, you can access the client with `EppoClient.getInstance()`. The SDK supports different types of assignments:
+
+```java
+String assignedVariation = eppoClient.getStringAssignment(
+    "subjectKey", 
+    "flagkey",
+    "defaultValue"
+);
+
+// With subject attributes
+Attributes subjectAttributes = new Attributes(
+  Map.of(
+    "country", EppoValue.valueOf("FR"),
+    "age", EppoValue.valueOf(60)
+  )
+);
+
+String assignedVariation = eppoClient.getStringAssignment(
+    "subjectKey", 
+    "flagkey", 
+    subjectAttributes, 
+    "defaultValue"
+);
+```
+
+### Assignment Types
+
+The SDK provides different assignment functions based on the type of value you need:
+
+| Function | Return Type |
+|----------|-------------|
+| `getStringAssignment()` | String |
+| `getBooleanAssignment()` | Boolean |
+| `getJSONAssignment()` | JSON object |
+| `getIntegerAssignment()` | Integer |
+| `getDoubleAssignment()` | Double |
+
+## Experiments
+
+For experiments, you'll need to add an assignment logger when initializing the SDK:
+
+```java
+EppoClient.Builder()
+  .apiKey(apiKey)
+  .assignmentLogger(assignmentLogData -> {
+    // TODO: Send assignment event data to data warehouse
+    System.out.println(assignmentLogData);
+  })
+  .buildAndInit();
+```
+
+After that, you can make assignments the same way as with feature flags.
+
+## Contextual Bandits
+
+For bandits, you'll need both an assignment logger and a bandit logger:
+
+```java
+EppoClient.Builder()
+  .apiKey(apiKey)
+  .assignmentLogger(assignmentLogData -> {
+    // TODO: Send assignment event data to data warehouse
+    System.out.println(assignmentLogData);
+  })
+  .banditLogger(banditLogData -> {
+    // TODO: Send bandit event data to data warehouse
+    System.out.println(banditLogData);
+  })
+  .buildAndInit();
+```
+
+### Query the bandit for actions
+
+```java
+String flagKey = "shoe-bandit";
+String subjectKey = "user123";
+DiscriminableAttributes subjectAttributes = new Attributes(
+  Map.of(
+    "age", EppoValue.valueOf(25),
+    "country", EppoValue.valueOf("BG")
+  )
+);
+
+Actions actions = new BanditActions(
+  Map.of(
+    "nike",
+    new Attributes(
+      Map.of(
+        "brandAffinity", EppoValue.valueOf(2.3),
+        "previouslyPurchased", EppoValue.valueOf(true)
+      )
+    ),
+    "adidas",
+    new Attributes(
+      Map.of(
+        "brandAffinity", EppoValue.valueOf(0.2),
+        "previouslyPurchased", EppoValue.valueOf(false)
+      )
+    )
+  )
+);
+
+String defaultValue = "control";
+
+BanditResult banditResult = EppoClient.getInstance().getBanditAction(
+  flagKey,
+  subjectKey,
+  subjectAttributes,
+  actions,
+  defaultValue
+);
+
+if (banditResult.getAction() != null) {
+  renderShoeAd(banditResult.getAction());
+} else {
+  renderDefaultShoeAd();
+}
+``` 
