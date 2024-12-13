@@ -164,7 +164,7 @@ The SDK will invoke the `LogAssignment` method with an `event` object that conta
 | `Subject` (string)                        | An identifier of the subject or user assigned to the experiment variation                                              | "ed6f85019080"                      |
 | `Variation` (string)                      | The experiment variation the subject was assigned to                                                                   | "control"                           |
 | `Timestamp` (DateTime)                    | The time when the subject was assigned to the variation                                                                | 2021-06-22T17:35:12.000Z            |
-| `SubjectAttributes` (Map<String, object>) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment method | `Map.of("device","iOS")`            |
+| `SubjectAttributes` (Map\<String, object\>) | A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment method | `Map.of("device","iOS")`            |
 | `FeatureFlag` (string)                    | An Eppo feature flag key                                                                                               | "recommendation-algo"               |
 | `Allocation` (string)                     | An Eppo allocation key                                                                                                 | "allocation-17"                     |
 
@@ -216,23 +216,23 @@ The SDK will invoke the `LogBanditAction()` method with a `BanditLogEvent` objec
 | `FlagKey` (string)                                           | The key of the feature flag corresponding to the bandit                                                           | "bandit-test-allocation-4"       |
 | `BanditKey` (string)                                         | The key (unique identifier) of the bandit                                                                         | "ad-bandit-1"                    |
 | `SubjectKey` (string)                                        | An identifier of the subject or user assigned to the experiment variation                                         | "ed6f85019080"                   |
-| `SubjectNumericAttributes` (IDictionary<string, double>)     | Metadata about numeric attributes of the subject. Map of the name of attributes their provided values             | `{"age": 30}`                    |
-| `SubjectCategoricalAttributes` (IDictionary<string, string>) | Metadata about non-numeric attributes of the subject. Map of the name of attributes their provided values         | `{"loyalty_tier": "gold"}`       |
+| `SubjectNumericAttributes` (IDictionary\<string, double\>)     | Metadata about numeric attributes of the subject. Map of the name of attributes their provided values             | `\{"age": 30\}`                    |
+| `SubjectCategoricalAttributes` (IDictionary\<string, string\>) | Metadata about non-numeric attributes of the subject. Map of the name of attributes their provided values         | `\{"loyalty_tier": "gold"\}`       |
 | `Action` (string)                                            | The action assigned by the bandit                                                                                 | "promo-20%-off"                  |
-| `ActionNumericAttributes` (IDictionary<string, double>)      | Metadata about numeric attributes of the assigned action. Map of the name of attributes their provided values     | `{"brandAffinity": 0.2}`         |
-| `ActionCategoricalAttributes` (IDictionary<string, string>)  | Metadata about non-numeric attributes of the assigned action. Map of the name of attributes their provided values | `{"previouslyPurchased": false}` |
+| `ActionNumericAttributes` (IDictionary\<string, double\>)      | Metadata about numeric attributes of the assigned action. Map of the name of attributes their provided values     | `\{"brandAffinity": 0.2\}`         |
+| `ActionCategoricalAttributes` (IDictionary\<string, string\>)  | Metadata about non-numeric attributes of the assigned action. Map of the name of attributes their provided values | `\{"previouslyPurchased": false\}` |
 | `ActionProbability` (number)                                 | The weight between 0 and 1 the bandit valued the assigned action                                                  | 0.25                             |
 | `OptimalityGap` (number)                                     | The difference between the score of the selected action and the highest-scored action                             | 456                              |
 | `ModelVersion` (string)                                      | Unique identifier for the version (iteration) of the bandit parameters used to determine the action probability   | "v123"                           |
-| `MetaData` IDictionary<string, string>                       | Any additional freeform meta data, such as the version of the SDK                                                 | `{ "sdkLibVersion": "3.5.1" }`   |
+| `MetaData` (IDictionary\<string, string\>)                    | Any additional freeform meta data, such as the version of the SDK                                                 | `\{ "sdkLibVersion": "3.5.1" \}`   |
 
 
 ### Querying for a Bandit Action
 To query the bandit for an action, use the `GetBanditAction()` method. The most specific implementation of `GetBanditAction()` takes the following parameters:
 - `flagKey` (string): The key of the feature flag corresponding to the bandit
 - `subjectKey` (string): The key of the subject or user assigned to the experiment variation
-- `subjectAttributes` (IDictionary<string, object?>): The subject's attributes
-- `actions` (IDictionary<string, IDictionary<string, object?>> ): Map of actions (by name) to their categorical and numeric attributes
+- `subjectAttributes` (IDictionary\<string, object?\>): The subject's attributes
+- `actions` (IDictionary\<string, IDictionary\<string, object?\>\>): Map of actions (by name) to their categorical and numeric attributes
 - `defaultValue` (string): The default *variation* to return if the flag is not successfully evaluated, or, as is more common, the flag is disabled
 
 ```cs
