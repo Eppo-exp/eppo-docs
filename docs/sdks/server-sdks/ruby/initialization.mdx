@@ -1,0 +1,195 @@
+---
+title: Initialization
+sidebar_position: 3
+---
+
+import ApiOptionRef from '@site/src/components/ApiOptionRef';
+
+The Eppo Ruby SDK is easy to initialize while offering robust customization options, making it adaptable to various use cases such as offline mode, custom caching requirements, and ultra-low-latency initialization.
+
+## Initialize the SDK
+
+To complete basic initialization, you only need to provide an SDK key. [Create an SDK key](/sdks/sdk-keys) if you don't already have one.
+
+```ruby
+require 'eppo_client'
+
+config = EppoClient::Config.new('<SDK-KEY>')
+EppoClient::init(config)
+```
+
+## Use the SDK instance
+
+After initialization, you can get an instance of the client using Ruby's singleton pattern:
+
+```ruby
+client = EppoClient::Client.instance
+```
+
+## Advanced Configuration
+
+Basic initialization is great for most use cases, but the SDK provides options that you can use during initialization to customize the behavior of the SDK.
+
+### Initialization Options
+
+The `Config` class accepts the following options:
+
+<ApiOptionRef 
+  name="api_key"
+  type="String"
+  defaultValue="nil"
+>
+
+Your SDK key from the Eppo dashboard. Required.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="assignment_logger"
+  type="AssignmentLogger"
+  defaultValue="nil"
+>
+
+A callback that sends each assignment to your data warehouse. Required only for experiment analysis.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="poll_interval_seconds"
+  type="Integer"
+  defaultValue="30"
+>
+
+The interval in seconds at which the SDK polls for configuration updates. If set to `nil`, polling is disabled.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="poll_jitter_seconds"
+  type="Integer"
+  defaultValue="30"
+>
+
+The jitter in seconds to add to the poll interval to prevent thundering herd problems.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="is_graceful_mode"
+  type="Boolean"
+  defaultValue="true"
+>
+
+When true, gracefully handles all exceptions within the assignment function and returns the default value.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="initial_configuration"
+  type="Configuration"
+  defaultValue="nil"
+>
+
+If set, the client will use this configuration until it fetches a fresh one.
+</ApiOptionRef>
+
+For example, to poll for changes every minute with jitter:
+
+```ruby
+config = EppoClient::Config.new(
+  '<SDK-KEY>',
+  assignment_logger: MyLogger.new,
+  poll_interval_seconds: 60,
+  poll_jitter_seconds: 10
+)
+EppoClient::init(config)
+```
+
+### Configuration Caching
+
+The SDK can cache previously loaded configurations for use in future sessions. This makes the SDK initialize faster and provides resilience against network issues.
+
+#### Advanced Configuration Control
+
+The Ruby SDK exposes an API to allow manual control over configuration:
+
+```ruby
+# Get current configuration
+config = client.get_configuration
+
+# Access specific parts of the configuration
+flags_config = config.get_flags_configuration
+flag_keys = config.get_flag_keys
+bandit_keys = config.get_bandit_keys
+```
+
+This API can be used for debugging or advanced optimizations like:
+- Caching configuration
+- Faster client-side initialization from server configuration
+- Debugging flag assignments
+
+### Usage in Serverless Environments
+
+The default periodic polling setup is suitable for most cases but may not be efficient in short-lived serverless environments like AWS Lambda, where a new configuration is fetched on every function call.
+
+For serverless environments, you can:
+
+1. Disable polling:
+```ruby
+config = EppoClient::Config.new(
+  '<SDK-KEY>',
+  poll_interval_seconds: nil  # Disable polling
+)
+```
+
+2. Manually control configuration updates:
+```ruby
+# Initialize with a cached configuration
+cached_config = get_cached_configuration  # Your caching logic
+config = EppoClient::Config.new(
+  '<SDK-KEY>',
+  poll_interval_seconds: nil,
+  initial_configuration: cached_config
+)
+EppoClient::init(config)
+
+# Later, update configuration manually if needed
+client = EppoClient::Client.instance
+new_config = fetch_new_configuration  # Your update logic
+client.set_configuration(new_config)
+```
+
+### Example Configurations
+
+Here are some common configuration patterns based on different needs:
+
+#### Prioritize Flag Value Freshness
+If you want to always use the latest flag values:
+
+```ruby
+config = EppoClient::Config.new(
+  '<SDK-KEY>',
+  poll_interval_seconds: 30,  # Poll frequently
+  poll_jitter_seconds: 5,
+  is_graceful_mode: false  # Fail fast if there are issues
+)
+```
+
+#### Prioritize Fast Initialization
+If you want to optimize for quick initialization:
+
+```ruby
+cached_config = get_cached_configuration  # Your caching logic
+config = EppoClient::Config.new(
+  '<SDK-KEY>',
+  poll_interval_seconds: 300,  # Poll less frequently
+  initial_configuration: cached_config,
+  is_graceful_mode: true  # Use default values if there are issues
+)
+```
+
+#### Offline Mode
+For completely offline operation:
+
+```ruby
+offline_config = get_offline_configuration  # Your configuration source
+config = EppoClient::Config.new(
+  '<SDK-KEY>',
+  poll_interval_seconds: nil,  # Disable polling
+  initial_configuration: offline_config
+)
