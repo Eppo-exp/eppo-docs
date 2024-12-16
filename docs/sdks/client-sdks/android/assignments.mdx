@@ -154,49 +154,6 @@ EppoClient eppoClient = new EppoClient.Builder("YOUR_SDK_KEY", getApplication())
     .buildAndInit();
 ```
 
-### Logging Examples
-
-Here are examples of integrating with popular analytics providers:
-
-<Tabs>
-<TabItem value="firebase" label="Firebase Analytics">
-
-```java
-AssignmentLogger logger = new AssignmentLogger() {
-    @Override
-    public void logAssignment(Assignment assignment) {
-        Bundle params = new Bundle();
-        params.putString("experiment", assignment.getExperiment());
-        params.putString("variation", assignment.getVariation());
-        params.putString("subject", assignment.getSubject());
-        
-        FirebaseAnalytics.getInstance(context)
-            .logEvent("eppo_assignment", params);
-    }
-};
-```
-
-</TabItem>
-<TabItem value="mixpanel" label="Mixpanel">
-
-```java
-AssignmentLogger logger = new AssignmentLogger() {
-    @Override
-    public void logAssignment(Assignment assignment) {
-        JSONObject props = new JSONObject();
-        props.put("experiment", assignment.getExperiment());
-        props.put("variation", assignment.getVariation());
-        props.put("subject", assignment.getSubject());
-        
-        MixpanelAPI mixpanel = MixpanelAPI.getInstance(context, MIXPANEL_TOKEN);
-        mixpanel.track("Eppo Assignment", props);
-    }
-};
-```
-
-</TabItem>
-</Tabs>
-
 :::note
 More details about logging and examples can be found in the [event logging](/sdks/event-logging/) page.
 :::
