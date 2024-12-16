@@ -1,0 +1,224 @@
+---
+title: Quickstart
+sidebar_position: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+The Eppo .NET SDK enables feature flags and experiments in your .NET applications with only a few lines of code.
+
+The SDK handles all the complexity of feature flag evaluation and experiment assignment locally in your application, with no network calls required after initial setup. This guide will walk you through installing the SDK and implementing your first feature flag, experiment, and contextual bandit.
+
+## Installation
+
+First, install the SDK into your current project:
+
+```shell
+dotnet add package Eppo.Sdk
+```
+
+## Feature Flags
+Feature flags are a way to toggle features on and off without needing to deploy code.
+
+### Initialize the SDK
+
+[Create an SDK key](/sdks/sdk-keys) if you don't already have one. 
+
+```csharp
+var eppoClientConfig = new EppoClientConfig("<SDK_KEY>", null);
+var eppoClient = EppoClient.Init(eppoClientConfig);
+```
+
+:::note
+The SDK key is different from the project API key. You can find your SDK key in the [SDK Keys section of the Eppo interface](https://eppo.cloud/configuration/environments/keys).
+:::
+
+### How assignments work
+
+The SDK periodically retrieves configuration rules from the Eppo server that define how subjects should be allocated to variants. When you call an assignment function, the SDK evaluates these rules locally without making additional network requests.
+
+Each assignment requires:
+
+- **Flag Key**: Identifies which set of configuration rules to use
+- **Subject Key**: A unique identifier for the subject (usually a user ID)
+- **Subject Attributes**: Optional key-value pairs containing additional information used for rule evaluation
+- **Default Value**: Fallback value if assignment fails or rules don't match
+
+```csharp
+// Get assignment parameters
+string flagKey = "my-neat-feature";
+string subjectKey = GetCurrentUser() ?? "anonymous";
+var subjectAttributes = new Dictionary<string, object>
+{
+    ["country"] = user.Country,
+    ["device"] = user.Device
+};
+string defaultValue = "default-value";
+
+// Make an assignment
+var variation = eppoClient.GetStringAssignment(
+    flagKey,
+    subjectKey,
+    subjectAttributes,
+    defaultValue
+);
+```
+
+### Assignment Types
+
+The SDK provides different assignment functions based on the type of value you need:
+
+| Function | Return Type |
+|----------|-------------|
+| `GetStringAssignment()` | String |
+| `GetBooleanAssignment()` | Boolean |
+| `GetJSONAssignment()` | JSON object |
+| `GetIntegerAssignment()` | Integer |
+| `GetNumericAssignment()` | Float |
+
+### Using Assignments
+
+After receiving an assignment, your application should implement logic to modify the user experience accordingly:
+
+```csharp
+var variation = eppoClient.GetStringAssignment(
+    flagKey,
+    subjectKey,
+    subjectAttributes,
+    defaultValue
+);
+
+// Render different components based on assignment
+switch(variation) 
+{
+    case "landing-page-a":
+        return RenderLandingPageA();
+    case "landing-page-b":
+        return RenderLandingPageB();
+    default:
+        return RenderLandingPageC();
+}
+```
+
+## Experiments
+
+While feature flags are useful, they do not send you any information about how your users are interacting with the feature. Experiments provide a way to collect data about these interactions using whichever logging and data warehousing system you prefer.
+
+To log events through the SDK, you need to define a logger that implements the `IAssignmentLogger` interface:
+
+<Tabs>
+<TabItem value="console" label="Console">
+
+```csharp
+internal class AssignmentLogger : IAssignmentLogger
+{
+    public void LogAssignment(AssignmentLogData assignmentLogData)
+    {
+        Console.WriteLine(assignmentLogData);
+    }
+}
+```
+
+</TabItem>
+<TabItem value="segment" label="Segment">
+
+```csharp
+internal class SegmentLogger : IAssignmentLogger
+{
+    private readonly Analytics analytics;
+
+    public SegmentLogger(Analytics analytics)
+    {
+        this.analytics = analytics;
+    }
+
+    public void LogAssignment(AssignmentLogData assignmentLogData)
+    {
+        analytics.Track("Eppo Randomization Assignment", assignmentLogData);
+    }
+}
+```
+
+</TabItem>
+</Tabs>
+
+:::note
+In a production application, you would want to replace the `Console.WriteLine()` statement with an actual logging system. We have documentation on how to set up logging with multiple popular data warehouses and logging systems in the [Assignment page](/sdks/server-sdks/dotnet/assignments/#logging-data-to-your-data-warehouse).
+:::
+
+## Contextual Bandits
+
+For bandits, you'll need both an assignment logger and a bandit logger:
+
+```csharp
+internal class BanditLogger : IAssignmentLogger
+{
+    public void LogAssignment(AssignmentLogData assignmentLogData)
+    {
+        Console.WriteLine(assignmentLogData);
+    }
+
+    public void LogBanditAction(BanditLogEvent banditLogEvent)
+    {
+        Console.WriteLine(banditLogEvent);
+    }
+}
+```
+
+### Query the bandit for actions
+
+Instead of making simple assignments with a bandit, you will want to query the bandit for actions. 
+
+
+```csharp
+var subjectAttributes = new Dictionary<string, object?>()
+{
+    ["age"] = 30,
+    ["country"] = "uk",
+    ["pricingTier"] = "1"
+};
+
+var actions = new Dictionary<string, IDictionary<string, object?>>()
+{
+    ["nike"] = new Dictionary<string, object?>()
+    {
+        ["brandLoyalty"] = 0.4,
+        ["from"] = "usa"
+    },
+    ["adidas"] = new Dictionary<string, object?>()
+    {
+        ["brandLoyalty"] = 2,
+        ["from"] = "germany"
+    }
+};
+
+var result = client.GetBanditAction(
+    "flag-with-shoe-bandit",
+    "user123",
+    subjectAttributes,
+    actions,
+    "default");
+
+if (result.Action != null)
+{
+    // Follow the Bandit action
+    RenderShoeAd(result.Action);
+} else {
+    // User was not selected for a Bandit.
+    // A variation is still assigned.
+    RenderDefaultShoeAd(result.Variation);
+}
+```
+
+:::note
+For full steps to create a bandit including UI steps, see the [bandit quickstart](/bandit-quickstart).
+:::
+
+## Next Steps
+
+Now that you've seen how to make assignments with the Eppo .NET SDK, we strongly recommend familiarizing yourself with the following topics:
+
+- [High Level concepts for the client API](/sdks/server-sdks)
+- [Initialization Configuration](/sdks/server-sdks/dotnet/initialization)
+- [Assignment details](/sdks/server-sdks/dotnet/assignments)
