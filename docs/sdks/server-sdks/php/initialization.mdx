@@ -1,0 +1,141 @@
+---
+title: Initialization
+sidebar_position: 3
+---
+
+import ApiOptionRef from '@site/src/components/ApiOptionRef';
+
+The Eppo PHP SDK is easy to initialize while offering robust customization options, making it adaptable to various use cases such as offline mode, custom caching requirements, and background polling.
+
+## Initialize the SDK
+
+To complete basic initialization, you only need to provide an SDK key. [Create an SDK key](/sdks/sdk-keys) if you don't already have one.
+
+```php
+use Eppo\EppoClient;
+
+require __DIR__ . '/vendor/autoload.php';
+
+$eppoClient = EppoClient::init("<your_sdk_key>");
+```
+
+## Advanced Configuration
+
+The SDK provides several optional parameters during initialization to customize its behavior:
+
+### Initialization Options
+
+<ApiOptionRef 
+  name="apiKey"
+  type="string"
+  defaultValue="undefined"
+>
+
+Your Eppo SDK key. Required for initialization.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="baseUrl"
+  type="string"
+  defaultValue="https://eppo.cloud/api"
+>
+
+The base URL for the Eppo API.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="assignmentLogger"
+  type="LoggerInterface"
+  defaultValue="null"
+>
+
+A callback that sends each assignment to your data warehouse. Required only for experiment analysis.
+Must implement the `Eppo\Logger\LoggerInterface` interface.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="cache"
+  type="CacheInterface"
+  defaultValue="FileSystem cache"
+>
+
+A PSR-6 compatible cache implementation for storing flag configurations.
+</ApiOptionRef>
+
+### Configuration Caching
+
+The SDK can cache previously loaded configurations for use in future sessions. By default, it uses a filesystem cache, but you can provide your own PSR-6 compatible cache implementation:
+
+```php
+use Symfony\Component\Cache\Adapter\RedisAdapter;
+
+$cache = new RedisAdapter($redisConnection);
+
+$eppoClient = EppoClient::init(
+   "<your_sdk_key>",
+   "<base_url>",
+   $assignmentLogger,
+   $cache
+);
+```
+
+### Background Polling
+
+A unique feature of the PHP SDK is its ability to poll for configuration updates in a background process. This ensures your application always has fresh configurations without blocking requests.
+
+Create a dedicated poller file (e.g. `eppo-poller.php`):
+
+```php
+$eppoClient = EppoClient::init(
+   "<your_sdk_key>",
+   "<base_url>",
+   $assignmentLogger,
+   $cache
+);
+
+$eppoClient->startPolling();
+```
+
+Run this as a separate process:
+
+```bash
+php eppo-poller.php
+```
+
+### Assignment Logger
+
+For experiment analysis, implement the `LoggerInterface`:
+
+```php
+<?php
+
+use Eppo\Logger\LoggerInterface;
+
+class Logger implements LoggerInterface {
+  public function logAssignment(
+    string $experiment,
+    string $variation,
+    string $subject,
+    string $timestamp,
+    array $subjectAttributes = []
+  ) {
+    // Implement your logging logic here
+  }
+}
+```
+
+The logger receives these parameters:
+
+| Field                     | Description                                                                                                              | Example                             |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------ | ----------------------------------- |
+| `experiment` (string)     | An Eppo experiment key                                                                                                   | "recommendation-algo-allocation-17" |
+| `subject` (string)        | An identifier of the subject or user assigned to the experiment variation                                                | UUID                                |
+| `variation` (string)      | The experiment variation the subject was assigned to                                                                     | "control"                           |
+| `timestamp` (string)      | The time when the subject was assigned to the variation                                                                  | 2021-06-22T17:35:12.000Z            |
+| `subjectAttributes` (map) | A free-form map of metadata about the subject                                                                           | `{ "country": "US" }`               |
+| `featureFlag` (string)    | An Eppo feature flag key                                                                                                 | "recommendation-algo"               |
+| `allocation` (string)     | An Eppo allocation key                                                                                                   | "allocation-17"                     |
+
+:::note
+More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/sdks/event-logging/) page.
+:::
