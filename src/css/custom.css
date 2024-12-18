@@ -412,6 +412,7 @@ code {
   color: var(--ifm-color-primary);
   background: none;
   padding: 0;
+  border: 0px;
 }
 
 .api-option__default {
