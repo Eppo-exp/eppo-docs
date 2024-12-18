@@ -1,0 +1,280 @@
+---
+title: Assignments
+sidebar_position: 4
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import ApiOptionRef from '@site/src/components/ApiOptionRef';
+
+Assignments are the mechanism through which a given [Subject](/sdks/sdk-features/subjects) is assigned to a variation for a feature flag, experiment, or bandit. 
+
+Currently, the Eppo SDK supports the following assignment types:
+
+- String
+- Boolean
+- JSON
+- Numeric
+- Integer
+
+Depending on the values you pass to the GetAssignment function, the SDK will return different results based on whether the subject details match the assignment rules you set in the Eppo UI.
+
+## String Assignments
+
+String assignment return a string value that is set as the variation for the experiment. String flags are the most common type of flags. They are useful for both A/B/n tests and advanced targeting use cases.
+
+```csharp
+string flagKey = "flag-key-123";
+string subjectKey = GetUserId() ?? "user-123";
+string defaultAssignment = "version-a";
+var subjectAttributes = new Dictionary<string, object>
+{
+    ["country"] = "US",
+    ["age"] = 30,
+    ["isReturningUser"] = true
+};
+
+var variant = eppoClient.GetStringAssignment(
+    flagKey,
+    subjectKey,
+    subjectAttributes,
+    defaultAssignment
+);
+
+// Use the variant value to determine which component to render
+switch(variant)
+{
+    case "version-a":
+        return HandleVersionA();
+    case "version-b":
+        return HandleVersionB();
+    default:
+        return HandleDefaultVersion();
+}
+```
+
+## Boolean Assignments
+
+Boolean flags support simple on/off toggles. They're useful for simple, binary feature switches like blue/green deployments or enabling/disabling a new feature.
+
+```csharp
+string flagKey = "flag-key-123";
+string subjectKey = GetUserId() ?? "user-123";
+bool defaultAssignment = false;
+var subjectAttributes = new Dictionary<string, object>
+{
+    ["country"] = "US",
+    ["age"] = 30,
+    ["isReturningUser"] = true
+};
+
+var variant = eppoClient.GetBooleanAssignment(
+    flagKey,
+    subjectKey,
+    subjectAttributes,
+    defaultAssignment
+);
+
+// Use the variant value to determine which component to render
+if (variant)
+{
+    return RenderFeatureEnabledComponent();
+}
+else
+{
+    return RenderFeatureDisabledComponent();
+}
+```
+
+## JSON Assignments
+
+JSON flags work best for advanced configuration use cases. The JSON flag can include structured information such as:
+
+- The text of marketing copy for a promotional campaign 
+- The address of a different hero image
+
+Using this pattern, a team can make minor changes to the copy and design of a website without having to go through an entire code release process.
+
+```csharp
+string flagKey = "flag-key-123";
+string subjectKey = GetUserId() ?? "user-123";
+var defaultAssignment = new Dictionary<string, object>
+{
+    ["hero"] = false,
+    ["heroImage"] = "placeholder.png",
+    ["heroTitle"] = "Placeholder Hero Title",
+    ["heroDescription"] = "Placeholder Hero Description"
+};
+var subjectAttributes = new Dictionary<string, object>
+{
+    ["country"] = "US",
+    ["age"] = 30,
+    ["isReturningUser"] = true
+};
+
+var campaignJson = eppoClient.GetJSONAssignment(
+    flagKey,
+    subjectKey,
+    subjectAttributes,
+    defaultAssignment
+);
+
+if (campaignJson != null)
+{
+    campaign.Hero = true;
+    campaign.HeroImage = campaignJson["heroImage"]?.ToString();
+    campaign.HeroTitle = campaignJson["heroTitle"]?.ToString() ?? "";
+    campaign.HeroDescription = campaignJson["heroDescription"]?.ToString() ?? "";
+}
+
+// Use the campaign settings in your component
+RenderHero(campaign.HeroImage, campaign.HeroTitle, campaign.HeroDescription);
+```
+
+## Integer and Numeric Assignments
+
+Integer and numeric assignments work the same way but return either an integer or a floating point number. These assignments are useful where you want to use a numeric value to drive business logic such as pricing on an item or a number of items to display in a list.
+
+```csharp
+string flagKey = "flag-key-123";
+string subjectKey = GetUserId() ?? "user-123";
+var subjectAttributes = new Dictionary<string, object>
+{
+    ["country"] = "US",
+    ["age"] = 30,
+    ["isReturningUser"] = true
+};
+
+// Example of getting an integer assignment
+int numberOfItems = eppoClient.GetIntegerAssignment(
+    flagKey,
+    subjectKey,
+    subjectAttributes,
+    0  // default value
+);
+
+// Example of getting a numeric assignment
+double price = eppoClient.GetNumericAssignment(
+    flagKey,
+    subjectKey,
+    subjectAttributes,
+    0.0  // default value
+);
+
+// Use the assignments to drive business logic
+RenderItemList(numberOfItems);
+RenderPrice(price);
+```
+
+## Assignment Logger Schema
+
+The SDK will invoke the `LogAssignment` method with an `AssignmentLogData` object that contains the following fields:
+
+<ApiOptionRef 
+  name="Timestamp"
+  type="DateTime"
+  defaultValue="undefined"
+>
+
+The time when the subject was assigned to the variation. Example: `"2021-06-22T17:35:12.000Z"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="FeatureFlag"
+  type="string"
+  defaultValue="undefined"
+>
+
+An Eppo feature flag key. Example: `"recommendation-algo"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="Allocation"
+  type="string"
+  defaultValue="undefined"
+>
+
+An Eppo allocation key. Example: `"allocation-17"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="Experiment"
+  type="string"
+  defaultValue="undefined"
+>
+
+An Eppo experiment key. Example: `"recommendation-algo-allocation-17"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="Subject"
+  type="string"
+  defaultValue="undefined"
+>
+
+An identifier of the subject or user assigned to the experiment variation. Example: UUID
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="SubjectAttributes"
+  type="Dictionary<string, object>"
+  defaultValue="{}"
+>
+
+A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function. Example: `{ "country": "US" }`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="Variation"
+  type="string"
+  defaultValue="undefined"
+>
+
+The experiment variation the subject was assigned to. Example: `"control"`
+</ApiOptionRef>
+
+### Logging data to your data warehouse
+
+Eppo's unique architecture makes it so Eppo never has access to your data. This means that you can use the assignment logging functions to send data to any data warehouse or logging system you want.
+
+All you need to do is implement the `IAssignmentLogger` interface at initialization.
+
+<Tabs>
+<TabItem value="console" label="Console">
+
+```csharp
+internal class AssignmentLogger : IAssignmentLogger
+{
+    public void LogAssignment(AssignmentLogData assignmentLogData)
+    {
+        Console.WriteLine(assignmentLogData);
+    }
+}
+```
+
+</TabItem>
+<TabItem value="segment" label="Segment">
+
+```csharp
+internal class SegmentLogger : IAssignmentLogger
+{
+    private readonly Analytics analytics;
+
+    public SegmentLogger(Analytics analytics)
+    {
+        this.analytics = analytics;
+    }
+
+    public void LogAssignment(AssignmentLogData assignmentLogData)
+    {
+        analytics.Track("Eppo Randomization Assignment", assignmentLogData);
+    }
+}
+```
+
+</TabItem>
+</Tabs>
+
+:::note
+More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/sdks/event-logging/) page.
+::: 
