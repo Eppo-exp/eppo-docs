@@ -1,0 +1,165 @@
+---
+title: Contextual Bandits
+sidebar_position: 5
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import ApiOptionRef from '@site/src/components/ApiOptionRef';
+
+## Usage with Contextual Multi-Armed Bandits
+
+Eppo also supports contextual multi-armed bandits. You can read more about them in the [high-level documentation](/contextual-bandits).
+Bandit flag configuration--including setting up the flag key, status quo variation, bandit variation, and targeting rules--are configured within
+the Eppo application. However, available actions are supplied to the SDK in the code when querying the bandit.
+
+To leverage bandits using the PHP SDK, there are two additional steps over regular feature flags:
+1. Add a bandit action logger to the SDK client instance
+2. Query the bandit for an action
+
+### Define a bandit assignment logger
+
+In order for the bandit to learn an optimized policy, we need to capture and log the bandit's actions.
+This requires defining a bandit logger in addition to an assignment logger.
+
+[Code Placeholder: Example of implementing IBanditLogger interface in PHP]
+
+The SDK will invoke the `logBanditAction()` function with an `IBanditEvent` object that contains the following fields:
+
+<ApiOptionRef 
+  name="timestamp"
+  type="string"
+  defaultValue="undefined"
+>
+The time when the action is taken in UTC as an ISO string. Example: `"2024-03-22T14:26:55.000Z"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="featureFlag"
+  type="string"
+  defaultValue="undefined"
+>
+The key of the feature flag corresponding to the bandit. Example: `"bandit-test-allocation-4"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="bandit"
+  type="string"
+  defaultValue="undefined"
+>
+The key (unique identifier) of the bandit. Example: `"ad-bandit-1"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="subject"
+  type="string"
+  defaultValue="undefined"
+>
+An identifier of the subject or user assigned to the experiment variation. Example: `"ed6f85019080"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="subjectNumericAttributes"
+  type="array"
+  defaultValue="[]"
+>
+Metadata about numeric attributes of the subject. Map of the name of attributes their provided values. Example: `{"age": 30}`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="subjectCategoricalAttributes"
+  type="array"
+  defaultValue="[]"
+>
+Metadata about non-numeric attributes of the subject. Map of the name of attributes their provided values. Example: `{"loyalty_tier": "gold"}`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="action"
+  type="string"
+  defaultValue="undefined"
+>
+The action assigned by the bandit. Example: `"promo-20%-off"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="actionNumericAttributes"
+  type="array"
+  defaultValue="[]"
+>
+Metadata about numeric attributes of the assigned action. Example: `{"brandAffinity": 0.2}`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="actionCategoricalAttributes"
+  type="array"
+  defaultValue="[]"
+>
+Metadata about non-numeric attributes of the assigned action. Example: `{"previouslyPurchased": false}`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="actionProbability"
+  type="float"
+  defaultValue="undefined"
+>
+The weight between 0 and 1 the bandit valued the assigned action. Example: `0.25`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="optimalityGap"
+  type="float"
+  defaultValue="undefined"
+>
+The difference between the score of the selected action and the highest-scored action. Example: `456`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="modelVersion"
+  type="string"
+  defaultValue="undefined"
+>
+Unique identifier for the version (iteration) of the bandit parameters used to determine the action probability. Example: `"v123"`
+</ApiOptionRef>
+
+### Querying the bandit for actions
+
+To query the bandit for an action, you can use the `getBanditAction()` function.
+
+[Code Placeholder: Example of querying a bandit for actions in PHP, showing both simple action list and actions with contexts]
+
+#### Subject context
+
+The subject context contains contextual information about the subject that is independent of bandit actions.
+For example, the subject's age or country.
+
+[Code Placeholder: Example of providing subject context in PHP]
+
+#### Action contexts
+
+The action context contains contextual information about each action. They can be provided as a mapping of attribute names 
+to their contexts.
+
+[Code Placeholder: Example of providing action contexts in PHP]
+
+#### Result
+
+`getBanditAction()` returns two fields:
+- `variation` (string): The variation that was assigned to the subject
+- `action` (string | null): The action that was assigned to the subject by the bandit, or `null` if the bandit was not assigned
+
+[Code Placeholder: Example of handling bandit action results in PHP]
+
+#### Status quo algorithm
+
+In order to accurately measure the performance of the bandit, we need to compare it to the status quo algorithm using an experiment.
+This status quo algorithm could be a complicated algorithm to that selects an action according to a different model, or a simple baseline such as selecting a fixed or random action.
+When you create an analysis allocation for the bandit and the returned `action` is `null`, implement the desired status quo algorithm based on the `variation` value.
+
+[Code Placeholder: Example of implementing a status quo algorithm in PHP]
+
+## Debugging
+
+You may encounter a situation where a flag assignment produces a value that you did not expect. There are functions [detailed here](/sdks/sdk-features/debugging-flag-assignment/) to help you understand how flags are assigned, which will allow you to take corrective action on potential configuration issues.
+
+[Code Placeholder: Example of using debugging functions with bandits in PHP] 
