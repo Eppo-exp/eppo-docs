@@ -26,7 +26,7 @@ Certified metric files can define one or more [fact sources](/data-management/de
 | `entities` | A list of [entities](/data-management/definitions/entities) in the table, each element containing the name of an existing entity created in the Eppo UI and the corresponding column | <pre><code>- entity_name: User <br></br>  column: user_id </code></pre> |
 | `facts` | A list of fact values in the table, their corresponding column, and optionally, a description and desired change (either `increase` or `decrease`) | <pre><code>- name: Purchase Revenue <br></br>  column: purchase_revenue <br></br>  description: ... <br></br>  desired_change: increase </code></pre> |
 | `properties` (optional) | An optional list of [fact properties](/data-management/definitions/properties#metric-properties) in the table, their corresponding column, and an optional description | <pre><code>- name: Purchase Type <br></br>  column: purchase_type <br></br>  description: ... </code></pre> |
-| `reference_url` (optional) | An optional URL to link to in the Eppo UI | `github.com/<my_repo>` |
+| `reference_url` (optional) | An optional URL to link to in the Eppo UI | `https://github.com/<my_repo>` |
 
 ### Metrics
 
@@ -42,7 +42,7 @@ Each certified metric yaml file can also define one or more metrics (either [sim
 | `is_guardrail` <br></br> (optional)| Whether the metric should be analyzed for every experiment run on this entity (default is false) | `true` or `false`| 
 | `metric_display_style` <br></br> (optional) | How to display the metric, either `decimal` or `percent` (default is `decimal`) | `decimal`| 
 | `minimum_detectable_effect` <br></br> (optional)| The default [MDE](/statistics/sample-size-calculator/mde#what-is-a-minimum-detectable-effect-mde) for the metric | `0.02` | 
-| `reference_url` <br></br> (optional)| An optional URL to link to in the Eppo UI | `github.com/.../<my_metric>` | 
+| `reference_url` <br></br> (optional)| An optional URL to link to in the Eppo UI | `https://github.com/.../<my_metric>` | 
 | `guardrail_cutoff` <br></br> (optional)| A Guardrail cutoff value for a metric, as a decimal representing a percentage. If a metric is expected to increase, this value should be negative, to warn when the metric is decreasing by more than this value. If a metric is expected to decrease, this value should be positive, to warn when the metric is increasing by more than this value. | `-0.05` | 
 
 ### Aggregations
