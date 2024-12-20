@@ -44,8 +44,7 @@ Feature flags are a way to toggle features on and off without needing to deploy 
 
 [Create an SDK key](/sdks/sdk-keys) if you don't already have one. 
 
-First, initialize the SDK using your SDK key. The SDK key is different from the project API key. 
-
+First, initialize the Eppo SDK at the app root using your SDK key. The SDK key is different from the project API key. 
 
 ```js
 import init from "@eppo/react-native-sdk";
@@ -117,6 +116,18 @@ See more details about assignment functions in the [Assignments](/sdks/client-sd
 After receiving an assignment, your application should implement logic to modify the user experience accordingly:
 
 ```javascript
+const LandingPageA = () => {
+    return <div>Landing Page A</div>
+}
+
+const LandingPageB = () => {
+    return <div>Landing Page B</div>
+}
+
+const LandingPageC = () => {
+    return <div>Landing Page C</div>
+}
+
 // Example using a boolean assignment
 const variation = eppoClient.getStringAssignment(
   featureKey,
@@ -210,90 +221,6 @@ if (variation === "landing-page-a") {
 
 You can see the full steps for running an experiment including UI steps in the [experiment quick start](/experiment-allocation-quickstart/).
 
-
-## Contextual Bandits
-
-Contextual Multi-Armed Bandits are a way to dynamically optimize assignments based on user context. A bandit balances exploration of new actions with exploitation of known successful actions to maximize a specified metric.
-
-### Bandit Setup
-
-Setting up a bandit is very similar to setting up an experiment but with an additional logging function.
-
-```js
-// Import Eppo's logger interfaces and client initializer
-import { IAssignmentLogger, IBanditLogger, init } from "@eppo/node-server-sdk";
-
-// Define an assignment logger for recording variation assignments
-const assignmentLogger: IAssignmentLogger = {
-  logAssignment(assignment: IAssignmentEvent) {
-    console.log("TODO: save assignment information to data warehouse", assignment);
-  }
-};
-
-// Define a bandit logger for recording bandit action assignments
-const banditLogger: IBanditLogger = {
-  logBanditAction (banditEvent: IBanditEvent) {
-    console.log("TODO: save bandit action information to the data warehouse, ensuring the column names are as expected", banditEvent);
-  }
-};
-
-// Initialize the SDK with both loggers provided
-await init({
-  apiKey: "<SDK_KEY>",
-  assignmentLogger,
-  banditLogger
-});
-```
-
-:::note
-In a production application, you would want to replace the `console.log()` statement with an actual logging system. We have documentation on how to set up logging with multiple popular data warehouses and logging systems in the [Assignment page](/sdks/client-sdks/javascript/assignments/#logging-data-to-your-data-warehouse).
-:::
-
-### Query the bandit for actions
-
-Instead of making simple assignments with a bandit, you will want to query the bandit for actions. 
-
-```js
-import * as EppoSdk from "@eppo/react-native-sdk";
-import { Attributes, BanditActions } from "@eppo/js-client-sdk-common";
-
-const eppoClient = EppoSdk.getInstance();
-
-const flagKey = "shoe-bandit";
-const subjectKey = getCurrentUser() || "anonymous";
-const subjectAttributes: Attributes = { age: 25, country: "GB" };
-const defaultValue = "default";
-const actions: BanditActions = {
-  nike: { 
-    numericAttributes: { brandAffinity: 2.3 }, 
-    categoricalAttributes: { imageAspectRatio: "16:9" } 
-  },
-  adidas: {
-    numericAttributes: { brandAffinity: 0.2 },
-    categoricalAttributes: { imageAspectRatio: "16:9" }
-  }
-};
-
-
-
-const { variation, action } = eppoClient.getBanditAction(
-  flagKey,
-  subjectKey,
-  subjectAttributes,
-  actions,
-  defaultValue
-);
-
-if (action) {
-  renderShoeAd(action);
-} else {
-  renderDefaultShoeAd();
-}
-```
-
-:::note
-For full steps to create a bandit including UI steps, see the [bandit quickstart](/bandit-quickstart).
-:::
 
 ## Next Steps
 
