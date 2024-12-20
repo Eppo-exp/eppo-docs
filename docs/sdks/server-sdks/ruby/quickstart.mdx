@@ -1,0 +1,178 @@
+---
+title: Quickstart
+sidebar_position: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+The Eppo Ruby SDK enables feature flags and experiments in your Ruby applications with only a few lines of code.
+
+The SDK handles all the complexity of feature flag evaluation and experiment assignment locally in your application, with no network calls required after initial setup. This guide will walk you through installing the SDK and implementing your first feature flag, experiment, and contextual bandit.
+
+## Installation
+
+First, install the SDK using gem:
+
+```bash
+gem install eppo-server-sdk
+```
+
+Or add to your `Gemfile`:
+
+```ruby
+gem 'eppo-server-sdk', '~> 3.2.7'
+```
+
+## Feature Flags
+Feature flags are a way to toggle features on and off without needing to deploy code.
+
+### Initialize the SDK
+
+[Create an SDK key](/sdks/sdk-keys) if you don't already have one. 
+
+First, initialize the SDK using your SDK key:
+
+```ruby
+require 'eppo_client'
+
+config = EppoClient::Config.new('<SDK-KEY>')
+EppoClient::init(config)
+```
+
+:::note
+The SDK key is different from the project API key. You can find your SDK key in the [SDK Keys section of the Eppo interface](https://eppo.cloud/configuration/environments/keys).
+:::
+
+### Assign a variant
+
+Once initialized, you can get an instance of the client and start making assignments:
+
+```ruby
+client = EppoClient::Client.instance
+variation = client.get_string_assignment(
+  'show-new-feature',
+  user.id,
+  { 'country' => user.country },
+  'control'
+)
+
+if variation == "variant-a"
+  handle_variant_a
+elsif variation == "variant-b"
+  handle_variant_b
+else
+  handle_control
+end
+```
+
+### Assignment Types
+
+The SDK provides different assignment functions based on the type of value you need:
+
+| Function | Return Type |
+|----------|-------------|
+| `get_string_assignment()` | String |
+| `get_boolean_assignment()` | Boolean |
+| `get_json_assignment()` | Hash |
+| `get_integer_assignment()` | Integer |
+| `get_numeric_assignment()` | Float |
+
+:::note
+See more details about assignment functions in the [Assignments](/sdks/server-sdks/ruby/assignments) page.
+:::
+
+## Experiments
+
+While feature flags are useful, they do not send you any information about how your users are interacting with the feature. Experiments provide a way to collect data about these interactions using your preferred logging system.
+
+To log events through the SDK, you need to implement the `AssignmentLogger` class:
+
+```ruby
+class MyLogger < EppoClient::AssignmentLogger
+  def log_assignment(assignment)
+    puts "Logging assignment: #{assignment}"  # Replace with your logging logic
+  end
+end
+
+config = EppoClient::Config.new(
+  '<SDK-KEY>',
+  assignment_logger: MyLogger.new
+)
+EppoClient::init(config)
+```
+
+:::note
+In a production application, you would want to replace the puts statement with an actual logging system. We have documentation on how to set up logging with multiple popular data warehouses and logging systems in the [Assignments page](/sdks/server-sdks/ruby/assignments/#logging-data-to-your-data-warehouse).
+:::
+
+## Contextual Bandits
+
+Contextual Multi-Armed Bandits are a way to dynamically optimize assignments based on user context. A bandit balances exploration of new actions with exploitation of known successful actions to maximize a specified metric.
+
+### Bandit Setup
+
+Setting up a bandit requires implementing both an assignment logger and a bandit logger:
+
+```ruby
+class MyLogger < EppoClient::AssignmentLogger
+  def log_assignment(assignment)
+    puts "Logging assignment: #{assignment}"
+  end
+  
+  def log_bandit_action(bandit_action)
+    puts "Logging bandit action: #{bandit_action}"
+  end
+end
+
+config = EppoClient::Config.new(
+  '<SDK-KEY>',
+  assignment_logger: MyLogger.new
+)
+EppoClient::init(config)
+```
+
+### Query the bandit for actions
+
+Instead of making simple assignments with a bandit, you query the bandit for actions:
+
+```ruby
+client = EppoClient::Client.instance
+bandit_result = client.get_bandit_action(
+  "shoe-bandit",
+  user.id,
+  EppoClient::Attributes.new(
+    numeric_attributes: { "age" => user.age },
+    categorical_attributes: { "country" => user.country }
+  ),
+  {
+    "nike" => EppoClient::Attributes.new(
+      numeric_attributes: { "brand_affinity" => 2.3 },
+      categorical_attributes: { "previously_purchased" => true }
+    ),
+    "adidas" => EppoClient::Attributes.new(
+      numeric_attributes: { "brand_affinity" => 0.2 },
+      categorical_attributes: { "previously_purchased" => false }
+    )
+  },
+  "control"
+)
+
+if bandit_result.action
+  show_shoe_ad(bandit_result.action)
+else
+  show_default_ad
+end
+```
+
+:::note
+For full steps to create a bandit including UI steps, see the [bandit quickstart](/bandit-quickstart).
+:::
+
+## Next Steps
+
+Now that you've seen how to make assignments with the Eppo Ruby SDK, we recommend familiarizing yourself with:
+
+- [High Level concepts for the server API](/sdks/server-sdks)
+- [Initialization Configuration](/sdks/server-sdks/ruby/initialization)
+- [Assignment details](/sdks/server-sdks/ruby/assignments) 

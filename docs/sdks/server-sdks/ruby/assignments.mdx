@@ -1,0 +1,311 @@
+---
+title: Assignments
+sidebar_position: 4
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import ApiOptionRef from '@site/src/components/ApiOptionRef';
+
+Assignments are the mechanism through which a given [Subject](/sdks/sdk-features/subjects) is assigned to a variation for a feature flag or experiment.
+
+The Eppo SDK supports the following assignment types:
+- String
+- Boolean
+- JSON (Hash)
+- Integer
+- Numeric (Float)
+
+## Assignment Types
+
+### String Assignments
+
+String assignments return a string value that is set as the variation. String flags are the most common type of flags and are useful for both A/B/n tests and advanced targeting use cases.
+
+```ruby
+require 'eppo_client'
+
+client = EppoClient::Client.instance
+
+flag_key = "flag-key-123"
+subject_key = get_user_id || "user-123"
+default_value = "version-a"
+subject_attributes = {
+  "country" => "US",
+  "age" => 30,
+  "is_returning_user" => true
+}
+
+variant = client.get_string_assignment(
+  flag_key,
+  subject_key,
+  subject_attributes,
+  default_value
+)
+
+# Use the variant value to determine which component to render
+case variant
+when "version-a"
+  handle_version_a
+when "version-b"
+  handle_version_b
+end
+```
+
+### Boolean Assignments
+
+Boolean flags support simple on/off toggles. They're useful for simple, binary feature switches like blue/green deployments or enabling/disabling a new feature.
+
+```ruby
+variant = client.get_boolean_assignment(
+  flag_key,
+  subject_key,
+  subject_attributes,
+  false  # default value
+)
+
+if variant
+  handle_feature_enabled
+else
+  handle_feature_disabled
+end
+```
+
+### JSON Assignments
+
+JSON flags (represented as Ruby Hashes) work best for advanced configuration use cases. The JSON flag can include structured information such as:
+- Marketing copy for a promotional campaign
+- Configuration parameters for a feature
+- UI customization settings
+
+```ruby
+default_campaign = {
+  "hero" => false,
+  "hero_image" => "placeholder.png",
+  "hero_title" => "Placeholder Hero Title",
+  "hero_description" => "Placeholder Hero Description"
+}
+
+campaign_json = client.get_json_assignment(
+  flag_key,
+  subject_key,
+  subject_attributes,
+  default_campaign
+)
+
+if campaign_json
+  campaign.hero = true
+  campaign.hero_image = campaign_json["hero_image"]
+  campaign.hero_title = campaign_json["hero_title"]
+  campaign.hero_description = campaign_json["hero_description"]
+end
+```
+
+### Numeric Assignments
+
+The SDK provides both integer and floating-point numeric assignments. These are useful for testing different numeric values like:
+- Price points
+- Number of items to display
+- Timeout durations
+
+```ruby
+# Integer assignment example
+num_items = client.get_integer_assignment(
+  flag_key,
+  subject_key,
+  subject_attributes,
+  10  # default value
+)
+
+# Floating point assignment example
+price = client.get_numeric_assignment(
+  flag_key,
+  subject_key,
+  subject_attributes,
+  9.99  # default value
+)
+```
+
+## Assignment Logging
+
+### Assignment Logger Schema
+
+The SDK will invoke the `log_assignment` method with an `assignment` hash that contains the following fields:
+
+<ApiOptionRef 
+  name="timestamp"
+  type="String"
+  defaultValue="undefined"
+>
+
+The time when the subject was assigned to the variation in ISO format. Example: `"2021-06-22T17:35:12.000Z"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="featureFlag"
+  type="String"
+  defaultValue="undefined"
+>
+
+An Eppo feature flag key. Example: `"recommendation-algo"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="allocation"
+  type="String"
+  defaultValue="undefined"
+>
+
+An Eppo allocation key. Example: `"allocation-17"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="experiment"
+  type="String"
+  defaultValue="undefined"
+>
+
+An Eppo experiment key. Example: `"recommendation-algo-allocation-17"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="subject"
+  type="String"
+  defaultValue="undefined"
+>
+
+An identifier of the subject or user assigned to the experiment variation. Example: UUID
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="subjectAttributes"
+  type="Hash"
+  defaultValue="{}"
+>
+
+A free-form hash of metadata about the subject. These attributes are only logged if passed to the SDK assignment function. Example: `{ "country" => "US" }`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="variation"
+  type="String"
+  defaultValue="undefined"
+>
+
+The experiment variation the subject was assigned to. Example: `"control"`
+</ApiOptionRef>
+
+### Logging to Your Data Warehouse
+
+Eppo's architecture ensures that raw user data never leaves your system. Instead of pushing subject-level exposure events to Eppo's servers, Eppo's SDKs integrate with your existing logging system.
+
+Here are examples of implementing the `AssignmentLogger` class for different logging systems:
+
+<Tabs>
+<TabItem value="console" label="Console">
+
+```ruby
+class ConsoleLogger < EppoClient::AssignmentLogger
+  def log_assignment(assignment)
+    puts "Assignment: #{assignment}"
+  end
+end
+```
+
+</TabItem>
+<TabItem value="segment" label="Segment">
+
+```ruby
+require 'segment/analytics'
+
+Analytics = Segment::Analytics.new(write_key: '<SEGMENT_WRITE_KEY>')
+
+class SegmentLogger < EppoClient::AssignmentLogger
+  def log_assignment(assignment)
+    Analytics.track(
+      user_id: assignment["subject"],
+      event: "Eppo Randomization Event",
+      properties: assignment
+    )
+  end
+end
+```
+
+</TabItem>
+<TabItem value="snowplow" label="Snowplow">
+
+```ruby
+require 'snowplow-tracker'
+
+emitter = SnowplowTracker::Emitter.new(endpoint: "collector.mydomain.net")
+tracker = SnowplowTracker::Tracker.new(emitters: [emitter], namespace: "eppo")
+
+class SnowplowLogger < EppoClient::AssignmentLogger
+  def log_assignment(assignment)
+    tracker.track_self_describing_event(
+      schema: "iglu:com.example_company/eppo-event/jsonschema/1-0-2",
+      data: {
+        userId: assignment["subject"],
+        properties: assignment
+      }
+    )
+  end
+end
+```
+
+</TabItem>
+</Tabs>
+
+### Deduplicating Logs
+
+To prevent duplicate assignment events, you can implement caching in your logger:
+
+```ruby
+require 'lru_redux'
+
+class CachingLogger < EppoClient::AssignmentLogger
+  def initialize
+    @cache = LruRedux::Cache.new(1024)
+  end
+
+  def log_assignment(assignment)
+    cache_key = "#{assignment['subject']}-#{assignment['featureFlag']}"
+    return if @cache.fetch(cache_key)
+    
+    # Your logging implementation
+    puts "Logging assignment: #{assignment}"
+    
+    @cache[cache_key] = true
+  end
+end
+
+config = EppoClient::Config.new(
+  '<SDK-KEY>',
+  assignment_logger: CachingLogger.new
+)
+```
+
+## Debugging Assignments
+
+The SDK provides detailed assignment information to help debug why a specific variation was chosen:
+
+```ruby
+evaluation = client.get_boolean_assignment_details(
+  "kill-switch",
+  "test-subject",
+  { "country" => "UK", "age" => 62 },
+  false
+)
+
+puts "Assignment: #{evaluation.variation}"
+puts "Details: #{evaluation.evaluation_details}"
+```
+
+The evaluation details include:
+- Flag and subject information
+- Timestamp and configuration metadata
+- Allocation evaluation results
+- Rule matching details
+- Split calculations
+
+For more information on debugging assignments, see [Debugging Flag Assignments](/sdks/sdk-features/debugging-flag-assignment/). 
