@@ -1,5 +1,6 @@
 ---
-sidebar_position: 3
+slug: /geolift-quickstart
+sidebar_position: 8
 ---
 # Creating your first Geolift test
 
