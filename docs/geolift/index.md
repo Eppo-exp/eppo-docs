@@ -6,12 +6,13 @@ sidebar_position: 1
 
 # Geolift (Quasi-experiments)
 
-Eppo’s Geolift product measures the effects of marketing spend or other interventions where randomization is not possible or practical. Geolift uses Bayesian Synthetic Control Methods and is a quasi-experiment. For more on the statistics of Geolift, check out MethodsTKLINK.
+Marketing teams face a critical challenge: how do you measure the true impact of regional marketing campaigns, pricing changes, or other geographic interventions when traditional A/B testing isn't feasible? Eppo's Geolift solves this through sophisticated causal inference, allowing you to:
 
+- Accurately measure the ROI of marketing initiatives
+- Run reliable experiments without sacrificing huge control regions
+- Optimize spending across different markets, channels, and budget levels
 
-:::info
-If you immediately want to get started with Contextual Bandits, check out our [Getting Started guide](/bandit-quickstart).
-:::
+Geolift uses Bayesian Synthetic Control methods, a proven quasi-experimental approach that creates a precise counterfactual for each treated region. This means you can understand exactly what would have happened in your test regions if you hadn't made the change - giving you true causal measurement of your intervention's impact.
 
 ## Example use cases for Geolift
 
@@ -26,9 +27,9 @@ If you immediately want to get started with Contextual Bandits, check out our [G
 There are some important differences between Geolift (quasi-experiments) and traditional experiments (randomized controlled trials.)
 
 1. **No user level facts and assignments:** All users within each unit (geography) are treated (or not) together. Individual variation and behavior is not available to a Geolift test.
-2. **Weaker statistical power:** in a Geolift test, there are many fewer units of randomization compared to a user-targeted experiment; there’s more inherent noise and variability in each unit that happens across a geographic region.
+2. **Weaker statistical power:** in a Geolift test, there are many fewer units of randomization compared to a user-targeted experiment; there's more inherent noise and variability in each unit that happens across a geographic region.
 3. **Need historical data:** Although Eppo supports methods like CUPED for traditional experiments that use historical data to reduce variance and increase power, it does not require it. In Geolift, historical data is needed to develop the synthetic control.
-4. **Stronger statistical assumptions:** Since we can't rely on randomization to accomodate any differences between the treatment and control groups, there is a stricter set of assumptions users should follow to ensure the units are similar enough to be compared in the quasi-experiment. For more detail, TKLINKHERE.
+4. **Stronger statistical assumptions:** Since we can't rely on randomization to accomodate any differences between the treatment and control groups, there is a stricter set of assumptions users should follow to ensure the units are similar enough to be compared in the quasi-experiment. For more detail, see [Assumptions and Best Practices](/geolift/assumptions_best_practices/).
 
 ## Historical Data Needed
 
