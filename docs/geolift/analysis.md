@@ -29,10 +29,6 @@ Below, we include three plots per variant of the test:
 
 ![Geolift Results Analysis](/img/geolift/geolift_overview_tab.png)
 
-## Test Plan
-
-Coming soon.
-
 ## Assignments
 
 The Assignment tab lists key information about the test, including dates and the units that are assigned to each test variant.
