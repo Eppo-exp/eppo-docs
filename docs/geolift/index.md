@@ -33,7 +33,7 @@ There are some important differences between Geolift (quasi-experiments) and tra
 
 ## Historical Data Needed
 
-Typically, we use your existing Eppo metrics and so will use up to 18 months of the metric as available in your data warehouse. More the better, but on the low end, if you are setting up a new data source and metric, we recommend at least three months of historical data before designing a test.
+Geolift tests use the metrics you create in Eppo, which are based on your data warehouse. We recommend at least three months of historical data before designing a test and recommend up to 18 months of data if available.
 
 ## Compatible geographic units
 
