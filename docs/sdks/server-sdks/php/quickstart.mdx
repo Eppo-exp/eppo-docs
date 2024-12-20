@@ -1,0 +1,99 @@
+---
+title: Quickstart
+sidebar_position: 2
+---
+
+The Eppo PHP SDK enables feature flags and experiments in your PHP applications with only a few lines of code.
+
+## Installation
+
+Install the SDK using Composer:
+
+```bash
+composer require eppo/php-sdk
+```
+
+## Initialize the SDK
+
+Initialize the SDK with your SDK key:
+
+```php
+use Eppo\EppoClient;
+
+require __DIR__ . '/vendor/autoload.php';
+
+$eppoClient = EppoClient::init(
+   "<your_sdk_key>",
+   "<base_url>", // optional, default https://eppo.cloud/api
+   $assignmentLogger, // optional, must be an instance of Eppo\LoggerInterface
+   $cache // optional, must be an instance of PSR-6 CacheInterface. If not passed, FileSystem cache will be used
+);
+```
+
+## Feature Flags
+
+### Make an Assignment
+
+```php
+$subjectAttributes = [];
+$variation = $eppoClient->getStringAssignment('subject-1', 'experiment_5', $subjectAttributes);
+
+if ($variation === 'control') {
+    // do something
+}
+```
+
+## Experiments 
+
+For experiments, you'll need to implement logging. Here's a basic example:
+
+```php
+<?php
+
+use Eppo\Logger\LoggerInterface;
+
+class Logger implements LoggerInterface {
+  public function logAssignment(
+    string $experiment,
+    string $variation,
+    string $subject,
+    string $timestamp,
+    array $subjectAttributes = []
+  ) {
+    var_dump(
+      json_encode([
+        'experiment' => $experiment,
+        'variation' => $variation,
+        'subject' => $subject,
+        'timestamp' => $timestamp,
+      ]);
+    );
+  }
+}
+```
+
+## Contextual Bandits
+
+Contextual Multi-Armed Bandits are a way to dynamically optimize assignments based on user context. A bandit balances exploration of new actions with exploitation of known successful actions to maximize a specified metric.
+
+### Bandit Setup
+
+Setting up a bandit requires two loggers:
+1. An assignment logger (same as experiments)
+2. A bandit logger for recording bandit-specific events
+
+[Code Placeholder: Implementation example of PHP bandit logger will be added in a future update]
+
+### Query the bandit for actions
+
+Instead of making simple assignments with a bandit, you query the bandit for actions. The bandit considers both the subject context (like user attributes) and action contexts (like product attributes) when making decisions.
+
+[Code Placeholder: Example of querying a bandit for actions in PHP will be added in a future update]
+
+The bandit will return both:
+- A variation (indicating whether the subject is in the experiment)
+- An action (the specific choice the bandit made, if the subject is in the experiment)
+
+:::note
+For full steps to create a bandit including UI steps, see the [bandit quickstart](/bandit-quickstart).
+::: 

@@ -1,0 +1,131 @@
+---
+title: Assignments
+sidebar_position: 4
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import ApiOptionRef from '@site/src/components/ApiOptionRef';
+
+Assignments are the mechanism through which a given [Subject](/sdks/sdk-features/subjects) is assigned to a variation for a feature flag, experiment, or bandit.
+
+Currently, the Eppo PHP SDK supports the following assignment types:
+
+- String
+- Boolean
+- JSON
+- Numeric
+
+## String Assignments
+
+String assignments return a string value that is set as the variation for the experiment. String flags are the most common type of flags.
+
+```php
+$subjectAttributes = [];
+$variation = $eppoClient->getStringAssignment(
+    'subject-1', 
+    'experiment_5', 
+    $subjectAttributes
+);
+
+if ($variation === 'control') {
+    // do something
+}
+```
+
+## Typed Assignments
+
+Additional functions are available for different value types:
+
+```php
+getBooleanAssignment(...)
+getNumericAssignment(...)
+getJSONStringAssignment(...)
+getParsedJSONAssignment(...)
+```
+
+[Placeholder: Need specific PHP examples for each typed assignment]
+
+## Handling Empty Assignments
+
+We recommend always handling the empty assignment case, when the SDK returns `""`. Here are some examples illustrating when the SDK returns `""`:
+
+1. The **Traffic Exposure** setting on experiments/allocations determines the percentage of subjects the SDK will assign to that experiment/allocation. For example, if Traffic Exposure is 25%, the SDK will assign a variation for 25% of subjects and `""` for the remaining 75% (unless the subject is part of an allow list).
+
+2. Assignments occur within the environments of feature flags. You must enable the environment corresponding to the feature flag's allocation in the user interface before `getStringAssignment` returns variations. It will return `""` if the environment is not enabled.
+
+:::note
+It may take up to 10 seconds for changes to Eppo experiments to be reflected by the SDK assignments.
+:::
+
+## Assignment Logger Schema
+
+The SDK will invoke the `logAssignment` function with the following parameters:
+
+<ApiOptionRef 
+  name="timestamp"
+  type="string"
+  defaultValue="undefined"
+>
+The time when the subject was assigned to the variation. Example: `"2021-06-22T17:35:12.000Z"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="featureFlag"
+  type="string"
+  defaultValue="undefined"
+>
+An Eppo feature flag key. Example: `"recommendation-algo"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="allocation"
+  type="string"
+  defaultValue="undefined"
+>
+An Eppo allocation key. Example: `"allocation-17"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="experiment"
+  type="string"
+  defaultValue="undefined"
+>
+An Eppo experiment key. Example: `"recommendation-algo-allocation-17"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="subject"
+  type="string"
+  defaultValue="undefined"
+>
+An identifier of the subject or user assigned to the experiment variation. Example: UUID
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="subjectAttributes"
+  type="array"
+  defaultValue="[]"
+>
+A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function. Example: `{ "country": "US" }`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="variation"
+  type="string"
+  defaultValue="undefined"
+>
+The experiment variation the subject was assigned to. Example: `"control"`
+</ApiOptionRef>
+
+### Logging Examples
+
+[Placeholder: Need PHP-specific examples for logging to different services (Segment, Rudderstack, mParticle, Snowplow)]
+
+:::note
+More details about logging and examples can be found in the [event logging](/sdks/event-logging/) page.
+:::
+
+## Debugging
+
+[Placeholder: Need PHP-specific debugging methods and examples] 
