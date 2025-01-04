@@ -30,7 +30,7 @@ The browser javascript SDK uses browser local storage to store experiment config
 String assignment return a string value that is set as the variation for the experiment. String flags are the most common type of flags. They are useful for both A/B/n tests and advanced targeting use cases.
 
 ```js
-import * as EppoSdk from "@eppo/js-server-sdk";
+import * as EppoSdk from "@eppo/node-server-sdk";
 
 const client = EppoSdk.getInstance();
 
@@ -65,7 +65,7 @@ if (variant === "version-a") {
 Boolean flags support simple on/off toggles. They're useful for simple, binary feature switches like blue/green deployments or enabling/disabling a new feature.
 
 ```js
-import * as EppoSdk from "@eppo/js-server-sdk";
+import * as EppoSdk from "@eppo/node-server-sdk";
 
 const client = EppoSdk.getInstance();
 
@@ -105,7 +105,7 @@ Using this pattern, a team can make minor changes to the copy and design of a we
 For example, the following code shows how to use a JSON flag to configure a campaign.
 
 ```js
-import * as EppoSdk from "@eppo/js-server-sdk";
+import * as EppoSdk from "@eppo/node-server-sdk";
 
 const client = EppoSdk.getInstance();
 
@@ -146,7 +146,7 @@ if (campaignJson !== null) {
 Integer and numeric assignments work the same way but return either an integer or a floating point number. These assignments are useful where you want to use a numeric value to drive business logic such as pricing on an item or a number of items to display in a list.
 
 ```js
-import * as EppoSdk from "@eppo/js-server-sdk";
+import * as EppoSdk from "@eppo/node-server-sdk";
 
 const client = EppoSdk.getInstance();
 const flagKey = "flag-key-123";

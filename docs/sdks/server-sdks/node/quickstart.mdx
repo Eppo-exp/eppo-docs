@@ -20,7 +20,7 @@ The Eppo Node SDK is available via a number of package managers.
 <TabItem value="yarn" label="Yarn">
 
 ```bash
-yarn add @eppo/js-server-sdk
+yarn add @eppo/node-server-sdk
 ```
 
 </TabItem>
@@ -28,7 +28,7 @@ yarn add @eppo/js-server-sdk
 <TabItem value="npm" label="NPM">
 
 ```bash
-npm install @eppo/js-server-sdk
+npm install @eppo/node-server-sdk
 ```
 
 </TabItem>
@@ -36,7 +36,7 @@ npm install @eppo/js-server-sdk
 <TabItem value="bun" label="Bun">
 
 ```bash
-bun add @eppo/js-server-sdk
+bun add @eppo/node-server-sdk
 ```
 
 </TabItem>
@@ -57,7 +57,7 @@ First, initialize the SDK using your SDK key. The SDK key is different from the 
 
 
 ```js
-import init from "@eppo/js-server-sdk";
+import init from "@eppo/node-server-sdk";
 
 await init({apiKey: 'SDK_KEY'});
 ``` 
@@ -82,7 +82,7 @@ Each assignment requires:
 - **Default Value**: Fallback value if assignment fails or rules don't match
 
 ```js
-import * as EppoSdk from "@eppo/js-server-sdk";
+import * as EppoSdk from "@eppo/node-server-sdk";
 
 // Get SDK instance
 const eppoClient = EppoSdk.getInstance();
@@ -159,7 +159,7 @@ For simplicity, we'll create a `logAssignment()` function that logs the assignme
 
 ```javascript
 // Import Eppo's assignment logger interface and client initializer
-import { IAssignmentLogger, init } from "@eppo/js-server-sdk";
+import { IAssignmentLogger, init } from "@eppo/node-server-sdk";
 
 // Define logAssignment so that it logs events
 const assignmentLogger: IAssignmentLogger = {
@@ -186,7 +186,7 @@ In a production application, you would want to replace the `console.log()` state
 After initializing the SDK with the `logAssignment()` function, you can make assignments in the same way as for feature flags.
 
 ```js
-import * as EppoSdk from "@eppo/js-server-sdk";
+import * as EppoSdk from "@eppo/node-server-sdk";
 
 // Get SDK instance
 const eppoClient = EppoSdk.getInstance();
@@ -263,7 +263,7 @@ In a production application, you would want to replace the `console.log()` state
 Instead of making simple assignments with a bandit, you will want to query the bandit for actions. 
 
 ```js
-import * as EppoSdk from "@eppo/js-server-sdk";
+import * as EppoSdk from "@eppo/node-server-sdk";
 import { Attributes, BanditActions } from "@eppo/js-client-sdk-common";
 
 const eppoClient = EppoSdk.getInstance();

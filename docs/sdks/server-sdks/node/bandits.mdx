@@ -23,7 +23,7 @@ In order for the bandit to learn an optimized policy, we need to capture and log
 This requires defining a bandit logger in addition to an assignment logger.
 ```ts
 // Import Eppo's logger interfaces and client initializer
-import { IAssignmentLogger, IBanditLogger, init } from "@eppo/js-server-sdk";
+import { IAssignmentLogger, IBanditLogger, init } from "@eppo/node-server-sdk";
 
 // Define an assignment logger for recording variation assignments
 const assignmentLogger: IAssignmentLogger = {
@@ -82,7 +82,7 @@ categoricalAttributes: Attributes }`). There is more detail on this in the Subje
 The following code queries the bandit for an action:
 
 ```ts
-import { getInstance as getEppoSdkInstance } from "@eppo/js-server-sdk";
+import { getInstance as getEppoSdkInstance } from "@eppo/node-server-sdk";
 import { Attributes, BanditActions } from "@eppo/js-client-sdk-common";
 
 const flagKey = "shoe-bandit";
