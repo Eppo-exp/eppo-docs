@@ -15,7 +15,7 @@ To complete basic initialization, you only need to provide an SDK key. [Create a
 let mut client = eppo::ClientConfig::from_api_key("<YOUR_API_KEY>")
     .to_client();
 
-client.start_poller_thread();
+let poller_thread = client.start_poller_thread();
 ```
 
 ## Advanced Configuration
@@ -25,24 +25,6 @@ Basic initialization is great for most use cases, but the SDK provides options t
 ### Initialization Options
 
 The SDK configuration can be customized using the `ClientConfig` builder pattern:
-
-<ApiOptionRef 
-  name="request_timeout"
-  type="Duration"
-  defaultValue="Duration::from_secs(5)"
->
-
-**Timeout** in seconds for HTTP requests for the experiment configurations.
-</ApiOptionRef>
-
-<ApiOptionRef 
-  name="poll_interval"
-  type="Duration"
-  defaultValue="Duration::from_secs(30)"
->
-
-Interval between polling attempts to fetch updated configurations.
-</ApiOptionRef>
 
 <ApiOptionRef 
   name="base_url"
@@ -68,64 +50,8 @@ Example using these configuration options:
 use std::time::Duration;
 
 let mut client = eppo::ClientConfig::from_api_key("<YOUR_API_KEY>")
-    .request_timeout(Duration::from_secs(10))
-    .poll_interval(Duration::from_secs(60))
     .base_url("https://custom-domain.example.com/api")
     .assignment_logger(MyAssignmentLogger)
-    .to_client();
-
-client.start_poller_thread();
-```
-
-### Configuration Caching
-
-The SDK can cache previously loaded configurations for use in future sessions. This makes the SDK initialize faster.
-
-```rust
-// Placeholder: The Rust SDK currently does not support persistent configuration caching.
-// This feature may be added in future versions.
-```
-
-### Offline Initialization
-
-Eppo's SDK supports offline initialization. This is useful if you want to initialize the SDK with a configuration from an external source or if you use serverless functions and want to avoid redundant network requests.
-
-```rust
-// Placeholder: The Rust SDK currently does not support offline initialization.
-// This feature may be added in future versions.
-```
-
-### Example Configurations
-
-Here are a few common configurations that you might want to use depending on what type of performance and consistency characteristics you want for your application.
-
-#### Prioritize Flag Value Freshness
-
-If you want to always use the latest flag values, you'd want settings that:
-- Poll frequently for updates
-- Use a shorter timeout for requests
-
-```rust
-use std::time::Duration;
-
-let mut client = eppo::ClientConfig::from_api_key("<YOUR_API_KEY>")
-    .request_timeout(Duration::from_secs(2))
-    .poll_interval(Duration::from_secs(15))
-    .to_client();
-
-client.start_poller_thread();
-```
-
-#### Prioritize Fast Initialization
-
-If you want to optimize for the quickest time to initialization:
-
-```rust
-use std::time::Duration;
-
-let mut client = eppo::ClientConfig::from_api_key("<YOUR_API_KEY>")
-    .request_timeout(Duration::from_millis(500))
-    .poll_interval(Duration::from_secs(300)) // Poll less frequently
     .to_client();
 
 client.start_poller_thread();
