@@ -191,6 +191,8 @@ A free-form map of metadata about the subject. These attributes are only logged 
 The experiment variation the subject was assigned to. Example: `"control"`
 </ApiOptionRef>
 
+<!-- missing: metaData, extraLogging -->
+
 ### Logging to Your Data Warehouse
 
 Eppo's architecture ensures that raw user data never leaves your system. Instead of pushing subject-level exposure events to Eppo's servers, Eppo's SDKs integrate with your existing logging system.
@@ -201,7 +203,7 @@ Here are examples of implementing the `AssignmentLogger` class for different log
 <TabItem value="console" label="Console">
 
 ```python
-from eppo_client.assignment_logger import AssignmentLogger
+from eppo_client import AssignmentLogger
 
 class ConsoleLogger(AssignmentLogger):
     def log_assignment(self, assignment):
@@ -213,7 +215,7 @@ class ConsoleLogger(AssignmentLogger):
 
 ```python
 import analytics
-from eppo_client.assignment_logger import AssignmentLogger
+from eppo_client import AssignmentLogger
 
 analytics.write_key = '<SEGMENT_WRITE_KEY>'
 
@@ -231,7 +233,7 @@ class SegmentLogger(AssignmentLogger):
 
 ```python
 from snowplow_tracker import Tracker, Emitter
-from eppo_client.assignment_logger import AssignmentLogger
+from eppo_client import AssignmentLogger
 
 emitter = Emitter("collector.mydomain.net")
 tracker = Tracker(emitters=emitter, namespace="eppo", app_id="eppo-app")
@@ -256,7 +258,7 @@ To prevent duplicate assignment events, the SDK provides a caching assignment lo
 
 ```python
 import cachetools
-from eppo_client.assignment_logger import AssignmentLogger, AssignmentCacheLogger
+from eppo_client import AssignmentLogger, AssignmentCacheLogger
 
 class MyLogger(AssignmentLogger):
     def log_assignment(self, assignment):
