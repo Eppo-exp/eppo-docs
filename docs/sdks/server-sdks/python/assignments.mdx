@@ -191,7 +191,14 @@ A free-form map of metadata about the subject. These attributes are only logged 
 The experiment variation the subject was assigned to. Example: `"control"`
 </ApiOptionRef>
 
-<!-- missing: metaData, extraLogging -->
+<ApiOptionRef 
+  name="metaData"
+  type="Dict[str, Any]"
+  defaultValue="{sdkName: 'python'}"
+>
+
+A free-form map of metadata about the assignment. By default, the SDK will include the SDK name for logging.
+</ApiOptionRef>
 
 ### Logging to Your Data Warehouse
 
