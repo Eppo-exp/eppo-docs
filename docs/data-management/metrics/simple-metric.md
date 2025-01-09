@@ -187,12 +187,12 @@ where fact_timestamp >= assignment_timestamp + X days
 and assignment_timestamp < current_date - X days 
 ```
 
-Additionally, a maximum number of days (Y) can be set on the retention period by enabling "add a timeframe to aggregate". When this is enabled, the aggregation will include events by subjects after the minimum number of days defined by the retention period (>=X) and before the max timeframe to aggregate (`<Y`). 
+Additionally, a maximum number of days (`Y`) can be set on the retention period by enabling "add a timeframe to aggregate". When this is enabled, the aggregation will include events by subjects after the minimum number of days defined by the retention period (`>=X`) and before the max timeframe to aggregate (`<Y`). 
 
 
 #### Conversion
 
-Conversion metrics measure the proportion of entities with at least one fact event within a fixed number of days (`X`) from experiment assignment. For example, a 7-day conversion metric would measure the proportion of users who sign up for a free trial within 7 days of being assigned to the experiment.
+Conversion metrics measure the proportion of entities with at least one fact event within a fixed number of days (X) from experiment assignment. For example, a 7-day conversion metric would measure the proportion of users who sign up for a free trial within 7 days of being assigned to the experiment.
 
 $\frac{\text{Number of entities with a non-NULL fact within X days}}{\text{Number of unique entities assigned}}$
 

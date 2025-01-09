@@ -15,13 +15,14 @@ To complete basic initialization, you only need to provide an SDK key. [Create a
 import { init } from "@eppo/js-client-sdk";
 
 await init({
-  apiKey: 'YOUR_SDK_KEY',
-    assignmentLogger: { logAssignment: (assignmentEvent) => console.log('Send to warehouse: ', assignmentEvent) },
+  apiKey: "YOUR_SDK_KEY",
+  assignmentLogger: { logAssignment: (assignmentEvent) => console.log('Send to warehouse: ', assignmentEvent) },
 
 });
 ``` 
 
 ## Use the SDK instance
+
 After initialization, you can use the SDK instance by importing the SDK at the scope you will use it in and calling `getInstance()`. You can then use the SDK instance to assign a variation to a subject using the `get*Assignment` functions.
 
 ```javascript
