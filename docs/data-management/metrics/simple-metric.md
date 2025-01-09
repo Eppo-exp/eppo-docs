@@ -192,7 +192,7 @@ Additionally, a maximum number of days (`Y`) can be set on the retention period 
 
 #### Conversion
 
-Conversion metrics measure the proportion of entities with at least one fact event within a fixed number of days (X) from experiment assignment. For example, a 7-day conversion metric would measure the proportion of users who sign up for a free trial within 7 days of being assigned to the experiment.
+Conversion metrics measure the proportion of entities with at least one fact event within a fixed number of days (`X`) from experiment assignment. For example, a 7-day conversion metric would measure the proportion of users who sign up for a free trial within 7 days of being assigned to the experiment.
 
 $\frac{\text{Number of entities with a non-NULL fact within X days}}{\text{Number of unique entities assigned}}$
 
