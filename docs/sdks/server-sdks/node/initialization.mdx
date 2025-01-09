@@ -3,7 +3,7 @@ title: Initialization
 sidebar_position: 3
 ---
 
-import ApiOptionRef from '@site/src/components/ApiOptionRef';
+import ApiOptionRef from "@site/src/components/ApiOptionRef";
 
 
 The Eppo JavaScript SDK is easy to initialize while offering robust customization options, making it adaptable to various use cases such as offline mode, custom caching requirements, and ultra-low-latency initialization.
@@ -16,7 +16,7 @@ To complete basic initialization, you only need to provide an SDK key. [Create a
 import { init } from "@eppo/node-server-sdk";
 
 await init({
-  apiKey: 'YOUR_SDK_KEY',
+  apiKey: "YOUR_SDK_KEY",
 });
 ``` 
 
@@ -133,8 +133,8 @@ Consider initialization successfully complete without fetching updates, even if 
 
 <ApiOptionRef 
   name="updateOnFetch"
-  type="'always' | 'expired' | 'empty'"
-  defaultValue="'always'"
+  type='"always" | "expired" | "empty"'
+  defaultValue='"always"'
 >
 
 Sets how the configuration is updated after a successful fetch:
@@ -157,7 +157,7 @@ You can also implement your own custom cache by providing a `persistentStore`:
 import { init } from "@eppo/node-server-sdk";
 
 await init({
-  apiKey: 'YOUR_SDK_KEY',
+  apiKey: "YOUR_SDK_KEY",
   persistentStore: myCustomStore
 });
 ```
@@ -184,10 +184,10 @@ Use the following configuration to achieve this:
 import { init } from "@eppo/node-server-sdk";
 
 await init({
-  apiKey: 'YOUR_API_KEY',
+  apiKey: "YOUR_API_KEY",
   maxCacheAgeSeconds: 0, // Always consider cached configurations expired
   useExpiredCache: false, // Wait for an updated configuration to be fetched before initialization is considered successful
-  updateOnFetch: 'always', // Immediately start using the new configuration after it is fetched
+  updateOnFetch: "always", // Immediately start using the new configuration after it is fetched
   requestTimeoutMs: 5000, // Don't time out the initial configuration request until five seconds have passed
   numInitialRequestRetries: 1, // If the initial configuration request fails, try one more time 
   pollAfterSuccessfulInitialization: true, // Check for updated configurations every 30 seconds
@@ -208,8 +208,8 @@ Use the following configuration to achieve those goals:
 import { init } from "@eppo/node-server-sdk";
 
 await init({
-  apiKey: 'YOUR_API_KEY',
-  updateOnFetch: 'always', // Immediately start using the new configuration once it is fetched
+  apiKey: "YOUR_API_KEY",
+  updateOnFetch: "always", // Immediately start using the new configuration once it is fetched
   maxCacheAgeSeconds: 300, // Don't even bother fetching updated configurations unless the last one is more than five minutes old
   useExpiredCache: true, // If the cached configuration is expired, use it to serve assignments until an updated one is fetched
   requestTimeoutMs: 500, // Give up on fetching updated configurations after half a second and--if this is the first-ever initialization--just serve default values
@@ -224,10 +224,10 @@ You could consider caches always expired so that it non-blocking loads an update
 import { init } from "@eppo/node-server-sdk";
 
 await init({
-  apiKey: 'YOUR_API_KEY',
+  apiKey: "YOUR_API_KEY",
   maxCacheAgeSeconds: 0, // Always consider cached configurations expired
   // Settings set to non-default values
-  updateOnFetch: 'empty', // Immediately start using the new configuration once it is fetched
+  updateOnFetch: "empty", // Immediately start using the new configuration once it is fetched
   useExpiredCache: true, // Always used the previously cached assignments
   requestTimeoutMs: 500, // Give up on fetching updated configurations after half a second and--if this is the first-ever initialization--just serve default values
   numInitialRequestRetries: 0, // Don't retry a failed initialization fetch
@@ -241,13 +241,13 @@ In some situations you may want to fetch flag configurations server side and the
 To start, you can export flag configurations from the Node SDK by using the `getFlagConfigurations(): Record<string, Flag>` function. From there, you can stringify them (or your preferred serialization method) and send it to the front-end client as a part of your routine initialization.
 
 ```javascript
-import express from 'express';
+import express from "express";
 import * as EppoSdk from "@eppo/node-server-sdk";
 
 const app = express();
 const eppoClient = EppoSdk.getInstance();
 
-app.get('/api/flag-configurations', (req, res) => {
+app.get("/api/flag-configurations", (req, res) => {
   const flagConfigurations = eppoClient.getFlagConfigurations();
   res.json(flagConfigurations);
 });

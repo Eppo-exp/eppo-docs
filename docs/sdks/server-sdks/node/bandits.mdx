@@ -21,6 +21,7 @@ To leverage bandits using the JavaScript Client SDK, there are two additional st
 
 In order for the bandit to learn an optimized policy, we need to capture and log the bandit's actions.
 This requires defining a bandit logger in addition to an assignment logger.
+
 ```ts
 // Import Eppo's logger interfaces and client initializer
 import { IAssignmentLogger, IBanditLogger, init } from "@eppo/node-server-sdk";
@@ -92,11 +93,11 @@ const defaultValue = "default";
 const actions: BanditActions = {
   nike: { 
     numericAttributes: { brandAffinity: 2.3 }, 
-    categoricalAttributes: { imageAspectRatio: "16:9" } 
+    categoricalAttributes: { hasPurchasedBefore: True } 
   },
   adidas: {
     numericAttributes: { brandAffinity: 0.2 },
-    categoricalAttributes: { imageAspectRatio: "16:9" }
+    categoricalAttributes: { hasPurchasedBefore: False }
   }
 };
 const { variation, action } = getEppoSdkInstance().getBanditAction(

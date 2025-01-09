@@ -3,8 +3,8 @@ title: Quickstart
 sidebar_position: 2
 ---
 
-import Tabs from '@theme/Tabs';
-import TabItem from '@theme/TabItem';
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
 
 The Eppo Node.js SDK enables feature flags and experiments in your JavaScript applications with only a few lines of code.
 
@@ -56,10 +56,10 @@ Feature flags are a way to toggle features on and off without needing to deploy 
 First, initialize the SDK using your SDK key. The SDK key is different from the project API key. 
 
 
-```js
+```ts
 import init from "@eppo/node-server-sdk";
 
-await init({apiKey: 'SDK_KEY'});
+await init({apiKey: "SDK_KEY"});
 ``` 
 
 :::note
@@ -81,7 +81,7 @@ Each assignment requires:
 - **Subject Attributes**: Optional key-value pairs containing additional information used for rule evaluation
 - **Default Value**: Fallback value if assignment fails or rules don't match
 
-```js
+```ts
 import * as EppoSdk from "@eppo/node-server-sdk";
 
 // Get SDK instance
@@ -91,8 +91,8 @@ const eppoClient = EppoSdk.getInstance();
 const featureKey = "my-neat-feature";
 const subjectKey = getCurrentUser() || "anonymous";
 const subjectAttributes = {
-    'country': user.country,
-    'device': user.device,
+    "country": user.country,
+    "device": user.device,
 };
 const defaultValue = "default-value";
 
@@ -118,7 +118,7 @@ The SDK provides different assignment functions based on the type of value you n
 | `getNumericAssignment()` | Float |
 
 :::note
-See more details about assignment functions in the [Assignments](/sdks/client-sdks/javascript/assignments) page.
+See more details about assignment functions in the [Assignments](/sdks/server-sdks/javascript/assignments) page.
 :::
 
 ### Using Assignments
@@ -178,14 +178,14 @@ await init({
 
 
 :::note
-In a production application, you would want to replace the `console.log()` statement with an actual logging system. We have documentation on how to set up logging with multiple popular data warehouses and logging systems in the [Assignment page](/sdks/client-sdks/javascript/assignments/#logging-data-to-your-data-warehouse).
+In a production application, you would want to replace the `console.log()` statement with an actual logging system. We have documentation on how to set up logging with multiple popular data warehouses and logging systems in the [Assignment page](/sdks/server-sdks/node/assignments/#logging-data-to-your-data-warehouse).
 :::
 
 ### Assign a variant
 
 After initializing the SDK with the `logAssignment()` function, you can make assignments in the same way as for feature flags.
 
-```js
+```ts
 import * as EppoSdk from "@eppo/node-server-sdk";
 
 // Get SDK instance
@@ -195,8 +195,8 @@ const eppoClient = EppoSdk.getInstance();
 const featureKey = "my-neat-feature";
 const subjectKey = getCurrentUser() || "anonymous";
 const subjectAttributes = {
-    'country': user.country,
-    'device': user.device,
+    "country": user.country,
+    "device": user.device,
 };
 const defaultValue = "default-value";
 
@@ -228,7 +228,7 @@ Contextual Multi-Armed Bandits are a way to dynamically optimize assignments bas
 
 Setting up a bandit is very similar to setting up an experiment but with an additional logging function.
 
-```js
+```ts
 // Import Eppo's logger interfaces and client initializer
 import { IAssignmentLogger, IBanditLogger, init } from "@eppo/node-server-sdk";
 
@@ -255,14 +255,14 @@ await init({
 ```
 
 :::note
-In a production application, you would want to replace the `console.log()` statement with an actual logging system. We have documentation on how to set up logging with multiple popular data warehouses and logging systems in the [Assignment page](/sdks/client-sdks/javascript/assignments/#logging-data-to-your-data-warehouse).
+In a production application, you would want to replace the `console.log()` statement with an actual logging system. We have documentation on how to set up logging with multiple popular data warehouses and logging systems in the [Assignment page](/sdks/server-sdks/node/assignments/#logging-data-to-your-data-warehouse).
 :::
 
 ### Query the bandit for actions
 
 Instead of making simple assignments with a bandit, you will want to query the bandit for actions. 
 
-```js
+```ts
 import * as EppoSdk from "@eppo/node-server-sdk";
 import { Attributes, BanditActions } from "@eppo/js-client-sdk-common";
 
