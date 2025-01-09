@@ -16,6 +16,8 @@ import { init } from "@eppo/js-client-sdk";
 
 await init({
   apiKey: 'YOUR_SDK_KEY',
+    assignmentLogger: { logAssignment: (assignmentEvent) => console.log('Send to warehouse: ', assignmentEvent) },
+
 });
 ``` 
 
