@@ -59,7 +59,10 @@ First, initialize the SDK using your SDK key. The SDK key is different from the 
 ```ts
 import init from "@eppo/node-server-sdk";
 
-await init({apiKey: "SDK_KEY"});
+await init({
+  apiKey: "SDK_KEY",
+  assignmentLogger: { logAssignment: (assignmentEvent) => console.log('Send to warehouse: ', assignmentEvent) },
+});
 ``` 
 
 :::note

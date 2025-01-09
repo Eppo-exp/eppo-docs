@@ -72,7 +72,10 @@ First, initialize the SDK using your SDK key. The SDK key is different from the 
 ```js
 import init from "@eppo/js-client-sdk";
 
-await init({apiKey: 'SDK_KEY'});
+await init({
+  apiKey: "SDK_KEY",
+  assignmentLogger: { logAssignment: (assignmentEvent) => console.log('Send to warehouse: ', assignmentEvent) },
+});
 ``` 
 
 :::note

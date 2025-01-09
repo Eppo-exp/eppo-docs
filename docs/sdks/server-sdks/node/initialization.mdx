@@ -16,7 +16,8 @@ To complete basic initialization, you only need to provide an SDK key. [Create a
 import { init } from "@eppo/node-server-sdk";
 
 await init({
-  apiKey: "YOUR_SDK_KEY",
+  apiKey: "SDK_KEY",
+  assignmentLogger: { logAssignment: (assignmentEvent) => console.log('Send to warehouse: ', assignmentEvent) },
 });
 ``` 
 
@@ -145,23 +146,6 @@ Sets how the configuration is updated after a successful fetch:
 
 </ApiOptionRef>
 
-### Configuration caching
-The SDK can cache previously loaded configurations for use in future sessions. 
-This makes the SDK initialize faster.
-
-\<Stub for configuration caching for Node.js\>
-
-You can also implement your own custom cache by providing a `persistentStore`:
-
-```javascript
-import { init } from "@eppo/node-server-sdk";
-
-await init({
-  apiKey: "YOUR_SDK_KEY",
-  persistentStore: myCustomStore
-});
-```
-
 #### Expiration
 Caching settings depend on the concept of expiration. Expiration is controlled by the `maxCacheAgeSeconds` initialization option. This setting is overridable by the implementation of `isExpired()` for a custom persistent store.
 
@@ -185,6 +169,7 @@ import { init } from "@eppo/node-server-sdk";
 
 await init({
   apiKey: "YOUR_API_KEY",
+  assignmentLogger: { logAssignment: (assignmentEvent) => console.log('Send to warehouse: ', assignmentEvent) },
   maxCacheAgeSeconds: 0, // Always consider cached configurations expired
   useExpiredCache: false, // Wait for an updated configuration to be fetched before initialization is considered successful
   updateOnFetch: "always", // Immediately start using the new configuration after it is fetched
@@ -209,6 +194,7 @@ import { init } from "@eppo/node-server-sdk";
 
 await init({
   apiKey: "YOUR_API_KEY",
+  assignmentLogger: { logAssignment: (assignmentEvent) => console.log('Send to warehouse: ', assignmentEvent) },
   updateOnFetch: "always", // Immediately start using the new configuration once it is fetched
   maxCacheAgeSeconds: 300, // Don't even bother fetching updated configurations unless the last one is more than five minutes old
   useExpiredCache: true, // If the cached configuration is expired, use it to serve assignments until an updated one is fetched
@@ -225,6 +211,7 @@ import { init } from "@eppo/node-server-sdk";
 
 await init({
   apiKey: "YOUR_API_KEY",
+  assignmentLogger: { logAssignment: (assignmentEvent) => console.log('Send to warehouse: ', assignmentEvent) },
   maxCacheAgeSeconds: 0, // Always consider cached configurations expired
   // Settings set to non-default values
   updateOnFetch: "empty", // Immediately start using the new configuration once it is fetched
