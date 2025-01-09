@@ -29,9 +29,9 @@ First, initialize the SDK using your SDK key:
 
 ```python
 import eppo_client
-from eppo_client import Config
+from eppo_client import ClientConfig
 
-client_config = Config(api_key="<SDK-KEY>")
+client_config = ClientConfig(api_key="<SDK-KEY>")
 eppo_client.init(client_config)
 ```
 
@@ -85,13 +85,13 @@ While feature flags are useful, they do not send you any information about how y
 To log events through the SDK, you need to implement the `AssignmentLogger` class:
 
 ```python
-from eppo_client.assignment_logger import AssignmentLogger
+from eppo_client import AssignmentLogger
 
 class MyLogger(AssignmentLogger):
     def log_assignment(self, assignment):
         print(f"Logging assignment: {assignment}")  # Replace with your logging logic
 
-client_config = Config(
+client_config = ClientConfig(
     api_key="<SDK-KEY>",
     assignment_logger=MyLogger()
 )
@@ -111,7 +111,7 @@ Contextual Multi-Armed Bandits are a way to dynamically optimize assignments bas
 Setting up a bandit requires implementing both an assignment logger and a bandit logger:
 
 ```python
-from eppo_client.assignment_logger import AssignmentLogger
+from eppo_client import AssignmentLogger
 
 class MyLogger(AssignmentLogger):
     def log_assignment(self, assignment):
@@ -120,7 +120,7 @@ class MyLogger(AssignmentLogger):
     def log_bandit_action(self, bandit_action):
         print(f"Logging bandit action: {bandit_action}")
 
-client_config = Config(
+client_config = ClientConfig(
     api_key="<SDK-KEY>",
     assignment_logger=MyLogger()
 )
@@ -133,22 +133,22 @@ Instead of making simple assignments with a bandit, you query the bandit for act
 
 ```python
 import eppo_client
-from eppo_client.bandit import Attributes
+from eppo_client import ContextAttributes
 
 client = eppo_client.get_instance()
 bandit_result = client.get_bandit_action(
     "shoe-bandit",
     user.id,
-    Attributes(
+    ContextAttributes(
         numeric_attributes={"age": user.age},
         categorical_attributes={"country": user.country}
     ),
     {
-        "nike": Attributes(
+        "nike": ContextAttributes(
             numeric_attributes={"brand_affinity": 2.3},
             categorical_attributes={"previously_purchased": True},
         ),
-        "adidas": Attributes(
+        "adidas": ContextAttributes(
             numeric_attributes={"brand_affinity": 0.2},
             categorical_attributes={"previously_purchased": False},
         ),

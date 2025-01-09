@@ -21,7 +21,7 @@ In order for the bandit to learn an optimized policy, we need to capture and log
 This requires implementing the `log_bandit_action` method in your `AssignmentLogger` class:
 
 ```python
-from eppo_client.assignment_logger import AssignmentLogger
+from eppo_client import AssignmentLogger
 
 class MyLogger(AssignmentLogger):
     def log_assignment(self, assignment):
@@ -142,22 +142,22 @@ To query the bandit for an action, use the `get_bandit_action` function:
 
 ```python
 import eppo_client
-from eppo_client.bandit import Attributes
+from eppo_client import ContextAttributes
 
 client = eppo_client.get_instance()
 bandit_result = client.get_bandit_action(
     "shoe-bandit",  # flag_key
     user.id,        # subject_key
-    Attributes(     # subject_attributes
+    ContextAttributes(     # subject_attributes
         numeric_attributes={"age": 25},
         categorical_attributes={"country": "GB"}
     ),
     {              # actions with their attributes
-        "nike": Attributes(
+        "nike": ContextAttributes(
             numeric_attributes={"brand_affinity": 2.3},
             categorical_attributes={"previously_purchased": True},
         ),
-        "adidas": Attributes(
+        "adidas": ContextAttributes(
             numeric_attributes={"brand_affinity": 0.2},
             categorical_attributes={"previously_purchased": False},
         ),
@@ -176,22 +176,22 @@ else:
 The subject context contains contextual information about the subject that is independent of bandit actions.
 For example, the subject's age or country.
 
-The subject context has type `Attributes` which has two fields:
+The subject context has type `ContextAttributes` which has two fields:
 - `numeric_attributes` (Dict[str, float]): A dictionary of numeric attributes (such as "age")
 - `categorical_attributes` (Dict[str, str]): A dictionary of categorical attributes (such as "country")
 
 :::note
-The `categorical_attributes` are also used for targeting rules for the feature flag similar to how `subject_attributes` are used with regular feature flags.
+The `ContextAttributes` are also used for targeting rules for the feature flag similar to how `subject_attributes` are used with regular feature flags.
 :::
 
 ### Action Contexts
 
-Next, supply a dictionary with actions and their attributes: `actions: Dict[str, Attributes]`.
+Next, supply a dictionary with actions and their attributes: `actions: Dict[str, ContextAttributes]`.
 If the user is assigned to the bandit, the bandit selects one of the actions supplied here.
 All actions supplied are considered to be valid; if an action should not be shown to a user, do not include it in this dictionary.
 
 The action attributes are similar to the `subject_attributes` but hold action-specific information.
-You can use `Attributes.empty()` to create an empty attribute context.
+You can use `ContextAttributes.empty()` to create an empty attribute context.
 
 Note that relevant action contexts are subject-action interactions. For example, there could be a "brand-affinity" model
 that computes brand affinities of users to brands, and scores of that model can be added to the action context to provide
