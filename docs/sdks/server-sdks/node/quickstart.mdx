@@ -137,14 +137,15 @@ const variation = eppoClient.getStringAssignment(
   defaultValue
 );
 
-// Render different components based on assignment
-if (variation === "landing-page-a") {
-    return <LandingPageA />
-} else if (variation === "landing-page-b") {
-    return <LandingPageB />
+let algorithm;
+
+if (variation === 'new-algorithm') {
+  algorithm = ALGORITHM.BIASED_RANDOM_WALK;
 } else {
-    return <LandingPageC />
+  algorithm = ALGORITHM.RANDOM_WALK;
 }
+const result = runAlgorithm(algorithm);
+
 ```
 
 That's all the code you need to make a basic assignment. After that, you can do the rest of the work running the experiment from the Eppo UI. This is awesome both because it allows you to iterate quickly and because it gives you the ability to change the experiment configuration without redeploying your code.
