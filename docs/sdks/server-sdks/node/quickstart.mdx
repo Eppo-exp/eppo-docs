@@ -82,7 +82,7 @@ Each assignment requires:
 - **Flag Key**: Identifies which set of configuration rules to use
 - **Subject Key**: A unique identifier for the subject (usually a user ID)
 - **Subject Attributes**: Optional key-value pairs containing additional information used for rule evaluation
-- **Default Value**: Fallback value if assignment fails or rules don't match
+- **Default Value**: Fallback value if the flag is disabled, the assignment fails, or rules don't match
 
 ```ts
 import * as EppoSdk from "@eppo/node-server-sdk";
@@ -155,7 +155,7 @@ You can see the full steps for setting up a feature flag including UI steps in t
 
 ## Experiments
 
-While feature flags are useful, they do not send you any information about how your users are interacting with the feature. Experiments provide a way to collect data about these interactions using whichever logging and data warehousing system you prefer.
+While feature flags are useful, they don't provide a mechanism to measure the impact of the feature. Experiments provide a way to collect data about these interactions using whichever logging and data warehousing system you prefer.
 
 To log events through the SDK, you need to define a `logAssignment()` function using the `IAssignmentLogger` interface to pass to the `init()` function.
 
@@ -168,7 +168,7 @@ import { IAssignmentLogger, init } from "@eppo/node-server-sdk";
 // Define logAssignment so that it logs events
 const assignmentLogger: IAssignmentLogger = {
   logAssignment(assignment) {
-    console.log(assignment);
+    console.log("Send information to data warehouse:", assignment);
   }
 };
 
