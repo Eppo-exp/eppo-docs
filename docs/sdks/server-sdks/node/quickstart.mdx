@@ -121,14 +121,14 @@ The SDK provides different assignment functions based on the type of value you n
 | `getNumericAssignment()` | Float |
 
 :::note
-See more details about assignment functions in the [Assignments](/sdks/server-sdks/javascript/assignments) page.
+See more details about assignment functions in the [Assignments](/sdks/server-sdks/node/assignments) page.
 :::
 
 ### Using Assignments
 
 After receiving an assignment, your application should implement logic to modify the user experience accordingly:
 
-```javascript
+```ts
 // Example using a boolean assignment
 const variation = eppoClient.getStringAssignment(
   featureKey,
@@ -161,7 +161,7 @@ To log events through the SDK, you need to define a `logAssignment()` function u
 
 For simplicity, we'll create a `logAssignment()` function that logs the assignment data to the console.
 
-```javascript
+```ts
 // Import Eppo's assignment logger interface and client initializer
 import { IAssignmentLogger, init } from "@eppo/node-server-sdk";
 

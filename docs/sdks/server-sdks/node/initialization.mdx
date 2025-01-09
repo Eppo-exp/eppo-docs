@@ -12,7 +12,7 @@ The Eppo JavaScript SDK is easy to initialize while offering robust customizatio
 
 To complete basic initialization, you only need to provide an SDK key. [Create an SDK key](/sdks/sdk-keys) if you don't already have one. 
 
-```javascript
+```ts
 import { init } from "@eppo/node-server-sdk";
 
 await init({
@@ -24,7 +24,7 @@ await init({
 ## Use the SDK instance
 After initialization, you can use the SDK instance by importing the SDK at the scope you will use it in and calling `getInstance()`. You can then use the SDK instance to assign a variation to a subject using the `get*Assignment` functions.
 
-```javascript
+```ts
 import * as EppoSdk from "@eppo/node-server-sdk";
 
 const eppoClient = EppoSdk.getInstance();
@@ -227,7 +227,7 @@ In some situations you may want to fetch flag configurations server side and the
 
 To start, you can export flag configurations from the Node SDK by using the `getFlagConfigurations(): Record<string, Flag>` function. From there, you can stringify them (or your preferred serialization method) and send it to the front-end client as a part of your routine initialization.
 
-```javascript
+```ts
 import express from "express";
 import * as EppoSdk from "@eppo/node-server-sdk";
 
@@ -242,7 +242,7 @@ app.get("/api/flag-configurations", (req, res) => {
 
 Using the values in `flagConfigurations`, you can now initialize client side SDKs with the `offlineInit` function. For instance, in the JS client-side SDK:
 
-```javascript
+```ts
 import { offlineInit, Flag, ObfuscatedFlag } from "@eppo/js-client-sdk";
 
 // configuration from the server SDK
@@ -266,7 +266,7 @@ Eppo's SDK supports offline initialization. This is useful if you want to initia
 
 This function is synchronous and ready to handle assignments after it returns.
 
-```javascript
+```ts
 import { offlineInit, Flag, ObfuscatedFlag } from "@eppo/node-server-sdk";
 
 // configuration from your server SDK
