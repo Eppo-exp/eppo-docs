@@ -101,7 +101,7 @@ If you used `sleep` to wait for `EppoClient` initialization before getting assig
 
 ### Configuration API
 
-This release extends [advanced configuration control API](/sdks/server-sdks/python/#c-advanced-configuration-control) introduced in 3.7.0.
+This release extends [advanced configuration control API](/sdks/server-sdks/python/initialization#advanced-configuration) introduced in 3.7.0.
 
 `EppoClient` now exposes `get_configuration()` method that returns currently-active configuration.
 

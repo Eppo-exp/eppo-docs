@@ -27,6 +27,10 @@ After initialization, you can get an instance of the client using `get_instance(
 client = eppo_client.get_instance()
 ```
 
+:::note
+When using pre-forking web servers (e.g., uWSGI), it's important to initialize Eppo SDK after forking process is complete. See [Using Eppo SDK with pre-forking servers](/sdks/preforking/) for more information.
+:::
+
 ## Advanced Configuration
 
 Basic initialization is great for most use cases, but the SDK provides options that you can use during initialization to customize the behavior of the SDK.
