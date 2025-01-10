@@ -1,0 +1,152 @@
+---
+title: Usage Examples
+sidebar_position: 6
+---
+
+In this section, we will go through a few examples of how to use Eppo's Python SDK in two common situations: batch processing and real-time applications.
+
+## Usage in a batch process
+
+As a basic example, imagine using Eppo's SDK to randomize users in a batch machine learning evaluation script. Further, imagine we're testing an upgrade from model version `v1.0.0` to `v1.1.0`. First we'd create a feature flag called `ml-model-version` with two variations: `v1.0.0` and `v1.1.0`. The Eppo UI should look like something like this:
+
+![Feature flag configuration](/img/feature-flagging/script_example_flag_config.png)
+
+:::note
+If you have not set up an experiment in Eppo's UI before, please see the [experiment quickstart guide](/experiment-allocation-quickstart).
+:::
+
+To keep the example simple, let's not worry about logging assignments to a warehouse and instead just write them to a local file using Python's built-in `logging` package.
+
+Your ML model evaluation script might then look something like this:
+
+```python title=script_example.py
+import logging
+import os
+from uuid import uuid4
+import eppo_client
+from eppo_client.config import Config, AssignmentLogger
+
+logging.basicConfig(
+    filename='eppo_assignments.csv',
+    level=logging.INFO,
+    format=f'%(message)s'
+)
+
+
+class LocalAssignmentLogger(AssignmentLogger):
+    def log_assignment(self, assignment):
+        logging.info(assignment)
+
+# initialize the Eppo client
+client_config = Config(
+    api_key=os.getenv("EPPO_API_KEY"),
+    assignment_logger=LocalAssignmentLogger()
+)
+eppo_client.init(client_config)
+
+# get an instance and wait for initialization to complete
+client = eppo_client.get_instance()
+client.wait_for_initialization()
+
+for _ in range(10):
+    # create random user ids for demonstration purposes
+    user_id = str(uuid4())
+
+    model_version = client.get_string_assignment(
+        "ml-model-version", 
+        user_id, 
+        {}, 
+        "v1.0.0"
+    )
+
+    # TODO: Evaluate the appropriate model version for the user
+
+    print(f"{user_id}: {model_version}")
+```
+
+Note that since the `get_string_assignment` call is deterministic, the same `user_id` will always produce the same `variation`. That is, if this script runs at a regular cadence, you don't need to worry about users switching between variations.
+
+After running this, you can inspect the logs in the `eppo_assignments.csv` file:
+
+```json title=eppo_assignments.csv
+{'base': {'featureFlag': 'ml-model-version', 'allocation': 'allocation-10061', 'experiment': 'ml-model-version-allocation-10061', 'variation': 'v1.1.0', 'metaData': {'sdkName': 'python', 'sdkVersion': '4.0.1', 'coreVersion': '4.0.0'}}, 'subject': 'f54ba5f3-90bb-4cdf-bf56-ca0335ede92c', 'subjectAttributes': {}, 'timestamp': '2024-10-11T03:24:12.093538Z'}
+{'base': {'featureFlag': 'ml-model-version', 'allocation': 'allocation-10061', 'experiment': 'ml-model-version-allocation-10061', 'variation': 'v1.0.0', 'metaData': {'sdkName': 'python', 'sdkVersion': '4.0.1', 'coreVersion': '4.0.0'}}, 'subject': '3ccfcb7c-1b5d-4d3b-8513-198ef97c20d0', 'subjectAttributes': {}, 'timestamp': '2024-10-11T03:24:12.094055Z'}
+{'base': {'featureFlag': 'ml-model-version', 'allocation': 'allocation-10061', 'experiment': 'ml-model-version-allocation-10061', 'variation': 'v1.0.0', 'metaData': {'sdkName': 'python', 'sdkVersion': '4.0.1', 'coreVersion': '4.0.0'}}, 'subject': '7d4d81be-e7e5-42b5-b096-79b2dd25a0a1', 'subjectAttributes': {}, 'timestamp': '2024-10-11T03:24:12.094164Z'}
+{'base': {'featureFlag': 'ml-model-version', 'allocation': 'allocation-10061', 'experiment': 'ml-model-version-allocation-10061', 'variation': 'v1.1.0', 'metaData': {'sdkName': 'python', 'sdkVersion': '4.0.1', 'coreVersion': '4.0.0'}}, 'subject': '71435619-b1e5-446c-aabe-18c28c7a96af', 'subjectAttributes': {}, 'timestamp': '2024-10-11T03:24:12.094246Z'}
+{'base': {'featureFlag': 'ml-model-version', 'allocation': 'allocation-10061', 'experiment': 'ml-model-version-allocation-10061', 'variation': 'v1.0.0', 'metaData': {'sdkName': 'python', 'sdkVersion': '4.0.1', 'coreVersion': '4.0.0'}}, 'subject': '10ae9617-7e06-459a-a699-a464e6a9dbb9', 'subjectAttributes': {}, 'timestamp': '2024-10-11T03:24:12.094321Z'}
+{'base': {'featureFlag': 'ml-model-version', 'allocation': 'allocation-10061', 'experiment': 'ml-model-version-allocation-10061', 'variation': 'v1.0.0', 'metaData': {'sdkName': 'python', 'sdkVersion': '4.0.1', 'coreVersion': '4.0.0'}}, 'subject': 'f2f4b2ed-9fdd-4150-af88-27ef17470d45', 'subjectAttributes': {}, 'timestamp': '2024-10-11T03:24:12.094394Z'}
+{'base': {'featureFlag': 'ml-model-version', 'allocation': 'allocation-10061', 'experiment': 'ml-model-version-allocation-10061', 'variation': 'v1.0.0', 'metaData': {'sdkName': 'python', 'sdkVersion': '4.0.1', 'coreVersion': '4.0.0'}}, 'subject': '169d2066-8861-4230-9fce-809a1bb2a3cc', 'subjectAttributes': {}, 'timestamp': '2024-10-11T03:24:12.094463Z'}
+{'base': {'featureFlag': 'ml-model-version', 'allocation': 'allocation-10061', 'experiment': 'ml-model-version-allocation-10061', 'variation': 'v1.0.0', 'metaData': {'sdkName': 'python', 'sdkVersion': '4.0.1', 'coreVersion': '4.0.0'}}, 'subject': '359ff058-c8ad-4d35-8559-44c8ad0c235f', 'subjectAttributes': {}, 'timestamp': '2024-10-11T03:24:12.094530Z'}
+{'base': {'featureFlag': 'ml-model-version', 'allocation': 'allocation-10061', 'experiment': 'ml-model-version-allocation-10061', 'variation': 'v1.0.0', 'metaData': {'sdkName': 'python', 'sdkVersion': '4.0.1', 'coreVersion': '4.0.0'}}, 'subject': 'b13ac779-e639-4367-8afb-7942f789ec12', 'subjectAttributes': {}, 'timestamp': '2024-10-11T03:24:12.094595Z'}
+{'base': {'featureFlag': 'ml-model-version', 'allocation': 'allocation-10061', 'experiment': 'ml-model-version-allocation-10061', 'variation': 'v1.1.0', 'metaData': {'sdkName': 'python', 'sdkVersion': '4.0.1', 'coreVersion': '4.0.0'}}, 'subject': 'a0bc2b98-bfc2-4740-a3e0-18151ca88dcd', 'subjectAttributes': {}, 'timestamp': '2024-10-11T03:24:12.094660Z'}
+```
+
+In a real-world scenario, you would send these logs to your warehouse of choice. From there, you would create an [Assignment SQL Definition](/data-management/definitions/assignment-sql/) and analyze your experiment like any other experiment in Eppo. For more information on analyzing experiments, see our [Experiment Analysis Quickstart](/experiment-quickstart/).
+
+## Targeting users in Django
+
+While Eppo's SDK can be used for batch processing as described above, it is most commonly used in live applications to perform assignment in real time.
+
+Let’s say you are running a Django service with the User-Agent package. You can use feature flags to offer a payment method that adapts to the browser (only Safari users should be offered to use Apple Pay), the country (Dutch users can use iDEAL), and loyalty status (members might use their points). You can use a feature flag to configure what is possible in which country, for which users, etc.
+
+To make the decision, you can put the relevant information (`country`, `loyalty_tier`, `device_type`, etc.) in a `session_attributes` dictionary:
+
+```python
+# ...
+from ipware import get_client_ip
+from django.contrib.gis.utils import GeoIP2
+g = GeoIP2()
+
+# ...
+
+if request.method == 'POST':
+    ip, is_routable = get_client_ip(request)
+    if is_routable:
+        country_code = g.city(ip)["country_code"]
+    else:
+        country_code = "UNKNOWN"
+
+    session_attributes = {
+        'country_code': country_code,
+        'loyalty_tier': request.session.loyalty_tier,
+        'browser_type': request.user_agent.browser.family,
+        'device_type': request.user_agent.device.family,
+    }
+
+    payment_method = client.get_string_assignment(
+        "payment-method", 
+        request.user.id, 
+        session_attributes,
+        "default_checkout"
+    )
+
+    if variation == 'apple_pay':
+        # TODO: Offer Apple Pay
+    elif variation == 'ideal':
+        # TODO: Offer iDEAL
+    else:
+        # TODO: Offer default checkout
+
+```
+
+
+:::note
+
+The `MATCHES`, `ONE_OF`, and `NOT_ONE_OF` operators are evaluated on string representations of the subject attributes. To be consistent with other SDKs, note that conversion of subject attributes from floats, booleans, and None is different from the standard Python conversion.
+
+In particular, `True` and `False` are converted to the string values `"true"` and `"false`". Integer floats are converted to integers before converting to a string. That is, `10.0` becomes `"10"`, whereas `10.1` becomes `"10.1"`. Finally, `None` is converted to the string `null`.
+
+:::
+
+Then, in the Eppo UI, your experiment assignment should look something like this:
+
+![Experiment allocation configuration](/img/feature-flagging/django_example_allocation_config.png)
+
+These rules are evaluated from top to bottom. That is, in this example an iOS user in the Netherlands will be put into the first category and see iDEAL, but not Apple Pay. If you instead want to offer such users both options, consider implementing two flags: one for iDEAL, one for Apple Pay.
+
+Our approach is highly flexible: it lets you configure properties that match the relevant entity for your feature flag or experiment. For example, if a user is usually on iOS but they are connecting from a PC browser this time, they probably should not be offered an Apple Pay option, in spite of being labelled an iOS user.
+
+:::note
+If you create rules based on attributes on a flag or an experiment, those attributes should be passed in on every assignment call.
+:::
+
