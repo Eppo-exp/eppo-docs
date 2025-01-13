@@ -98,13 +98,13 @@ Using this pattern, a team can make minor changes to the copy and design of a we
 ```csharp
 string flagKey = "flag-key-123";
 string subjectKey = GetUserId() ?? "user-123";
-var defaultAssignment = new Dictionary<string, object>
+var defaultAssignment = (JObject)(new Dictionary<string, object>
 {
     ["hero"] = false,
     ["heroImage"] = "placeholder.png",
     ["heroTitle"] = "Placeholder Hero Title",
     ["heroDescription"] = "Placeholder Hero Description"
-};
+});
 var subjectAttributes = new Dictionary<string, object>
 {
     ["country"] = "US",
