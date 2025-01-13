@@ -204,7 +204,7 @@ The `CategoricalAttributes` are also used for targeting rules for the feature fl
 
 ### Action Contexts
 
-Next, supply a map with actions and their attributes: `actions: map[string]Attributes`.
+Next, supply a map with actions and their attributes: `actions: map[string]ContextAttributes`.
 If the user is assigned to the bandit, the bandit selects one of the actions supplied here.
 All actions supplied are considered to be valid; if an action should not be shown to a user, do not include it in this map.
 
