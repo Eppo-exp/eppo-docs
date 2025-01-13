@@ -139,7 +139,8 @@ http://adoring-yonath-6ecb9d.netlify.app/*  http://docs.geteppo.com/:splat  301!
 
 /guides/engineering/nextjs-setup/ /sdks/client-sdks/javascript/nextjs-setup
 
-# .NET SDK redirects
+/sdks/server-sdks/ruby/ /sdks/server-sdks/ruby/intro
+
 /sdks/server-sdks/dotnet /sdks/server-sdks/dotnet/intro 301!
 /sdks/server-sdks/dotnet#getting-started /sdks/server-sdks/dotnet/quickstart
 /sdks/server-sdks/dotnet#installation /sdks/server-sdks/dotnet/quickstart#installation
