@@ -15,7 +15,7 @@ Eppo's server-side SDKs may be used to implement flags and run experiments in yo
 - [Node](/sdks/server-sdks/node)
 - [Python](/sdks/server-sdks/python)
 - [Java](/sdks/server-sdks/java)
-- [Dot Net](/sdks/server-sdks/dotnet)
+- [Dot Net](/sdks/server-sdks/dotnet/intro)
 - [Go](/sdks/server-sdks/go)
 - [Ruby](/sdks/server-sdks/ruby)
 - [PHP](/sdks/server-sdks/php)
