@@ -175,9 +175,10 @@ var subjectContext = new ContextAttributes("user123")
 The action context contains contextual information about each action. They can be provided as a mapping of attribute names 
 to their contexts. 
 
-Similar to subject context, action contexts can be provided as `IDictionary<string, object?>`--which will then assume anything that is a number is a numeric
-attribute, and everything else is a categorical attribute--or as `ContextAttributes`, which have explicit bucketing into `NumericAttributes`
-and `CategoricalAttributes`.
+Similar to subject context, action contexts can be provided as: 
+
+- `IDictionary<string, object?>` - which will then assume anything that is a number is a numeric attribute, and everything else is a categorical attribute 
+- `ContextAttributes`, which have explicit bucketing into `NumericAttributes` and `CategoricalAttributes`.
 
 If there is no action context, an array of strings comprising only the actions names can also be passed in.
 

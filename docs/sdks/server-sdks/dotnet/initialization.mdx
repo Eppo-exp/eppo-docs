@@ -49,12 +49,12 @@ The interval in milliseconds between polling attempts to fetch updated configura
 </ApiOptionRef>
 
 <ApiOptionRef 
-  name="BaseUrl"
-  type="string"
-  defaultValue="https://fscdn.eppo.cloud/api"
+  name="PollingJitter"
+  type="long"
+  defaultValue="5000"
 >
 
-The base URL for the Eppo API. You typically won't need to change this unless you're using a custom endpoint.
+The maximum amount of time in milliseconds to add to the polling interval.
 </ApiOptionRef>
 
 <ApiOptionRef 
@@ -67,13 +67,14 @@ A callback that sends each assignment to your data warehouse. Required for exper
 </ApiOptionRef>
 
 <ApiOptionRef 
-  name="HttpClient"
-  type="HttpClient"
-  defaultValue="new HttpClient()"
+  name="BaseUrl"
+  type="string"
+  defaultValue="https://fscdn.eppo.cloud/api"
 >
 
-The HTTP client used for making requests to the Eppo API. You can provide a custom client to handle things like timeouts and retries.
+The base URL for the Eppo API. You typically won't need to change this unless you're using a custom endpoint.
 </ApiOptionRef>
+
 
 ### Example Configuration
 

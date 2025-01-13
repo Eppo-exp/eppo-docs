@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem';
 
 The Eppo .NET SDK enables feature flags and experiments in your .NET applications with only a few lines of code.
 
-The SDK handles all the complexity of feature flag evaluation and experiment assignment locally in your application, with no network calls required after initial setup. This guide will walk you through installing the SDK and implementing your first feature flag, experiment, and contextual bandit.
+The SDK handles all the complexity of feature flag evaluation and experiment assignment locally in your application. This guide will walk you through installing the SDK and implementing your first feature flag, experiment, and contextual bandit.
 
 ## Installation
 
@@ -74,8 +74,8 @@ The SDK provides different assignment functions based on the type of value you n
 | `GetStringAssignment()` | String |
 | `GetBooleanAssignment()` | Boolean |
 | `GetJSONAssignment()` | JSON object |
-| `GetIntegerAssignment()` | Integer |
-| `GetNumericAssignment()` | Float |
+| `GetIntegerAssignment()` | Long |
+| `GetNumericAssignment()` | Double |
 
 ### Using Assignments
 
@@ -124,7 +124,7 @@ internal class AssignmentLogger : IAssignmentLogger
 <TabItem value="segment" label="Segment">
 
 ```csharp
-internal class SegmentLogger : IAssignmentLogger
+class SegmentLogger : IAssignmentLogger
 {
     private readonly Analytics analytics;
 
@@ -136,6 +136,11 @@ internal class SegmentLogger : IAssignmentLogger
     public void LogAssignment(AssignmentLogData assignmentLogData)
     {
         analytics.Track("Eppo Randomization Assignment", assignmentLogData);
+    }
+
+    public void LogBanditAction(BanditLogEvent banditLogEvent)
+    {
+        analytics.Track("Eppo Bandit Action", banditLogEvent);
     }
 }
 ```
@@ -172,21 +177,21 @@ Instead of making simple assignments with a bandit, you will want to query the b
 
 
 ```csharp
-var subjectAttributes = new Dictionary<string, object?>()
+var subject = new ContextAttributes("user123")
 {
     ["age"] = 30,
     ["country"] = "uk",
     ["pricingTier"] = "1"
 };
 
-var actions = new Dictionary<string, IDictionary<string, object?>>()
+var actions = new Dictionary<string, ContextAttributes>()
 {
-    ["nike"] = new Dictionary<string, object?>()
+    ["nike"] = new ContextAttributes("nike")
     {
         ["brandLoyalty"] = 0.4,
         ["from"] = "usa"
     },
-    ["adidas"] = new Dictionary<string, object?>()
+    ["adidas"] = new ContextAttributes("adidas")
     {
         ["brandLoyalty"] = 2,
         ["from"] = "germany"
@@ -196,7 +201,7 @@ var actions = new Dictionary<string, IDictionary<string, object?>>()
 var result = client.GetBanditAction(
     "flag-with-shoe-bandit",
     "user123",
-    subjectAttributes,
+    subject,
     actions,
     "default");
 
