@@ -233,27 +233,3 @@ In order to accurately measure the performance of the bandit, we need to compare
 This status quo algorithm could be a complicated algorithm that selects an action according to a different model, or a simple baseline such as selecting a fixed or random action.
 
 When you create an analysis allocation for the bandit and the `Action` in `BanditResult` is empty, implement the desired status quo algorithm based on the `Variation` value.
-
-## Debugging
-
-You may encounter a situation where a bandit assignment produces a value that you did not expect. The SDK provides detailed evaluation information through the `GetBanditActionDetails` method:
-
-```go
-evaluation, err := client.GetBanditActionDetails(
-    "shoe-bandit",
-    "test-subject",
-    attributes,
-    actions,
-    "control",
-)
-if err != nil {
-    log.Printf("Error getting bandit details: %v", err)
-    return
-}
-
-log.Printf("Assignment: %s", evaluation.Variation)
-log.Printf("Action: %s", evaluation.Action)
-log.Printf("Details: %+v", evaluation.EvaluationDetails)
-```
-
-For more information on debugging assignments, see [Debugging Flag Assignment](/sdks/sdk-features/debugging-flag-assignment/). 
