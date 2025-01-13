@@ -27,7 +27,7 @@ String assignment return a string value that is set as the variation for the exp
 string flagKey = "flag-key-123";
 string subjectKey = GetUserId() ?? "user-123";
 string defaultAssignment = "version-a";
-var subjectAttributes = new IDictionary<string, object>
+var subjectAttributes = new Dictionary<string, object>
 {
     ["country"] = "US",
     ["age"] = 30,
