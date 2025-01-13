@@ -9,9 +9,14 @@ import ApiOptionRef from '@site/src/components/ApiOptionRef';
 
 ## Usage with Contextual Multi-Armed Bandits
 
-Eppo also supports contextual multi-armed bandits. You can read more about them in the [high-level documentation](/contextual-bandits).
-Bandit flag configuration--including setting up the flag key, status quo variation, bandit variation, and targeting rules--are configured within
-the Eppo application. However, available actions are supplied to the SDK in the code when querying the bandit.
+Eppo supports contextual [multi-armed bandits](/contextual-bandits). You configure bandit flags in the Eppo application, where you can set up:
+
+- Flag keys
+- Status quo variations 
+- Bandit variations
+- Targeting rules
+
+When you query the bandit in your code, you provide the available actions to the SDK.
 
 To leverage bandits using the .NET SDK, there are two additional steps over regular feature flags:
 1. Add a bandit action logger to the SDK client instance
@@ -49,8 +54,8 @@ The SDK will invoke the `LogBanditAction()` method with a `BanditLogEvent` objec
 | `FlagKey` (string)                          | The key of the feature flag corresponding to the bandit                                                           | "bandit-test-allocation-4"       |
 | `BanditKey` (string)                        | The key (unique identifier) of the bandit                                                                         | "ad-bandit-1"                    |
 | `SubjectKey` (string)                       | An identifier of the subject or user assigned to the experiment variation                                         | "ed6f85019080"                   |
-| `SubjectNumericAttributes` (IDictionary)    | Metadata about numeric attributes of the subject. Map of the name of attributes their provided values             | `{"age": 30}`                    |
-| `SubjectCategoricalAttributes` (IDictionary)| Metadata about non-numeric attributes of the subject. Map of the name of attributes their provided values         | `{"loyalty_tier": "gold"}`       |
+| `SubjectNumericAttributes` (IDictionary || ContextAttributes)    | Metadata about numeric attributes of the subject. Map of the name of attributes their provided values             | `{"age": 30}`                    |
+| `SubjectCategoricalAttributes` (IDictionary || ContextAttributes)| Metadata about non-numeric attributes of the subject. Map of the name of attributes their provided values         | `{"loyalty_tier": "gold"}`       |
 | `Action` (string)                           | The action assigned by the bandit                                                                                 | "promo-20%-off"                  |
 | `ActionNumericAttributes` (IDictionary)     | Metadata about numeric attributes of the assigned action. Map of the name of attributes their provided values     | `{"brandAffinity": 0.2}`         |
 | `ActionCategoricalAttributes` (IDictionary) | Metadata about non-numeric attributes of the assigned action. Map of the name of attributes their provided values | `{"previouslyPurchased": false}` |
@@ -69,21 +74,21 @@ To query the bandit for an action, use the `GetBanditAction()` method. The most 
 - `defaultValue` (string): The default *variation* to return if the flag is not successfully evaluated
 
 ```csharp
-var subjectAttributes = new Dictionary<string, object?>()
+var subjectAttributes = new ContextAttributes("user123")
 {
     ["age"] = 30,
     ["country"] = "uk",
     ["pricingTier"] = "1"
 };
 
-var actions = new Dictionary<string, IDictionary<string, object?>>()
+var actions = new Dictionary<string, ContextAttributes>()
 {
-    ["nike"] = new Dictionary<string, object?>()
+    ["nike"] = new ContextAttributes("nike")
     {
         ["brandLoyalty"] = 0.4,
         ["from"] = "usa"
     },
-    ["adidas"] = new Dictionary<string, object?>()
+    ["adidas"] = new ContextAttributes("adidas")
     {
         ["brandLoyalty"] = 2,
         ["from"] = "germany"
@@ -110,11 +115,11 @@ if (result.Action != null)
 
 ### `GetBanditAction` Overloads
 
-There are several overloads of the `GetBanditAction()` method available:
+There are several overloads of the [`GetBanditAction()` method](https://github.com/Eppo-exp/dot-net-server-sdk/blob/89f65bb5779a7293beff878534381dcc871b03cd/dot-net-sdk/EppoClient.cs#L267) available:
 
 For a simple list of actions without attributes:
 ```csharp
-public BanditResult GetBanditAction(
+public BanditResult GetBanditAction(s
     string flagKey,
     string subjectKey,
     IDictionary<string, object?> subjectAttributes,
