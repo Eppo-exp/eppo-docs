@@ -133,7 +133,7 @@ The read more about our specific SDKs, check out the SDK-specific docs below:
 - [Java](server-sdks/java)
 - [Python](server-sdks/python)
 - [Go](server-sdks/go)
-- [Rust](server-sdks/rust)
+- [Rust](server-sdks/rust/intro)
 - [Ruby](server-sdks/ruby)
 - [.NET](server-sdks/dotnet)
 - [PHP](server-sdks/php)
