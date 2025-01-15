@@ -19,6 +19,6 @@ The SDK uses a background process to fetch and store the experiment data. The p7
 ### Language-specific Documentation
 
 - [JavaScript](/sdks/client-sdks/javascript/intro)
-- [React Native](/sdks/client-sdks/react-native)
+- [React Native](/sdks/client-sdks/react-native/intro)
 - [Android](/sdks/client-sdks/android)
 - [iOS](/sdks/client-sdks/ios)
