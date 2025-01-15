@@ -89,6 +89,21 @@ To specify a partition key, map the column to the Partition Date field.
 Partition dates are disabled by default, if you'd like to enable them in your workspace, please reach out to your Eppo representative or email us at support@geteppo.com.
 :::
 
+### Defining template variables
+
+If you need to reduce the volume of data the data warehouse needs to process, you can incorporate analysis-specific variables into your Fact SQL. When the experiment pipeline runs, it will filter the query to the date range specified in the analysis set up.
+
+Supported variables:
+- `{{analysis_start_datetime}}` - The ‘event data from’ date in the ‘Analysis Set Up’,
+- `{{analysis_end_datetime}}` - The ‘event end date’ date in the ‘Analysis Set Up’,
+
+#### Example
+
+```sql
+select * from analytics.reviews
+where event_timestamp BETWEEN `{{analysis_start_datetime}}` AND `{{analysis_end_datetime}}`
+```
+
 ### Defining in code
 
 You can also chose to define Fact SQL Definitions in code and then sync to Eppo via Eppo's metric sync API. For more details, see the [Certified Metrics](/data-management/certified-metrics/) section.
