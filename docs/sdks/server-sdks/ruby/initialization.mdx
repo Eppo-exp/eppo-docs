@@ -110,12 +110,11 @@ The Ruby SDK exposes an API to allow manual control over configuration:
 
 ```ruby
 # Get current configuration
-config = client.get_configuration
+config = client.configuration
 
 # Access specific parts of the configuration
-flags_config = config.get_flags_configuration
-flag_keys = config.get_flag_keys
-bandit_keys = config.get_bandit_keys
+flags_config = config.flags_configuration
+bandits_config = config.bandits_configuration
 ```
 
 This API can be used for debugging or advanced optimizations like:
