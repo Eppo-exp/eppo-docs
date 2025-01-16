@@ -8,7 +8,7 @@ Pre-forking is particularly effective for web servers with long initialization t
 
 Pre-forking is great but it's a tricky/advanced optimization technique and it may cause problems if not used carefully. In particular, forking is incompatible with multi-threading because only the calling thread is copied over to the forked process and the rest of the threads just "disappear" from the process. This may cause some parts of the server not working or leave the system in inconsistent state and cause hangs or crashes.
 
-During initialization, **Python** and **Ruby** Eppo SDKs create a native thread that is responsible for fetching and refreshing Eppo configuration. This is done to offload work from the main thread, so your code can run 100% of the time. Because of this, it is important that Python and Ruby SDKs are not initialized before pre-forking.
+During initialization, **Python** and **Ruby** Eppo SDKs create a native thread that is responsible for fetching and refreshing Eppo configuration. This is done to offload work from the main thread, so your code can run 100% of the time. Because of this, it is important that Python and Ruby SDKs are **not** initialized before pre-forking.
 
 To avoid issues, defer the initialization of Eppo SDK until after the forking process is complete. Most pre-forking servers provide lifecycle hooks that allow you to execute custom logic after the fork. Use these hooks to initialize the SDK.
 
