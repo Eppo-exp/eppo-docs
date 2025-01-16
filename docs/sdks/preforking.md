@@ -26,7 +26,7 @@ def initialize_eppo():
 
 ### Spring Example
 
-For Ruby applications using Spring, you can use the `after_fork` callback:
+For Ruby applications using Spring, you can use the `after_fork` callback in `config/spring.rb`:
 
 ```ruby
 Spring.after_fork do
