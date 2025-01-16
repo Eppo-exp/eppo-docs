@@ -4,7 +4,7 @@ sidebar_position: 1
 
 # Overview
 
-Eppo's analysis engine is fully powered by SQL. This means that anything in your warehouse can be leverages in Eppo's experimentation analysis pipeline. This section describes the SQL definition that tells Eppo how to leverage the data in your warehouse.
+Eppo's analysis engine is fully powered by SQL. This means that anything in your warehouse can be leveraged in Eppo's experimentation analysis pipeline. This section describes the SQL definition that tells Eppo how to leverage the data in your warehouse.
 
 These basic SQL definitions are compiled into a larger SQL data pipeline that computes experiment-level summaries. Only the end result of this data pipeline (anonymized aggregate values) leave your data warehouse. You can read more about the Eppo data pipeline on the [Data Pipeline](/data-management/data-pipeline) page.
 

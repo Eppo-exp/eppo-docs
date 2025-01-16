@@ -134,7 +134,7 @@ The read more about our specific SDKs, check out the SDK-specific docs below:
 - [Python](server-sdks/python)
 - [Go](server-sdks/go)
 - [Rust](server-sdks/rust)
-- [Ruby](server-sdks/ruby)
+- [Ruby](server-sdks/ruby/intro)
 - [.NET](server-sdks/dotnet)
 - [PHP](server-sdks/php)
 
