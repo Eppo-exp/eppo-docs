@@ -47,9 +47,12 @@ Feature flags are a way to toggle features on and off without needing to deploy 
 First, initialize the Eppo SDK at the app root using your SDK key. The SDK key is different from the project API key. 
 
 ```js
-import init from "@eppo/react-native-sdk";
+import {IAssignmentEvent, init} from "@eppo/react-native-sdk";
 
-await init({apiKey: 'SDK_KEY'});
+await init({
+  apiKey: "<SDK_KEY>",
+  assignmentLogger: { logAssignment: (assignment: IAssignmentEvent)=> console.log("TODO: send to warehouse", assignment) }
+});
 ``` 
 
 :::note
@@ -69,7 +72,8 @@ Each assignment requires:
 - **Flag Key**: Identifies which set of configuration rules to use
 - **Subject Key**: A unique identifier for the subject (usually a user ID)
 - **Subject Attributes**: Optional key-value pairs containing additional information used for rule evaluation
-- **Default Value**: Fallback value if assignment fails or rules don't match
+- **Default Value**: Fallback value if assignment fails, rules don't match, an error was thrown during initialization, or the feature is not enabled
+
 
 ```js
 import * as EppoSdk from "@eppo/react-native-sdk";
@@ -79,10 +83,11 @@ const eppoClient = EppoSdk.getInstance();
 
 // Define assignment parameters
 const featureKey = "my-neat-feature";
-const subjectKey = getCurrentUser() || "anonymous";
+const subjectKey = user?.id || "anonymous";
+
 const subjectAttributes = {
-    'country': user.country,
-    'device': user.device,
+    "country": user?.country,
+    "device": user?.device,
 };
 const defaultValue = "default-value";
 
@@ -124,7 +129,7 @@ const LandingPageB = () => {
     return <div>Landing Page B</div>
 }
 
-const LandingPageC = () => {
+const ControlLandingPage = () => {
     return <div>Landing Page C</div>
 }
 
@@ -142,7 +147,7 @@ if (variation === "landing-page-a") {
 } else if (variation === "landing-page-b") {
     return <LandingPageB />
 } else {
-    return <LandingPageC />
+    return <ControlLandingPage />
 }
 ```
 
@@ -197,8 +202,8 @@ const eppoClient = EppoSdk.getInstance();
 const featureKey = "my-neat-feature";
 const subjectKey = getCurrentUser() || "anonymous";
 const subjectAttributes = {
-    'country': user.country,
-    'device': user.device,
+    "country": user.country,
+    "device": user.device,
 };
 const defaultValue = "default-value";
 
@@ -215,7 +220,7 @@ if (variation === "landing-page-a") {
 } else if (variation === "landing-page-b") {
     return <LandingPageB />
 } else {
-    return <LandingPageC />
+    return <ControlLandingPage />
 }
 ```
 
