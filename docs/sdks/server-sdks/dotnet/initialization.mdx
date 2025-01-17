@@ -1,0 +1,134 @@
+---
+title: Initialization
+sidebar_position: 3
+---
+
+import ApiOptionRef from '@site/src/components/ApiOptionRef';
+
+The Eppo .NET SDK is easy to initialize while offering robust customization options, making it adaptable to various use cases such as custom caching requirements and ultra-low-latency initialization.
+
+## Initialize the SDK
+
+To complete basic initialization, you only need to provide an SDK key. [Create an SDK key](/sdks/sdk-keys) if you don't already have one. 
+
+```csharp
+var eppoClientConfig = new EppoClientConfig("<SDK_KEY>", null);
+var eppoClient = EppoClient.Init(eppoClientConfig);
+```
+
+## Use the SDK instance
+After initialization, you can use the SDK instance to assign a variation to a subject using the `Get*Assignment` methods.
+
+```csharp
+// Get the current user from your application context
+var user = GetCurrentUser();
+
+// Make an assignment
+var variation = eppoClient.GetStringAssignment(
+    "my-feature",
+    user.Id,
+    user.Attributes,
+    "default"
+);
+```
+
+## Advanced Configuration
+Basic initialization is great for most use cases, but the SDK provides options that you can use during initialization to customize the behavior of the SDK.
+
+### Initialization Options
+
+How the SDK fetches, serves, and caches experiment configurations is configurable via the `EppoClientConfig` class:
+
+<ApiOptionRef 
+  name="PollingIntervalInMillis"
+  type="int"
+  defaultValue="30000"
+>
+
+The interval in milliseconds between polling attempts to fetch updated configurations from the Eppo API.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="PollingJitter"
+  type="long"
+  defaultValue="5000"
+>
+
+The maximum amount of time in milliseconds to add to the polling interval.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="AssignmentLogger"
+  type="IAssignmentLogger"
+  defaultValue="null"
+>
+
+A callback that sends each assignment to your data warehouse. Required for experiment analysis.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="BaseUrl"
+  type="string"
+  defaultValue="https://fscdn.eppo.cloud/api"
+>
+
+The base URL for the Eppo API. You typically won't need to change this unless you're using a custom endpoint.
+</ApiOptionRef>
+
+
+### Example Configuration
+
+Here's an example of initializing the SDK with custom configuration:
+
+```csharp
+var config = new EppoClientConfig("<SDK_KEY>", new MyAssignmentLogger())
+{
+    PollingIntervalInMillis = 5000,  // Poll every 5 seconds
+    BaseUrl = "https://my-custom-endpoint.com/api",
+    HttpClient = new HttpClient 
+    { 
+        Timeout = TimeSpan.FromSeconds(10) 
+    }
+};
+
+var eppoClient = EppoClient.Init(config);
+```
+
+### Configuration Caching
+
+The SDK caches configurations in memory to ensure fast assignment evaluations. The cache is automatically updated based on the polling interval.
+
+```csharp
+// Example showing how to initialize with a shorter polling interval for more frequent updates
+var config = new EppoClientConfig("<SDK_KEY>", myLogger)
+{
+    PollingIntervalInMillis = 5000  // Update cache every 5 seconds
+};
+```
+
+### Error Handling
+
+Wrap your initialization in a try/catch block to handle errors gracefully.
+
+```csharp
+try 
+{
+    var eppoClient = EppoClient.Init(config);
+}
+catch (EppoInitializationException ex)
+{
+    // Handle initialization failure
+    Logger.Error("Failed to initialize Eppo SDK", ex);
+}
+```
+
+
+## Best Practices
+
+1. **Initialize Once**: Create a single instance of the SDK at application startup and reuse it throughout your application.
+
+2. **Handle Errors**: Always implement error handling around initialization to ensure your application degrades gracefully.
+
+3. **Configure Timeouts**: Set appropriate timeout values for your use case to prevent hanging operations.
+
+4. **Monitor Memory**: Be mindful of memory usage when setting polling intervals, as configurations are cached in memory.

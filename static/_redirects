@@ -140,6 +140,16 @@ http://adoring-yonath-6ecb9d.netlify.app/*  http://docs.geteppo.com/:splat  301!
 
 /sdks/server-sdks/ruby/ /sdks/server-sdks/ruby/intro 301!
 
+/sdks/server-sdks/dotnet /sdks/server-sdks/dotnet/intro 301!
+/sdks/server-sdks/dotnet#getting-started /sdks/server-sdks/dotnet/quickstart
+/sdks/server-sdks/dotnet#installation /sdks/server-sdks/dotnet/quickstart#installation
+/sdks/server-sdks/dotnet#usage /sdks/server-sdks/dotnet/quickstart#feature-flags
+/sdks/server-sdks/dotnet#define-an-assignment-logger /sdks/server-sdks/dotnet/assignments#logging-data-to-your-data-warehouse
+/sdks/server-sdks/dotnet#assignment-methods /sdks/server-sdks/dotnet/assignments#assignment-types
+/sdks/server-sdks/dotnet#advanced-options /sdks/server-sdks/dotnet/initialization#advanced-configuration
+/sdks/server-sdks/dotnet#assignment-log-schema /sdks/server-sdks/dotnet/assignments#assignment-logger-schema
+/sdks/server-sdks/dotnet#usage-with-contextual-multi-armed-bandits /sdks/server-sdks/dotnet/bandits
+
 /sdks/client-sdks/react-native /sdks/client-sdks/react-native/intro
 /sdks/client-sdks/react-native#getting-started /sdks/client-sdks/react-native/quickstart
 /sdks/client-sdks/react-native#installation /sdks/client-sdks/react-native/quickstart#installation

@@ -135,7 +135,7 @@ The read more about our specific SDKs, check out the SDK-specific docs below:
 - [Go](server-sdks/go)
 - [Rust](server-sdks/rust/intro)
 - [Ruby](server-sdks/ruby/intro)
-- [.NET](server-sdks/dotnet)
+- [.NET](server-sdks/dotnet/intro)
 - [PHP](server-sdks/php)
 
 ### Hybrid implementations
