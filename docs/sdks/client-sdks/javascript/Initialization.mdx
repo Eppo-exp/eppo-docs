@@ -5,22 +5,24 @@ sidebar_position: 3
 
 import ApiOptionRef from '@site/src/components/ApiOptionRef';
 
-
 The Eppo JavaScript SDK is easy to initialize while offering robust customization options, making it adaptable to various use cases such as offline mode, custom caching requirements, and ultra-low-latency initialization.
 
 ## Initialize the SDK
 
-To complete basic initialization, you only need to provide an SDK key which you can created in the Eppo UI under **Configuration** > **Environments** > **API Keys**. 
+To complete basic initialization, you only need to provide an SDK key. [Create an SDK key](/sdks/sdk-keys) if you don't already have one. 
 
 ```javascript
 import { init } from "@eppo/js-client-sdk";
 
 await init({
-  apiKey: 'YOUR_SDK_KEY',
+  apiKey: "YOUR_SDK_KEY",
+  assignmentLogger: { logAssignment: (assignmentEvent) => console.log('Send to warehouse: ', assignmentEvent) },
+
 });
 ``` 
 
 ## Use the SDK instance
+
 After initialization, you can use the SDK instance by importing the SDK at the scope you will use it in and calling `getInstance()`. You can then use the SDK instance to assign a variation to a subject using the `get*Assignment` functions.
 
 ```javascript
@@ -304,3 +306,4 @@ Whether the flag values are obfuscated.
 
 Throw an error if an error occurs during initialization.
 </ApiOptionRef>
+

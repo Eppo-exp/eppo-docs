@@ -122,21 +122,22 @@ The read more about our specific SDKs, check out the SDK-specific docs below:
 ### Client SDKs
 
 - [JavaScript](client-sdks/javascript/intro)
-- [React Native](client-sdks/react-native)
+- [React Native](client-sdks/react-native/intro)
 - [Android](client-sdks/android)
 - [iOS](client-sdks/ios)
 
 
 ### Server SDKs
 
-- [Node](server-sdks/node)
+- [Node](server-sdks/node/intro)
 - [Java](server-sdks/java)
-- [Python](server-sdks/python)
+- [Python](server-sdks/python/intro)
 - [Go](server-sdks/go)
-- [Rust](server-sdks/rust)
-- [Ruby](server-sdks/ruby)
-- [.NET](server-sdks/dotnet)
+- [Rust](server-sdks/rust/intro)
+- [Ruby](server-sdks/ruby/intro)
+- [.NET](server-sdks/dotnet/intro)
 - [PHP](server-sdks/php/intro)
+
 
 ### Hybrid implementations
 

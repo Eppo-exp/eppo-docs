@@ -1,0 +1,237 @@
+---
+title: Contextual Bandits
+sidebar_position: 5
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import ApiOptionRef from '@site/src/components/ApiOptionRef';
+
+Eppo's Python SDK supports contextual multi-armed bandits, which dynamically optimize assignments based on user context. A bandit balances exploration of new actions with exploitation of known successful actions to maximize a specified metric.
+
+## Bandit Setup
+
+To leverage Eppo's contextual bandits using the Python SDK, there are two additional steps over regular feature flags:
+1. Add a bandit action logger to the assignment logger
+2. Query the bandit for an action
+
+### Logging Bandit Actions
+
+In order for the bandit to learn an optimized policy, we need to capture and log the bandit's actions.
+This requires implementing the `log_bandit_action` method in your `AssignmentLogger` class:
+
+```python
+from eppo_client import AssignmentLogger
+
+class MyLogger(AssignmentLogger):
+    def log_assignment(self, assignment):
+        # Your assignment logging implementation
+        pass
+
+    def log_bandit_action(self, bandit_action):
+        # Your bandit action logging implementation
+        pass
+```
+
+### Bandit Action Schema
+
+The SDK will invoke the `log_bandit_action` function with a `bandit_action` dictionary containing the following fields:
+
+<ApiOptionRef 
+  name="timestamp"
+  type="str"
+  defaultValue="undefined"
+>
+
+The time when the action is taken in UTC. Example: `"2024-03-22T14:26:55.000Z"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="flagKey"
+  type="str"
+  defaultValue="undefined"
+>
+
+The key of the feature flag corresponding to the bandit. Example: `"bandit-test-allocation-4"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="banditKey"
+  type="str"
+  defaultValue="undefined"
+>
+
+The key (unique identifier) of the bandit. Example: `"ad-bandit-1"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="subject"
+  type="str"
+  defaultValue="undefined"
+>
+
+An identifier of the subject or user assigned to the experiment variation. Example: `"ed6f85019080"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="subjectNumericAttributes"
+  type="Dict[str, float]"
+  defaultValue="{}"
+>
+
+Metadata about numeric attributes of the subject. Example: `{"age": 30}`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="subjectCategoricalAttributes"
+  type="Dict[str, str]"
+  defaultValue="{}"
+>
+
+Metadata about non-numeric attributes of the subject. Example: `{"loyalty_tier": "gold"}`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="action"
+  type="str"
+  defaultValue="undefined"
+>
+
+The action assigned by the bandit. Example: `"promo-20%-off"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="actionNumericAttributes"
+  type="Dict[str, float]"
+  defaultValue="{}"
+>
+
+Metadata about numeric attributes of the assigned action. Example: `{"brandAffinity": 0.2}`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="actionCategoricalAttributes"
+  type="Dict[str, str]"
+  defaultValue="{}"
+>
+
+Metadata about non-numeric attributes of the assigned action. Example: `{"previouslyPurchased": "false"}`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="actionProbability"
+  type="float"
+  defaultValue="undefined"
+>
+
+The weight between 0 and 1 the bandit valued the assigned action. Example: `0.25`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="modelVersion"
+  type="str"
+  defaultValue="undefined"
+>
+
+Unique identifier for the version of the bandit parameters used. Example: `"v123"`
+</ApiOptionRef>
+
+## Querying the Bandit
+
+To query the bandit for an action, use the `get_bandit_action` function:
+
+```python
+import eppo_client
+from eppo_client import ContextAttributes
+
+client = eppo_client.get_instance()
+bandit_result = client.get_bandit_action(
+    "shoe-bandit",  # flag_key
+    user.id,        # subject_key
+    ContextAttributes(     # subject_attributes
+        numeric_attributes={"age": 25},
+        categorical_attributes={"country": "GB"}
+    ),
+    {              # actions with their attributes
+        "nike": ContextAttributes(
+            numeric_attributes={"brand_affinity": 2.3},
+            categorical_attributes={"previously_purchased": True},
+        ),
+        "adidas": ContextAttributes(
+            numeric_attributes={"brand_affinity": 0.2},
+            categorical_attributes={"previously_purchased": False},
+        ),
+    },
+    "control"      # default_value
+)
+
+if bandit_result.action:
+    show_shoe_ad(bandit_result.action)
+else:
+    show_default_ad()
+```
+
+### Subject Context
+
+The subject context contains contextual information about the subject that is independent of bandit actions.
+For example, the subject's age or country.
+
+The subject context has type `ContextAttributes` which has two fields:
+- `numeric_attributes` (Dict[str, float]): A dictionary of numeric attributes (such as "age")
+- `categorical_attributes` (Dict[str, str]): A dictionary of categorical attributes (such as "country")
+
+:::note
+The `ContextAttributes` are also used for targeting rules for the feature flag similar to how `subject_attributes` are used with regular feature flags.
+:::
+
+### Action Contexts
+
+Next, supply a dictionary with actions and their attributes: `actions: Dict[str, ContextAttributes]`.
+If the user is assigned to the bandit, the bandit selects one of the actions supplied here.
+All actions supplied are considered to be valid; if an action should not be shown to a user, do not include it in this dictionary.
+
+The action attributes are similar to the `subject_attributes` but hold action-specific information.
+You can use `ContextAttributes.empty()` to create an empty attribute context.
+
+Note that relevant action contexts are subject-action interactions. For example, there could be a "brand-affinity" model
+that computes brand affinities of users to brands, and scores of that model can be added to the action context to provide
+additional context for the bandit.
+
+### Result
+
+The `bandit_result` is an instance of `EvaluationResult`, which has two fields:
+- `variation` (str): The variation that was assigned to the subject
+- `action` (Optional[str]): The action that was assigned to the subject
+
+The variation returns the feature flag variation, this can be the bandit itself, or the "status quo" variation if the user is not assigned to the bandit.
+If we are unable to generate a variation, for example when the flag is turned off, then the `default` variation is returned.
+In both of those cases, the `action` is `None`, and you should use the status-quo algorithm to select an action.
+
+When `action` is not `None`, the bandit has selected that action to be shown to the user.
+
+### Status Quo Algorithm
+
+In order to accurately measure the performance of the bandit, we need to compare it to the status quo algorithm using an experiment.
+This status quo algorithm could be a complicated algorithm that selects an action according to a different model, or a simple baseline such as selecting a fixed or random action.
+
+When you create an analysis allocation for the bandit and the `action` in `EvaluationResult` is `None`, implement the desired status quo algorithm based on the `variation` value.
+
+## Debugging
+
+You may encounter a situation where a bandit assignment produces a value that you did not expect. The SDK provides detailed evaluation information through the `get_bandit_action_details()` method:
+
+```python
+evaluation = client.get_bandit_action_details(
+    "shoe-bandit",
+    "test-subject",
+    subject_attributes,
+    actions,
+    "control"
+)
+
+print("Assignment:", evaluation.variation)
+print("Action:", evaluation.action)
+print("Details:", evaluation.evaluation_details)
+```
+
+For more information on debugging assignments, see [Debugging Flag Assignment](/sdks/sdk-features/debugging-flag-assignment/). 

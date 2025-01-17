@@ -73,7 +73,7 @@ You can also install the SDK with NPM or via a script tag. For more information,
 npm install @eppo/node-client-sdk
 ```
 
-You can also install the Node SDK with NPM. For more information, see the [Node JS SDK](/sdks/server-sdks/node) documentation.
+You can also install the Node SDK with NPM. For more information, see the [Node JS SDK](/sdks/server-sdks/node/intro) documentation.
 
 </TabItem>
 
