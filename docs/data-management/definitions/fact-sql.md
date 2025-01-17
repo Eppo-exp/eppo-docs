@@ -94,14 +94,14 @@ Partition dates are disabled by default, if you'd like to enable them in your wo
 If you need to reduce the volume of data the data warehouse needs to process, you can incorporate analysis-specific variables into your Fact SQL. When the experiment pipeline runs, it will filter the query to the date range specified in the analysis set up.
 
 Supported variables:
-- `{{analysis_start_datetime}}` - The ‘event data from’ date in the ‘Analysis Set Up’,
-- `{{analysis_end_datetime}}` - The ‘event end date’ date in the ‘Analysis Set Up’,
+- {{analysis_start_timestamp}} - The ‘event data from’ date in the ‘Analysis Set Up’,
+- {{analysis_end_timestamp}} - The ‘event end date’ date in the ‘Analysis Set Up’,
 
 #### Example
 
 ```sql
 select * from analytics.reviews
-where event_timestamp BETWEEN `{{analysis_start_datetime}}` AND `{{analysis_end_datetime}}`
+where event_timestamp BETWEEN '{{analysis_start_timestamp}}' AND '{{analysis_end_timestamp}}'
 ```
 
 ### Defining in code
