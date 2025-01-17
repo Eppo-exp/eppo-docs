@@ -1,18 +1,16 @@
-# Announcing Python SDK 4.0
+---
+title: Differences between Python SDK 3.x and 4.x
+sidebar_position: 10
+---
 
-We’re excited to announce the release of Python SDK 4.0!
+The Python SDK 4.0 provides significant improvements over previous versions through its rewrite using a shared Eppo core library written in Rust.
 
-This release signifies a big milestone for the Python SDK.
-It’s a complete rewrite of the SDK using a shared Eppo core library written in Rust.
+## Key improvements
 
-Using a shared core library allows us to centralize our efforts and provide better performance, stability, and deliver new features faster.
-
-## Better performance
-
-Thanks to Rust’s natural speed, the assignment evaluation performance improved 2–5x depending on the feature flag configuration.
-You may expect even better performance in the future as we continue to optimize the core library.
-
-Additionally, configuration update now happens in a background thread without ever holding Global Interpreter Lock (GIL), so it runs in parallel with your Python threads without slowing them down.
+- **Better Performance**: Assignment evaluation is 2-5x faster than previous versions
+- **Improved Stability**: The shared core library provides more robust and reliable operation
+- **Background Updates**: Configuration updates run in a separate thread without blocking the Global Interpreter Lock (GIL)
+- **Faster Feature Delivery**: The shared core architecture allows us to roll out new features more quickly across all SDKs
 
 ## New API
 
@@ -103,7 +101,7 @@ If you used `sleep` to wait for `EppoClient` initialization before getting assig
 
 ### Configuration API
 
-This release extends [advanced configuration control API](/sdks/server-sdks/python/#c-advanced-configuration-control) introduced in 3.7.0.
+This release extends [advanced configuration control API](/sdks/server-sdks/python/initialization#advanced-configuration) introduced in 3.7.0.
 
 `EppoClient` now exposes `get_configuration()` method that returns currently-active configuration.
 
