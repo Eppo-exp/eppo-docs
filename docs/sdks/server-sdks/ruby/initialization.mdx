@@ -18,6 +18,10 @@ config = EppoClient::Config.new('<SDK-KEY>')
 EppoClient::init(config)
 ```
 
+:::note
+When using pre-forking web servers (e.g., Spring), it's important to initialize Eppo SDK after forking process is complete. See [Using Eppo SDK with pre-forking servers](/sdks/preforking/) for more information.
+:::
+
 ## Use the SDK instance
 
 After initialization, you can get an instance of the client using Ruby's singleton pattern:
@@ -110,12 +114,11 @@ The Ruby SDK exposes an API to allow manual control over configuration:
 
 ```ruby
 # Get current configuration
-config = client.get_configuration
+config = client.configuration
 
 # Access specific parts of the configuration
-flags_config = config.get_flags_configuration
-flag_keys = config.get_flag_keys
-bandit_keys = config.get_bandit_keys
+flags_config = config.flags_configuration
+bandits_config = config.bandits_configuration
 ```
 
 This API can be used for debugging or advanced optimizations like:
@@ -193,3 +196,35 @@ config = EppoClient::Config.new(
   poll_interval_seconds: nil,  # Disable polling
   initial_configuration: offline_config
 )
+```
+
+### Frameworks
+
+When using the SDK in Rails, Spring or other frameworks that have their own initialization process, 
+you can initialize the SDK after the framework has initialized.
+
+See details on pre-fork behavior in [Using Eppo SDK with pre-forking servers](/sdks/preforking/).
+
+After initialization, you can use the client singleton to get the client instance:
+
+```ruby
+eppo_client = EppoClient::Client.instance
+```
+
+#### Rails
+
+```ruby
+# In config/initializers/eppo.rb
+EppoClient::init(EppoClient::Config.new('<SDK-KEY>'))
+```
+
+#### Spring
+
+```ruby
+# In config/spring.rb
+require 'eppo_client'
+
+Spring.after_fork do
+    EppoClient::init(EppoClient::Config.new('<SDK-KEY>'))
+end
+```

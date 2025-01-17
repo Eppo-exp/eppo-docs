@@ -1,0 +1,113 @@
+---
+title: Initialization
+sidebar_position: 3
+---
+
+import ApiOptionRef from '@site/src/components/ApiOptionRef';
+
+The Eppo JavaScript SDK is easy to initialize while offering robust customization options, making it adaptable to various use cases such as offline mode, custom caching requirements, and ultra-low-latency initialization.
+
+## Initialize the SDK
+
+To complete basic initialization, you only need to provide an SDK key. [Create an SDK key](/sdks/sdk-keys) if you don't already have one. 
+
+```javascript
+import { init } from "@eppo/react-native-sdk";
+
+await init({
+  apiKey: 'tx6eTRdJh2MD0KV87FB2aQ1uNMhGpzJmucQRifMtvGE',
+  assignmentLogger: { logAssignment: (assignment: IAssignmentEvent)=> console.log('TODO: send to warehouse', assignment) }
+})
+``` 
+
+## Use the SDK instance
+After initialization, you can use the SDK instance by importing the SDK at the scope you will use it in and calling `getInstance()`. You can then use the SDK instance to assign a variation to a subject using the `get*Assignment` functions.
+
+```javascript
+import * as EppoSdk from "@eppo/react-native-sdk";
+
+const eppoClient = EppoSdk.getInstance();
+```
+
+
+## Advanced Configuration
+Basic initialization is great for most use cases, but the SDK provides options that you can use during initialization to customize the behavior of the SDK.
+
+### Initialization Options
+
+How the SDK fetches, serves, and caches experiment configurations is configurable via additional optional initialization options:
+
+<ApiOptionRef 
+  name="requestTimeoutMs"
+  type="number"
+  defaultValue="5000"
+>
+
+**Timeout** in milliseconds for HTTPS requests for the experiment configurations.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="numInitialRequestRetries"
+  type="number"
+  defaultValue="1"
+>
+
+Number of *additional* times the initial configurations request will be attempted if it fails. 
+This is the request typically synchronously waited (via `await`) for completion. 
+A small wait will be done between requests.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="baseUrl"
+  type="string"
+  defaultValue="https://api.eppo.com"
+>
+
+The base URL for for the API. Can be overriden to proxy configuration requests.
+</ApiOptionRef>
+
+
+<ApiOptionRef 
+  name="pollAfterFailedInitialization"
+  type="boolean"
+  defaultValue="false"
+>
+
+Poll for new configurations even if the initial configurations request failed.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="throwOnFailedInitialization"
+  type="boolean"
+  defaultValue="true"
+>
+
+Throw an error (reject the promise) if unable to fetch initial configurations during initialization.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="numPollRequestRetries"
+  type="number"
+  defaultValue="7"
+>
+
+If polling for updated configurations after initialization, the number of additional times a request will be attempted before giving up. Subsequent attempts are done using an exponential backoff.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="persistentStore"
+  type="IAsyncStore"
+  defaultValue="(Eppo provided)"
+>
+
+An asynchronous, persistent storage for caching fetched flag configurations for use in subsequent sessions
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="maxCacheAgeSeconds"
+  type="number"
+  defaultValue="0"
+>
+
+Maximum age, in seconds, that a previously cached configuration is considered valid and the wait-time before fetching a fresh configuration
+</ApiOptionRef>
