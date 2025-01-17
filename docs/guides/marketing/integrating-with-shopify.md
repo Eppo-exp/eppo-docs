@@ -86,12 +86,12 @@ Start by installing the Eppo client SDK into your Hydrogen app.
 ```
     
 2. **Initialize Eppo**:
-Set up the Eppo client, preferably in a global file or context, so it can be accessed easily across different components. Our [Usage in React documentation](/sdks/server-sdks/node/) covers how to set up an Eppo provider and how to use to assign variations to any child component.
+Set up the Eppo client, preferably in a global file or context, so it can be accessed easily across different components. Our [Usage in React documentation](/sdks/server-sdks/node/intro) covers how to set up an Eppo provider and how to use to assign variations to any child component.
 3. **Manage Feature Flags Using React State**:
     - Use the `useEffect` hook to determine the user's assignment when the component loads. Read more about the Javascript SDK’s usage in React [here](/sdks/client-sdks/javascript/react).
     - Depending on the feature flag assignment, you can conditionally render different parts of your React components.
 4. **Server-Side Rendering Considerations**:
-If you’re server-side rendering (SSR) parts of your Hydrogen store, make sure to account for how you want to handle feature flag evaluation on the server. You might need to fetch assignments during server rendering, especially if flags need to influence SEO or static content. [Eppo’s Node SDK](/sdks/server-sdks/node/) can be used for server rendered flag evaluations.
+If you’re server-side rendering (SSR) parts of your Hydrogen store, make sure to account for how you want to handle feature flag evaluation on the server. You might need to fetch assignments during server rendering, especially if flags need to influence SEO or static content. [Eppo’s Node SDK](/sdks/server-sdks/node/intro) can be used for server rendered flag evaluations.
 
 ### **Other Considerations:**
 

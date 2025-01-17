@@ -187,7 +187,7 @@ where fact_timestamp >= assignment_timestamp + X days
 and assignment_timestamp < current_date - X days 
 ```
 
-Additionally, a maximum number of days (Y) can be set on the retention period by enabling "add a timeframe to aggregate". When this is enabled, the aggregation will include events by subjects after the minimum number of days defined by the retention period (>=X) and before the max timeframe to aggregate (`<Y`). 
+Additionally, a maximum number of days (`Y`) can be set on the retention period by enabling "add a timeframe to aggregate". When this is enabled, the aggregation will include events by subjects after the minimum number of days defined by the retention period (`>=X`) and before the max timeframe to aggregate (`<Y`). 
 
 
 #### Conversion

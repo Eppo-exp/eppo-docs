@@ -20,7 +20,7 @@ slice and dice those results by looking at different segments and metric cuts.
 
 When you click on the **Experiments** tab of the **Analysis** section, you will see the **experiment list
 view**, which shows all of your experiments. You can filter this list by
-experiment name, status, entity, or owner, or just show experiments you have
+experiment name, timeframe, status, entity, team, creator, primary metric, or just show experiments you have
 **starred**.
 
 <Figure alt="Experiment list view" src="/img/interpreting-experiments/experiments-list-view.png">
@@ -28,6 +28,22 @@ experiment name, status, entity, or owner, or just show experiments you have
 </Figure>
 
 <!-- TODO: Discuss the experiment table view? -->
+
+## Experiment timeline view
+
+The Experiment timeline view is a visual representation of experiments run and their outcomes over time. You can switch between a list of experiment to a timeline view by clicking the **Timeline** button in the top right corner of the experiment page. 
+
+<Figure alt="Experiment timeline view" src="/img/interpreting-experiments/experiment-timeline-view.png">
+   The Experiment timeline view, showing a list of experiments and their outcomes over time.
+</Figure>
+
+By default, the timeline will show all experiments sorted by start date descending. You can also filter the timeline by experiment name, timeframe, status, entity, team, creator, primary metric, or just show experiments you have **starred**.
+
+Experiments in the timeline are color coded by their status and outcome:
+- **Running, Ready for Review and Wrap Up** - Grey with purple bar indicating progress towards goal
+- **Completed with positive result** - Green
+- **Completed with neutral result** - Grey
+- **Completed with negative result** - Red
 
 ## Overview of an experiment's results
 

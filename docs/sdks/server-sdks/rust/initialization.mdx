@@ -1,0 +1,62 @@
+---
+title: Initialization
+sidebar_position: 3
+---
+
+import ApiOptionRef from '@site/src/components/ApiOptionRef';
+
+The Eppo Rust SDK is easy to initialize while offering robust customization options, making it adaptable to various use cases such as offline mode, custom caching requirements, and ultra-low-latency initialization.
+
+## Initialize the SDK
+
+To complete basic initialization, you only need to provide an SDK key. [Create an SDK key](/sdks/sdk-keys) if you don't already have one.
+
+```rust
+let mut client = eppo::ClientConfig::from_api_key("<YOUR_API_KEY>")
+    .to_client();
+
+let poller_thread = client.start_poller_thread();
+```
+
+## Advanced Configuration
+
+Basic initialization is great for most use cases, but the SDK provides options that you can use during initialization to customize the behavior of the SDK.
+
+### Initialization Options
+
+The SDK configuration can be customized using the `ClientConfig` builder pattern:
+
+<ApiOptionRef 
+  name="base_url"
+  type="String"
+  defaultValue="https://fscdn.eppo.cloud/api"
+>
+
+The base URL for the Eppo API.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="assignment_logger"
+  type="Box<dyn AssignmentLogger>"
+  defaultValue="None"
+>
+
+A callback that sends each assignment to your data warehouse. Required only for experiment analysis.
+</ApiOptionRef>
+
+Example using these configuration options:
+
+```rust
+use std::time::Duration;
+
+let mut client = eppo::ClientConfig::from_api_key("<YOUR_API_KEY>")
+    .base_url("https://custom-domain.example.com/api")
+    .assignment_logger(MyAssignmentLogger)
+    .to_client();
+
+client.start_poller_thread();
+```
+
+:::note
+The Rust SDK is still evolving and some features available in other SDKs (like persistent caching and offline initialization) are not yet implemented. The documentation will be updated as these features become available.
+::: 
