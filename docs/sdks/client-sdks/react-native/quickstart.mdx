@@ -1,0 +1,236 @@
+---
+title: Quickstart
+sidebar_position: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+The Eppo React Native SDK lets you manage feature flags and experiments in your react native applications 
+
+The SDK handles all the complexity of feature flag evaluation and experiment assignment locally in your application, with no network calls required after initial setup. This guide will walk you through installing the SDK and implementing your first feature flag, experiment, and contextual bandit.
+
+## Installation
+
+First, install the SDK into your current project.
+
+The Eppo React Native SDK is available via a number of package managers or via a CDN. Use whichever one you prefer.
+
+<Tabs>
+<TabItem value="yarn" label="Yarn">
+
+```bash
+yarn add @eppo/react-native-sdk
+```
+
+</TabItem>
+
+<TabItem value="npm" label="NPM">
+
+```bash
+npm install @eppo/react-native-sdk
+```
+
+</TabItem>
+
+</Tabs>
+
+Depending on whether you are running a feature flag, an experiment, or a bandit, the initialization code will be slightly different.
+
+## Feature Flags
+Feature flags are a way to toggle features on and off without needing to deploy code.
+
+### Initialize the SDK
+
+[Create an SDK key](/sdks/sdk-keys) if you don't already have one. 
+
+First, initialize the Eppo SDK at the app root using your SDK key. The SDK key is different from the project API key. 
+
+```js
+import {IAssignmentEvent, init} from "@eppo/react-native-sdk";
+
+await init({
+  apiKey: "<SDK_KEY>",
+  assignmentLogger: { logAssignment: (assignment: IAssignmentEvent)=> console.log("TODO: send to warehouse", assignment) }
+});
+``` 
+
+:::note
+The SDK key is different from the project API key. You can find your SDK key in the [SDK Keys section of the Eppo interface](https://eppo.cloud/configuration/environments/keys).
+:::
+
+### Assign a variant
+
+Once initialized, the SDK uses a singleton pattern, making it accessible from anywhere in your application. To make assignments, import the SDK and use `getInstance()` to access the SDK instance.
+
+### How assignments work
+
+The SDK periodically retrieves configuration rules from the Eppo server that define how subjects should be allocated to variants. When you call an assignment function, the SDK evaluates these rules locally without making additional network requests.
+
+Each assignment requires:
+
+- **Flag Key**: Identifies which set of configuration rules to use
+- **Subject Key**: A unique identifier for the subject (usually a user ID)
+- **Subject Attributes**: Optional key-value pairs containing additional information used for rule evaluation
+- **Default Value**: Fallback value if assignment fails, rules don't match, an error was thrown during initialization, or the feature is not enabled
+
+
+```js
+import * as EppoSdk from "@eppo/react-native-sdk";
+
+// Get SDK instance
+const eppoClient = EppoSdk.getInstance();
+
+// Define assignment parameters
+const featureKey = "my-neat-feature";
+const subjectKey = user?.id || "anonymous";
+
+const subjectAttributes = {
+    "country": user?.country,
+    "device": user?.device,
+};
+const defaultValue = "default-value";
+
+// Make an assignment
+const variation = eppoClient.getStringAssignment(
+  featureKey,
+  subjectKey,
+  subjectAttributes,
+  defaultValue
+);
+```
+
+### Assignment Types
+
+The SDK provides different assignment functions based on the type of value you need:
+
+| Function | Return Type |
+|----------|-------------|
+| `getStringAssignment()` | String |
+| `getBooleanAssignment()` | Boolean |
+| `getJSONAssignment()` | JSON object |
+| `getIntegerAssignment()` | Integer |
+| `getNumericAssignment()` | Float |
+
+:::note
+See more details about assignment functions in the [Assignments](/sdks/client-sdks/javascript/assignments) page.
+:::
+
+### Using Assignments
+
+After receiving an assignment, your application should implement logic to modify the user experience accordingly:
+
+```javascript
+const LandingPageA = () => {
+    return <div>Landing Page A</div>
+}
+
+const LandingPageB = () => {
+    return <div>Landing Page B</div>
+}
+
+const ControlLandingPage = () => {
+    return <div>Landing Page C</div>
+}
+
+// Example using a boolean assignment
+const variation = eppoClient.getStringAssignment(
+  featureKey,
+  subjectKey,
+  subjectAttributes,
+  defaultValue
+);
+
+// Render different components based on assignment
+if (variation === "landing-page-a") {
+    return <LandingPageA />
+} else if (variation === "landing-page-b") {
+    return <LandingPageB />
+} else {
+    return <ControlLandingPage />
+}
+```
+
+That's all the code you need to make a basic assignment. After that, you can do the rest of the work running the experiment from the Eppo UI. This is awesome both because it allows you to iterate quickly and because it gives you the ability to change the experiment configuration without redeploying your code.
+
+You can see the full steps for setting up a feature flag including UI steps in the [feature flag quickstart](/feature-flag-quickstart).
+
+
+## Experiments
+
+While feature flags are useful, they do not send you any information about how your users are interacting with the feature. Experiments provide a way to collect data about these interactions using whichever logging and data warehousing system you prefer.
+
+To log events through the SDK, you need to define a `logAssignment()` function using the `IAssignmentLogger` interface to pass to the `init()` function.
+
+For simplicity, we'll create a `logAssignment()` function that logs the assignment data to the console.
+
+```javascript
+// Import Eppo's assignment logger interface and client initializer
+import { IAssignmentLogger, init } from "@eppo/react-native-sdk";
+
+// Define logAssignment so that it logs events
+const assignmentLogger: IAssignmentLogger = {
+  logAssignment(assignment) {
+    console.log(assignment);
+  }
+};
+
+// Initialize the SDK
+await init({
+  apiKey: "<SDK_KEY>",
+  assignmentLogger,
+});
+
+```
+
+
+:::note
+In a production application, you would want to replace the `console.log()` statement with an actual logging system. We have documentation on how to set up logging with multiple popular data warehouses and logging systems in the [Assignment page](/sdks/client-sdks/javascript/assignments/#logging-data-to-your-data-warehouse).
+:::
+
+### Assign a variant
+
+After initializing the SDK with the `logAssignment()` function, you can make assignments in the same way as for feature flags.
+
+```js
+import * as EppoSdk from "@eppo/react-native-sdk";
+
+// Get SDK instance
+const eppoClient = EppoSdk.getInstance();
+
+// Define assignment parameters
+const featureKey = "my-neat-feature";
+const subjectKey = getCurrentUser() || "anonymous";
+const subjectAttributes = {
+    "country": user.country,
+    "device": user.device,
+};
+const defaultValue = "default-value";
+
+// Make an assignment
+const variation = eppoClient.getStringAssignment(
+  featureKey,
+  subjectKey,
+  subjectAttributes,
+  defaultValue
+);
+
+if (variation === "landing-page-a") {
+    return <LandingPageA />
+} else if (variation === "landing-page-b") {
+    return <LandingPageB />
+} else {
+    return <ControlLandingPage />
+}
+```
+
+You can see the full steps for running an experiment including UI steps in the [experiment quick start](/experiment-allocation-quickstart/).
+
+
+## Next Steps
+
+Now that you've seen how to make assignments with the Eppo JavaScript SDK, we strongly recommend familiarizing yourself with the following topics:
+
+- [High Level concepts for the client API](/sdks/client-sdks)
+- [Initialization Configuration](/sdks/client-sdks/javascript/Initialization)
+- [Assignment details](/sdks/client-sdks/javascript/assignments)

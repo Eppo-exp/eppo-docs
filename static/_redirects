@@ -136,10 +136,22 @@ http://adoring-yonath-6ecb9d.netlify.app/*  http://docs.geteppo.com/:splat  301!
 /sdks/client-sdks/javascript/ /sdks/client-sdks/javascript/intro 301!
 /sdks/client-sdks/javascript/#offline-initialization /sdks/client-sdks/javascript/initialization#offline-initialization 301!
 /sdks/client-sdks/javascript/#usage-in-react /sdks/client-sdks/javascript/react 301!
-
 /guides/engineering/nextjs-setup/ /sdks/client-sdks/javascript/nextjs-setup
 
 /sdks/server-sdks/ruby/ /sdks/server-sdks/ruby/intro
+
+/sdks/client-sdks/react-native /sdks/client-sdks/react-native/intro
+/sdks/client-sdks/react-native#getting-started /sdks/client-sdks/react-native/quickstart
+/sdks/client-sdks/react-native#installation /sdks/client-sdks/react-native/quickstart#installation
+/sdks/client-sdks/react-native#usage /sdks/client-sdks/react-native/assignment
+/sdks/client-sdks/react-native#connecting-an-event-logger /sdks/client-sdks/react-native/assignment#logging-data-to-your-data-warehouse
+/sdks/client-sdks/react-native#getting-variations /sdks/client-sdks/react-native/assignment#assignment-types
+/sdks/client-sdks/react-native#advanced-options /sdks/client-sdks/react-native/initialization#advanced-configuration
+/sdks/client-sdks/react-native#initialization-options /sdks/client-sdks/react-native/initialization#initialization-options
+/sdks/client-sdks/react-native#usage-in-react /sdks/client-sdks/react-native/assignment#using-assignments
+/sdks/client-sdks/react-native#local-storage /sdks/client-sdks/react-native/assignment#local-storage
+/sdks/client-sdks/react-native#debugging /sdks/client-sdks/react-native/quickstart#next-steps
+/sdks/client-sdks/react-native#assignment-logger-schema /sdks/client-sdks/react-native/assignment#assignment-logger-schema
 
 /sdks/server-sdks/rust /sdks/server-sdks/rust/intro 301!
 /sdks/server-sdks/rust#getting-started /sdks/server-sdks/rust/quickstart
