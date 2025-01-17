@@ -112,13 +112,7 @@ For experiment analysis, implement the `LoggerInterface`:
 use Eppo\Logger\LoggerInterface;
 
 class Logger implements LoggerInterface {
-  public function logAssignment(
-    string $experiment,
-    string $variation,
-    string $subject,
-    string $timestamp,
-    array $subjectAttributes = []
-  ) {
+  public function logAssignment(AssignmentEvent $assignmentEvent) {
     // Implement your logging logic here
   }
 }
