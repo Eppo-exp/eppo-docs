@@ -32,6 +32,10 @@ client_config = Config(api_key="<SDK-KEY-FROM-DASHBOARD>")
 eppo_client.init(client_config)
 ```
 
+:::note
+When using pre-forking web servers (e.g., uWSGI), it's important to initialize Eppo SDK after forking process is complete. See [Using Eppo SDK with pre-forking servers](/sdks/preforking/) for more information.
+:::
+
 #### Assign anywhere
 
 ```python
