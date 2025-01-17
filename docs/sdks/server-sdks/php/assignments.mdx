@@ -121,7 +121,31 @@ The experiment variation the subject was assigned to. Example: `"control"`
 
 ### Logging Examples
 
-[Placeholder: Need PHP-specific examples for logging to different services (Segment, Rudderstack, mParticle, Snowplow)]
+To use the Eppo SDK for experiments that require analysis, pass in an implementation of the LoggerInterface to the init function on SDK initialization. The SDK invokes the callback to capture assignment data whenever a variation is assigned. The assignment data is needed in the warehouse to perform analysis.
+
+The code below illustrates an example implementation of a logging callback using Segment, but you can use any system you'd like. The only requirement is that the SDK receives a logAssignment callback function. Here we define an implementation of the Eppo AssignmentLogger interface containing a single function named logAssignment:
+
+```php
+<?php
+
+use Eppo\Logger\LoggerInterface;
+
+
+use Eppo\Logger\AssignmentEvent;
+use Eppo\Logger\LoggerInterface;
+
+class SegmentLogger implements LoggerInterface
+{
+    public function logAssignment(AssignmentEvent $assignmentEvent): void
+    {
+        Segment::track([
+            'event' => 'Flag Assignment for ' . $assignmentEvent->featureFlag,
+            'userId' => $assignmentEvent->subject,
+            'properties' => $assignmentEvent->toArray()
+        ]);
+    }
+}
+```
 
 :::note
 More details about logging and examples can be found in the [event logging](/sdks/event-logging/) page.
