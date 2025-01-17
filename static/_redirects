@@ -149,3 +149,14 @@ http://adoring-yonath-6ecb9d.netlify.app/*  http://docs.geteppo.com/:splat  301!
 /sdks/server-sdks/rust#assignment-logging-for-experiments /sdks/server-sdks/rust/assignments#assignment-logger-schema
 /sdks/server-sdks/rust#typed-assignment-calls /sdks/server-sdks/rust/assignments#assignment-types
 
+/sdks/server-sdks/python/#getting-started /sdks/server-sdks/python/quickstart
+/sdks/server-sdks/python/#usage /sdks/server-sdks/python/assignments
+/sdks/server-sdks/python/#initialization-options /sdks/server-sdks/python/initialization#initialization-options
+/sdks/server-sdks/python/#contextual-bandits /sdks/server-sdks/python/bandits
+/sdks/server-sdks/python/#advanced-options /sdks/server-sdks/python/initialization#advanced-configuration
+/sdks/server-sdks/python/#examples /sdks/server-sdks/python/examples
+/sdks/server-sdks/python/#assignment-logger-schema /sdks/server-sdks/python/assignments#assignment-logger-schema
+/sdks/server-sdks/python/#logging-to-your-data-warehouse /sdks/server-sdks/python/assignments#logging-to-your-data-warehouse
+/sdks/server-sdks/python/#deduplicating-logs /sdks/server-sdks/python/assignments#deduplicating-logs
+/sdks/server-sdks/python/#waiting-for-configuration /sdks/server-sdks/python/initialization#waiting-for-configuration
+/sdks/server-sdks/python/#usage-in-serverless-environments /sdks/server-sdks/python/initialization#usage-in-serverless-environments

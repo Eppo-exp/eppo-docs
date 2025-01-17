@@ -1,0 +1,198 @@
+---
+title: Initialization
+sidebar_position: 3
+---
+
+import ApiOptionRef from '@site/src/components/ApiOptionRef';
+
+The Eppo Python SDK is easy to initialize while offering robust customization options, making it adaptable to various use cases such as offline mode, custom caching requirements, and ultra-low-latency initialization.
+
+## Initialize the SDK
+
+To complete basic initialization, you only need to provide an SDK key. [Create an SDK key](/sdks/sdk-keys) if you don't already have one.
+
+```python
+import eppo_client
+from eppo_client import ClientConfig
+
+client_config = ClientConfig(api_key="<SDK-KEY>")
+eppo_client.init(client_config)
+```
+
+## Use the SDK instance
+
+After initialization, you can get an instance of the client using `get_instance()`:
+
+```python
+client = eppo_client.get_instance()
+```
+
+:::note
+When using pre-forking web servers (e.g., uWSGI), it's important to initialize Eppo SDK after forking process is complete. See [Using Eppo SDK with pre-forking servers](/sdks/preforking/) for more information.
+:::
+
+## Advanced Configuration
+
+Basic initialization is great for most use cases, but the SDK provides options that you can use during initialization to customize the behavior of the SDK.
+
+### Initialization Options
+
+The `Config` class accepts the following options:
+
+<ApiOptionRef
+  name="api_key"
+  type="str"
+  defaultValue="None"
+>
+
+Your SDK key from the Eppo dashboard. Required.
+</ApiOptionRef>
+
+<ApiOptionRef
+  name="assignment_logger"
+  type="AssignmentLogger"
+>
+
+A callback that sends each assignment to your data warehouse. Required.
+</ApiOptionRef>
+
+<ApiOptionRef
+  name="poll_interval_seconds"
+  type="Optional[int]"
+  defaultValue="30"
+>
+
+The interval in seconds at which the SDK polls for configuration updates. If set to `None`, polling is disabled.
+</ApiOptionRef>
+
+<ApiOptionRef
+  name="poll_jitter_seconds"
+  type="int"
+  defaultValue="3"
+>
+
+The jitter in seconds to add to the poll interval to prevent thundering herd problems.
+</ApiOptionRef>
+
+<ApiOptionRef
+  name="is_graceful_mode"
+  type="bool"
+  defaultValue="True"
+>
+
+When true, gracefully handles all exceptions within the assignment function and returns the default value.
+</ApiOptionRef>
+
+<ApiOptionRef
+  name="initial_configuration"
+  type="Optional[Configuration]"
+  defaultValue="None"
+>
+
+If set, the client will use this configuration until it fetches a fresh one.
+</ApiOptionRef>
+
+For example, to poll for changes every minute with jitter:
+
+```python
+client_config = ClientConfig(
+    api_key="<SDK-KEY>",
+    assignment_logger=MyLogger(),
+    poll_interval_seconds=60,
+    poll_jitter_seconds=10
+)
+eppo_client.init(client_config)
+```
+
+### Waiting for Configuration
+
+Starting in version `v4.0.0`, the SDK has a method to wait for the configuration to be fetched: `wait_for_initialization()`. This method parks the current Python thread until the client fetches the configuration. It releases Global Interpreter Lock (GIL) while it waits, so it does not block other Python threads.
+
+```python
+client = eppo_client.get_instance()
+client.wait_for_initialization()  # Blocks until configuration is loaded
+```
+
+This is particularly useful for scripting use cases when subsequent calls to Eppo's client will happen immediately after initialization.
+
+### Advanced Configuration Control
+
+Starting with `v4.0.0`, the Python SDK exposes an advanced API to allow manual control over configuration:
+
+```python
+from eppo_client import Configuration
+
+# Get current configuration
+config = client.get_configuration()
+
+# Access specific parts of the configuration
+flags_config = config.get_flags_configuration()
+flag_keys = config.get_flag_keys()
+bandit_keys = config.get_bandit_keys()
+```
+
+This API can be used for debugging or advanced optimizations like:
+- Caching configuration
+- Faster client-side initialization from server configuration
+- Debugging flag assignments
+
+#### Usage in Serverless Environments
+
+The default periodic polling setup is suitable for most cases but may be inefficient in short-lived serverless environments like AWS Lambda, where a new configuration is fetched on every function call.
+
+For serverless environments, you can manually control configuration updates:
+```python
+# Initialize with a cached configuration
+cached_config = get_cached_configuration()  # Your caching logic
+client_config = ClientConfig(
+    api_key="<SDK-KEY>",
+    poll_interval_seconds=None,
+    initial_configuration=cached_config
+)
+eppo_client.init(client_config)
+
+# Later, update configuration manually if needed
+new_config = fetch_new_configuration()  # Your update logic
+eppo_client.get_instance().set_configuration(new_config)
+```
+
+### Example Configurations
+
+Here are some common configuration patterns based on different needs:
+
+#### Prioritize Flag Value Freshness
+If you want to always use the latest flag values:
+
+```python
+client_config = ClientConfig(
+    api_key="<SDK-KEY>",
+    poll_interval_seconds=10,  # Poll frequently
+    poll_jitter_seconds=1,
+    is_graceful_mode=False  # Throw exceptions if there are issues (useful for debugging)
+)
+```
+
+#### Prioritize Fast Initialization
+If you want to optimize for quick initialization:
+
+```python
+cached_config = get_cached_configuration()  # Your caching logic
+client_config = ClientConfig(
+    api_key="<SDK-KEY>",
+    poll_interval_seconds=300,  # Poll less frequently
+    initial_configuration=cached_config,
+    is_graceful_mode=True  # Use default values if there are issues (preferred in production)
+)
+```
+
+#### Offline Mode
+For completely offline operation:
+
+```python
+offline_config = get_offline_configuration()  # Your configuration source
+client_config = ClientConfig(
+    api_key="<SDK-KEY>",
+    poll_interval_seconds=None,  # Disable polling
+    initial_configuration=offline_config
+)
+```
