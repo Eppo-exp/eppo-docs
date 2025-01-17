@@ -138,8 +138,6 @@ http://adoring-yonath-6ecb9d.netlify.app/*  http://docs.geteppo.com/:splat  301!
 /sdks/client-sdks/javascript/#usage-in-react /sdks/client-sdks/javascript/react 301!
 /guides/engineering/nextjs-setup/ /sdks/client-sdks/javascript/nextjs-setup
 
-/sdks/server-sdks/node/ /sdks/server-sdks/node/intro 301!
-
 /sdks/server-sdks/ruby/ /sdks/server-sdks/ruby/intro 301!
 
 /sdks/client-sdks/react-native /sdks/client-sdks/react-native/intro
@@ -174,3 +172,15 @@ http://adoring-yonath-6ecb9d.netlify.app/*  http://docs.geteppo.com/:splat  301!
 /sdks/server-sdks/python/#deduplicating-logs /sdks/server-sdks/python/assignments#deduplicating-logs
 /sdks/server-sdks/python/#waiting-for-configuration /sdks/server-sdks/python/initialization#waiting-for-configuration
 /sdks/server-sdks/python/#usage-in-serverless-environments /sdks/server-sdks/python/initialization#usage-in-serverless-environments
+
+/sdks/server-sdks/node/ /sdks/server-sdks/node/intro 301!
+/sdks/server-sdks/node#getting-started /sdks/server-sdks/node/quickstart
+/sdks/server-sdks/node#installation /sdks/server-sdks/node/quickstart#installation
+/sdks/server-sdks/node#usage /sdks/server-sdks/node/quickstart#initialize-the-sdk
+/sdks/server-sdks/node#connecting-an-event-logger /sdks/server-sdks/node/assignments#logging-data-to-your-data-warehouse
+/sdks/server-sdks/node#initialization-options /sdks/server-sdks/node/initialization#initialization-options
+/sdks/server-sdks/node#assignment-logger-schema /sdks/server-sdks/node/assignments#assignment-logger-schema
+/sdks/server-sdks/node#usage-with-contextual-multi-armed-bandits /sdks/server-sdks/node/bandits
+/sdks/server-sdks/node#define-a-bandit-assignment-logger /sdks/server-sdks/node/bandits#logging-bandit-actions
+/sdks/server-sdks/node#querying-the-bandit-for-an-action /sdks/server-sdks/node/bandits#query-the-bandit-for-actions
+/sdks/server-sdks/node#debugging /sdks/server-sdks/node/assignments#debugging
