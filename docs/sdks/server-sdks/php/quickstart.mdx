@@ -38,11 +38,13 @@ $eppoClient = EppoClient::init(
 ### Make an Assignment
 
 ```php
-$subjectAttributes = [];
-$variation = $eppoClient->getStringAssignment('subject-1', 'experiment_5', $subjectAttributes);
+$subjectAttributes = [ 'tier' => 2 ];
+$assignment = $eppoClient->getStringAssignment('experimentalBackground', 'user123', $subjectAttributes, 'control');
 
-if ($variation === 'control') {
-    // do something
+if ($assignment !== 'control') {
+    // do something special
+} else {
+  // Show the default treatment
 }
 ```
 
