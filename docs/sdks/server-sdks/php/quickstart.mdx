@@ -85,7 +85,32 @@ Setting up a bandit requires two loggers:
 1. An assignment logger (same as experiments)
 2. A bandit logger for recording bandit-specific events
 
-[Code Placeholder: Implementation example of PHP bandit logger will be added in a future update]
+<?php
+
+use Eppo\Logger\AssignmentEvent;
+use Eppo\Logger\BanditActionEvent;
+use Eppo\Logger\IBanditLogger;
+
+class SegmentLogger implements IBanditLogger
+{
+    public function logAssignment(AssignmentEvent $assignmentEvent): void
+    {
+        Segment::track([
+            'event' => 'Flag Assignment for ' . $assignmentEvent->featureFlag,
+            'userId' => $assignmentEvent->subject,
+            'properties' => $assignmentEvent->toArray()
+        ]);
+    }
+
+    public function logBanditAction(BanditActionEvent $banditActionEvent): void
+    {
+        Segment::track([
+            'event' => 'Bandit Action Selected',
+            'userId' => $banditActionEvent->subjectKey,
+            'properties' => $banditActionEvent->toArray()
+        ]);
+    }
+}
 
 ### Query the bandit for actions
 
