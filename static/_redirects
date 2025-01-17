@@ -138,3 +138,10 @@ http://adoring-yonath-6ecb9d.netlify.app/*  http://docs.geteppo.com/:splat  301!
 /sdks/client-sdks/javascript/#usage-in-react /sdks/client-sdks/javascript/react 301!
 
 /guides/engineering/nextjs-setup/ /sdks/client-sdks/javascript/nextjs-setup
+
+/sdks/server-sdks/php /sdks/server-sdks/php/intro 301!
+/sdks/server-sdks/php#install-the-sdk /sdks/server-sdks/php/quickstart#installation
+/sdks/server-sdks/php#initialize-the-sdk /sdks/server-sdks/php/initialization
+/sdks/server-sdks/php#assign-variations /sdks/server-sdks/php/assignments
+/sdks/server-sdks/php#typed-assignments /sdks/server-sdks/php/assignments#typed-assignments
+/sdks/server-sdks/php#handling-the-empty-assignment /sdks/server-sdks/php/assignments#handling-empty-assignments
