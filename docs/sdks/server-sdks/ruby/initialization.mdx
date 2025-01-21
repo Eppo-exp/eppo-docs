@@ -57,6 +57,15 @@ A callback that sends each assignment to your data warehouse. Required only for 
 </ApiOptionRef>
 
 <ApiOptionRef 
+  name="base_url"
+  type="String"
+  defaultValue="https://fscdn.eppo.cloud/api"
+>
+
+The Eppo API endpoint base url.
+</ApiOptionRef>
+
+<ApiOptionRef 
   name="poll_interval_seconds"
   type="Integer"
   defaultValue="30"
@@ -75,12 +84,12 @@ The jitter in seconds to add to the poll interval to prevent thundering herd pro
 </ApiOptionRef>
 
 <ApiOptionRef 
-  name="is_graceful_mode"
-  type="Boolean"
-  defaultValue="true"
+  name="log_level"
+  type="String"
+  defaultValue="nil"
 >
 
-When true, gracefully handles all exceptions within the assignment function and returns the default value.
+The default log level for the Eppo client. Can be either nil, error, warn, info, debug or trace
 </ApiOptionRef>
 
 <ApiOptionRef 
