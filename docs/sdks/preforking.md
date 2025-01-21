@@ -60,7 +60,9 @@ If you use Phusion [Passenger](https://www.phusionpassenger.com/), initialize th
 ```ruby
 if defined?(PhusionPassenger)
   PhusionPassenger.on_event(:starting_worker_process) do |forked|
-    EppoClient::init(EppoClient::Config.new(...))
+    if forked
+      EppoClient::init(EppoClient::Config.new(...))
+    end
   end
 end
 ```
