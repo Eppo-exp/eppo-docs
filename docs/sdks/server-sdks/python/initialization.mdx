@@ -15,7 +15,10 @@ To complete basic initialization, you only need to provide an SDK key. [Create a
 import eppo_client
 from eppo_client import ClientConfig, AssignmentLogger
 
-client_config = ClientConfig(api_key="<SDK-KEY>", assignment_logger=AssignmentLogger())
+client_config = ClientConfig(
+  api_key="<SDK-KEY>", 
+  assignment_logger=AssignmentLogger()
+)
 eppo_client.init(client_config)
 ```
 
