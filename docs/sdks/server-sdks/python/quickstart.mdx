@@ -29,9 +29,9 @@ First, initialize the SDK using your SDK key:
 
 ```python
 import eppo_client
-from eppo_client import ClientConfig
+from eppo_client import ClientConfig, AssignmentLogger
 
-client_config = ClientConfig(api_key="<SDK-KEY>")
+client_config = ClientConfig(api_key="<SDK-KEY>", assignment_logger=AssignmentLogger())
 eppo_client.init(client_config)
 ```
 
@@ -85,7 +85,8 @@ While feature flags are useful, they do not send you any information about how y
 To log events through the SDK, you need to implement the `AssignmentLogger` class:
 
 ```python
-from eppo_client import AssignmentLogger
+import eppo_client
+from eppo_client import ClientConfig, AssignmentLogger
 
 class MyLogger(AssignmentLogger):
     def log_assignment(self, assignment):
@@ -111,7 +112,8 @@ Contextual Multi-Armed Bandits are a way to dynamically optimize assignments bas
 Setting up a bandit requires implementing both an assignment logger and a bandit logger:
 
 ```python
-from eppo_client import AssignmentLogger
+import eppo_client
+from eppo_client import ClientConfig, AssignmentLogger
 
 class MyLogger(AssignmentLogger):
     def log_assignment(self, assignment):
