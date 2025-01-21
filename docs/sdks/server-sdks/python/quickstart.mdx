@@ -31,7 +31,10 @@ First, initialize the SDK using your SDK key:
 import eppo_client
 from eppo_client import ClientConfig, AssignmentLogger
 
-client_config = ClientConfig(api_key="<SDK-KEY>", assignment_logger=AssignmentLogger())
+client_config = ClientConfig(
+    api_key="<SDK-KEY>", 
+    assignment_logger=AssignmentLogger()
+)
 eppo_client.init(client_config)
 ```
 
