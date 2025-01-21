@@ -45,7 +45,7 @@ Eppo can gracefully handle this many-to-many relationship as well as assignment 
 ### Assignment SQL set up in Eppo
 
 :::note
-By default, secondary IDs are disabled in Eppo workspaces. To have secondary IDs enabled in your workspace, please contact support@geteppo.com.
+By default, secondary IDs are disabled in Eppo workspaces. To have secondary IDs enabled in your workspace, please contact support@geteppo.com. Also note that [funnel metrics](/data-management/metrics/funnel-metric) and metrics that use the [Count Distinct](/data-management/metrics/simple-metric#count-distinct) aggregation are not supported in experiments with secondary IDs.
 :::
 
 Before setting up an anonymous user assignment SQL, make sure you have created [entities](/data-management/definitions/entities/) for both anonymous users and logged in users, along with one or more [metrics](/data-management/metrics/).
