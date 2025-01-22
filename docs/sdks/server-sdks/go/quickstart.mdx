@@ -99,19 +99,12 @@ While feature flags are useful, they do not send you any information about how y
 To log events through the SDK, you need to implement the `AssignmentLogger` interface:
 
 ```go
-type MyLogger struct{}
+type ConsoleLogger struct{}
 
-func (l *MyLogger) LogAssignment(assignment *eppo.Assignment) error {
-    // Replace with your logging logic
-    log.Printf("Logging assignment: %+v", assignment)
+func (l *ConsoleLogger) LogAssignment(event eppoclient.AssignmentEvent) error {
+    log.Printf("Assignment: %+v", event)
     return nil
 }
-
-config := eppo.NewConfig(
-    "<SDK-KEY>",
-    eppo.WithAssignmentLogger(&MyLogger{}),
-)
-client, err := eppo.Init(config)
 ```
 
 :::note
