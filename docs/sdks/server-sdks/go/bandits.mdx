@@ -223,7 +223,7 @@ The `result` is an instance of `BanditResult`, which has two fields:
 
 The variation returns the feature flag variation, this can be the bandit itself, or the "status quo" variation if the user is not assigned to the bandit.
 If we are unable to generate a variation, for example when the flag is turned off, then the `default` variation is returned.
-In both of those cases, the `Action` is an empty string, and you should use the status-quo algorithm to select an action.
+In both of those cases, the `Action` is nil, and you should use the status-quo algorithm to select an action.
 
 When `Action` is not empty, the bandit has selected that action to be shown to the user.
 
