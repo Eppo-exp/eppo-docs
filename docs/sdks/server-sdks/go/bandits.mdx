@@ -219,7 +219,7 @@ Note that action contexts can contain two kinds of information:
 
 The `result` is an instance of `BanditResult`, which has two fields:
 - `Variation` (string): The variation that was assigned to the subject
-- `Action` (string): The action that was assigned to the subject (empty string if no action was assigned)
+- `Action` (`*string`): The action that was assigned to the subject (`nil` if no action was assigned)
 
 The variation returns the feature flag variation, this can be the bandit itself, or the "status quo" variation if the user is not assigned to the bandit.
 If we are unable to generate a variation, for example when the flag is turned off, then the `default` variation is returned.
