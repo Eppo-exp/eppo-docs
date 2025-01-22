@@ -194,3 +194,14 @@ http://adoring-yonath-6ecb9d.netlify.app/*  http://docs.geteppo.com/:splat  301!
 /sdks/server-sdks/node#define-a-bandit-assignment-logger /sdks/server-sdks/node/bandits#logging-bandit-actions
 /sdks/server-sdks/node#querying-the-bandit-for-an-action /sdks/server-sdks/node/bandits#query-the-bandit-for-actions
 /sdks/server-sdks/node#debugging /sdks/server-sdks/node/assignments#debugging
+
+# Java SDK redirects
+/sdks/server-sdks/java /sdks/server-sdks/java/intro 301!
+/sdks/server-sdks/java/#installation /sdks/server-sdks/java/quickstart#installation
+/sdks/server-sdks/java/#initialize-the-sdk /sdks/server-sdks/java/initialization
+/sdks/server-sdks/java/#assignments /sdks/server-sdks/java/assignments 
+/sdks/server-sdks/java/#assignment-types /sdks/server-sdks/java/assignments#assignment-types
+/sdks/server-sdks/java/#subject-attributes /sdks/server-sdks/java/assignments#subject-attributes
+/sdks/server-sdks/java/#assignment-logger /sdks/server-sdks/java/assignments#assignment-logger
+/sdks/server-sdks/java/#bandits /sdks/server-sdks/java/bandits
+/sdks/server-sdks/java/#usage-with-contextual-multi-armed-bandits /sdks/server-sdks/java/bandits#usage-with-contextual-multi-armed-bandits
