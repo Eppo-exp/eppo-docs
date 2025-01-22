@@ -29,11 +29,13 @@ First, initialize the SDK using your SDK key:
 
 ```go
 import (
-    "github.com/eppo-exp/eppo-go-sdk/eppo"
+    "github.com/eppo-exp/golang-sdk/v6/eppoclient"
 )
 
-config := eppo.NewConfig("<SDK-KEY>")
-client, err := eppo.Init(config)
+config := eppoclient.Config{
+    SdkKey: "<SDK-KEY>",
+}
+client, err := eppoclient.InitClient(config)
 if err != nil {
     log.Fatal("Failed to initialize Eppo client:", err)
 }
