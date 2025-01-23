@@ -10,6 +10,7 @@ import ApiOptionRef from '@site/src/components/ApiOptionRef';
 Assignments are the mechanism through which a given [Subject](/sdks/sdk-features/subjects) is assigned to a variation for a feature flag or experiment.
 
 The Eppo SDK supports the following assignment types:
+
 - String
 - Boolean
 - JSON
@@ -114,6 +115,7 @@ campaignBytes, err := client.GetJSONBytesAssignment(
 ### Numeric Assignments
 
 The SDK provides both integer and floating-point numeric assignments. These are useful for testing different numeric values like:
+
 - Price points
 - Number of items to display
 - Timeout durations
@@ -137,6 +139,8 @@ price, err := client.GetNumericAssignment(
 ```
 
 ## Assignment Logging
+
+The SDK will invoke an assignment logger function if it is available when the assignment is made. This function will send the assignment to your storage system.
 
 ### Assignment Logger Schema
 
