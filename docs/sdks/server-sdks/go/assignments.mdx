@@ -205,6 +205,22 @@ A map of metadata about the subject. These attributes are only logged if passed 
 The experiment variation the subject was assigned to. Example: `"control"`
 </ApiOptionRef>
 
+<ApiOptionRef 
+  name="MetaData"
+  type="map[string]string"
+  defaultValue="{}"
+>
+A map of key-value pairs that allows you to attach custom metadata to the assignment event. This metadata is logged alongside the assignment event and can be used for additional context or filtering in analytics.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="ExtraLogging"
+  type="map[string]string"
+  defaultValue="{}"
+>
+An optional map of key-value pairs for additional logging information that doesn't fit into the standard metadata category. This field can be used for debugging, temporary logging needs, or specialized tracking without affecting the core assignment data.
+</ApiOptionRef>
+
 ### Logging to Your Data Warehouse
 
 Eppo's architecture ensures that raw user data never leaves your system. Instead of pushing subject-level exposure events to Eppo's servers, Eppo's SDKs integrate with your existing logging system.
