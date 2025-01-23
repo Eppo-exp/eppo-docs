@@ -22,6 +22,7 @@ Your ML model evaluation script might then look something like this:
 ```python title=script_example.py
 import logging
 import os
+import json
 from uuid import uuid4
 import eppo_client
 from eppo_client.config import Config, AssignmentLogger
@@ -35,7 +36,7 @@ logging.basicConfig(
 
 class LocalAssignmentLogger(AssignmentLogger):
     def log_assignment(self, assignment):
-        logging.info(assignment)
+        logging.info(json.dumps(assignment))
 
 # initialize the Eppo client
 client_config = Config(
@@ -69,16 +70,16 @@ Note that since the `get_string_assignment` call is deterministic, the same `use
 After running this, you can inspect the logs in the `eppo_assignments.csv` file:
 
 ```json title=eppo_assignments.csv
-{'base': {'featureFlag': 'ml-model-version', 'allocation': 'allocation-10061', 'experiment': 'ml-model-version-allocation-10061', 'variation': 'v1.1.0', 'metaData': {'sdkName': 'python', 'sdkVersion': '4.0.1', 'coreVersion': '4.0.0'}}, 'subject': 'f54ba5f3-90bb-4cdf-bf56-ca0335ede92c', 'subjectAttributes': {}, 'timestamp': '2024-10-11T03:24:12.093538Z'}
-{'base': {'featureFlag': 'ml-model-version', 'allocation': 'allocation-10061', 'experiment': 'ml-model-version-allocation-10061', 'variation': 'v1.0.0', 'metaData': {'sdkName': 'python', 'sdkVersion': '4.0.1', 'coreVersion': '4.0.0'}}, 'subject': '3ccfcb7c-1b5d-4d3b-8513-198ef97c20d0', 'subjectAttributes': {}, 'timestamp': '2024-10-11T03:24:12.094055Z'}
-{'base': {'featureFlag': 'ml-model-version', 'allocation': 'allocation-10061', 'experiment': 'ml-model-version-allocation-10061', 'variation': 'v1.0.0', 'metaData': {'sdkName': 'python', 'sdkVersion': '4.0.1', 'coreVersion': '4.0.0'}}, 'subject': '7d4d81be-e7e5-42b5-b096-79b2dd25a0a1', 'subjectAttributes': {}, 'timestamp': '2024-10-11T03:24:12.094164Z'}
-{'base': {'featureFlag': 'ml-model-version', 'allocation': 'allocation-10061', 'experiment': 'ml-model-version-allocation-10061', 'variation': 'v1.1.0', 'metaData': {'sdkName': 'python', 'sdkVersion': '4.0.1', 'coreVersion': '4.0.0'}}, 'subject': '71435619-b1e5-446c-aabe-18c28c7a96af', 'subjectAttributes': {}, 'timestamp': '2024-10-11T03:24:12.094246Z'}
-{'base': {'featureFlag': 'ml-model-version', 'allocation': 'allocation-10061', 'experiment': 'ml-model-version-allocation-10061', 'variation': 'v1.0.0', 'metaData': {'sdkName': 'python', 'sdkVersion': '4.0.1', 'coreVersion': '4.0.0'}}, 'subject': '10ae9617-7e06-459a-a699-a464e6a9dbb9', 'subjectAttributes': {}, 'timestamp': '2024-10-11T03:24:12.094321Z'}
-{'base': {'featureFlag': 'ml-model-version', 'allocation': 'allocation-10061', 'experiment': 'ml-model-version-allocation-10061', 'variation': 'v1.0.0', 'metaData': {'sdkName': 'python', 'sdkVersion': '4.0.1', 'coreVersion': '4.0.0'}}, 'subject': 'f2f4b2ed-9fdd-4150-af88-27ef17470d45', 'subjectAttributes': {}, 'timestamp': '2024-10-11T03:24:12.094394Z'}
-{'base': {'featureFlag': 'ml-model-version', 'allocation': 'allocation-10061', 'experiment': 'ml-model-version-allocation-10061', 'variation': 'v1.0.0', 'metaData': {'sdkName': 'python', 'sdkVersion': '4.0.1', 'coreVersion': '4.0.0'}}, 'subject': '169d2066-8861-4230-9fce-809a1bb2a3cc', 'subjectAttributes': {}, 'timestamp': '2024-10-11T03:24:12.094463Z'}
-{'base': {'featureFlag': 'ml-model-version', 'allocation': 'allocation-10061', 'experiment': 'ml-model-version-allocation-10061', 'variation': 'v1.0.0', 'metaData': {'sdkName': 'python', 'sdkVersion': '4.0.1', 'coreVersion': '4.0.0'}}, 'subject': '359ff058-c8ad-4d35-8559-44c8ad0c235f', 'subjectAttributes': {}, 'timestamp': '2024-10-11T03:24:12.094530Z'}
-{'base': {'featureFlag': 'ml-model-version', 'allocation': 'allocation-10061', 'experiment': 'ml-model-version-allocation-10061', 'variation': 'v1.0.0', 'metaData': {'sdkName': 'python', 'sdkVersion': '4.0.1', 'coreVersion': '4.0.0'}}, 'subject': 'b13ac779-e639-4367-8afb-7942f789ec12', 'subjectAttributes': {}, 'timestamp': '2024-10-11T03:24:12.094595Z'}
-{'base': {'featureFlag': 'ml-model-version', 'allocation': 'allocation-10061', 'experiment': 'ml-model-version-allocation-10061', 'variation': 'v1.1.0', 'metaData': {'sdkName': 'python', 'sdkVersion': '4.0.1', 'coreVersion': '4.0.0'}}, 'subject': 'a0bc2b98-bfc2-4740-a3e0-18151ca88dcd', 'subjectAttributes': {}, 'timestamp': '2024-10-11T03:24:12.094660Z'}
+{"featureFlag": "test-checkout", "allocation": "allocation-7144", "experiment": "test-checkout-allocation-7144", "variation": "standard_checkout", "metaData": {"sdkName": "python", "sdkVersion": "4.1.0", "coreVersion": "4.1.0"}, "subject": "86781c1a-6e7d-4aef-b1ea-80f40f78e155", "subjectAttributes": {}, "timestamp": "2025-01-23T19:28:19.983611Z"}
+{"featureFlag": "test-checkout", "allocation": "allocation-7144", "experiment": "test-checkout-allocation-7144", "variation": "fast_checkout", "metaData": {"sdkName": "python", "sdkVersion": "4.1.0", "coreVersion": "4.1.0"}, "subject": "e4404974-c691-4095-b1d8-2866658b49ec", "subjectAttributes": {}, "timestamp": "2025-01-23T19:28:19.983996Z"}
+{"featureFlag": "test-checkout", "allocation": "allocation-7144", "experiment": "test-checkout-allocation-7144", "variation": "fast_checkout", "metaData": {"sdkName": "python", "sdkVersion": "4.1.0", "coreVersion": "4.1.0"}, "subject": "502e3e2a-7f38-4963-88a6-a99ebff43d83", "subjectAttributes": {}, "timestamp": "2025-01-23T19:28:19.984057Z"}
+{"featureFlag": "test-checkout", "allocation": "allocation-7144", "experiment": "test-checkout-allocation-7144", "variation": "standard_checkout", "metaData": {"sdkName": "python", "sdkVersion": "4.1.0", "coreVersion": "4.1.0"}, "subject": "747b6acf-fc3d-4d0d-afdc-3bf707ee16a2", "subjectAttributes": {}, "timestamp": "2025-01-23T19:28:19.984093Z"}
+{"featureFlag": "test-checkout", "allocation": "allocation-7144", "experiment": "test-checkout-allocation-7144", "variation": "fast_checkout", "metaData": {"sdkName": "python", "sdkVersion": "4.1.0", "coreVersion": "4.1.0"}, "subject": "4f6665ed-a33d-4f6e-881d-bb22fd136461", "subjectAttributes": {}, "timestamp": "2025-01-23T19:28:19.984121Z"}
+{"featureFlag": "test-checkout", "allocation": "allocation-7144", "experiment": "test-checkout-allocation-7144", "variation": "standard_checkout", "metaData": {"sdkName": "python", "sdkVersion": "4.1.0", "coreVersion": "4.1.0"}, "subject": "bb8a4e07-10eb-4d54-a278-b0fa130c4a3b", "subjectAttributes": {}, "timestamp": "2025-01-23T19:28:19.984147Z"}
+{"featureFlag": "test-checkout", "allocation": "allocation-7144", "experiment": "test-checkout-allocation-7144", "variation": "fast_checkout", "metaData": {"sdkName": "python", "sdkVersion": "4.1.0", "coreVersion": "4.1.0"}, "subject": "433c21d1-57bf-4549-ba35-e28685c8ae15", "subjectAttributes": {}, "timestamp": "2025-01-23T19:28:19.984172Z"}
+{"featureFlag": "test-checkout", "allocation": "allocation-7144", "experiment": "test-checkout-allocation-7144", "variation": "fast_checkout", "metaData": {"sdkName": "python", "sdkVersion": "4.1.0", "coreVersion": "4.1.0"}, "subject": "87d24f03-64df-4af6-a7a2-b26ab80d4be2", "subjectAttributes": {}, "timestamp": "2025-01-23T19:28:19.984194Z"}
+{"featureFlag": "test-checkout", "allocation": "allocation-7144", "experiment": "test-checkout-allocation-7144", "variation": "standard_checkout", "metaData": {"sdkName": "python", "sdkVersion": "4.1.0", "coreVersion": "4.1.0"}, "subject": "37afd045-d569-4f9d-b1b2-77dee3694e6d", "subjectAttributes": {}, "timestamp": "2025-01-23T19:28:19.984216Z"}
+{"featureFlag": "test-checkout", "allocation": "allocation-7144", "experiment": "test-checkout-allocation-7144", "variation": "fast_checkout", "metaData": {"sdkName": "python", "sdkVersion": "4.1.0", "coreVersion": "4.1.0"}, "subject": "26acea9e-f6d8-4680-b72e-8d9c7a4109a2", "subjectAttributes": {}, "timestamp": "2025-01-23T19:28:19.984240Z"}
 ```
 
 In a real-world scenario, you would send these logs to your warehouse of choice. From there, you would create an [Assignment SQL Definition](/data-management/definitions/assignment-sql/) and analyze your experiment like any other experiment in Eppo. For more information on analyzing experiments, see our [Experiment Analysis Quickstart](/experiment-quickstart/).
