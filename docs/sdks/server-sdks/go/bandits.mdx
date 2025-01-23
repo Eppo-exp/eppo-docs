@@ -198,7 +198,7 @@ if err != nil {
     return
 }
 
-if result.Action != "" {
+if result.Action != nil {
     showShoeAd(result.Action)
 } else {
     showDefaultAd()
