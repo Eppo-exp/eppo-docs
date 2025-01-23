@@ -144,7 +144,7 @@ client, err := eppo.Init(config)
 Instead of making simple assignments with a bandit, you query the bandit for actions:
 
 ```go
-attributes := eppo.Attributes{
+attributes := eppo.ContextAttributes{
     NumericAttributes: map[string]float64{
         "age": float64(user.Age),
     },
