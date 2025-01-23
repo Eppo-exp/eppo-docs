@@ -262,20 +262,23 @@ func (l *SegmentLogger) LogAssignment(event eppoclient.AssignmentEvent) error {
 <TabItem value="snowplow" label="Snowplow">
 
 ```go
-import "github.com/snowplow/snowplow-golang-tracker/v2/tracker"
+import (
+	"github.com/Eppo-exp/golang-sdk/v6/eppoclient"
+)
 
-type SnowplowLogger struct {
-    tracker *tracker.Tracker
-}
+var eppoClient *eppoclient.EppoClient
 
-func (l *SnowplowLogger) LogAssignment(event eppoclient.AssignmentEvent) error {
-    return l.tracker.TrackSelfDescribingEvent(tracker.SelfDescribingEvent{
-        Schema: "iglu:com.example_company/eppo-event/jsonschema/1-0-2",
-        Data: map[string]interface{}{
-            "userId":     event.Subject,
-            "properties": event,
-        },
-    })
+func main() {
+	assignmentLogger := NewExampleAssignmentLogger()
+
+	// 10000 is the maximum number of assignments to cache.
+	assignmentLogger = eppoclient.NewLruAssignmentLogger(assignmentLogger, 10000)
+	assignmentLogger = eppoclient.NewLruBanditLogger(assignmentLogger, 10000)
+
+	eppoClient, _ = eppoclient.InitClient(eppoclient.Config{
+		ApiKey:           "<your_sdk_key>",
+		AssignmentLogger: assignmentLogger,
+	})
 }
 ```
 
@@ -284,7 +287,12 @@ func (l *SnowplowLogger) LogAssignment(event eppoclient.AssignmentEvent) error {
 
 ### Deduplicating Logs
 
-To prevent duplicate assignment events, you can implement caching in your logger:
+The SDK can encounter a large number of duplicate assignments over a short period of time. If you have a logging function, the SDK will send the same assignment to your storage system multiple times. This increases the cost storage and bloat analysis costs for no additional benefit.
+
+Solve this problem by using the in-memory assigment cache with an expiration based on the least recently accessed time.
+
+You can configure caching individually for assignment logs and bandit action logs using `LruAssignmentLogger` and `LruBanditLogger` respectively. Both loggers are configured with a maximum size to fit your desired memory allocation.
+
 
 ```go
 type CachingLogger struct {
