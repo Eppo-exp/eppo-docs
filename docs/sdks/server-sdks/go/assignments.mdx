@@ -297,35 +297,3 @@ func (l *CachingLogger) LogAssignment(event eppoclient.AssignmentEvent) error {
     return err
 }
 ```
-
-## Debugging Assignments
-
-The SDK provides detailed assignment information to help debug why a specific variation was chosen:
-
-```go
-evaluation, err := client.GetBooleanAssignmentDetails(
-    "kill-switch",
-    "test-subject",
-    map[string]interface{}{
-        "country": "UK",
-        "age":     62,
-    },
-    false,
-)
-if err != nil {
-    log.Printf("Error getting assignment details: %v", err)
-    return
-}
-
-log.Printf("Assignment: %s", evaluation.Variation)
-log.Printf("Details: %+v", evaluation.EvaluationDetails)
-```
-
-The evaluation details include:
-- Flag and subject information
-- Timestamp and configuration metadata
-- Allocation evaluation results
-- Rule matching details
-- Split calculations
-
-For more information on debugging assignments, see [Debugging Flag Assignments](/sdks/sdk-features/debugging-flag-assignment/). 
