@@ -137,6 +137,22 @@ The weight between 0 and 1 the bandit valued the assigned action. Example: `0.25
 Unique identifier for the version of the bandit parameters used. Example: `"v123"`
 </ApiOptionRef>
 
+<ApiOptionRef 
+  name="OptimalityGap"
+  type="float64"
+  defaultValue="0"
+>
+  The optimality gap represents the difference between the probability of the chosen action and the probability of the best possible action according to the bandit model. A lower value indicates the chosen action is closer to optimal. This field is optional and will be omitted if zero.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="MetaData"
+  type="map[string]string"
+  defaultValue="{}"
+>
+  A key-value map that allows attaching additional contextual information to bandit events and assignments. This field is required and can be used to store custom metadata about the event such as environment information, client details, or any other relevant tracking data.
+</ApiOptionRef>
+
 ## Querying the Bandit
 
 To query the bandit for an action, use the `GetBanditAction` method:
