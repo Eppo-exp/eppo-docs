@@ -158,7 +158,7 @@ Unique identifier for the version of the bandit parameters used. Example: `"v123
 To query the bandit for an action, use the `GetBanditAction` method:
 
 ```go
-attributes := eppoclient.Attributes{
+attributes := eppoclient.ContextAttributes{
     NumericAttributes: map[string]float64{
         "age": float64(user.Age),
     },
