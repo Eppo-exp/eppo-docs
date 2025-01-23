@@ -211,8 +211,8 @@ The subject context contains contextual information about the subject that is in
 For example, the subject's age or country.
 
 The subject context has type `Attributes` which has two fields:
-- `NumericAttributes` (map[string]float64): A map of numeric attributes (such as "age")
-- `CategoricalAttributes` (map[string]string): A map of categorical attributes (such as "country")
+- `Numeric` (map[string]float64): A map of numeric attributes (such as "age")
+- `Categorical` (map[string]string): A map of categorical attributes (such as "country")
 
 :::note
 The `contextAttributes` are also used for targeting rules for the feature flag similar to how `subject_attributes` are used with regular feature flags.
