@@ -32,12 +32,17 @@ import (
     "github.com/eppo-exp/golang-sdk/v6/eppoclient"
 )
 
-config := eppoclient.Config{
-    SdkKey: "<SDK-KEY>",
-}
-client, err := eppoclient.InitClient(config)
-if err != nil {
-    log.Fatal("Failed to initialize Eppo client:", err)
+var eppoClient *eppoclient.EppoClient
+
+func main() {
+    config := eppoclient.Config{
+        SdkKey: "<SDK-KEY>",
+    }
+    client, err := eppoclient.InitClient(config)
+    if err != nil {
+        log.Fatal("Failed to initialize Eppo client:", err)
+    }
+
 }
 ```
 
@@ -105,6 +110,14 @@ func (l *ConsoleLogger) LogAssignment(event eppoclient.AssignmentEvent) error {
     log.Printf("Assignment: %+v", event)
     return nil
 }
+
+config := eppoclient.Config{
+    SdkKey: "<SDK-KEY>",
+    AssignmentLogger: &ConsoleLogger{},
+client, err := eppoclient.InitClient(config)
+if err != nil {
+    log.Fatal("Failed to initialize Eppo client:", err)
+}
 ```
 
 :::note
@@ -120,6 +133,10 @@ Contextual Multi-Armed Bandits are a way to dynamically optimize assignments bas
 Setting up a bandit requires implementing both an assignment logger and a bandit logger:
 
 ```go
+import (
+    "github.com/eppo-exp/golang-sdk/v6/eppoclient"
+)
+
 type MyLogger struct{}
 
 func (l *MyLogger) LogAssignment(assignment *eppo.Assignment) error {
@@ -132,11 +149,13 @@ func (l *MyLogger) LogBanditAction(banditAction *eppo.BanditAction) error {
     return nil
 }
 
-config := eppo.NewConfig(
-    "<SDK-KEY>",
-    eppo.WithAssignmentLogger(&MyLogger{}),
-)
-client, err := eppo.Init(config)
+config := eppoclient.Config{
+    SdkKey: "<SDK-KEY>",
+}
+client, err := eppoclient.InitClient(config)
+if err != nil {
+    log.Fatal("Failed to initialize Eppo client:", err)
+}
 ```
 
 ### Query the bandit for actions
