@@ -32,7 +32,8 @@ a holdout group. Held out subjects will have the default experience and the SDK 
 #### Experiment eligibility
 
 * New experiment assignments that start and end within the holdout window will have the holdout applied
-  * Old experiments that started within a newly created holdout window will not retroactively have the holdout applied
+  * Previously created experiments that started within a newly created holdout window will not retroactively have the 
+holdout applied
   * Experiment assignments that start after the holdout window will not have the holdout applied
 * Experiments assignments that start during the holdout window but do not end in that time, will continue to have the 
 holdout applied until the experiment ends
@@ -128,11 +129,10 @@ This allows the Eppo generated SQL to correctly query the data in your warehouse
 
 ![Configure variations](/img/experiments/holdouts/standalone-variations.png)
 
-On the Overview tab, you are able to link experiments to your holdout to conduct an analysis of how each experiment 
-impacted the primary holdout metric and show the experience provided by the winning variants.
-
-To do so, go to the Overview tab and add experiments that are part of the holdout. Note that these experiments must be 
-configured in Eppo to be linked.
+On the Overview tab, you are able to link experiments to your holdout to provide a comprehensive report of how each 
+experiment impacted the primary Holdout metric and show the experience provided by the winning variants. To do so, go to
+the Overview tab and add experiments that are part of the holdout. Note that these experiments must be configured in Eppo
+to be linked.
 
 ![Create a stand-alone analysis](/img/experiments/holdouts/analysis-only-setup1.png)
 
