@@ -32,8 +32,8 @@ a holdout group. Held out subjects will have the default experience and the SDK 
 #### Experiment eligibility
 
 * New experiment assignments that start and end within the holdout window will have the holdout applied
-  * Previously created experiments that started within a newly created holdout window will not retroactively have the 
-holdout applied
+  * Any experiment assignment that was created before the holdout was created will not have a holdout applied, regardless 
+of dates for holdout assignment
   * Experiment assignments that start after the holdout window will not have the holdout applied
 * Experiments assignments that start during the holdout window but do not end in that time, will continue to have the 
 holdout applied until the experiment ends
