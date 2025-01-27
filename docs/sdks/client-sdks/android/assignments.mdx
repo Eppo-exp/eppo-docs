@@ -37,8 +37,7 @@ import cloud.eppo.android.EppoClient;
 EppoClient eppoClient = EppoClient.getInstance();
 
 String flagKey = "new-landing-page";
-String subjectKey = getUserId() || "anonymous";
-Map<String, Object> subjectAttributes = new HashMap<>();
+String subjectKey = getUserId() != null ? getUserId() : "anonymous";Map<String, Object> subjectAttributes = new HashMap<>();
 subjectAttributes.put("country", "US");
 subjectAttributes.put("device", "android");
 String defaultValue = "control";
