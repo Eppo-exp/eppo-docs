@@ -14,7 +14,7 @@ When Eppo's SDK is initialized, only configurations from flags enabled in that e
 
 ## Creating SDK keys
 
-To create an SDK key, navigate to the **SDK Keys** section of the **Configuration** page and click **New SDK Key**. 
+To create an SDK key, navigate to the **Environments** page under **Flags** on the left. Then select **Create** in the top right and select **SDK Key**.
 
 ![SDK key setup](/img/feature-flagging/environments/sdk-keys.png)
 
