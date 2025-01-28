@@ -49,11 +49,11 @@ getJSONAssignment(...)
 
 ## Handling Empty Assignments
 
-We recommend always handling the empty assignment case, when the SDK returns `""`. Here are some examples illustrating when the SDK returns `""`:
+The SDK requires a `defaultValue` when computing assignments. This value is returned if the subject is not matched to any allocation or if the SDK encounters an error.
 
 1. The **Traffic Exposure** setting on experiments/allocations determines the percentage of subjects the SDK will assign to that experiment/allocation. For example, if Traffic Exposure is 25%, the SDK will assign a variation for 25% of subjects and `""` for the remaining 75% (unless the subject is part of an allow list).
 
-2. Assignments occur within the environments of feature flags. You must enable the environment corresponding to the feature flag's allocation in the user interface before `getStringAssignment` returns variations. It will return `""` if the environment is not enabled.
+2. Assignments occur within the environments of feature flags. You must enable the environment corresponding to the feature flag's allocation in the user interface before `getStringAssignment` returns variations. It will return the `defaultValue` if the environment is not enabled.
 
 :::note
 It may take up to 10 seconds for changes to Eppo experiments to be reflected by the SDK assignments.
