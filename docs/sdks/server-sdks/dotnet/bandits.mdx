@@ -48,21 +48,21 @@ var eppoClient = EppoClient.Init(eppoClientConfig);
 
 The SDK will invoke the `LogBanditAction()` method with a `BanditLogEvent` object that contains the following fields:
 
-| Field                                       | Description                                                                                                       | Example                          |
-|---------------------------------------------|-------------------------------------------------------------------------------------------------------------------|----------------------------------|
-| `Timestamp` (DateTime)                      | The time when the action is taken in UTC                                                                           | "2024-03-22T14:26:55.000Z"       |
-| `FlagKey` (string)                          | The key of the feature flag corresponding to the bandit                                                           | "bandit-test-allocation-4"       |
-| `BanditKey` (string)                        | The key (unique identifier) of the bandit                                                                         | "ad-bandit-1"                    |
-| `SubjectKey` (string)                       | An identifier of the subject or user assigned to the experiment variation                                         | "ed6f85019080"                   |
-| `SubjectNumericAttributes` (IDictionary || ContextAttributes)    | Metadata about numeric attributes of the subject. Map of the name of attributes their provided values             | `{"age": 30}`                    |
-| `SubjectCategoricalAttributes` (IDictionary || ContextAttributes)| Metadata about non-numeric attributes of the subject. Map of the name of attributes their provided values         | `{"loyalty_tier": "gold"}`       |
-| `Action` (string)                           | The action assigned by the bandit                                                                                 | "promo-20%-off"                  |
-| `ActionNumericAttributes` (IDictionary)     | Metadata about numeric attributes of the assigned action. Map of the name of attributes their provided values     | `{"brandAffinity": 0.2}`         |
-| `ActionCategoricalAttributes` (IDictionary) | Metadata about non-numeric attributes of the assigned action. Map of the name of attributes their provided values | `{"previouslyPurchased": false}` |
-| `ActionProbability` (double)                | The weight between 0 and 1 the bandit valued the assigned action                                                  | 0.25                             |
-| `OptimalityGap` (double)                    | The difference between the score of the selected action and the highest-scored action                             | 456                              |
-| `ModelVersion` (string)                     | Unique identifier for the version (iteration) of the bandit parameters used to determine the action probability   | "v123"                           |
-| `MetaData` (IDictionary)                    | Any additional freeform meta data, such as the version of the SDK                                                 | `{ "sdkLibVersion": "3.5.1" }`   |
+| Field                                                               | Description                                                                                                       | Example                          |
+| ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- | -------------------------------- |
+| `Timestamp` (DateTime)                                              | The time when the action is taken in UTC                                                                          | "2024-03-22T14:26:55.000Z"       |
+| `FlagKey` (string)                                                  | The key of the feature flag corresponding to the bandit                                                           | "bandit-test-allocation-4"       |
+| `BanditKey` (string)                                                | The key (unique identifier) of the bandit                                                                         | "ad-bandit-1"                    |
+| `SubjectKey` (string)                                               | An identifier of the subject or user assigned to the experiment variation                                         | "ed6f85019080"                   |
+| `SubjectNumericAttributes` (IDictionary \|\| ContextAttributes)     | Metadata about numeric attributes of the subject. Map of the name of attributes their provided values             | `{"age": 30}`                    |
+| `SubjectCategoricalAttributes` (IDictionary \|\| ContextAttributes) | Metadata about non-numeric attributes of the subject. Map of the name of attributes their provided values         | `{"loyalty_tier": "gold"}`       |
+| `Action` (string)                                                   | The action assigned by the bandit                                                                                 | "promo-20%-off"                  |
+| `ActionNumericAttributes` (IDictionary)                             | Metadata about numeric attributes of the assigned action. Map of the name of attributes their provided values     | `{"brandAffinity": 0.2}`         |
+| `ActionCategoricalAttributes` (IDictionary)                         | Metadata about non-numeric attributes of the assigned action. Map of the name of attributes their provided values | `{"previouslyPurchased": false}` |
+| `ActionProbability` (double)                                        | The weight between 0 and 1 the bandit valued the assigned action                                                  | 0.25                             |
+| `OptimalityGap` (double)                                            | The difference between the score of the selected action and the highest-scored action                             | 456                              |
+| `ModelVersion` (string)                                             | Unique identifier for the version (iteration) of the bandit parameters used to determine the action probability   | "v123"                           |
+| `MetaData` (IDictionary)                                            | Any additional freeform meta data, such as the version of the SDK                                                 | `{ "sdkLibVersion": "3.5.1" }`   |
 
 ### Query the bandit for an action
 
