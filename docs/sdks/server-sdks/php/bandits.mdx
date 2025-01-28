@@ -35,7 +35,7 @@ The time when the action is taken in UTC as an ISO string. Example: `"2024-03-22
 </ApiOptionRef>
 
 <ApiOptionRef 
-  name="featureFlag"
+  name="flagKey"
   type="string"
   defaultValue="undefined"
 >
@@ -43,7 +43,7 @@ The key of the feature flag corresponding to the bandit. Example: `"bandit-test-
 </ApiOptionRef>
 
 <ApiOptionRef 
-  name="bandit"
+  name="banditKey"
   type="string"
   defaultValue="undefined"
 >
@@ -51,7 +51,7 @@ The key (unique identifier) of the bandit. Example: `"ad-bandit-1"`
 </ApiOptionRef>
 
 <ApiOptionRef 
-  name="subject"
+  name="subjectKey"
   type="string"
   defaultValue="undefined"
 >
@@ -126,29 +126,88 @@ Unique identifier for the version (iteration) of the bandit parameters used to d
 
 To query the bandit for an action, you can use the `getBanditAction()` function.
 
-[Code Placeholder: Example of querying a bandit for actions in PHP, showing both simple action list and actions with contexts]
+
+```php
+
+$flagKey = 'my-bandit-flag';
+$subject = 'user-123';
+$subjectContext = ['accountAge' => 0.5, 'country' => 'US'];
+
+// A simple list of actions with no context attributes
+$actions = ['nike', 'adidas', 'reebok'];
+
+$result = $client->getBanditAction($flagKey, $subject, $subjectContext, $actions, 'control');
+```
+
+Example 1.2: Actions with un-grouped context
+
+```php
+$actions = [
+  'nike': [
+    'brandLoyalty' => 0.0,
+    'size' => 5,
+    'colour' => 'red'
+  ], ...
+];
+
+$result = $client->getBanditAction($flagKey, $subject, $subjectContext, $actions, 'control');
+```
 
 #### Subject context
 
 The subject context contains contextual information about the subject that is independent of bandit actions.
 For example, the subject's age or country.
 
-[Code Placeholder: Example of providing subject context in PHP]
+```php
+$subjectContext = new AttributeSet(
+     numericAttributes: ['accountAge' => 0.5],
+     categoricalAttributes: ['zip' => 90210, 'country' => 'US']
+);
+
+$actions = [
+  'nike': new AttributeSet(
+    numericAttributes: ['brandLoyalty' => 0.0],
+    categoricalAttributes: ['size' => 5, 'colour' => 'red']
+  ), ...
+];
+
+$result = $client->getBanditAction($flagKey, $subject, $subjectContext, $actions, 'control');
+```
 
 #### Action contexts
 
 The action context contains contextual information about each action. They can be provided as a mapping of attribute names 
 to their contexts.
 
-[Code Placeholder: Example of providing action contexts in PHP]
+```php
+$flagKey = 'my-bandit-flag';
+$subject = 'user-123';
+$subjectContext = ['accountAge' => 0.5, 'country' => 'US'];
 
+// Actions with structured context
+$actions = [
+  'nike': new AttributeSet(
+    numericAttributes: ['brandLoyalty' => 0.0],
+    categoricalAttributes: ['size' => 5, 'colour' => 'red']
+  ), ...
+];
+
+$result = $client->getBanditAction($flagKey, $subject, $subjectContext, $actions, 'control');
+```
 #### Result
 
 `getBanditAction()` returns two fields:
 - `variation` (string): The variation that was assigned to the subject
 - `action` (string | null): The action that was assigned to the subject by the bandit, or `null` if the bandit was not assigned
 
-[Code Placeholder: Example of handling bandit action results in PHP]
+```php
+$result = $client->getBanditAction($flagKey, $subject, $subjectContext, $actions, 'control');
+if ($result->action) {
+  doBanditAction($result->action)
+} else {
+  doTheStatusQuo($result->variation);
+}
+```
 
 #### Status quo algorithm
 
@@ -156,7 +215,14 @@ In order to accurately measure the performance of the bandit, we need to compare
 This status quo algorithm could be a complicated algorithm to that selects an action according to a different model, or a simple baseline such as selecting a fixed or random action.
 When you create an analysis allocation for the bandit and the returned `action` is `null`, implement the desired status quo algorithm based on the `variation` value.
 
-[Code Placeholder: Example of implementing a status quo algorithm in PHP]
+```php
+$result = $client->getBanditAction($flagKey, $subject, $subjectContext, $actions, 'control');
+if ($result->action) {
+  doBanditAction($result->action)
+} else {
+  doTheStatusQuo($result->variation);
+}
+```
 
 ## Debugging
 

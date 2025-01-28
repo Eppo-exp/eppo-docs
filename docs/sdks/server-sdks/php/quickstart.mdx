@@ -58,21 +58,8 @@ For experiments, you'll need to implement logging. Here's a basic example:
 use Eppo\Logger\LoggerInterface;
 
 class Logger implements LoggerInterface {
-  public function logAssignment(
-    string $experiment,
-    string $variation,
-    string $subject,
-    string $timestamp,
-    array $subjectAttributes = []
-  ) {
-    var_dump(
-      json_encode([
-        'experiment' => $experiment,
-        'variation' => $variation,
-        'subject' => $subject,
-        'timestamp' => $timestamp,
-      ]);
-    );
+  public function logAssignment(AssignmentEvent $assignmentEvent) {
+    var_dump(assignmentEvent);
   }
 }
 ```
