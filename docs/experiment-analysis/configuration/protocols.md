@@ -10,7 +10,7 @@ Specifically, Protocols allow admins to create re-usable rules for all the diffe
 
 ## Creating a Protocol
 
-Protocols can be created by Admins by navigating to Admin > Protocols and clicking the `Create Protocol Button`.
+Protocols can be created by Admins, Data Owners, and Experiment Editors by navigating to Admin > Protocols and clicking the `Create Protocol Button`.
 
 ![Protocol configuration screen](/img/experiments/protocols/protocol-config.png)
 
