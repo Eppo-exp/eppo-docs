@@ -1,0 +1,143 @@
+---
+title: Quickstart
+sidebar_position: 2
+---
+
+The Eppo PHP SDK enables feature flags and experiments in your PHP applications with only a few lines of code.
+
+## Installation
+
+Install the SDK using Composer:
+
+```bash
+composer require eppo/php-sdk
+```
+
+## Initialize the SDK
+
+Initialize the SDK with your SDK key:
+
+```php
+use Eppo\EppoClient;
+
+require __DIR__ . '/vendor/autoload.php';
+
+
+$eppoClient = EppoClient::init(
+   '<your_api_key>',
+   '<base_url>', // optional, default https://fscdn.eppo.cloud/api
+   $assignmentLogger, // optional, must be an instance of Eppo\Logger\LoggerInterface
+   $cache // optional, must be an instance of PSR-16 SimpleCache\CacheInterface. If not passed, FileSystem cache will be used
+   $httpClient // optional, must be an instance of PSR-18 ClientInterface. If not passed, Discovery will be used to find a suitable implementation
+   $requestFactory // optional, must be an instance of PSR-17 Factory. If not passed, Discovery will be used to find a suitable implementation
+);
+```
+
+## Feature Flags
+
+### Make an Assignment
+
+```php
+$subjectAttributes = [ 'tier' => 2 ];
+$assignment = $eppoClient->getStringAssignment('experimentalBackground', 'user123', $subjectAttributes, 'control');
+
+if ($assignment !== 'control') {
+    // do something special
+} else {
+  // Show the default treatment
+}
+```
+
+## Experiments 
+
+For experiments, you'll need to implement logging. Here's a basic example:
+
+```php
+<?php
+
+use Eppo\Logger\LoggerInterface;
+
+class Logger implements LoggerInterface {
+  public function logAssignment(AssignmentEvent $assignmentEvent) {
+    var_dump(assignmentEvent);
+  }
+}
+```
+
+## Contextual Bandits
+
+Contextual Multi-Armed Bandits are a way to dynamically optimize assignments based on user context. A bandit balances exploration of new actions with exploitation of known successful actions to maximize a specified metric.
+
+### Bandit Setup
+
+Setting up a bandit requires two loggers:
+1. An assignment logger (same as experiments)
+2. A bandit logger for recording bandit-specific events
+
+```php
+use Eppo\Logger\AssignmentEvent;
+use Eppo\Logger\BanditActionEvent;
+use Eppo\Logger\IBanditLogger;
+
+class SegmentLogger implements IBanditLogger
+{
+    public function logAssignment(AssignmentEvent $assignmentEvent): void
+    {
+        Segment::track([
+            'event' => 'Flag Assignment for ' . $assignmentEvent->featureFlag,
+            'userId' => $assignmentEvent->subject,
+            'properties' => $assignmentEvent->toArray()
+        ]);
+    }
+
+    public function logBanditAction(BanditActionEvent $banditActionEvent): void
+    {
+        Segment::track([
+            'event' => 'Bandit Action Selected',
+            'userId' => $banditActionEvent->subjectKey,
+            'properties' => $banditActionEvent->toArray()
+        ]);
+    }
+}
+``` 
+
+### Query the bandit for actions
+
+Instead of making simple assignments with a bandit, you query the bandit for actions. The bandit considers both the subject context (like user attributes) and action contexts (like product attributes) when making decisions.
+
+```php
+<?php
+
+use Eppo\Logger\AssignmentEvent;
+use Eppo\Logger\BanditActionEvent;
+use Eppo\Logger\IBanditLogger;
+
+class SegmentLogger implements IBanditLogger
+{
+    public function logAssignment(AssignmentEvent $assignmentEvent): void
+    {
+        Segment::track([
+            'event' => 'Flag Assignment for ' . $assignmentEvent->featureFlag,
+            'userId' => $assignmentEvent->subject,
+            'properties' => $assignmentEvent->toArray()
+        ]);
+    }
+
+    public function logBanditAction(BanditActionEvent $banditActionEvent): void
+    {
+        Segment::track([
+            'event' => 'Bandit Action Selected',
+            'userId' => $banditActionEvent->subjectKey,
+            'properties' => $banditActionEvent->toArray()
+        ]);
+    }
+}
+```
+
+The bandit will return both:
+- A variation (indicating whether the subject is in the experiment)
+- An action (the specific choice the bandit made, if the subject is in the experiment)
+
+:::note
+For full steps to create a bandit including UI steps, see the [bandit quickstart](/bandit-quickstart).
+::: 

@@ -141,6 +141,13 @@ http://adoring-yonath-6ecb9d.netlify.app/*  http://docs.geteppo.com/:splat  301!
 
 /sdks/server-sdks/ruby/ /sdks/server-sdks/ruby/intro 301!
 
+/sdks/server-sdks/php /sdks/server-sdks/php/intro 301!
+/sdks/server-sdks/php#install-the-sdk /sdks/server-sdks/php/quickstart#installation
+/sdks/server-sdks/php#initialize-the-sdk /sdks/server-sdks/php/initialization
+/sdks/server-sdks/php#assign-variations /sdks/server-sdks/php/assignments
+/sdks/server-sdks/php#typed-assignments /sdks/server-sdks/php/assignments#typed-assignments
+/sdks/server-sdks/php#handling-the-empty-assignment /sdks/server-sdks/php/assignments#handling-empty-assignments
+
 /sdks/server-sdks/dotnet /sdks/server-sdks/dotnet/intro 301!
 /sdks/server-sdks/dotnet#getting-started /sdks/server-sdks/dotnet/quickstart
 /sdks/server-sdks/dotnet#installation /sdks/server-sdks/dotnet/quickstart#installation

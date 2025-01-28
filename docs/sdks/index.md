@@ -136,7 +136,8 @@ The read more about our specific SDKs, check out the SDK-specific docs below:
 - [Rust](server-sdks/rust/intro)
 - [Ruby](server-sdks/ruby/intro)
 - [.NET](server-sdks/dotnet/intro)
-- [PHP](server-sdks/php)
+- [PHP](server-sdks/php/intro)
+
 
 ### Hybrid implementations
 
