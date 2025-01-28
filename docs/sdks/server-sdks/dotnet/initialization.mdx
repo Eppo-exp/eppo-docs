@@ -84,11 +84,7 @@ Here's an example of initializing the SDK with custom configuration:
 var config = new EppoClientConfig("<SDK_KEY>", new MyAssignmentLogger())
 {
     PollingIntervalInMillis = 5000,  // Poll every 5 seconds
-    BaseUrl = "https://my-custom-endpoint.com/api",
-    HttpClient = new HttpClient 
-    { 
-        Timeout = TimeSpan.FromSeconds(10) 
-    }
+    BaseUrl = "https://my-custom-endpoint.com/api"
 };
 
 var eppoClient = EppoClient.Init(config);
