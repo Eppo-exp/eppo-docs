@@ -136,6 +136,7 @@ http://adoring-yonath-6ecb9d.netlify.app/*  http://docs.geteppo.com/:splat  301!
 /sdks/client-sdks/javascript/ /sdks/client-sdks/javascript/intro 301!
 /sdks/client-sdks/javascript/#offline-initialization /sdks/client-sdks/javascript/initialization#offline-initialization 301!
 /sdks/client-sdks/javascript/#usage-in-react /sdks/client-sdks/javascript/react 301!
+
 /guides/engineering/nextjs-setup/ /sdks/client-sdks/javascript/nextjs-setup
 
 /sdks/server-sdks/ruby/ /sdks/server-sdks/ruby/intro 301!
@@ -194,3 +195,12 @@ http://adoring-yonath-6ecb9d.netlify.app/*  http://docs.geteppo.com/:splat  301!
 /sdks/server-sdks/node#define-a-bandit-assignment-logger /sdks/server-sdks/node/bandits#logging-bandit-actions
 /sdks/server-sdks/node#querying-the-bandit-for-an-action /sdks/server-sdks/node/bandits#query-the-bandit-for-actions
 /sdks/server-sdks/node#debugging /sdks/server-sdks/node/assignments#debugging
+
+/sdks/client-sdks/android /sdks/client-sdks/android/intro 301!
+/sdks/client-sdks/android#1-install-the-sdk /sdks/client-sdks/android/quickstart#installation
+/sdks/client-sdks/android#2-initialize-the-sdk /sdks/client-sdks/android/initialization
+/sdks/client-sdks/android#define-an-assignment-logger-experiment-assignment-only /sdks/client-sdks/android/initialization#assignment-logger-schema
+/sdks/client-sdks/android#3-assign-variations /sdks/client-sdks/android/assignments
+/sdks/client-sdks/android#initial-configuration /sdks/client-sdks/android/initialization#configuration-caching
+/sdks/client-sdks/android#offline-mode /sdks/client-sdks/android/initialization#offline-mode
+
