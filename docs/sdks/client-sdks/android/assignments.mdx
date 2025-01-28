@@ -1,0 +1,178 @@
+---
+title: Assignments
+sidebar_position: 4
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import ApiOptionRef from '@site/src/components/ApiOptionRef';
+
+Assignments are the mechanism through which a given [Subject](/sdks/sdk-features/subjects) is assigned to a variation for a feature flag, experiment, or bandit.
+
+Currently, the Eppo SDK supports the following assignment types:
+
+- String
+- Boolean
+- JSON
+- Numeric (Integer and Double)
+
+## How Assignments Work
+
+The SDK periodically retrieves configuration rules from the Eppo server that define how subjects should be allocated to variants. When you call an assignment function, the SDK evaluates these rules locally without making additional network requests.
+
+Each assignment requires:
+
+- **Flag Key**: Identifies which set of configuration rules to use
+- **Subject Key**: A unique identifier for the subject (usually a user ID)
+- **Subject Attributes**: Optional key-value pairs containing additional information used for rule evaluation
+- **Default Value**: Fallback value if assignment fails or rules don't match
+
+## String Assignments
+
+String assignments return a string value that is set as the variation for the experiment. String flags are the most common type of flags and are useful for both A/B/n tests and advanced targeting use cases.
+
+```java
+import cloud.eppo.android.EppoClient;
+
+EppoClient eppoClient = EppoClient.getInstance();
+
+String flagKey = "new-landing-page";
+String subjectKey = getUserId() != null ? getUserId() : "anonymous";Map<String, Object> 
+subjectAttributes = new HashMap<>();
+subjectAttributes.put("country", "US");
+subjectAttributes.put("device", "android");
+String defaultValue = "control";
+
+String variation = eppoClient.getStringAssignment(
+    flagKey,
+    subjectKey,
+    subjectAttributes,
+    defaultValue
+);
+
+// Use the variant value to determine which component to render
+if (variation.equals("version-a")) {
+    showVersionA();
+} else if (variation.equals("version-b")) {
+    showVersionB();
+} else {
+    showControl();
+}
+```
+
+## Boolean Assignments
+
+Boolean flags support simple on/off toggles. They're useful for simple, binary feature switches like blue/green deployments or enabling/disabling a new feature.
+
+```java
+boolean isEnabled = eppoClient.getBooleanAssignment(
+    "new-feature",
+    subjectKey,
+    subjectAttributes,
+    false  // default value
+);
+
+if (isEnabled) {
+    showNewFeature();
+} else {
+    showExistingFeature();
+}
+```
+
+## Numeric Assignments
+
+The SDK supports both integer and double numeric assignments. These are useful for testing different numeric values like prices, counts, or thresholds.
+
+```java
+// Integer assignment
+int itemCount = eppoClient.getIntegerAssignment(
+    "items-per-page",
+    subjectKey,
+    subjectAttributes,
+    10  // default value
+);
+
+// Double assignment
+double price = eppoClient.getDoubleAssignment(
+    "subscription-price",
+    subjectKey,
+    subjectAttributes,
+    9.99  // default value
+);
+```
+
+## JSON Assignments
+
+JSON assignments allow for complex configuration objects. They're useful for testing multiple related values together.
+
+```java
+import org.json.JSONObject;
+
+JSONObject defaultConfig = new JSONObject();
+defaultConfig.put("color", "#FF0000");
+defaultConfig.put("fontSize", 14);
+defaultConfig.put("fontFamily", "Roboto");
+
+JSONObject config = eppoClient.getJSONAssignment(
+    "ui-config",
+    subjectKey,
+    subjectAttributes,
+    defaultConfig
+);
+
+// Use the configuration
+String color = config.getString("color");
+int fontSize = config.getInt("fontSize");
+String fontFamily = config.getString("fontFamily");
+```
+
+## Assignment Logging
+
+When using the SDK for experiments (rather than just feature flags), you'll need to log assignments to analyze the results. The SDK provides a flexible logging system that can integrate with any analytics or data warehouse solution.
+
+### Logging Setup
+
+Configure assignment logging during SDK initialization:
+
+```java
+AssignmentLogger logger = new AssignmentLogger() {
+    @Override
+    public void logAssignment(Assignment assignment) {
+        // Log assignment to your analytics system
+        analytics.track("Eppo Experiment Assignment",
+            new Properties()
+                .putValue("experiment", assignment.getExperiment())
+                .putValue("variation", assignment.getVariation())
+                .putValue("subject", assignment.getSubject())
+                .putValue("timestamp", assignment.getTimestamp())
+        );
+    }
+};
+
+EppoClient eppoClient = new EppoClient.Builder("YOUR_SDK_KEY", getApplication())
+    .assignmentLogger(logger)
+    .buildAndInit();
+```
+
+:::note
+More details about logging and examples can be found in the [event logging](/sdks/event-logging/) page.
+:::
+
+## Debugging Assignments
+
+You may encounter situations where a flag assignment produces unexpected values. The SDK provides debugging functions to help understand how assignments are being made:
+
+```java
+import cloud.eppo.android.dto.AssignmentDebugInfo;
+
+AssignmentDebugInfo debugInfo = eppoClient.getAssignmentDebugInfo(
+    flagKey,
+    subjectKey,
+    subjectAttributes
+);
+
+// Log debug information
+Log.d("Eppo", "Assignment debug info: " + debugInfo.toString());
+```
+
+For more information about debugging, see the [debugging documentation](/sdks/sdk-features/debugging-flag-assignment). 
