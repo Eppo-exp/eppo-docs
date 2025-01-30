@@ -12,7 +12,7 @@ The Eppo iOS SDK is easy to initialize while offering robust customization optio
 To complete basic initialization, you only need to provide an SDK key which you can create in the Eppo UI under **Configuration** > **Environments** > **API Keys**.
 
 ```swift
-import EppoSDK
+import EppoFlagging
 
 Task {
     try await EppoClient.initialize(sdkKey: "SDK-KEY-FROM-DASHBOARD");
@@ -72,7 +72,7 @@ The SDK supports different initialization modes to suit your needs:
 The default initialization mode fetches configurations from Eppo's CDN:
 
 ```swift
-import EppoSDK
+import EppoFlagging
 
 Task {
     try await EppoClient.initialize(sdkKey: "SDK-KEY-FROM-DASHBOARD");
