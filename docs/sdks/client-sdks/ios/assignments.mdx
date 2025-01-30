@@ -202,22 +202,6 @@ struct ContentView: View {
 }
 ```
 
-## Debugging Assignments
-
-You may encounter situations where a flag assignment produces unexpected values. The SDK provides debugging functions to help understand how assignments are being made:
-
-```swift
-let debugInfo = try eppoClient.getAssignmentDebugInfo(
-    flagKey: flagKey,
-    subjectKey: subjectKey,
-    subjectAttributes: subjectAttributes
-)
-
-// Log debug information
-print("Assignment debug info: \(debugInfo)")
-```
-
-For more information about debugging, see the [debugging documentation](/sdks/sdk-features/debugging-flag-assignment).
 
 :::note
 More details about logging and examples can be found in the [event logging](/sdks/event-logging/) page.
