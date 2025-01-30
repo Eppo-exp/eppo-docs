@@ -54,6 +54,34 @@ eppoClient.track({
 
 ## Configuration
 
+```typescript
+import { init } from "@eppo/js-client-sdk";
+
+await init({
+  apiKey: "YOUR_SDK_KEY",
+  // ...other config options
+  // Track API configuration below - all fields are optional
+  eventIngestionConfig: {
+    /** Number of milliseconds to wait between each batch delivery. Defaults to 10 seconds. */
+    deliveryIntervalMs: 10_000,
+    /** Minimum amount of milliseconds to wait before retrying a failed delivery. Defaults to 5 seconds */
+    retryIntervalMs: 5_000,
+    /** Maximum amount of milliseconds to wait before retrying a failed delivery. Defaults to 30 seconds. */
+    maxRetryDelayMs: 30_000,
+    /** Maximum number of retry attempts before giving up on a batch delivery. Defaults to 3 retries. */
+    maxRetries: 3,
+    /** Maximum number of events to send per delivery request. Defaults to 1000 events. */
+    batchSize: 1_000,
+    /**
+     * Maximum number of events to queue in memory before starting to drop events.
+     * Note: This is only used if localStorage is not available.
+     * Defaults to 10000 events.
+     */
+    maxQueueSize: 10_000,
+  }
+})
+```
+
 TODOS:
 * Warehouse sync recurrence
 * Client config options
