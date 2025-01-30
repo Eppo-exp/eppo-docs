@@ -211,3 +211,14 @@ http://adoring-yonath-6ecb9d.netlify.app/*  http://docs.geteppo.com/:splat  301!
 /sdks/client-sdks/android#initial-configuration /sdks/client-sdks/android/initialization#configuration-caching
 /sdks/client-sdks/android#offline-mode /sdks/client-sdks/android/initialization#offline-mode
 
+/sdks/client-sdks/ios/ /sdks/client-sdks/ios/intro 301!
+/sdks/client-sdks/ios#getting-started /sdks/client-sdks/ios/quickstart
+/sdks/client-sdks/ios#installation /sdks/client-sdks/ios/quickstart#installation
+/sdks/client-sdks/ios#usage /sdks/client-sdks/ios/quickstart#feature-flags
+/sdks/client-sdks/ios#connecting-an-event-logger /sdks/client-sdks/ios/initialization#initialization-with-assignment-logger
+/sdks/client-sdks/ios#getting-variations /sdks/client-sdks/ios/assignments#assignment-types
+/sdks/client-sdks/ios#considerations /sdks/client-sdks/ios/assignments#best-practices
+/sdks/client-sdks/ios#typed-assignments /sdks/client-sdks/ios/assignments#assignment-types
+/sdks/client-sdks/ios#initialization-modes /sdks/client-sdks/ios/initialization#initialization-modes
+/sdks/client-sdks/ios#assignment-logger-schema /sdks/client-sdks/ios/initialization#assignment-logger-schema
+
