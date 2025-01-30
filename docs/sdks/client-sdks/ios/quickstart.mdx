@@ -24,6 +24,8 @@ Feature flags are a way to toggle features on and off without needing to deploy 
 First, initialize the SDK with your API key. You'll need to do this early in your application lifecycle:
 
 ```swift
+import EppoSDK
+
 Task {
     try await EppoClient.initialize(sdkKey: "SDK-KEY-FROM-DASHBOARD");
 }
