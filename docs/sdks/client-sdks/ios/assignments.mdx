@@ -43,11 +43,12 @@ let assignment = try eppoClient.getStringAssignment(
 );
 
 // Use the variant value to determine which component to render
-if assignment == "version-a" {
+switch assignment {
+case "version-a":
     showVersionA()
-} else if assignment == "version-b" {
+case "version-b":
     showVersionB()
-} else {
+default:
     showControl()
 }
 ```
