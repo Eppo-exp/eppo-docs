@@ -9,7 +9,12 @@ Assignments are the mechanism through which a given [Subject](/sdks/sdk-features
 
 ## How Assignments Work
 
-The SDK periodically retrieves configuration rules from the Eppo server that define how subjects should be allocated to variants. When you call an assignment function, the SDK evaluates these rules locally without making additional network requests.
+The SDK retrieves configuration rules from the Eppo server in two cases: 
+
+1. when starting a new session 
+2. when calling the load function. 
+
+These rules determine variant assignments for subjects. All assignment evaluations happen locally, without additional network requests.
 
 Each assignment requires:
 
@@ -175,7 +180,6 @@ public class AssignmentObserver: ObservableObject {
     }
 }
 ```
-
 ### Using in SwiftUI Views
 
 Here's how to use the assignment observer in a SwiftUI view:
