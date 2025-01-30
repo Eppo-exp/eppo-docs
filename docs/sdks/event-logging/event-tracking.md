@@ -51,3 +51,10 @@ eppoClient.track({
   }
 });
 ```
+
+## Configuration
+
+TODOS:
+* Warehouse sync recurrence
+* Client config options
+* Warehouse table schema
