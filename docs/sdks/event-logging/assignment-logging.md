@@ -1,11 +1,11 @@
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
-# Assignment Event logging
+# Assignment logging
 
 In order to run experiments on Eppo you'll need to provide a logging callback function to write assignment events to your warehouse. It is best practice to centralize application logging as much as possible, and Eppo's SDKs work seamlessly with most logging tools, meaning you can keep using your favorite logger.
 
-Eppo's SDKs include either an assignment logger base class or an interface, in which you can define a method according to your logging requirements. Examples are [shown below](/sdks/assignment-event-logging#examples-for-common-logging-systems) in Eppo's Node SDK for logging with some common event loggers.
+Eppo's SDKs include either an assignment logger base class or an interface, in which you can define a method according to your logging requirements. Examples are [shown below](#examples-for-common-logging-systems) in Eppo's Node SDK for logging with some common event loggers.
 
 The object passed into the assignment logger function contains the following fields:
 

@@ -21,5 +21,5 @@ Don't hesitate to shoot us an email at support@geteppo.com.
 
 ## Experimentation
 
-- Learn how to set up [assignment event logging](/sdks/event-logging/assignment-event-logging/) with Segment, Rudderstack, mParticle, or Snowplow.
+- Learn how to set up [assignment logging](/sdks/event-logging/assignment-logging/) with Segment, Rudderstack, mParticle, or Snowplow.
 - Analyze experiments with [anonymous user IDs](/guides/advanced-experimentation/anonymous-explainer).
