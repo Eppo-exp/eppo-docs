@@ -233,7 +233,7 @@ Task {
 ```
 
 :::note
-It is recommended to wrap initialization in a `Task` block in order to perform network request asynchronously. For more information, see the [iOS SDK](/sdks/client-sdks/ios) documentation.
+It is recommended to wrap initialization in a `Task` block in order to perform network request asynchronously. For more information, see the [iOS SDK](/sdks/client-sdks/ios/intro) documentation.
 :::
  
 </TabItem>

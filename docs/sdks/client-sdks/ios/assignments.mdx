@@ -1,0 +1,212 @@
+---
+title: Assignments
+sidebar_position: 4
+---
+
+import ApiOptionRef from '@site/src/components/ApiOptionRef';
+
+Assignments are the mechanism through which a given [Subject](/sdks/sdk-features/subjects) is assigned to a variation for a feature flag or experiment.
+
+## How Assignments Work
+
+The SDK retrieves configuration rules from the Eppo server in two cases: 
+
+1. when starting a new session 
+2. when calling the load function. 
+
+These rules determine variant assignments for subjects. All assignment evaluations happen locally, without additional network requests.
+
+Each assignment requires:
+
+- **Flag Key**: Identifies which set of configuration rules to use
+- **Subject Key**: A unique identifier for the subject (usually a user ID)
+- **Subject Attributes**: Optional key-value pairs containing additional information used for rule evaluation
+- **Default Value**: Fallback value if assignment fails or rules don't match
+
+## Assignment Types
+
+Every Eppo flag has a return type that is set once on creation in the dashboard. Once a flag is created, assignments in code should be made using the corresponding typed function:
+
+```swift
+getBooleanAssignment(...)
+getNumericAssignment(...)
+getIntegerAssignment(...)
+getStringAssignment(...)
+getJSONStringAssignment(...)
+```
+
+### String Assignments
+
+String assignments return a string value that is set as the variation for the experiment. String flags are the most common type of flags and are useful for both A/B/n tests and advanced targeting use cases.
+
+```swift
+let assignment = try eppoClient.getStringAssignment(
+    flagKey: "new-user-onboarding",
+    subjectKey: user.id,
+    subjectAttributes: user.attributes,
+    defaultValue: "control"
+);
+
+// Use the variant value to determine which component to render
+switch assignment {
+case "version-a":
+    showVersionA()
+case "version-b":
+    showVersionB()
+default:
+    showControl()
+}
+```
+
+### Boolean Assignments
+
+Boolean flags support simple on/off toggles. They're useful for simple, binary feature switches like blue/green deployments or enabling/disabling a new feature.
+
+```swift
+let isEnabled = try eppoClient.getBooleanAssignment(
+    flagKey: "new-feature",
+    subjectKey: user.id,
+    subjectAttributes: user.attributes,
+    defaultValue: false
+)
+
+if isEnabled {
+    showNewFeature()
+} else {
+    showExistingFeature()
+}
+```
+
+### Numeric Assignments
+
+The SDK supports both integer and numeric assignments. These are useful for testing different numeric values like prices, counts, or thresholds.
+
+```swift
+// Integer assignment
+let itemCount = try eppoClient.getIntegerAssignment(
+    flagKey: "items-per-page",
+    subjectKey: user.id,
+    subjectAttributes: user.attributes,
+    defaultValue: 10
+)
+
+// Numeric assignment
+let price = try eppoClient.getNumericAssignment(
+    flagKey: "subscription-price",
+    subjectKey: user.id,
+    subjectAttributes: user.attributes,
+    defaultValue: 9.99
+)
+```
+
+### JSON Assignments
+
+JSON assignments allow for complex configuration objects. They're useful for testing multiple related values together.
+
+```swift
+let defaultConfig = """
+{
+    "color": "#FF0000",
+    "fontSize": 14,
+    "fontFamily": "Roboto"
+}
+"""
+
+let config = try eppoClient.getJSONStringAssignment(
+    flagKey: "ui-config",
+    subjectKey: user.id,
+    subjectAttributes: user.attributes,
+    defaultValue: defaultConfig
+)
+
+// Parse and use the configuration
+if let jsonData = config.data(using: .utf8),
+   let json = try? JSONSerialization.jsonObject(with: jsonData) as? [String: Any] {
+    let color = json["color"] as? String
+    let fontSize = json["fontSize"] as? Int
+    let fontFamily = json["fontFamily"] as? String
+}
+```
+
+## Best Practices
+
+### Using with SwiftUI
+
+For applications using SwiftUI, wrapping assignment in an `ObservableObject` is the best practice. This will create an object that will update Swift UI when the assignment is received.
+
+```swift
+@MainActor
+public class AssignmentObserver: ObservableObject {
+    @Published var assignment: String?
+
+    public init() {
+        do {
+            // Use the shared instance after it has been configured.
+            self.assignment = try EppoClient.shared().getStringAssignment(
+                flagKey: "new-user-onboarding",
+                subjectKey: user.id,
+                subjectAttributes: user.attributes,
+                defaultValue: "control"
+            );
+        } catch {
+            self.assignment = nil
+        }
+    }
+}
+```
+
+You can also choose to combine instantiation and assignment within the same `ObservableObject`:
+
+```swift
+@MainActor
+public class AssignmentObserver: ObservableObject {
+    @Published var assignment: String?
+
+    public init() {
+        Task {
+            do {
+                // The initialization method has controls to maintain a single instance.
+                try await EppoClient.initialize(sdkKey: "SDK-KEY-FROM-DASHBOARD");
+                self.assignment = try EppoClient.shared().getStringAssignment(
+                    flagKey: "new-user-onboarding",
+                    subjectKey: user.id,
+                    subjectAttributes: user.attributes,
+                    defaultValue: "control"
+                );
+            } catch {
+                self.assignment = nil
+            }
+        }
+    }
+}
+```
+### Using in SwiftUI Views
+
+Here's how to use the assignment observer in a SwiftUI view:
+
+```swift
+import SwiftUI
+
+struct ContentView: View {
+    @StateObject private var observer = AssignmentObserver()
+
+    var body: some View {
+        VStack {
+            if let assignment = observer.assignment {
+                Text("Assignment: \(assignment)")
+                    .font(.headline)
+                    .padding()
+            } else {
+                Text("Loading assignment...")
+                    .font(.subheadline)
+                    .padding()
+            }
+        }
+    }
+}
+```
+
+
+:::note
+More details about logging and examples can be found in the [event logging](/sdks/event-logging/) page.
+:::

@@ -1,0 +1,209 @@
+---
+title: Initialization
+sidebar_position: 3
+---
+
+import ApiOptionRef from '@site/src/components/ApiOptionRef';
+
+The Eppo iOS SDK is easy to initialize while offering robust customization options, making it adaptable to various use cases such as offline mode, custom caching requirements, and ultra-low-latency initialization.
+
+## Initialize the SDK
+
+To complete basic initialization, you only need to provide an SDK key which you can create in the Eppo UI under **Configuration** > **Environments** > **API Keys**.
+
+```swift
+import EppoFlagging
+
+Task {
+    try await EppoClient.initialize(sdkKey: "SDK-KEY-FROM-DASHBOARD");
+}
+```
+
+:::tip
+Wrap initialization in a `Task` block in order to perform network request asynchronously.
+:::
+
+## Use the SDK instance
+
+After initialization, you can use the SDK instance by calling `shared()`. You can then use the SDK instance to assign a variation to a subject using the `get*Assignment` functions.
+
+```swift
+let eppoClient = EppoClient.shared()
+let user = getCurrentUser()
+```
+
+## Advanced Configuration
+
+Basic initialization is great for most use cases, but the SDK provides options that you can use during initialization to customize the behavior of the SDK.
+
+### Initialization with Assignment Logger
+
+When using the SDK for experiments (rather than just feature flags), you'll need to add a logging callback during initialization:
+
+```swift
+eppoClient = try await EppoClient.initialize(
+    sdkKey: "mock-sdk-key", 
+    assignmentLogger: segmentAssignmentLogger
+)
+
+// Example of a simple assignmentLogger function
+func segmentAssignmentLogger(assignment: Assignment) {
+    let assignmentDictionary: [String: Any] = [
+        "allocation": assignment.allocation,
+        "experiment": assignment.experiment,
+        "featureFlag": assignment.featureFlag,
+        "variation": assignment.variation,
+        "subject": assignment.subject,
+        "timestamp": assignment.timestamp
+    ]
+
+    analytics.track(
+        name: "Eppo Assignment", 
+        properties: TrackProperties(assignmentDictionary)
+    )
+}
+```
+
+### Initialization Modes
+
+The SDK supports different initialization modes to suit your needs:
+
+#### Standard Initialization
+The default initialization mode fetches configurations from Eppo's CDN:
+
+```swift
+import EppoFlagging
+
+Task {
+    try await EppoClient.initialize(sdkKey: "SDK-KEY-FROM-DASHBOARD");
+}
+```
+
+#### Initialization with Pre-fetched Configuration
+You can pass in a pre-fetched flag configuration JSON string:
+
+```swift
+Task {
+    try await EppoClient.initialize(
+        sdkKey: "SDK-KEY-FROM-DASHBOARD",
+        initialConfiguration: try Configuration(
+            flagsConfigurationJson: Data(#"{ "pre-loaded-JSON": "passed in here" }"#.utf8),
+            obfuscated: false
+        )
+    );
+}
+```
+
+This will still perform a network request to fetch the latest flag configurations. The provided configuration will be used until the network request is successful.
+
+#### Offline Initialization
+If you'd like to initialize Eppo's client without performing a network request, you can use the `initializeOffline` method:
+
+```swift
+try EppoClient.initializeOffline(
+    sdkKey: "SDK-KEY-FROM-DASHBOARD",
+    initialConfiguration: try Configuration(
+        flagsConfigurationJson: Data(#"{ "pre-loaded-JSON": "passed in here" }"#.utf8),
+        obfuscated: false
+    )
+);
+```
+
+The `obfuscated` parameter is used to inform the SDK if the flag configuration is obfuscated.
+
+### Configuration Updates
+
+#### Fetching Updated Configurations
+After the client has been initialized, you can use `load()` to asynchronously fetch the latest flag configuration from the remote source:
+
+```swift
+try EppoClient.initializeOffline(
+    sdkKey: "SDK-KEY-FROM-DASHBOARD",
+    initialConfiguration: try Configuration(
+        flagsConfigurationJson: Data(#"{ "pre-loaded-JSON": "passed in here" }"#.utf8),
+        obfuscated: false
+    )
+);
+
+// Later, fetch updated configurations
+Task {
+    try await EppoClient.shared().load();
+}
+```
+
+:::note
+As modern iOS devices have substantial memory, applications are often kept in memory across sessions. This means that the flag configurations are not automatically reloaded on subsequent launches.
+
+It is recommended to use the `load()` method to fetch the latest flag configurations when the application is launched.
+:::
+
+### Assignment Logger Schema
+
+The SDK will invoke the `logAssignment` function with an `Assignment` object that contains the following fields:
+
+<ApiOptionRef 
+  name="timestamp"
+  type="string"
+  defaultValue=""
+>
+
+The time when the subject was assigned to the variation. Example: `"2021-06-22T17:35:12.000Z"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="featureFlag"
+  type="string"
+  defaultValue=""
+>
+
+An Eppo feature flag key. Example: `"recommendation-algo"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="allocation"
+  type="string"
+  defaultValue=""
+>
+
+An Eppo allocation key. Example: `"allocation-17"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="experiment"
+  type="string"
+  defaultValue=""
+>
+
+An Eppo experiment key. Example: `"recommendation-algo-allocation-17"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="subject"
+  type="string"
+  defaultValue=""
+>
+
+An identifier of the subject or user assigned to the experiment variation. Example: UUID
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="subjectAttributes"
+  type="[String: EppoValue]"
+  defaultValue="[:]"
+>
+
+A dictionary mapping String keys to EppoValue values. These attributes are used for targeting and are only logged if passed to the SDK assignment function. EppoValue can be a String, Number, or Boolean.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="variation"
+  type="string"
+  defaultValue="undefined"
+>
+
+The experiment variation the subject was assigned to. Example: `"control"`
+</ApiOptionRef>
+
+:::note
+More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/sdks/event-logging/) page.
+:::
