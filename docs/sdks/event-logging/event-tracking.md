@@ -5,7 +5,7 @@ along with any properties that describe the action. Once you send these events, 
 load into the data warehouse of your choice. You can then, further analyze them, trigger downstream actions, and generally 
 get better visibility into user behavior.
 
-## Why to use it
+## Benefits of using the Track API
 
 * **Deeper Insights**: You get real-time data about how people use your product. That helps you figure out where users might get stuck, what features they love, and what drives them to come back.
 * **Personalized Experiences**: Once you know what actions users are taking, you can customize their experience—like sending personalized messages or recommending features they’d find useful.
