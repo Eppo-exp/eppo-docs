@@ -73,7 +73,7 @@ We'll now provide a step-by-step walkthrough for creating Assignment SQL Definit
 ![Write Assignment SQL Query](/img/building-experiments/add-assignment-sql-query.png)
 
 :::info
-If you do not yet have assignment logs in your warehouse, see the [Event Logging page](/sdks/event-logging).
+If you do not yet have assignment logs in your warehouse, see the [Assignment Event Logging page](/sdks/assignment-event-logging).
 :::
 
 5. After clicking **Run**, you'll see some sample data. Annotate these columns into Eppo's data model using the right panel:

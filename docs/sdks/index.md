@@ -87,7 +87,7 @@ await init({
 });
 ```
 
-This `assignmentLogger` function takes a single input: an Eppo-maintained `assignment` analytic event. This function is invoked each time the `get<Type>Assignment` method is called, meaning that once the SDK is installed in your application, engineers need to think about assignment logging. The `assignment` [analytic event](/sdks/event-logging/) contains all of the fields needed for Eppo's analytic engine, including targeting details and holdout group evaluations.
+This `assignmentLogger` function takes a single input: an Eppo-maintained `assignment` analytic event. This function is invoked each time the `get<Type>Assignment` method is called, meaning that once the SDK is installed in your application, engineers need to think about assignment logging. The `assignment` [analytic event](/sdks/event-logging/assignment-event-logging/) contains all of the fields needed for Eppo's analytic engine, including targeting details and holdout group evaluations.
 
 ## Ergonomic API
 

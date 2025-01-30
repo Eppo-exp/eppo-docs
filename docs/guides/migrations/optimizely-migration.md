@@ -3,7 +3,7 @@
 1. **Install the Eppo SDK**
     - Login to Eppo with your work email: https://eppo.cloud/
     - [Generate an SDK key](/sdks/sdk-keys) by navigating to “SDK Keys” under Configuration
-    - [Define a logging function](/sdks/event-logging/) for the Eppo SDK to log assignments so they end up in your data warehouse
+    - [Define a logging function](/sdks/event-logging/assignment-event-logging/) for the Eppo SDK to log assignments so they end up in your data warehouse
         
         *TypeScript Example:*
         
