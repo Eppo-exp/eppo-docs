@@ -52,7 +52,7 @@ eppoClient.track({
 });
 ```
 
-## Configuration
+## SDK Configuration
 
 ```typescript
 import { init } from "@eppo/js-client-sdk";
@@ -82,7 +82,12 @@ await init({
 })
 ```
 
+## Warehouse Configuration
+
+Events are by default sent to a table named `eppo_events`.
+Note: There is a special case handling for *assignment logging events* (which are all events with the type `eppo_assignment`).
+These events are treated differently and are, instead, sent to a special table named `eppo_assignments`.
+Events are synchronized to the configured data warehouse every 10 minutes by default.
+
 TODOS:
-* Warehouse sync recurrence
-* Client config options
 * Warehouse table schema
