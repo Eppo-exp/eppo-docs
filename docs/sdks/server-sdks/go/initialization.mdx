@@ -1,0 +1,104 @@
+---
+title: Initialization
+sidebar_position: 3
+---
+
+import ApiOptionRef from '@site/src/components/ApiOptionRef';
+
+The Eppo Go SDK is easy to initialize while offering robust customization options, making it adaptable to various use cases such as offline mode, custom caching requirements, and ultra-low-latency initialization.
+
+## Initialize the SDK
+
+To complete basic initialization, you only need to provide an SDK key. [Create an SDK key](/sdks/sdk-keys) if you don't already have one.
+
+```go
+import (
+    "github.com/eppo-exp/golang-sdk/v6/eppoclient"
+)
+
+config := eppoclient.Config{
+    SdkKey: "<SDK-KEY>",
+}
+client, err := eppoclient.InitClient(config)
+if err != nil {
+    log.Fatal("Failed to initialize Eppo client:", err)
+}
+```
+
+## Waiting for Initialization
+
+The SDK provides a channel to wait for initialization to complete. This is useful in server applications where you want to ensure the SDK is ready before handling requests:
+
+```go
+select {
+case <-client.Initialized():
+    log.Println("Eppo SDK initialized successfully")
+case <-time.After(2 * time.Second):
+    log.Warn("Timed out waiting for Eppo SDK to initialize")
+}
+```
+
+## Advanced Configuration
+
+Basic initialization is great for most use cases, but the SDK provides options that you can use during initialization to customize the behavior of the SDK.
+
+### Configuration Options
+
+The `Config` struct accepts the following options:
+
+<ApiOptionRef 
+  name="SdkKey"
+  type="string"
+  defaultValue='""'
+>
+
+Your SDK key from the Eppo dashboard. Required.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="AssignmentLogger"
+  type="IAssignmentLogger"
+  defaultValue="nil"
+>
+
+A callback that sends each assignment to your data warehouse. Required only for experiment analysis.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="BaseUrl"
+  type="string"
+  defaultValue='"https://fscdn.eppo.cloud/api"'
+>
+
+The base URL for the Eppo API.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="PollerInterval"
+  type="time.Duration"
+  defaultValue="10 * time.Second"
+>
+
+The interval at which the SDK polls for configuration updates.
+</ApiOptionRef>
+
+
+For example, to configure custom polling intervals and timeouts:
+
+```go
+config := eppoclient.Config{
+    SdkKey:          "<SDK-KEY>",
+    AssignmentLogger: &MyLogger{},
+    PollInterval:     60 * time.Second,
+    InitialWaitTime:  5 * time.Second,
+}
+```
+
+
+## Best Practices
+
+1. **Initialize Once**: Create a single instance of the SDK at application startup and reuse it throughout your application.
+
+2. **Handle Errors**: Always implement error handling around initialization to make sure errors don't disrupt your application.
+
+4. **Monitor Memory**: Be mindful of memory usage when setting polling intervals, as configurations are cached in memory.

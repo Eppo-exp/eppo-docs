@@ -1,0 +1,327 @@
+---
+title: Assignments
+sidebar_position: 4
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import ApiOptionRef from '@site/src/components/ApiOptionRef';
+
+Assignments are the mechanism through which a given [Subject](/sdks/sdk-features/subjects) is assigned to a variation for a feature flag or experiment.
+
+The Eppo SDK supports the following assignment types:
+
+- String
+- Boolean
+- JSON
+- Integer
+- Float
+
+## Assignment Types
+
+### String Assignments
+
+String assignments return a string value that is set as the variation. String flags are the most common type of flags and are useful for both A/B/n tests and advanced targeting use cases.
+
+```go
+import (
+    "github.com/eppo-exp/golang-sdk/v6/eppoclient"
+)
+
+subjectAttributes := map[string]interface{}{
+    "country": user.Country,
+    "age":     30,
+}
+
+variation, err := client.GetStringAssignment(
+    "flag-key-123",
+    user.ID,
+    subjectAttributes,
+    "control",
+)
+if err != nil {
+    log.Printf("Error getting assignment: %v", err)
+    return
+}
+
+switch variation {
+case "version-a":
+    handleVersionA()
+case "version-b":
+    handleVersionB()
+default:
+    handleControl()
+}
+```
+
+### Boolean Assignments
+
+Boolean flags support simple on/off toggles. They're useful for simple, binary feature switches like blue/green deployments or enabling/disabling a new feature.
+
+```go
+enabled, err := client.GetBooleanAssignment(
+    "new-feature",
+    user.ID,
+    subjectAttributes,
+    false, // default value
+)
+if err != nil {
+    log.Printf("Error getting assignment: %v", err)
+    return
+}
+
+if enabled {
+    handleFeatureEnabled()
+} else {
+    handleFeatureDisabled()
+}
+```
+
+### JSON Assignments
+
+JSON flags work best for advanced configuration use cases. The JSON flag can include structured information such as:
+- Marketing copy for a promotional campaign
+- Configuration parameters for a feature
+- UI customization settings
+
+```go
+defaultCampaign := map[string]interface{}{
+    "hero":             false,
+    "hero_image":       "placeholder.png",
+    "hero_title":       "Placeholder Hero Title",
+    "hero_description": "Placeholder Hero Description",
+}
+
+campaignConfig, err := client.GetJSONAssignment(
+    "campaign-config",
+    user.ID,
+    subjectAttributes,
+    defaultCampaign,
+)
+if err != nil {
+    log.Printf("Error getting assignment: %v", err)
+    return
+}
+
+// You can also get the raw JSON bytes
+campaignBytes, err := client.GetJSONBytesAssignment(
+    "campaign-config",
+    user.ID,
+    subjectAttributes,
+    defaultCampaignBytes,
+)
+```
+
+### Numeric Assignments
+
+The SDK provides both integer and floating-point numeric assignments. These are useful for testing different numeric values like:
+
+- Price points
+- Number of items to display
+- Timeout durations
+
+```go
+// Integer assignment
+numItems, err := client.GetIntegerAssignment(
+    "items-to-show",
+    user.ID,
+    subjectAttributes,
+    10, // default value
+)
+
+// Float assignment
+price, err := client.GetNumericAssignment(
+    "price-test",
+    user.ID,
+    subjectAttributes,
+    9.99, // default value
+)
+```
+
+## Assignment Logging
+
+The SDK will invoke an assignment logger function if it is available when the assignment is made. This function will send the assignment to your storage system.
+
+### Assignment Logger Schema
+
+The SDK will invoke the `LogAssignment` method with an `AssignmentEvent` struct that contains the following fields:
+
+<ApiOptionRef 
+  name="Timestamp"
+  type="string"
+  defaultValue='""'
+>
+
+The time when the subject was assigned to the variation in ISO format. Example: `"2021-06-22T17:35:12.000Z"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="FeatureFlag"
+  type="string"
+  defaultValue='""'
+>
+
+An Eppo feature flag key. Example: `"recommendation-algo"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="Allocation"
+  type="string"
+  defaultValue='""'
+>
+
+An Eppo allocation key. Example: `"allocation-17"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="Experiment"
+  type="string"
+  defaultValue='""'
+>
+
+An Eppo experiment key. Example: `"recommendation-algo-allocation-17"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="Subject"
+  type="string"
+  defaultValue='""'
+>
+
+An identifier of the subject or user assigned to the experiment variation. Example: UUID
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="SubjectAttributes"
+  type="map[string]interface{}"
+  defaultValue="nil"
+>
+
+A map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function. Example: `{"country": "US"}`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="Variation"
+  type="string"
+  defaultValue='""'
+>
+
+The experiment variation the subject was assigned to. Example: `"control"`
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="MetaData"
+  type="map[string]string"
+  defaultValue="{}"
+>
+A map of key-value pairs that allows you to attach custom metadata to the assignment event. This metadata is logged alongside the assignment event and can be used for additional context or filtering in analytics.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="ExtraLogging"
+  type="map[string]string"
+  defaultValue="{}"
+>
+An optional map of key-value pairs for additional logging information that doesn't fit into the standard metadata category. This field can be used for debugging, temporary logging needs, or specialized tracking without affecting the core assignment data.
+</ApiOptionRef>
+
+### Logging to Your Data Warehouse
+
+Eppo's architecture ensures that raw user data never leaves your system. Instead of pushing subject-level exposure events to Eppo's servers, Eppo's SDKs integrate with your existing logging system.
+
+Here are examples of implementing the `IAssignmentLogger` interface for different logging systems:
+
+<Tabs>
+<TabItem value="console" label="Console">
+
+```go
+type ConsoleLogger struct{}
+
+func (l *ConsoleLogger) LogAssignment(event eppoclient.AssignmentEvent) error {
+    log.Printf("Assignment: %+v", event)
+    return nil
+}
+```
+
+</TabItem>
+<TabItem value="segment" label="Segment">
+
+```go
+import "gopkg.in/segmentio/analytics-go.v3"
+
+type SegmentLogger struct {
+    client analytics.Client
+}
+
+func (l *SegmentLogger) LogAssignment(event eppoclient.AssignmentEvent) error {
+    return l.client.Enqueue(analytics.Track{
+        UserId: event.Subject,
+        Event:  "Eppo Randomization Event",
+        Properties: analytics.Properties(event),
+    })
+}
+```
+
+</TabItem>
+<TabItem value="snowplow" label="Snowplow">
+
+```go
+import (
+	"github.com/Eppo-exp/golang-sdk/v6/eppoclient"
+)
+
+var eppoClient *eppoclient.EppoClient
+
+func main() {
+	assignmentLogger := NewExampleAssignmentLogger()
+
+	// 10000 is the maximum number of assignments to cache.
+	assignmentLogger = eppoclient.NewLruAssignmentLogger(assignmentLogger, 10000)
+	assignmentLogger = eppoclient.NewLruBanditLogger(assignmentLogger, 10000)
+
+	eppoClient, _ = eppoclient.InitClient(eppoclient.Config{
+		ApiKey:           "<your_sdk_key>",
+		AssignmentLogger: assignmentLogger,
+	})
+}
+```
+
+</TabItem>
+</Tabs>
+
+### Deduplicating Logs
+
+The SDK can encounter a large number of duplicate assignments over a short period of time. If you have a logging function, the SDK will send the same assignment to your storage system multiple times. This increases the cost storage and bloat analysis costs for no additional benefit.
+
+Solve this problem by using the in-memory assigment cache with an expiration based on the least recently accessed time.
+
+You can configure caching individually for assignment logs and bandit action logs using `LruAssignmentLogger` and `LruBanditLogger` respectively. Both loggers are configured with a maximum size to fit your desired memory allocation.
+
+
+```go
+type CachingLogger struct {
+    wrapped eppoclient.IAssignmentLogger
+    cache   *lru.Cache
+}
+
+func NewCachingLogger(wrapped eppoclient.IAssignmentLogger) *CachingLogger {
+    cache, _ := lru.New(1024)
+    return &CachingLogger{
+        wrapped: wrapped,
+        cache:   cache,
+    }
+}
+
+func (l *CachingLogger) LogAssignment(event eppoclient.AssignmentEvent) error {
+    cacheKey := fmt.Sprintf("%s-%s", event.Subject, event.FeatureFlag)
+    if _, exists := l.cache.Get(cacheKey); exists {
+        return nil
+    }
+    
+    err := l.wrapped.LogAssignment(event)
+    if err == nil {
+        l.cache.Add(cacheKey, true)
+    }
+    return err
+}
+```
