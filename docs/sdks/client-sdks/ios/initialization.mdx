@@ -140,7 +140,7 @@ The SDK will invoke the `logAssignment` function with an `Assignment` object tha
 <ApiOptionRef 
   name="timestamp"
   type="string"
-  defaultValue="undefined"
+  defaultValue=""
 >
 
 The time when the subject was assigned to the variation. Example: `"2021-06-22T17:35:12.000Z"`
@@ -149,7 +149,7 @@ The time when the subject was assigned to the variation. Example: `"2021-06-22T1
 <ApiOptionRef 
   name="featureFlag"
   type="string"
-  defaultValue="undefined"
+  defaultValue=""
 >
 
 An Eppo feature flag key. Example: `"recommendation-algo"`
@@ -158,7 +158,7 @@ An Eppo feature flag key. Example: `"recommendation-algo"`
 <ApiOptionRef 
   name="allocation"
   type="string"
-  defaultValue="undefined"
+  defaultValue=""
 >
 
 An Eppo allocation key. Example: `"allocation-17"`
@@ -167,7 +167,7 @@ An Eppo allocation key. Example: `"allocation-17"`
 <ApiOptionRef 
   name="experiment"
   type="string"
-  defaultValue="undefined"
+  defaultValue=""
 >
 
 An Eppo experiment key. Example: `"recommendation-algo-allocation-17"`
@@ -176,7 +176,7 @@ An Eppo experiment key. Example: `"recommendation-algo-allocation-17"`
 <ApiOptionRef 
   name="subject"
   type="string"
-  defaultValue="undefined"
+  defaultValue=""
 >
 
 An identifier of the subject or user assigned to the experiment variation. Example: UUID
@@ -184,11 +184,11 @@ An identifier of the subject or user assigned to the experiment variation. Examp
 
 <ApiOptionRef 
   name="subjectAttributes"
-  type="map"
-  defaultValue="{}"
+  type="[String: EppoValue]"
+  defaultValue="[:]"
 >
 
-A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function.
+A dictionary mapping String keys to EppoValue values. These attributes are used for targeting and are only logged if passed to the SDK assignment function. EppoValue can be a String, Number, or Boolean.
 </ApiOptionRef>
 
 <ApiOptionRef 
