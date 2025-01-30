@@ -16,6 +16,9 @@ While in XCode:
 
 ## Feature Flags
 
+Feature flags are a way to toggle features on and off without needing to deploy code.
+
+
 ### Initialize the SDK
 
 First, initialize the SDK with your API key. You'll need to do this early in your application lifecycle:
@@ -56,4 +59,57 @@ if isEnabled {
     showExistingFeature()
 }
 ```
+
+### Running Experiments
+
+To run experiments, you'll need to add a logging callback during initialization to track assignments:
+
+```swift
+// Example of a simple assignmentLogger function
+func segmentAssignmentLogger(assignment: Assignment) {
+    let assignmentDictionary: [String: Any] = [
+        "allocation": assignment.allocation,
+        "experiment": assignment.experiment,
+        "featureFlag": assignment.featureFlag,
+        "variation": assignment.variation,
+        "subject": assignment.subject,
+        "timestamp": assignment.timestamp
+    ]
+
+    analytics.track(
+        name: "Eppo Assignment", 
+        properties: TrackProperties(assignmentDictionary)
+    )
+}
+
+eppoClient = try await EppoClient.initialize(sdkKey: "<SDK-KEY>", assignmentLogger: segmentAssignmentLogger)
+
+```
+
+Then use the SDK to make experiment assignments:
+
+```swift
+let assignment = try eppoClient.getStringAssignment(
+    flagKey: "new-user-onboarding",
+    subjectKey: user.id,
+    subjectAttributes: user.attributes,
+    defaultValue: "control"
+);
+
+// Use the variant value to determine which component to render
+if assignment == "version-a" {
+    showVersionA()
+} else if assignment == "version-b" {
+    showVersionB()
+} else {
+    showControl()
+}
+```
+
+### Next Steps
+
+Now that you have the basics working, here are some advanced topics to explore:
+- [Advanced SDK Initialization](/sdks/client-sdks/ios/initialization)
+- [Assignment Logging Setup](/sdks/event-logging)
+- [Debugging Flag Assignments](/sdks/sdk-features/debugging-flag-assignment)
 
