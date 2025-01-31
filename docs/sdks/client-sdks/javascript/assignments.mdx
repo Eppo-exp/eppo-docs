@@ -259,27 +259,49 @@ Metadata around the assignment, such as the version of the SDK. Example: `{ "obf
 
 ### Logging data to your data warehouse
 
-Eppo's unique architecture make it so Eppo never has access to your data. This means that you can use the assignment logging functions to send data to any data warehouse or logging system you want.
+You can use the assignment logging functions to send data to any data warehouse or logging system you want, including Eppo's [Event Tracking](/event-logging/event-tracking), or your own custom solution.
 
 All you need to do is adjust the way you define the `logAssignment()` function within the `IAssignmentLogger` interface at initialization.
 
 <Tabs>
 <TabItem value="console" label="Console">
 
-```javascript
+```typescript
 // Import Eppo's assignment logger interface and client initializer
 import { IAssignmentLogger, init } from "@eppo/node-server-sdk";
 
 // Define logAssignment so that it logs events
 const assignmentLogger: IAssignmentLogger = {
   logAssignment(assignment) {
-	console.log(assignment);
+	  console.log(assignment);
   }
 };
 ```
 :::note
 This example writes to your local machine and is useful for development in your local environment. In production, these logs will need to get written to a table in your data warehouse.
 :::
+
+</TabItem>
+
+<TabItem value="eppo" label="Eppo">
+
+```typescript
+import { IAssignmentEvent, IAssignmentLogger } from '@eppo/js-client-sdk-common';
+import { getInstance, init } from '@eppo/node-server-sdk';
+
+// Define the assignment logger
+const assignmentLogger: IAssignmentLogger = {
+  logAssignment(assignment: IAssignmentEvent) {
+    getInstance().track('eppo_assignment', assignment);
+  }
+};
+
+// initialize the SDK
+await EppoSDK.init({
+  apiKey: eppoSdkKey,
+  assignmentLogger,
+});
+```
 
 </TabItem>
 
