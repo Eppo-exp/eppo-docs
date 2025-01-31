@@ -42,6 +42,10 @@ export default function EppoRandomizationProvider({
 }
 ```
 
+:::note
+If you are using Next.js, make sure this component is rendered client side by adding `"use client"` to the top of the file.
+:::
+
 After the SDK is initialized, you may assign variations from any child component of `EppoRandomizationProvider`. We recommend wrapping the SDK code in a [useMemo hook](https://reactjs.org/docs/hooks-reference.html#usememo) to avoid invoking the assignment logic on every render:
 
 ```tsx
