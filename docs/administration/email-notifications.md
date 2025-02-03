@@ -14,7 +14,7 @@ You can select specific email addresses to receive notifications for **ANY** exp
 
 Only experiment traffic imbalances and experiment refresh errors are available for system-wide email notifications.
 
-## Configure Email Notifications for for Team owned Flags, Experiments, and Metrics
+## Configure Email Notifications for Team owned Flags, Experiments, and Metrics
 
 You can select to receive notifications related to flags, experiments, and metrics that are owned by the Teams you belong to.
 
