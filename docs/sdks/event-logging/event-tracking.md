@@ -1,6 +1,6 @@
 # Event tracking
 
-Eppo's Tracking APIs allow you to record any actions your users perform, like "Signed Up", "Made a Purchase" or "Clicked a Button",
+Eppo's Track API allow you to record any actions your users perform, like "Signed Up", "Made a Purchase" or "Clicked a Button",
 along with any properties that describe the action. Once you send these events, Eppo will ingest them, batch, process and load into your data warehouse. You can then use those events in your warehouse to run experiments, construct data pipelines, or power custom tools/dashboards.
 
 ## Benefits of using the Track API
@@ -96,7 +96,7 @@ The frequency of updates/latency depends on the load/availability of compute res
 
 
 ## SDK Configuration
-In order to use the event tracking APIs in the Eppo SDKs, you need to use an SDK key which was created after November 15, 2024. SDK keys created prior to this date can still be used for feature flag/experiments, but not event tracking.
+In order to use the Track API in the Eppo SDKs, you need to use an SDK key which was created after November 15, 2024. SDK keys created prior to this date can still be used for feature flag/experiments, but not event tracking.
 
 Other than using a compatible SDK key, there is no additional configuration required. Simply initialize the SDK with your SDK key, and start tracking events.
 
