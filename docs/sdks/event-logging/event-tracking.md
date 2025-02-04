@@ -28,13 +28,10 @@ Here's an example of how you might use the Track API in a Browser application:
 import * as EppoSdk from "@eppo/js-client-sdk";
 
 const eppoClient = EppoSdk.getInstance();
-eppoClient.track({
-  type: "added_to_cart",
-  payload: {
-    productId: "abc-987",
-    userId: "123",
-    price: 24.99
-  }
+eppoClient.track("added_to_cart", {
+  productId: "abc-987",
+  userId: "123",
+  price: 24.99
 });
 ```
 

@@ -174,15 +174,12 @@ Tracking events involves providing a `type`, as well a `payload` containing any 
 import * as EppoSdk from "@eppo/js-client-sdk";
 
 const eppoClient = EppoSdk.getInstance();
-eppoClient.track({
-  type: "added_to_cart",
-  payload: {
-    userId: 1337,
-    language: "en-US"
-    productId: "product-xyz",
-    price: 24.99,
-    currency: "USD",
-  }
+eppoClient.track("added_to_cart", {
+  userId: 1337,
+  language: "en-US"
+  productId: "product-xyz",
+  price: 24.99,
+  currency: "USD",
 });
 ```
 

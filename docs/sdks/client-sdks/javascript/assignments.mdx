@@ -446,7 +446,7 @@ import { track } from '@amplitude/analytics-node';
 const assignmentLogger: IAssignmentLogger = {
   logAssignment(assignment) {
     track('Experiment Viewed', assignment, {
-	  user_id: assignment.subject
+      user_id: assignment.subject
     });
   },
 };
