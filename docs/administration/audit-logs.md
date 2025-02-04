@@ -40,16 +40,16 @@ Audit logs record the following changes:
     - Creation
     - Update
     - Deletion
-Allocation,  
-  Experiment,  
-  ExperimentMetricGroup,  
-  ExperimentMetricGroupMetric,  
-  ExperimentVariation,  
-  ExposureSchedule,  
-  FunnelMetricAggregation,  
-  Metric,  
-  MetricCollectionMetric,  
-  MetricEventAggregation,  
-  MetricEventEntity,  
-  MetricEventMeasure,  
-  MetricEventSource,  
+    - Allocation
+- Experiment  
+    - ExperimentMetricGroup
+    - ExperimentMetricGroupMetric  
+    - ExperimentVariation
+    - ExposureSchedule
+    - FunnelMetricAggregation
+ - Metric
+    - MetricCollectionMetric
+    - MetricEventAggregation  
+    - MetricEventEntity
+    - MetricEventMeasure
+    - MetricEventSource  
