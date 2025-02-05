@@ -1,0 +1,166 @@
+---
+title: Assignments
+sidebar_position: 4
+---
+
+import ApiOptionRef from '@site/src/components/ApiOptionRef';
+
+Assignments are the mechanism through which a given Subject is assigned to a variation for a feature flag, experiment, or bandit.
+
+## Assignment Types
+
+The Eppo SDK supports the following assignment types:
+
+- String
+- Boolean
+- JSON
+- Integer
+- Double
+
+### String Assignments
+
+String assignments are the most common type. They return a string value that is set as the variation for the experiment.
+
+```java
+String assignedVariation = eppoClient.getStringAssignment(
+    "subjectKey", 
+    "flagkey",
+    "defaultValue"
+);
+```
+
+### Boolean Assignments
+
+Boolean flags support simple on/off toggles:
+
+```java
+Boolean isEnabled = eppoClient.getBooleanAssignment(
+    "subjectKey", 
+    "flagkey",
+    false
+);
+```
+
+### JSON Assignments
+
+JSON assignments are useful for complex configuration values:
+
+```java
+JsonNode config = eppoClient.getJSONAssignment(
+    "subjectKey", 
+    "flagkey",
+    defaultJsonNode
+);
+```
+
+If you prefer to use a different JSON library, you can use `getJSONStringAssignment()` to get the unparsed JSON string.
+
+### Numeric Assignments
+
+For numeric values, you can use either integer or double assignments:
+
+```java
+Integer count = eppoClient.getIntegerAssignment(
+    "subjectKey", 
+    "flagkey",
+    0
+);
+
+Double price = eppoClient.getDoubleAssignment(
+    "subjectKey", 
+    "flagkey",
+    0.0
+);
+```
+
+## Subject Attributes
+
+All assignment methods support optional subject attributes that can be used for targeting:
+
+```java
+Attributes subjectAttributes = new Attributes(
+  Map.of(
+    "country", EppoValue.valueOf("FR"),
+    "age", EppoValue.valueOf(60),
+    "isReturningUser", EppoValue.valueOf(true)
+  )
+);
+
+String assignedVariation = eppoClient.getStringAssignment(
+    "subjectKey", 
+    "flagkey", 
+    subjectAttributes, 
+    "defaultValue"
+);
+```
+
+## Assignment Logger
+
+For experiments, you'll need to implement an assignment logger to track exposure events. The logger receives an assignment object with the following fields:
+
+<ApiOptionRef 
+  name="timestamp"
+  type="Date"
+  defaultValue="undefined"
+>
+
+The time when the subject was assigned to the variation
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="experiment"
+  type="String"
+  defaultValue="undefined"
+>
+
+The key of the experiment
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="featureFlag"
+  type="String"
+  defaultValue="undefined"
+>
+
+The key of the feature flag
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="allocation"
+  type="String"
+  defaultValue="undefined"
+>
+
+The key of the allocation
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="variation"
+  type="String"
+  defaultValue="undefined"
+>
+
+The identifier of the assigned variation
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="subject"
+  type="String"
+  defaultValue="undefined"
+>
+
+The identifier of the subject
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="subjectAttributes"
+  type="Attributes"
+  defaultValue="{}"
+>
+
+A map of metadata about the subject
+</ApiOptionRef>
+
+:::info
+More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/sdks/event-logging/) page.
+::: 

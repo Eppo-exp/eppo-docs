@@ -1,0 +1,103 @@
+---
+title: Initialization
+sidebar_position: 3
+---
+
+import ApiOptionRef from '@site/src/components/ApiOptionRef';
+
+The Eppo Java SDK is easy to initialize while offering robust customization options, making it adaptable to various use cases.
+
+## Initialize the SDK
+
+To complete basic initialization, you only need to provide an SDK key. [Create an SDK key](/sdks/sdk-keys) if you don't already have one.
+
+```java
+EppoClient.Builder()
+  .apiKey(apiKey)
+  .buildAndInit();
+```
+
+## Use the SDK instance
+
+After initialization, you can access the client instance using `EppoClient.getInstance()`. The client is a singleton that should be used throughout your application's lifecycle.
+
+```java
+EppoClient eppoClient = EppoClient.getInstance();
+```
+
+## Advanced Configuration
+
+Basic initialization is great for most use cases, but the SDK provides options that you can use during initialization to customize the behavior of the SDK.
+
+### Initialization Options
+
+<ApiOptionRef 
+  name="gracefulMode"
+  type="boolean"
+  defaultValue="true"
+>
+
+When on (which is the default), flag evaluation errors will be caught, and the default value returned. When off, the errors will be rethrown.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="forceReinitialize"
+  type="boolean"
+  defaultValue="false"
+>
+
+If true, a new client will be initialized and a new fetch for configuration will be performed even if the SDK has already been initialized. If false (which is the default), all subsequent initializations will be ignored and the previously initialized client will continue to be used.
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="pollingIntervalMs"
+  type="long"
+  defaultValue="30000"
+>
+
+How often, in milliseconds, the client should check for updated configurations. The default is 30,000 (poll every 30 seconds).
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="host"
+  type="String"
+  defaultValue="Eppo CDN"
+>
+
+Where the SDK should fetch configurations. The default is the Eppo-backed Fastly Content Delivery Network (CDN).
+</ApiOptionRef>
+
+### Example Configuration
+
+Here's an example of using multiple configuration options:
+
+```java
+EppoClient.Builder()
+  .apiKey(apiKey)
+  .gracefulMode(true)
+  .pollingIntervalMs(60000) // Poll every minute
+  .assignmentLogger(assignmentLogData -> {
+    // Log assignments for experiments
+    System.out.println(assignmentLogData);
+  })
+  .banditLogger(banditLogData -> {
+    // Log bandit actions
+    System.out.println(banditLogData);
+  })
+  .buildAndInit();
+```
+
+### Additional Methods
+
+The SDK provides several utility methods that can be useful:
+
+```java
+// Toggle graceful mode on/off after initialization
+eppoClient.setIsGracefulFailureMode(false);
+
+// Stop polling for configuration updates
+EppoClient.stopPolling();
+
+// Serialize attributes to JSON string
+attributes.serializeNonNullAttributesToJSONString();
+``` 
