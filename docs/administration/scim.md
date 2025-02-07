@@ -58,7 +58,7 @@ To assign users and groups:
 * Select the groups you want to assign to the application.
 * Click Save.
 
-To push groups for role assignment: (see User roles via Groups below for more details about roles)
+To push groups for role assignment: (see [User roles via Groups](#user-roles-via-groups) below for more details about roles)
 * Navigate to the Push Groups tab.
 * Click the Push Groups button and select Find groups by name.
 * Select the groups for each role.
