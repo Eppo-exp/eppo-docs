@@ -13,17 +13,20 @@ Provisioning users through SCIM (the System for Cross-domain Identity Management
 We partner with [WorkOS](https://workos.com/docs/integrations/scim) to provide a secure SCIM connection using the 2.0 version of the SCIM protocol. Please contact Eppo with the email of your IT admin; 
 they will receive an onboarding email from WorkOS with an onboarding wizard containing the necessary information to complete the setup tailored to your organization.
 
-Eppo offers support for:
+Eppo's SCIM integration will enable you to do the following via your IdP:
 
-* Provisioning new users
-* Updating user profiles: name & role.
-* De-provisioning users
-* User roles via Groups
-:::note
-Users created with SCIM can only be updated through your IdP.
-:::
+* Provision new users
+* Update user's profiles
+* De-provision users
+* Manage user roles via Groups
+
+Users managed with SCIM can only be updated through your IdP.
 
 Existing users can be populated through a programmatic process; please contact Eppo to request this.
+
+:::warning
+Once you complete the WorkOS setup, you will not be able to get back into WorkOS. Please read the instructions and prepare your Role groups before starting.
+:::
 
 ## Okta
 
