@@ -18,7 +18,7 @@ Eppo offers support for:
 * Provisioning new users
 * Updating user profiles: name & role.
 * De-provisioning users
-
+* User roles via Groups
 :::note
 Users created with SCIM can only be updated through your IdP.
 :::
@@ -47,17 +47,21 @@ Fill out the fields as shown in the screenshot above: Paste the base URL from th
 * For Unique identifier field for users, set to "email". 
 * Check the Push New Users and Push Profile Updates. 
 * For Authentication Mode, select HTTP Header and paste the Bearer Token from the WorkOS set up to the field. 
-* Click Save.  
+* Click Save. 
 
-### Attributes and Roles on Okta
+To assign users and groups:
+* Navigate to the assignments tab.
+* Click the Assign button and select Assign to Groups.
+* Select the groups you want to assign to the application.
+* Click Save.
 
-To setup Attribute Mapping, you will see that we support a custom attribute called `eppoMemberRole`. This optional custom attribute allows an IT admin to set the user's Eppo role from within the IdP.
-
-That attribute can only have the following attributes (strings): `default`, `viewer`, `experiment_editor`, `data_owner`, `admin`
-
-The `default` value is useful for migrating to managing roles in the Idp: it will keep the user's role as it is in Eppo, or if the user is new, it will assume the default user role as configured in Eppo.
-
-<img src="/img/administration/scim/scim-custom-attribute.png" alt="configure Okta API Integration" width="600" />
+To push groups for role assignment: (see User roles via Groups below for more details about roles)
+* Navigate to the Push Groups tab.
+* Click the Push Groups button and select Find groups by name.
+* Select the groups for each role.
+* Check the box for Push Immediately.
+* Click Save.
+* In WorkOS, you can now map the groups to the Eppo role.
 
 ## Microsoft Entra
 
@@ -65,20 +69,20 @@ The `default` value is useful for migrating to managing roles in the Idp: it wil
 
 * Create a new Entra app or use an existing one configured for SSO. 
 * Enable SCIM provisioning.
-
-### Attributes and Roles on Entra
-
-Enable mapping for Microsoft Entra ID Users.
-
-<img src="/img/administration/scim/scim-entra2.png" alt="configure Entra custom attribute" width="600" />
-
-Configure user mapping.
-
-* Add a custom attribute called `eppoMemberRole`. This optional custom attribute allows an IT admin to set the user's Eppo role from within the IdP.
-* Create mapping for the attribute `eppoMemberRole` from your organization or define it with a static value.
-
-<img src="/img/administration/scim/scim-entra1.png" alt="configure Entra custom attribute" width="600" />
+* On the provisioning tab, enable Microsoft Entra ID Users and Microsoft Entra ID Groups.
 
 ## Other IdPs
 
 Eppo supports additional IdPs: OneLogin, PingFederate, Rippling and JumpCloud. Please contact Eppo for onboarding guides on these platforms.
+
+## User roles via Groups
+
+[Directory group role assignment from WorkOS](https://workos.com/docs/directory-sync/identity-provider-role-assignment/directory-group-role-assignment).
+
+<img src="/img/administration/scim/scim-workos-groups.png" alt="Map groups to Eppo roles" width="600" />
+
+To configure user roles via groups, you will need to create a group in your IdP for each Eppo role and map it to the Eppo role in the WorkOS setup.
+
+Our roles are: `Admin`, `Data Owner`, `Experiment Editor`, and `Viewer`. See [our role documentation](/administration/users-and-permissions/) for more details.
+
+We recommend naming the groups after the role, e.g. `Eppo Admin`, `Eppo Data Owner`, `Eppo Experiment Editor`, and `Eppo Viewer`. Once your groups are pushed to WorkOS, you can map them to the Eppo role (see screenshot above).
