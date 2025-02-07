@@ -29,7 +29,7 @@ Existing users can be populated through a programmatic process; please contact E
 
 [Setup guide from WorkOS](https://workos.com/docs/integrations/okta-scim).
 
-* Create a new Okta app or use an existing one configured for SSO. 
+* Create a new Okta app, do not show it to end users.
 * Enable SCIM provisioning.
 
 <img src="/img/administration/scim/scim1.png" alt="enable SCIM provisioning" width="600" />
