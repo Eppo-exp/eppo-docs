@@ -16,7 +16,7 @@ For Eppo to connect to your Redshift database, you’ll need to allow our inboun
 6. Click **Add Rule** to add a new Inbound Rule.
    a. Set the Type to **Redshift**.
    b. Adjust the Port, if needed.
-   c. Enter the following into the Source field: 
+   c. Enter the following into the Source field:
 
 | IP Address |
 | --- |
@@ -105,6 +105,25 @@ You'll want to gather the following connection details from Redshift:
 
   You can also find your **Database Name** under the **Database configurations** section of the Properties tab.
 
+#### (Optional) Event tracking
+
+To use Eppo's [Event Tracking](/sdks/event-logging/event-tracking) with Redshift, additional configuration is required:
+
+- **S3 Bucket**: Eppo will write events to this bucket before bulk inserting into Redshift.
+
+  Files will be automatically deleted from this bucket after insertion into Redshift.
+
+- **AWS Region**: The region the Redshift cluster resides in
+
+- **Access Key ID**: Credentials of the service account Eppo can use to upload files to the S3 bucket
+
+- **Secret Access Key**: Credentials of the service account Eppo can use to upload files to the S3 bucket
+
+- **AWS IAM Role**: IAM role to use when running `COPY INTO` operations to load data from S3 into the Redshift instance.
+
+  This role needs permissions to `LIST` and the contents of the above S3 bucket as well as `GET` objects within the S3 bucket.
+
+
 #### (Optional) SSH Tunnel
 
 Eppo supports connecting to a Redshift cluster over an SSH tunnel.
@@ -139,6 +158,7 @@ Now that you have a proper User created for Eppo with adequate privileges, you c
 - **Database name** - **Database name** from [previous section](#gather-redshift-connection-details)
 - **Schema name** - `eppo_output`
 - **Port** - **Database port** from [previous section](#gather-redshift-connection-details)
+- **[Optional] Event Tracking Configuration** - values from [previous section](#gather-redshift-connection-details)
 
 4. Enter the values into the form (which should look like the screenshot below), then click `Test Connection`. Once this test succeeds, save your settings by clicking `Test and Save Connection`.
 
