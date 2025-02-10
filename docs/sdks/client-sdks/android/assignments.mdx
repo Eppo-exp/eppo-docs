@@ -37,8 +37,8 @@ import cloud.eppo.android.EppoClient;
 EppoClient eppoClient = EppoClient.getInstance();
 
 String flagKey = "new-landing-page";
-String subjectKey = getUserId() != null ? getUserId() : "anonymous";Map<String, Object> 
-subjectAttributes = new HashMap<>();
+String subjectKey = getUserId() != null ? getUserId() : "anonymous";
+Map<String, Object> subjectAttributes = new HashMap<>();
 subjectAttributes.put("country", "US");
 subjectAttributes.put("device", "android");
 String defaultValue = "control";
@@ -155,7 +155,7 @@ EppoClient eppoClient = new EppoClient.Builder("YOUR_SDK_KEY", getApplication())
 ```
 
 :::note
-More details about logging and examples can be found in the [event logging](/sdks/event-logging/) page.
+More details about logging and examples can be found in the [assignment logging](/sdks/event-logging/assignment-logging/) page.
 :::
 
 ## Debugging Assignments
@@ -175,4 +175,4 @@ AssignmentDebugInfo debugInfo = eppoClient.getAssignmentDebugInfo(
 Log.d("Eppo", "Assignment debug info: " + debugInfo.toString());
 ```
 
-For more information about debugging, see the [debugging documentation](/sdks/sdk-features/debugging-flag-assignment). 
+For more information about debugging, see the [debugging documentation](/sdks/sdk-features/debugging-flag-assignment).

@@ -8,7 +8,7 @@ import TabItem from '@theme/TabItem';
 import ApiOptionRef from '@site/src/components/ApiOptionRef';
 
 
-Assignments are the mechanism through which a given [Subject](/sdks/sdk-features/subjects) is assigned to a variation for a feature flag, experiment, or bandit. 
+Assignments are the mechanism through which a given [Subject](/sdks/sdk-features/subjects) is assigned to a variation for a feature flag, experiment, or bandit.
 
 Currently, the Eppo SDK supports the following assignment types:
 
@@ -68,7 +68,7 @@ const client = EppoSdk.getInstance();
 
 const flagKey = "flag-key-123";
 const subjectKey = getUserId() || "user-123";
-const defaultAssignment = false; 
+const defaultAssignment = false;
 const subjectAttributes = {
   "country": "US",
   "age": 30,
@@ -92,10 +92,10 @@ if (variant) {
 
 ## JSON Assignments
 
-JSON flags work best for advanced configuration use cases. The JSON flag can include structured information such as 
+JSON flags work best for advanced configuration use cases. The JSON flag can include structured information such as
 
-- the text of a marketing copy for a promotional campaign 
-- the address of a different hero image. 
+- the text of a marketing copy for a promotional campaign
+- the address of a different hero image.
 
 Using this pattern, a team can make minor changes to the copy and design of a website without having to go through an entire code release process.
 
@@ -113,7 +113,7 @@ const defaultAssignment = {
     heroImage: "placeholder.png",
     heroTitle: "Placeholder Hero Title",
     heroDescription: "Placeholder Hero Description"
-}; 
+};
 const subjectAttributes = {
   "country": "US",
   "age": 30,
@@ -127,7 +127,7 @@ const campaignJson = client.getJSONAssignment(
   defaultAssignment
 );
 
-if (campaignJson !== null) {  
+if (campaignJson !== null) {
     campaign.hero = true;
     campaign.heroImage = campaignJson.heroImage;
     campaign.heroTitle = campaignJson.heroTitle || "";
@@ -148,7 +148,7 @@ import * as EppoSdk from "@eppo/react-native-sdk";
 const client = EppoSdk.getInstance();
 const flagKey = "flag-key-123";
 const subjectKey = getUserId() || "user-123";
-const defaultAssignment = 0; 
+const defaultAssignment = 0;
 const subjectAttributes = {
   "country": "US",
   "age": 30,
@@ -182,7 +182,7 @@ const price = client.getNumericAssignment(
 
 The SDK will invoke the `logAssignment` function with an `assignment` object that contains the following fields:
 
-<ApiOptionRef 
+<ApiOptionRef
   name="timestamp"
   type="string"
   defaultValue="undefined"
@@ -191,7 +191,7 @@ The SDK will invoke the `logAssignment` function with an `assignment` object tha
 The time when the subject was assigned to the variation. Example: `"2021-06-22T17:35:12.000Z"`
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="featureFlag"
   type="string"
   defaultValue="undefined"
@@ -200,7 +200,7 @@ The time when the subject was assigned to the variation. Example: `"2021-06-22T1
 An Eppo feature flag key. Example: `"recommendation-algo"`
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="allocation"
   type="string"
   defaultValue="undefined"
@@ -209,7 +209,7 @@ An Eppo feature flag key. Example: `"recommendation-algo"`
 An Eppo allocation key. Example: `"allocation-17"`
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="experiment"
   type="string"
   defaultValue="undefined"
@@ -218,7 +218,7 @@ An Eppo allocation key. Example: `"allocation-17"`
 An Eppo experiment key. Example: `"recommendation-algo-allocation-17"`
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="subject"
   type="string"
   defaultValue="undefined"
@@ -227,7 +227,7 @@ An Eppo experiment key. Example: `"recommendation-algo-allocation-17"`
 An identifier of the subject or user assigned to the experiment variation. Example: UUID
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="subjectAttributes"
   type="Record<string, any>"
   defaultValue="{}"
@@ -236,7 +236,7 @@ An identifier of the subject or user assigned to the experiment variation. Examp
 A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function. Example: `{ "country": "US" }`
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="variation"
   type="string"
   defaultValue="undefined"
@@ -245,7 +245,7 @@ A free-form map of metadata about the subject. These attributes are only logged 
 The experiment variation the subject was assigned to. Example: `"control"`
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="metaData"
   type="Record<string, string>"
   defaultValue="{}"
@@ -421,7 +421,7 @@ import { track } from '@amplitude/analytics-node';
 const assignmentLogger: IAssignmentLogger = {
   logAssignment(assignment) {
     track('Experiment Viewed', assignment, {
-	  user_id: assignment.subject
+      user_id: assignment.subject
     });
   },
 };
@@ -431,4 +431,4 @@ const assignmentLogger: IAssignmentLogger = {
 </TabItem>
 </Tabs>
 
-More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/sdks/event-logging/) page.
+More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [assignment logging](/sdks/event-logging/assignment-logging/) page.

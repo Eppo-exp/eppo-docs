@@ -142,7 +142,7 @@ The SDK will invoke the `LogAssignment` function with an `event` object that con
 
 
 :::note
-More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/sdks/event-logging/) page.
+More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [assignment logging](/sdks/event-logging/assignment-logging/) page.
 :::
 
 ## 3. Assign variations

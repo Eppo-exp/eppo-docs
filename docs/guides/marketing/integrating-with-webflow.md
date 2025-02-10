@@ -109,7 +109,7 @@ window.eppo.init(opts).then(setHeader);
 
 - Provide your SDK key and Feature Flag key in the `'<SDK-KEY>'` and `'<FEATURE-FLAG-KEY>'` placeholders above.
 - Provide the id you are going to use for analytics logging to `'<SUBJECT-ID>'`. Ideally this would be an id from a managed platform such as Segment, Rudderstack, Google Analytics, or an internal platform.
-- Add your client side analytics tracking call once the assignment has been made. Make sure your analytics platform is sending data to your data warehouse connected to Eppo. This will ensure that assignments made by Eppo will be tracked and can be used for experiment analysis. For more information on Eppo's event logging integrations with popular platforms like Segment, mParticle, Rudderstack, and Snowplow, see our documentation [here](/sdks/event-logging).
+- Add your client side analytics tracking call once the assignment has been made. Make sure your analytics platform is sending data to your data warehouse connected to Eppo. This will ensure that assignments made by Eppo will be tracked and can be used for experiment analysis. For more information on Eppo's event logging integrations with popular platforms like Segment, mParticle, Rudderstack, and Snowplow, see our documentation [here](/sdks/event-logging/assignment-logging/).
 
 ## Edge cases
 
@@ -120,4 +120,3 @@ If you end up using a subject key or user traits from a cookie, make sure that t
 ## Demo
 
 To see a demo of the Webflow integration in action, see this link: https://star-wars-demo.webflow.io/. 
-

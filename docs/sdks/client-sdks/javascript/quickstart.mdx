@@ -64,9 +64,9 @@ Feature flags are a way to toggle features on and off without needing to deploy 
 
 ### Initialize the SDK
 
-[Create an SDK key](/sdks/sdk-keys) if you don't already have one. 
+[Create an SDK key](/sdks/sdk-keys) if you don't already have one.
 
-First, initialize the SDK using your SDK key. The SDK key is different from the project API key. 
+First, initialize the SDK using your SDK key. The SDK key is different from the project API key.
 
 
 ```js
@@ -76,7 +76,7 @@ await init({
   apiKey: "SDK_KEY",
   assignmentLogger: { logAssignment: (assignmentEvent) => console.log('Send to warehouse: ', assignmentEvent) },
 });
-``` 
+```
 
 :::note
 The SDK key is different from the project API key. You can find your SDK key in the [SDK Keys section of the Eppo interface](https://eppo.cloud/configuration/environments/keys).
@@ -164,10 +164,28 @@ That's all the code you need to make a basic assignment. After that, you can do 
 
 You can see the full steps for setting up a feature flag including UI steps in the [feature flag quickstart](/feature-flag-quickstart).
 
+## Event Tracking
+
+While feature flags are useful, by themselves they do not allow you to understand how your users are using your product. Eppo's [Event Tracking](/sdks/event-logging/event-tracking) APIs allow you to track any event/action which will be sent to your data warehouse. Those events can then be used to create metrics in Eppo which can then be analyzed with experiments.
+
+Tracking events involves providing a `type`, as well a `payload` containing any additional fields you want to associate with the event. Common values you may want to include are user ID, device language, and/or user agent.
+
+```typescript
+import * as EppoSdk from "@eppo/js-client-sdk";
+
+const eppoClient = EppoSdk.getInstance();
+eppoClient.track("added_to_cart", {
+  userId: 1337,
+  language: "en-US"
+  productId: "product-xyz",
+  price: 24.99,
+  currency: "USD",
+});
+```
+
 
 ## Experiments
-
-While feature flags are useful, they do not send you any information about how your users are interacting with the feature. Experiments provide a way to collect data about these interactions using whichever logging and data warehousing system you prefer.
+Running experiments in Eppo requires tables in your warehouse indicating which users/subjects were assigned to which variation.
 
 To log events through the SDK, you need to define a `logAssignment()` function using the `IAssignmentLogger` interface to pass to the `init()` function.
 
@@ -276,7 +294,7 @@ In a production application, you would want to replace the `console.log()` state
 
 ### Query the bandit for actions
 
-Instead of making simple assignments with a bandit, you will want to query the bandit for actions. 
+Instead of making simple assignments with a bandit, you will want to query the bandit for actions.
 
 ```js
 import * as EppoSdk from "@eppo/js-client-sdk";
@@ -289,9 +307,9 @@ const subjectKey = getCurrentUser() || "anonymous";
 const subjectAttributes: Attributes = { age: 25, country: "GB" };
 const defaultValue = "default";
 const actions: BanditActions = {
-  nike: { 
-    numericAttributes: { brandAffinity: 2.3 }, 
-    categoricalAttributes: { imageAspectRatio: "16:9" } 
+  nike: {
+    numericAttributes: { brandAffinity: 2.3 },
+    categoricalAttributes: { imageAspectRatio: "16:9" }
   },
   adidas: {
     numericAttributes: { brandAffinity: 0.2 },
@@ -327,5 +345,5 @@ Now that you've seen how to make assignments with the Eppo JavaScript SDK, we st
 - [High Level concepts for the client API](/sdks/client-sdks)
 - [Initialization Configuration](/sdks/client-sdks/javascript/Initialization)
 - [Assignment details](/sdks/client-sdks/javascript/assignments)
-- [Using the SDK with React](/sdks/client-sdks/javascript/react) 
+- [Using the SDK with React](/sdks/client-sdks/javascript/react)
 - [Using the SDK with Next.js](/sdks/client-sdks/javascript/nextjs-setup) if you are using Next.js

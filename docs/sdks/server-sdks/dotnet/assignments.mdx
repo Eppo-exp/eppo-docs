@@ -7,7 +7,7 @@ import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 import ApiOptionRef from '@site/src/components/ApiOptionRef';
 
-Assignments are the mechanism through which a given [Subject](/sdks/sdk-features/subjects) is assigned to a variation for a feature flag, experiment, or bandit. 
+Assignments are the mechanism through which a given [Subject](/sdks/sdk-features/subjects) is assigned to a variation for a feature flag, experiment, or bandit.
 
 Currently, the Eppo SDK supports the following assignment types:
 
@@ -90,7 +90,7 @@ else
 
 JSON flags work best for advanced configuration use cases. The JSON flag can include structured information such as:
 
-- The text of marketing copy for a promotional campaign 
+- The text of marketing copy for a promotional campaign
 - The address of a different hero image
 
 Using this pattern, a team can make minor changes to the copy and design of a website without having to go through an entire code release process.
@@ -170,7 +170,7 @@ RenderPrice(price);
 
 The SDK will invoke the `LogAssignment` method with an `AssignmentLogData` object that contains the following fields:
 
-<ApiOptionRef 
+<ApiOptionRef
   name="Timestamp"
   type="DateTime"
   defaultValue="undefined"
@@ -179,7 +179,7 @@ The SDK will invoke the `LogAssignment` method with an `AssignmentLogData` objec
 The time when the subject was assigned to the variation. Example: `"2021-06-22T17:35:12.000Z"`
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="FeatureFlag"
   type="string"
   defaultValue="undefined"
@@ -188,7 +188,7 @@ The time when the subject was assigned to the variation. Example: `"2021-06-22T1
 An Eppo feature flag key. Example: `"recommendation-algo"`
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="Allocation"
   type="string"
   defaultValue="undefined"
@@ -197,7 +197,7 @@ An Eppo feature flag key. Example: `"recommendation-algo"`
 An Eppo allocation key. Example: `"allocation-17"`
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="Experiment"
   type="string"
   defaultValue="undefined"
@@ -206,7 +206,7 @@ An Eppo allocation key. Example: `"allocation-17"`
 An Eppo experiment key. Example: `"recommendation-algo-allocation-17"`
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="Subject"
   type="string"
   defaultValue="undefined"
@@ -215,7 +215,7 @@ An Eppo experiment key. Example: `"recommendation-algo-allocation-17"`
 An identifier of the subject or user assigned to the experiment variation. Example: UUID
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="SubjectAttributes"
   type="Dictionary<string, object>"
   defaultValue="{}"
@@ -224,7 +224,7 @@ An identifier of the subject or user assigned to the experiment variation. Examp
 A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function. Example: `{ "country": "US" }`
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="Variation"
   type="string"
   defaultValue="undefined"
@@ -276,5 +276,5 @@ internal class SegmentLogger : IAssignmentLogger
 </Tabs>
 
 :::note
-More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/sdks/event-logging/) page.
-::: 
+More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [assignment logging](/sdks/event-logging/assignment-logging/) page.
+:::

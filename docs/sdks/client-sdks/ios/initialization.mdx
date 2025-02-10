@@ -42,7 +42,7 @@ When using the SDK for experiments (rather than just feature flags), you'll need
 
 ```swift
 eppoClient = try await EppoClient.initialize(
-    sdkKey: "mock-sdk-key", 
+    sdkKey: "mock-sdk-key",
     assignmentLogger: segmentAssignmentLogger
 )
 
@@ -58,7 +58,7 @@ func segmentAssignmentLogger(assignment: Assignment) {
     ]
 
     analytics.track(
-        name: "Eppo Assignment", 
+        name: "Eppo Assignment",
         properties: TrackProperties(assignmentDictionary)
     )
 }
@@ -141,7 +141,7 @@ It is recommended to use the `load()` method to fetch the latest flag configurat
 
 The SDK will invoke the `logAssignment` function with an `Assignment` object that contains the following fields:
 
-<ApiOptionRef 
+<ApiOptionRef
   name="timestamp"
   type="string"
   defaultValue=""
@@ -150,7 +150,7 @@ The SDK will invoke the `logAssignment` function with an `Assignment` object tha
 The time when the subject was assigned to the variation. Example: `"2021-06-22T17:35:12.000Z"`
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="featureFlag"
   type="string"
   defaultValue=""
@@ -159,7 +159,7 @@ The time when the subject was assigned to the variation. Example: `"2021-06-22T1
 An Eppo feature flag key. Example: `"recommendation-algo"`
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="allocation"
   type="string"
   defaultValue=""
@@ -168,7 +168,7 @@ An Eppo feature flag key. Example: `"recommendation-algo"`
 An Eppo allocation key. Example: `"allocation-17"`
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="experiment"
   type="string"
   defaultValue=""
@@ -177,7 +177,7 @@ An Eppo allocation key. Example: `"allocation-17"`
 An Eppo experiment key. Example: `"recommendation-algo-allocation-17"`
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="subject"
   type="string"
   defaultValue=""
@@ -186,7 +186,7 @@ An Eppo experiment key. Example: `"recommendation-algo-allocation-17"`
 An identifier of the subject or user assigned to the experiment variation. Example: UUID
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="subjectAttributes"
   type="[String: EppoValue]"
   defaultValue="[:]"
@@ -195,7 +195,7 @@ An identifier of the subject or user assigned to the experiment variation. Examp
 A dictionary mapping String keys to EppoValue values. These attributes are used for targeting and are only logged if passed to the SDK assignment function. EppoValue can be a String, Number, or Boolean.
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="variation"
   type="string"
   defaultValue="undefined"
@@ -205,5 +205,5 @@ The experiment variation the subject was assigned to. Example: `"control"`
 </ApiOptionRef>
 
 :::note
-More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [event logging](/sdks/event-logging/) page.
+More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) can be found in the [assignment logging](/sdks/event-logging/assignment-logging/) page.
 :::

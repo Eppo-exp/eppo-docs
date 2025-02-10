@@ -35,7 +35,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        
+
         // Initialize the SDK
         try {
             EppoClient eppoClient = new EppoClient.Builder("YOUR_SDK_KEY", this)
@@ -96,7 +96,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        
+
         // Create assignment logger
         AssignmentLogger logger = new AssignmentLogger() {
             @Override
@@ -165,5 +165,5 @@ JSONObject config = eppoClient.getJSONAssignment(key, subject, attributes, defau
 Now that you have the basics working, here are some advanced topics to explore:
 
 - [Advanced SDK Initialization](/sdks/client-sdks/android/initialization)
-- [Assignment Logging Setup](/sdks/event-logging)
+- [Assignment Logging Setup](/sdks/event-logging/assignment-logging/)
 - [Debugging Flag Assignments](/sdks/sdk-features/debugging-flag-assignment)

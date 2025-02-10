@@ -27,7 +27,7 @@ Store the SDK key securely; it is not possible to view it after closing the moda
 
 Eppo leverages your existing event logging infrastructure to track experiment assignments. Whether you use a third-party system to log events to the data warehouse or have an internally built solution, you'll simply pass in a logging function when initializing the SDK.
 
-The [event logging](/sdks/event-logging/) page has more information on how to set up logging using different logging tools.
+The [Assignment event logging](/sdks/event-logging/assignment-logging/) page has more information on how to set up logging using different logging tools.
 
 This logger should write to a table with columns with the following names (they can be in any order):
 * **timestamp** - Timestamp of the bandit assignment
@@ -46,7 +46,7 @@ Additional information that is provided to the logger that can optionally--but i
 * **optimality_gap** - The difference between the score of the selected action and the highest-scored action
 * **metadata** - Any additional freeform metadata, in JSON format, such as the version of the SDK
 
-Below is an example bandit assignment logger for the Java SDK, defined when building the SDK client. This example writes directly to Snowflake. This is illustrative and not recommended practice. Refer to our [event logging](/sdks/event-logging/) page for recommended options.
+Below is an example bandit assignment logger for the Java SDK, defined when building the SDK client. This example writes directly to Snowflake. This is illustrative and not recommended practice. Refer to our [assignment logging](/sdks/event-logging/assignment-logging/) page for recommended options.
 
 ```java
 .banditLogger(logData -> {
