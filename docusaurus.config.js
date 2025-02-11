@@ -85,6 +85,16 @@ async function createConfig () {
       },
     ],
 
+    plugins: [
+      [
+        '@docusaurus/plugin-google-gtag',
+        {
+          trackingID: 'G-MPEPCYZCEY', 
+          anonymizeIP: true, // GDPR compliance
+        },
+      ],
+    ],    
+
     themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
