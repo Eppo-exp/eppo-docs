@@ -89,7 +89,7 @@ async function createConfig () {
       [
         '@docusaurus/plugin-google-gtag',
         {
-          trackingID: 'G-MPEPCYZCEY', 
+          trackingID: 'G-8VW1T2Y4E8', 
           anonymizeIP: true, // GDPR compliance
         },
       ],
