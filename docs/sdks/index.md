@@ -132,7 +132,7 @@ The read more about our specific SDKs, check out the SDK-specific docs below:
 - [Node](server-sdks/node/intro)
 - [Java](server-sdks/java)
 - [Python](server-sdks/python/intro)
-- [Go](server-sdks/go)
+- [Go](server-sdks/go/intro)
 - [Rust](server-sdks/rust/intro)
 - [Ruby](server-sdks/ruby/intro)
 - [.NET](server-sdks/dotnet/intro)
