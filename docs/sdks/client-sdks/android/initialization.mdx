@@ -112,6 +112,48 @@ CompletableFuture<EppoClient> eppoClientFuture = new EppoClient.Builder("YOUR_SD
 
 The initialization methods, `buildAndInit` and `buildAndInitAsync` return or resolve to an `EppoClient` instance with a loaded configuration.
 
+### Mobile Polling
+
+The SDK can be configured to poll the Eppo API periodically to get the latest configuration.
+
+<ApiOptionRef
+  name="pollingIntervalMs"
+  type="long"
+  defaultValue="null"
+>
+
+Maximum amount of time to wait between calls to the API for the latest configuration.
+</ApiOptionRef>
+
+<ApiOptionRef
+  name="pollingJitterMs"
+  type="long"
+  defaultValue="-1"
+>
+
+Limit to the amount of randomized difference in length of each polling interval. A value `-1` triggers the default, which is 10% of the `pollingIntervalMs`.
+</ApiOptionRef>
+
+
+When enabling polling, it is important to tie into the application's lifecycle to pause and resume pollings
+
+```java
+  // Tie into the activity's lifecycle and pause/resume polling where appropriate.
+
+  @Override
+  public void onPause() {
+    super.onPause();
+    EppoClient.getInstance().pausePolling();
+  }
+
+  @Override
+  public void onResume() {
+    super.onResume();
+    EppoClient.getInstance().resumePolling();
+  }
+
+```
+
 ### Assignment Logger Schema
 
 The SDK will invoke the `logAssignment` function with an `Assignment` object that contains the following fields:
