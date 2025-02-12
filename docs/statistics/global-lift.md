@@ -46,7 +46,7 @@ To measure this, let's first define a few more terms:
 - $t_{exp}$ is the percent of eligible users randomly selected to be enrolled into the experiment
 - $p_T$ is this percent of enrolled users who received the treatment (typically 50%)
 
-All of these values can either be estimated directly from the observed data or are known from the experiment design. Next, we label similar terms in the other two scenarios. These are directly observed and instead must be estimated from the values above.
+All of these values can either be estimated directly from the observed data or are known from the experiment design. Next, we label similar terms in the other two scenarios. These are not directly observed and instead must be estimated from the values above.
 
 - $TEM_T$ is the total metric value of enrolled users had they all received treatment
 - $TEM_C$ is the total metric value of enrolled users had they all received control
