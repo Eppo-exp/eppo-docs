@@ -83,7 +83,7 @@ The decision made can be recorded by clicking the `Make Decision` button. Note t
 
 ## Advanced settings
 
-If your Primary or Guardrail metrics have metric properties, you can choose which Metric Properties to include in the experiment. This means that they will be available for analysis in [Explores](/deep-dive/explores) and [Property Analysis](/deep-dive/property_analysis) in all Experiments that use this Protocol.
+If your Primary or Guardrail metrics have metric properties, you can choose which Metric Properties to include in the experiment. This means that they will be available for analysis in [Explores](/experiment-analysis/deep-dive/explores) and [Property Analysis](/experiment-analysis/deep-dive/property_analysis) in all Experiments that use this Protocol.
 
 To select which Metric Properties to make available, toggle `Use the company defaults` to off and select which Properties you want to include from the drop-down.
  
