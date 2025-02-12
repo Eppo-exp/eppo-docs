@@ -80,3 +80,11 @@ A recommendation will display when:
 * The Guardrail metrics are statistically significant positive or negative, or the guardrail cutoff threshold is breached
 
 The decision made can be recorded by clicking the `Make Decision` button. Note that the recommended decision does not have to followed, but we suggest adding notes as to why the team decided to deviate from the Protocol.
+
+## Advanced settings
+
+If your Primary or Guardrail metrics have metric properties, you can choose which Metric Properties to include in the experiment. This means that they will be available for analysis in [Explores](/deep-dive/explores) and [Property Analysis](/deep-dive/property_analysis) in all Experiments that use this Protocol.
+
+To select which Metric Properties to make available, toggle `Use the company defaults` to off and select which Properties you want to include from the drop-down.
+ 
+![Settings to add metric properties to a Protocol](/img/experiments/protocols/protocol-advanced-settings.png)
