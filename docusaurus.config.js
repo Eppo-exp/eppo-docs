@@ -93,6 +93,12 @@ async function createConfig () {
           anonymizeIP: true, // GDPR compliance
         },
       ],
+      [
+        "@gracefullight/docusaurus-plugin-microsoft-clarity",
+        {
+          projectId: "q6ay3hytr7"
+        },
+      ],
     ],    
 
     themeConfig:
