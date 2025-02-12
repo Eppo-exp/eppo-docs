@@ -70,9 +70,13 @@ Metric Properties can be used to refine Metrics or split experiment metrics when
 
 ![Configuring a Fact SQL](/img/properties/metric-property-fact-sql.png)
 
-Add a Metric property to any of your existing Facts or by creating a new one.
+Add a Metric Property to any of your existing FactSQLs or by creating a new one. A Metric Property only needs to be configured once and is able to be re-used many times for any Metrics created.
 
-This only needs to be configured once and re-use many times for any Metrics created.
+By default, Metric Properties will not be included in experiment computation to reduce experiment run time. This means that they are not available for analysis in [Explores](/experiment-analysis/deep-dive/explores) and [Property Analysis](/experiment-analysis/deep-dive/property_analysis) for a given experiment.
+
+This can be changed by toggling the Metric Property to enabled, which will make it available in all experiments. However, it is recommended instead that you set Metric Properties to be available for experiment analysis by choosing to include them in Protocols settings and in individual experiment settings.
+
+![Metric property with toggle to include in experiment computation](/img/properties/metric-property-toggle.png)
 
 ### Configure a Metric with a property filter
 

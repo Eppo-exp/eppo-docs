@@ -36,7 +36,7 @@ Specifying a Primary Metric is required. This is the metric that your experiment
 
 You are also able to specify optional [guardrail metrics](/data-management/organizing-metrics/guardrails). Guardrail metrics provide a level of governance and are primarily useful to track metrics that an experiment is not supposed to positively impact, but you want to ensure that there is no negative effect either. Guardrail metrics can use any cutoff bounds previously set or can have custom cutoffs set for the Protocol.
 
-After the metrics are set, you can then specify the recommended decision based on metric outcomes. This recommendation will appear on the experiment when the experiment end date is reached or if the primary or guardrail metrics have achieved an outcome that is statisically significant.
+After the metrics are set, you can then specify the recommended decision based on metric outcomes. This recommendation will appear on the experiment when the experiment end date is reached or if the primary or guardrail metrics have achieved an outcome that is statistically significant.
 
 ![Protocol decision criteria screen](/img/experiments/protocols/protocol-decision-criteria.png)
 
@@ -80,3 +80,11 @@ A recommendation will display when:
 * The Guardrail metrics are statistically significant positive or negative, or the guardrail cutoff threshold is breached
 
 The decision made can be recorded by clicking the `Make Decision` button. Note that the recommended decision does not have to followed, but we suggest adding notes as to why the team decided to deviate from the Protocol.
+
+## Advanced settings
+
+If your Primary or Guardrail metrics have metric properties, you can choose which Metric Properties to include in the experiment. This means that they will be available for analysis in [Explores](/experiment-analysis/deep-dive/explores) and [Property Analysis](/experiment-analysis/deep-dive/property_analysis) in all Experiments that use this Protocol.
+
+To select which Metric Properties to make available, toggle `Use the company defaults` to off and select which Properties you want to include from the drop-down.
+ 
+![Settings to add metric properties to a Protocol](/img/experiments/protocols/protocol-advanced-settings.png)
