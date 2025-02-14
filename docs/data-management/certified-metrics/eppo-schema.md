@@ -41,7 +41,7 @@ Each certified metric yaml file can also define one or more metrics (either [sim
 | `denominator` <br></br> (optional)| An aggregation object (see below) that, if set, will specify the metric as a ratio | <pre><code>fact_name: Purchase Revenue <br></br>operation: count </code></pre>| 
 | `is_guardrail` <br></br> (optional)| Whether the metric should be analyzed for every experiment run on this entity (default is false) | `true` or `false`| 
 | `metric_display_style` <br></br> (optional) | How to display the metric, either `decimal` or `percent` (default is `decimal`) | `decimal`| 
-| `minimum_detectable_effect` <br></br> (optional)| The default [MDE](/statistics/sample-size-calculator/mde#what-is-a-minimum-detectable-effect-mde) for the metric | `0.02` | 
+| `minimum_detectable_effect` <br></br> (optional)| The default [MDE](/statistics/sample-size-calculator/mde#what-is-a-minimum-detectable-effect-mde) for the metric. This is also called precision in the Eppo UI. | `0.02` | 
 | `reference_url` <br></br> (optional)| An optional URL to link to in the Eppo UI | `https://github.com/.../<my_metric>` | 
 | `guardrail_cutoff` <br></br> (optional)| A Guardrail cutoff value for a metric, as a decimal representing a percentage. If a metric is expected to increase, this value should be negative, to warn when the metric is decreasing by more than this value. If a metric is expected to decrease, this value should be positive, to warn when the metric is increasing by more than this value. | `-0.05` | 
 
