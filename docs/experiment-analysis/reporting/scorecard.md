@@ -1,6 +1,6 @@
 # Performance Scorecard
 
-The Performance Scorecard provides an aggregate view of the of the experimentation program. It can be used to communicate program impact, promote teams experimenting with high velocity, and identify teams that need assistance due to low win rates or quality.
+The Performance Scorecard provides an aggregate view of the experimentation program. It can be used to communicate program impact, promote teams experimenting with high velocity, and identify teams that need assistance due to low win rates or quality.
 
 The Performance Scorecard does this through a number of modules:
 * Top Experiments
