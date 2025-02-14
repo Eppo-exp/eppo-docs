@@ -16,7 +16,7 @@ You can install the SDK using Gradle or Maven:
 <TabItem value="gradle" label="Gradle">
 
 ```groovy
-implementation 'cloud.eppo:eppo-server-sdk:3.0.1'
+implementation 'cloud.eppo:eppo-server-sdk:3.5.3'
 ```
 
 </TabItem>
@@ -39,11 +39,11 @@ implementation 'cloud.eppo:eppo-server-sdk:3.0.1'
 
 [Create an SDK key](/sdks/sdk-keys) if you don't already have one.
 
-Initialize the SDK with your SDK key:
+Initialize the SDK with your key:
 
 ```java
-EppoClient.Builder()
-  .apiKey(apiKey)
+EppoClient eppoClient = EppoClient.Builder()
+  .apiKey(sdkKey)
   .buildAndInit();
 ```
 
@@ -53,8 +53,8 @@ After initialization, you can access the client with `EppoClient.getInstance()`.
 
 ```java
 String assignedVariation = eppoClient.getStringAssignment(
-    "subjectKey", 
-    "flagkey",
+    "flagKey",
+    "subjectKey",
     "defaultValue"
 );
 
@@ -67,8 +67,8 @@ Attributes subjectAttributes = new Attributes(
 );
 
 String assignedVariation = eppoClient.getStringAssignment(
-    "subjectKey", 
-    "flagkey", 
+    "flagKey",
+    "subjectKey",
     subjectAttributes, 
     "defaultValue"
 );
@@ -78,17 +78,17 @@ String assignedVariation = eppoClient.getStringAssignment(
 
 The SDK provides different assignment functions based on the type of value you need:
 
-| Function | Return Type |
-|----------|-------------|
-| `getStringAssignment()` | String |
-| `getBooleanAssignment()` | Boolean |
-| `getJSONAssignment()` | JSON object |
-| `getIntegerAssignment()` | Integer |
-| `getDoubleAssignment()` | Double |
+| Function                 | Return Type |
+|--------------------------|-------------|
+| `getStringAssignment()`  | String      |
+| `getBooleanAssignment()` | Boolean     |
+| `getJSONAssignment()`    | JSON object |
+| `getIntegerAssignment()` | Integer     |
+| `getDoubleAssignment()`  | Double      |
 
 ## Experiments
 
-For experiments, you'll need to add an assignment logger when initializing the SDK:
+For experiments, you'll need to add an assignment logger (see [`AssignmentLogger`](/sdks/server-sdks/java/assignments#assignment-logger)) when initializing the SDK:
 
 ```java
 EppoClient.Builder()
@@ -104,7 +104,7 @@ After that, you can make assignments the same way as with feature flags.
 
 ## Contextual Bandits
 
-For bandits, you'll need both an assignment logger and a bandit logger:
+For bandits, you'll need both an [`assignment logger`](/sdks/server-sdks/java/assignments#assignment-logger) and a [`bandit logger`](/sdks/server-sdks/java/bandits#define-a-bandit-assignment-logger):
 
 ```java
 EppoClient.Builder()
@@ -153,7 +153,7 @@ Actions actions = new BanditActions(
 
 String defaultValue = "control";
 
-BanditResult banditResult = EppoClient.getInstance().getBanditAction(
+BanditResult banditResult = eppoClient.getBanditAction(
   flagKey,
   subjectKey,
   subjectAttributes,

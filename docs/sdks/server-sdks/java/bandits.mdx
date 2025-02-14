@@ -149,6 +149,9 @@ To query the bandit for an action, use the `getBanditAction()` function:
 ```java
 String flagKey = "shoe-bandit";
 String subjectKey = "user123";
+
+// `DiscriminableAttributes` is a set of attributes which can present the attributes sorted into numeric and categorical
+// The `Attributes` class sorts these automatically based on data type.
 DiscriminableAttributes subjectAttributes = new Attributes(
   Map.of(
     "age", EppoValue.valueOf(25),
@@ -156,6 +159,7 @@ DiscriminableAttributes subjectAttributes = new Attributes(
   )
 );
 
+// `BanditActions` is a map of action key to a set of attributes.
 Actions actions = new BanditActions(
   Map.of(
     "nike",

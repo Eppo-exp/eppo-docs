@@ -17,6 +17,12 @@ EppoClient.Builder()
   .buildAndInit();
 ```
 
+<ApiOptionRef
+    name="apiKey"
+    type="string"
+>
+    Your SDK key. [Create an SDK key](/sdks/sdk-keys) if you don't already have one.
+</ApiOptionRef>
 ## Use the SDK instance
 
 After initialization, you can access the client instance using `EppoClient.getInstance()`. The client is a singleton that should be used throughout your application's lifecycle.
@@ -29,6 +35,25 @@ EppoClient eppoClient = EppoClient.getInstance();
 
 Basic initialization is great for most use cases, but the SDK provides options that you can use during initialization to customize the behavior of the SDK.
 
+### Loggers
+
+<ApiOptionRef
+    name="assignmentLogger"
+    type="AssignmentLogger"
+    defaultValue="null"
+>
+    An implementation of `AssignmentLogger`; sends assignment event data to your data warehouse
+</ApiOptionRef>
+
+<ApiOptionRef
+    name="banditLogger"
+    type="BanditLogger"
+    defaultValue="null"
+>
+    An implementation of `BanditLogger`; sends bandit selection event data to your data warehouse
+</ApiOptionRef>
+
+
 ### Initialization Options
 
 <ApiOptionRef 
@@ -36,8 +61,7 @@ Basic initialization is great for most use cases, but the SDK provides options t
   type="boolean"
   defaultValue="true"
 >
-
-When on (which is the default), flag evaluation errors will be caught, and the default value returned. When off, the errors will be rethrown.
+    When on (which is the default), flag evaluation errors will be caught, and the default value returned. When off, the errors will be rethrown.
 </ApiOptionRef>
 
 <ApiOptionRef 
@@ -45,8 +69,7 @@ When on (which is the default), flag evaluation errors will be caught, and the d
   type="boolean"
   defaultValue="false"
 >
-
-If true, a new client will be initialized and a new fetch for configuration will be performed even if the SDK has already been initialized. If false (which is the default), all subsequent initializations will be ignored and the previously initialized client will continue to be used.
+    If true, a new client will be initialized and a new fetch for configuration will be performed even if the SDK has already been initialized. If false (which is the default), all subsequent initializations will be ignored and the previously initialized client will continue to be used.
 </ApiOptionRef>
 
 <ApiOptionRef 
@@ -54,18 +77,17 @@ If true, a new client will be initialized and a new fetch for configuration will
   type="long"
   defaultValue="30000"
 >
-
-How often, in milliseconds, the client should check for updated configurations. The default is 30,000 (poll every 30 seconds).
+    How often, in milliseconds, the client should check for updated configurations. The default is 30,000 (poll every 30 seconds).
 </ApiOptionRef>
 
 <ApiOptionRef 
-  name="host"
+  name="apiBaseUrl"
   type="String"
   defaultValue="Eppo CDN"
 >
-
-Where the SDK should fetch configurations. The default is the Eppo-backed Fastly Content Delivery Network (CDN).
+    Where the SDK should fetch configurations. The default is the Eppo-backed Fastly Content Delivery Network (CDN).
 </ApiOptionRef>
+
 
 ### Example Configuration
 
@@ -97,7 +119,4 @@ eppoClient.setIsGracefulFailureMode(false);
 
 // Stop polling for configuration updates
 EppoClient.stopPolling();
-
-// Serialize attributes to JSON string
-attributes.serializeNonNullAttributesToJSONString();
 ``` 
