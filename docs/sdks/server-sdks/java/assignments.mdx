@@ -23,8 +23,8 @@ String assignments are the most common type. They return a string value that is 
 
 ```java
 String assignedVariation = eppoClient.getStringAssignment(
-    "subjectKey", 
     "flagkey",
+    "subjectKey",
     "defaultValue"
 );
 ```
@@ -35,8 +35,8 @@ Boolean flags support simple on/off toggles:
 
 ```java
 Boolean isEnabled = eppoClient.getBooleanAssignment(
-    "subjectKey", 
     "flagkey",
+    "subjectKey",
     false
 );
 ```
@@ -47,8 +47,8 @@ JSON assignments are useful for complex configuration values:
 
 ```java
 JsonNode config = eppoClient.getJSONAssignment(
-    "subjectKey", 
     "flagkey",
+    "subjectKey",
     defaultJsonNode
 );
 ```
@@ -61,14 +61,14 @@ For numeric values, you can use either integer or double assignments:
 
 ```java
 Integer count = eppoClient.getIntegerAssignment(
-    "subjectKey", 
     "flagkey",
+    "subjectKey",
     0
 );
 
 Double price = eppoClient.getDoubleAssignment(
-    "subjectKey", 
     "flagkey",
+    "subjectKey",
     0.0
 );
 ```
@@ -87,8 +87,8 @@ Attributes subjectAttributes = new Attributes(
 );
 
 String assignedVariation = eppoClient.getStringAssignment(
-    "subjectKey", 
-    "flagkey", 
+    "flagkey",
+    "subjectKey",
     subjectAttributes, 
     "defaultValue"
 );
