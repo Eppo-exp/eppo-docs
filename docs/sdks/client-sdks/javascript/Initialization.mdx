@@ -9,17 +9,77 @@ The Eppo JavaScript SDK is easy to initialize while offering robust customizatio
 
 ## Initialize the SDK
 
-To complete basic initialization, you only need to provide an SDK key. [Create an SDK key](/sdks/sdk-keys) if you don't already have one. 
+To complete basic initialization, you only need to provide an SDK key. [Create an SDK key](/sdks/sdk-keys) if you don't already have one.
+
+There are many options for creating an `EppoJSClient` instance. These options are grouped into different types for some organizational convenience. It is also possible to declare your options as one single object.
+At a minimum, the SDK key and an assignment logger must be provided.
 
 ```javascript
 import { init } from "@eppo/js-client-sdk";
+// Grouped options.
+const apiOptions: IApiOptions = {
+  apiKey: '<MY SDK KEY>',
+};
 
-await init({
-  apiKey: "YOUR_SDK_KEY",
+const loggers: ILoggers = {
   assignmentLogger: { logAssignment: (assignmentEvent) => console.log('Send to warehouse: ', assignmentEvent) },
+};
 
+const eppoClient = EppoJSClient.buildAndInit({
+  ...apiOptions,
+  ...loggers,
 });
-``` 
+
+// combined options
+const allOptions: IClientConfig = {
+  apiKey: '<MY SDK KEY>',
+  assignmentLogger: { logAssignment: (assignmentEvent) => console.log('Send to warehouse: ', assignmentEvent) },
+};
+
+// This client is immediately usable for assignments, however, the default-values will be returned until some configuration
+// is loaded. see `waitForConfiguration()`
+const eppoClient = EppoJSClient.buildAndInit(allOptions);
+
+
+```
+
+```javascript
+// eppo-init.ts
+
+// Use an Immediately Invoked Function Expression to await the initialization of the client.
+export const eppoClient = await (async () => {
+  const client = EppoJSClient.buildAndInit({
+    ...apiOptions,
+    ...loggers,
+  });
+  // Wait for initialization to complete at whatever point makes sense in your application. The
+  // client will return default values until initialization is complete.
+  await client.waitForInitialization();
+  return client;
+})();
+
+// my-service.ts
+// Wait for initialization to complete at whatever point makes sense in your application. The
+// client will return default values until initialization is complete.
+import { eppoClient } from './eppo-init';
+
+export default function myService(): any {
+
+  const useV2 =  eppoClient.getBooleanAssignment('use_v2_backend', 'subject', {}, false);
+
+  const result = {};
+
+  if (useV2) {
+    // use the new backend
+  } else {
+    // use the old backend
+  }
+
+  return result;
+}
+```
+
+
 
 ## Use the SDK instance
 
