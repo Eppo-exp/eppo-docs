@@ -72,7 +72,7 @@ If a previous calculation for the same entry point already contains all the metr
 
 ## Statistical details
 
-Eppo supports fixed-sample confidence intervals as well as sequential confidence intervals (fully sequential and hybrid sequential). The type of confidence interval will determine the formula that is used for each metric’s MDE.
+Eppo supports fixed-sample [confidence intervals](/statistics/confidence-intervals) as well as sequential confidence intervals (fully sequential and hybrid sequential). The type of confidence interval will determine the formula that is used for each metric’s MDE.
 
 For fixed-sample experiments, the relative Minimum Detectable Effect is given by
 
@@ -90,4 +90,8 @@ The sequential version of the Minimum Detectable Effect is similar, but scaled b
 
 :::note
 If metrics are [winsorized](/guides/advanced-experimentation/running-well-powered-experiments/#handling-outliers-using-winsorization) the sample size computation takes that into account. 
+:::
+
+:::note
+The sample size calculator also [checks the validity of the normal approximation used](/statistics/confidence-intervals/#estimating-lift) for the MDE calculation.
 :::

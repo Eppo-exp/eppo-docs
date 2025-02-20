@@ -26,7 +26,8 @@ control variant.
 
 :::note
 If the estimate for Control is close to zero, that ratio becomes unreliable.
-We do not compute the relative lift when Control is less than 1.5 standard deviation around zero.
+We do not compute the relative lift when the Control is less than 10 standard deviations around zero.
+This corresponds to Kuethe's criterion for an accurate Normal approximation.[^diaz-frances-rubio]
 :::
 
 For a lot of metrics, this is pretty straightforward: if the average revenue per
@@ -152,3 +153,8 @@ factors:
     controlling for, and therefore removing, random variation) makes the
     confidence intervals narrower, which makes it easier to tell when a
     treatment has an effect.
+
+[^diaz-frances-rubio]:
+    See
+    [Díaz-Francés and Rubio (2004), "On the Existence of a Normal Approximation to the Distribution of the Ratio of Two Independent Normal Random Variables."](https://www.researchgate.net/profile/F-Rubio/publication/257406150_On_the_existence_of_a_normal_approximation_to_the_distribution_of_the_ratio_of_two_independent_normal_random_variables/links/53d7a18a0cf2e38c632ddabc/On-the-existence-of-a-normal-approximation-to-the-distribution-of-the-ratio-of-two-independent-normal-random-variables.pdf)
+    for more details on the validity of the normal approximation.
