@@ -18,7 +18,7 @@ Additionally, you will need to create a data environment for Eppo to write inter
     - `BigQuery Job User (roles/bigquery.jobUser)`
       - Required
     - `Storage Admin (roles/storage.admin)`
-      - Optional; required for using Eppo's [Event Tracking](/sdks/event-logging/event-tracking)
+      - Optional; required for using Eppo's [Track API](/sdks/event-logging/event-tracking)
       - Scoped to the Storage bucket to use for temporary storage of events before loading into BigQuery
 
 8. Click **CONTINUE**.
@@ -68,7 +68,7 @@ Now that you have a proper Service Account created for Eppo with adequate privil
 - **BigQuery Dataset** - `eppo_output`
 - **BigQuery Project** - Name of the BQ project to which `eppo_output` belongs
 - **BigQuery Region** - The region in which you created the `eppo_output` dataset
-- **Storage Bucket (Optional)** - Cloud Storage bucket to use for staging of events logged with Eppo's [Event Tracking](/sdks/event-logging/event-tracking) before inserting into BigQuery. Files will be automatically deleted from this bucket after insertion into BigQuery.
+- **Storage Bucket (Optional)** - Cloud Storage bucket to use for staging of events logged with Eppo's [Track API](/sdks/event-logging/event-tracking) before inserting into BigQuery. Files will be automatically deleted from this bucket after insertion into BigQuery.
 
 5. Enter the values into the form (which should look like the screenshot below), then click `Test Connection`. Once this test succeeds, save your settings by clicking `Test and Save Connection`.
 
