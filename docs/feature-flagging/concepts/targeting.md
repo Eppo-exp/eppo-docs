@@ -29,6 +29,11 @@ Each rule may have multiple conditions. The rule is only satisfied if all the co
 When rolling out new versions of your product or wishing to deploy custom behavior across a range of releases,
 use Eppo's targeting rules to perform numeric comparisons against strings in the [SemVer format](https://semver.org/).
 
+:::info
+Note that the SDKs require the version to be in full SemVer format of `major.minor.patch`.
+For example, `28.5` is not valid, but `28.5.0` is.
+:::
+
 1. Create an allocation with your desired mix of rules.
 
 ![generating-api-token-1](/img/feature-flagging/semver-targeting.png)
