@@ -57,7 +57,7 @@ You should create a new user and grant SELECT permissions to the tables the user
    _**Note**: The password must contain at least one uppercase, one lowercase, and one numeric character._
 
 ```sql
-CREATE USER eppo_user WITH PASSWORD '<password>' SYSLOG ACCESS UNRESTRICTED;
+CREATE USER eppo_user WITH PASSWORD '<password>' SYSLOG ACCESS RESTRICTED;
 ```
 
 3. Grant this user the appropriate privileges for any tables we will need to access. This
