@@ -53,7 +53,7 @@ This is often the most important variable in a regression, but does suffer some 
   In our implementation, we can still leverage historical data of the **other experiment metrics** to help improve estimates of these conversion and retention metrics.
   This allows us to get improved estimates for conversion and retention metrics versus a standard CUPED approach.
 - The standard CUPED approach does not help for experiments where no pre-experiment data exists (e.g. experiments on new users, such as onboarding flows).
-  Because we also use **assignment properties** as covariates in the regression adjustments model, we are able to reduce variance for these experiments as well, which leads to smaller confidence intervals for such experiments. Currently, we include assignment properties that have 10 or less values to optimize warehouse compute.
+  Because we also use **assignment properties** as covariates in the regression adjustments model, we are able to reduce variance for these experiments as well, which leads to smaller confidence intervals for such experiments. Currently, we include assignment properties that have 100 or less values to optimize warehouse compute.
 
 ## Using CUPED on Eppo
 
