@@ -9,13 +9,16 @@ Don't be blocked! We're here to help you get up and running with Eppo. Contact u
 :::
 
 ### Best Practice
-Strive to place assignment calls as close to code split as possible. This reduces the likelihood of logging an assignment but not delivering the corresponding experience.
+
+Strive to place assignment calls as close to the intervention as possible. This ensures that users who are assigned to an experiment actually experience the feature being tested, leading to cleaner data and more reliable conclusions.
 
 ### Why It Matters
-When assignment and delivery are not tightly coupled, you may encounter:
-- Impact dilution in your analysis
-- Inconsistent user experiences
-- Difficulty tracking experiment results
+
+When assignment and delivery are not tightly coupled, we face several challenges:
+
+- **Impact dilution**: Assigning users too early means many will never reach the intervention. These users contribute no meaningful data, making it harder to detect real differences between groups. This weakens the statistical power of the experiment, increasing both the uncertainty in the results, and the required duration of the experiment.
+
+- **Difficulty tracking experiment results**: When users are assigned far in advance, it becomes unclear who actually experienced the intervention. This makes debugging, customer support, and analyzing outcomes more difficult, as there is uncertainty around which users were truly exposed to the change.
 
 ### Example Implementation
 Here's how to properly implement assignment placement in a payment flow test by fetching the assignment and delivering the experience as close together in the code as possible:
