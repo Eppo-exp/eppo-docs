@@ -16,7 +16,7 @@ You can install the SDK using Gradle or Maven:
 <TabItem value="gradle" label="Gradle">
 
 ```groovy
-implementation 'cloud.eppo:eppo-server-sdk:3.5.3'
+implementation 'cloud.eppo:eppo-server-sdk:5.0.0'
 ```
 
 </TabItem>
@@ -26,7 +26,7 @@ implementation 'cloud.eppo:eppo-server-sdk:3.5.3'
 <dependency>
   <groupId>cloud.eppo</groupId>
   <artifactId>eppo-server-sdk</artifactId>
-  <version>3.0.1</version>
+  <version>5.0.0</version>
 </dependency>
 ```
 
@@ -42,9 +42,7 @@ implementation 'cloud.eppo:eppo-server-sdk:3.5.3'
 Initialize the SDK with your key:
 
 ```java
-EppoClient eppoClient = EppoClient.Builder()
-  .apiKey(sdkKey)
-  .buildAndInit();
+EppoClient eppoClient = EppoClient.builder(sdkKey).buildAndInit();
 ```
 
 ### Assign a variant
@@ -91,8 +89,7 @@ The SDK provides different assignment functions based on the type of value you n
 For experiments, you'll need to add an assignment logger (see [`AssignmentLogger`](/sdks/server-sdks/java/assignments#assignment-logger)) when initializing the SDK:
 
 ```java
-EppoClient.Builder()
-  .apiKey(apiKey)
+EppoClient.builder(sdkKey)
   .assignmentLogger(assignmentLogData -> {
     // TODO: Send assignment event data to data warehouse
     System.out.println(assignmentLogData);
@@ -107,8 +104,7 @@ After that, you can make assignments the same way as with feature flags.
 For bandits, you'll need both an [`assignment logger`](/sdks/server-sdks/java/assignments#assignment-logger) and a [`bandit logger`](/sdks/server-sdks/java/bandits#define-a-bandit-assignment-logger):
 
 ```java
-EppoClient.Builder()
-  .apiKey(apiKey)
+EppoClient.builder(sdkKey)
   .assignmentLogger(assignmentLogData -> {
     // TODO: Send assignment event data to data warehouse
     System.out.println(assignmentLogData);

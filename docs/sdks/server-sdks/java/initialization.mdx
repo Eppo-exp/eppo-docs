@@ -12,13 +12,12 @@ The Eppo Java SDK is easy to initialize while offering robust customization opti
 To complete basic initialization, you only need to provide an SDK key. [Create an SDK key](/sdks/sdk-keys) if you don't already have one.
 
 ```java
-EppoClient.Builder()
-  .apiKey(apiKey)
+EppoClient.builder(sdkKey)
   .buildAndInit();
 ```
 
 <ApiOptionRef
-    name="apiKey"
+    name="sdkKey"
     type="string"
 >
     Your SDK key. [Create an SDK key](/sdks/sdk-keys) if you don't already have one.
@@ -94,8 +93,7 @@ Basic initialization is great for most use cases, but the SDK provides options t
 Here's an example of using multiple configuration options:
 
 ```java
-EppoClient.Builder()
-  .apiKey(apiKey)
+EppoClient.builder(sdkKey)
   .gracefulMode(true)
   .pollingIntervalMs(60000) // Poll every minute
   .assignmentLogger(assignmentLogData -> {
@@ -118,5 +116,5 @@ The SDK provides several utility methods that can be useful:
 eppoClient.setIsGracefulFailureMode(false);
 
 // Stop polling for configuration updates
-EppoClient.stopPolling();
+eppoClient.stopPolling();
 ``` 
