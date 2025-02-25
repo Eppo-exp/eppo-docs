@@ -1,0 +1,256 @@
+---
+title: Contextual Bandits
+sidebar_position: 5
+---
+
+import ApiOptionRef from '@site/src/components/ApiOptionRef';
+
+## Usage with Contextual Multi-Armed Bandits
+
+Eppo supports contextual multi-armed bandits. You can read more about them in the [high-level documentation](/contextual-bandits).
+Bandit flag configuration--including setting up the flag key, status quo variation, bandit variation, and targeting rules--are configured within
+the Eppo application. However, available actions are supplied to the SDK in the code when querying the bandit.
+
+To leverage bandits using the Java SDK, there are two additional steps over regular feature flags:
+1. Add a bandit action logger to the SDK client instance
+2. Query the bandit for an action
+
+### Define a bandit assignment logger
+
+In order for the bandit to learn an optimized policy, we need to capture and log the bandit's actions.
+This requires defining a bandit logger in addition to an assignment logger.
+
+```java
+EppoClient.Builder()
+  .apiKey(apiKey)
+  .assignmentLogger(assignmentLogData -> {
+    System.out.println("TODO: send assignment event data to data warehouse: " + assignmentLogData);
+  })
+  .banditLogger(banditLogData -> {
+    System.out.println("TODO: also send bandit event data to data warehouse, ensuring the column names are as expected: " + banditLogData);
+  })
+  .buildAndInit();
+```
+
+The bandit logger receives an event object with the following fields:
+
+<ApiOptionRef 
+  name="timestamp"
+  type="Date"
+  defaultValue="undefined"
+>
+
+The time when the action is taken
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="featureFlag"
+  type="String"
+  defaultValue="undefined"
+>
+
+The key of the feature flag corresponding to the bandit
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="bandit"
+  type="String"
+  defaultValue="undefined"
+>
+
+The key of the bandit
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="subject"
+  type="String"
+  defaultValue="undefined"
+>
+
+The identifier of the subject
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="subjectNumericAttributes"
+  type="Attributes"
+  defaultValue="{}"
+>
+
+Metadata about numeric attributes of the subject
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="subjectCategoricalAttributes"
+  type="Attributes"
+  defaultValue="{}"
+>
+
+Metadata about non-numeric attributes of the subject
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="action"
+  type="String"
+  defaultValue="undefined"
+>
+
+The action assigned by the bandit
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="actionNumericAttributes"
+  type="Attributes"
+  defaultValue="{}"
+>
+
+Metadata about numeric attributes of the assigned action
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="actionCategoricalAttributes"
+  type="Attributes"
+  defaultValue="{}"
+>
+
+Metadata about non-numeric attributes of the assigned action
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="actionProbability"
+  type="Double"
+  defaultValue="undefined"
+>
+
+The weight between 0 and 1 the bandit valued the assigned action
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="optimalityGap"
+  type="Double"
+  defaultValue="undefined"
+>
+
+The difference between the score of the selected action and the highest-scored action
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="modelVersion"
+  type="String"
+  defaultValue="undefined"
+>
+
+The key for the version of the bandit parameters used
+</ApiOptionRef>
+
+### Query the bandit for an action
+
+To query the bandit for an action, use the `getBanditAction()` function:
+
+```java
+String flagKey = "shoe-bandit";
+String subjectKey = "user123";
+
+// `DiscriminableAttributes` is a set of attributes which can present the attributes sorted into numeric and categorical
+// The `Attributes` class sorts these automatically based on data type.
+DiscriminableAttributes subjectAttributes = new Attributes(
+  Map.of(
+    "age", EppoValue.valueOf(25),
+    "country", EppoValue.valueOf("BG")
+  )
+);
+
+// `BanditActions` is a map of action key to a set of attributes.
+Actions actions = new BanditActions(
+  Map.of(
+    "nike",
+    new Attributes(
+      Map.of(
+        "brandAffinity", EppoValue.valueOf(2.3),
+        "previouslyPurchased", EppoValue.valueOf(true)
+      )
+    ),
+    "adidas",
+    new Attributes(
+      Map.of(
+        "brandAffinity", EppoValue.valueOf(0.2),
+        "previouslyPurchased", EppoValue.valueOf(false)
+      )
+    )
+  )
+);
+
+String defaultValue = "control";
+
+BanditResult banditResult = EppoClient.getInstance().getBanditAction(
+  flagKey,
+  subjectKey,
+  subjectAttributes,
+  actions,
+  defaultValue
+);
+
+if (banditResult.getAction() != null) {
+  renderShoeAd(banditResult.getAction());
+} else {
+  renderDefaultShoeAd();
+}
+```
+
+#### Subject Context
+
+The subject context contains contextual information about the subject that is independent of bandit actions.
+For example, the subject's age or country.
+
+The subject context can be provided as `Attributes`, which will then assume anything that is number is a numeric
+attribute, and everything else is a categorical attribute.
+
+You can also explicitly bucket the attribute types by providing the context as `ContextAttributes`. For example, you may
+have an attribute named `priority`, with possible values `0`, `1`, and `2` that you want to be treated categorically rather
+than numeric.
+
+```java
+Attributes subjectNumericAttributes = new Attributes(
+  Map.of(
+    "age", EppoValue.valueOf(30)
+  )
+);
+Attributes subjectCategoricalAttributes = new Attributes(
+  Map.of(
+    "priority", EppoValue.valueOf(1),
+    "country", EppoValue.valueOf("GB")
+  )
+);
+ContextAttributes subjectAttributes = new ContextAttributes(
+  subjectNumericAttributes, 
+  subjectCategoricalAttributes
+);
+```
+
+#### Action Contexts
+
+The action context contains contextual information about each action. They can be provided as a mapping of attribute names
+to their contexts.
+
+Similar to subject context, action contexts can be provided as `Attributes` or as `ContextAttributes`. If there is no action
+context, you can use a `Set<String>` of all the action names when constructing `BanditActions`.
+
+If the subject is assigned to the variation associated with the bandit, the bandit selects one of the supplied actions.
+All actions supplied are considered to be valid. If an action should not be available to a subject, do not include it for
+that call.
+
+#### Result
+
+`getBanditAction()` returns a `BanditResult` which has two fields:
+- `variation` (String): The variation that was assigned to the subject
+- `action` (String | null): The action that was assigned to the subject by the bandit, or `null` if the bandit was not 
+  assigned
+
+When `action` is not `null`, the bandit has selected an action for the subject. Otherwise, you should use your status quo
+algorithm to select an action.
+
+#### Status Quo Algorithm
+
+In order to accurately measure the performance of the bandit, we need to compare it to the status quo algorithm using an 
+experiment. This status quo algorithm could be a complicated algorithm that selects an action according to a different 
+model, or a simple baseline such as selecting a fixed or random action. When you create an analysis allocation for the 
+bandit and the returned `action` is `null`, implement the desired status quo algorithm based on the `variation` value. 
