@@ -1,0 +1,175 @@
+---
+title: Contextual Bandits
+sidebar_position: 5
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+import ApiOptionRef from "@site/src/components/ApiOptionRef";
+
+## Usage with Contextual Multi-Armed Bandits
+
+Eppo supports contextual [multi-armed bandits](/contextual-bandits). You configure bandit flags in the Eppo application, where you can set up:
+
+- Flag keys
+- Status quo variations
+- Bandit variations
+- Targeting rules
+
+When you query the bandit in your code, you provide the available actions to the SDK.
+
+To leverage bandits using the Dart SDK, there are two additional steps over regular feature flags:
+
+1. Implement a logger that handles bandit actions
+2. Query the bandit for an action
+
+### Define a bandit assignment logger
+
+In order for the bandit to learn an optimized policy, we need to capture and log the bandit's actions.
+The Dart SDK uses a single logger class that handles both assignment and bandit action logging:
+
+```dart
+class MyBanditLogger extends AssignmentLogger {
+  const MyBanditLogger();
+
+  @override
+  void logAssignment(Map<String, dynamic> event) {
+    print('Assignment event: $event');
+    // TODO: save assignment information to data warehouse
+  }
+
+  @override
+  void logBanditAction(Map<String, dynamic> event) {
+    print('Bandit action event: $event');
+    // TODO: save bandit action information to the data warehouse
+  }
+}
+
+// Initialize the SDK with the logger
+final client = EppoClient(
+  sdkKey: '<SDK_KEY>',
+  logger: MyBanditLogger()
+);
+```
+
+The SDK will invoke the `logBanditAction()` method with a Map containing the following fields:
+
+| Field                             | Description                                                                                                       | Example                          |
+| --------------------------------- | ----------------------------------------------------------------------------------------------------------------- | -------------------------------- |
+| `timestamp` (String)              | The time when the action is taken in UTC                                                                          | "2024-03-22T14:26:55.000Z"       |
+| `flagKey` (String)                | The key of the feature flag corresponding to the bandit                                                           | "bandit-test-allocation-4"       |
+| `banditKey` (String)              | The key (unique identifier) of the bandit                                                                         | "ad-bandit-1"                    |
+| `subjectKey` (String)             | An identifier of the subject or user assigned to the experiment variation                                         | "ed6f85019080"                   |
+| `subjectNumericAttributes`        | Metadata about numeric attributes of the subject. Map of the name of attributes their provided values             | `{"age": 30}`                    |
+| `subjectCategoricalAttributes`    | Metadata about non-numeric attributes of the subject. Map of the name of attributes their provided values         | `{"loyalty_tier": "gold"}`       |
+| `action` (String)                 | The action assigned by the bandit                                                                                 | "promo-20%-off"                  |
+| `actionNumericAttributes`         | Metadata about numeric attributes of the assigned action. Map of the name of attributes their provided values     | `{"brandAffinity": 0.2}`         |
+| `actionCategoricalAttributes`     | Metadata about non-numeric attributes of the assigned action. Map of the name of attributes their provided values | `{"previouslyPurchased": false}` |
+| `actionProbability` (double)      | The weight between 0 and 1 the bandit valued the assigned action                                                  | 0.25                             |
+| `optimalityGap` (double)          | The difference between the score of the selected action and the highest-scored action                             | 456                              |
+| `modelVersion` (String)           | Unique identifier for the version (iteration) of the bandit parameters used to determine the action probability   | "v123"                           |
+| `metaData` (Map<String, dynamic>) | Any additional freeform meta data, such as the version of the SDK                                                 | `{ "sdkLibVersion": "3.5.1" }`   |
+
+### Query the bandit for an action
+
+To query the bandit for an action, use the `banditAction()` method. This method takes the following parameters:
+
+- `flagKey` (String): The key of the feature flag corresponding to the bandit
+- `subject` (Subject): The subject with its attributes
+- `actions` (Map<String, Attributes>): Map of actions (by name) to their attributes
+- `defaultValue` (String): The default _variation_ to return if the flag is not successfully evaluated
+
+```dart
+// Create a subject with attributes
+final subject = Subject('user123')
+  ..numberAttribute('age', 30)
+  ..stringAttribute('country', 'uk')
+  ..stringAttribute('pricingTier', '1');
+
+// Define actions with their attributes
+final actions = {
+  'nike': Attributes()
+    ..numberAttribute('brand_affinity', 0.4)
+    ..stringAttribute('from', 'usa'),
+  'adidas': Attributes()
+    ..numberAttribute('brand_affinity', 2.0)
+    ..stringAttribute('from', 'germany')
+};
+
+// Get bandit action
+final result = client.banditAction(
+  'flag-with-shoe-bandit',
+  subject,
+  actions,
+  'default'
+);
+
+if (result.action != null) {
+  // Follow the Bandit action
+  renderShoeAd(result.action!);
+} else {
+  // User was not selected for a Bandit.
+  // A variation is still assigned.
+  renderDefaultShoeAd(result.variation);
+}
+```
+
+### Bandit Result
+
+The `banditAction()` method returns a `BanditResult` object with the following properties:
+
+- `variation` (String): The variation assigned to the subject
+- `action` (String?): The action selected by the bandit, or null if no bandit action was selected
+
+### Subject Attributes
+
+The subject contains contextual information about the subject that is independent of bandit actions.
+For example, the subject's age or country.
+
+In the Dart SDK, you create a subject using the `Subject` class and add attributes using the attribute methods:
+
+```dart
+// Create a subject with attributes
+final subject = Subject('user123')
+  ..numberAttribute('age', 30)
+  ..stringAttribute('country', 'US')
+  ..boolAttribute('isReturningUser', true);
+```
+
+The SDK automatically categorizes attributes based on their type:
+
+- `numberAttribute()`: For numeric values (treated as numeric attributes)
+- `stringAttribute()`: For string values (treated as categorical attributes)
+- `boolAttribute()`: For boolean values (treated as categorical attributes)
+
+### Action Attributes
+
+The action attributes contain contextual information about each action. In the Dart SDK, you create action attributes using the `Attributes` class:
+
+```dart
+// Define actions with their attributes
+final actions = {
+  'nike': Attributes()
+    ..numberAttribute('brand_affinity', 0.8)
+    ..numberAttribute('price_point', 120)
+    ..stringAttribute('category', 'athletic')
+    ..boolAttribute('in_stock', true),
+
+  'adidas': Attributes()
+    ..numberAttribute('brand_affinity', 0.6)
+    ..numberAttribute('price_point', 100)
+    ..stringAttribute('category', 'casual')
+    ..boolAttribute('in_stock', false)
+};
+```
+
+For simple cases where actions don't have attributes, you can also pass a list of action names:
+
+```dart
+// Simple list of action names
+final actions = ['nike', 'adidas', 'puma'].asMap().map((_, name) => MapEntry(name, Attributes()));
+```
+
+## Debugging
+
+You may encounter a situation where a flag assignment produces a value that you did not expect. There are functions [detailed here](/sdks/sdk-features/debugging-flag-assignment/) to help you understand how flags are assigned, which will allow you to take corrective action on potential configuration issues.
