@@ -74,10 +74,10 @@ The SDK will invoke the `logBanditAction()` method with a Map containing the fol
 
 To query the bandit for an action, use the `banditAction()` method. This method takes the following parameters:
 
-- `flagKey` (String): The key of the feature flag corresponding to the bandit
-- `subject` (Subject): The subject with its attributes
-- `actions` (Map<String, Attributes>): Map of actions (by name) to their attributes
-- `defaultValue` (String): The default _variation_ to return if the flag is not successfully evaluated
+- `flagKey (String)`: The key of the feature flag corresponding to the bandit
+- `subject (Subject)`: The subject with its attributes
+- `actions (Map<String, Attributes>)`: Map of actions (by name) to their attributes
+- `defaultValue (String)`: The default _variation_ to return if the flag is not successfully evaluated
 
 ```dart
 // Create a subject with attributes
@@ -118,8 +118,8 @@ if (result.action != null) {
 
 The `banditAction()` method returns a `BanditResult` object with the following properties:
 
-- `variation` (String): The variation assigned to the subject
-- `action` (String?): The action selected by the bandit, or null if no bandit action was selected
+- `variation (String)`: The variation assigned to the subject
+- `action (String?)`: The action selected by the bandit, or null if no bandit action was selected
 
 ### Subject Attributes
 
