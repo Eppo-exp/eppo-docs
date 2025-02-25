@@ -21,8 +21,7 @@ In order for the bandit to learn an optimized policy, we need to capture and log
 This requires defining a bandit logger in addition to an assignment logger.
 
 ```java
-EppoClient.Builder()
-  .apiKey(apiKey)
+EppoClient.builder(sdkKey)
   .assignmentLogger(assignmentLogData -> {
     System.out.println("TODO: send assignment event data to data warehouse: " + assignmentLogData);
   })
