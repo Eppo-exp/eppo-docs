@@ -1,0 +1,157 @@
+---
+title: Initialization
+sidebar_position: 3
+---
+
+import ApiOptionRef from "@site/src/components/ApiOptionRef";
+
+The Eppo Dart SDK is easy to initialize while offering robust customization options, making it adaptable to various use cases such as custom caching requirements and ultra-low-latency initialization.
+
+## Initialize the SDK
+
+To complete basic initialization, you only need to provide an SDK key. [Create an SDK key](/sdks/sdk-keys) if you don't already have one.
+
+```dart
+import 'package:eppo_sdk/eppo_sdk.dart';
+
+final client = EppoClient(sdkKey: '<SDK_KEY>');
+
+// Wait for the client to be ready before making assignments
+await client.whenReady();
+```
+
+## Use the SDK instance
+
+After initialization, you can use the SDK instance to assign a variation to a subject using the assignment methods.
+
+```dart
+// Create a subject with the current user's information
+final subject = Subject(getCurrentUserId())
+  ..stringAttribute('country', user.country)
+  ..stringAttribute('device', user.device);
+
+// Make an assignment
+final variation = client.stringAssignment(
+  'my-feature',
+  subject,
+  'default'
+);
+```
+
+## Advanced Configuration
+
+Basic initialization is great for most use cases, but the SDK provides options that you can use during initialization to customize the behavior of the SDK.
+
+### Initialization Options
+
+How the SDK fetches, serves, and caches experiment configurations is configurable via the `EppoClient` constructor:
+
+<ApiOptionRef 
+  name="PollingIntervalInMillis"
+  type="int"
+  defaultValue="30000"
+>
+
+The interval in milliseconds between polling attempts to fetch updated configurations from the Eppo API.
+
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="PollingJitter"
+  type="long"
+  defaultValue="5000"
+>
+
+The maximum amount of time in milliseconds to add to the polling interval.
+
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="logger"
+  type="AssignmentLogger"
+  defaultValue="null"
+>
+
+A callback that sends each assignment to your data warehouse. Required for experiment analysis.
+
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="BaseUrl"
+  type="string"
+  defaultValue="https://fscdn.eppo.cloud/api"
+>
+
+The base URL for the Eppo API. You typically won't need to change this unless you're using a custom endpoint.
+
+</ApiOptionRef>
+
+### Example Configuration
+
+Here's an example of initializing the SDK with custom configuration:
+
+```dart
+// Create a custom logger
+final logger = MyAssignmentLogger();
+
+// Initialize with custom configuration
+final client = EppoClient(
+  sdkKey: '<SDK_KEY>',
+  baseUrl: Uri.parse('http://custom-endpoint.com/api'),
+  logger: logger
+);
+
+// Wait for the client to be ready
+await client.whenReady();
+```
+
+### Configuration Caching
+
+The SDK caches configurations in memory to ensure fast assignment evaluations. The cache is automatically updated based on the polling interval.
+
+```dart
+class MyAssignmentLogger extends AssignmentLogger {
+  const MyAssignmentLogger();
+
+  @override
+  void logAssignment(Map<String, dynamic> event) {
+    // Send assignment data to your analytics system
+    analytics.track('Eppo Assignment', event);
+  }
+
+  @override
+  void logBanditAction(Map<String, dynamic> event) {
+    // Send bandit action data to your analytics system
+    analytics.track('Eppo Bandit Action', event);
+  }
+}
+```
+
+### Error Handling
+
+Wrap your initialization in a try/catch block to handle errors gracefully.
+
+```dart
+try {
+  final client = EppoClient(sdkKey: '<SDK_KEY>');
+  await client.whenReady();
+} catch (e) {
+  // Handle initialization failure
+  logger.error('Failed to initialize Eppo SDK: $e');
+
+  // Provide fallback behavior
+  // ...
+}
+```
+
+## Best Practices
+
+1. **Initialize Once**: Create a single instance of the SDK at application startup and reuse it throughout your application.
+
+2. **Wait for Readiness**: Always await `client.whenReady()` before making assignments to ensure configurations are loaded.
+
+3. **Handle Errors**: Implement error handling around initialization to ensure your application degrades gracefully.
+
+4. **Implement Proper Logging**: Configure a proper assignment logger to ensure experiment data is captured correctly.
+
+5. **Use Subjects Consistently**: Ensure that subject IDs are consistent across your application to maintain experiment integrity.
