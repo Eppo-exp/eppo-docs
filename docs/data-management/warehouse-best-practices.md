@@ -5,35 +5,135 @@ sidebar_position: 11
 
 # Warehouse Best Practices
 
-Eppo's warehouse native approach makes integration easy, transparent, and secure but it also creates a dependency on the underlying warehouse database structure. Knowing how to configure your tables to work with Eppo properly is important to minimizing run-times and compute used.
+Eppo's warehouse native approach makes integration easy, transparent, and secure but it also creates a dependency on the underlying warehouse database structure. Knowing how to configure your tables to work with Eppo properly is important to minimizing runtimes and compute used.
 
-This page outlines some best practices to help keep Eppo's pipeline as lightweight as possible.
+This page outlines some best practices to help keep Eppo's data pipeline as lightweight as possible.
 
-## Data modeling
+## Materialize data upstream of Eppo
 
-Eppo's SQL editor makes it easy to quickly pilot new SQL logic, but in the steady state all complex logic (joins, aggregations, etc.) should happen upstream of Eppo in your data warehouse's transformation layer. In Eppo, the SQL should then be a simple `SELECT ... FROM` statement (just make sure the table is materialized as table and not a view). 
+Eppo's SQL editor makes it easy to quickly pilot new SQL logic, but in the steady state all complex logic (joins, aggregations, etc.) should happen upstream of Eppo in your data warehouse's transformation layer. In Eppo, the SQL should then be a simple `SELECT ... FROM` statement (just make sure the table is materialized as a table and not a view). 
 
 By materializing data upstream of Eppo, you can avoid having Eppo perform complex joins and aggregations separately for each experiment. Simple `WHERE` statements are typically fine to include in Eppo, just avoid `JOIN` and `GROUP BY`. 
 
-### One metric table vs many
+## Pre-aggregating high volume data sources
 
-The most intensive part of the experiment pipeline is often joining assignments to facts (metric events). By consolidating multiple metric events into one pre-computed table, you can reduce the number of times that Eppo has to perform this join.
+If your metric sources are extremely large you might want to consider aggregating up to the subject-day grain (e.g., daily user values) before adding to Eppo. For example, imagine you have a large table of user events. This table might look something like this:
+
+| user_id | event_type | timestamp |
+|---------|------------|------------|
+| 123     | login      | 2024-01-01 00:01:00|
+| 123     | search     | 2024-01-01 00:01:15 |
+| 124     | login      | 2024-01-03 00:02:00 |
+| 124     | search     | 2024-01-04 00:02:20 |
+| 124     | search     | 2024-01-04 00:02:40 |
+| 125     | support_ticket      | 2024-01-05 00:03:05 |
+
+Instead of pointing Eppo at this table directly, consider creating a pre-aggregated table:
+
+| user_id | event_type | date       | event_count |
+|---------|------------|------------|-------------|
+| 123     | login      | 2024-01-01 | 1           |
+| 123     | search     | 2024-01-01 | 1           |
+| 124     | login      | 2024-01-03 | 1           |
+| 124     | search     | 2024-01-04 | 2           |
+| 125     | support_ticket      | 2024-01-05 | 1  |
+
+If you're using a data transformation tool such as dbt, you can create a table like this with the following SQL:
 
 ```sql
-SELECT 
-  ...
-FROM assignments AS a
-LEFT JOIN facts AS f
-  ON f.subject_id = a.subject_id
- AND f.timestamp >= a.timestamp
-  ...
+select
+  user_id,
+  event_type,
+  date(timestamp) as date,
+  count(*) as event_count
+from user_events
+group by 1, 2, 3
 ```
 
-### Pre-aggregating data
+You can now use this aggregated table as a fact source in Eppo and build metrics off of it just like any other fact source.
 
-If your metric sources are extremely large you might want to consider aggregating up to the subject-day grain (e.g., daily user values) before adding to Eppo. If you do opt to do this, make sure you truncate the assignment date to the start of the day as well so that the join above does not remove data from the day of assignment.
+:::note
+If you opt to pre-aggregate data, make sure you truncate the assignment date to the start of the day to avoid losing data from the day of assignment. Remember that Eppo only includes events that occur after the subject's first assignment into the experiment.
 
-Pre-aggregating to the date level can reduce warehouse usage at the cost of minor dilution to metrics. Specifically, all events that happen on the day of assignment will be included, not just those after the subject is exposed to the experiment. Depending on your business and use cases, this may be a suitable tradeoff to make in order to drastically reduce warehouse costs.
+Pre-aggregating by date can reduce warehouse usage at the cost of some minor dilution to metrics. Specifically, all events that happen on the day of assignment will be included in the analysis, not just those after the subject is exposed to the experiment. For many use cases, this is a suitable tradeoff to make in order to drastically reduce warehouse costs.
+:::
+
+### Accounting for multiple entities
+
+The approach above works well when you have a single entity (e.g., user). However, if you have multiple entities (e.g., user and visitor) you'll need to account for this in your pre-aggregated table. This can be done by simply adding a column for each entity. For example, consider a table of events tracked by `user_id` and `visitor_id`:
+
+| user_id | visitor_id | event_type | timestamp       |
+|---------|------------|------------|------------|
+| u_123     | v_123        | login      | 2024-01-01 00:01:00 |
+| u_123     | v_123        | search     | 2024-01-01 00:01:15 | 
+| null     | v_124        | login      | 2024-01-03 00:02:00 | 
+| null     | v_124        | search     | 2024-01-04 00:02:20 | 
+| null     | v_124        | search     | 2024-01-04 00:02:40 | 
+| u_125     | v_125        | support_ticket      | 2024-01-05 00:03:05 | 
+
+You can take the exact same approach as above but instead of only grouping by `user_id`, also group by `visitor_id`:
+
+```sql
+select
+  user_id,
+  visitor_id,
+  event_type,
+  date(timestamp) as date,
+  count(*) as event_count
+from user_events
+group by 1, 2, 3, 4
+```
+
+Note that this is not the logic you'll enter into Eppo, but rather the logic you'll use in your data warehouse's transformation layer.
+
+### Moving beyond just event counts
+
+So far this all works well if you only care about the count of events or unique subjects with a specific event. Often times however, you'll want to leverage additional event metadata such as time spent on page, minutes of a video watched, etc. In this case, your pre-aggregation will need to include some more complex logic. It's often helpful to pre-aggregate data in a set of tables each specific to a given surface area or set of events.
+
+As an example, imagine you have a simple login page and want to track whether a login was successful. You might have data that looks like this:
+
+| visitor_id | event_type | event_metadata | timestamp |
+|---------|------------|------------|------------|
+| 123     | login      | `{"success": true}` | 2024-01-01 00:01:00 |
+| 123     | login      | `{"success": false}` | 2024-01-01 00:01:15 | 
+| 124     | login      | `{"success": true}`| 2024-01-03 00:02:00 | 
+| 124     | login      | `{"success": false}` | 2024-01-04 00:02:20 | 
+| 124     | login      | `{"success": false}` | 2024-01-04 00:02:40 | 
+| 125     | login      | `{"success": true}` | 2024-01-05 00:03:05 | 
+
+Simply aggregating this data by user and event type will not give you the information you need. Instead, you'll want to also leverage the event metadata. The resulting aggregated table might look like this:
+
+| visitor_id | date       | login_attempts | login_successes |
+|---------|------------|-------------|-------------|
+| 123     | 2024-01-01 | 2           | 1           |
+| 124     | 2024-01-03 | 1           | 1           |
+| 124     | 2024-01-04 | 2           | 0           |
+| 125     | 2024-01-05 | 1           | 1           |
+
+In your transformation layer, you'll need to extract the `success` field from the event metadata and then aggregate the data. This might look something like this:
+
+```sql
+select
+  visitor_id,
+  date(timestamp) as date,
+  count(*) as login_attempts,
+  sum(
+    case 
+      when parse_json(event_metadata):success = 'true' then 1 
+      else 0 
+    end) as login_successes
+from user_events
+where event_type = 'login'
+group by 1, 2
+```
+
+:::note
+For events with a lot of properties (dimensions), you have two options: fan out each property value into a separate column, or include that property as an additional part of the group by statement. Properties like device type that are present for all events are typically better suited as an additional group by clause, whereas event-specific properties like "log in successful" are better to fan out into separate columns.
+
+Depending on your use case, you may want to create one large table with all of your event types or you may want to group related events in separate tables.
+:::
+
+By applying transformations on large data source like click stream tables, you can drastically reduce the amount of warehouse resources needed to run Eppo's data pipeline.
 
 ## Configuring Eppo
 
