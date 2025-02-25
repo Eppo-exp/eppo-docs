@@ -127,7 +127,11 @@ where event_type = 'login'
 group by 1, 2
 ```
 
-You can add additional events to this table as needed, or you can create a separate table for each event type.
+:::note
+For events with a lot of properties (dimensions), you have two options: fan out each property value into a separate column, or include that property as an additional part of the group by statement. Properties like device type that are present for all events are typically better suited as an additional group by clause, whereas event-specific properties like "log in successful" are better to fan out into separate columns.
+
+Depending on your use case, you may want to create one large table with all of your event types or you may want to group related events in separate tables.
+:::
 
 By applying transformations on large data source like click stream tables, you can drastically reduce the amount of warehouse resources needed to run Eppo's data pipeline.
 
