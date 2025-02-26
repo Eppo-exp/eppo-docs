@@ -42,7 +42,7 @@ Feature flags are a way to toggle features on and off without needing to deploy 
 ```dart
 import 'package:eppo_sdk/eppo_sdk.dart';
 
-final client = EppoClient(sdkKey: '<SDK_KEY>');
+final client = new EppoClient(sdkKey: '<SDK_KEY>');
 
 // Wait for the client to be ready before making assignments
 await client.whenReady();
@@ -164,7 +164,7 @@ Then, pass the logger when initializing the client:
 
 ```dart
 final logger = ConsoleLogger();
-final client = EppoClient(
+final client = new EppoClient(
   sdkKey: '<SDK_KEY>',
   logger: logger
 );
