@@ -8,9 +8,7 @@ Eppo's Experiment Forecast tools is designed to give you clarity, control, and c
 
 The Experiment timeline view is a visual representation of experiments run and their outcomes over time. You can switch between a list of experiment to a timeline view by clicking the **Timeline** button in the top right corner of the experiment page. 
 
-<Figure alt="Experiment timeline view" src="/img/interpreting-experiments/experiment-timeline-view.png">
-   The Experiment timeline view, showing a list of experiments and their outcomes over time.
-</Figure>
+![The Experiment timeline view, showing a list of experiments and their outcomes over time](/img/interpreting-experiments/experiment-timeline-view.png)
 
 By default, the timeline will show all experiments sorted by start date descending. You can also filter the timeline by experiment name, timeframe, status, entity, team, creator, primary metric, or just show experiments you have **starred**.
 
