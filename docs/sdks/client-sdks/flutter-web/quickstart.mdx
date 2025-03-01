@@ -6,17 +6,24 @@ sidebar_position: 2
 import Tabs from "@theme/Tabs";
 import TabItem from "@theme/TabItem";
 
-The Eppo Dart SDK enables feature flags and experiments in your Dart applications with only a few lines of code.
+The Eppo SDK for Flutter Web enables feature flags and experiments in your Flutter Web applications with only a few lines of code.
 
-The SDK handles all the complexity of feature flag evaluation and experiment assignment locally in your application. This guide will walk you through installing the SDK and implementing your first feature flag, experiment, and contextual bandit.
+The SDK handles all the complexity of feature flag evaluation and experiment assignment locally in your application. 
+This guide will walk you through installing the SDK and implementing your first feature flag, experiment, and contextual bandit.
 
 ## Installation
 
-First, install the SDK into your current project by adding it to your `pubspec.yaml` file:
+First, add the Eppo JavaScript SDK to your script tag:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@eppo/js-client-sdk@latest/dist/eppo-sdk.min.js"></script>
+```
+
+Then, add the SDK to your `pubspec.yaml` file:
 
 ```yaml
 dependencies:
-  eppo_sdk: ^latest_version
+  eppo_web_sdk: ^1.0.0
 ```
 
 Then run:
@@ -40,12 +47,18 @@ Feature flags are a way to toggle features on and off without needing to deploy 
 [Create an SDK key](/sdks/sdk-keys) if you don't already have one.
 
 ```dart
-import 'package:eppo_sdk/eppo_sdk.dart';
-
-final client = new EppoClient(sdkKey: '<SDK_KEY>');
+import 'dart:js_interop';
+import 'dart:convert';
+import 'package:eppo_web_sdk/eppo_web_sdk.dart';
 
 // Wait for the client to be ready before making assignments
-await client.whenReady();
+await eppo
+  .init(
+    EppoConfig(
+      apiKey: '<SDK_KEY>'
+    ),
+  )
+  .toDart;
 ```
 
 :::note
@@ -54,7 +67,8 @@ The SDK key is different from the project API key. You can find your SDK key in 
 
 ### How assignments work
 
-The SDK periodically retrieves configuration rules from the Eppo server that define how subjects should be allocated to variants. When you call an assignment function, the SDK evaluates these rules locally without making additional network requests.
+The SDK retrieves configuration rules from the Eppo server that define how subjects should be allocated to variants. 
+When you call an assignment function, the SDK evaluates these rules locally without making additional network requests.
 
 Each assignment requires:
 
@@ -64,16 +78,12 @@ Each assignment requires:
 - **Default Value**: Fallback value if assignment fails or rules don't match
 
 ```dart
-// Create a subject with attributes
-final subject = Subject('user123')
-  ..stringAttribute('country', 'US')
-  ..stringAttribute('device', 'mobile');
-
 // Make an assignment
-final variation = client.stringAssignment(
+final String variation = client.getStringAssignment(
   'my-neat-feature',
-  subject,
-  'default-value'
+  '<subject-key>',
+  {'country': 'US', 'device': 'mobile'}.jsify() as JSAny,
+  'default-value',
 );
 ```
 
@@ -81,23 +91,24 @@ final variation = client.stringAssignment(
 
 The SDK provides different assignment functions based on the type of value you need:
 
-| Function              | Return Type            |
-| --------------------- | ---------------------- |
-| `stringAssignment()`  | `String`               |
-| `booleanAssignment()` | `bool`                 |
-| `jsonAssignment()`    | `Map<String, dynamic>` |
-| `integerAssignment()` | `int`                  |
-| `numericAssignment()` | `double`               |
+| Function                 | Return Type            |
+| ------------------------ | ---------------------- |
+| `getStringAssignment()`  | `String`               |
+| `getIntegerAssignment()` | `int`                  |
+| `getNumericAssignment()` | `num`                  |
+| `getBooleanAssignment()` | `bool`                 |
+| `getJsonAssignment()`    | `JSAny`                |
 
 ### Using Assignments
 
 After receiving an assignment, your application should implement logic to modify the user experience accordingly:
 
 ```dart
-final variation = client.stringAssignment(
-  'landing-page-flag',
-  subject,
-  'default-landing'
+final String variation = client.getStringAssignment(
+  'my-neat-feature',
+  '<subject-key>',
+  {'country': 'US', 'device': 'mobile'}.jsify() as JSAny,
+  'default-value',
 );
 
 // Render different components based on assignment
@@ -113,65 +124,53 @@ switch(variation) {
 
 ## Experiments
 
-While feature flags are useful, they do not send you any information about how your users are interacting with the feature. Experiments provide a way to collect data about these interactions using whichever logging and data warehousing system you prefer.
+While feature flags are useful, they do not send you any information about how your users are interacting with the feature. 
+Experiments provide a way to collect data about these interactions using whichever logging and data warehousing system you prefer.
 
-To log events through the SDK, you need to define a logger that extends the `AssignmentLogger` class:
+To log events through the SDK, you need to provide a logger when initializing the client:
 
 <Tabs>
 <TabItem value="console" label="Console">
 
 ```dart
-class ConsoleLogger extends AssignmentLogger {
-  const ConsoleLogger();
-
-  @override
-  void logAssignment(Map<String, dynamic> event) {
-    print('Assignment event: $event');
-  }
-
-  @override
-  void logBanditAction(Map<String, dynamic> event) {
-    print('Bandit action event: $event');
-  }
-}
+await eppo
+  .init(
+    EppoConfig(
+      apiKey: '<SDK_KEY>',
+      assignmentLogger: AssignmentLogger(
+        logAssignment:
+          ((JSAny event) {
+            final typedEvent = event as AssignmentEvent;
+            print('warehouse assignment logged:');
+            print('  Feature flag: ${typedEvent.featureFlag}');
+            print('  Subject: ${typedEvent.subject}');
+            print('  Variation: ${typedEvent.variation}');
+            print('  Timestamp: ${typedEvent.timestamp}');
+            print(
+              '  Subject attributes: ${typedEvent.subjectAttributes}',
+            );
+            print('  Allocation: ${typedEvent.allocation}');
+            print('  Experiment: ${typedEvent.experiment}');
+            print('  Format: ${typedEvent.format}');
+            print(
+              '  Evaluation details: ${typedEvent.evaluationDetails}',
+            );
+          }
+        ).toJS,
+      )
+    ),
+  )
+  .toDart;
 ```
 
 </TabItem>
-<TabItem value="segment" label="Segment">
 
-```dart
-class SegmentLogger extends AssignmentLogger {
-  final Analytics analytics;
-
-  const SegmentLogger(this.analytics);
-
-  @override
-  void logAssignment(Map<String, dynamic> event) {
-    analytics.track('Eppo Randomization Assignment', event);
-  }
-
-  @override
-  void logBanditAction(Map<String, dynamic> event) {
-    analytics.track('Eppo Bandit Action', event);
-  }
-}
-```
-
-</TabItem>
 </Tabs>
 
-Then, pass the logger when initializing the client:
-
-```dart
-final logger = ConsoleLogger();
-final client = new EppoClient(
-  sdkKey: '<SDK_KEY>',
-  logger: logger
-);
-```
-
 :::note
-In a production application, you would want to replace the `print` statement with an actual logging system. We have documentation on how to set up logging with multiple popular data warehouses and logging systems in the [Assignment page](/sdks/server-sdks/dart/assignments/#logging-data-to-your-data-warehouse).
+In a production application, you would want to replace the `print` statement with an actual logging system. 
+We have documentation on how to set up logging with multiple popular data warehouses and 
+logging systems in the [Assignment page](/sdks/client-sdks/flutter-web/assignments/#logging-data-to-your-data-warehouse).
 :::
 
 ## Contextual Bandits
@@ -179,19 +178,31 @@ In a production application, you would want to replace the `print` statement wit
 For bandits, the same logger handles both assignment and bandit action logging:
 
 ```dart
-class MyBanditLogger extends AssignmentLogger {
-  const MyBanditLogger();
-
-  @override
-  void logAssignment(Map<String, dynamic> event) {
-    print('Assignment event: $event');
-  }
-
-  @override
-  void logBanditAction(Map<String, dynamic> event) {
-    print('Bandit action event: $event');
-  }
-}
+await eppo
+  .init(
+    EppoConfig(
+      apiKey: '<SDK_KEY>',
+      banditLogger: BanditLogger(
+        logBanditEvent:
+          ((JSAny event) {
+            final typedEvent = event as BanditEvent;
+            print('warehouse bandit event logged:');
+            print('  Bandit key: ${typedEvent.banditKey}');
+            print('  Action: ${typedEvent.action}');
+            print('  Subject: ${typedEvent.subject}');
+            print('  Timestamp: ${typedEvent.timestamp}');
+            print(
+              '  Subject attributes: ${typedEvent.subjectAttributes}',
+            );
+            print(
+              '  Evaluation details: ${typedEvent.evaluationDetails}',
+            );
+          }
+        ).toJS,
+      ),
+    ),
+  )
+  .toDart;
 ```
 
 ### Query the bandit for actions
@@ -199,27 +210,21 @@ class MyBanditLogger extends AssignmentLogger {
 Instead of making simple assignments with a bandit, you will want to query the bandit for actions:
 
 ```dart
-// Create a subject with attributes
-final subject = Subject('user123')
-  ..numberAttribute('age', 30)
-  ..stringAttribute('country', 'uk')
-  ..stringAttribute('pricingTier', '1');
-
-// Define actions with their attributes
-final actions = {
-  'nike': Attributes()
-    ..numberAttribute('brand_affinity', 0.4)
-    ..stringAttribute('from', 'usa'),
-  'adidas': Attributes()
-    ..numberAttribute('brand_affinity', 2.0)
-    ..stringAttribute('from', 'germany')
-};
-
 // Get bandit action
-final result = client.banditAction(
+final result = client.getBanditAction(
   'flag-with-shoe-bandit',
-  subject,
-  actions,
+  '<subject-key>',
+  {'age': 30, 'country': 'uk', 'pricingTier': '1'}.jsify() as JSAny,
+  {
+    'nike': [
+      {'brand_affinity': 0.4},
+      {'from': 'usa'},
+    ],
+    'adidas': [
+      {'brand_affinity': 2.0},
+      {'from': 'germany'}
+    ]
+  }.jsify() as JSAny,
   'default'
 );
 

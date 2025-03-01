@@ -5,9 +5,11 @@ sidebar_position: 3
 
 import ApiOptionRef from "@site/src/components/ApiOptionRef";
 
-The Eppo SDK for Flutter Web is easy to initialize while offering robust customization options, making it adaptable to various use cases such as custom caching requirements and ultra-low-latency initialization.
+The Eppo SDK for Flutter Web is easy to initialize while offering robust customization options, 
+making it adaptable to various use cases such as custom caching requirements and ultra-low-latency initialization.
 
-The SDK is built on top of the Eppo JavaScript SDK, using `dart:js_interop` to call the JavaScript SDK. The Dart package is a wrapper around the JavaScript SDK, provided typed bindings.
+The SDK is built on top of the Eppo JavaScript SDK, using `dart:js_interop` to call the JavaScript SDK. 
+The Dart package is a wrapper around the JavaScript SDK, providing typed bindings.
 
 ## Initialize the SDK
 
@@ -46,7 +48,7 @@ After initialization, you can use the SDK instance to assign a variation to a su
 ```dart
 final EppoClient client = eppo.getInstance();
 
-final bool? variation = client.getBooleanAssignment(
+final bool variation = client.getBooleanAssignment(
   '<flag-key>',
   '<subject-key>',
   {}.jsify() as JSAny,
@@ -87,41 +89,44 @@ The base URL for the Eppo API. You typically won't need to change this unless yo
 Here's an example of initializing the SDK with custom configuration:
 
 ```dart
-// Create a custom logger
-final logger = MyAssignmentLogger();
+import 'dart:js_interop';
+import 'dart:convert';
+import 'package:eppo_web_sdk/eppo_web_sdk.dart';
 
-// Initialize with custom configuration
-final client = EppoClient(
-  sdkKey: '<SDK_KEY>',
-  baseUrl: Uri.parse('http://custom-endpoint.com/api'),
-  logger: logger
-);
-
-// Wait for the client to be ready
-await client.whenReady();
+// Initialize with custom configuration and wait for the client to be ready
+await eppo
+  .init(
+    EppoConfig(
+      apiKey: '<SDK_KEY>',
+      assignmentLogger: AssignmentLogger(
+        logAssignment:
+          ((JSAny event) {
+            final typedEvent = event as AssignmentEvent;
+            print('warehouse assignment logged:');
+            print('  Feature flag: ${typedEvent.featureFlag}');
+            print('  Subject: ${typedEvent.subject}');
+            print('  Variation: ${typedEvent.variation}');
+            print('  Timestamp: ${typedEvent.timestamp}');
+            print(
+              '  Subject attributes: ${typedEvent.subjectAttributes}',
+            );
+            print('  Allocation: ${typedEvent.allocation}');
+            print('  Experiment: ${typedEvent.experiment}');
+            print('  Format: ${typedEvent.format}');
+            print(
+              '  Evaluation details: ${typedEvent.evaluationDetails}',
+            );
+          }
+        ).toJS,
+      )
+    ),
+  )
+  .toDart;
 ```
 
 ### Configuration Caching
 
 The SDK caches configurations in memory to ensure fast assignment evaluations. The cache is automatically updated based on the polling interval.
-
-```dart
-class MyAssignmentLogger extends AssignmentLogger {
-  const MyAssignmentLogger();
-
-  @override
-  void logAssignment(Map<String, dynamic> event) {
-    // Send assignment data to your analytics system
-    analytics.track('Eppo Assignment', event);
-  }
-
-  @override
-  void logBanditAction(Map<String, dynamic> event) {
-    // Send bandit action data to your analytics system
-    analytics.track('Eppo Bandit Action', event);
-  }
-}
-```
 
 ## Best Practices
 

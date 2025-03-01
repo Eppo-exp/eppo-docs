@@ -21,17 +21,14 @@ The SDK will return different results based on whether the subject details match
 
 ## String Assignments
 
-String assignment return a string value that is set as the variation for the experiment. String flags are the most common type of flags. They are useful for both A/B/n tests and advanced targeting use cases.
+String assignment return a string value that is set as the variation for the experiment. 
+String flags are the most common type of flags. They are useful for both A/B/n tests and advanced targeting use cases.
 
 ```dart
-final subject = Subject('user123')
-  ..stringAttribute('country', 'US')
-  ..numberAttribute('age', 30)
-  ..boolAttribute('isReturningUser', true);
-
-final variant = client.stringAssignment(
+final variant = client.getStringAssignment(
   'flag-key-123',
   subject,
+  {'country': 'US', 'age': 30, 'isReturningUser': true}.jsify() as JSAny,
   'version-a'  // default value
 );
 
@@ -51,14 +48,10 @@ switch(variant) {
 Boolean flags support simple on/off toggles. They're useful for simple, binary feature switches like blue/green deployments or enabling/disabling a new feature.
 
 ```dart
-final subject = Subject('user123')
-  ..stringAttribute('country', 'US')
-  ..numberAttribute('age', 30)
-  ..boolAttribute('isReturningUser', true);
-
-final variant = client.booleanAssignment(
+final variant = client.getBooleanAssignment(
   'flag-key-123',
   subject,
+  {'country': 'US', 'age': 30, 'isReturningUser': true}.jsify() as JSAny,
   false  // default value
 );
 
@@ -80,11 +73,6 @@ JSON flags work best for advanced configuration use cases. The JSON flag can inc
 Using this pattern, a team can make minor changes to the copy and design of a website without having to go through an entire code release process.
 
 ```dart
-final subject = Subject('user123')
-  ..stringAttribute('country', 'US')
-  ..numberAttribute('age', 30)
-  ..boolAttribute('isReturningUser', true);
-
 final defaultAssignment = {
   'hero': false,
   'heroImage': 'placeholder.png',
@@ -92,9 +80,10 @@ final defaultAssignment = {
   'heroDescription': 'Placeholder Hero Description'
 };
 
-final campaignJson = client.jsonAssignment(
+final campaignJson = client.getJsonAssignment(
   'flag-key-123',
   subject,
+  {'country': 'US', 'age': 30, 'isReturningUser': true}.jsify() as JSAny,
   defaultAssignment
 );
 
@@ -114,22 +103,19 @@ renderHero(campaign.heroImage, campaign.heroTitle, campaign.heroDescription);
 Integer and numeric assignments work the same way but return either an integer or a floating point number. These assignments are useful where you want to use a numeric value to drive business logic such as pricing on an item or a number of items to display in a list.
 
 ```dart
-final subject = Subject('user123')
-  ..stringAttribute('country', 'US')
-  ..numberAttribute('age', 30)
-  ..boolAttribute('isReturningUser', true);
-
 // Example of getting an integer assignment
-final numberOfItems = client.integerAssignment(
+final numberOfItems = client.getIntegerAssignment(
   'flag-key-123',
-  subject,
+  '<subject-key>',
+  {'country': 'US', 'age': 30, 'isReturningUser': true}.jsify() as JSAny,
   0  // default value
 );
 
 // Example of getting a numeric assignment
-final price = client.numericAssignment(
+final price = client.getNumericAssignment(
   'flag-key-123',
-  subject,
+  '<subject-key>',
+  {'country': 'US', 'age': 30, 'isReturningUser': true}.jsify() as JSAny,
   0.0  // default value
 );
 
@@ -214,48 +200,48 @@ The experiment variation the subject was assigned to. Example: `"control"`
 
 ### Logging data to your data warehouse
 
-Eppo's unique architecture makes it so Eppo never has access to your data. This means that you can use the assignment logging functions to send data to any data warehouse or logging system you want.
+Eppo's unique architecture makes it so Eppo never has access to your data. This means that you can use the assignment 
+logging functions to send data to any data warehouse or logging system you want.
 
-All you need to do is extend the `AssignmentLogger` class and implement the required methods.
+All you need to do is to provide a callback to the `assignmentLogger` parameter of the `EppoConfig` constructor.
 
 <Tabs>
 <TabItem value="console" label="Console">
 
 ```dart
-class ConsoleLogger extends AssignmentLogger {
-  const ConsoleLogger();
+import 'dart:js_interop';
+import 'dart:convert';
+import 'package:eppo_web_sdk/eppo_web_sdk.dart';
 
-  @override
-  void logAssignment(Map<String, dynamic> event) {
-    print('Assignment event: $event');
-  }
-
-  @override
-  void logBanditAction(Map<String, dynamic> event) {
-    print('Bandit action event: $event');
-  }
-}
-```
-
-</TabItem>
-<TabItem value="segment" label="Segment">
-
-```dart
-class SegmentLogger extends AssignmentLogger {
-  final Analytics analytics;
-
-  const SegmentLogger(this.analytics);
-
-  @override
-  void logAssignment(Map<String, dynamic> event) {
-    analytics.track('Eppo Randomization Assignment', event);
-  }
-
-  @override
-  void logBanditAction(Map<String, dynamic> event) {
-    analytics.track('Eppo Bandit Action', event);
-  }
-}
+// Initialize with custom configuration and wait for the client to be ready
+await eppo
+  .init(
+    EppoConfig(
+      apiKey: '<SDK_KEY>',
+      assignmentLogger: AssignmentLogger(
+        logAssignment:
+          ((JSAny event) {
+            final typedEvent = event as AssignmentEvent;
+            print('warehouse assignment logged:');
+            print('  Feature flag: ${typedEvent.featureFlag}');
+            print('  Subject: ${typedEvent.subject}');
+            print('  Variation: ${typedEvent.variation}');
+            print('  Timestamp: ${typedEvent.timestamp}');
+            print(
+              '  Subject attributes: ${typedEvent.subjectAttributes}',
+            );
+            print('  Allocation: ${typedEvent.allocation}');
+            print('  Experiment: ${typedEvent.experiment}');
+            print('  Format: ${typedEvent.format}');
+            print(
+              '  Evaluation details: ${typedEvent.evaluationDetails}',
+            );
+          }
+        ).toJS,
+      )
+    ),
+  )
+  .toDart;
 ```
 
 </TabItem>
