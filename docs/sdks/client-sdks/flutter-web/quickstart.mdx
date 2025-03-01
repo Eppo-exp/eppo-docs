@@ -26,13 +26,7 @@ dependencies:
   eppo_web_sdk: ^1.0.0
 ```
 
-Then run:
-
-```shell
-dart pub get
-```
-
-Or if you're using Flutter:
+Finally, run:
 
 ```shell
 flutter pub get
@@ -59,6 +53,9 @@ await eppo
     ),
   )
   .toDart;
+
+// Get a handle to the client
+final EppoClient client = eppo.getInstance();
 ```
 
 :::note
@@ -133,6 +130,27 @@ To log events through the SDK, you need to provide a logger when initializing th
 <TabItem value="console" label="Console">
 
 ```dart
+/// Represents an assignment event.
+@JS()
+@staticInterop
+@anonymous
+class AssignmentEvent {
+  external factory AssignmentEvent();
+}
+
+/// Extension methods for AssignmentEvent.
+extension AssignmentEventExtension on AssignmentEvent {
+  external String? get allocation;
+  external String? get experiment;
+  external String get featureFlag;
+  external String? get variation;
+  external String get subject;
+  external String get timestamp;
+  external JSAny get subjectAttributes;
+  external String get format;
+  external FlagEvaluationDetails? get evaluationDetails;
+}
+
 await eppo
   .init(
     EppoConfig(
@@ -141,20 +159,7 @@ await eppo
         logAssignment:
           ((JSAny event) {
             final typedEvent = event as AssignmentEvent;
-            print('warehouse assignment logged:');
-            print('  Feature flag: ${typedEvent.featureFlag}');
-            print('  Subject: ${typedEvent.subject}');
-            print('  Variation: ${typedEvent.variation}');
-            print('  Timestamp: ${typedEvent.timestamp}');
-            print(
-              '  Subject attributes: ${typedEvent.subjectAttributes}',
-            );
-            print('  Allocation: ${typedEvent.allocation}');
-            print('  Experiment: ${typedEvent.experiment}');
-            print('  Format: ${typedEvent.format}');
-            print(
-              '  Evaluation details: ${typedEvent.evaluationDetails}',
-            );
+            print('warehouse assignment logged:', typedEvent.toJson());
           }
         ).toJS,
       )
@@ -178,6 +183,24 @@ logging systems in the [Assignment page](/sdks/client-sdks/flutter-web/assignmen
 For bandits, the same logger handles both assignment and bandit action logging:
 
 ```dart
+/// Represents a bandit event.
+@JS()
+@staticInterop
+@anonymous
+class BanditEvent {
+  external factory BanditEvent();
+}
+
+/// Extension methods for BanditEvent.
+extension BanditEventExtension on BanditEvent {
+  external String get banditKey;
+  external String get action;
+  external String get subject;
+  external String get timestamp;
+  external JSAny get subjectAttributes;
+  external FlagEvaluationDetails? get evaluationDetails;
+}
+
 await eppo
   .init(
     EppoConfig(
@@ -186,17 +209,7 @@ await eppo
         logBanditEvent:
           ((JSAny event) {
             final typedEvent = event as BanditEvent;
-            print('warehouse bandit event logged:');
-            print('  Bandit key: ${typedEvent.banditKey}');
-            print('  Action: ${typedEvent.action}');
-            print('  Subject: ${typedEvent.subject}');
-            print('  Timestamp: ${typedEvent.timestamp}');
-            print(
-              '  Subject attributes: ${typedEvent.subjectAttributes}',
-            );
-            print(
-              '  Evaluation details: ${typedEvent.evaluationDetails}',
-            );
+            print('warehouse bandit event logged:', typedEvent.toJson());
           }
         ).toJS,
       ),

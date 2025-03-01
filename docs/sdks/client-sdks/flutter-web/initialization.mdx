@@ -65,7 +65,17 @@ Basic initialization is great for most use cases, but the SDK provides options t
 How the SDK fetches, serves, and caches experiment configurations is configurable via the `EppoClient` constructor:
 
 <ApiOptionRef 
-  name="logger"
+  name="apiKey"
+  type="String"
+  defaultValue="null"
+>
+
+The SDK key for your environment.
+
+</ApiOptionRef>
+
+<ApiOptionRef 
+  name="assignmentLogger"
   type="AssignmentLogger"
   defaultValue="null"
 >
@@ -75,12 +85,12 @@ A callback that sends each assignment to your data warehouse. Required for exper
 </ApiOptionRef>
 
 <ApiOptionRef 
-  name="BaseUrl"
-  type="string"
-  defaultValue="https://fscdn.eppo.cloud/api"
+  name="banditLogger"
+  type="BanditLogger"
+  defaultValue="null"
 >
 
-The base URL for the Eppo API. You typically won't need to change this unless you're using a custom endpoint.
+A callback that sends each bandit action to your data warehouse. Required for bandit analysis.
 
 </ApiOptionRef>
 
@@ -102,20 +112,7 @@ await eppo
         logAssignment:
           ((JSAny event) {
             final typedEvent = event as AssignmentEvent;
-            print('warehouse assignment logged:');
-            print('  Feature flag: ${typedEvent.featureFlag}');
-            print('  Subject: ${typedEvent.subject}');
-            print('  Variation: ${typedEvent.variation}');
-            print('  Timestamp: ${typedEvent.timestamp}');
-            print(
-              '  Subject attributes: ${typedEvent.subjectAttributes}',
-            );
-            print('  Allocation: ${typedEvent.allocation}');
-            print('  Experiment: ${typedEvent.experiment}');
-            print('  Format: ${typedEvent.format}');
-            print(
-              '  Evaluation details: ${typedEvent.evaluationDetails}',
-            );
+            print('warehouse assignment logged:', typedEvent.toJson());
           }
         ).toJS,
       )

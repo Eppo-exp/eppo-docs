@@ -213,6 +213,27 @@ import 'dart:js_interop';
 import 'dart:convert';
 import 'package:eppo_web_sdk/eppo_web_sdk.dart';
 
+/// Represents an assignment event.
+@JS()
+@staticInterop
+@anonymous
+class AssignmentEvent {
+  external factory AssignmentEvent();
+}
+
+/// Extension methods for AssignmentEvent.
+extension AssignmentEventExtension on AssignmentEvent {
+  external String? get allocation;
+  external String? get experiment;
+  external String get featureFlag;
+  external String? get variation;
+  external String get subject;
+  external String get timestamp;
+  external JSAny get subjectAttributes;
+  external String get format;
+  external FlagEvaluationDetails? get evaluationDetails;
+}
+
 // Initialize with custom configuration and wait for the client to be ready
 await eppo
   .init(
@@ -222,20 +243,7 @@ await eppo
         logAssignment:
           ((JSAny event) {
             final typedEvent = event as AssignmentEvent;
-            print('warehouse assignment logged:');
-            print('  Feature flag: ${typedEvent.featureFlag}');
-            print('  Subject: ${typedEvent.subject}');
-            print('  Variation: ${typedEvent.variation}');
-            print('  Timestamp: ${typedEvent.timestamp}');
-            print(
-              '  Subject attributes: ${typedEvent.subjectAttributes}',
-            );
-            print('  Allocation: ${typedEvent.allocation}');
-            print('  Experiment: ${typedEvent.experiment}');
-            print('  Format: ${typedEvent.format}');
-            print(
-              '  Evaluation details: ${typedEvent.evaluationDetails}',
-            );
+            print('warehouse assignment logged:', typedEvent.toJson());
           }
         ).toJS,
       )

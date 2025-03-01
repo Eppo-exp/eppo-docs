@@ -29,6 +29,24 @@ In order for the bandit to learn an optimized policy, we need to capture and log
 The Dart SDK uses a single logger class that handles both assignment and bandit action logging:
 
 ```dart
+/// Represents a bandit event.
+@JS()
+@staticInterop
+@anonymous
+class BanditEvent {
+  external factory BanditEvent();
+}
+
+/// Extension methods for BanditEvent.
+extension BanditEventExtension on BanditEvent {
+  external String get banditKey;
+  external String get action;
+  external String get subject;
+  external String get timestamp;
+  external JSAny get subjectAttributes;
+  external FlagEvaluationDetails? get evaluationDetails;
+}
+
 await eppo
   .init(
     EppoConfig(
@@ -37,17 +55,7 @@ await eppo
         logBanditEvent:
           ((JSAny event) {
             final typedEvent = event as BanditEvent;
-            print('warehouse bandit event logged:');
-            print('  Bandit key: ${typedEvent.banditKey}');
-            print('  Action: ${typedEvent.action}');
-            print('  Subject: ${typedEvent.subject}');
-            print('  Timestamp: ${typedEvent.timestamp}');
-            print(
-              '  Subject attributes: ${typedEvent.subjectAttributes}',
-            );
-            print(
-              '  Evaluation details: ${typedEvent.evaluationDetails}',
-            );
+            print('warehouse bandit event logged:', typedEvent.toJson());
           }
         ).toJS,
       ),
