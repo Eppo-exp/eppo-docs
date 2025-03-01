@@ -1,0 +1,264 @@
+---
+title: Quickstart
+sidebar_position: 2
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+The Eppo SDK for Flutter Web enables feature flags and experiments in your Flutter Web applications with only a few lines of code.
+
+The SDK handles all the complexity of feature flag evaluation and experiment assignment locally in your application. 
+This guide will walk you through installing the SDK and implementing your first feature flag, experiment, and contextual bandit.
+
+## Installation
+
+First, add the Eppo JavaScript SDK to your script tag:
+
+```html
+<script src="https://cdn.jsdelivr.net/npm/@eppo/js-client-sdk@latest/dist/eppo-sdk.min.js"></script>
+```
+
+Then, add the SDK to your `pubspec.yaml` file:
+
+```yaml
+dependencies:
+  eppo_web_sdk: ^1.0.0
+```
+
+Finally, run:
+
+```shell
+flutter pub get
+```
+
+## Feature Flags
+
+Feature flags are a way to toggle features on and off without needing to deploy code.
+
+### Initialize the SDK
+
+[Create an SDK key](/sdks/sdk-keys) if you don't already have one.
+
+```dart
+import 'dart:js_interop';
+import 'dart:convert';
+import 'package:eppo_web_sdk/eppo_web_sdk.dart';
+
+// Wait for the client to be ready before making assignments
+await eppo
+  .init(
+    EppoConfig(
+      apiKey: '<SDK_KEY>'
+    ),
+  )
+  .toDart;
+
+// Get a handle to the client
+final EppoClient client = eppo.getInstance();
+```
+
+:::note
+The SDK key is different from the project API key. You can find your SDK key in the [SDK Keys section of the Eppo interface](https://eppo.cloud/configuration/environments/keys).
+:::
+
+### How assignments work
+
+The SDK retrieves configuration rules from the Eppo server that define how subjects should be allocated to variants. 
+When you call an assignment function, the SDK evaluates these rules locally without making additional network requests.
+
+Each assignment requires:
+
+- **Flag Key**: Identifies which set of configuration rules to use
+- **Subject Key**: A unique identifier for the subject (usually a user ID)
+- **Subject Attributes**: Optional key-value pairs containing additional information used for rule evaluation
+- **Default Value**: Fallback value if assignment fails or rules don't match
+
+```dart
+// Make an assignment
+final String variation = client.getStringAssignment(
+  'my-neat-feature',
+  '<subject-key>',
+  {'country': 'US', 'device': 'mobile'}.jsify() as JSAny,
+  'default-value',
+);
+```
+
+### Assignment Types
+
+The SDK provides different assignment functions based on the type of value you need:
+
+| Function                 | Return Type            |
+| ------------------------ | ---------------------- |
+| `getStringAssignment()`  | `String`               |
+| `getIntegerAssignment()` | `int`                  |
+| `getNumericAssignment()` | `num`                  |
+| `getBooleanAssignment()` | `bool`                 |
+| `getJsonAssignment()`    | `JSAny`                |
+
+### Using Assignments
+
+After receiving an assignment, your application should implement logic to modify the user experience accordingly:
+
+```dart
+final String variation = client.getStringAssignment(
+  'my-neat-feature',
+  '<subject-key>',
+  {'country': 'US', 'device': 'mobile'}.jsify() as JSAny,
+  'default-value',
+);
+
+// Render different components based on assignment
+switch(variation) {
+  case 'landing-page-a':
+    return renderLandingPageA();
+  case 'landing-page-b':
+    return renderLandingPageB();
+  default:
+    return renderLandingPageC();
+}
+```
+
+## Experiments
+
+While feature flags are useful, they do not send you any information about how your users are interacting with the feature. 
+Experiments provide a way to collect data about these interactions using whichever logging and data warehousing system you prefer.
+
+To log events through the SDK, you need to provide a logger when initializing the client:
+
+<Tabs>
+<TabItem value="console" label="Console">
+
+```dart
+/// Represents an assignment event.
+@JS()
+@staticInterop
+@anonymous
+class AssignmentEvent {
+  external factory AssignmentEvent();
+}
+
+/// Extension methods for AssignmentEvent.
+extension AssignmentEventExtension on AssignmentEvent {
+  external String? get allocation;
+  external String? get experiment;
+  external String get featureFlag;
+  external String? get variation;
+  external String get subject;
+  external String get timestamp;
+  external JSAny get subjectAttributes;
+  external String get format;
+  external FlagEvaluationDetails? get evaluationDetails;
+}
+
+await eppo
+  .init(
+    EppoConfig(
+      apiKey: '<SDK_KEY>',
+      assignmentLogger: AssignmentLogger(
+        logAssignment:
+          ((JSAny event) {
+            final typedEvent = event as AssignmentEvent;
+            print('warehouse assignment logged:', typedEvent.toJson());
+          }
+        ).toJS,
+      )
+    ),
+  )
+  .toDart;
+```
+
+</TabItem>
+
+</Tabs>
+
+:::note
+In a production application, you would want to replace the `print` statement with an actual logging system. 
+We have documentation on how to set up logging with multiple popular data warehouses and 
+logging systems in the [Assignment page](/sdks/client-sdks/flutter-web/assignments/#logging-data-to-your-data-warehouse).
+:::
+
+## Contextual Bandits
+
+For bandits, the same logger handles both assignment and bandit action logging:
+
+```dart
+/// Represents a bandit event.
+@JS()
+@staticInterop
+@anonymous
+class BanditEvent {
+  external factory BanditEvent();
+}
+
+/// Extension methods for BanditEvent.
+extension BanditEventExtension on BanditEvent {
+  external String get banditKey;
+  external String get action;
+  external String get subject;
+  external String get timestamp;
+  external JSAny get subjectAttributes;
+  external FlagEvaluationDetails? get evaluationDetails;
+}
+
+await eppo
+  .init(
+    EppoConfig(
+      apiKey: '<SDK_KEY>',
+      banditLogger: BanditLogger(
+        logBanditEvent:
+          ((JSAny event) {
+            final typedEvent = event as BanditEvent;
+            print('warehouse bandit event logged:', typedEvent.toJson());
+          }
+        ).toJS,
+      ),
+    ),
+  )
+  .toDart;
+```
+
+### Query the bandit for actions
+
+Instead of making simple assignments with a bandit, you will want to query the bandit for actions:
+
+```dart
+// Get bandit action
+final result = client.getBanditAction(
+  'flag-with-shoe-bandit',
+  '<subject-key>',
+  {'age': 30, 'country': 'uk', 'pricingTier': '1'}.jsify() as JSAny,
+  {
+    'nike': [
+      {'brand_affinity': 0.4},
+      {'from': 'usa'},
+    ],
+    'adidas': [
+      {'brand_affinity': 2.0},
+      {'from': 'germany'}
+    ]
+  }.jsify() as JSAny,
+  'default'
+);
+
+if (result.action != null) {
+  // Follow the Bandit action
+  renderShoeAd(result.action!);
+} else {
+  // User was not selected for a Bandit.
+  // A variation is still assigned.
+  renderDefaultShoeAd(result.variation);
+}
+```
+
+:::note
+For full steps to create a bandit including UI steps, see the [bandit quickstart](/bandit-quickstart).
+:::
+
+## Next Steps
+
+Now that you've seen how to make assignments with the Eppo Dart SDK, we strongly recommend familiarizing yourself with the following topics:
+
+- [High Level concepts for the client API](/sdks/server-sdks)
+- [Initialization Configuration](/sdks/client-sdks/flutter-web/initialization)
+- [Assignment details](/sdks/client-sdks/flutter-web/assignments)
