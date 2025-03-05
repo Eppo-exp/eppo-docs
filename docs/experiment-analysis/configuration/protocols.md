@@ -6,7 +6,7 @@ sidebar_position: 1
 
 Eppo's mission is to help everyone run more experiments, but creating new experiments comes with a number of friction points that slows down the process. Experiment Protocols automate key elements on the experimentation process such that running experiments involves making less decisions and experimentation overall takes less time.
 
-Specifically, Protocols allow admins to create re-usable rules for all the different types of experiments teams run. Individual teams can then adopt these Protocols when creating experiments, resulting in experiments that adhere to the governance rules proscribed.
+Specifically, Protocols allow admins to create re-usable rules for all the different types of experiments teams run. Individual teams can then adopt these Protocols when creating experiments, resulting in experiments that adhere to the governance rules prescribed.
 
 ## Creating a Protocol
 
