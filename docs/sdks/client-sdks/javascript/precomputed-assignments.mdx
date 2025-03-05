@@ -101,7 +101,7 @@ const client = EppoSdk.offlinePrecomputedInit({
 
 Notice that offline initialization does not require an SDK key nor subject information; everything needed for making assignments is provided in the precomputed configuration.
 
-An example of how this looks in a Next.js application:
+### Example of how using `offlinePrecomputedInit` in a Next.js application
 
 ```javascript
 // page.tsx or similar server-side rendered component
@@ -126,7 +126,7 @@ export default async function Page() {
 }
 ```
 
-And then in your client-side component, you can use the `offlinePrecomputedInit` method to initialize the SDK.
+And then in your client-side component, you can use the `offlinePrecomputedInit` method to initialize the SDK. In Next.js, the `'use client'` directive at the top of the file designates a component to be rendered client side.
 
 ```javascript
 'use client';
