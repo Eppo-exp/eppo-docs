@@ -63,3 +63,96 @@ After the precomputed Eppo client is initialized, the client instance can be acc
 const client = EppoSdk.getPrecomputedInstance();
 const variant = client.getStringAssignment(flagKey, 'default-value');
 ```
+
+## Offline Precomputed Assignments
+
+### Overview
+
+The Eppo Node Server SDK can be used to generate precomputed assignments on the server and bootstrap the client-side SDK using `offlinePrecomputedInit`. This approach allows you to initialize the client without making remote calls from the browser.
+
+These SDK methods are available in Eppo's Javascript SDK version `3.9.4` and above.
+
+### Initialize offline precomputed client
+
+First, generate the precomputed configuration on your backend using Eppo's Node Server SDK:
+
+```javascript
+import * as EppoSDK from '@eppo/node-server-sdk';
+
+await EppoSdk.init({
+  apiKey: 'YOUR_SDK_KEY',
+  assignmentLogger: { logAssignment() {} }, // we will log in the client, not here
+})
+
+const precomputedConfiguration = await EppoSDK.getInstance()
+  .getPrecomputedConfiguration(subjectKey, subjectAttributes);
+```
+
+Then, pass this configuration to your client-side application and initialize the SDK:
+
+```javascript
+import * as EppoSdk from "@eppo/js-client-sdk";
+
+const client = EppoSdk.offlinePrecomputedInit({
+    precomputedConfiguration, // JSON string from server-side getPrecomputedConfiguration
+    assignmentLogger: assignmentLogger,
+});
+```
+
+Notice that offline initialization does not require an SDK key nor subject information; everything needed for making assignments is provided in the precomputed configuration.
+
+An example of how this looks in a Next.js application:
+
+```javascript
+// page.tsx or similar server-side rendered component
+import * as EppoSDK from '@eppo/node-server-sdk';
+
+const getPrecomputedConfiguration = async () => {
+  const subjectKey = 'test-subject';
+  const subjectAttributes = { attr1: 'value1' };
+  return await EppoSDK.getInstance().getPrecomputedConfiguration(subjectKey, subjectAttributes);
+};
+
+export default async function Page() {
+  await EppoSDK.init({
+    apiKey: process.env.NEXT_PUBLIC_EPPO_SDK_KEY as string,
+    assignmentLogger: { logAssignment() {} },
+  });
+  const precomputedConfiguration = await getPrecomputedConfiguration();
+
+  return (
+    <ClientSideComponent precomputedConfiguration={precomputedConfiguration} />
+  );
+}
+```
+
+And then in your client-side component, you can use the `offlinePrecomputedInit` method to initialize the SDK.
+
+```javascript
+'use client';
+
+import * as EppoSDK from '@eppo/js-client-sdk';
+
+const assignmentLogger: EppoSDK.IAssignmentLogger = {
+  logAssignment(assignment) {
+    console.log(assignment);
+  }
+};
+
+export function ClientSideComponent({
+  precomputedConfiguration,
+}: {
+  precomputedConfiguration: string;
+}) {
+  EppoSDK.offlinePrecomputedInit({
+    precomputedConfiguration: configuration,
+    assignmentLogger: assignmentLogger,
+  });
+  const assignment = EppoSDK.getPrecomputedInstance().getStringAssignment('flag-key', 'default-value');
+  return <div>{assignment}</div>;
+}
+```
+
+### Perform evaluation
+
+Evaluations are the same as the `precomputedInit` method.
