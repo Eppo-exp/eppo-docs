@@ -107,18 +107,12 @@ Notice that offline initialization does not require an SDK key nor subject infor
 // page.tsx or similar server-side rendered component
 import * as EppoSDK from '@eppo/node-server-sdk';
 
-const getPrecomputedConfiguration = async () => {
-  const subjectKey = 'test-subject';
-  const subjectAttributes = { attr1: 'value1' };
-  return await EppoSDK.getInstance().getPrecomputedConfiguration(subjectKey, subjectAttributes);
-};
-
 export default async function Page() {
   await EppoSDK.init({
     apiKey: process.env.NEXT_PUBLIC_EPPO_SDK_KEY as string,
     assignmentLogger: { logAssignment() {} },
   });
-  const precomputedConfiguration = await getPrecomputedConfiguration();
+  const precomputedConfiguration = await EppoSDK.getInstance().getPrecomputedConfiguration('<SUBJECT-KEY>', <SUBJECT-ATTRIBUTES>);
 
   return (
     <ClientSideComponent precomputedConfiguration={precomputedConfiguration} />
@@ -148,8 +142,9 @@ export function ClientSideComponent({
     precomputedConfiguration: configuration,
     assignmentLogger: assignmentLogger,
   });
-  const assignment = EppoSDK.getPrecomputedInstance().getStringAssignment('flag-key', 'default-value');
-  return <div>{assignment}</div>;
+  const assignment = EppoSDK.getPrecomputedInstance().getStringAssignment('<FLAG-KEY>', '<DEFAULT-VALUE>');
+
+  // render the component with the assignment
 }
 ```
 
