@@ -153,6 +153,54 @@ export function ClientSideComponent({
 }
 ```
 
+### Other ways to serve the precomputed configuration from the server
+
+1. **Script Tags with Window Object**
+```html
+<script>
+  window.__EPPO_CONFIG__ = JSON.stringify({
+    precomputedConfiguration: /* configuration from server */
+  });
+</script>
+```
+
+2. **Data Attributes**
+```html
+<div id="eppo-config" data-configuration="<encoded-configuration-here>"></div>
+
+<script>
+  const config = document.getElementById('eppo-config').dataset.configuration;
+  // Use the config...
+</script>
+```
+
+3. **Cookies**
+```javascript
+// Server-side
+res.cookie('eppo-config', JSON.stringify(precomputedConfiguration));
+
+// Client-side
+const config = document.cookie
+  .split('; ')
+  .find(row => row.startsWith('eppo-config='))
+  ?.split('=')[1];
+```
+
+4. **Meta Tags**
+```html
+<meta name="eppo-config" content="<encoded-configuration-here>" />
+
+<script>
+  const config = document.querySelector('meta[name="eppo-config"]').content;
+  // Use the config...
+</script>
+```
+
+The best approach depends on your application's architecture and security requirements.
+
+- Script tags with window objects are simple but will expose the configuration globally
+- Cookies may be constrainted by session durations and size limits
+
 ### Perform evaluation
 
 Evaluations are the same as the `precomputedInit` method.
