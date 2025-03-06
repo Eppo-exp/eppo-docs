@@ -72,6 +72,15 @@ A PSR-18 compatible client interface for making http requests.
 </ApiOptionRef>
 
 <ApiOptionRef
+  name="pollingOptions"
+  type="PollingOptions"
+  defaultValue="none"
+>
+
+Options to configure the local cache and background polling.
+</ApiOptionRef>
+
+<ApiOptionRef
   name="requestFactory"
   type="RequestFactoryInterface"
   defaultValue="automatic (Discovery)"
@@ -80,20 +89,56 @@ A PSR-18 compatible client interface for making http requests.
 A PSR-18 compatible client interface for making http requests.
 </ApiOptionRef>
 
+### PollingOptions Configuration
+
+The `PollingOptions` object allows you to configure caching and background polling behavior with the following parameters:
+
+<ApiOptionRef
+  name="cacheAgeLimitMillis"
+  type="int"
+  defaultValue="300000"
+>
+
+Maximum age (in milliseconds) of cached configurations before they are considered stale. Defaults to 5 minutes.
+</ApiOptionRef>
+
+<ApiOptionRef
+  name="pollingIntervalMillis"
+  type="int"
+  defaultValue="30000"
+>
+
+Interval (in milliseconds) between polling attempts when background polling is enabled. Defaults to 30 seconds.
+</ApiOptionRef>
+
+<ApiOptionRef
+  name="pollingJitterMillis"
+  type="int"
+  defaultValue="5000"
+>
+
+Random jitter (in milliseconds) added to the polling interval to prevent synchronized polling across multiple instances. Defaults to 5 seconds.
+</ApiOptionRef>
+
 ### Configuration Caching
 
-The SDK can cache previously loaded configurations for use in future sessions. By default, it uses a filesystem cache, but you can provide your own PSR-6 compatible cache implementation:
+To avoid making a fetch request for every assignment, the SDK caches the configuration, re-fetching it when the cache expires. By default, it uses a filesystem cache, but you can provide your own PSR-6 compatible cache implementation as showin in the example below. You can also change the age limit of the cache.
 
 ```php
 use Symfony\Component\Cache\Adapter\RedisAdapter;
 
 $cache = new RedisAdapter($redisConnection);
 
+$pollingOptions = new PollingOptions(
+    cacheAgeLimitMillis: 5 * 60 * 1000 // 5 minutes
+);
+
 $eppoClient = EppoClient::init(
    "<your_sdk_key>",
    null,
    $assignmentLogger,
-   $cache
+   $cache,
+   pollingOptions: $pollingOptions
 );
 ```
 
@@ -104,11 +149,18 @@ A unique feature of the PHP SDK is its ability to poll for configuration updates
 Create a dedicated poller file (e.g. `eppo-poller.php`):
 
 ```php
+
+$pollingOptions = new PollingOptions(
+    pollingIntervalMillis: 10000,
+    pollingJitterMillis: 2000
+);
+
 $eppoClient = EppoClient::init(
    "<your_sdk_key>",
    "<base_url>",
    $assignmentLogger,
-   $cache
+   $cache,
+   pollingOptions: $pollingOptions
 );
 
 $eppoClient->startPolling();
