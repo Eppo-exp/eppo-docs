@@ -53,7 +53,17 @@ This is often the most important variable in a regression, but does suffer some 
   In our implementation, we can still leverage historical data of the **other experiment metrics** to help improve estimates of these conversion and retention metrics.
   This allows us to get improved estimates for conversion and retention metrics versus a standard CUPED approach.
 - The standard CUPED approach does not help for experiments where no pre-experiment data exists (e.g. experiments on new users, such as onboarding flows).
-  Because we also use **assignment properties** as covariates in the regression adjustments model, we are able to reduce variance for these experiments as well, which leads to smaller confidence intervals for such experiments. Currently, we include assignment properties that have 100 or less values to optimize warehouse compute.
+  Because we also use **assignment properties** as covariates in the regression adjustments model, we are able to reduce variance for these experiments as well, which leads to smaller confidence intervals for such experiments.
+
+## CUPED++ and stratification
+
+Stratification is a common technique used in experiment design. By ensuring that treatment and control groups have a similar distribution of categorical features (prior engagement data, demographics, etc.), we can run experiments with tighter confidence intervals.
+
+In practice however, online stratification systems tend to lead to engineering overhead and performance issues. Other options such as seed finding also have substantial limitations, namely that they extend poorly to new users. 
+
+Fortunately, Eppo's CUPED++ model can give mathematically equivalent estimates as stratification, but without the engineering or performance overhead. This is referred to as **post hoc stratification**. Simply add the categorical variables on which you want to balance as assignment properties and you will get a variance reduction equivalent to that from a stratified design. Not only does this alleviate performance issues, it also allows you to include as many variables as you'd like, even if they are not available at the time of assignment.
+
+For more information on the connection, please see section 3.3 and Appendix A of [this paper](https://exp-platform.com/Documents/2013-02-CUPED-ImprovingSensitivityOfControlledExperiments.pdf) from Microsoft. Netflix [has also explored](https://www.kdd.org/kdd2016/papers/files/adp0945-xieA.pdf) the tradeoffs between realtime stratification and post-hoc regression adjustment similar to Eppo's CUPED++ model. They also recommend post-hoc adjustments over real time stratified randomization.
 
 ## Using CUPED on Eppo
 
@@ -71,7 +81,7 @@ CUPED can be turned on in the admin panel, and in the overview page of an experi
 
 **What data does CUPED use?**
 - Pre-experiment data from _all_ [eligible metrics](/data-management/metrics/simple-metric#metric-aggregation-types) (sum, count, unique entities, and these aggregations for ratio metrics)
-- [Assignment properties](/data-management/definitions/properties#assignment-properties) from the AssignmentSQL used for this experiment. These are interpreted as categorical features.
+- [Assignment properties](/data-management/definitions/properties#assignment-properties) from the AssignmentSQL used for this experiment. These are interpreted as categorical features. Currently, we include assignment properties that have 100 or fewer values.
 
 To avoid confusion, it is useful to keep in mind that the above refers to the input data. CUPED produces improved results across all metrics.
 
