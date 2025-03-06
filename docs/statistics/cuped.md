@@ -55,15 +55,17 @@ This is often the most important variable in a regression, but does suffer some 
 - The standard CUPED approach does not help for experiments where no pre-experiment data exists (e.g. experiments on new users, such as onboarding flows).
   Because we also use **assignment properties** as covariates in the regression adjustments model, we are able to reduce variance for these experiments as well, which leads to smaller confidence intervals for such experiments.
 
-## CUPED++ and stratification
+## CUPED++ and stratified sampling
 
-Stratification is a common technique used in experiment design. By ensuring that treatment and control groups have a similar distribution of categorical features (prior engagement data, demographics, etc.), we can run experiments with tighter confidence intervals.
+Eppo's CUPED++ provides the statistical benefits of stratified sampling in a powerful and performant way.
 
-In practice however, online stratification systems tend to lead to engineering overhead and performance issues. Other options such as seed finding also have substantial limitations, namely that they extend poorly to new users. 
+Stratification is a common technique used in experiment design. It helps guarantee that the treatment and control groups have a similar mix of important factors, like past user activity or demographics. This leads to smaller confidence intervals and more sensitive experiments.
 
-Fortunately, Eppo's CUPED++ model can give mathematically equivalent estimates as stratification, but without the engineering or performance overhead. This is referred to as **post hoc stratification**. Simply add the categorical variables on which you want to balance as assignment properties and you will get a variance reduction equivalent to that from a stratified design. Not only does this alleviate performance issues, it also allows you to include as many variables as you'd like, even if they are not available at the time of assignment.
+However, using stratification in online systems can be challenging. It often requires extra engineering work and can introduce performance issues. Other methods, like seed finding, also have problems—especially when dealing with new users.
 
-For more information on the connection, please see section 3.3 and Appendix A of [this paper](https://exp-platform.com/Documents/2013-02-CUPED-ImprovingSensitivityOfControlledExperiments.pdf) from Microsoft. Netflix [has also explored](https://www.kdd.org/kdd2016/papers/files/adp0945-xieA.pdf) the tradeoffs between realtime stratification and post-hoc regression adjustment similar to Eppo's CUPED++ model. They also recommend post-hoc adjustments over real time stratified randomization.
+Eppo's CUPED++ model offers a better solution. It provides the same statistical benefits as stratification but without the extra engineering effort or performance issues. This approach, called **post hoc stratification**, lets you balance groups after the experiment instead of during assignment. You just need to include the important categories as assignment properties, and you’ll get the same variance reduction as traditional stratification. Plus, you can use as many variables as you want, even if they weren’t available at the time of assignment.
+
+For more details, check out section 3.3 and Appendix A of this [Microsoft paper](https://exp-platform.com/Documents/2013-02-CUPED-ImprovingSensitivityOfControlledExperiments.pdf). Netflix [has also studied](https://www.kdd.org/kdd2016/papers/files/adp0945-xieA.pdf) the pros and cons of real-time stratification versus post-hoc adjustments like Eppo’s CUPED++. They also recommend post-hoc adjustments over real-time stratification.
 
 ## Using CUPED on Eppo
 
