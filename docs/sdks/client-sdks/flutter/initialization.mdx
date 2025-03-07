@@ -1,0 +1,91 @@
+---
+title: Initialization
+sidebar_position: 3
+---
+
+import ApiOptionRef from "@site/src/components/ApiOptionRef";
+
+The Eppo SDK for Dart and Flutter is easy to initialize while offering robust customization options, 
+making it adaptable to various use cases such as custom caching requirements and ultra-low-latency initialization.
+
+## Initialize the SDK
+
+To complete basic initialization, you only need to provide an SDK key. [Create an SDK key](/sdks/sdk-keys) if you don't already have one.
+
+Add the Eppo Dart SDK to your `pubspec.yaml` file:
+
+```yaml
+dependencies:
+  eppo: ^1.0.0
+```
+
+Then, initialize the SDK:
+
+```dart
+import 'package:eppo/eppo.dart';
+
+final subject = Subject(
+  subjectKey: 'user-identifier',
+  subjectAttributes: ContextAttributes(),
+);
+
+await Eppo.initialize(
+  PrecomputeArguments(subject: subject),
+  SdkOptions(
+    sdkKey: 'your-sdk-key'
+  ),
+);
+```
+
+## Use the SDK instance
+
+After initialization, you can use the SDK singleton to assign a variation to a subject using the assignment methods.
+
+```dart
+final bool variation = Eppo.getBooleanAssignment(
+  '<flag-key>',
+  false,
+);
+```
+
+### Example Configuration
+
+Here's an example of initializing the SDK with custom configuration:
+
+```dart
+import 'package:eppo/eppo.dart';
+
+class YourAssignmentLogger implements AssignmentLogger {
+  @override
+  void logAssignment(AssignmentEvent event) {
+    print('warehouse assignment logged:', event.toJson());
+  }
+}
+
+class YourBanditLogger implements BanditLogger {
+  @override
+  void logBanditEvent(BanditEvent event) {
+    print('warehouse bandit logged:', event.toJson());
+  }
+}
+
+await Eppo.initialize(
+  PrecomputeArguments(subject: subject),
+  SdkOptions(
+    sdkKey: 'your-sdk-key',
+    assignmentLogger: YourAssignmentLogger(),
+    banditLogger: YourBanditLogger(),
+  )
+);
+```
+
+### Configuration Caching
+
+The SDK caches configurations in memory to ensure fast assignment evaluations. The cache is automatically updated when new configurations are fetched from the Eppo Edge server.
+
+## Best Practices
+
+1. **Initialize Once**: The SDK is a singleton, initialize it once at application startup and reuse it throughout your application.
+2. **Wait for Readiness**: Optionally, await `initialize` before making assignments to ensure configurations are loaded.
+3. **Implement Proper Logging**: Configure an assignment logger to ensure experiment data is captured correctly.
+4. **Use Subjects Consistently**: Ensure that subject IDs are consistent across your application to maintain experiment integrity.

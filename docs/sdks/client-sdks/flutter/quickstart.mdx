@@ -1,0 +1,293 @@
+---
+title: Quickstart
+sidebar_position: 2
+---
+
+import Tabs from "@theme/Tabs";
+import TabItem from "@theme/TabItem";
+
+The Eppo SDK enables feature flags and experiments in your Dart and Flutter applications with only a few lines of code.
+
+The SDK handles all the complexity of feature flag evaluation and experiment assignment locally in your application. 
+This guide will walk you through installing the SDK and implementing your first feature flag, experiment, and contextual bandit.
+
+## Installation
+
+First, add the SDK to your `pubspec.yaml` file:
+
+```yaml
+dependencies:
+  eppo: ^1.0.0
+```
+
+If using Dart, run:
+
+```shell
+dart pub get
+```
+
+If using Flutter, run:
+
+```shell
+flutter pub get
+```
+
+## Feature Flags
+
+Feature flags are a way to toggle features on and off without needing to deploy code.
+
+### Initialize the SDK
+
+[Create an SDK key](/sdks/sdk-keys) if you don't already have one.
+
+```dart
+import 'package:eppo/eppo.dart';
+
+// Create subject
+final subject = Subject(
+  subjectKey: subjectKey,
+  subjectAttributes: ContextAttributes(),
+);
+
+// Create precompute arguments
+final precomputeArgs = PrecomputeArguments(subject: subject);
+
+// Create SDK options
+final sdkOptions = SdkOptions(
+  sdkKey: sdkKey
+);
+
+// Create client
+Eppo.initialize(precomputeArgs, sdkOptions);
+```
+
+:::note
+The SDK key is different from the project API key. You can find your SDK key in the [SDK Keys section of the Eppo interface](https://eppo.cloud/configuration/environments/keys).
+:::
+
+### How assignments work
+
+On session start, the SDK retrieves precomputed evaluation of configuration rules from the Eppo Edge server that define how your subject should be allocated to variants.
+The configuration is cached locally; when you call an assignment function, the SDK evaluates these rules locally without making additional network requests.
+
+Initializing the SDK requires:
+
+- **SDK Key**: Authorizes the SDK to connect to the Eppo environment
+- **Subject Key**: A unique identifier for the subject (usually a user ID)
+
+Each assignment requires:
+
+- **Flag Key**: Identifies which set of configuration rules to use
+- **Default Value**: Fallback value if assignment fails or rules don't match
+
+```dart
+// Make an assignment
+final String variation = Eppo.getStringAssignment(
+  'my-neat-feature',
+  'default-value',
+);
+```
+
+### Assignment Types
+
+The SDK provides different assignment functions based on the type of value you need:
+
+| Function                 | Return Type            |
+| ------------------------ | ---------------------- |
+| `getBooleanAssignment()` | `bool`                 |
+| `getIntegerAssignment()` | `int`                  |
+| `getNumericAssignment()` | `num`                  |
+| `getStringAssignment()`  | `String`               |
+| `getJSONAssignment()`    | `Map<String, dynamic>` |
+
+### Using Assignments
+
+After receiving an assignment, your application should implement logic to modify the user experience accordingly:
+
+```dart
+final String variation = Eppo.getStringAssignment(
+  'my-neat-feature',
+  'default-value',
+);
+
+// Render different components based on assignment
+switch(variation) {
+  case 'landing-page-a':
+    return renderLandingPageA();
+  case 'landing-page-b':
+    return renderLandingPageB();
+  default:
+    return renderLandingPageC();
+}
+```
+
+## Experiments
+
+While feature flags are useful, they do not send you any information about how your users are interacting with the feature. 
+Experiments provide a way to collect data about these interactions using whichever logging and data warehousing system you prefer.
+
+To log events through the SDK, you need to provide a logger when initializing the client:
+
+```dart
+/// Represents an assignment event.
+class AssignmentEvent {
+  /// The allocation the subject was assigned to
+  final String? allocation;
+
+  /// The experiment identifier
+  final String? experiment;
+
+  /// The feature flag identifier
+  final String featureFlag;
+
+  /// The format of the assignment
+  final String format;
+
+  /// The variation key that was assigned
+  final String? variation;
+
+  /// The subject identifier
+  final String subject;
+
+  /// The timestamp of the assignment
+  final String timestamp;
+
+  /// The subject attributes
+  final Map<String, dynamic>? subjectAttributes;
+
+  /// Additional metadata
+  final Map<String, dynamic>? metaData;
+}
+
+// Implement your own `AssignmentLogger`
+class YourAssignmentLogger implements AssignmentLogger {
+  @override
+  void logAssignment(AssignmentEvent event) {
+    // Your logging logic here
+  }
+}
+
+await Eppo.initialize(
+  PrecomputeArguments(subject: subject),
+  SdkOptions(
+    sdkKey: sdkKey,
+    assignmentLogger: YourAssignmentLogger(),
+  ),
+);
+```
+
+:::note
+For your production application, we have documentation on how to set up logging with multiple popular data warehouses and 
+logging systems in the [Assignment page](/sdks/client-sdks/flutter-web/assignments/#logging-data-to-your-data-warehouse).
+:::
+
+## Contextual Bandits
+
+For bandits, a separate logger handles its logging:
+
+```dart
+/// Represents a bandit event.
+class BanditEvent {
+  /// The timestamp when the event occurred
+  final String timestamp;
+
+  /// The feature flag key
+  final String featureFlag;
+
+  /// The bandit key
+  final String bandit;
+
+  /// The subject key
+  final String subject;
+
+  /// The action associated with the bandit
+  final String? action;
+
+  /// The probability of the action
+  final double? actionProbability;
+
+  /// The optimality gap
+  final double? optimalityGap;
+
+  /// The model version
+  final String? modelVersion;
+
+  /// Numeric attributes of the subject
+  final Map<String, double>? subjectNumericAttributes;
+
+  /// Categorical attributes of the subject
+  final Map<String, String>? subjectCategoricalAttributes;
+
+  /// Numeric attributes of the action
+  final Map<String, double>? actionNumericAttributes;
+
+  /// Categorical attributes of the action
+  final Map<String, String>? actionCategoricalAttributes;
+
+  /// Metadata about the SDK
+  final Map<String, dynamic> metaData;
+}
+
+// Implement your own `BanditLogger`
+class YourBanditLogger implements BanditLogger {
+  @override
+  void logBanditEvent(BanditEvent event) {
+    // Your logging logic here
+  }
+}
+
+await Eppo.initialize(
+  PrecomputeArguments(
+    subject: subject,
+    banditActions: {
+      'flag-with-shoe-bandit': {
+        'nike': {
+          'brand_affinity': 0.4,
+          'from': 'usa',
+        },
+        'adidas': {
+          'brand_affinity': 2.0,
+          'from': 'germany',
+        },
+      },
+    },
+  ),
+  SdkOptions(
+    sdkKey: sdkKey,
+    banditLogger: YourBanditLogger(),
+  ),
+);
+```
+
+### Query the bandit for actions
+
+Instead of making simple assignments with a bandit, you will want to query the bandit for actions:
+
+```dart
+// Get bandit action
+final result = Eppo.getBanditAction(
+  'flag-with-shoe-bandit',
+  'default'
+);
+
+if (result.action != null) {
+  // Follow the Bandit action
+  renderShoeAd(result.action!);
+} else {
+  // User was not selected for a Bandit.
+  // A variation is still assigned.
+  renderDefaultShoeAd(result.variation);
+}
+```
+
+:::note
+For full steps to create a bandit including UI steps, see the [bandit quickstart](/bandit-quickstart).
+:::
+
+## Next Steps
+
+Now that you've seen how to make assignments with the Eppo Dart SDK, we strongly recommend familiarizing yourself with the following topics:
+
+- [High Level concepts for the client API](/sdks/server-sdks)
+- [Initialization Configuration](/sdks/client-sdks/flutter-web/initialization)
+- [Assignment details](/sdks/client-sdks/flutter-web/assignments)
