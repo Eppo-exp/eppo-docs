@@ -59,9 +59,9 @@ This is often the most important variable in a regression, but does suffer some 
 
 Eppo's CUPED++ provides the statistical benefits of stratified sampling in a powerful and performant way.
 
-Stratification is a common technique used in experiment design. It helps guarantee that the treatment and control groups have a similar mix of important factors, like past user activity or demographics. This leads to smaller confidence intervals and more sensitive experiments.
+Stratified sampling is a common technique used in classical experiment designs (clinical trials, social science experiments, etc.). It helps guarantee that the treatment and control groups have a similar mix of important factors, like medical history or demographics. This can lead to tighter confidence intervals and more sensitive experiments.
 
-However, using stratification in online systems can be challenging. It often requires extra engineering work and can introduce performance issues. Other methods, like seed finding, also have problems—especially when dealing with new users.
+However, using stratification in online systems is less common in practice. It often introduces substantial engineering overhead and can lead to performance issues. Other methods, like seed finding, also have problems — especially when dealing with new users.
 
 Eppo's CUPED++ model offers a better solution. It provides the same statistical benefits as stratification but without the extra engineering effort or performance issues. This approach, called **post-hoc stratification**, lets you balance groups after the experiment instead of during assignment. You just need to include the important categories as assignment properties, and you’ll get the same variance reduction as traditional stratification. Plus, you can use as many variables as you want, even if they weren’t available at the time of assignment.
 
