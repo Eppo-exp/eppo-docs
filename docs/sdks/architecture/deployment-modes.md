@@ -142,3 +142,11 @@ A/B/n testing methodology relies on the assumption that we have a clear picture 
 Both of these issues are in theory solvable if teams are diligent about filtering on the correct exposure event. However, as experimentation programs grow we have observed that this becomes increasingly hard to enforce and monitor. As you consider different options to deploy Eppo's SDK, make sure that you consider not just immediate implementation costs, but also long term scalability and tech debt. 
 
 For teams that need to fetch variants at session start (say, for fully server-side rendered architectures), Eppo can support this pattern. This is done by exporting a list of flags from the SDK and evaluating each of them in a for loop. That said, for the reasons above it is highly encouraged that teams instead follow one of the other deployment patterns whenever possible.
+
+## Precomputed Assignments
+
+The Eppo JavaScript SDK supports additional deployment modes for precomputed assignments:
+- [Online](/sdks/client-sdks/javascript/precomputed-assignments/#initialize-precomputed-client) 
+- [Offline](/sdks/client-sdks/javascript/precomputed-assignments#offline-precomputed-assignments) 
+
+With precomputed assignments, the all flags are pre-computed for a subject and the SDK does not do any evaluation at runtime. This can be useful for performance and security. See the [precomputed assignments](/sdks/client-sdks/javascript/precomputed-assignments) sections for more details.
