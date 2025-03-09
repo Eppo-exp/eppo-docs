@@ -1,0 +1,200 @@
+---
+title: Contextual Bandits
+sidebar_position: 5
+---
+
+## Usage with Contextual Multi-Armed Bandits
+
+Eppo supports contextual [multi-armed bandits](/contextual-bandits). You configure bandit flags in the Eppo application, where you can set up:
+
+- Flag keys
+- Status quo variations
+- Bandit variations
+- Targeting rules
+
+Provide the available actions to the SDK in the `banditActions` parameter on initialization. In addition, any subject attributes can be passed in the `subjectAttributes` parameter.
+
+To leverage bandits using the Dart SDK, there are two additional steps over regular feature flags:
+
+1. Implement a logger that handles bandit actions
+2. Initialize the SDK with a custom logger and bandit actions
+3. Query the bandit for an action
+
+### Subject Attributes
+
+The subject contains contextual information about the subject that is independent of bandit actions.
+For example, the subject's age or country.
+
+```dart
+final subjectEvaluation = SubjectEvaluation(
+  subject: Subject(
+    subjectKey: 'user-identifier',
+    subjectAttributes: {
+      'age': 30,
+      'country': 'usa',
+    }
+  )
+);
+```
+
+### Action Attributes
+
+The action attributes contain contextual information about each action.
+
+For simple cases where actions don't have attributes, you can also pass a list of action names as a map: `Map<String, Map<String, Map<String, dynamic>>>`.
+
+```dart
+final subjectEvaluation = SubjectEvaluation(
+  subject: Subject(
+    subjectKey: 'user-identifier',
+    subjectAttributes: {
+      'age': 30,
+      'country': 'usa',
+    }
+  ),
+  banditActions: {
+    'nike': {
+      'brand_affinity': 0.4,
+      'from': 'usa',
+    },
+  }
+);
+```
+
+### Define a bandit assignment logger
+
+In order for the bandit to learn an optimized policy, we need to capture and log the bandit's actions.
+The Dart SDK uses a single logger class that handles both assignment and bandit action logging:
+
+```dart
+// Implement your own `BanditLogger`
+class YourBanditLogger implements BanditLogger {
+  @override
+  void logBanditEvent(BanditEvent event) {
+    // Your logging logic here
+  }
+}
+
+// Initialize the SDK with a custom bandit logger and bandit actions
+await Eppo.initialize(
+  'your-sdk-key',
+  SubjectEvaluation(
+    subject: Subject(
+      subjectKey: 'user-identifier',
+      subjectAttributes: {
+        'age': 30,
+        'country': 'usa',
+      }
+    ),
+    banditActions: {
+      'test-bandit': {
+        'action1': {'price': 10.99, 'category': 'electronics'},
+        'action2': {'price': 5.99, 'category': 'books'}
+      }
+    }
+  ),
+  ClientConfiguration(
+    banditLogger: YourBanditLogger(),
+  )
+);
+```
+
+The SDK will invoke the `logBanditAction()` method with a `BanditEvent` object containing the following fields:
+
+```dart
+/// Represents a bandit event.
+class BanditEvent {
+  /// The timestamp when the event occurred
+  final String timestamp;
+
+  /// The feature flag key
+  final String featureFlag;
+
+  /// The bandit key
+  final String bandit;
+
+  /// The subject key
+  final String subject;
+
+  /// The action selected by the bandit
+  final String? action;
+
+  /// The probability of the action
+  final double? actionProbability;
+
+  /// The optimality gap
+  final double? optimalityGap;
+
+  /// The model version
+  final String? modelVersion;
+
+  /// Numeric attributes of the subject
+  final Map<String, double>? subjectNumericAttributes;
+
+  /// Categorical attributes of the subject
+  final Map<String, String>? subjectCategoricalAttributes;
+
+  /// Numeric attributes of the action
+  final Map<String, double>? actionNumericAttributes;
+
+  /// Categorical attributes of the action
+  final Map<String, String>? actionCategoricalAttributes;
+
+  /// Metadata about the SDK
+  final Map<String, dynamic> metaData;
+}
+```
+
+Example of a `BanditEvent`:
+
+| Field                          | Example                          |
+| ------------------------------ | -------------------------------- |
+| `timestamp`                    | `"2024-03-22T14:26:55.000Z"`     |
+| `featureFlag`                  | `"bandit-test-allocation-4"`     |
+| `bandit`                       | `"ad-bandit-1"`                  |
+| `subject`                      | `"ed6f85019080"`                 |
+| `subjectNumericAttributes`     | `{"age": 30}`                    |
+| `subjectCategoricalAttributes` | `{"loyalty_tier": "gold"}`       |
+| `action`                       | `"promo-20%-off"`                |
+| `actionNumericAttributes`      | `{"brandAffinity": 0.2}`         |
+| `actionCategoricalAttributes`  | `{"previouslyPurchased": false}` |
+| `actionProbability`            | `0.25`                           |
+| `optimalityGap`                | `456`                            |
+| `modelVersion`                 | `"v123"`                         |
+| `metaData`                     | `{ "sdkLibVersion": "3.5.1" }`   |
+
+### Query the bandit for an action
+
+To query the bandit for an action, use the `getBanditAction()` method. This method takes the following parameters:
+
+- `flagKey (String)`: The key of the feature flag corresponding to the bandit
+- `defaultValue (String)`: The default _variation_ to return if the flag is not successfully evaluated
+
+```dart
+final result = Eppo.getBanditAction(
+  'flag-with-shoe-bandit',
+  'default'
+);
+
+if (result.action != null) {
+  // Follow the Bandit action
+  renderShoeAd(result.action!);
+} else {
+  // User was not selected for a Bandit.
+  // A variation is still assigned.
+  renderDefaultShoeAd(result.variation);
+}
+```
+
+### Bandit Result
+
+The `getBanditAction()` method returns a `BanditEvaluation` object with the following properties:
+
+- `variation (String)`: The variation assigned to the subject
+- `action (String?)`: The action selected by the bandit, or null if no bandit action was selected
+
+## Debugging
+
+You may encounter a situation where a flag assignment produces a value that you did not expect. 
+There are functions [detailed here](/sdks/sdk-features/debugging-flag-assignment/) to help you understand how flags are assigned, 
+which will allow you to take corrective action on potential configuration issues.

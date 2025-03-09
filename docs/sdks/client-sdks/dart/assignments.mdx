@@ -1,0 +1,178 @@
+---
+title: Assignments
+sidebar_position: 4
+---
+
+Assignments are the mechanism through which a given [Subject](/sdks/sdk-features/subjects) is assigned to a variation for a feature flag, experiment, or bandit.
+
+Currently, the Eppo SDK supports the following assignment types:
+
+- Boolean
+- Integer
+- Numeric
+- JSON
+- String
+
+The SDK will return different results based on whether the subject details match the assignment rules you set in the Eppo UI.
+
+## Boolean Assignments
+
+Boolean flags support simple on/off toggles. They're useful for simple, binary feature switches like blue/green deployments or enabling/disabling a new feature.
+
+```dart
+final variant = Eppo.getBooleanAssignment(
+  'flag-key-123',
+  false  // default value
+);
+
+// Use the variant value to determine which component to render
+if (variant) {
+  return renderFeatureEnabledComponent();
+} else {
+  return renderFeatureDisabledComponent();
+}
+```
+
+## String Assignments
+
+String assignment return a string value that is set as the variation for the experiment. 
+String flags are the most common type of flags for A/B/n tests and advanced targeting use cases.
+
+```dart
+final variant = Eppo.getStringAssignment(
+  'flag-key-123',
+  'version-a'  // default value
+);
+
+// Use the variant value to determine which component to render
+switch(variant) {
+  case 'version-a':
+    return handleVersionA();
+  case 'version-b':
+    return handleVersionB();
+  default:
+    return handleDefaultVersion();
+}
+```
+
+## JSON Assignments
+
+JSON flags work best for advanced configuration use cases. The JSON flag can include structured information such as:
+
+- The text of marketing copy for a promotional campaign
+- The address of a different hero image
+
+Using this pattern, a team can make minor changes to the copy and design of a website without having to go through an entire code release process.
+
+```dart
+final defaultAssignment = {
+  'hero': false,
+  'heroImage': 'placeholder.png',
+  'heroTitle': 'Placeholder Hero Title',
+  'heroDescription': 'Placeholder Hero Description'
+};
+
+final campaignJson = Eppo.getJSONAssignment(
+  'flag-key-123',
+  defaultAssignment
+);
+
+if (campaignJson != null) {
+  campaign.hero = true;
+  campaign.heroImage = campaignJson['heroImage'] as String?;
+  campaign.heroTitle = campaignJson['heroTitle'] as String? ?? '';
+  campaign.heroDescription = campaignJson['heroDescription'] as String? ?? '';
+}
+
+// Use the campaign settings in your component
+renderHero(campaign.heroImage, campaign.heroTitle, campaign.heroDescription);
+```
+
+## Integer and Numeric Assignments
+
+Integer and numeric assignments work the same way but return either an integer or a floating point number. 
+These assignments are useful where you want to use a numeric value to drive business logic such as pricing on an item or a number of items to display in a list.
+
+```dart
+// Example of getting an integer assignment
+final numberOfItems = Eppo.getIntegerAssignment(
+  'flag-key-123',
+  0  // default value
+);
+
+// Example of getting a numeric assignment
+final price = Eppo.getNumericAssignment(
+  'flag-key-123',
+  0.0  // default value
+);
+
+// Use the assignments to drive business logic
+renderItemList(numberOfItems);
+renderPrice(price);
+```
+
+## Assignment Logger Schema
+
+The SDK will invoke the `logAssignment` method with an `AssignmentEvent` object containing the following fields:
+
+```dart
+class AssignmentEvent {
+  /// The allocation the subject was assigned to
+  final String? allocation;
+
+  /// The experiment identifier
+  final String? experiment;
+
+  /// The feature flag identifier
+  final String featureFlag;
+
+  /// The format of the assignment
+  final String format;
+
+  /// The variation key that was assigned
+  final String? variation;
+
+  /// The subject identifier
+  final String subject;
+
+  /// The timestamp of the assignment
+  final String timestamp;
+
+  /// The subject attributes
+  final Map<String, dynamic>? subjectAttributes;
+
+  /// Additional metadata
+  final Map<String, dynamic>? metaData;
+
+  /// Details about the evaluation
+  final Map<String, dynamic>? evaluationDetails;
+```
+
+### Logging data to your data warehouse
+
+Eppo's unique architecture makes it so Eppo never has to store your data. This means that you can use the assignment 
+logging functions to send data to any data warehouse or logging system you want.
+
+All you need to do is to provide a callback to the `assignmentLogger` parameter of the `EppoConfig` constructor.
+
+```dart
+/// Interface for logging assignment events
+abstract class AssignmentLogger {
+  /// Logs an assignment event
+  void logAssignment(AssignmentEvent event);
+}
+
+// Initialize with custom configuration and wait for the client to be ready
+await Eppo.initialize(
+  PrecomputeArguments(subject: subject),
+  SdkOptions(
+    sdkKey: 'your-sdk-key',
+    assignmentLogger: YourAssignmentLogger(),
+  )
+);
+```
+
+:::note
+More details about logging and examples (with Segment, Rudderstack, mParticle, and Snowplow) 
+can be found in the [assignment logging](/sdks/event-logging/assignment-logging/) page.
+:::
