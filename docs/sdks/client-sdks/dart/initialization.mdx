@@ -6,6 +6,9 @@ sidebar_position: 3
 The Eppo SDK for Dart and Flutter is easy to initialize while offering robust customization options, 
 making it adaptable to various use cases such as custom caching requirements and ultra-low-latency initialization.
 
+We seek to maintain broad compatibility with Dart and Flutter versions, 
+requiring only a minimum version of Dart 3.0.
+
 ## Initialize the SDK
 
 To complete basic initialization, you only need to provide an SDK key. [Create an SDK key](/sdks/sdk-keys) if you don't already have one.
@@ -22,17 +25,20 @@ Then, initialize the SDK:
 ```dart
 import 'package:eppo/eppo.dart';
 
-final subject = Subject(
-  subjectKey: 'user-identifier',
-  subjectAttributes: ContextAttributes(),
+// Create subject evaluation
+final subjectEvaluation = SubjectEvaluation(
+  subject: Subject(
+    subjectKey: 'user-identifier'
+  )
 );
 
-await Eppo.initialize(
-  PrecomputeArguments(subject: subject),
-  SdkOptions(
-    sdkKey: 'your-sdk-key'
-  ),
+// Create client configuration
+final clientConfiguration = ClientConfiguration(
+  sdkPlatform: SdkPlatform.dart,
 );
+
+// Initialize the SDK
+await Eppo.initialize('your-sdk-key', subjectEvaluation, clientConfiguration);
 ```
 
 ## Use the SDK instance
@@ -67,13 +73,28 @@ class YourBanditLogger implements BanditLogger {
   }
 }
 
+// Initialize the SDK
 await Eppo.initialize(
-  PrecomputeArguments(subject: subject),
-  SdkOptions(
-    sdkKey: 'your-sdk-key',
+  'your-sdk-key',
+  SubjectEvaluation(
+    subject: Subject(
+      subjectKey: 'user-identifier',
+      subjectAttributes: {
+        'age': 30,
+        'country': 'usa',
+      }
+    ),
+    banditActions: {
+      'test-bandit': {
+        'action1': {'price': 10.99, 'category': 'electronics'},
+        'action2': {'price': 5.99, 'category': 'books'}
+      }
+    }
+  ),
+  ClientConfiguration(
     assignmentLogger: YourAssignmentLogger(),
     banditLogger: YourBanditLogger(),
-  )
+  ),
 );
 ```
 

@@ -1,0 +1,48 @@
+---
+title: Flutter Integration
+sidebar_position: 6
+---
+
+## Flutter Integration
+
+Ensure the Eppo SDK is initialized when the app is launched or resumed from the background.
+
+Use the Flutter `AppLifecycleListener` to initialize the SDK when the app is launched:
+
+```dart
+// An example of an EppoObserver that initializes the SDK when the app is launched
+class EppoObserver extends WidgetsBindingObserver {
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    switch (state) {
+      case AppLifecycleState.resumed:
+        // Create subject and configuration
+        final subject = Subject(subjectKey: 'user-identifier');
+        final subjectEvaluation = SubjectEvaluation(subject: subject);
+        final clientConfiguration = ClientConfiguration(sdkPlatform: SdkPlatform.flutter);
+        
+        // Initialize the SDK
+        await Eppo.initialize('your-sdk-key', subjectEvaluation, clientConfiguration);
+        break;
+    }
+  }
+}
+```
+
+Add the EppoObserver to the WidgetsBinding:
+
+```dart
+@override
+void initState() {
+  super.initState();
+  WidgetsBinding.instance.addObserver(EppoObserver());
+}
+```
+
+Use evaluation methods to get the value of a feature flag or experiment.
+
+```dart
+final bool variation = Eppo.getBooleanAssignment(
+  '<flag-key>',
+  false,
+);

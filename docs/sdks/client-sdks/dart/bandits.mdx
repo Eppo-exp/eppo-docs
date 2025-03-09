@@ -12,12 +12,54 @@ Eppo supports contextual [multi-armed bandits](/contextual-bandits). You configu
 - Bandit variations
 - Targeting rules
 
-When you query the bandit in your code, you provide the available actions to the SDK.
+Provide the available actions to the SDK in the `banditActions` parameter on initialization. In addition, any subject attributes can be passed in the `subjectAttributes` parameter.
 
 To leverage bandits using the Dart SDK, there are two additional steps over regular feature flags:
 
 1. Implement a logger that handles bandit actions
-2. Query the bandit for an action
+2. Initialize the SDK with a custom logger and bandit actions
+3. Query the bandit for an action
+
+### Subject Attributes
+
+The subject contains contextual information about the subject that is independent of bandit actions.
+For example, the subject's age or country.
+
+```dart
+final subjectEvaluation = SubjectEvaluation(
+  subject: Subject(
+    subjectKey: 'user-identifier',
+    subjectAttributes: {
+      'age': 30,
+      'country': 'usa',
+    }
+  )
+);
+```
+
+### Action Attributes
+
+The action attributes contain contextual information about each action.
+
+For simple cases where actions don't have attributes, you can also pass a list of action names as a map: `Map<String, Map<String, Map<String, dynamic>>>`.
+
+```dart
+final subjectEvaluation = SubjectEvaluation(
+  subject: Subject(
+    subjectKey: 'user-identifier',
+    subjectAttributes: {
+      'age': 30,
+      'country': 'usa',
+    }
+  ),
+  banditActions: {
+    'nike': {
+      'brand_affinity': 0.4,
+      'from': 'usa',
+    },
+  }
+);
+```
 
 ### Define a bandit assignment logger
 
@@ -32,10 +74,26 @@ class YourBanditLogger implements BanditLogger {
     // Your logging logic here
   }
 }
+
+// Initialize the SDK with a custom bandit logger and bandit actions
 await Eppo.initialize(
-  PrecomputeArguments(subject: subject),
-  SdkOptions(
-    sdkKey: 'your-sdk-key',
+  'your-sdk-key',
+  SubjectEvaluation(
+    subject: Subject(
+      subjectKey: 'user-identifier',
+      subjectAttributes: {
+        'age': 30,
+        'country': 'usa',
+      }
+    ),
+    banditActions: {
+      'test-bandit': {
+        'action1': {'price': 10.99, 'category': 'electronics'},
+        'action2': {'price': 5.99, 'category': 'books'}
+      }
+    }
+  ),
+  ClientConfiguration(
     banditLogger: YourBanditLogger(),
   )
 );
@@ -58,7 +116,7 @@ class BanditEvent {
   /// The subject key
   final String subject;
 
-  /// The action associated with the bandit
+  /// The action selected by the bandit
   final String? action;
 
   /// The probability of the action
@@ -134,27 +192,6 @@ The `getBanditAction()` method returns a `BanditEvaluation` object with the foll
 
 - `variation (String)`: The variation assigned to the subject
 - `action (String?)`: The action selected by the bandit, or null if no bandit action was selected
-
-### Subject Attributes
-
-The subject contains contextual information about the subject that is independent of bandit actions.
-For example, the subject's age or country.
-
-### Action Attributes
-
-The action attributes contain contextual information about each action.
-
-For simple cases where actions don't have attributes, you can also pass a list of action names as a map: `Map<String, Map<String, Map<String, dynamic>>>`.
-
-```dart
-final actions = {
-  'nike': {
-    'brand_affinity': 0.4,
-    'from': 'usa',
-  },
-  
-}
-```
 
 ## Debugging
 

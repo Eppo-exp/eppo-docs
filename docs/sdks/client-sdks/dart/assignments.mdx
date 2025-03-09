@@ -9,8 +9,8 @@ Currently, the Eppo SDK supports the following assignment types:
 
 - Boolean
 - Integer
-- JSON
 - Numeric
+- JSON
 - String
 
 The SDK will return different results based on whether the subject details match the assignment rules you set in the Eppo UI.
@@ -150,7 +150,7 @@ class AssignmentEvent {
 
 ### Logging data to your data warehouse
 
-Eppo's unique architecture makes it so Eppo never has access to your data. This means that you can use the assignment 
+Eppo's unique architecture makes it so Eppo never has to store your data. This means that you can use the assignment 
 logging functions to send data to any data warehouse or logging system you want.
 
 All you need to do is to provide a callback to the `assignmentLogger` parameter of the `EppoConfig` constructor.

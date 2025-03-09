@@ -40,24 +40,16 @@ Feature flags are a way to toggle features on and off without needing to deploy 
 ```dart
 import 'package:eppo/eppo.dart';
 
-// Create subject
-final subject = Subject(
-  subjectKey: subjectKey,
-  subjectAttributes: ContextAttributes(),
+// Initialize the SDK
+await Eppo.initialize(
+  'your-sdk-key',
+  SubjectEvaluation(
+    subject: Subject(
+      subjectKey: 'user-identifier'
+    )
+  )
 );
-
-// Create precompute arguments
-final precomputeArgs = PrecomputeArguments(subject: subject);
-
-// Create SDK options
-final sdkOptions = SdkOptions(
-  sdkKey: sdkKey
-);
-
-// Create client
-Eppo.initialize(precomputeArgs, sdkOptions);
 ```
-
 :::note
 The SDK key is different from the project API key. You can find your SDK key in the [SDK Keys section of the Eppo interface](https://eppo.cloud/configuration/environments/keys).
 :::
@@ -70,7 +62,8 @@ The configuration is cached locally; when you call an assignment function, the S
 Initializing the SDK requires:
 
 - **SDK Key**: Authorizes the SDK to connect to the Eppo environment
-- **Subject Key**: A unique identifier for the subject (usually a user ID)
+- **Subject Evaluation**: Contains the subject key and optional attributes
+- **Client Configuration**: Contains SDK platform and optional loggers
 
 Each assignment requires:
 
@@ -120,7 +113,7 @@ switch(variation) {
 
 ## Experiments
 
-While feature flags are useful, they do not send you any information about how your users are interacting with the feature. 
+While feature flags are useful, they do not let you evaluate the impact of your feature on the users interacting with it. 
 Experiments provide a way to collect data about these interactions using whichever logging and data warehousing system you prefer.
 
 To log events through the SDK, you need to provide a logger when initializing the client:
@@ -157,30 +150,33 @@ class AssignmentEvent {
 }
 
 // Implement your own `AssignmentLogger`
-class YourAssignmentLogger implements AssignmentLogger {
+class MyAssignmentLogger implements AssignmentLogger {
   @override
   void logAssignment(AssignmentEvent event) {
     // Your logging logic here
+    print('Assignment logged: ${event.toJson()}');
   }
 }
 
+// Initialize the SDK with a custom assignment logger
 await Eppo.initialize(
-  PrecomputeArguments(subject: subject),
-  SdkOptions(
-    sdkKey: sdkKey,
-    assignmentLogger: YourAssignmentLogger(),
+  'your-sdk-key',
+  SubjectEvaluation(subject: subject),
+  ClientConfiguration(
+    assignmentLogger: MyAssignmentLogger(),
   ),
 );
 ```
 
 :::note
 For your production application, we have documentation on how to set up logging with multiple popular data warehouses and 
-logging systems in the [Assignment page](/sdks/client-sdks/flutter/assignments/#logging-data-to-your-data-warehouse).
+logging systems in the [Assignment page](/sdks/client-sdks/dart/assignments/#logging-data-to-your-data-warehouse).
 :::
 
 ## Contextual Bandits
 
-For bandits, a separate logger handles its logging:
+For bandits, a separate logger handles its logging, you supply the available actions and subject attributes, and the SDK provides 
+an API to query the bandit for an action:
 
 ```dart
 /// Represents a bandit event.
@@ -226,32 +222,45 @@ class BanditEvent {
 }
 
 // Implement your own `BanditLogger`
-class YourBanditLogger implements BanditLogger {
+class MyBanditLogger implements BanditLogger {
   @override
   void logBanditEvent(BanditEvent event) {
     // Your logging logic here
+    print('Bandit event logged: ${event.toJson()}');
   }
 }
 
-await Eppo.initialize(
-  PrecomputeArguments(
-    subject: subject,
-    banditActions: {
-      'flag-with-shoe-bandit': {
-        'nike': {
-          'brand_affinity': 0.4,
-          'from': 'usa',
-        },
-        'adidas': {
-          'brand_affinity': 2.0,
-          'from': 'germany',
-        },
+// Create subject with attributes
+final subject = Subject(
+  subjectKey: 'user-identifier',
+  subjectAttributes: ContextAttributes(
+    categoricalAttributes: {'country': 'US'},
+  ),
+);
+
+// Create subject evaluation with bandit actions
+final subjectEvaluation = SubjectEvaluation(
+  subject: subject,
+  banditActions: {
+    'flag-with-shoe-bandit': {
+      'nike': {
+        'brand_affinity': 0.4,
+        'from': 'usa',
+      },
+      'adidas': {
+        'brand_affinity': 2.0,
+        'from': 'germany',
       },
     },
-  ),
-  SdkOptions(
-    sdkKey: sdkKey,
-    banditLogger: YourBanditLogger(),
+  },
+);
+
+// Initialize the SDK with a custom bandit logger
+await Eppo.initialize(
+  'your-sdk-key',
+  subjectEvaluation,
+  ClientConfiguration(
+    banditLogger: MyBanditLogger(),
   ),
 );
 ```
@@ -281,10 +290,45 @@ if (result.action != null) {
 For full steps to create a bandit including UI steps, see the [bandit quickstart](/bandit-quickstart).
 :::
 
+## Flutter Integration
+
+Ensure the Eppo SDK is initialized when the app is launched or resumed from the background.
+
+Use the Flutter `AppLifecycleListener` to initialize the SDK when the app is launched:
+
+```dart
+// An example of an EppoObserver that initializes the SDK when the app is launched
+class EppoObserver extends WidgetsBindingObserver {
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) async {
+    switch (state) {
+      case AppLifecycleState.resumed:
+        // Create subject and configuration
+        final subject = Subject(subjectKey: 'user-identifier');
+        final subjectEvaluation = SubjectEvaluation(subject: subject);
+        final clientConfiguration = ClientConfiguration(sdkPlatform: SdkPlatform.flutter);
+        
+        // Initialize the SDK
+        await Eppo.initialize('your-sdk-key', subjectEvaluation, clientConfiguration);
+        break;
+    }
+  }
+}
+
+// Add the EppoObserver to the WidgetsBinding
+@override
+void initState() {
+  super.initState();
+  WidgetsBinding.instance.addObserver(EppoObserver());
+}
+```
+
+More details about Flutter integration can be found in the [Flutter Integration](/sdks/client-sdks/dart/flutter) page.
+
 ## Next Steps
 
 Now that you've seen how to make assignments with the Eppo Dart SDK, we strongly recommend familiarizing yourself with the following topics:
 
 - [High Level concepts for the client API](/sdks/server-sdks)
-- [Initialization Configuration](/sdks/client-sdks/flutter/initialization)
-- [Assignment details](/sdks/client-sdks/flutter/assignments)
+- [Initialization Configuration](/sdks/client-sdks/dart/initialization)
+- [Assignment details](/sdks/client-sdks/dart/assignments)
