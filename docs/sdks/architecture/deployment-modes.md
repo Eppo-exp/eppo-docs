@@ -149,4 +149,4 @@ The Eppo JavaScript SDK supports additional deployment modes for precomputed ass
 - [Online](/sdks/client-sdks/javascript/precomputed-assignments/#initialize-precomputed-client) 
 - [Offline](/sdks/client-sdks/javascript/precomputed-assignments#offline-precomputed-assignments) 
 
-With precomputed assignments, the all flags are pre-computed for a subject and the SDK does not do any evaluation at runtime. This can be useful for performance and security. See the [precomputed assignments](/sdks/client-sdks/javascript/precomputed-assignments) sections for more details.
+With precomputed assignments, all flag assignments are precomputed for a subject and the SDK does not do any evaluation at runtime. This can be useful for performance and security. See the [precomputed assignments](/sdks/client-sdks/javascript/precomputed-assignments) sections for more details.
