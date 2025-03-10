@@ -55,10 +55,18 @@ const variation = eppoClient.getBooleanAssignment('show-new-feature', user.id, {
 }, false);
 ```
 
+### Precomputed Assignments
+
+The Eppo JavaScript SDK supports additional deployment modes for precomputed assignments:
+- [Online](/sdks/client-sdks/javascript/precomputed-assignments/#initialize-precomputed-client) 
+- [Offline (bootstrapped)](/sdks/client-sdks/javascript/precomputed-assignments#offline-precomputed-assignments) 
+
+With precomputed assignments, all flag assignments are precomputed for a subject and the SDK does not do any evaluation at runtime. This can be useful for performance and security. See the [precomputed assignments](/sdks/client-sdks/javascript/precomputed-assignments) sections for more details.
+
 
 ### Local flag evaluation using configurations from internal server
 
-The majority of Eppo users opt to use the deployment mode outlined above. However, some teams prefer to manage the flagging configuration themselves and pass that to clients via internal API calls. Eppo supports this through the `offlineInit` method available in several client-side SDKs. This function allows you to pass in a configuration manually instead of making a request to Eppo's CDN. The configuration can be exported from one of Eppo's server side SDKs. 
+The majority of Eppo users opt to use [the recommended deployment mode](/sdks/architecture/deployment-modes#local-flag-evaluation-using-configurations-from-cdn-recommended). However, some teams prefer to manage the flagging configuration themselves and pass that to clients via internal API calls. Eppo supports this through the `offlineInit` method available in several client-side SDKs. This function allows you to pass in a configuration manually instead of making a request to Eppo's CDN. The configuration can be exported from one of Eppo's server side SDKs. 
 
 The same example above would have a sequence diagram that looks something like this:
 
@@ -142,11 +150,3 @@ A/B/n testing methodology relies on the assumption that we have a clear picture 
 Both of these issues are in theory solvable if teams are diligent about filtering on the correct exposure event. However, as experimentation programs grow we have observed that this becomes increasingly hard to enforce and monitor. As you consider different options to deploy Eppo's SDK, make sure that you consider not just immediate implementation costs, but also long term scalability and tech debt. 
 
 For teams that need to fetch variants at session start (say, for fully server-side rendered architectures), Eppo can support this pattern. This is done by exporting a list of flags from the SDK and evaluating each of them in a for loop. That said, for the reasons above it is highly encouraged that teams instead follow one of the other deployment patterns whenever possible.
-
-## Precomputed Assignments
-
-The Eppo JavaScript SDK supports additional deployment modes for precomputed assignments:
-- [Online](/sdks/client-sdks/javascript/precomputed-assignments/#initialize-precomputed-client) 
-- [Offline (bootstrapped)](/sdks/client-sdks/javascript/precomputed-assignments#offline-precomputed-assignments) 
-
-With precomputed assignments, all flag assignments are precomputed for a subject and the SDK does not do any evaluation at runtime. This can be useful for performance and security. See the [precomputed assignments](/sdks/client-sdks/javascript/precomputed-assignments) sections for more details.
