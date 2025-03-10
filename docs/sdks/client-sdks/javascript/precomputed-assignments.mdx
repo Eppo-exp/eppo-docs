@@ -64,15 +64,15 @@ const client = EppoSdk.getPrecomputedInstance();
 const variant = client.getStringAssignment(flagKey, 'default-value');
 ```
 
-## Offline Precomputed Assignments
+## Offline (Bootstrapped) Precomputed Assignments
 
 ### Overview
 
-The Eppo Node Server SDK can be used to generate precomputed assignments on the server and bootstrap the client-side SDK using `offlinePrecomputedInit`. This approach allows you to initialize the client without making remote calls from the browser.
+The Eppo Node Server SDK can be used to generate precomputed assignments on the server to bootstrap the client-side SDK using `offlinePrecomputedInit`. This approach allows you to initialize the client without making remote calls from the browser.
 
 These SDK methods are available in Eppo's JavaScript Client SDK version `3.9.4` and above.
 
-### Initialize offline precomputed client
+### Initialize offline (bootstrapped) precomputed client
 
 First, generate the precomputed configuration on your backend using Eppo's Node Server SDK:
 
@@ -99,7 +99,7 @@ const client = EppoSdk.offlinePrecomputedInit({
 });
 ```
 
-Notice that offline initialization does not require an SDK key nor subject information; everything needed for making assignments is provided in the precomputed configuration.
+Notice that offline (bootstrapped) initialization does not require an SDK key nor subject information; everything needed for making assignments is provided in the precomputed configuration.
 
 ### Example of how using `offlinePrecomputedInit` in a Next.js application
 
