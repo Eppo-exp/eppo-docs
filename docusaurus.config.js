@@ -104,7 +104,13 @@ async function createConfig () {
     themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({
-
+      announcementBar: {
+        id: 'announcementBar-1', // Any value that will identify this message
+        content: 'Join our next live demo April 8th at 11am PT / 2pm ET <a target="_blank" rel="noopener noreferrer" href="https://us06web.zoom.us/webinar/register/WN_HQuy1FIOTV6g3jdPOyD0ig#/registration">Register now →</a>',
+        backgroundColor: '#8266ff', // Defaults to '#fff'
+        textColor: '#ffffff', // Defaults to '#000'
+        isCloseable: true, // Defaults to true
+      },
       algolia: {
       // // The application ID provided by Algolia
         appId: 'XFI8PX63MB',
@@ -115,11 +121,11 @@ async function createConfig () {
         indexName: 'geteppo'
 
       // // ... other Algolia params
-      },
+      },      
       navbar: {
         // title: 'Eppo',
         logo: {
-          alt: 'Eppo logo',
+          alt: 'Eppo',
           src: 'img/eppo_logo2024.svg',
           srcDark: 'img/eppo_logo2024_dark.svg'
         },
