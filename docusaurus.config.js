@@ -130,6 +130,18 @@ async function createConfig () {
           srcDark: 'img/eppo_logo2024_dark.svg'
         },
         items: [
+          {
+            href: 'https://eppo.cloud/',
+            label: 'Login',
+            position: 'right',
+            className: 'button button--secondary',
+          },          
+          {
+            href: 'https://www.geteppo.com/get-access',
+            label: 'Sign Up',
+            position: 'right',
+            className: 'button button--primary',
+          },          
         ]
       },
       footer: {
