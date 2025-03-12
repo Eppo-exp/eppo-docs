@@ -138,7 +138,7 @@ async function createConfig () {
           },          
           {
             href: 'https://www.geteppo.com/get-access',
-            label: 'Sign Up',
+            label: 'Get a Demo',
             position: 'right',
             className: 'button button--primary',
           },          
