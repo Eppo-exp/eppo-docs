@@ -452,3 +452,11 @@ code {
 .api-option__type a:hover {
   text-decoration: underline;
 }
+
+.navbar__item {
+  margin-right: 1rem;
+}
+
+.button--primary:hover {
+  color: var(--ifm-color-gray-1000)
+}
