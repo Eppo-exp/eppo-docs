@@ -4,11 +4,11 @@
 Switchback experiments are currently in closed Beta
 :::
 
-Marketplaces present unique challenges when it comes to experimentation, especially because they depend on complex interactions between multiple groups. Switchback tests solve this problem by randomizing entire environments (e.g., regions and time periods) instead of focusing on groups of users. For example, in a ride-sharing app, you might alternate between treatment (lower prices for riders) and control (regular prices) during a specific time of day across different cities. This way, all drivers and riders experience the same conditions for each phase, minimizing interference and isolating the effects of price changes cleanly. Switchback tests can simulate real-world conditions without fracturing the ecosystem or leaving groups with noticeably worse experiences.
+Marketplaces present unique challenges when it comes to experimentation, especially because they depend on complex interactions between multiple groups. Switchback tests solve this problem by randomizing entire environments (e.g., regions and time periods) instead of focusing on groups of users. For example, in a ride-sharing app, you might alternate between pricing algorithms (new algorithm as treatment, old algorithm as control) during a specific time of day across different cities. This way, all drivers and riders experience the same conditions for each phase, minimizing interference and isolating the effects of price changes cleanly. Switchback tests can simulate real-world conditions without fracturing the ecosystem or leaving groups with noticeably worse experiences.
 
 ## Configure Switchback assignments
 
-Before creating any experiments, the data for which environment (i.e. market or region) is being randomized and when each variation is exposed to these environments needs to be configured. This is in addition to user assignments, which tell Eppo when individual users were exposed to a variation. [See here for more information on setting up AssignmentSQL](/definitions/assignment-sql/).
+Before creating any experiments, the data for which environment (i.e. market or region) is being randomized and when each variation is exposed to these environments needs to be configured. This is in addition to user assignments, which tell Eppo when individual users were exposed to a variation. [See here for more information on setting up AssignmentSQL](/data-management/definitions/assignment-sql).
 
 ### Create the environment entity
 First we need the environment entity defined. This is the environment that is being randomized over the course of the experiment, such as market or region.
@@ -34,6 +34,11 @@ We'll now provide a step-by-step walkthrough for creating Switchback Assignment 
 4. After clicking **Run**, you'll see some sample data. Annotate these columns into Eppo's data model using the right panel:
 5. Once you've finished annotating columns, click **Save & Close**
 
+### Updates to FactSQL
+FactSQL that corresponds to metrics you want to monitor also need to be updated with the Switchback entity. On the FactSQL page, click edit and add a new subentity that corresponds to the Switchback entity. 
+
+You do not need to make any changes to metrics.
+
 ## Create switchback analysis
 
 Switchback analysis shows you the impact of your test on key metrics while giving you confidence that your test is healthy.
@@ -51,11 +56,13 @@ Switchback have some key differences from setting up an A/B analysis. To configu
    2. Choose an Assignment Logging Table. This is the table that has information on when subjects were exposed to each variant over the course of the test.
    3. (Optional) Filter assignment by entry point - enable this is subject are exposed to the experiment at a different point from when they are randomized.
 3. Statistical Analysis Plan
-   1. Choose to use the default analysis plan or not. [See here for more information on the Statistical Analysis Plan](/experiment-analysis/analysis-plans/).
+   1. Choose to use the default analysis plan or not. [See here for more information on the Statistical Analysis Plan](/experiment-analysis/analysis-plans).
 
 ### Decision criteria
 
-The decision criteria sets the key metrics to be measured in the experiment and aligns the team around a ship decision based on the measurement of those metrics. See [Decision Criteria](/experiment-analysis/configuration/protocols/#decision-criteria/) for more information on configuring this part of the analysis.
+The decision criteria sets the key metrics to be measured in the experiment and aligns the team around a ship decision based on the measurement of those metrics. See [Decision Criteria](/experiment-analysis/configuration/protocols/#decision-criteria) for more information on configuring this part of the analysis.
+
+Of note for Switchbacks only, you can optionally add burn in and burn out periods. A burn period refers to a designated time interval at the start of a testing cycle where  assignment data is intentionally disregarded. This period allows the system to stabilize after switching between test conditions, such as transitioning from control to treatment in a switchback test. For example, when alternating pricing algorithms in a ride-sharing app, a burn period gives the marketplace time to adjust rider demand and driver availability before meaningful data is collected.
 
 ### Key, Variations, & Analysis dates
 
