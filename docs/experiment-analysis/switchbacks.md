@@ -56,7 +56,7 @@ Switchback have some key differences from setting up an A/B analysis. To configu
    2. Choose an Assignment Logging Table. This is the table that has information on when subjects were exposed to each variant over the course of the test.
    3. (Optional) Filter assignment by entry point - enable this is subject are exposed to the experiment at a different point from when they are randomized.
 3. Statistical Analysis Plan
-   1. Choose to use the default analysis plan or not. [See here for more information on the Statistical Analysis Plan](/experiment-analysis/analysis-plans).
+   1. Choose to use the default analysis plan or not. [See here for more information on the Statistical Analysis Plan](/experiment-analysis/configuration/analysis-plans).
 
 ### Decision criteria
 
