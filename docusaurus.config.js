@@ -106,7 +106,7 @@ async function createConfig () {
     ({
       announcementBar: {
         id: 'announcementBar-1', // Any value that will identify this message
-        content: 'Join our next live demo April 8th at 11am PT / 2pm ET <a target="_blank" rel="noopener noreferrer" href="https://us06web.zoom.us/webinar/register/WN_HQuy1FIOTV6g3jdPOyD0ig#/registration">Register now →</a>',
+        content: 'Webinar: "Measuring the Impact of AI Projects on Business Metrics" March 25th at 10am PT / 1pm ET <a target="_blank" rel="noopener noreferrer" href="https://us06web.zoom.us/webinar/register/4317418215826/WN__I0Wfr74Squ0JeU1pYERIA#/registration">Register now →</a>',
         backgroundColor: '#7964d3', // Defaults to '#fff'
         textColor: '#ffffff', // Defaults to '#000'
         isCloseable: true, // Defaults to true
