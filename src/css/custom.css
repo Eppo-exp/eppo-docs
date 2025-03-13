@@ -457,6 +457,10 @@ code {
   margin-right: 1rem;
 }
 
+.button--primary {
+  color: var(--ifm-background-color)
+}
+
 .button--primary:hover {
   color: var(--ifm-color-gray-1000)
 }
