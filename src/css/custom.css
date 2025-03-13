@@ -458,7 +458,7 @@ code {
 }
 
 .button--primary {
-  color: var(--ifm-color-gray-100)
+  color: var(--ifm-background-color)
 }
 
 .button--primary:hover {
