@@ -4,7 +4,7 @@
 Switchback experiments are currently in closed Beta
 :::
 
-Marketplaces present unique challenges when it comes to experimentation, especially because they depend on complex interactions between multiple groups. Switchback tests solve this problem by randomizing entire environments (e.g., regions and time periods) instead of focusing on groups of users. For example, in a ride-sharing app, you might alternate between pricing algorithms (new algorithm as treatment, old algorithm as control) during a specific time of day across different cities. This way, all drivers and riders experience the same conditions for each phase, minimizing interference and isolating the effects of price changes cleanly. Switchback tests can simulate real-world conditions without fracturing the ecosystem or leaving groups with noticeably worse experiences.
+Marketplaces present unique challenges when it comes to experimentation, particularly because they depend on complex interactions between multiple groups. Switchback tests solve this problem by randomizing entire environments (e.g., regions and time periods) instead of focusing on groups of users. For example, in a ride-sharing app, you might alternate between pricing algorithms (new algorithm as treatment, old algorithm as control) during a specific time of day across different cities. This way, all drivers and riders experience the same conditions for each phase, minimizing interference and isolating the effects of price changes cleanly. Switchback tests can simulate real-world conditions without fracturing the ecosystem or leaving groups with noticeably worse experiences.
 
 ## Configure Switchback assignments
 
@@ -36,8 +36,6 @@ We'll now provide a step-by-step walkthrough for creating Switchback Assignment 
 
 ![Configuring the Switchback assignment SQL](/img/experiments/switchbacks/switchback-assignments.png)
    
-### Updates to FactSQL
-FactSQL that corresponds to metrics you want to monitor also need to be updated with the Switchback entity. On the FactSQL page, click edit and add a new subentity that corresponds to the Switchback entity. 
 ### Updates to FactSQL
 FactSQL that corresponds to metrics you want to monitor also need to be updated with the Switchback entity. On the FactSQL page, click edit and add a new subentity that corresponds to the Switchback entity. 
 
