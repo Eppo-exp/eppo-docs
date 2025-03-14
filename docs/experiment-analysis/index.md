@@ -225,6 +225,17 @@ processes compatible with that method.
    This example shows frequentist statistics, described in detail below.
 </Figure>
 
+### Multivariate comparisons
+
+By default, Eppo groups by variation first and shows all metric result for a given variation together. As an option, you can also choose to view "By Metric" which groups by metric first and shows how all variants compare to Control for each metric.
+
+To toggle views, simply choose the "By Metric" option from the View dropdown.
+
+<Figure alt="Showing result by metric" src="/img/interpreting-experiments/results-by-metric.png">
+   This example shows results broken out by metric, allowing for multivariate comparisons at a glance.
+</Figure>
+
+
 #### Frequentist statistics
 
 Frequentist analysis methods (that is, sequential and fixed-sample) will show
