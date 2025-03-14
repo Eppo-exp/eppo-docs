@@ -1,4 +1,4 @@
-# Integrating With Braze
+# Integrating with Braze
 
 ## Set up A/B test in Braze and analyze in Eppo
 
