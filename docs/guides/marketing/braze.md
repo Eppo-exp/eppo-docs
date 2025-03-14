@@ -27,7 +27,7 @@ Once your experiment is set up, launch the test in Braze.
 
 ### **Eppo Experiment setup**
 
-The first step to setting up your experiment in Braze is to create an [Assignment table](/data-management/definitions/assignment-sql) in Eppo for the user level Braze campaign data in your warehouse. Use [Braze’s docs](https://www.braze.com/docs/user_guide/data/braze_currents/event_glossary/message_engagement_events?tab=cloud%20storage) to determine which event schema you should use and align with the data requirements with your Eppo Assignments table. 
+The first step to setting up your experiment in Braze is to create an [Assignment table](/data-management/definitions/assignment-sql) in Eppo based on user-level Braze campaign data in your warehouse. Use [Braze’s docs](https://www.braze.com/docs/user_guide/data/braze_currents/event_glossary/message_engagement_events?tab=cloud%20storage) to determine which event schema you should use as experiment assignments in Eppo. 
 
 When analyzing channel outreach experiments, it's common to measure both overall user level metrics (engagement, revenue, retention, etc.) and campaign-specific metrics (click through rate, unsubscribes, etc.). Depending on the entities that your metrics use, you may want to include a [Secondary Entity](/data-management/definitions/assignment-sql/#optional-columns-for-advanced-use-cases) to include metrics that use a different user id than what is used in Braze.
 
