@@ -17,6 +17,10 @@ Additionally, you will need to create a data environment for Eppo to write inter
 7. Under **Service account permissions**, add the following roles:
     - `BigQuery Job User (roles/bigquery.jobUser)`
       - Required
+    - `BigQuery User (roles/bigquery.user)`
+      - Required
+    - `BigQuery Darta Viewer (roles/bigquery.dataViewer )`
+      - Required
     - `Storage Admin (roles/storage.admin)`
       - Optional; required for using Eppo's [Track API](/sdks/event-logging/event-tracking)
       - Scoped to the Storage bucket to use for temporary storage of events before loading into BigQuery
