@@ -1,0 +1,198 @@
+---
+title: Assignments
+sidebar_position: 3
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+import ApiOptionRef from '@site/src/components/ApiOptionRef';
+
+Assignments are the mechanism through which a given [Subject](/sdks/sdk-features/subjects) is assigned to a variation for a feature flag or experiment.
+
+The Eppo SDK supports the following assignment types:
+- String
+- Boolean
+- JSON
+- Integer
+- Numeric
+
+## Assignment Types
+
+### String Assignments
+
+String assignments return a string value that is set as the variation. String flags are the most common type of flags and are useful for both A/B/n tests and advanced targeting use cases.
+
+```elixir
+flag_key = "flag-key-123"
+subject_key = get_user_id() || "user-123"
+default_value = "version-a"
+subject_attributes = %{
+  "country" => "US",
+  "age" => 30,
+  "is_returning_user" => true
+}
+
+client = EppoSdk.Server.get_instance()
+variant = EppoSdk.Client.get_string_assignment(
+  client,
+  flag_key,
+  subject_key,
+  subject_attributes,
+  default_value
+)
+
+case variant do
+  "version-a" -> handle_version_a()
+  "version-b" -> handle_version_b()
+end
+```
+
+### Boolean Assignments
+
+Boolean flags support simple on/off toggles. They're useful for simple, binary feature switches like blue/green deployments or enabling/disabling a new feature.
+
+```elixir
+variant = EppoSdk.Client.get_boolean_assignment(
+  client,
+  flag_key,
+  subject_key,
+  subject_attributes,
+  false  # default value
+)
+
+if variant do
+  handle_feature_enabled()
+else
+  handle_feature_disabled()
+end
+```
+
+### JSON Assignments
+
+JSON flags work best for advanced configuration use cases. The JSON flag can include structured information such as:
+- Marketing copy for a promotional campaign
+- Configuration parameters for a feature
+- UI customization settings
+
+```elixir
+default_campaign = %{
+  "hero" => false,
+  "hero_image" => "placeholder.png",
+  "hero_title" => "Placeholder Hero Title",
+  "hero_description" => "Placeholder Hero Description"
+}
+
+campaign_json = EppoSdk.Client.get_json_assignment(
+  client,
+  flag_key,
+  subject_key,
+  subject_attributes,
+  default_campaign
+)
+```
+
+### Numeric Assignments
+
+The SDK provides both integer and floating-point numeric assignments. These are useful for testing different numeric values like:
+- Price points
+- Number of items to display
+- Timeout durations
+
+```elixir
+# Integer assignment example
+num_items = EppoSdk.Client.get_integer_assignment(
+  client,
+  flag_key,
+  subject_key,
+  subject_attributes,
+  10  # default value
+)
+
+# Floating point assignment example
+price = EppoSdk.Client.get_numeric_assignment(
+  client,
+  flag_key,
+  subject_key,
+  subject_attributes,
+  9.99  # default value
+)
+```
+
+## Assignment Logging
+
+### Assignment Logger Schema
+
+The SDK will invoke the `log_assignment` function with an `assignment` map that contains the following fields:
+
+<ApiOptionRef
+  name="timestamp"
+  type="str"
+  defaultValue="undefined"
+>
+
+The time when the subject was assigned to the variation in ISO format. Example: `"2021-06-22T17:35:12.000Z"`
+</ApiOptionRef>
+
+<ApiOptionRef
+  name="featureFlag"
+  type="str"
+  defaultValue="undefined"
+>
+
+An Eppo feature flag key. Example: `"recommendation-algo"`
+</ApiOptionRef>
+
+<ApiOptionRef
+  name="allocation"
+  type="str"
+  defaultValue="undefined"
+>
+
+An Eppo allocation key. Example: `"allocation-17"`
+</ApiOptionRef>
+
+<ApiOptionRef
+  name="experiment"
+  type="str"
+  defaultValue="undefined"
+>
+
+An Eppo experiment key. Example: `"recommendation-algo-allocation-17"`
+</ApiOptionRef>
+
+<ApiOptionRef
+  name="subject"
+  type="str"
+  defaultValue="undefined"
+>
+
+An identifier of the subject or user assigned to the experiment variation. Example: UUID
+</ApiOptionRef>
+
+<ApiOptionRef
+  name="subjectAttributes"
+  type="Map"
+  defaultValue="{}"
+>
+
+A free-form map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function. Example: `%{ "country" => "US" }`
+</ApiOptionRef>
+
+<ApiOptionRef
+  name="variation"
+  type="str"
+  defaultValue="undefined"
+>
+
+The experiment variation the subject was assigned to. Example: `"control"`
+</ApiOptionRef>
+
+<ApiOptionRef
+  name="metaData"
+  type="Map"
+  defaultValue="%{sdkName: 'elixir'}"
+>
+
+A free-form map of metadata about the assignment. By default, the SDK will include the SDK name for logging.
+</ApiOptionRef>
+

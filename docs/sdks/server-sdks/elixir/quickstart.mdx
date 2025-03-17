@@ -1,0 +1,161 @@
+---
+title: Quickstart
+sidebar_position: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+The Eppo Elixir SDK enables feature flags and experiments in your Elixir applications with only a few lines of code.
+
+The SDK handles all the complexity of feature flag evaluation and experiment assignment locally in your application, with no network calls required after initial setup. This guide will walk you through installing the SDK and implementing your first feature flag and experiment.
+
+## Installation
+
+First, add the SDK as a dependency in your `mix.exs`:
+
+```elixir
+defp deps do
+  [
+    {:eppo_sdk, "~> 1.0"}
+  ]
+end
+```
+
+Then fetch and compile dependencies:
+
+```bash
+mix deps.get
+```
+
+## Feature Flags
+Feature flags are a way to toggle features on and off without needing to deploy code.
+
+### Initialize the SDK
+
+[Create an SDK key](/sdks/sdk-keys) if you don't already have one.
+
+First, initialize the SDK using your SDK key:
+
+```elixir
+config = %EppoSdk.Client.Config{
+  api_key: "<SDK-KEY>",
+  assignment_logger: MyApp.AssignmentLogger
+}
+
+{:ok, client} = EppoSdk.Client.new(config)
+```
+
+:::note
+The SDK key is different from the project API key. You can find your SDK key in the [SDK Keys section of the Eppo interface](https://eppo.cloud/configuration/environments/keys).
+:::
+
+### Assign a variant
+
+Once initialized, you can start making assignments:
+
+```elixir
+user = get_current_user()
+
+variation = EppoSdk.Client.get_string_assignment(
+  client,
+  "show-new-feature",
+  user.id,
+  %{ "country" => user.country },
+  "default"
+)
+
+case variation do
+  "variant-a" -> handle_variant_a()
+  "variant-b" -> handle_variant_b()
+  _ -> handle_control()
+end
+```
+
+### Assignment Types
+
+The SDK provides different assignment functions based on the type of value you need:
+
+| Function | Return Type |
+|----------|-------------|
+| `get_string_assignment/5` | String |
+| `get_boolean_assignment/5` | Boolean |
+| `get_json_assignment/5` | Map (JSON object) |
+| `get_integer_assignment/5` | Integer |
+| `get_numeric_assignment/5` | Float |
+
+:::note
+See more details about assignment functions in the [Assignments](/sdks/server-sdks/elixir/assignments) page.
+:::
+
+## Assignment Logger
+
+While feature flags are useful, they do not send you any information about how your users are interacting with the feature. 
+To run and analyze experiments, we need to collect data about these interactions using your preferred logging system.
+Implement the `EppoSdk.AssignmentLogger` behavior to log events through the SDK:
+
+```elixir
+defmodule MyApp.AssignmentLogger do
+  @behaviour EppoSdk.AssignmentLogger
+  
+  def log_assignment(assignment) do
+    IO.inspect("Logging assignment: #{inspect(assignment)}") # Replace with actual logging logic
+  end
+end
+
+config = %EppoSdk.Client.Config{
+  api_key: "<SDK-KEY>",
+  assignment_logger: MyApp.AssignmentLogger
+}
+
+{:ok, client} = EppoSdk.Client.new(config)
+```
+
+:::note
+In a production application, you would want to replace `IO.inspect` with an actual logging system. We have documentation on how to set up logging with multiple popular data warehouses and logging systems in the [Assignments page](/sdks/server-sdks/elixir/assignments/#logging-data-to-your-data-warehouse).
+:::
+
+## Singleton Server
+
+We want to avoid re-initializing the SDK for each request.
+Instead of passing the client around, we can use the `EppoSdk.Server` module to get the current client
+
+```elixir
+config = %EppoSdk.Client.Config{
+  api_key: api_key,
+  assignment_logger: EppoSdk.AssignmentLogger,
+  is_graceful_mode: true,
+  poll_interval_seconds: 30,
+  poll_jitter_seconds: 3
+}
+
+{:ok, _pid} = EppoSdk.Server.start_link(config)
+client = EppoSdk.Server.get_instance()
+```
+
+You can also add this server to your supervision tree:
+
+Or added to your application's supervision tree:
+
+```elixir
+# In your application.ex
+defmodule YourApp.Application do
+  use Application
+
+  def start(_type, _args) do
+    config = %EppoSdk.Client.Config{
+      api_key: System.get_env("EPPO_API_KEY"),
+      assignment_logger: YourApp.AssignmentLogger,
+      # ... other config options ...
+    }
+
+    children = [
+      # ... other children ...
+      {EppoSdk.Server, config}
+    ]
+
+    opts = [strategy: :one_for_one, name: YourApp.Supervisor]
+    Supervisor.start_link(children, opts)
+  end
+end
+```
