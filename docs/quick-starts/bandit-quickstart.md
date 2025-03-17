@@ -132,7 +132,7 @@ Note, here is where you use the SDK key generated in step 1.
 Once the SDK is initialized, use getStringAssignment() to check what variation a user should see. When requesting an assignment from a flag with a bandit, the set of actions and their attributes are provided as an additional argument.
 
 :::info
-Depending on the SDK you are using, a `getBanditAction()` alternative method may be available. Refer to the [Node](/sdks/server-sdks/node/bandits) or [Python](https://docs.geteppo.com/sdks/server-sdks/python/#6-contextual-bandits) documentation for more details. 
+Depending on the SDK you are using, a `getBanditAction()` alternative method may be available. Refer to the [Node](/sdks/server-sdks/node/bandits) or [Python](sdks/server-sdks/python/bandits) documentation for more details. 
 :::
 
 In the Java SDK, the call may look like:
