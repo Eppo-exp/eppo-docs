@@ -15,6 +15,7 @@ For browser-based applications, you have several options to ensure fresh configu
 ```javascript
 const client = new EppoClient({
     apiKey: 'your-api-key',
+    pollAfterSuccessfulInitialization: true, // Set SDK to poll
     pollInterval: 30000 // Poll every 30 seconds
 });
 ```
@@ -22,6 +23,7 @@ const client = new EppoClient({
 2. **Manual Refresh**
 ```javascript
 // Force a configuration refresh when needed
+forceReinitialize: true // Re-initialize the SDK
 await eppoClient.load();
 ```
 
@@ -32,14 +34,15 @@ Mobile apps can implement similar strategies:
 ```swift
 // iOS Example
 let client = EppoClient(
-    apiKey: "your-api-key",
-    pollInterval: 30 // seconds
+    resetSharedInstance() // Force a refresh 
+    try await EppoClient.initialize(sdkKey: "your-api-key") // Re-initialize the SDK
 )
 ```
 
 ```kotlin
 // Android Example
 val client = EppoClient.builder()
+    .forceReinitialize(true)
     .apiKey("your-api-key")
     .pollInterval(30) // seconds
     .build()
