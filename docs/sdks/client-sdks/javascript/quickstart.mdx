@@ -173,6 +173,14 @@ Tracking events involves providing a `type`, as well a `payload` containing any 
 ```typescript
 import * as EppoSdk from "@eppo/js-client-sdk";
 
+// initialize with event tracking enabled
+await EppoSDK.init({
+  apiKey: "<SDK_KEY>",
+  eventTracking: {
+    enabled: true
+  }
+});
+
 const eppoClient = EppoSdk.getInstance();
 eppoClient.track("added_to_cart", {
   userId: 1337,
