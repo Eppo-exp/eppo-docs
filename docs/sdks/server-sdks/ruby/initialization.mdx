@@ -30,6 +30,21 @@ After initialization, you can get an instance of the client using Ruby's singlet
 client = EppoClient::Client.instance
 ```
 
+## Wait for initialization to complete
+
+Eppo SDK initialization is non-blocking. This means your application can continue running while the SDK initializes in the background. However, if you call assignment methods before initialization completes, you will get default values. It is therefore recommended to wait for initialization to finish before serving assignments.
+
+Ruby SDK 3.6.0 adds a new `wait_for_initialization(timeout=1)` method that waits for initialization to complete (or timeout reached):
+```ruby
+client.wait_for_initialization(0.5)
+```
+
+For versions before 3.6.0, you can apply a short sleep after calling init:
+```ruby
+EppoClient::init(config)
+sleep(0.5)
+```
+
 ## Advanced Configuration
 
 Basic initialization is great for most use cases, but the SDK provides options that you can use during initialization to customize the behavior of the SDK.
@@ -38,7 +53,7 @@ Basic initialization is great for most use cases, but the SDK provides options t
 
 The `Config` class accepts the following options:
 
-<ApiOptionRef 
+<ApiOptionRef
   name="api_key"
   type="String"
   defaultValue="nil"
@@ -47,7 +62,7 @@ The `Config` class accepts the following options:
 Your SDK key from the Eppo dashboard. Required.
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="assignment_logger"
   type="AssignmentLogger"
   defaultValue="nil"
@@ -56,7 +71,7 @@ Your SDK key from the Eppo dashboard. Required.
 A callback that sends each assignment to your data warehouse. Required only for experiment analysis.
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="base_url"
   type="String"
   defaultValue="https://fscdn.eppo.cloud/api"
@@ -65,7 +80,7 @@ A callback that sends each assignment to your data warehouse. Required only for 
 The Eppo API endpoint base url.
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="poll_interval_seconds"
   type="Integer"
   defaultValue="30"
@@ -74,7 +89,7 @@ The Eppo API endpoint base url.
 The interval in seconds at which the SDK polls for configuration updates. If set to `nil`, polling is disabled.
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="poll_jitter_seconds"
   type="Integer"
   defaultValue="30"
@@ -83,7 +98,7 @@ The interval in seconds at which the SDK polls for configuration updates. If set
 The jitter in seconds to add to the poll interval to prevent thundering herd problems.
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="log_level"
   type="String"
   defaultValue="nil"
@@ -92,7 +107,7 @@ The jitter in seconds to add to the poll interval to prevent thundering herd pro
 The default log level for the Eppo client. Can be either nil, error, warn, info, debug or trace
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="initial_configuration"
   type="Configuration"
   defaultValue="nil"
@@ -113,11 +128,7 @@ config = EppoClient::Config.new(
 EppoClient::init(config)
 ```
 
-### Configuration Caching
-
-The SDK can cache previously loaded configurations for use in future sessions. This makes the SDK initialize faster and provides resilience against network issues.
-
-#### Advanced Configuration Control
+### Advanced Configuration Control
 
 The Ruby SDK exposes an API to allow manual control over configuration:
 
@@ -125,7 +136,10 @@ The Ruby SDK exposes an API to allow manual control over configuration:
 # Get current configuration
 config = client.configuration
 
-# Access specific parts of the configuration
+# Set current configuration
+client.configuration = config
+
+# Get serialized configuration representation that can be used to bootstrap client SDKs
 flags_config = config.flags_configuration
 bandits_config = config.bandits_configuration
 ```
@@ -142,29 +156,29 @@ The default periodic polling setup is suitable for most cases but may not be eff
 For serverless environments, you can:
 
 1. Disable polling:
-```ruby
-config = EppoClient::Config.new(
-  '<SDK-KEY>',
-  poll_interval_seconds: nil  # Disable polling
-)
-```
+   ```ruby
+   config = EppoClient::Config.new(
+     '<SDK-KEY>',
+     poll_interval_seconds: nil  # Disable polling
+   )
+   ```
 
 2. Manually control configuration updates:
-```ruby
-# Initialize with a cached configuration
-cached_config = get_cached_configuration  # Your caching logic
-config = EppoClient::Config.new(
-  '<SDK-KEY>',
-  poll_interval_seconds: nil,
-  initial_configuration: cached_config
-)
-EppoClient::init(config)
+   ```ruby
+   # Initialize with a cached configuration
+   cached_config = get_cached_configuration  # Your caching logic
+   config = EppoClient::Config.new(
+     '<SDK-KEY>',
+     poll_interval_seconds: nil,
+     initial_configuration: cached_config
+   )
+   EppoClient::init(config)
 
-# Later, update configuration manually if needed
-client = EppoClient::Client.instance
-new_config = fetch_new_configuration  # Your update logic
-client.set_configuration(new_config)
-```
+   # Later, update configuration manually if needed
+   client = EppoClient::Client.instance
+   new_config = fetch_new_configuration  # Your update logic
+   client.set_configuration(new_config)
+   ```
 
 ### Example Configurations
 
@@ -209,7 +223,7 @@ config = EppoClient::Config.new(
 
 ### Frameworks
 
-When using the SDK in Rails, Spring or other frameworks that have their own initialization process, 
+When using the SDK in Rails, Spring or other frameworks that have their own initialization process,
 you can initialize the SDK after the framework has initialized.
 
 See details on pre-fork behavior in [Using Eppo SDK with pre-forking servers](/sdks/preforking/).
