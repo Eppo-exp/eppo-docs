@@ -33,6 +33,7 @@ const client = init({
 ### Mobile Applications
 Mobile apps can implement similar strategies:
 
+```swift
 EppoClient.resetSharedInstance()
 eppoClient = try await EppoClient.initialize(
     sdkKey: "your-sdk-key",
