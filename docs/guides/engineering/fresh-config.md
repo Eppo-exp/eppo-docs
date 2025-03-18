@@ -51,7 +51,7 @@ val client = new EppoClient.Builder("your-sdk-key", getApplication())
 
 ## Best Practices and Considerations
 
-When implementing polling or real-time updates, consider how configuration changes might affect active user sessions. Specifically,Configuration changes during an active session might create an inconsistent user experience. Consider these strategies:
+When implementing polling or real-time updates, consider how configuration changes might affect active user sessions. Specifically, configuration changes during an active session might create an inconsistent user experience. Consider these strategies:
   - Reserve changing flag values in a session for only the flags that absolutely need it, like kill switches
   - Update configurations only between sessions
   - Implement graceful transitions when flags change
