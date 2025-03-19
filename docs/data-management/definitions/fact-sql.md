@@ -23,9 +23,10 @@ Each Fact SQL Definition should return the following columns. Note that the spec
 | Fact value (optional) | A numeric quantity associated with the fact. You can add several if an event has multiple associated values (e.g., net revenue and gross revenue) | `gross_revenue` , `items_added_to_cart` , `support_ticket_count` |
 | Fact property (optional) | A categorical variable associated with the event. This can be used to filter events in metric creation, or to break out experiment results. Note that properties that are 1:1 with experiment subjects should be defined in an [Assignment](/data-management/definitions/assignment-sql) or [Entity Property](/data-management/definitions/property-sql) SQL definition. | `revenue_category` , `support_ticket_reason` , `event_name` |
 | Partition date (optional) | An optional additional timestamp for filtering rows with a column other than the event timestamp. Useful if your event timestamp column differs from the table's partition timestamp column. See [here](/data-management/warehouse-best-practices/#leveraging-partitioning) for more information about leveraging partitioning. | `date` |
+| Always full refresh | An optional boolean parameter that specifies if a metric associated to this source will fully refresh whenever the underlying SQL in this source changes. | `false` |
 
 :::info
-Partition date columns are disabled by default. If you would like to enable them, please reach out to your Eppo point of contact or email support@geteppo.com. Enabling this feature will have no impact on billing.
+Partition date columns and always full refresh are disabled by default. If you would like to enable them, please reach out to your Eppo point of contact or email support@geteppo.com. Enabling this feature will have no impact on billing.
 :::
 
 ## Creating a Fact SQL
@@ -125,7 +126,7 @@ select * from analytics.reviews
 | `passenger_id` | Entity ID |
 | `review_rating` | Fact value |
 | `review_has_photo` | Fact property |
-| `review_is_disputed` | Fact property | 
+| `review_is_disputed` | Fact property |
 
 Since we've added multiple entity columns, this table will be able to power metrics for both passenger-randomized and driver-randomized experiments. We'll be able to create metrics based on both the number of rows in this table (i.e., the number of reviews) and the average rating. We'll also be able to leverage fact properties to build metrics like "Reviews with Dispute", and break out measurements by whether the review had a photo.
 
@@ -136,19 +137,19 @@ Next, imagine you are working at an ecommerce website and have a log of every bu
 | Column | Type in Eppo |
 |--------|--------------|
 | `user_id` | Entity ID |
-| `event_timestamp` | Timestamp | 
+| `event_timestamp` | Timestamp |
 | `event_name` | Fact property |
 
 In this case, you could have many different `event_name` values corresponding to different buttons in your app. By marking `event_name` as a fact property, you can filter metrics to look at specific button clicks (for instance, add to cart clicks).
 
 ### Pre-aggregated data
 
-Finally, some companies may have very large data sources and prefer to pre-aggregate data upstream of Eppo. For instance, instead of pointing Eppo at a raw event stream, you might aggregate data by session and point Eppo at that instead. 
+Finally, some companies may have very large data sources and prefer to pre-aggregate data upstream of Eppo. For instance, instead of pointing Eppo at a raw event stream, you might aggregate data by session and point Eppo at that instead.
 
 | Column | Type in Eppo |
 |--------|--------------|
 | `session_id` | (not used) |
-| `session_start_timestamp` | Timestamp | 
+| `session_start_timestamp` | Timestamp |
 | `user_id` | Entity ID |
 | `pages_viewed` | Fact value |
 | `items_added_to_cart` | Fact value |
@@ -168,12 +169,12 @@ You can update facts by clicking the `Edit` button to access the Fact SQL. At th
 Pressing the `Run` button will enable the mapping fields. Click `Save & Close` button to save any changes made in either the SQL or mapping.
 
 :::note
-Any running experiments with metrics based on the updated Fact SQL will automatically fully refresh those metrics on the next experiment update.
+Any running experiments with metrics based on the updated Fact SQL will automatically fully refresh those metrics on the next experiment update, if "Always full refresh" is enabled for that Fact SQL.
 :::
 
 ## Deleting Facts
 
-You can delete a Fact SQL as well as individual Facts. First, access the Fact SQL by clicking the `Edit` button. 
+You can delete a Fact SQL as well as individual Facts. First, access the Fact SQL by clicking the `Edit` button.
 
 To delete the Fact SQL, click `Delete Fact SQL` from the overflow menu.
 
