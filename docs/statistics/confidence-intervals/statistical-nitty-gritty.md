@@ -431,7 +431,7 @@ $$
 
 Fixed-sample analysis assumes that the results are only looked at once, and
 therefore only a single interval need be constructed—so we can ignore the $t$
-subscripts in the above constraint (eq. 15). Given that we have
+subscripts in the above constraint (eq. 16). Given that we have
 constructed a normal distribution that describes the lift estimate, we can
 therefore simply use that distribution's
 [quantile function](https://en.wikipedia.org/wiki/Normal_distribution#Quantile_function)
@@ -456,7 +456,7 @@ $$
 #### Sequential
 
 For the sequential analysis method, we need to ensure that the constraint in
-equation 15 holds _for all $t$ at once_. That is:
+equation 16 holds _for all $t$ at once_. That is:
 
 $$
 P(L_t^c \le \Delta_t \le U_t^c~,~ \forall t \ge 1) \ge c
