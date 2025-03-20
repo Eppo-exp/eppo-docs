@@ -1,11 +1,11 @@
 # Webhooks
 
-## Experiment Update Webhook
-
 Webhooks let your integrations take action in response to events that occur in Eppo. 
+
+## Experiment Webhook Events
+
 The Experiment Update Webhook is a good solution when a custom application needs to display or take action on the most up to date state of an experiment.
 
-## Webhook Events
 The webhook sends four types of experiment update events. If you only want to take action based on certain types of events, 
 you can filter to just the events you are interested in subscribing to based on their event type in the request body.
 
@@ -90,11 +90,14 @@ you can filter to just the events you are interested in subscribing to based on 
 
 ## Flagging Webhooks
 
+The flagging webhook is a good solution when a custom application needs to display 
+or take action on the most up to date state of a flag.
+
 ### Flag Configuration Updated
 
-The flag configuration updated webhook is sent when a flag or its associated configuration is updated.
+The flag configuration updated webhook is sent when a flag or its associated models, such as assignments, targeting rules, environments or audiences, are updated.
 
-Any operation visible in the Flag History is sent to the webhook.
+In short, any operation visible in the Flag History is sent to the webhook.
 
 **Request body:**
 
