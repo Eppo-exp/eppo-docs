@@ -17,7 +17,6 @@ The Run Log highlights any pipeline failures during refresh, whether from errors
 The Long Running Tasks view shows how long each pipeline component takes to execute. The visualization includes:
 
 - A timeline chart showing runs from earliest to latest, with color-coded pipeline components
-- A black line indicating total run time per experiment (note: this may differ from the sum of component times due to parallel execution)
 - A sorted list of cumulative time per task type
 
 [Learn more about pipeline components here](/data-management/data-pipeline/#pipeline-steps).
@@ -33,7 +32,6 @@ If certain tasks consistently take a long time, consider whether they're necessa
 ## Investigate the Pipeline
 
 ![Investigate the Pipeline module](/img/data-management/pipeline/investigate-pipeline.png)
-
 
 The Pipeline Investigation view lets you examine every task in every run. For each run:
 
