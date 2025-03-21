@@ -41,7 +41,7 @@ The Pipeline Investigation view lets you examine every task in every run. For ea
 
 ![Log details for a task](/img/data-management/pipeline/investigate-pipeline-details.png)
 
-For Snowflake and Databricks users, a warehouse usage module shows:
+For Snowflake and BigQuery users, a warehouse usage module shows:
 - Bytes scanned
 - Execution time 
 
