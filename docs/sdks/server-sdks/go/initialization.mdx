@@ -13,7 +13,7 @@ To complete basic initialization, you only need to provide an SDK key. [Create a
 
 ```go
 import (
-    "github.com/eppo-exp/golang-sdk/v6/eppoclient"
+    "github.com/Eppo-exp/golang-sdk/v6/eppoclient"
 )
 
 config := eppoclient.Config{
@@ -46,7 +46,7 @@ Basic initialization is great for most use cases, but the SDK provides options t
 
 The `Config` struct accepts the following options:
 
-<ApiOptionRef 
+<ApiOptionRef
   name="SdkKey"
   type="string"
   defaultValue='""'
@@ -55,7 +55,7 @@ The `Config` struct accepts the following options:
 Your SDK key from the Eppo dashboard. Required.
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="AssignmentLogger"
   type="IAssignmentLogger"
   defaultValue="nil"
@@ -64,7 +64,7 @@ Your SDK key from the Eppo dashboard. Required.
 A callback that sends each assignment to your data warehouse. Required only for experiment analysis.
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="BaseUrl"
   type="string"
   defaultValue='"https://fscdn.eppo.cloud/api"'
@@ -73,7 +73,7 @@ A callback that sends each assignment to your data warehouse. Required only for 
 The base URL for the Eppo API.
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="PollerInterval"
   type="time.Duration"
   defaultValue="10 * time.Second"

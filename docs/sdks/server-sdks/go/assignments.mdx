@@ -25,7 +25,7 @@ String assignments return a string value that is set as the variation. String fl
 
 ```go
 import (
-    "github.com/eppo-exp/golang-sdk/v6/eppoclient"
+    "github.com/Eppo-exp/golang-sdk/v6/eppoclient"
 )
 
 subjectAttributes := map[string]interface{}{
@@ -146,7 +146,7 @@ The SDK will invoke an assignment logger function if it is available when the as
 
 The SDK will invoke the `LogAssignment` method with an `AssignmentEvent` struct that contains the following fields:
 
-<ApiOptionRef 
+<ApiOptionRef
   name="Timestamp"
   type="string"
   defaultValue='""'
@@ -155,7 +155,7 @@ The SDK will invoke the `LogAssignment` method with an `AssignmentEvent` struct 
 The time when the subject was assigned to the variation in ISO format. Example: `"2021-06-22T17:35:12.000Z"`
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="FeatureFlag"
   type="string"
   defaultValue='""'
@@ -164,7 +164,7 @@ The time when the subject was assigned to the variation in ISO format. Example: 
 An Eppo feature flag key. Example: `"recommendation-algo"`
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="Allocation"
   type="string"
   defaultValue='""'
@@ -173,7 +173,7 @@ An Eppo feature flag key. Example: `"recommendation-algo"`
 An Eppo allocation key. Example: `"allocation-17"`
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="Experiment"
   type="string"
   defaultValue='""'
@@ -182,7 +182,7 @@ An Eppo allocation key. Example: `"allocation-17"`
 An Eppo experiment key. Example: `"recommendation-algo-allocation-17"`
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="Subject"
   type="string"
   defaultValue='""'
@@ -191,7 +191,7 @@ An Eppo experiment key. Example: `"recommendation-algo-allocation-17"`
 An identifier of the subject or user assigned to the experiment variation. Example: UUID
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="SubjectAttributes"
   type="map[string]interface{}"
   defaultValue="nil"
@@ -200,7 +200,7 @@ An identifier of the subject or user assigned to the experiment variation. Examp
 A map of metadata about the subject. These attributes are only logged if passed to the SDK assignment function. Example: `{"country": "US"}`
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="Variation"
   type="string"
   defaultValue='""'
@@ -209,7 +209,7 @@ A map of metadata about the subject. These attributes are only logged if passed 
 The experiment variation the subject was assigned to. Example: `"control"`
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="MetaData"
   type="map[string]string"
   defaultValue="{}"
@@ -217,7 +217,7 @@ The experiment variation the subject was assigned to. Example: `"control"`
 A map of key-value pairs that allows you to attach custom metadata to the assignment event. This metadata is logged alongside the assignment event and can be used for additional context or filtering in analytics.
 </ApiOptionRef>
 
-<ApiOptionRef 
+<ApiOptionRef
   name="ExtraLogging"
   type="map[string]string"
   defaultValue="{}"
@@ -317,7 +317,7 @@ func (l *CachingLogger) LogAssignment(event eppoclient.AssignmentEvent) error {
     if _, exists := l.cache.Get(cacheKey); exists {
         return nil
     }
-    
+
     err := l.wrapped.LogAssignment(event)
     if err == nil {
         l.cache.Add(cacheKey, true)
