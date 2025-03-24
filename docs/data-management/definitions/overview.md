@@ -47,7 +47,7 @@ You can also use entry points to filter experiment analyses. This is useful when
 
 ### Entity Properties (optional)
 
-The final type of definition in Eppo is entity properties. Entity properties are used to specify static entity-level (typically user-level) properties that don't change as a part of an experiment. Examples include original marketing channel, region, or user age. 
+The final type of definition in Eppo is entity properties. Entity properties are used to specify static entity-level (typically user-level) properties that don't change as a part of an experiment. Examples include original marketing channel, region, or user cohort. 
 
 Note that entity properties should only be used for static properties. If a subject's property value changes over time, it should instead be added as a property on the assignment table. This way Eppo can guarantee that the property value at the start of the experiment is used. This helps simplify analysis and give more robust results.
 
