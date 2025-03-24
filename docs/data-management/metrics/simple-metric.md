@@ -25,11 +25,11 @@ WITH user_summaries AS (
         assignments.user_id,
         assignments.variant,
         SUM(revenue.revenue_amount) AS user_revenue
-   FROM assignments
+   FROM assignments -- Eppo will manage assignment deduplication
    LEFT JOIN revenue
      ON revenue.user = assignments.user
     AND revenue.timestamp >= assignments.timestamp
-  GROUP BY assignments.user_id
+  GROUP BY assignments.user_id, assignments.variant
   WHERE revenue.timestamp BETWEEN <experiment_start> AND <experiment_end>
 )
 
