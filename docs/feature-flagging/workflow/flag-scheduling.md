@@ -2,16 +2,22 @@
 sidebar_position: 3
 ---
 
-# Flag scheduling
+# Flag scheduling and rollouts
 
-:::note
-Scheduling flags are currently in closed Beta
-:::
+In Eppo, you can create a rollout schedule for feature gates and experiment assignments on flags. This is helpful in cases where you want to perform a slow rollout to monitor performance metrics and reduce risk.
 
-In Eppo, you can schedule enabling or disabling a Feature Flag in Production. To do so, click the clock icon next to the flag enable/disable toggle. You are able to select a date and time for the change to take effect.
+To add a rollout schedule:
+1. In a flag, create a Feature Gate or Experiment Assignment
+2. Under "Traffic Exposure & Weights" choose "Schedule automated rollouts in phases". As a default the flag will rollout to the selected traffic exposure when the flag is enabled.
+![Rollout options under Traffic Exposure](/img/feature-flagging/rollouts/rollout-percentage.png)
+3. Set the phases of the rollout. Each phase is a set date, time, and traffic percentage. The rollout will be at 0% until Phase 1's scheduled datetime.
+![Setting the phases of a rollout](/img/feature-flagging/rollouts/rollout-phases.png)
 
-![Schedule a flag](/img/feature-flagging/flag-schedule.png)
+When set, the schedule will be displayed on the Flag detail page along with any action that should be taken. For example, if the flag is disabled, we message that the flag should be enabled prior to rollout.
+![Flag with a rollout scheduled](/img/feature-flagging/rollouts/rollout-flag-details.png)
 
-Flags that are scheduled can also be rescheduled. Click the `Reschedule` button on the banner to select a new date and time or to cancel the current scheduled change.
+Hovering over the schedule also provides the details of the schedule at a glance.
+![Phases of the rollout shown on hover](/img/feature-flagging/rollouts/rollout-phases-hover.png)
 
-Note that a flag cannot be toggled on or off when a scheduled action is active.
+
+Schedules can be edited or removed. To do so, edit the flag and change settings as you like.
