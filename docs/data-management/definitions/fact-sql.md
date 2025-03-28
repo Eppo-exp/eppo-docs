@@ -86,7 +86,7 @@ To specify a partition key, map the column to the Partition Date field.
 ![Partition Date](/img/data-management/best-practices/partition_date.png)
 
 :::info
-Partition dates are disabled by default, if you'd like to enable them in your workspace, please reach out to your Eppo representative or email us at support@geteppo.com.
+Partition keys are disabled by default, if you'd like to enable them in your workspace, please reach out to your Eppo representative or email us at support@geteppo.com.
 :::
 
 ### Defining template variables
