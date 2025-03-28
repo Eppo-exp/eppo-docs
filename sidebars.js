@@ -152,6 +152,11 @@ const sidebars = {
         },
         {
           type: 'doc',
+          label: 'Architecture and Security',
+          id: 'reference/architecture-and-security'
+        },
+        {
+          type: 'doc',
           label: 'REST API',
           id: 'reference/api/index'
         },
@@ -159,7 +164,7 @@ const sidebars = {
           type: 'doc',
           label: 'Webhooks',
           id: 'reference/webhook'
-        },
+        }
       ]
     },
   ],
