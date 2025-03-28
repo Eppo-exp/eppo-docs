@@ -172,6 +172,28 @@ Run this as a separate process:
 php eppo-poller.php
 ```
 
+### Reloading Configuration as a Cron Job
+
+You can force a refresh of your Eppo configuration data by calling the `fetchAndActivateConfiguration` method as in the
+example below:
+
+```php
+<?php
+
+require __DIR__ . '/../vendor/autoload.php';
+
+use Eppo\EppoClient;
+use Eppo\Exception\EppoClientException;
+
+try {
+    $eppoClient = EppoClient::init(apiKey: "<your sdk key>", isGracefulMode: false);
+    $eppoClient->fetchAndActivateConfiguration();
+} catch (EppoClientException $e) {
+    print ($e->getMessage());
+}
+
+```
+
 ### Assignment Logger
 
 For experiment analysis, implement the `LoggerInterface`:
