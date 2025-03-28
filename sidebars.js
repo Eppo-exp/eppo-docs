@@ -160,6 +160,11 @@ const sidebars = {
           label: 'Webhooks',
           id: 'reference/webhook'
         },
+        {
+          type: 'doc',
+          label: 'Architecture and Security',
+          id: 'reference/architecture-and-security'
+        },
       ]
     },
   ],
