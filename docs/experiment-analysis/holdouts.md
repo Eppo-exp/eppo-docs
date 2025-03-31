@@ -2,9 +2,7 @@
 
 Holdout Analysis allows you to understand the aggregate impact of experiments grouped in a Holdout. 
 
-Eppo enables you to bring your own holdouts and provides a full-featured analysis of that holdout on key metrics. If your Holdout is deployed by an external randomization library and you are not using Eppo's feature flags, please refer to this section.
-
-Holdouts can also be used with Eppo's SDK for an end-to-end managed experiments. Please refer to [the Holdouts page for this functionality](/feature-flagging/concepts/holdout-config).
+Eppo enables you to bring your own holdouts and provides a full-featured analysis of that holdout on key metrics. Holdouts can also be used with Eppo's SDK for an end-to-end managed experiments. Please refer to [the Holdouts page for this functionality](/feature-flagging/concepts/holdout-config).
 
 ### Assignment setup
 

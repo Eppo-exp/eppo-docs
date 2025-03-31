@@ -25,6 +25,12 @@ rolled out (holdout variation key `all_shipped`)
 
 ![Creating a Holdout](/img/experiments/holdouts/holdouts-create-object.png)
 
+### Holdout types
+Eppo offers both Global and Selective Holdouts.
+
+* Global Holdouts - all experiments that fall within the holdout assignment window are automatically included in the Holdout
+* Selective Holdouts - experiments that fall within the holdout assignment window need to be selected to be part of the holdout when the experiment is created
+
 ### Assignment period
 
 1. Experiment assignments are added to flags
@@ -39,12 +45,6 @@ a holdout group. Held out subjects will have the default experience and the SDK 
 * Experiments assignments that start during the holdout window but do not end in that time, will continue to have the 
 holdout applied until the experiment ends
   * To include these experiments in the holdout _analysis_, you can extend the analysis end date beyond the holdout window end date
-
-#### Global and Selective Holdouts
-Eppo offers both Global and Selective Holdouts.
-
-* Global Holdouts - all experiments that fall within the holdout assignment window are automatically included in the Holdout
-* Selective Holdouts - experiments that fall within the holdout assignment window need to be selected to be part of the holdout when the experiment is created
 
 #### Concluding experiments
 
