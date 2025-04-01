@@ -10,7 +10,7 @@ Eppo offers both Global and Selective Holdouts for Holdouts created using the Ep
 
 ## Using Eppo SDKs
 
-Begin by [configuring your Assignment Source](/data-management/definitions/assignment-sql) to annotate your holdout columns.
+Begin by [configuring your Assignment Source](/data-management/definitions/assignment-sql/#optional-columns-for-advanced-use-cases) to annotate your holdout columns.
 
 ### Journey of a holdout subject
 
