@@ -21,7 +21,7 @@ The holdout is randomly split into two groups:
 * Status Quo: Subjects in this group will always see the default experience for any experiments that take place during the 
 holdout period (holdout variation key `status_quo`)
 * Winning Variants: Subjects in this group will see the winning variant of each experiment after it has been concluded and 
-rolled out (holdout variation key `all_shipped`)
+rolled out (holdout variation key `all_shipped_variants`)
 
 ![Creating a Holdout](/img/experiments/holdouts/holdouts-create-object.png)
 
