@@ -1,3 +1,7 @@
+---
+sidebar_position: 3
+---
+
 # Deployment modes
 
 Eppo's SDK supports a variety of deployment modes depending on your use case. This page describes a few common patterns for using Eppo, some tradeoffs, and a few anti-patterns to avoid.
