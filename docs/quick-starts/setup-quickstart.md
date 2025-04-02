@@ -3,7 +3,7 @@ slug: /setup-quickstart
 sidebar_position: 2
 ---
 
-# Initial setup
+# Workspace setup
 
 This page walks through the initial setup of your Eppo instance. In this guide, you'll learn how to access Eppo, connect your data warehouse and create your first entity.
 
