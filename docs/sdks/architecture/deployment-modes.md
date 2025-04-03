@@ -42,7 +42,7 @@ To prevent loading this whole file to your application, you can instead evaluate
 
 ### Serverless architectures
 
-Finally, if you are using a serverless architecture, we recommend using a [**local evaluation from pre-fetched configurations**](#local-flag-evaluation-initialized-with-pre-fetched-configurations) pattern. In this pattern, you'll manage a cache of flag configurations and pass that as an argument when the SDK is initialized in the serverless function. By doing this, you avoid requesting the configuration from Eppo's CDN separately for every call to your function.
+Finally, if you are using a serverless architecture, we recommend using a [**local evaluation from pre-fetched configurations**](#local-flag-evaluation-initialized-with-pre-fetched-configurations) pattern. In this pattern, you'll manage a cache of flag configurations and pass the flag configurations as an argument when the SDK is initialized in the serverless function. By doing this, you avoid requesting the configuration from Eppo's CDN separately for every call to your function.
 
 ## Deployment pattern details
 
