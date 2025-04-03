@@ -1,152 +1,292 @@
+---
+sidebar_position: 3
+---
+
 # Deployment modes
 
-Eppo's architecture is highly composable and can support a variety of deployment modes depending on what best fits your stack. This page describes a few common patterns for using Eppo, some tradeoffs, and a few anti-patterns to avoid (or at least be aware of).
+Eppo's SDK supports a variety of deployment modes depending on your use case. This page describes a few common patterns for using Eppo, some tradeoffs, and a few anti-patterns to avoid.
 
-## Considerations when integrating a flagging service
+## How Eppo's SDKs work
 
-When weighing the pros and cons of the approaches outlined below, there are several dimensions to consider:
+Before diving into the different ways to integrate Eppo's SDK, it's important to understand the basics of how Eppo's SDKs assign variants. When you make a change to a flag in the Eppo UI, Eppo will update a configuration object that contains a list of enabled flags, their associated targeting rules, and the variant(s) that each targeting rule is assigned. 
 
-1. **Ease of integration and maintenance** - Do you want to use a system out of the box to minimize integration and operational overhead? Or are you comfortable maintaining some additional code on top of the service?
-2. **Performance and latency** - What is your tolerance for load times for flagging and experiment configurations?
-3. **Reliability and redundancy** - How many layers of redundancy do you want to have to ensure user experiences are never interrupted?
-4. **Quality of data capture** - How well does a given deployment pattern guarantee that the data captured will lead to high-quality decision making? What level of confidence do you need that a given architecture will avoid data quality issues like Sample Ratio Mismatch (SRM)?
+The Eppo SDK uses this configuration object to determine what variant a given subject (e.g., user) should see based on that subject's attributes. This configuration is hosted on Eppo's global CDN for high availability around the world. 
 
-Each company might weigh each of these considerations differently. The purpose of this page is to highlight common patterns across Eppo customers and discuss the tradeoffs on the dimensions above.
+When initializing the Eppo SDK, you can either tell the SDK to pull this configuration from the CDN or pass in a configuration object you handle manually. In addition, you can specify whether the SDK should load the full rule set configuration, or evaluate assignment logic within an Edge function managed by Eppo.
 
-## Common deployment patterns 
+This may seem like an overwhelming number of options, but it allows Eppo to fully support all of the surface areas that modern development teams might need. In the next section, we'll summarize recommended deployment patterns based on use case.
 
-### Local flag evaluation using configurations from CDN (recommended)
+## Summarized guidance 
 
-The simplest and least error prone approach is to load feature flag configurations from Eppo's CDN each time the SDK is initialized (with optional subsequent polling for updates). This only requires one network call to Eppo's CDN at app initialization, which typically returns in under 15ms. 
+### Server-side implementations
 
-Eppo's SDK will then locally determine what variant a user should see based on this configuration. The logging callback function is invoked at the exact moment the user was exposed to the variant. This is ideal from a data analysis perspective as only users exposed to the variant will be included in the analysis. That is, there is as little dilution as possible.
+For most server applications, we recommend using Eppo's default mode: [**local flag evaluation using configurations from CDN**](#local-flag-evaluation-using-configurations-from-cdn-most-common). This is a simple-to-implement and practical solution that allows you to fetch the latest flag configurations from Eppo's CDN at app initialization and poll for updates at a specified cadence.
+
+Since the configuration contains all of the necessary information to evaluate the flag, the SDK will evaluate the flag locally without any network calls to Eppo. This provides very fast evaluations and decreases network traffic to Eppo's CDN.
+
+### Client-side implementations
+
+For the majority of client side applications, the same approach as above is recommended. This leads to simple implementations and doesn't require any subsequent calls to Eppo's network if subject attributes change.
+
+However, there are a few situations where you might want to consider a different approach:
+
+#### 1. Important targeting attributes are not available on the client
+
+If you have subject attributes that you cannot send to your client application, but is available on the server you can use [**offline initialization from precomputed assignments**](#offline-initialization-from-precomputed-assignments). In this approach, you'll pre-evaluate all flags on the server side and pass them down to the client as part of routine app initialization. All that is available on the client is a list of flag values (with their names obfuscated).
+
+#### 2. Individual flags have very complex rulesets
+
+In general, the rules file is very lightweight and can be loaded in a few milliseconds. That said, the file gets larger as the complexity of targeting increases. For human-created rules logic, this is typically not a concern. However, if you are using Eppo to run [Contextual Bandits](/contextual-bandits/) with a large amount of context and potential actions, this file can get large. 
+
+To prevent loading this whole file to your application, you can instead evaluate the flag in an Edge function managed by Eppo. On SDK initialization, you'll include the relevant context and Eppo will determine which action to take remotely without ever sending the full rule-set to the client. We refer to this pattern as [**precomputed assignment from Edge functions**](#precomputed-assignments-from-edge-functions). 
+
+### Serverless architectures
+
+Finally, if you are using a serverless architecture, we recommend using a [**local evaluation from pre-fetched configurations**](#local-flag-evaluation-initialized-with-pre-fetched-configurations) pattern. In this pattern, you'll manage a cache of flag configurations and pass the configurations as an argument when the SDK is initialized in the serverless function. By doing this, you avoid requesting the configuration from Eppo's CDN separately for every call to your function.
+
+## Deployment pattern details
+
+In this section we'll dive into the details of each of the deployment patterns mentioned above.
+
+### Local flag evaluation using configurations from CDN (most common)
+
+The simplest approach to using Eppo's SDK is to load feature flag configurations from Eppo's CDN during SDK initialization at app start (with optional subsequent polling for updates). Thanks to Eppo's global distribution, this network call typically returns in a few milliseconds. You can see our public latency benchmark [here](/sdks/architecture/latency/#latency-benchmark).
+
+Eppo's SDK will then locally determine which variant a user should see based on this configuration. The logging callback function is invoked at the exact moment the user was exposed to the variant. This is ideal from an analysis perspective as only users exposed to the variant will be included in the analysis. That is, there is as little dilution as possible.
 
 As an example, consider an ecommerce site that is running experiments on both a checkout page and a payment page. Here is a sequence diagram for this deployment mode:
 
-![Local eval CDN config](/img/feature-flagging/architecture/local-eval-cdn-config.png)
+![Local eval CDN config](/img/feature-flagging/architecture/rules-from-cdn.png)
 
-Note that there is only one network call to Eppo right at the start of the application's lifecycle (optional polling is not shown in the diagram). Eppo's CDN is hosted on Fastly, which provides another degree of redundancy to this deployment pattern (if Eppo had an outage, configurations would remain cached in Fastly and there would be no impact to active feature flags or experiments).
+Note that there is only one network call to Eppo, right at the start of the application's lifecycle (optional polling is not shown in the diagram). Eppo's CDN is hosted on Fastly, which provides another degree of redundancy to this deployment pattern: if Eppo had an outage, configurations would remain cached in Fastly and there would be no impact to active feature flags or experiments.
 
-Experiment exposure logs happen at the exact moment in time that the user is exposed to the variant. This provides high-quality data to allow experiment measurement to be as precise as possible.
+Experiment exposures are logged at the exact moment in time that the user is exposed to the variant. This provides high-quality data to allow experiment measurement to be as precise as possible.
 
 #### Developer interface
 
-This deployment pattern provides an easy way for engineers to fetch variants throughout the code base. For instance, in the client-side Javascript SDK:
+This deployment pattern provides an easy interface for engineers to fetch variants throughout the code base. For instance, in the client-side Javascript SDK:
 
 **Initialize once**
+
+One time addition when first integrating Eppo's SDK:
 
 ```javascript
 import { init } from "@eppo/js-client-sdk";
 
-await init({apiKey: "<SDK_KEY>"});
-```
-
-**Assign anywhere**
-
-```javascript
-import * as EppoSdk from "@eppo/js-client-sdk";
-
-const eppoClient = EppoSdk.getInstance();
-const user = getCurrentUser();
-
-const variation = eppoClient.getBooleanAssignment('show-new-feature', user.id, { 
-  'country': user.country,
-  'device': user.device,
-}, false);
-```
-
-### Precomputed Assignments
-
-The Eppo JavaScript SDK supports additional deployment modes for precomputed assignments:
-- [Online](/sdks/client-sdks/javascript/precomputed-assignments/#initialize-precomputed-client) 
-- [Offline (bootstrapped)](/sdks/client-sdks/javascript/precomputed-assignments#offline-precomputed-assignments) 
-
-With precomputed assignments, all flag assignments are precomputed for a subject and the SDK does not do any evaluation at runtime. This can be useful for performance and security. See the [precomputed assignments](/sdks/client-sdks/javascript/precomputed-assignments) sections for more details.
-
-
-### Local flag evaluation using configurations from internal server
-
-The majority of Eppo users opt to use [the recommended deployment mode](/sdks/architecture/deployment-modes#local-flag-evaluation-using-configurations-from-cdn-recommended). However, some teams prefer to manage the flagging configuration themselves and pass that to clients via internal API calls. Eppo supports this through the `offlineInit` method available in several client-side SDKs. This function allows you to pass in a configuration manually instead of making a request to Eppo's CDN. The configuration can be exported from one of Eppo's server side SDKs. 
-
-The same example above would have a sequence diagram that looks something like this:
-
-![Local eval server config](/img/feature-flagging/architecture/local-eval-internal-config.png)
-
-This deployment mode provides more control over how the configuration object is handled but introduces complexity in both implementation and maintenance. It does however still provide high quality analytic data (logging events are only fired when a user is exposed to a variant).
-
-#### Developer interface
-
-This deployment mode requires using two of Eppo's SDKs: a server-side SDK for fetching and updating the experiment configuration, and a client-side SDK initialized with the configuration from the server SDK. For example, using the Node and client-side Javascript SDKs:
-
-**Server-side implementation**
-
-```javascript
-import express from 'express';
-import * as EppoSdk from "@eppo/node-server-sdk";
-
-const app = express();
-const eppoClient = EppoSdk.getInstance();
-
-app.get('/api/flag-configurations', (req, res) => {
-  const flagConfigurations = eppoClient.getFlagConfigurations();
-  res.json(flagConfigurations);
+await init({
+  apiKey: "<SDK_KEY>",
+  assignmentLogger: { 
+    logAssignment: (assignmentEvent) => console.log('Send to warehouse: ', assignmentEvent) 
+  }
 });
 ```
 
-**Initialize client SDK from exported flag configurations**
+**Assign anywhere**
+
+Using the SDK to integrate a new flag:
 
 ```javascript
-import { offlineInit, Flag, ObfuscatedFlag } from "@eppo/js-client-sdk";
+const eppoClient = EppoSdk.getInstance();
 
-// configuration from your server SDK
-const configurationJsonString: string = getConfigurationFromServer();
+const variation = eppoClient.getBooleanAssignment(
+  'show-new-feature', 
+  userId, { 
+    'country': userCountry,
+    'device': userDevice,
+  }, 
+  false
+);
+```
 
-// The configuration will be not-obfuscated from your server SDK.
-// If you have obfuscated flag values, you can use the `ObfuscatedFlag` type.
-const flagsConfiguration: Record<string, Flag | ObfuscatedFlag> = JSON.parse(configurationJsonString);
+### Offline initialization from precomputed assignments
+
+The approach above works well if you have the full user context available at the time of flag evaluation. If this is not the case, and you instead need to leverage context only available on the server side, you can also precompute flag values as part of your initialization cycle. You can then pass down a list of precomputed flags via an internal API and use that to initialize Eppo's client-side SDK.
+
+Returning to the same ecommerce example, here is a sequence diagram for this deployment mode:
+
+![Bootstrap with flag values](/img/feature-flagging/architecture/bootstrap-w-eval.png)
+
+This method allows you to avoid any incremental network calls during app spin up. Since an up-to-date configuration is already stored on your server, Eppo's server SDK can determine a user's flag values entirely locally. Then, when using Eppo's client SDK, there's no need to evaluate rules, much less make a network call to Eppo's CDN.
+
+Exposures are still logged at the exact moment in time that the user sees the variant, providing the same high-quality analytic data as above.
+
+#### Developer interface
+
+To support this pattern, you'll need to integrate both a server and a client SDK. Once integrated, the development experience to add a new flag is as simple as the previous example. Below is an example using the Node and client-side Javascript SDKs:
+
+**Server-side implementation**
+
+On server spin up, initialize the Eppo server SDK:
+
+```javascript
+await EppoSdk.init({
+  apiKey: "<SDK_KEY>",
+  assignmentLogger: { 
+    logAssignment: (assignmentEvent) => console.log('Send to warehouse: ', assignmentEvent) 
+  },
+});
+```
+
+Then, on app initialization, fetch the flag values for the specific user:
+
+```javascript
+const eppoAssignments = await EppoSdk.getInstance().getPrecomputedConfiguration(
+  'user-123', {
+    'email': 'dev@example.com'
+  }
+)
+// pass the assignments down to the client via internal API
+```
+
+**Client-side implementation**
+
+Use the assignments computed on the server to initialize the Eppo client SDK:
+
+```javascript
+await EppoSdk.offlinePrecomputedInit({
+  precomputedConfiguration: eppoAssignments,
+  assignmentLogger: { 
+    logAssignment: (assignmentEvent) => console.log('Send to warehouse: ', assignmentEvent) 
+  }
+});
+```
+
+Everything mentioned above is a one time setup. Now that the SDK is initialized, you can use it as usual for evaluating a new flag:
+
+```javascript
+const eppoClient = EppoSdk.getInstance();
+
+const variation = eppoClient.getBooleanAssignment(
+  'show-new-feature', 
+  userId, { 
+    'country': userCountry,
+    'device': userDevice,
+  }, 
+  false
+);
+```
+
+
+### Precomputed assignments from Edge functions
+
+If you'd like to avoid the complexity of integrating SDKs on both the client and server side, but still want to minimize latency for complex use cases, you might want to consider having Eppo calculate flag values on the Edge at SDK initialization.
+
+For most use cases, the Eppo configuration file is small and can be loaded in a few milliseconds. That said, there are situations where you may want to optimize the payload size passed back from Eppo's CDN. The most common scenario is when using complex Contextual Bandits logic, which may require a large configuration file including many actions and parameters.
+
+In this case, you can tell Eppo to return a list of pre-evaluated flags instead of the full configuration file. Returning to our example from above, the sequence diagram would look like this:
+
+![Edge Evaluation](/img/feature-flagging/architecture/edge-evaluation.png)
+
+Note that we have many of the same benefits as when fetching the rules file: the integration is simple, evaluation is fast, and we collect high quality exposure data. The only downside to this approach is that you must know the full user context upfront. If this context changes, you'll need to make another request to Eppo's CDN.
+
+#### Developer interface
+
+The interface for this pattern is similar to when initializing the SDK rules from the CDN. The only difference is that you'll use the `precomputedInit` and `getPrecomputedInstance` methods instead of `init` and `getInstance`:
+
+**Initialize once**
+
+One time addition when first integrating Eppo's SDK:
+
+```javascript
+await EppoSdk.precomputedInit({}
+  apiKey: "<SDK_KEY>",
+  assignmentLogger,
+  precompute: {
+    subjectKey: 'user-123',
+    subjectAttributes: {
+      'email': 'dev@example.com'
+    }
+});
+```
+
+**Evaluate anywhere**
+
+Using the SDK to integrate a new flag:
+
+```javascript
+const eppoClient = EppoSdk.getInstance();
+
+const variation = eppoClient.getBooleanAssignment(
+  'show-new-feature', 
+  userId, { 
+    'country': userCountry,
+    'device': userDevice,
+  }, 
+  false
+);
+```
+
+### Local flag evaluation, initialized with pre-fetched configurations
+
+Finally, you can also initialize the SDK with a pre-fetched configuration object that contains the full rules file. This is useful in a few situations:
+
+1. You are using a serverless architecture and want to avoid making a request to Eppo's CDN for every call to your function.
+2. You want to avoid dependencies on an external network request but don't have full user context available at initialization time.
+
+For this pattern, the sequence diagram would look like this:
+
+![Bootstrap with rules](/img/feature-flagging/architecture/bootstrap-w-rules.png)
+
+Here your server hosts the rules set and passes it to other surfaces for local initialization. This is similar to the "Offline initialization from precomputed assignments" pattern above, but allows for processing of multiple users as well as realtime updates based on user attributes.
+
+#### Developer interface
+
+This pattern requires installing the Eppo SDK on both your server and in your serverless function or client application. For example, using the Node and client-side Javascript SDKs:
+
+**Server-side implementation**
+
+On server spin up, initialize the Eppo server SDK:
+
+```javascript
+await EppoSdk.init({
+  apiKey: "<SDK_KEY>",
+  assignmentLogger,
+});
+```
+
+Then, fetch flag configurations for downstream initialization:
+
+```javascript
+const flagConfigurations = await EppoSdk.getInstance().getFlagConfigurations();
+```
+
+**Initialize SDK from exported flag configurations**
+
+When the serverless function is called, or the client initializes, pass the configuration fetched above:
+
+```javascript
+const flagsConfiguration = getCachedConfiguration(); // replace with your caching logic
 
 offlineInit({ 
-  flagsConfiguration,
-  // If you have obfuscated flag values, you can use the `ObfuscatedFlag` type.
-  isObfuscated: true,
- });
- ```
+  flagsConfiguration
+});
+```
 
 **Assign anywhere**
 
+Once this one-time setup is complete, you can use the SDK as usual:
+
 ```javascript
-import * as EppoSdk from "@eppo/js-client-sdk";
-
 const eppoClient = EppoSdk.getInstance();
-const user = getCurrentUser();
 
-const variation = eppoClient.getBooleanAssignment('show-new-feature', user.id, { 
-  'country': user.country,
-  'device': user.device,
-}, false);
+const variation = eppoClient.getBooleanAssignment(
+  'show-new-feature', 
+  userId, { 
+    'country': userCountry,
+    'device': userDevice,
+  }, 
+  false
+);
 ```
 
-### Fetching all flag values at app initialization (not recommended)
+## Patterns to avoid
 
-:::warning
-This deployment pattern is not recommended as it can lead to unreliable analytic data. 
-:::
+### Initializing the SDK each time a flag is evaluated
 
-Some feature flagging vendors provide methods to evaluate all feature flags at once (typically session start). This may seem tempting as it remediates any concern about downstream latency. However, Eppo's SDK's local evaluation architecture makes this concern irrelevant (post-initialize evaluations happen in under 1ms). 
+A common anti-pattern is to initialize the SDK each time a flag is evaluated. This is unnecessary thanks to Eppo's local evaluation architecture. Further, this causes excessive network calls to Eppo's CDN leading to not just increased latency, but also potential breaching of Eppo's CDN request limits.
 
-While this pattern may make sense for a pure feature gating use case, it quickly falls apart in the experimentation context. To see this, consider the same use case discussed above and imagine fetching all variants at application start. The sequence diagram would look something like this: 
+Instead, initialize once at the start of the application lifecycle and use the `getInstance` method when you need to evaluate a flag.
 
-![Initialization eval](/img/feature-flagging/architecture/initialization-eval.png)
+### Initializing from CDN in a serverless function
 
-While Eppo supports [filtering experiments by post-assignment events](/experiment-analysis/configuration/filter-assignments-by-entry-point/) (e.g., viewing the checkout page), this deployment pattern makes no programmatic guarantee that exposure events will align with the moment that the user is actually exposed to the variant. 
-
-A/B/n testing methodology relies on the assumption that we have a clear picture of who was exposed to a new variant, and at what time. If this assumption is violating two negative outcomes can occur:
-
-1. **Users not exposed to the experiment are included in the analysis.** Imagine you're running a test on the checkout page and say you have 10,000 visitors to your site each day, 500 of whom reach the checkout page. If you include all 10,000 users in your analysis, you've unlikely to see even a large change in the behavior of the 500 that hit the checkout page. This can lead to understated experiment results, and calling tests neutral even if they are actually winners.
-
-2. **Users are more likely to be included in the experiment if they are in control**. Imagine you're experimenting on a new search algorithm and users are flagged as "exposed" once they complete a search. If a new search model has a higher latency, this could lead to more control users being included in the analysis and introduce meaningful bias in experiment results. [Sample Ratio Mismatch](/experiment-analysis/diagnostics/#traffic-imbalance-diagnostic) (SRM) tests are designed to detect this type of issue, but often use a very low p value threshold (typically 0.001). That is, it's easy to imagine a case like this hypothetical search model experiment where SRM alerts are not triggered, but experiment results are still impacted by SRM-related bias.
-
-
-Both of these issues are in theory solvable if teams are diligent about filtering on the correct exposure event. However, as experimentation programs grow we have observed that this becomes increasingly hard to enforce and monitor. As you consider different options to deploy Eppo's SDK, make sure that you consider not just immediate implementation costs, but also long term scalability and tech debt. 
-
-For teams that need to fetch variants at session start (say, for fully server-side rendered architectures), Eppo can support this pattern. This is done by exporting a list of flags from the SDK and evaluating each of them in a for loop. That said, for the reasons above it is highly encouraged that teams instead follow one of the other deployment patterns whenever possible.
+Similarly, make sure to follow [the recommendations above](#local-flag-evaluation-initialized-with-pre-fetched-configurations) for serverless architectures. If you instead make a request to Eppo's CDN each time the serverless function is called, you'll introduce unnecessary latency and risk breaching Eppo's CDN limits.
