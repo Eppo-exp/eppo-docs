@@ -49,15 +49,25 @@ Use [Braze’s docs](https://www.braze.com/docs/user_guide/data/braze_currents/e
 
 ### **Canvas Assignment Table Setup**
 
-For Canvas experiments, you will use the `users.canvas.experimentstep.SplitEntry` event where you will use the `canvas_name` as the `Experiment` name, the `canvas_variation_name` as the `Variation` name, and the `time` as the `Timestamp` for your Eppo Assignments table. This event in Braze represents when a user enters the Experiment Split step in a Canvas and the timestamp will be the most accurate representation of when a user was exposed to the experiment. 
+For Canvas experiments, there are two ways to create experiments:
+1. At the Canvas level that corresponds to the `users.canvas.Entry` event
+2. Within the Canvas that corresponds to the  `users.canvas.experimentstep.SplitEntry` event 
+
+For experiments on the Canvas entry, `canvas_name` is used as the `Experiment` name, and the `canvas_variation_name` as the `Variation` name in the Assignments table.
+
+For experiments witin a Canvas, `experiment_step_id` is uesed as the `Experiemnt` name and `experiment_split_id` is used as the `Variation` name in the Assignment table.
+
+Additionally `time` as the `Timestamp` for both of these experiment types on the Eppo Assignments table. 
+
+These events in Braze represents when a user enters an Experiment step or a Canvas and the timestamp will be the most accurate representation of when a user was exposed to the experiment. 
 
 Your Braze Canvas Assignments table will look like this:
 | Column | Type in Eppo | Data from Braze Table |
 | --- | --- | --- |
 | **`assignment_timestamp`** | Timestamp | **`time`** |
 | **`user_id`** | Experiment subject ID | **`user_id`** This should be an ID that maps to the metrics used in a experiment, this will most likely be an internal User ID |
-| **`experiment`** | Experiment key | **`canvas_name`** |
-| **`variant`** | Variant | **`canvas_variation_name`** |
+| **`experiment`** | Experiment key | **`canvas_name`** and **`experiment_step_id`** |
+| **`variant`** | Variant | **`canvas_variation_name`** and **`experiment_split_id`** |
 
 ### **Campaign Assignment Table Setup**
 
@@ -94,9 +104,9 @@ Your Assignments table should look like this:
 | --- | --- | --- |
 | **`assignment_timestamp`** | Timestamp | **`time`** |
 | **`user_id`** | Experiment subject ID | **`user_id`** Internally defined User ID |
-| **`experiment`** | Experiment key | **`campaign_name`** or **`canvas_name`**|
-| **`variant`** | Variant | **`message_variation_id`** or **`canvas_variation_name`** |
-| **`combined_id`** | **Combined ID** Entity as the Secondary ID | Concatentated **`campaign_name`** or **`canvas_name`** with **`user_id`** |
+| **`experiment`** | Experiment key | **`campaign_name`**, **`canvas_name`**, **`experiment_step_id`** |
+| **`variant`** | Variant | **`message_variation_id`**, **`canvas_variation_name`**, and **`experiment_split_id`** |
+| **`combined_id`** | **Combined ID** Entity as the Secondary ID | Concatentated **`campaign_name`**, **`canvas_name`**, or **`experiment_step_id`** with **`user_id`** |
 
 4. Concatenate the Campaign or Canvas Name with the User ID on your Braze Facts table and use that as the Entity for the Fact. Your Fact table should look like this:
 
@@ -104,8 +114,8 @@ Your Assignments table should look like this:
 | --- | --- | --- |
 | **`timestamp`** | Timestamp | **`time`** |
 | **`user_id`** | No column specified | **`user_id`** Internally defined User ID |
-| **`experiment`** | No column specified| **`campaign_name`** or **`canvas_name`** |
-| **`combined_id`** | **Combined ID** as the Entity ID | Concatentated **`campaign_name`** or **`canvas_name`** with **`user_id`** |
+| **`experiment`** | No column specified| **`campaign_name`**, **`canvas_name`**, **`experiment_step_id`**  |
+| **`combined_id`** | **Combined ID** as the Entity ID | Concatentated **`campaign_name`**, **`canvas_name`**, or **`experiment_step_id`** with **`user_id`** |
 
 4. Create [Metrics](/data-management/metrics/) from your newly created Braze Fact tables.
 5. When setting up an experiment for analysis, make sure you select the **Combined ID** as the Secondary ID used for Analysis. Consider setting up a [Protocol](/experiment-analysis/configuration/protocols/) for Braze experiments to automate this experiment setup for subsequent experiments.
