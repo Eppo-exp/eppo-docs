@@ -1,6 +1,6 @@
 # Eppo Developer Tools - Chrome Extension
 
-The **Eppo Developer Tools** Chrome Extension allows you to instantly override flag assignments for local development and to QA features on a shared host.
+The **Eppo Developer Tools** Chrome Extension allows you to instantly override flag assignments for your local user in a shared environment, such as staging or production. This helps you easily QA features by enabling and disabling flags as needed and testing the resulting experience.
 
 ## Installation
 
