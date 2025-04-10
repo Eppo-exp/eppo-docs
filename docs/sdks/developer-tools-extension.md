@@ -10,7 +10,7 @@ Next, [create a Browser Extension Key](https://eppo.cloud/configuration/environm
 
 ![Browser Extension Key](/img/developer-tools-extension/browser-extension-key.png)
 
-Click **Back to feature flags list** to view your list of flags. Click the refresh icon in the extension's header if they don't immediately appear.
+Click **Back to feature flags list** to view your list of flags. Click the refresh icon in the extension's header if they don't immediately appear. At this point, you'll be able to see a list of your flags, but will not yet be able to override them. Follow the instructions below to enable overrides for client or server configuration.
 
 ## Configuring Client Overrides
 
