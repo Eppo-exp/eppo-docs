@@ -116,7 +116,7 @@ In short, any operation visible in the Flag History is sent to the webhook.
 
 ## Configuring the webhook
 
-To use the webhook, you first need to setup a URL on your side to receive the webhook payload.
+To use the webhook, you first need to setup a URL on your side to receive the webhook request.
 
 The configuration is done in the [Admin > Integrations](https://eppo.cloud/admin/integrations) page.
 
@@ -124,14 +124,14 @@ Once that is done, contact [Eppo support](emailto:support@geteppo.com) to custom
 
 ## Webhook Signature
 
-The webhook payload is signed with a signature. The signature is a hash of the payload and the webhook secret.
+The webhook request is signed with a signature. The signature is a hash of the `"data"` object in the webhook request body and the webhook secret.
 
 ### Integrating and Verifying the Signature
 
 To verify the webhook signature, you'll need to:
 
-1. Get the signature from the webhook payload
-2. Generate a HMAC SHA-256 hash of the raw request body using your webhook secret
+1. Get the signature from the webhook request body
+2. Generate a HMAC SHA-256 hash with your webhook secret and a string representation of the `"data"` object in the webhook request body
 3. Compare the generated hash with the received signature
 
 Here's an example in TypeScript/Node.js:
@@ -139,18 +139,18 @@ Here's an example in TypeScript/Node.js:
 ```typescript
 import crypto from 'crypto';
 
-function generateHMACSignature(secret: string, payload: string): string {
+function generateHMACSignature(secret: string, data: string): string {
   return crypto.createHmac('sha256', secret)
-    .update(payload)
+    .update(data)
     .digest('hex');
 }
 
 function isValidWebhookSignature(
-  payload: string,
+  data: string,
   signature: string,
   webhookSecret: string
 ): boolean {
-  const expectedSignature = generateHMACSignature(webhookSecret, payload);
+  const expectedSignature = generateHMACSignature(webhookSecret, data);
   return crypto.timingSafeEqual(
     Buffer.from(signature),
     Buffer.from(expectedSignature)
@@ -160,10 +160,10 @@ function isValidWebhookSignature(
 // Example usage in an Express route handler
 app.post('/webhook', (req, res) => {
   const signature = req.body.signature;
-  const payload = JSON.stringify(req.body);
+  const data = JSON.stringify(req.body.data);
   const webhookSecret = process.env.WEBHOOK_SECRET;
 
-  if (!isValidWebhookSignature(payload, signature, webhookSecret)) {
+  if (!isValidWebhookSignature(data, signature, webhookSecret)) {
     return res.status(401).send('Invalid signature');
   }
 
