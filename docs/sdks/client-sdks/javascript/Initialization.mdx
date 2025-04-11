@@ -67,7 +67,7 @@ A small wait will be done between requests.
   defaultValue="false"
 >
 
-Poll for new **configurations** (every 30 seconds) after successfully requesting the initial configurations.
+Poll for a new configuration (every 30 seconds or as set in `pollingIntervalMs`) after successfully requesting the initial configurations.
 </ApiOptionRef>
 
 <ApiOptionRef 
@@ -76,7 +76,7 @@ Poll for new **configurations** (every 30 seconds) after successfully requesting
   defaultValue="false"
 >
 
-Poll for new configurations even if the initial configurations request failed.
+Poll for a new configuration even if the initial configurations request failed.
 </ApiOptionRef>
 
 <ApiOptionRef
@@ -85,7 +85,7 @@ Poll for new configurations even if the initial configurations request failed.
   defaultValue="30000"
 >
 
-Maximum amount of time to wait between calls to the API for the latest configuration.
+Maximum amount of time to wait between calls to the API for the latest configuration if polling is enabled.
 </ApiOptionRef>
 
 <ApiOptionRef 
