@@ -68,12 +68,30 @@ The base URL for for the API. Can be overriden to proxy configuration requests.
 
 
 <ApiOptionRef 
+  name="pollAfterSuccessfulInitialization"
+  type="boolean"
+  defaultValue="false"
+>
+
+Poll for new **configurations** (every 30 seconds) after successfully requesting the initial configurations.
+</ApiOptionRef>
+
+<ApiOptionRef 
   name="pollAfterFailedInitialization"
   type="boolean"
   defaultValue="false"
 >
 
 Poll for new configurations even if the initial configurations request failed.
+</ApiOptionRef>
+
+<ApiOptionRef
+  name="pollingIntervalMs"
+  type="number"
+  defaultValue="30000"
+>
+
+Maximum amount of time to wait between calls to the API for the latest configuration.
 </ApiOptionRef>
 
 <ApiOptionRef 
