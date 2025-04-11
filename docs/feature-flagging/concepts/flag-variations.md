@@ -4,7 +4,7 @@ sidebar_position: 0
 
 # Flag variations
 
-Variations are the distinct paths that can be taken from a single flag. In the simplest case a flag will have two variations, but there is no limit.
+Variations are the distinct paths that can be taken from a single flag. In the simplest case a flag will have one variation (on/off), but there is no limit if you choose to create a flag with two or more variations.
 
 As a simple example, consider a feature flag that controls the button color of the "Buy Now" button on the checkout page.
 In this case, the feature flag may be called `checkout_page_buy_now_button_color` and the variations could be `red`, `green` and `yellow`. 
@@ -15,13 +15,15 @@ Eppo flags support multiple types: boolean, string, integer, numeric, and JSON.
 
 ## Boolean flags
 
-Boolean flags can only ever have two variants, each corresponding to a `true` or `false` value. As such, boolean flags are great for creating simple on/off toggles.
+Boolean flags can only ever have one variant, where the flag being enabled corresponds to a value of `true` and the flag being disabled corresponds to a value of `false`. As such, boolean flags are great for creating simple on/off toggles.
 
-We recommend setting boolean flags to `true` when the flag is on and `false` when the flag is off.
+Choosing a one variation flag makes the Flag a Boolean type.
+
+![Feature gate 1](/img/feature-flagging/feature-gate-1.png)
 
 ## String flags
 
-String flags are the default and most common type of flag. They are useful for both A/B/n tests and advanced targeting use cases.
+String flags are the default for a flag with two or more experiences and is the most common type of flag. They are useful for both A/B/n tests and advanced targeting use cases.
 
 String flags have a limit of 65KB. Strings are UTF-8 encoded, so certain characters, like emojis and non-ASCII characters, take more than one byte each.
 
