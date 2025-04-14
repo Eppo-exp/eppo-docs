@@ -6,11 +6,11 @@ sidebar_position: 2
 
 Every Eppo instance comes with two out-of-the-box environments: **Test** and **Production**.  Use the **Test** environment to check feature flag behavior before releasing them in **Production**.
 
-Additional environments can be added with no limit to match the ways you develop and ship code. For example, you can create environments for every developer's local environment or if you have multiple lower environments. Use _Configuration > Environments_ to create new environments.
+Additional environments can be added with no limit to match the ways you develop and ship code. For example, you can create environments for every developer's local environment or if you have multiple lower environments. Use _Flags > Environments_ to create new environments.
 
 ![Environment setup](/img/feature-flagging/environments/environment-setup.png)
 
-SDK keys for environments can be created on the _Configuration > SDK Keys_ section of the interface:
+SDK keys for environments can be created on the _Flags > Environments > SDK Keys_ section of the interface:
 
 ![SDK key setup](/img/feature-flagging/environments/sdk-keys.png)
 
@@ -18,7 +18,6 @@ There is no limit to the number of SDK keys per environment. Once keys are gener
 
 Flags can be toggled on an off independently per environment on the flag list and flag detail views. You can also define different targeting rules per environment:
 
-![Feature flag list page](/img/feature-flagging/environments/ff-list-page.png)
 ![Feature flag detail page](/img/feature-flagging/environments/ff-detail-page.png)
 
 ## Use cases
