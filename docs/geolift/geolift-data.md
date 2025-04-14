@@ -34,7 +34,7 @@ In A/B testing, the unit of analysis is often a user, account, order, etc. In Ge
 
 The Geolift unit of analysis is created as an **Entity** in Eppo. The provided units are read as strings and must be consistent across the entire pipeline, including KPI modeling, spend data, and results.
 
-Eppo supports multiple entities across Geolift, A/B testing, and contextual bandits. [Read more on how to create entities that match your business here.](../data-management/definitions/entities/)
+Eppo supports multiple entities across Geolift, A/B testing, and contextual bandits. [Read more on how to create entities that match your business here.](../../data-management/definitions/entities/)
 
 ### Geographic Units
 
