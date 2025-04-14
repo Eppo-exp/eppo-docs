@@ -9,6 +9,25 @@ Eppo Geolift leverages Eppo's metric primitives but has additional consideration
 
 Geolift focuses on detecting attributable differences in the Metrics analyzed from ground up, at aggregated levels.
 
+## Planning New Tests
+
+To plan a new test, consider:
+
+- The channel, creative, or campaign you'd like to test
+- The business question or hypothesis you'd like to answer
+- What units of randomization might fit your data (see below)
+- Any units/regions that must be included in treatment or excluded from the synthetic control
+- Eligible testing dates (blackout periods, promotional periods, other tests in-flight)
+
+## Analyzing Existing Tests
+
+To analyze an existing test, consider:
+
+- The baseline test design
+- The start and end dates of the intervention
+- The unit of randomization (see below)
+- The units/regions included in treatment and included in control
+
 ## Geolift Units
 
 In A/B testing, the unit of analysis is often a user, account, order, etc. In Geolift, the units of analysis are usually geographies or a set of non-geographic units that are more aggregated than individal actions. For example, in a regional geotest, the treatment and control would vary across US States, DMAs, or postal code clusters.
@@ -47,24 +66,17 @@ The unit should be consistently available across:
 
 ### Metrics and Spend
 
-Primary and secondary metrics and ad spend data are made available to the Eppo Geolift system by creating **Metrics**.
-
-### Facts
-
-Full documentation on Facts is available here. Generally, a Fact should be aligned with the source of truth in your warehouse. For Geolift, the most important factors are:
+Primary and secondary metrics and ad spend data are made available to the Eppo Geolift system by creating **Metrics**. Generally, a Metric should be aligned with the source of truth in your warehouse. For Geolift, the most important factors are:
 
 - The **Entity** to be analyzed is mapped to the column that contains its values
-- The **Entity value (e.g. location)** is mapped to a Fact
+- The **Entity value (e.g. location)** is attached to the Metric
 
-### Metric
+Geolift supports SUM and COUNT aggregations. The Metric layer is also where filtering can be performed on values that are supplied as Fact Properties.
 
-Aftger creating the Fact, create a Metric that represents the final metric you'd like to analyze. Geolift supports SUM and COUNT aggregations. The Metric layer is also where filtering can be performed on values that are supplied as Fact Properties.
+### Spend
 
-#### Spend
-
-Ad spend data is supplied through the same process as your measurement metrics -- creating Facts with the daily aggregations of spend for the Entity being analyzed and then a resulting SUM metric that maps to the appropriate level of aggregation and matches the intervention.
+Ad spend data is supplied through the same process as your measurement metrics -- creating a SUM metric that maps to the appropriate level of aggregation and matches the intervention.
 
 ## Historical Data Needs
 
 For your Primary Metric, we require at least three months of historical data to exist in the system. We support up to 18 months of data.
-We don't need last-click-attributed information.
