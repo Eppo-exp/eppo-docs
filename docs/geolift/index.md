@@ -6,7 +6,7 @@ sidebar_position: 1
 
 # Geolift (Quasi-experiments)
 
-Marketing teams face a critical challenge: how do you measure the true impact of regional marketing campaigns, pricing changes, or other geographic interventions when traditional A/B testing isn't feasible? Eppo's Geolift solves this through sophisticated causal inference, allowing you to:
+Marketing teams face a critical challenge: how do you measure the true impact of regional marketing campaigns, pricing changes, or other geographic interventions when traditional A/B testing isn't feasible? Eppo Geolift solves this through sophisticated causal inference, allowing you to:
 
 - Accurately measure the ROI of marketing initiatives
 - Run reliable experiments without sacrificing huge control regions
