@@ -66,7 +66,7 @@ The unit should be consistently available across:
 
 ### Metrics and Spend
 
-Primary and secondary metrics and ad spend data are made available to the Eppo Geolift system by creating **Metrics**. Generally, a Metric should be aligned with the source of truth in your warehouse. For Geolift, the most important factors are:
+Primary and secondary metrics and ad spend data are made available to the Eppo Geolift system by creating [**Metrics**](/data-management/metrics/simple-metric/). Generally, a Metric should be aligned with the source of truth in your warehouse. For Geolift, the most important factors are:
 
 - The **Entity** to be analyzed is mapped to the column that contains its values
 - The **Entity value (e.g. location)** is attached to the Metric
