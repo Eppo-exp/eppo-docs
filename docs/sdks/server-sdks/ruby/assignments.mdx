@@ -297,8 +297,8 @@ evaluation = client.get_boolean_assignment_details(
   false
 )
 
-puts "Assignment: #{evaluation.variation}"
-puts "Details: #{evaluation.evaluation_details}"
+puts "Assignment: #{evaluation[:variation]}"
+puts "Details: #{evaluation[:evaluationDetails]}"
 ```
 
 The evaluation details include:
@@ -308,4 +308,7 @@ The evaluation details include:
 - Rule matching details
 - Split calculations
 
-For more information on debugging assignments, see [Debugging Flag Assignments](/sdks/sdk-features/debugging-flag-assignment/). 
+
+> **Note:** The `_details` methods are meant for debugging purposes and not for production use. They collect additional diagnostic information that may impact performance.
+
+For more information on debugging assignments, see [Debugging Flag Assignments](/sdks/sdk-features/debugging-flag-assignment/).
