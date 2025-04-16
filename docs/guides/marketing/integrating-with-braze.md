@@ -69,6 +69,10 @@ Your Braze Canvas Assignments table will look like this:
 | **`experiment`** | Experiment key | **`canvas_name`** and **`experiment_step_id`** |
 | **`variant`** | Variant | **`canvas_variation_name`** and **`experiment_split_id`** |
 
+See below for a visual overview of what Braze Canvas steps map to as Braze data.
+![Braze Canvas steps aligned to Braze data](/img/guides/integrating-with-braze/braze-canvas-overview.png)
+
+
 ### **Campaign Assignment Table Setup**
 
 For Campaign experiments, you will identify the channels your team uses. Typically we recommend using `Send` events to represent when a user was entered into an experiment. The following `Send` events all have a `campaign_name` to represent the `Experiment` name, `message_variation_name` to represent the `Variation` name, and `time` to represent the timestamp in an Eppo Assignment table:
