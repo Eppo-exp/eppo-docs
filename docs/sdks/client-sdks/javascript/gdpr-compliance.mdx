@@ -1,0 +1,40 @@
+---
+title: GDPR Compliance
+sidebar_position: 110
+---
+
+## Overview
+
+In certain situations, you may wish to hold off on logging assignments until a later time, such as the user granting
+the relevant permission.
+
+To handle this, you can initialize the SDK without an assignment logger and let it buffer events to be flushed later
+when permission has been granted.
+
+With no initial assignment logger, the SDK will buffer 10,000 events in memory, and will flush them when an assignment
+logger is later defined.
+
+## Code Example
+
+First, you want to initialize the SDK _without_ an assignment logger. We leverage TypeScript's typing to remind people to
+specify an assignment logger, so you will need to explicitly cast `null` in order to pass in while satisfying type
+checks.
+
+```ts
+await init({
+  apiKey: 'YOUR_SDK_KEY',
+  assignmentLogger: null as unknown as IAssignmentLogger,
+});
+```
+
+Once you are ready to send the buffered events, set the assignment logger.
+
+```ts
+getInstance().setAssignmentLogger({
+  logAssignment(assignment: IAssignmentEvent) {
+    console.log('Send to warehouse: ', assignmentEvent);
+  }
+});
+```
+
+Note that since assignments are buffered in memory, if the SDK is reinitialized any buffered assignments will be reset.
