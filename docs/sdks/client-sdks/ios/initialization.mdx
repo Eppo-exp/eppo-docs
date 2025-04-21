@@ -79,7 +79,7 @@ Task {
 }
 ```
 
-#### Automatic Configuration Updates (Polling)
+#### Initialization with Automatic Configuration Updates (Polling)
 
 The SDK can be configured to automatically poll for configuration updates at regular intervals. This is useful for ensuring your application always has the latest flag configurations without requiring manual updates.
 
@@ -121,7 +121,6 @@ The polling mechanism includes the following features:
 :::note
 For battery efficiency in mobile applications, it's recommended to stop polling when your app goes to the background and resume when it comes to the foreground.
 :::
-
 
 #### Initialization with Pre-fetched Configuration
 You can pass in a pre-fetched flag configuration JSON string:
