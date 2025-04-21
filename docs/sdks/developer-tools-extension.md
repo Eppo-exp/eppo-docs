@@ -33,6 +33,7 @@ init({
     },
   },
   overridesStorageKey: 'eppo-overrides', // your overrides key goes here
+  enableOverrides: true,
 });
 ```
 
