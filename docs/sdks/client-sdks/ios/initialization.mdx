@@ -79,6 +79,50 @@ Task {
 }
 ```
 
+#### Automatic Configuration Updates (Polling)
+
+The SDK can be configured to automatically poll for configuration updates at regular intervals. This is useful for ensuring your application always has the latest flag configurations without requiring manual updates.
+
+To enable polling during initialization:
+
+```swift
+Task {
+    try await EppoClient.initialize(
+        sdkKey: "SDK-KEY-FROM-DASHBOARD",
+        pollingEnabled: true,
+        pollingIntervalMs: 300_000,  // 5 minutes (default)
+        pollingJitterMs: 30_000      // 10% of polling interval (default)
+    )
+}
+```
+
+You can also start and stop polling after initialization:
+
+```swift
+let eppoClient = EppoClient.shared()
+
+// Start polling with custom intervals
+try await eppoClient.startPolling(
+    intervalMs: 300_000,  // 5 minutes
+    jitterMs: 30_000      // Jitter of up to 30 seconds
+)
+
+// Stop polling
+eppoClient.stopPolling()
+```
+
+The polling mechanism includes the following features:
+- Default polling interval of 5 minutes (300,000 ms)
+- Random jitter to prevent thundering herd problems (default is 10% of polling interval)
+- Exponential backoff on failures
+- Automatic retry up to 7 times on failed requests
+- Polling stops automatically if max retries are exceeded
+
+:::note
+For battery efficiency in mobile applications, it's recommended to stop polling when your app goes to the background and resume when it comes to the foreground.
+:::
+
+
 #### Initialization with Pre-fetched Configuration
 You can pass in a pre-fetched flag configuration JSON string:
 
