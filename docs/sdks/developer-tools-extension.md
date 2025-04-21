@@ -20,7 +20,7 @@ To configure overriding client-side flags, ensure you have configured a storage 
 
 ![Storage Key](/img/developer-tools-extension/storage-key.png)
 
-During your client-side SDK initialization, make sure you specify the `overridesStorageKey` with the same value as your **Storage Key** setting in your extension.
+During your client-side SDK initialization, make sure you specify the `overridesStorageKey` with the same value as your **Storage Key** setting in your extension. Additionally, make sure you set `enableOverrides` to `true`.
 
 ```typescript
 import { init } from '@eppo/js-client-sdk';
@@ -33,7 +33,7 @@ init({
     },
   },
   overridesStorageKey: 'eppo-overrides', // your overrides key goes here
-  enableOverrides: true,
+  enableOverrides: true, // don't forget to enable flag overriding!
 });
 ```
 
