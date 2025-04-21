@@ -14,7 +14,7 @@ Click **Back to feature flags list** to view your list of flags. Click the refre
 
 ## Configuring Client Overrides
 
-*Available in **@eppo/js-client-sdk@v3.11.0** and later*
+*Available in **@eppo/js-client-sdk@3.11.0** and later*
 
 To configure overriding client-side flags, ensure you have configured a storage key. You can name this however you'd like.
 
@@ -43,7 +43,7 @@ That's it! You should be able to override flag assignments by clicking on the va
 
 ## Configuring Server Overrides
 
-*Available in **@eppo/node-server-sdk@v3.8.0** and later*
+*Available in **@eppo/node-server-sdk@3.8.0** and later*
 
 With **Eppo Developer Tools**, you have the option to configure your extension to override server-side flags.
 
