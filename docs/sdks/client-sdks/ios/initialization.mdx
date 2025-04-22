@@ -133,7 +133,7 @@ let newClient = EppoClient.initializeOffline(
 
 ##### 2. Using JSON String Serialization
 
-The JSON string serialization approach is particularly useful when:
+The JSON string serialization approach, an alternative to the configuration object approach, is useful when:
 - You need to persist configurations between app launches in platform-agnostic storage
 - You need to transfer configurations through non-Swift environments or systems
 
@@ -152,7 +152,7 @@ let newClient = EppoClient.initializeOffline(
 )
 ```
 
-These approaches provide more flexibility than the basic offline initialization when your application needs to bootstrap before network connectivity is available and maintain that state between app launches.
+These approaches provide more flexibility than basic offline initialization for when your application needs to bootstrap before network connectivity is available and maintain that state between app launches.
 
 In both approaches, the configuration object contains all necessary information including flags, variations, and allocation rules, allowing the SDK to make assignment decisions without requiring network connectivity.
 
