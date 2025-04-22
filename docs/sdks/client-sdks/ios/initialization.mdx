@@ -113,17 +113,18 @@ The `obfuscated` parameter is used to inform the SDK if the flag configuration i
 
 #### Offline Initialization with Configuration Management
 
-While the basic offline initialization approach is ideal when you can preload JSON configuration from a server environment, some application architectures may require different approaches to configuration management. Here are two alternative approaches that provide more flexibility:
+While the basic offline initialization approach is ideal when you can preload the configuration as JSON from a server environment, some application architectures may require different approaches to configuration management. Here are two alternative approaches that provide more flexibility:
 
 ##### 1. Using Configuration Objects Directly
 
-You can retrieve the current configuration object and use it to initialize a new client. This approach works well when your application can maintain the configuration in memory or when transferring configurations between different parts of your Swift application:
+You can retrieve the current configuration object and use it to initialize a new client. This approach works well when your application can maintain the configuration in memory or when transferring configurations within the same Swift application:
 
 ```swift
 // Get configuration from an existing client
 let configuration = existingClient.getFlagsConfiguration()
+EppoClient.resetSharedInstance()
 
-// Initialize a new client with the configuration object
+// Later, initialize a new client with the configuration object
 let newClient = EppoClient.initializeOffline(
     sdkKey: "SDK-KEY-FROM-DASHBOARD",
     initialConfiguration: configuration
@@ -132,11 +133,9 @@ let newClient = EppoClient.initializeOffline(
 
 ##### 2. Using JSON String Serialization
 
-If you need to persist or transfer the configuration through non-Swift environments, you can serialize it to a JSON string. This approach is particularly useful when:
-- Your application architecture doesn't allow direct server-to-mobile configuration transfer
-- You need to store configurations in a format compatible with multiple platforms
-- You're working with build-time configuration generation
-- You need to persist configurations in platform-agnostic storage systems
+The JSON string serialization approach is particularly useful when:
+- You need to persist configurations between app launches in platform-agnostic storage
+- You need to transfer configurations through non-Swift environments or systems
 
 ```swift
 // Get configuration from an existing client and convert to string
@@ -153,13 +152,9 @@ let newClient = EppoClient.initializeOffline(
 )
 ```
 
-These approaches provide more flexibility than the basic offline initialization when:
-- Your application needs to bootstrap before network connectivity is available
-- You're working in environments where direct server-to-mobile configuration transfer isn't feasible
-- You need to manage configurations across different runtime environments or build phases
-- You want to maintain configuration state between app launches without server communication
+These approaches provide more flexibility than the basic offline initialization when your application needs to bootstrap before network connectivity is available and maintain that state between app launches.
 
-The configuration object contains all necessary information including flags, variations, and allocation rules, allowing the SDK to make assignment decisions without requiring network connectivity.
+In both approaches, the configuration object contains all necessary information including flags, variations, and allocation rules, allowing the SDK to make assignment decisions without requiring network connectivity.
 
 ### Configuration Updates
 
