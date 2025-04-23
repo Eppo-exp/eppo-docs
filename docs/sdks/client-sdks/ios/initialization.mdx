@@ -113,11 +113,11 @@ The `obfuscated` parameter is used to inform the SDK if the flag configuration i
 
 #### Offline Initialization with Configuration Management
 
-While the basic offline initialization approach is ideal when you can preload the configuration as JSON from a server environment, some application architectures may require different approaches to configuration management. Here are two alternative approaches that provide more flexibility:
+While the basic offline initialization approach is designed for pre-loading the configuration from a server environment, some application architectures may require different approaches to configuration management. Here are two alternative approaches that provide more flexibility:
 
 ##### 1. Using Configuration Objects Directly
 
-You can retrieve the current configuration object and use it to initialize a new client. This approach works well when your application can maintain the configuration in memory or when transferring configurations within the same Swift application:
+You can extract the configuration object in your application and use it to initialize a new client. This approach works well when your application can maintain the configuration in memory or when transferring configurations within the same Swift application:
 
 ```swift
 // Get configuration from an existing client
