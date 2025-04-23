@@ -26,4 +26,4 @@ Entities specify the different subjects on which you plan to run experiments. Co
 
 ![Create Entity](/img/initial-setup/quick-start-1.png)
 
-Congratulations, you've completely the initial set up of Eppo! Next, check out our quick start guides on [creating your first metric](/metric-quickstart) and [running your first experiment](/feature-flag-quickstart).
+Congratulations, you've completed the initial setup of Eppo! Next, check out our quick start guides on [creating your first metric](/metric-quickstart) and [running your first experiment](/feature-flag-quickstart).
