@@ -24,7 +24,9 @@ Note that it is possible to reduce an allocation's traffic exposure to less than
 
 When you adjust the traffic exposure of an allocation:
 
--   **Modifying traffic exposure**: When you modify traffic exposure, existing users who were already assigned to the allocation will maintain their variant assignments when they return. This means that users who have previously been bucketed for this allocation will continue to receive the same experience. Only new users (who are being evaluated for the first time) and users who were not previously bucketed for this allocation will be subject to the updated traffic rules.
+-   **Increasing traffic exposure**: When you increase traffic exposure, existing users who were already assigned to the allocation will maintain their variant assignments when they return (i.e. have sticky assignments). This means that users who have previously been bucketed for this allocation will continue to receive the same experience. Only new users (who are being evaluated for the first time) and users who were not previously bucketed for this allocation will be subject to the updated traffic rules.
+
+-   **Decreasing traffic exposure**: When you decrease traffic exposure, existing users who were already assigned to a bucket will be re-evaluated. This means that users who have previously been bucketed for a specific variant will potentially receive a different experience.
 
 -   **Experiment completion**: This is particularly useful for experiments with a measurement window. For example, if you've reached your sample size goals, you can set traffic exposure to 0% to stop new assignments while allowing already-assigned users to complete their measurement window.
 
