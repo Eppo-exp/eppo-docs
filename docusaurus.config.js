@@ -106,7 +106,7 @@ async function createConfig () {
     ({
       announcementBar: {
         id: 'announcementBar-1', // Any value that will identify this message
-        content: '<strong>Webinar: Join our next live demo</strong> &nbsp; May 13th at 11am PT / 2pm ET &nbsp;<a target="_blank" rel="noopener noreferrer" href="https://us06web.zoom.us/webinar/register/WN_UkuwiDQXTkyCG2ZaRNNquQ">Register now →</a>',
+        content: '<strong>Webinar: How Delivery Hero Uses Switchbacks to Drive Marketplace Innovation</strong> &nbsp; April 30th at 8am PT / 11am ET &nbsp;<a target="_blank" rel="noopener noreferrer" href="https://us06web.zoom.us/webinar/register/9017437949706/WN_bO4xdxxaTYW1X6H6n4YX4g">Register now →</a>',
         backgroundColor: '#7964d3', // Defaults to '#fff'
         textColor: '#ffffff', // Defaults to '#000'
         isCloseable: true, // Defaults to true
