@@ -169,7 +169,7 @@ You can update facts by clicking the `Edit` button to access the Fact SQL. At th
 Pressing the `Run` button will enable the mapping fields. Click `Save & Close` button to save any changes made in either the SQL or mapping.
 
 :::note
-Any running experiments with metrics based on the updated Fact SQL will automatically fully refresh those metrics on the next experiment update, if "Always full refresh" is enabled for that Fact SQL.
+Any running experiments with metrics based on the updated Fact SQL will automatically fully refresh those metrics on the next experiment update.
 :::
 
 ## Deleting Facts
