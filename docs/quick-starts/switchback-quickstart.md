@@ -48,12 +48,18 @@ And then fill in the same randomization unit as you provided in the subject attr
 
 ![Create Switchback Assignment](/../static/img/switchback/quick-start-2.png)
 
-In this example, we will randomly assign a new variation every hour, and each of the listed cities is expected to have a distinct schedule of assignments.
+In this example, a variation will be randomly assigned every hour, and each of the listed cities will randomize independently of the others and thus will have its own schedule of assignments. Moreover, this schedule will be written to a table in your data warehouse. Create a definition for this schedule in the **Switchback Assignments** tab in the **Definitions** section.
 
 ### 3. Create a Switchback Experiment
 
+To analyze the results of the switchback experiment, click the **Create Switchback Analysis** button.
 
+![Create Switchback Analysis](/../static/img/switchback/quick-start-3.png)
 
-### 4. Go-Live Preparation
+And select the **Entity** of the randomization unit and the two SQL definitions: the **Assignment Logging Table**, and the **Switchback Assignment Logging Table**.
+
+![Create Switchback Analysis](/../static/img/switchback/quick-start-4.png)
+
+Then proceed with the remaining steps as shown in the UI. Further details for setting up a switchback analysis can be found in the [Experiment Analysis for Switchbacks](/experiment-analysis/switchbacks/) section.
 
 
