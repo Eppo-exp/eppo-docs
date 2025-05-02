@@ -236,3 +236,9 @@ http://adoring-yonath-6ecb9d.netlify.app/*  http://docs.geteppo.com/:splat  301!
 /server-sdks/php/intro/ /sdks/server-sdks/php/intro/ 301!
 
 /sdks/event-logging/    /sdks/server-sdks/java/event-logging/    301
+
+/metric-quickstart/ /quick-starts/analysis-integration/adding-metrics/
+/feature-flag-quickstart/ /quick-starts/sdk-integration/creating-a-flag/
+/experiment-quickstart/ /quick-starts/analysis-integration/creating-experiment-analysis/
+/experiment-allocation-quickstart/ /quick-starts/sdk-integration/launching-an-experiment/
+/setup-quickstart/ /quick-starts/analysis-integration/connect-warehouse/

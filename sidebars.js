@@ -31,11 +31,6 @@ const sidebars = {
           id: 'home'
         },
         {
-          type: 'doc',
-          label: 'Workspace setup',
-          id: 'quick-starts/setup-quickstart'
-        },
-        {
           type: 'category',
           label: 'Analysis quickstart',
           items: [

@@ -32,8 +32,8 @@
         ```
         
 2. **Set up a new flag and verify its functionality**
-    - [Create a new flag in Eppo](https://docs.geteppo.com/feature-flag-quickstart#2-create-a-flag) by navigating to “Feature Flags” under Configuration.
-    - [Implement the flag](https://docs.geteppo.com/feature-flag-quickstart#6-embed-the-flag-in-your-code) in your application code.
+    - [Create a new flag in Eppo](/quick-starts/sdk-integration/creating-a-flag/#2-create-a-flag) by navigating to “Feature Flags” under Configuration.
+    - [Implement the flag](/quick-starts/sdk-integration/creating-a-flag#6-embed-the-flag-in-your-code) in your application code.
     - Test the flag in your local development environment to ensure it works as expected.
       
       *TypeScript Example:*

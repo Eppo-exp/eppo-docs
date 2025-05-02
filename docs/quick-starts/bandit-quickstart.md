@@ -8,7 +8,7 @@ sidebar_position: 7
 This 10-minute guide will walk through configuring and running your first Contextual Bandit with Eppo. Note that Contextual Bandits leverage the Eppo SDK and this guide will walk through SDK setup.
 
 :::info
-In order to optimize a Bandit, you must have [created your first metric](/metric-quickstart).
+In order to optimize a Bandit, you must have [created your first metric](/quick-starts/analysis-integration/adding-metrics/).
 :::
 
 ### 1. Generate an SDK key
@@ -205,4 +205,4 @@ Complete these last steps to deploy your Bandit to Production:
 ![Production setup](/img/bandit/bandit-qs-6.png)
 5. Toggle the flag on in Production
 
-Congrats on running your first Bandit! As a next step, you can connect your flag to an Experiment Analysis so you can measure the impact your bandit is having on your product. See the [experiment quickstart guide](/experiment-quickstart) for more.
+Congrats on running your first Bandit! As a next step, you can connect your flag to an Experiment Analysis so you can measure the impact your bandit is having on your product. See the [experiment quickstart guide](/quick-starts/analysis-integration/creating-experiment-analysis/) for more.

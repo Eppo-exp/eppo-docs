@@ -148,24 +148,6 @@ async function createConfig () {
         style: 'dark',
         links: [
           {
-            title: 'Quick start guides',
-            items: [
-              {
-                label: 'Initial setup',
-                to: '/setup-quickstart'
-              },
-              {
-                label: 'Feature flag quick start',
-                to: '/feature-flag-quickstart'
-              },
-              {
-                label: 'Experiment quick start',
-                to: '/experiment-quickstart'
-              }
-            ]
-          },
-
-          {
             title: 'Links',
             items: [
               {

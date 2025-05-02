@@ -1,16 +1,14 @@
 ---
-title: Creating an experiment analysis
+title: Analyzing your first experiment
 sidebar_position: 3
 ---
-
-# Creating your first experiment analysis
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
 
 
 :::info
-In order to analyze an experiment, you must have completed the [initial setup quick start](/setup-quickstart) and [created your first metric](/metric-quickstart).
+In order to analyze an experiment, you must have completed the [initial setup quick start](/quick-starts/analysis-integration/connect-warehouse/) and [created your first metric](/quick-starts/analysis-integration/adding-metrics/).
 :::
 
 This guide will walk you through creating your first experiment readout. We will create a new experiment analysis, set up basic configurations, add metrics, run the analysis, and visualize results.
@@ -18,7 +16,11 @@ This guide will walk you through creating your first experiment readout. We will
 
 ### 1. Create an Assignment SQL definition
 
-At the core of Eppo's data model is a log of every time a subject (e.g., user) was assigned to an experiment and which variant they received. These logs can capture both experiments randomized with Eppo as well as with other tools (for instance, email marketing systems). If you have not run an experiment before, see our [guide on running your first experiment](/feature-flag-quickstart).  
+:::note
+This step is only required when first integrating Eppo. If your company is already using Eppo to measure experiments, you may be able to skip this step.
+:::
+
+At the core of Eppo's data model is a log of every time a subject (e.g., user) was assigned to an experiment and which variant they received. These logs can capture both experiments randomized with Eppo as well as with other tools (for instance, email marketing systems). If you have not run an experiment before, see our [guide on running your first experiment](/quick-starts/sdk-integration/creating-a-flag).  
 
 To add an assignment log, navigate to the **Assignments** section on the **Definitions** tab and click **+Create Assignment Table**. Give the Assignment SQL a name (e.g., "Eppo Randomized Assignments") and write SQL to return the following fields from your data warehouse:
 
@@ -41,7 +43,7 @@ You can read more about Assignment SQL Definitions [here](/data-management/defin
 <Tabs>
 <TabItem value="e2e" label="Eppo Randomized">
 
-From your Feature Flag, click **Create Experiment Analysis**. Give the experiment a name, select the assignment logging table you created above, and click **Next**.
+From your Feature Flag, click **Create Experiment Analysis**. Give the experiment a name and add an optional hypothesis. If you have already set up Experiment Protocols, you can select one here. Otherwise, keep the default ("No Protocol -> Start from Scratch") and click **Next**:
 
 ![Create Experiment 1b](/../static/img/building-experiments/quick-start-1b.png)
 

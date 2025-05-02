@@ -1,4 +1,9 @@
-# Connecting Eppo to your data warehouse
+---
+title: Connecting Eppo to your data warehouse
+---
+
+
+import WarehouseGrid from '@site/src/components/WarehouseGrid';
 
 Eppo never stores raw data and instead directly uses data that lives in your data warehouse. This section provides instructions on connecting to warehouses currently supported by Eppo.
 
@@ -13,7 +18,8 @@ Specifically Eppo needs to read:
 Eppo writes experiment results along with intermediate tables used to calculate those final results. Please visit the [data pipeline page](/data-management/data-pipeline) to learn more about how the pipeline works and the intermediate tables we write to your data warehouse.
 
 ## Warehouse specific instructions
-- [BigQuery](/data-management/connecting-dwh/bigquery)
-- [Databricks](/data-management/connecting-dwh/databricks)
-- [Redshift](/data-management/connecting-dwh/redshift)
-- [Snowflake](/data-management/connecting-dwh/snowflake)
+
+Click below to learn how to connect your warehouse:
+
+<WarehouseGrid />
+

@@ -73,7 +73,7 @@ html {
   --ifm-code-font-size: 95%;
   --ifm-background-color: #fff;
   --ifm-sidebar-border-color: var(--ifm-color-gray-300);
-  --card-bg: #fff;
+  --card-bg: #fcfaf7;
   --card-border: #ddd;
   --card-shadow: rgba(0, 0, 0, 0.1);
   --inline-code-bg: #f0f0f0;
@@ -319,7 +319,7 @@ sup {
 
 .feature-card {
   padding: 20px;
-  border: 1px solid var(--card-border);
+  border: 0px solid var(--card-border);
   border-radius: 8px;
   background-color: var(--card-bg);
   height: 100%;
@@ -464,3 +464,102 @@ code {
 .button--primary:hover {
   color: var(--ifm-color-gray-1000)
 }
+
+.tech-card-link {
+  text-decoration: none;
+  color: inherit;
+  width: 50%;  /* Half the width of its container */
+  max-width: 600px;  /* Optional: maximum width */
+  display: block;
+  margin: 0 auto;  /* Centers the card */
+}
+
+.tech-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 1rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  background: var(--ifm-background-surface-color);
+}
+
+/* Dark mode specific styles */
+[data-theme='dark'] .tech-card {
+  border-color: var(--ifm-color-emphasis-300);
+  background: var(--ifm-color-emphasis-100);
+}
+
+.tech-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+[data-theme='dark'] .tech-card:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.tech-card-icon-wrapper {
+  width: 38px;
+  height: 38px;
+  margin-bottom: 8px; /* Changed from margin-right to margin-bottom */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.tech-card-icon {
+  width: 100px;  /* Force exact width */
+  height: 100px; /* Force exact height */
+  object-fit: contain;
+  display: block; /* Removes any extra space */
+}
+
+.tech-card-text {
+  font-size: 16px;
+  font-weight: 500;
+  text-align: center;
+  color: var(--ifm-font-color-base);
+}
+
+.tech-grid {
+  display: grid;
+  gap: 1rem;
+  width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.tech-grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.tech-grid-3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+
+.tech-grid-4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+
+.tech-grid-5 {
+  grid-template-columns: repeat(5, 1fr);
+}
+
+.tech-card-link {
+  width: 100%; /* Change from 50% to 100% since grid handles the width now */
+  max-width: none; /* Remove max-width constraint */
+}
+
+.with-shadow {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px; /* Optional: adds rounded corners */
+}
+
+/* Darker shadow for dark mode */
+[data-theme='dark'] .with-shadow {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+

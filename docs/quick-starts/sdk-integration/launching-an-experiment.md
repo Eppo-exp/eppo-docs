@@ -21,7 +21,7 @@ At the end of this guide, you'll be able to:
 
 To run an experiment with Eppo, you'll need the following:
 
-1. An existing feature flag capturing the variations you want to test. If you have not already created a flag, we recommend you start with the [feature flag quick start guide](/feature-flag-quickstart/).
+1. An existing feature flag capturing the variations you want to test. If you have not already created a flag, we recommend you start with the [feature flag quick start guide](/quick-starts/sdk-integration/creating-a-flag/).
 2. A method for logging events to your data warehouse. Eppo never captures any user-level data. Instead, you'll provide an interface for your existing event logging system. This simplifies security and cookie consent considerations associated with working with a vendor.
 3. A data warehouse service account connected to your Eppo workspace. For details on setting this up, see the [connecting your warehouse section](/data-management/connecting-dwh/).
 

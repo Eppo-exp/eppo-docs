@@ -12,7 +12,7 @@ As a basic example, imagine using Eppo's SDK to randomize users in a batch machi
 ![Feature flag configuration](/img/feature-flagging/script_example_flag_config.png)
 
 :::note
-If you have not set up an experiment in Eppo's UI before, please see the [experiment quickstart guide](/experiment-allocation-quickstart).
+If you have not set up an experiment in Eppo's UI before, please see the [experiment quickstart guide](/quick-starts/sdk-integration/launching-an-experiment/).
 :::
 
 To keep the example simple, let's not worry about logging assignments to a warehouse and instead just write them to a local file using Python's built-in `logging` package.
@@ -82,7 +82,7 @@ After running this, you can inspect the logs in the `eppo_assignments.csv` file:
 {"featureFlag": "test-checkout", "allocation": "allocation-7144", "experiment": "test-checkout-allocation-7144", "variation": "fast_checkout", "metaData": {"sdkName": "python", "sdkVersion": "4.1.0", "coreVersion": "4.1.0"}, "subject": "26acea9e-f6d8-4680-b72e-8d9c7a4109a2", "subjectAttributes": {}, "timestamp": "2025-01-23T19:28:19.984240Z"}
 ```
 
-In a real-world scenario, you would send these logs to your warehouse of choice. From there, you would create an [Assignment SQL Definition](/data-management/definitions/assignment-sql/) and analyze your experiment like any other experiment in Eppo. For more information on analyzing experiments, see our [Experiment Analysis Quickstart](/experiment-quickstart/).
+In a real-world scenario, you would send these logs to your warehouse of choice. From there, you would create an [Assignment SQL Definition](/data-management/definitions/assignment-sql/) and analyze your experiment like any other experiment in Eppo. For more information on analyzing experiments, see our [Experiment Analysis Quickstart](/quick-starts/analysis-integration/creating-experiment-analysis/).
 
 ## Targeting users in Django
 
