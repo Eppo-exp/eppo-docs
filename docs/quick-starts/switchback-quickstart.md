@@ -31,7 +31,7 @@ const variant = client.getStringAssignment(
   "flag-key",
   "user-123",
   {
-    "city": "nyc",
+    "city": "sf",
   },
   "default-assignment"
 );
@@ -48,7 +48,9 @@ And then fill in the same randomization unit as you provided in the subject attr
 
 ![Create Switchback Assignment](/../static/img/switchback/quick-start-2.png)
 
-In this example, a variation will be randomly assigned every hour, and each of the listed cities will randomize independently of the others and thus will have its own schedule of assignments. Moreover, an **Switchback Assignment Logging Table** will be written to your data warehouse. It will contain the assignment schedule for each of the values you provided in the **Randomization Unit** field. Create a definition for this schedule in the **Switchback Assignments** tab in the **Definitions** section.
+In this example, a variation will be randomly assigned every hour by the SDK within the assignment date range, and each of the listed cities will randomize independently of the others and thus will have its own schedule of assignments. 
+
+Additionally, a **Switchback Assignment Logging Table** will be written to your data warehouse. It will contain the assignment schedule for each of the values you provided in the **Randomization Unit** field. You will need tor ceate a definition for this schedule in the **Switchback Assignments** tab in the **Definitions** section.
 
 :::note
 The feature flag key in which the switchback assignment was created is the same feature flag key that you should use in the SDK function for getting assignments.
