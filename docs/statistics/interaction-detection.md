@@ -38,7 +38,7 @@ Note that when entities were randomized to see a white sign up button in experim
 
 Even when assignments between experiments do not display assignment dependence, the effects in each experiment can still interact. This happens when the effect of a variant in one experiment depends on which variant a user received in another experiment. 
 
-Suppose the estimated lift from Experiment 1, looking only at users who saw the white button, is +5%. But when you look at users who saw the black button, the estimated lift is only +1%.  The effect of the call to action change is different depending on which button color the entity was exposed to. In this case, “Sign Up For Free!” might look more compelling on a white button than on a black button, hence leading to a larger lift.
+Suppose the estimated lift from Experiment 1, looking only at users who saw the white button, is +5%. But when you look at users who saw the black button, the estimated lift is only +1%.  The effect of the call to action change is different depending on which button color the subject was exposed to. In this case, “Sign Up For Free!” might look more compelling on a white button than on a black button, hence leading to a larger lift.
 
 | Estimated Lift (CTA Variant vs Control) | Experiment 2: White Button | Experiment 2: Black Button |
 |----------------------------------------|-----------------------------|-----------------------------|
