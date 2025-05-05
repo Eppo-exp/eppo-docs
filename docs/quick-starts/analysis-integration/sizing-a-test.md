@@ -36,7 +36,7 @@ To perform a sample size calculation, you'll need to provide the following input
 - **Entity** - On what type of subject are you running your experiment? User, cookie, etc.
 - **Entry Point** - The moment in your user journey on which you're interested in experimenting.
 - **Name** - The name of your sample size calculation.
-- **Metrics** - The metric you're interested in measuring.
+- **Metrics** - The metrics you're interested in measuring.
 
 ![Sample size calculator interface](/img/planning-experiments/on_demand_sample_size_calculator_interface.png)
 
