@@ -133,11 +133,12 @@ Start here for basic 10 minute tutorials on using core Eppo functionality.
   <div>
     <ul>
       <li><a href="/bandit-quickstart/">**Launching a Contextual Bandit**</a></li>
+      <li><a href="/geolift-quickstart/">**Creating a Geolift test**</a></li>
     </ul>
   </div>
   <div>
     <ul>
-      <li><a href="/geolift-quickstart/">**Creating a Geolift test**</a></li>
+      <li><a href="/switchback-quickstart/">**Running a Switchback test**</a></li> 
     </ul>
   </div>
 </div>
