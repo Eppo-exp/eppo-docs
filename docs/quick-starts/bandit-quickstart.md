@@ -31,7 +31,7 @@ The [Assignment event logging](/sdks/event-logging/assignment-logging/) page has
 
 This logger should write to a table with columns with the following names (they can be in any order):
 * **timestamp** - Timestamp of the bandit assignment
-* **key** - The key (unique identifier) of the bandit
+* **bandit_key** - The key (unique identifier) of the bandit
 * **subject** - The unique identifier for the subject being assigned
 * **subject_numeric_attributes** - Mapping of attribute names to numbers, in JSON format, for the numeric-valued attributes of the subject
 * **subject_categorical_attributes** - Mapping of attribute names to strings, in JSON format, for the non-numeric-valued attributes of the subject
@@ -51,7 +51,7 @@ Below is an example bandit assignment logger for the Java SDK, defined when buil
 ```java
 .banditLogger(logData -> {
     String sql = "INSERT INTO bandit_assignments " +
-      "(timestamp, experiment, variation_value, subject," +
+      "(timestamp, experiment, bandit_key, subject," +
       " action, action_probability, model_version," +
       " subject_numeric_attributes, subject_categorical_attributes," +
       " action_numeric_attributes, action_categorical_attributes) " +
