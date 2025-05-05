@@ -14,7 +14,7 @@ Further, these use cases often have different requirements for decision making. 
 2. Standardize the metrics and analysis method for each experimentation use case
 3. Pre-register and standardize the decision criteria for your experiments
 
-This page gives a high level overview of how to create an experiment protocol. For more details on protocols, see the full docs [here](/experiment-analysis/configuration/protocols).
+This page gives a high-level overview of how to create an experiment protocol. For more details on protocols, see the full docs [here](/experiment-analysis/configuration/protocols).
 
 ## Creating a protocol
 
