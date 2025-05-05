@@ -55,6 +55,11 @@ const sidebars = {
           label: 'Contextual Bandit quickstart',
           id: 'quick-starts/bandit-quickstart'
         },
+        {
+          type: 'doc',
+          label: 'Switchback quickstart',
+          id: 'quick-starts/switchback-quickstart'
+        },
         { 
           type: 'doc',
           label: 'Geolift quickstart',
