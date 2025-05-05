@@ -79,6 +79,49 @@ Task {
 }
 ```
 
+#### Initialization with Automatic Configuration Updates (Polling)
+
+The SDK can be configured to automatically poll for configuration updates at regular intervals. This is useful for ensuring your application always has the latest flag configurations.
+
+To enable polling during initialization:
+
+```swift
+Task {
+    try await EppoClient.initialize(
+        sdkKey: "SDK-KEY-FROM-DASHBOARD",
+        pollingEnabled: true,
+        pollingIntervalMs: 300_000,  // 5 minutes (default)
+        pollingJitterMs: 30_000      // 10% of polling interval (default)
+    )
+}
+```
+
+You can also start and stop polling after initialization:
+
+```swift
+let eppoClient = EppoClient.shared()
+
+// Start polling with custom intervals
+try await eppoClient.startPolling(
+    intervalMs: 300_000,  // 5 minutes
+    jitterMs: 30_000      // Jitter of up to 30 seconds
+)
+
+// Stop polling
+eppoClient.stopPolling()
+```
+
+The polling mechanism includes the following features:
+- Default polling interval of 5 minutes (300,000 ms)
+- Random jitter to prevent thundering herd problems (default is 10% of polling interval)
+- Automatic retry up to 7 times on failed requests
+- Exponential backoff on failures
+- Polling stops automatically if max retries are exceeded
+
+:::note
+For battery efficiency in mobile applications, it's recommended to stop polling when your app goes to the background and resume when it comes to the foreground.
+:::
+
 #### Initialization with Pre-fetched Configuration
 You can pass in a pre-fetched flag configuration JSON string:
 
@@ -110,6 +153,51 @@ try EppoClient.initializeOffline(
 ```
 
 The `obfuscated` parameter is used to inform the SDK if the flag configuration is obfuscated.
+
+#### Offline Initialization with Configuration Management
+
+While the basic offline initialization approach is designed for pre-loading the configuration from a server environment, some application architectures may require different approaches to configuration management. Here are two alternative approaches that provide more flexibility:
+
+##### 1. Using Configuration Objects Directly
+
+You can extract the configuration object in your application and use it to initialize a new client. This approach works well when your application can maintain the configuration in memory or when transferring configurations within the same Swift application:
+
+```swift
+// Get configuration from an existing client
+let configuration = existingClient.getFlagsConfiguration()
+EppoClient.resetSharedInstance()
+
+// Later, initialize a new client with the configuration object
+let newClient = EppoClient.initializeOffline(
+    sdkKey: "SDK-KEY-FROM-DASHBOARD",
+    initialConfiguration: configuration
+)
+```
+
+##### 2. Using JSON String Serialization
+
+The JSON string serialization approach, an alternative to the configuration object approach, is useful when:
+- You need to persist configurations between app launches in platform-agnostic storage
+- You need to transfer configurations through non-Swift environments or systems
+
+```swift
+// Get configuration from an existing client and convert to string
+let configuration = existingClient.getFlagsConfiguration()
+let configurationString = try configuration.toJsonString()
+
+// Later, initialize a new client using the JSON string
+let newClient = EppoClient.initializeOffline(
+    sdkKey: "SDK-KEY-FROM-DASHBOARD",
+    initialConfiguration: try Configuration(
+        flagsConfigurationJson: Data(configurationString.utf8),
+        obfuscated: false
+    )
+)
+```
+
+These approaches provide more flexibility than basic offline initialization for when your application needs to bootstrap before network connectivity is available and maintain that state between app launches.
+
+In both approaches, the configuration object contains all necessary information including flags, variations, and allocation rules, allowing the SDK to make assignment decisions without requiring network connectivity.
 
 ### Configuration Updates
 

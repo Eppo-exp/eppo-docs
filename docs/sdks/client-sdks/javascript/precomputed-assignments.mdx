@@ -48,8 +48,10 @@ const assignmentLogger: IAssignmentLogger = {
 const client = await EppoSdk.precomputedInit({
     apiKey: 'YOUR_SDK_KEY',
     assignmentLogger: assignmentLogger,
-    subjectKey: 'test-subject',
-    subjectAttributes: { attr1: 'value1' },
+    precompute: {
+        subjectKey: 'test-subject',
+        subjectAttributes: { attr1: 'value1' },
+    }
 });
 ```
 

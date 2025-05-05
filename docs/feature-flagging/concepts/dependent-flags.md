@@ -28,9 +28,21 @@ Like other targeting rules, the `get_*_assignment` function must pass the releva
 import eppo_client
 
 client = eppo_client.get_instance()
+
+new_onboarding_flow_variation = client.get_string_assignment(
+  "new-onboarding-flow",
+  "<SUBJECT-KEY>",
+  {}, # optional subject attributes
+  "<DEFAULT-VALUE>"
+)
+
 variation = client.get_string_assignment(
   "<FLAG-KEY>",
   "<SUBJECT-KEY>",
-  { "dependent_flag": "new-onboarding-flow", "variation_served": "true" }, 
-  "<DEFAULT-VALUE>")
+    { 
+      "dependent_flag": "new-onboarding-flow", 
+      "variation_served": new_onboarding_flow_variation
+    }, 
+  "<DEFAULT-VALUE>"
+)
 ```

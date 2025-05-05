@@ -16,13 +16,13 @@ At a minimum, a Fact SQL Definition needs to return a timestamp and a column to 
 
 Each Fact SQL Definition should return the following columns. Note that the specific names of these columns do not matter as you will map them into Eppo's data model when you create the fact definition.
 
-|           | Description| Examples |
-|-----------|------------|--------|
-| Timestamp | The time at which the event occurred, or the time dimension for aggregated data                            | `event_timestamp` , `session_timestamp` , `daydate` |
-| Entity ID | An ID for joining to assignment SQL sources. You can add multiple of these if the fact corresponds to multiple entities. | `user_id` , `device_id` , `company_id`|
-| Fact value (optional) | A numeric quantity associated with the fact. You can add several if an event has multiple associated values (e.g., net revenue and gross revenue) | `gross_revenue` , `items_added_to_cart` , `support_ticket_count` |
-| Fact property (optional) | A categorical variable associated with the event. This can be used to filter events in metric creation, or to break out experiment results. Note that properties that are 1:1 with experiment subjects should be defined in an [Assignment](/data-management/definitions/assignment-sql) or [Entity Property](/data-management/definitions/property-sql) SQL definition. | `revenue_category` , `support_ticket_reason` , `event_name` |
-| Partition date (optional) | An optional additional timestamp for filtering rows with a column other than the event timestamp. Useful if your event timestamp column differs from the table's partition timestamp column. See [here](/data-management/warehouse-best-practices/#leveraging-partitioning) for more information about leveraging partitioning. | `date` |
+|                           | Description                                                                                                                                                                                                                                                                                                                                                              | Examples                                                         |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------- |
+| Timestamp                 | The time at which the event occurred, or the time dimension for aggregated data                                                                                                                                                                                                                                                                                          | `event_timestamp` , `session_timestamp` , `daydate`              |
+| Entity ID                 | An ID for joining to assignment SQL sources. You can add multiple of these if the fact corresponds to multiple entities.                                                                                                                                                                                                                                                 | `user_id` , `device_id` , `company_id`                           |
+| Fact value (optional)     | A numeric quantity associated with the fact. You can add several if an event has multiple associated values (e.g., net revenue and gross revenue)                                                                                                                                                                                                                        | `gross_revenue` , `items_added_to_cart` , `support_ticket_count` |
+| Fact property (optional)  | A categorical variable associated with the event. This can be used to filter events in metric creation, or to break out experiment results. Note that properties that are 1:1 with experiment subjects should be defined in an [Assignment](/data-management/definitions/assignment-sql) or [Entity Property](/data-management/definitions/property-sql) SQL definition. | `revenue_category` , `support_ticket_reason` , `event_name`      |
+| Partition date (optional) | An optional additional timestamp for filtering rows with a column other than the event timestamp. Useful if your event timestamp column differs from the table's partition timestamp column. See [here](/data-management/warehouse-best-practices/#leveraging-partitioning) for more information about leveraging partitioning.                                          | `date`                                                           |
 
 :::info
 Partition date columns are disabled by default. If you would like to enable them, please reach out to your Eppo point of contact or email support@geteppo.com. Enabling this feature will have no impact on billing.
@@ -79,6 +79,7 @@ You can read more about Fact Properties on the [Properties](/data-management/def
 Once you have finished defining your Fact SQL, click **Save & Close**. You can now repeat this process for other fact tables, or continue on to create [Metrics](/quick-starts/analysis-integration/adding-metrics/) from your new Facts.
 
 #### Adding Partition Keys (optional)
+
 If your table is partitioned on a different column than the event timestamp (i.e. event date), Eppo can leverage the partition column to create more efficient queries.
 
 To specify a partition key, map the column to the Partition Date field.
@@ -86,7 +87,7 @@ To specify a partition key, map the column to the Partition Date field.
 ![Partition Date](/img/data-management/best-practices/partition_date.png)
 
 :::info
-Partition dates are disabled by default, if you'd like to enable them in your workspace, please reach out to your Eppo representative or email us at support@geteppo.com.
+Partition keys are disabled by default, if you'd like to enable them in your workspace, please reach out to your Eppo representative or email us at support@geteppo.com.
 :::
 
 ### Defining template variables
@@ -94,8 +95,9 @@ Partition dates are disabled by default, if you'd like to enable them in your wo
 If you need to reduce the volume of data the data warehouse needs to process, you can incorporate analysis-specific variables into your Fact SQL. When the experiment pipeline runs, it will filter the query to the date range specified in the analysis set up.
 
 Supported variables:
-- `{{analysis_start_timestamp}}` - The ‘event data from’ date in the ‘Analysis Set Up’,
-- `{{analysis_end_timestamp}}` - The ‘event end date’ date in the ‘Analysis Set Up’,
+
+-   `{{analysis_start_timestamp}}` - The ‘event data from’ date in the ‘Analysis Set Up’,
+-   `{{analysis_end_timestamp}}` - The ‘event end date’ date in the ‘Analysis Set Up’,
 
 #### Example
 
@@ -118,14 +120,14 @@ If you have well established analytic data models in your warehouse, you can cre
 select * from analytics.reviews
 ```
 
-| Column | Type in Eppo |
-|--------|--------------|
-| `created_at` | Timestamp |
-| `driver_id` | Entity ID |
-| `passenger_id` | Entity ID |
-| `review_rating` | Fact value |
-| `review_has_photo` | Fact property |
-| `review_is_disputed` | Fact property | 
+| Column               | Type in Eppo  |
+| -------------------- | ------------- |
+| `created_at`         | Timestamp     |
+| `driver_id`          | Entity ID     |
+| `passenger_id`       | Entity ID     |
+| `review_rating`      | Fact value    |
+| `review_has_photo`   | Fact property |
+| `review_is_disputed` | Fact property |
 
 Since we've added multiple entity columns, this table will be able to power metrics for both passenger-randomized and driver-randomized experiments. We'll be able to create metrics based on both the number of rows in this table (i.e., the number of reviews) and the average rating. We'll also be able to leverage fact properties to build metrics like "Reviews with Dispute", and break out measurements by whether the review had a photo.
 
@@ -133,29 +135,28 @@ Since we've added multiple entity columns, this table will be able to power metr
 
 Next, imagine you are working at an ecommerce website and have a log of every button click on the site. This data might look something like this in Eppo's data model:
 
-| Column | Type in Eppo |
-|--------|--------------|
-| `user_id` | Entity ID |
-| `event_timestamp` | Timestamp | 
-| `event_name` | Fact property |
+| Column            | Type in Eppo  |
+| ----------------- | ------------- |
+| `user_id`         | Entity ID     |
+| `event_timestamp` | Timestamp     |
+| `event_name`      | Fact property |
 
 In this case, you could have many different `event_name` values corresponding to different buttons in your app. By marking `event_name` as a fact property, you can filter metrics to look at specific button clicks (for instance, add to cart clicks).
 
 ### Pre-aggregated data
 
-Finally, some companies may have very large data sources and prefer to pre-aggregate data upstream of Eppo. For instance, instead of pointing Eppo at a raw event stream, you might aggregate data by session and point Eppo at that instead. 
+Finally, some companies may have very large data sources and prefer to pre-aggregate data upstream of Eppo. For instance, instead of pointing Eppo at a raw event stream, you might aggregate data by session and point Eppo at that instead.
 
-| Column | Type in Eppo |
-|--------|--------------|
-| `session_id` | (not used) |
-| `session_start_timestamp` | Timestamp | 
-| `user_id` | Entity ID |
-| `pages_viewed` | Fact value |
-| `items_added_to_cart` | Fact value |
-| `purchase_revenue` | Fact value |
+| Column                    | Type in Eppo |
+| ------------------------- | ------------ |
+| `session_id`              | (not used)   |
+| `session_start_timestamp` | Timestamp    |
+| `user_id`                 | Entity ID    |
+| `pages_viewed`            | Fact value   |
+| `items_added_to_cart`     | Fact value   |
+| `purchase_revenue`        | Fact value   |
 
 Some companies may instead aggregate data by day instead of session, which would look similar to the example above, just with `date` as the Timestamp instead of `session_start_timestamp`.
-
 
 :::info
 If you opt to use aggregated data as facts, make sure that assignment data timestamp is truncated to the same grain. When the Eppo pipeline runs, it will filter to facts that occur after the first observed assignment for a given subject (e.g., user). If the fact timestamp is truncated to the day (or to session start), but the assignment timestamp is not, it may lead to some events being lost in the analysis. This is easily solved by also truncating the assignment timestamp to the same grain (date, session start, etc.).
@@ -173,7 +174,7 @@ Any running experiments with metrics based on the updated Fact SQL will automati
 
 ## Deleting Facts
 
-You can delete a Fact SQL as well as individual Facts. First, access the Fact SQL by clicking the `Edit` button. 
+You can delete a Fact SQL as well as individual Facts. First, access the Fact SQL by clicking the `Edit` button.
 
 To delete the Fact SQL, click `Delete Fact SQL` from the overflow menu.
 
@@ -182,3 +183,80 @@ To delete an individual Fact, press the `Run` button to unlock the mapping field
 If either type of delete action will impact existing metrics or experiments, a confirmation modal will appear detailing the metrics and experiments impacted.
 
 ![Delete fact confirmation](/img/data-management/best-practices/delete_fact.png)
+
+## Advanced Settings
+
+### Enabling full refreshes
+
+The "Always full refresh metrics from this table" option in the Eppo UI determines how metrics from a fact source are updated during experiment computation.
+
+:::info
+The "Always full refresh metrics from this table" option is disabled by default. If you would like to enable it, please reach out to your Eppo point of contact or email support@geteppo.com. Enabling this feature will have no impact on billing.
+:::
+
+#### What it does
+
+When enabled, Eppo will perform a complete recalculation of all metrics from this fact source whenever they are included in an experiment. This means:
+
+-   All historical data will be reprocessed
+-   Previous metric calculations will be discarded
+-   A fresh computation will be performed from scratch
+
+#### When to enable this option
+
+Enable "Always full refresh metrics from this table" for fact sources where data continues to be updated long after the initial event date. Common examples include:
+
+-   Refund tables where refunds can occur weeks or months after the original transaction
+-   Tables with delayed data updates or corrections
+-   Tables where historical records may be modified
+
+#### Default behavior
+
+By default, this option is disabled. Eppo will use incremental updates when possible, which is more efficient for most use cases.
+
+#### Impact on performance
+
+While enabling this option ensures the most up-to-date metrics, it comes with some trade-offs:
+
+-   Longer computation times for experiments
+-   Higher resource usage during metric calculations
+-   More database load during updates
+
+#### Example use case
+
+Consider a table tracking e-commerce transactions and refunds:
+
+```sql
+CREATE TABLE transactions (
+  transaction_id VARCHAR,
+  user_id VARCHAR,
+  amount DECIMAL,
+  transaction_date TIMESTAMP,
+  refund_date TIMESTAMP,  -- Can be updated months later
+  refund_amount DECIMAL   -- Can be updated months later
+);
+```
+
+In this case, you would want to enable "Always full refresh metrics from this table" because:
+
+1. Refund data can be updated long after the transaction date
+2. The final refund amount may change over time
+3. Historical records may be modified
+
+This ensures your experiment metrics always reflect the most current state of the data.
+
+#### Where to find this option
+
+In the Eppo UI:
+
+1. Navigate to Definitions
+2. Select your fact source
+3. Look for "Source Configuration - Optional" section
+4. Find the checkbox labeled "Always full refresh metrics from this table"
+5. A tooltip (info icon) provides additional context about when to use this option
+
+In the API, this field is represented by `force_full_refresh` which can be found in the `Definitions` object.
+
+#### Note on certified fact sources
+
+If a fact source is certified (indicating it has been formally approved and validated), this setting cannot be modified to maintain data integrity and consistency.
