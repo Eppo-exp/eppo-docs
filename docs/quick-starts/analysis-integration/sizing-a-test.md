@@ -52,7 +52,7 @@ The table on the right can be used to understand what size signal we'll be able 
 
 Under **Experiment Settings** you can set different variant counts and traffic exposures. You can also test advanced analysis settings such as confidence interval methodology, confidence level, and statistical power. To learn more about Eppo's statistics engine and these advanced settings, see the [statistics section of the docs](/statistics/).
 
-As you change the number of variants, traffic exposure, and any other advanced settings, you'll be able to see the minimum detectable effect of each metric change
+As you change the number of variants, traffic exposure, and any other advanced settings, you'll be able to see the minimum detectable effect of each metric change in real time.
 
 ## Next steps
 
