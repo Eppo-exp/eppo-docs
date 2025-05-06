@@ -1,12 +1,12 @@
 ---
-slug: /feature-flag-quickstart
-sidebar_position: 3
+title: Creating a flag
+sidebar_position: 1
 ---
+
+# Creating your first feature flag
 
 import Tabs from '@theme/Tabs';
 import TabItem from '@theme/TabItem';
-
-# Creating your first feature flag
 
 This 10 minute guide will walk through creating your first feature flag in Eppo. In the example, we'll imagine that we are adding a basic on/off switch for a new onboarding page.
 
@@ -48,7 +48,7 @@ For this example, we will assign all users to the Enabled version of the flag. I
 
 ## Integrate the SDK
 
-Now that we have created a flag and an allocation, we can start getting variations from the SDK. This section walks through basic integration for a few common frameworks, for a full list of SDKs and integration options, see the [SDKs](/sdks) section of the docs.
+Now that we have created a flag and an allocation, we can start getting variations from the SDK. This section walks through basic integration for a few common frameworks, for a full list of SDKs and integration options, see the [SDKs](/sdks/#client-sdks) section of the docs.
 
 ### Install the SDK
 

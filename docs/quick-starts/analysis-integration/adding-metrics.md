@@ -1,15 +1,15 @@
 ---
-slug: /metric-quickstart
-sidebar_position: 4
+title: Adding metrics
+sidebar_position: 2
 ---
 
 # Creating your first metric
 
 :::info
-In order to create a metric, you must have a data warehouse connected and an entity created. See [the initial setup quickstart](/setup-quickstart) for details.
+In order to create a metric, you must have a data warehouse connected and an entity created. See [the initial setup quickstart](/quick-starts/analysis-integration/connect-warehouse/) for details.
 :::
 
-Metrics are standardized definitions of where data lives in your data warehouse and how it should be used to analyze experiments. In this guide, you'll create a Fact SQL definition to tell Eppo where data lives, and create a metric definition to standardize how this data should be used to analyze experiments.
+Metrics are standardized definitions of where data lives in your data warehouse and how it should be used to analyze experiments. In this guide, you'll create a Fact SQL definition to tell Eppo where data lives, and create a metric definition to specify how this data should be used to analyze experiments.
 
 ### 1. Create a Fact SQL definition
 
@@ -24,7 +24,7 @@ Follow the steps below to create your first Fact SQL definition.
 5. Create Facts for any columns from which you plan to build metrics, or select "Each Record"
 6. Click **Save and close**
 
-![Create Assignment SQL](/../static/img/metrics/quick-start-2.png)
+![Create Fact SQL](/img/metrics/quick-start-2.png)
 
 ### 2. Create a Metric
 
@@ -36,6 +36,6 @@ Metrics specify how the raw event data you defined above should be aggregated fo
 4. (Optional) Set metric time window (relative to experiment assignment), and Winsorization settings
 5. Hit **Create Metric** and repeat for any other metrics you would like to create
 
-![Create Assignment SQL](../../static/img/metrics/quick-start-4.png)
+![Create Metric](/img/metrics/quick-start-4.png)
 
-You have now created your first metric! Next, check out our quick start on [running your first experiment](/feature-flag-quickstart) or [analyzing a past experiment](/experiment-quickstart/).
+You have now created your first metric! Next, check out our quick start on [running your first experiment](/quick-starts/sdk-integration/creating-a-flag) or [analyzing a past experiment](/quick-starts/analysis-integration/creating-experiment-analysis/).

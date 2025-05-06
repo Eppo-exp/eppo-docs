@@ -1,9 +1,9 @@
 ---
-slug: /setup-quickstart
+slug: /quick-starts/analysis-integration/connect-warehouse/
 sidebar_position: 2
 ---
 
-# Initial setup
+# Workspace setup
 
 This page walks through the initial setup of your Eppo instance. In this guide, you'll learn how to access Eppo, connect your data warehouse and create your first entity.
 
@@ -26,4 +26,4 @@ Entities specify the different subjects on which you plan to run experiments. Co
 
 ![Create Entity](/img/initial-setup/quick-start-1.png)
 
-Congratulations, you've completed the initial setup of Eppo! Next, check out our quick start guides on [creating your first metric](/metric-quickstart) and [running your first experiment](/feature-flag-quickstart).
+Congratulations, you've completely the initial set up of Eppo! Next, check out our quick start guides on [creating your first metric](/quick-starts/analysis-integration/adding-metrics/) and [running your first experiment](/quick-starts/sdk-integration/creating-a-flag).

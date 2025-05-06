@@ -76,7 +76,7 @@ You can read more about Fact Properties on the [Properties](/data-management/def
 
 ![Create Property](/img/building-experiments/add-fact-sql-property.png)
 
-Once you have finished defining your Fact SQL, click **Save & Close**. You can now repeat this process for other fact tables, or continue on to create [Metrics](https://docs.geteppo.com/metric-quickstart) from your new Facts.
+Once you have finished defining your Fact SQL, click **Save & Close**. You can now repeat this process for other fact tables, or continue on to create [Metrics](/quick-starts/analysis-integration/adding-metrics/) from your new Facts.
 
 #### Adding Partition Keys (optional)
 

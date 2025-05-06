@@ -1,5 +1,13 @@
 # Client SDKs {#client-sdks}
 
+import ClientSDKsGrid from '../../../src/components/ClientSDKsGrid';
+
+Eppo supports a variety of client-side SDKs for different programming languages. To get started with a specific SDK, select the language below:
+
+<ClientSDKsGrid />
+
+## About
+
 Eppo's client SDK integrates with client-side applications that run on a user device. The below diagram shows how the SDK interacts with your application code, event tracking system, and Eppo's servers:
 
 1. **Initialization**: The SDK retrieves flag/experiment configurations from Eppo using an API key provided during initialization. The configuration data includes flag/experiment variations and traffic allocation. The SDK stores these configurations locally on the device for quick lookup during assignment.
@@ -15,10 +23,3 @@ Eppo's client SDK integrates with client-side applications that run on a user de
 The SDK retrieves experiment data from the globally distributed Fastly CDN. Each CDN location maintains a cache of experiment data. If there is a change to an experiment, such as an increase in traffic allocation, cached experiment configurations are updated within 10 seconds.
 
 The SDK uses a background process to fetch and store the experiment data. The p75 latency of these requests is 50ms. This latency does not affect variation assignments, which use locally stored experiment data.
-
-### Language-specific Documentation
-
-- [JavaScript](/sdks/client-sdks/javascript/intro)
-- [React Native](/sdks/client-sdks/react-native/intro)
-- [Android](/sdks/client-sdks/android/intro)
-- [iOS](/sdks/client-sdks/ios/intro)

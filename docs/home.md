@@ -5,6 +5,8 @@ slug: /
 ---
 
 import FeatureCard from '../src/components/FeatureCard';
+import ClientSDKsGrid from '../src/components/ClientSDKsGrid';
+import ServerSDKsGrid from '../src/components/ServerSDKsGrid';
 
 # Welcome to the Eppo Docs
 
@@ -14,21 +16,21 @@ To get started right away, check out one of our quickstart guides below. Otherwi
 
 <div className="feature-card-container">
   <FeatureCard 
-    title="SDK Quickstart" 
-    description="Install the SDK and create a basic flag"
-    link="/feature-flag-quickstart/"
+    title="Create a Feature Flag" 
+    description="Add a kill switch, plan a gradual rollout, or run an experiment"
+    link="/quick-starts/sdk-integration/creating-a-flag/"
     iconSrc="/img/what-is-eppo/feature-flag.svg"
   />
   <FeatureCard 
-    title="Creating a Metric" 
+    title="Create a Metric" 
     description="Annotate data in your warehouse and create a metric"
-    link="/metric-quickstart/"
+    link="/quick-starts/analysis-integration/adding-metrics/"
     iconSrc="/img/what-is-eppo/metric.svg"
   />
   <FeatureCard 
-    title="Analyzing an Experiment" 
+    title="Analyze an Experiment" 
     description="Measure the impact of a past or running experiment"
-    link="/experiment-quickstart/"
+    link="/quick-starts/analysis-integration/creating-experiment-analysis/"
     iconSrc="/img/what-is-eppo/experiment.svg"
   />
 </div>
@@ -38,9 +40,7 @@ To get started right away, check out one of our quickstart guides below. Otherwi
 Eppo has two main components: a lightweight SDK to control feature rollouts, kill switches, and advanced experimentation use cases, and an analytics platform for experiment analysis and program management. These two components fit naturally into your tech stack. We have SDKs for most modern development frameworks, and support a variety of deployment options. Our warehouse-native analysis engine is tightly coupled with your existing data, either through our data annotation UI or through our code-based semantic framework.
 
 <div align="center">
-
-![What is Eppo](/img/what-is-eppo/basic-architecture.png)
-
+<img src="/img/what-is-eppo/basic-architecture.png" alt="What is Eppo" className="with-shadow" />
 </div>
 
 
@@ -50,11 +50,19 @@ Eppo's SDK supports feature gating, progressive rollouts and randomized experime
 
 Feature gates and experiments are configured in Eppo's UI. Eppo then turns this into a generalized configuration file and distributes it across our global CDN. On initialization, this file is downloaded and cached locally (either on the user's device or on your server, depending on the SDK). Evaluating which variant a user should see is then done locally within the SDK with no further network requests. Most SDKs will also handle polling for you to ensure the configuration is up to date.
 
-![Eppo SDK](/img/what-is-eppo/sdk-architecture.png)
+<img src="/img/what-is-eppo/sdk-architecture.png" alt="What is Eppo" className="with-shadow" />
 
 Eppo's SDK does not do any tracking of its own, meaning that no user-level data passes through Eppo's system. Instead you'll pass in a simple interface to your existing event tracking system. In addition to mitigating security risks of using a third party vendor, this also simplifies considerations around ad blocking and cookie consent.
 
-To learn more about Eppo's SDK, check out the [SDK docs](/sdks) or read the [quickstart guide](/feature-flag-quickstart).
+To learn more about Eppo's SDK, see the [SDK docs](/sdks) or check out one of our quickstart guides below:
+
+#### Client SDKs
+
+<ClientSDKsGrid />
+
+#### Server SDKs
+
+<ServerSDKsGrid />
 
 ### The Eppo Analytics Platform
 
@@ -64,7 +72,9 @@ Metrics are added to Eppo by pointing Eppo at existing data models in your data 
 
 Once you've annotated your data models into Eppo's data model, you can craft metrics using either the in-app metric builder, or in code using Eppo's metric yaml standard. 
 
-![Eppo Analytics](/img/what-is-eppo/analytics-architecture.png)
+<div align="center">
+<img src="/img/what-is-eppo/analytics-architecture.png" alt="What is Eppo" className="with-shadow" />
+</div>
 
 Eppo is designed so that once a Data team has annotated tables in their warehouse, anyone in the company can use them to plan, monitor, and analyze experiments. This is paired with a comprehensive set of automated diagnostics to ensure that data quality and statistical rigor are both held to a high standard. 
 
@@ -83,11 +93,57 @@ To learn more about Eppo's analytics platform, check out the [Data Management](/
 
 The docs are organized into the following sections:
 
-#### Getting Started
+### Getting Started
 
-- [**Quickstart Guides**](/quick-starts) - Start here for basic 10 minute tutorials on using core Eppo functionality.
+Start here for basic 10 minute tutorials on using core Eppo functionality.
 
-#### Core Concepts
+<h4>Analysis Integration</h4>
+<div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+  <div>
+    <ul>
+      <li><a href="/quick-starts/analysis-integration/connect-warehouse/">**Connecting your Warehouse**</a></li>
+      <li><a href="/quick-starts/analysis-integration/adding-metrics/">**Adding metrics**</a></li>
+      <li><a href="/quick-starts/analysis-integration/creating-experiment-analysis/">**Analyzing experiments**</a></li>
+    </ul>
+  </div>
+  <div>
+    <ul>
+      <li><a href="/quick-starts/analysis-integration/sizing-a-test/">**Sizing experiments**</a></li>
+      <li><a href="/quick-starts/analysis-integration/defining-protocols/">**Defining protocols**</a></li>
+    </ul>
+  </div>
+</div>
+
+<h4>SDK Integration</h4>
+<div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+  <div>
+    <ul>
+      <li><a href="/quick-starts/sdk-integration/creating-a-flag/">**Creating a flag**</a></li>
+    </ul>
+  </div>
+  <div>
+    <ul>
+      <li><a href="/quick-starts/sdk-integration/launching-an-experiment/">**Launching an experiment**</a></li>
+    </ul>
+  </div>
+</div>
+
+<h4>Advanced Use Cases</h4>
+<div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+  <div>
+    <ul>
+      <li><a href="/bandit-quickstart/">**Launching a Contextual Bandit**</a></li>
+      <li><a href="/geolift-quickstart/">**Creating a Geolift test**</a></li>
+    </ul>
+  </div>
+  <div>
+    <ul>
+      <li><a href="/switchback-quickstart/">**Running a Switchback test**</a></li> 
+    </ul>
+  </div>
+</div>
+
+### Core Concepts
 
 - [**Flag and experiment configuration**](/feature-flagging) - Learn the core concepts, workflows, and use cases for Eppo feature flags and how to configure them in the UI, as well as details on advanced concepts like targeting, mutual exclusion, and global holdouts.
 - [**SDKs**](/sdks) - Learn about how to install and use Eppo's SDKs into your environment(s), as well as more details on the Eppo architecture and supported deployment patterns.
@@ -95,7 +151,7 @@ The docs are organized into the following sections:
 - [**Experiment Analysis**](/experiment-analysis) - Learn how to create experiment analysis in Eppo's UI, as well as how to deep dive into experiment results and curate custom experiment reports to communicate and track learnings.
 - [**Contextual Bandits**](/contextual-bandits) - Learn how to use Eppo to personalize user experiences with contextual bandits.
 
-#### Reference
+### Reference
 - [**Guides**](/guides) - Dive into detailed guides on advanced use cases including marketing integrations, engineering tutorials, and advanced experimentation topics.
 - [**Statistics**](/statistics) - Learn about the nitty-gritty details of how Eppo's statistical engine works, including confidence interval methods, CUPED++, sample size calculation, and more.
 - **Administration** - Learn about Eppo's approach to Role Based Access Control, SSO, SCIM, Teams, and other global admin settings.

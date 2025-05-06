@@ -3,6 +3,9 @@ title: Introduction
 sidebar_position: 1
 ---
 
+import ClientSDKsGrid from '/src/components/ClientSDKsGrid';
+import ServerSDKsGrid from '/src/components/ServerSDKsGrid';
+
 # Eppo's SDKs
 
 Eppo's SDKs are built for simplicity, speed, and reliability, and support everything from simple kill switches to cutting-edge experimentation methods. Developers only need to learn one simple, consistent API for all feature flagging and experiments use cases, abstracting away the complexity of the underlying allocation logic.
@@ -115,29 +118,17 @@ You can also manage what instances of the SDK should have which flags. For examp
 
 ## Navigating the docs
 
-We hope that you are excited to explore how Eppo can fit into your work stream and tech stack. To start integrating Eppo, check out our getting started guides on [creating your first flag](/feature-flag-quickstart/) and [running your first experiment](/experiment-allocation-quickstart/).
+We hope that you are excited to explore how Eppo can fit into your work stream and tech stack. To start integrating Eppo, check out our getting started guides on [creating your first flag](/quick-starts/sdk-integration/creating-a-flag/) and [running your first experiment](/quick-starts/sdk-integration/launching-an-experiment/).
 
 The read more about our specific SDKs, check out the SDK-specific docs below:
 
 ### Client SDKs
 
-- [JavaScript](client-sdks/javascript/intro)
-- [React Native](client-sdks/react-native/intro)
-- [Android](client-sdks/android/intro)
-- [iOS](client-sdks/ios/intro)
-
+<ClientSDKsGrid />
 
 ### Server SDKs
 
-- [Node](server-sdks/node/intro)
-- [Java](server-sdks/java/intro)
-- [Python](server-sdks/python/intro)
-- [Go](server-sdks/go/intro)
-- [Rust](server-sdks/rust/intro)
-- [Ruby](server-sdks/ruby/intro)
-- [.NET](server-sdks/dotnet/intro)
-- [PHP](server-sdks/php/intro)
-
+<ServerSDKsGrid />
 
 ### Hybrid implementations
 
