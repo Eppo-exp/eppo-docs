@@ -29,7 +29,7 @@ metrics:
     operation: sum
 ```
 
-Metrics are certified via the [metric sync API](https://eppo.cloud/api/docs#/Metrics%20Sync/syncMetrics). You can either post to that endpoint directly or use the `eppo_metrics_sync` [python package](https://github.com/Eppo-exp/eppo-metrics-sync) to post a directory of yaml files to Eppo's API. See [Syncing Metrics](#syncing-metrics) below for details. 
+Metrics are certified via the [metric sync API](https://eppo.cloud/api/docs#/Metrics%20Sync/syncMetrics). You can either post to that endpoint directly or use the `eppo_metrics_sync` [python package](https://github.com/Eppo-exp/eppo-metrics-sync) to post a directory of yaml files to Eppo's API. See [Syncing Metrics](#syncing-metrics) below for details. [Simple](/data-management/metrics/simple-metric/), [Ratio](/data-management/metrics/ratio-metric/) and [Percentage](/data-management/metrics/percentile-metric/) metrics can be certified; [Funnel metrics](/data-management/metrics/funnel-metric/) cannot.
 
 Any metric or fact source created through the metric sync API will have a Certified badge and will not be editable in the UI:
 
