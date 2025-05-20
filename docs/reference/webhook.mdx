@@ -108,11 +108,18 @@ In short, any operation visible in the Flag History is sent to the webhook.
     "flag": {
       "id": <flag_id>,
       "key": "<flag_key>"
+    },
+    "meta_data": {
+      "user_email": "<email_of_user_who_updated_flag>"
     }
   },
   "signature": "<signature>"
 }
 ```
+
+:::note
+The `"user_email"` field is only available if the flag was updated via the UI. Updates by the API will have `"meta_data": {}`.
+:::
 
 ## Configuring the webhook
 
