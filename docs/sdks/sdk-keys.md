@@ -13,7 +13,7 @@ From the feature flagging page, you can toggle which environment you are in by c
 When Eppo's SDK is initialized, only configurations from flags enabled in that environment will be downloaded. This can help when using flags across a variety of use cases and it's not necessary to download every flag for every instance of the Eppo client. A common example is when different flags are used in mobile and web applications. In this case, you can create separate Web and Mobile environments and use Eppo's UI to manage which flags are active in each.
 
 ## Types of SDK keys
-There are 3 types of SDK keys - SDK keys itself, Client Tokens and Browser Extension keys. SDK keys and Client Tokens are used by SDKs. Browser Extension keys are used by [Eppo Developer Tools - Chrome Extension](/sdks/developer-tools-extension/). SDK keys and Client Tokens are the same functionality keys, except config always is obfuscated when Client Tokens are used. Therefore, the main application of the Client Tokens is SDK clients working in browsers. Meanwhile, the primary application of the SDK keys is on server side.
+There are 3 types of SDK keys - SDK keys itself, Client Tokens and Browser Extension keys. SDK keys and Client Tokens are used by SDKs. Browser Extension keys are used by [Eppo Developer Tools - Chrome Extension](/sdks/developer-tools-extension/). SDK keys and Client Tokens are the same functionality keys, except config always is obfuscated when Client Tokens are used. Therefore, the main application of the Client Tokens is SDK clients requesting configurations for clients such as browsers or mobile applications. Meanwhile, the primary application of the SDK keys is on server side.
 
 ## Creating SDK keys
 
