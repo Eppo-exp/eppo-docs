@@ -54,19 +54,138 @@ Numerators and denominators follow a similar schema, with some fields only being
 | Property |  Description | Example |
 | -------- |  ----------- | ------- |
 | `fact_name` | The name of a fact as specified in `fact_source`* |  Purchase Revenue |
-| `operation` | The [aggregation method](/data-management/metrics/simple-metric#aggregation-methods) to use. <br></br><br></br>For numerator aggregations options are `sum, count, count_distinct, distinct_entity, threshold, conversion, retention`. <br></br><br></br>For denominator aggregations, valid options are `sum, count, count_distinct, distinct_entity` | `sum` |
-| `aggregation_timeframe_start_value` <br></br> (optional) | Timeframe units since assignment after which events are included | 2 |
-| `aggregation_timeframe_end_value` <br></br> (optional) | Timeframe units since assignment after which events are excluded | 7 |
-| `aggregation_timeframe_unit` <br></br> (optional) | The time unit to use: `minutes`, `hours`, `days`, or `weeks` | `days` |
-| `winsorization_lower_percentile` <br></br> (optional) | Percentile at which to clip aggregated metrics | 0.001 |
-| `winsorization_upper_percentile` <br></br> (optional) | Percentile at which to clip aggregated metrics | 0.999 |
+| `operation` | The [aggregation method](/data-management/metrics/simple-metric#aggregation-methods) to use. <br></br><br></br>For numerator aggregations options are `sum, count, count_distinct, distinct_entity, threshold, conversion, retention`. <br></br><br></br>For denominator aggregations, valid options are `sum, count, count_distinct, distinct_entity` <br></br><br></br>**Note**: See [Constraints and Limitations](#constraints-and-limitations) for operation-specific parameter restrictions. | `sum` |
+| `aggregation_timeframe_start_value` <br></br> (optional) | Timeframe units since assignment after which events are included. <br></br><br></br>**Constraint**: Cannot be used with `conversion` operations. Requires `aggregation_timeframe_unit` to be specified. | 2 |
+| `aggregation_timeframe_end_value` <br></br> (optional) | Timeframe units since assignment after which events are excluded. <br></br><br></br>**Constraint**: Cannot be used with `conversion` operations. Requires `aggregation_timeframe_unit` to be specified. | 7 |
+| `aggregation_timeframe_unit` <br></br> (optional) | The time unit to use: `minutes`, `hours`, `days`, or `weeks`. <br></br><br></br>**Constraint**: Required when any timeframe parameters are used. | `days` |
+| `winsorization_lower_percentile` <br></br> (optional) | Percentile at which to clip aggregated metrics. <br></br><br></br>**Constraint**: Only supported for `sum`, `count`, `last_value`, and `first_value` operations. | 0.001 |
+| `winsorization_upper_percentile` <br></br> (optional) | Percentile at which to clip aggregated metrics. <br></br><br></br>**Constraint**: Only supported for `sum`, `count`, `last_value`, and `first_value` operations. | 0.999 |
 | `filters` <br></br> (optional) | A list of filters to apply to metric, each containing a fact property, an operation (`equals` or `not_equals`), and a list of values | <pre><code>- fact_property: Source <br></br>  operation: equals <br></br>  values: <br></br>   - organic <br></br>   - search </code></pre>  |
-| `retention_threshold_days` <br></br> (optional, numerators only) | Number of days to use in retention calculation (only used if `operation` = `retention`) | 7 |
-| `conversion_threshold_days` <br></br> (optional, numerators only) | Number of days to use in conversion calculation (only used if `operation` = `conversion`) | 7 |
-| `threshold_metric_settings` <br></br> (optional, numerators only) | Setting for threshold metrics | <pre><code>comparison_operator: gt <br></br>aggregation_type: sum <br></br>breach_value: 0 <br></br>timeframe_unit: days <br></br>timeframe_value: 3 </code></pre> |
+| `retention_threshold_days` <br></br> (optional, numerators only) | Number of days to use in retention calculation. <br></br><br></br>**Constraint**: Only used with `operation` = `retention`. Cannot be combined with other advanced aggregation parameters. | 7 |
+| `conversion_threshold_days` <br></br> (optional, numerators only) | Number of days to use in conversion calculation. <br></br><br></br>**Constraint**: Only used with `operation` = `conversion`. Cannot be combined with other advanced aggregation parameters or timeframe parameters. | 7 |
+| `threshold_metric_settings` <br></br> (optional, numerators only) | Settings for threshold metrics. <br></br><br></br>**Constraint**: Required when `operation` = `threshold`. Cannot be combined with other advanced aggregation parameters. | <pre><code>comparison_operator: gt <br></br>aggregation_type: sum <br></br>breach_value: 0 <br></br>timeframe_unit: days <br></br>timeframe_value: 3 </code></pre> |
 
 
 *Note that `fact_name` can reference facts defined in a different yaml file.
+
+## Constraints and Limitations
+
+When defining certified metrics, there are several important constraints to be aware of. These validation rules help ensure your metrics are configured correctly and will help prevent common configuration errors.
+
+### Winsorization Constraints
+
+Winsorization parameters (`winsorization_lower_percentile` and `winsorization_upper_percentile`) can **only** be used with the following aggregation operations:
+- `sum`
+- `count` 
+- `last_value`
+- `first_value`
+
+**Cannot be used with:**
+- `count_distinct`
+- `distinct_entity`
+- `threshold`
+- `retention` 
+- `conversion`
+
+:::warning
+Attempting to use winsorization with unsupported operations like `count_distinct` or `threshold` will result in a validation error.
+:::
+
+### Advanced Aggregation Parameter Constraints
+
+Advanced aggregation parameters have strict operation requirements:
+
+#### Retention Metrics
+- **Must use**: `retention_threshold_days` parameter
+- **Cannot use**: Other advanced aggregation parameters
+- **Operation**: Must be `retention`
+
+#### Conversion Metrics  
+- **Must use**: `conversion_threshold_days` parameter
+- **Cannot use**: Other advanced aggregation parameters or timeframe parameters
+- **Operation**: Must be `conversion`
+
+#### Threshold Metrics
+- **Must use**: `threshold_metric_settings` parameter
+- **Cannot use**: Other advanced aggregation parameters
+- **Operation**: Must be `threshold`
+
+### Timeframe Parameter Constraints
+
+Timeframe parameters (`aggregation_timeframe_start_value`, `aggregation_timeframe_end_value`, `aggregation_timeframe_unit`) have the following restrictions:
+
+- **Cannot be used** with `conversion` operations
+- **Must include** `aggregation_timeframe_unit` if any timeframe parameters are specified
+- The deprecated `aggregation_timeframe_value` parameter should be replaced with `aggregation_timeframe_end_value`
+
+### Threshold Metric Settings
+
+When using `threshold_metric_settings` for threshold operations, the settings object must include:
+- `comparison_operator`: The comparison operator to use (e.g., `gt`, `lt`, `gte`, `lte`, `eq`)
+- `aggregation_type`: The aggregation type to apply before threshold comparison
+- `breach_value`: The threshold value to compare against
+- `timeframe_unit`: The time unit for the threshold calculation
+- `timeframe_value`: The time value for the threshold calculation
+
+### Denominator Operation Constraints
+
+For ratio metrics, denominator aggregations are limited to:
+- `sum`
+- `count`
+- `count_distinct` 
+- `distinct_entity`
+
+**Cannot use** advanced operations like `threshold`, `retention`, or `conversion` in denominators.
+
+### Common Validation Examples
+
+Here are some examples of **invalid** configurations that will trigger validation errors:
+
+#### ❌ Invalid: Winsorization with count_distinct
+```yaml
+numerator:
+  fact_name: User ID
+  operation: count_distinct
+  winsorization_lower_percentile: 0.01  # ERROR: Cannot winsorize count_distinct
+```
+
+#### ❌ Invalid: Threshold without threshold_metric_settings
+```yaml
+numerator:
+  fact_name: Revenue
+  operation: threshold  # ERROR: Must include threshold_metric_settings
+```
+
+#### ❌ Invalid: Mixed advanced aggregation parameters
+```yaml
+numerator:
+  fact_name: User ID
+  operation: retention
+  retention_threshold_days: 7
+  conversion_threshold_days: 14  # ERROR: Cannot mix retention and conversion parameters
+```
+
+#### ❌ Invalid: Timeframe with conversion
+```yaml
+numerator:
+  fact_name: User ID
+  operation: conversion
+  conversion_threshold_days: 7
+  aggregation_timeframe_start_value: 1  # ERROR: Cannot use timeframe with conversion
+```
+
+#### ✅ Valid: Proper threshold configuration
+```yaml
+numerator:
+  fact_name: Revenue
+  operation: threshold
+  threshold_metric_settings:
+    comparison_operator: gt
+    aggregation_type: sum
+    breach_value: 100
+    timeframe_unit: days
+    timeframe_value: 7
+```
 
 ### Examples
 
