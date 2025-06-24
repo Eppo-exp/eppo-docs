@@ -37,7 +37,7 @@ When writing the code for an experiment, many product teams prefer to test the f
 
 ### Percentage exposure rollout
 
-When rolling-out an experiment, a common pattern is to only allocate 5% of the traffic to Treatment first, to minimize risk. That would imply to have 95% of the traffic to Control. If you want to increase the exposure to treatment to 20 or 50%, you will have to reallocate users from Control to Treatment. That would create mixed exposures and inconsistent allocations. Alternatively, you can also exclude the initial weeks of your experiment, loosing some insights. This is why Eppo considers this an anti-pattern.
+When rolling-out an experiment, a common pattern is to only allocate 5% of the traffic to Treatment first, to minimize risk. That would imply to have 95% of the traffic to Control. If you want to increase the exposure to treatment to 20 or 50%, you will have to reallocate users from Control to Treatment. That would create mixed exposures and inconsistent allocations. Alternatively, you can also exclude the initial weeks of your experiment, losing some insights. This is why Eppo considers this an anti-pattern.
 
 Instead we recommend that you have a fair split between Control and Treatment, so 5% and 5% in that case, and that you consider the remaining 90%, **excluded from the allocation** and not part of the experiment for now. When you increase the exposure from 10% to 40% or 100%, you won’t have to exclude your initial test data, and the same test can continue as it is.
 
