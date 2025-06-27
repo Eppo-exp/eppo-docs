@@ -23,3 +23,5 @@ This behavior is enabled by default and no action is required beyond upgrading t
 This functionality is available in the Javascript and React Native clients.
 
 Server support is available in NodeJS and GoLang.
+
+Additionally, the Python SDK provides a caching assignment logger with configurable cache behavior to deduplicate logs.

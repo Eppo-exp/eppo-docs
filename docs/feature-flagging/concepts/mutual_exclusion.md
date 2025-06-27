@@ -77,10 +77,10 @@ const defaultValue = {
 };
 
 const layerParameters = eppoClient.getJSONAssignment(
-    subjectKey,
     layerKey,
+    subjectKey,
     subjectAttributes,
-    defaultValue,
+    defaultValue
 );
 const stickyBanner = layerParameters.sticky_banner;
 ```
