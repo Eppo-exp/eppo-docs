@@ -6,7 +6,7 @@ The **Eppo Developer Tools** Chrome Extension allows you to instantly override f
 
 To install Eppo's Chrome Extension, navigate to the [Eppo Developer Tools](https://chromewebstore.google.com/detail/eppo-developer-tools/aommfcceagiaibbaepafcpdfpmpidbme) extension on the Chrome Web Store and click **Add to Chrome**.
 
-Next, [create a Browser Extension Key](https://eppo.cloud/configuration/environments/browser-extension-keys) in Eppo by navigating to Flags > Environments > Browser Extension Keys. Create a new Browser Extension Key, give it a name, and select an environment. Copy the key to your clipboard once it has been created, and paste it in in the "Settings" page of your browser extension. Click **Save** once you have pasted in your key.
+Next, [create a Browser Extension Key](https://eppo.cloud/configuration/environments/browser-extension-keys) in Eppo by navigating to Flags > Environments > Browser Extension Keys. Create a new Browser Extension Key, give it a name, and select the Production environment. Browser Extension Keys can only be scoped to the Production environment, but will pull in all flags and variations regardless of the flag's state in your Production environment. Only Admins have the permission level to create a Browser Extension Key. Next, copy the key to your clipboard once it has been created, and paste it in in the "Settings" page of your browser extension. Click **Save** once you have pasted in your key.
 
 ![Browser Extension Key](/img/developer-tools-extension/browser-extension-key.png)
 

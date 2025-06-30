@@ -1,109 +1,91 @@
-# Event tracking
+# Event tracking with Datadog
 
-Eppo's Track API allow you to record any actions your users perform, like "Signed Up", "Made a Purchase" or "Clicked a Button",
-along with any properties that describe the action. Once you send these events, Eppo will ingest them, batch, process and load into your data warehouse. You can then use those events in your warehouse to run experiments, construct data pipelines, or power custom tools/dashboards.
+:::info Deprecation Notice
+Eppo's native event tracking feature has been deprecated in favor of integrating with Datadog's RUM SDK and product analytics platform. This approach provides more robust analytics capabilities and better integration with your existing observability stack.
+:::
 
-## Benefits of using the Track API
+Eppo now recommends using [Datadog's RUM (Real User Monitoring) SDK](https://docs.datadoghq.com/real_user_monitoring/) and [product analytics platform](https://docs.datadoghq.com/product_analytics/) to track user events and behaviors for experiment analysis. This integration allows you to leverage Datadog's powerful analytics capabilities while maintaining seamless experiment tracking with Eppo.
 
-* **Deeper Insights**: You can better understand how people use your product. That helps you figure out where users might get stuck, what features they love, and what drives them to come back.
-* **Personalized Experiences**: Once you know what actions users are taking, you can customize their experience—like sending personalized messages or recommending features they’d find useful.
-* **Consistent Data Flow**: By centralizing your event tracking with an API call, you keep everything neat and standard across all your different tools (analytics, CRM, marketing platforms, etc.).
+## Benefits of using Datadog for experiment tracking
 
-## When to Use It
+* **Unified observability**: Combine experiment data with your existing application monitoring, logs, and traces in a single platform
+* **Advanced analytics**: Leverage Datadog's sophisticated funnel analysis, retention tracking, and user journey mapping
+* **Real-time insights**: Get immediate visibility into how experiment variations affect user behavior
+* **Scalable infrastructure**: Built to handle high-volume event tracking without performance impact
+* **Rich visualizations**: Create custom dashboards and reports for experiment results and user behavior
 
-Use the Track API any time you want to record a user’s action. This could be:
+## Getting started
 
-* User signs up or completes onboarding;
-* User views specific screens or pages;
-* User interacts with certain in-app features (clicking a button, changing a setting, etc.);
-* Transactions, such as making a purchase or completing a subscription upgrade;
+### 1. Set up Datadog RUM SDK
 
+First, install and configure the Datadog RUM SDK for your platform. Follow the platform-specific setup guides:
 
-## Example usage
-Events are composed of a `type` string, and a `payload`. The `payload` can contain any properties you'd like to associate with the event. The maximum length of the stringified JSON `payload` is 4096.
+- [Browser RUM SDK](https://docs.datadoghq.com/real_user_monitoring/browser/)
+- [Mobile RUM SDK (iOS)](https://docs.datadoghq.com/real_user_monitoring/mobile_and_tv_monitoring/setup/ios/)
+- [Mobile RUM SDK (Android)](https://docs.datadoghq.com/real_user_monitoring/mobile_and_tv_monitoring/setup/android/)
+- [React Native RUM SDK](https://docs.datadoghq.com/real_user_monitoring/mobile_and_tv_monitoring/setup/reactnative/)
 
-Here's an example of how you might use the Track API in a Browser application:
+### 2. Track experiment-relevant events
 
-```typescript
-import * as EppoSdk from "@eppo/js-client-sdk";
+Use Datadog's custom event tracking to record user actions that are relevant to your experiments:
 
-const eppoClient = EppoSdk.getInstance();
-eppoClient.track("added_to_cart", {
-  productId: "abc-987",
-  userId: "123",
-  price: 24.99
+```javascript
+// Browser example
+import { datadogRum } from '@datadog/browser-rum';
+
+// Track a custom event
+datadogRum.addAction('button_clicked', {
+  button_id: 'signup_cta',
+  user_id: 'user_123'
 });
 ```
 
-## Data Organization
-When configuring Eppo for experimentation, you provide Eppo with a dataset/schema to use for writing intermediate tables for experiment analysis. We use this same dataset for writing events logged by our SDKs. This ensures maximum performance when using metrics based on these events in experiment analysis.
+```swift
+// iOS example
+import DatadogRUM
 
-### Events table
-By default, each event `type` will be stored in a single table called `eppo_events`. This table contains the following fields:
-| Column Name | Type | Description |
-|-------------|------|-------------|
-| `timestamp` | `TIMESTAMP` | When the event was created/tracked (populated automatically) |
-| `type` | `VARCHAR` | Type of the event |
-| `payload` | `VARCHAR` | Payload of the event in JSON format |
-| `uuid` | `VARCHAR` | UUID of the event (populated automatically) |
-| `api_key_prefix` | `VARCHAR` | Prefix of the SDK key used to log the event (populated automatically) |
-| `client_ip_fingerprint` | `VARCHAR` | Fingerprint of the IP address of the client that logged the event (populated automatically) |
-| `environment` | `VARCHAR` | Environment of the event (populated automatically based on the SDK key used) |
-
-
-### Custom tables
-You can also configure a certain event `type` to be stored in its own table, with a specific schema. Rather than having a single column that contains the `payload` sent to the SDK, custom tables can have specific events which are extracted from events in the `payload`.
-
-For example, consider the following event:
-
-```
-{
-  "type": "item_added_to_cart",
-  "payload": {
-    "user_id": "user_123",
-    "item_id": "item_456",
-    "item_name": "Some Widget",
-    "price": 10.00,
-    "currency": "USD"
-  }
-}
+// Track experiment-related user action
+RUMMonitor.shared().addAction(
+    type: .custom,
+    name: "purchase_completed",
+    attributes: [
+        "purchase_amount": 29.99,
+        "user_id": "user_456"
+    ]
+)
 ```
 
-This event can be configured to be stored in a custom table, with each field in the payload represented as a column in the table. The resulting table will have the following structure (with underlying types depending on your warehouse):
-| Column Name | Type | Description |
-|-------------|------|-------------|
-| user_id | `VARCHAR` | ID of the user who added the item to the cart |
-| item_id | `VARCHAR` | ID of the item added to the cart |
-| item_name | `VARCHAR` | Name of the item added to the cart |
-| price | `DECIMAL` | Price of the item added to the cart |
-| currency | `VARCHAR` | Currency of the item added to the cart |
-| timestamp | `TIMESTAMP` | When the event was created/tracked (populated automatically) |
-| uuid | `VARCHAR` | UUID of the event (populated automatically) |
-| api_key_prefix | `VARCHAR` | Prefix of the SDK key used to log the event (populated automatically) |
-| client_ip_fingerprint | `VARCHAR` | Fingerprint of the IP address of the client that logged the event (populated automatically) |
-| environment | `VARCHAR` | Environment of the event (populated automatically based on the SDK key used) |
+## Integration with Eppo Assignment data
 
-Once a table is configured, the schema can only be modified in a backward-compatible manner. This means that you cannot remove or change columns, but you can add new columns.
+### Using the official Datadog-Eppo integration
 
+Datadog provides an official integration with Eppo that automatically enriches your RUM data with feature flag information. This integration provides visibility into performance monitoring and behavioral changes by showing which users are exposed to which variations.
 
-## System latency
-Events tracked with our SDKs are buffered to local storage on the user's device (or server, depending on the SDK) before being sent in batches to Eppo's servers. We then do additional batching before writing the results into your warehouse.
+To set up the integration, follow the [official Datadog-Eppo integration documentation](https://docs.datadoghq.com/integrations/eppo/). The setup involves:
 
-The frequency of updates/latency depends on the load/availability of compute resources in your warehouse. You are able to configure how often, and optionally during what times of day events are loaded into your warehouse. The maximum frequency which you are able to configure events to be loaded into your warehouse is 10 minutes.
+1. **Update your RUM SDK**: Ensure you're using Browser RUM SDK version 4.25.0 or above
+2. **Enable feature flags**: Configure the `enableExperimentalFeatures` parameter with `["feature_flags"]` when initializing the RUM SDK
+3. **Configure Eppo SDK**: Initialize Eppo's SDK with the assignment logger that reports to Datadog
 
+This integration automatically tracks feature flag evaluations and provides rich visualizations in your Datadog dashboards, showing how experiments impact user experience and performance metrics.
 
-## SDK Configuration
-In order to use the Track API in the Eppo SDKs, you need to use an SDK key which was created after November 15, 2024. SDK keys created prior to this date can still be used for feature flag/experiments, but not event tracking.
+Continue using Eppo's Experiment Analysis for calculating statistical signicance and confidence intervals with metrics from your warehouse.
 
-Other than using a compatible SDK key, there is no additional configuration required. Simply initialize the SDK with your SDK key, and start tracking events.
+## Data organization and querying
 
-In order to override the default behavior of certain aspects of event handling, you can modify the following properties (see language-specific pages for examples):
+Events tracked through Datadog RUM are automatically organized and can be queried using [Datadog's query language](https://docs.datadoghq.com/logs/explorer/search_syntax/). You can:
 
-| Property | Type | Description | Default |
-|----------|------|-------------|---------|
-| `deliveryIntervalMs` | `number` | Time to wait between each batch delivery, in milliseconds. | 10,000 (10 seconds) |
-| `retryIntervalMs` | `number` | Minimum time to wait before retrying a failed delivery, in milliseconds. | 5,000 (5 seconds) |
-| `maxRetryDelayMs` | `number` | Maximum time to wait before retrying a failed delivery, in milliseconds. | 30,000 (30 seconds) |
-| `maxRetries` | `number` | Maximum number of retry attempts before giving up on a batch delivery. | 3 |
-| `batchSize` | `number` | Maximum number of events to send per batch/network request. | 1,000 |
-| `maxQueueSize` | `number` | Maximum number of events to queue in memory before starting to drop events. | 10,000 |
+- Filter events by experiment key and variation
+- Aggregate metrics across experiment cohorts  
+- Create custom metrics based on experiment performance
+- Set up alerts for real time experiment-related anomalies
+
+## Best practices
+
+1. **Consistent naming**: Use consistent naming conventions for experiment keys and event types
+2. **Include context**: Always include relevant experiment metadata with your events
+3. **Monitor performance**: Use Datadog's performance monitoring to ensure event tracking doesn't impact user experience
+4. **Set up alerts**: Create alerts for unusual patterns in experiment metrics
+5. **Regular cleanup**: Remove tracking for concluded experiments to maintain data hygiene
+
+For detailed implementation guides and advanced features, refer to the [Datadog RUM documentation](https://docs.datadoghq.com/real_user_monitoring/) and [product analytics documentation](https://docs.datadoghq.com/product_analytics/).
