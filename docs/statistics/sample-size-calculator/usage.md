@@ -16,7 +16,19 @@ Here you can see a record of all past calculations, which are automatically save
 
 ![Sample size calculator interface](/img/planning-experiments/on_demand_sample_size_calculator_interface.png)
 
-Use the controls on the left to configure the sample size calculation. Select the experiment Entity, the Entry Point, and metrics you want to compute [Minimum Detectable Effects](/statistics/sample-size-calculator/mde) for. You can customize the saved calculation name or use the auto-generated name.
+Use the controls on the left to configure the sample size calculation. Select the experiment Entity, the Entry Point, an optional Entry Point filter, and metrics you want to compute [Minimum Detectable Effects](/statistics/sample-size-calculator/mde) for. You can customize the saved calculation name or use the auto-generated name.
+
+An **Entry Point filter** allows you to restrict the sample size calculation to a specific subset of entities based on their entity properties. For example, you might want to calculate the required sample size only for users in a particular country or with a certain account type.
+
+:::info 
+When configuring an Entry Point filter, you can select from **entity properties** (such as user attributes) rather than **assignment properties**. This is because:
+
+1. **Assignment-based entity properties require assignment context that isn't available during sample size calculation.**
+2. **Sample size calculation happens before assignment data is available, making assignment-based properties incompatible.**
+
+In other words, since the sample size calculator is used to plan experiments before any assignments have occurred, only properties that are intrinsic to the entity (and available in your data warehouse) can be used for filtering at this stage.
+:::
+
 
 You can optionally set a custom start date for the lookback period. By default, the sample size calculator uses the most recent 10 weeks of data as the lookback period, with all timespans (1 week, 2 weeks, etc.) ending at the current date. With a custom start date lookback period, the historical data for each timespan will instead start at the custom start date you select. This option can be useful when the most recent data has quality issues, or when seasonality makes the most recent data less representative of the traffic patterns that will hold during the experiment.
 
