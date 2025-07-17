@@ -199,6 +199,18 @@ sup {
   font-size: 0.9rem;
 }
 
+/* Navbar logo sizing */
+.navbar__brand img {
+  height: 50px;
+  width: auto;
+}
+
+/* Ensure logo maintains aspect ratio and proper sizing */
+.navbar__logo {
+  height: 50px;
+  width: auto;
+}
+
 /* Fix hover & selected behavior background*/
 .menu{
   padding-right: 0.5rem !important;

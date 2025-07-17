@@ -89,7 +89,7 @@ async function createConfig () {
       [
         '@docusaurus/plugin-google-gtag',
         {
-          trackingID: 'G-8VW1T2Y4E8', 
+          trackingID: 'G-8VW1T2Y4E8',
           anonymizeIP: true, // GDPR compliance
         },
       ],
@@ -99,7 +99,7 @@ async function createConfig () {
           projectId: "q6ay3hytr7"
         },
       ],
-    ],    
+    ],
 
     themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
@@ -121,13 +121,13 @@ async function createConfig () {
         indexName: 'geteppo'
 
       // // ... other Algolia params
-      },      
+      },
       navbar: {
         // title: 'Eppo',
         logo: {
           alt: 'Eppo',
-          src: 'img/eppo_logo2024.svg',
-          srcDark: 'img/eppo_logo2024_dark.svg'
+          src: 'img/eppo_by_datadog_logo.svg',
+          srcDark: 'img/eppo_by_datadog_logo_dark.svg'
         },
         items: [
           {
@@ -135,7 +135,7 @@ async function createConfig () {
             label: 'Login',
             position: 'right',
             className: 'button button--secondary',
-          },          
+          },
           {
             href: 'https://www.geteppo.com/get-access',
             label: 'Get a Demo',
