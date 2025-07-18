@@ -100,3 +100,5 @@ class MyAssignmentLogger(AssignmentLogger):
         })
 ```
 
+> **Note:** Some SDK implementations may nest the holdout information within an `extraLogging` field. If you don't see `holdoutKey` and `holdoutVariation` at the top level of the event, check for them in `event.extraLogging.holdoutKey` and `event.extraLogging.holdoutVariation`.
+
