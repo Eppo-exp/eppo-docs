@@ -40,7 +40,7 @@ getJSONStringAssignment(...)
 String assignments return a string value that is set as the variation for the experiment. String flags are the most common type of flags and are useful for both A/B/n tests and advanced targeting use cases.
 
 ```swift
-let assignment = try eppoClient.getStringAssignment(
+let assignment = eppoClient.getStringAssignment(
     flagKey: "new-user-onboarding",
     subjectKey: user.id,
     subjectAttributes: user.attributes,
@@ -63,7 +63,7 @@ default:
 Boolean flags support simple on/off toggles. They're useful for simple, binary feature switches like blue/green deployments or enabling/disabling a new feature.
 
 ```swift
-let isEnabled = try eppoClient.getBooleanAssignment(
+let isEnabled = eppoClient.getBooleanAssignment(
     flagKey: "new-feature",
     subjectKey: user.id,
     subjectAttributes: user.attributes,
@@ -83,7 +83,7 @@ The SDK supports both integer and numeric assignments. These are useful for test
 
 ```swift
 // Integer assignment
-let itemCount = try eppoClient.getIntegerAssignment(
+let itemCount = eppoClient.getIntegerAssignment(
     flagKey: "items-per-page",
     subjectKey: user.id,
     subjectAttributes: user.attributes,
@@ -91,7 +91,7 @@ let itemCount = try eppoClient.getIntegerAssignment(
 )
 
 // Numeric assignment
-let price = try eppoClient.getNumericAssignment(
+let price = eppoClient.getNumericAssignment(
     flagKey: "subscription-price",
     subjectKey: user.id,
     subjectAttributes: user.attributes,
@@ -112,7 +112,7 @@ let defaultConfig = """
 }
 """
 
-let config = try eppoClient.getJSONStringAssignment(
+let config = eppoClient.getJSONStringAssignment(
     flagKey: "ui-config",
     subjectKey: user.id,
     subjectAttributes: user.attributes,

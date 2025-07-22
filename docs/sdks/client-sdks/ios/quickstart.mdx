@@ -47,7 +47,7 @@ let eppoClient = EppoClient.shared()
 let userId = getCurrentUserId() // Your user identification logic
 var attributes = ["userType": "premium", "country": "US"]
 
-let isEnabled = try eppoClient.getBooleanAssignment(
+let isEnabled = eppoClient.getBooleanAssignment(
     flagKey: "new-feature",
     subjectKey: userId,
     subjectAttributes: attributes,
@@ -92,7 +92,7 @@ eppoClient = try await EppoClient.initialize(sdkKey: "<SDK-KEY>", assignmentLogg
 Then use the SDK to make experiment assignments:
 
 ```swift
-let assignment = try eppoClient.getStringAssignment(
+let assignment = eppoClient.getStringAssignment(
     flagKey: "new-user-onboarding",
     subjectKey: user.id,
     subjectAttributes: user.attributes,
