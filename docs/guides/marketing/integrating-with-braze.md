@@ -126,7 +126,10 @@ Your Assignments table should look like this:
 
 ## Use Eppo Flags to bucket users for Braze campaigns
 
-In addition to analyzing Braze experiments in Eppo, you can also use Eppo's feature flagging to determine user cohorts and send those assignments to Braze for targeted messaging. This approach allows you to leverage Eppo's advanced targeting and assignment logic while using Braze's powerful campaign delivery capabilities.
+In addition to analyzing Braze experiments in Eppo, you can also use Eppo's feature flagging to determine user cohorts and send those assignments to Braze for targeted messaging. This approach allows you to leverage Eppo's advanced targeting and assignment logic while using Braze's powerful campaign delivery capabilities. 
+
+Additionally, this integration enables powerful use cases like coordinated product and marketing experiments, dynamic campaign targeting based on product behavior, and consistent user experiences across all touchpoints. Eppo's deterministic bucketing will make sure that users with the same ID will receive the same assignment regardless of if the flag is run for Braze or within your product.
+
 
 ### Setting up Eppo Flags for Braze targeting
 
@@ -193,14 +196,6 @@ Once Eppo assignments are sent to Braze as custom attributes, you can use them t
 
 3. **Personalize content** using the assignment values in your campaign messaging
 
-### Benefits of this approach
-
-- **Centralized logic**: Define complex targeting rules once in Eppo and use across multiple channels
-- **Consistent experiences**: Ensure users see coordinated messaging across product and marketing touchpoints  
-- **Advanced targeting**: Leverage Eppo's sophisticated audience and assignment capabilities
-- **Real-time updates**: Flag assignments update in real-time as conditions change
-
-This integration enables powerful use cases like coordinated product and marketing experiments, dynamic campaign targeting based on product behavior, and consistent user experiences across all touchpoints. Eppo's deterministic bucketing will make sure that users with the same ID will receive the same assignment regardless of if the flag is run for Braze or within your product.
 
 ### Example implementation
 
