@@ -17,9 +17,6 @@ Additionally, you will need to create a data environment for Eppo to write inter
 7. Under **Service account permissions**, add the following roles:
     - `BigQuery Job User (roles/bigquery.jobUser)`
       - Required
-    - `Storage Admin (roles/storage.admin)`
-      - Optional; required for using Eppo's [Track API](/sdks/event-logging/event-tracking)
-      - Scoped to the Storage bucket to use for temporary storage of events before loading into BigQuery
 
 8. Click **CONTINUE**.
 9. (optional) Under **Grant users access** you may choose to grant other users access to your new service account.
