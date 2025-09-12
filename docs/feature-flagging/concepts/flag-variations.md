@@ -25,7 +25,7 @@ Choosing a one variation flag makes the Flag a Boolean type.
 
 String flags are the default for a flag with two or more experiences and is the most common type of flag. They are useful for both A/B/n tests and advanced targeting use cases.
 
-String flags have a limit of 65KB. Strings are UTF-8 encoded, so certain characters, like emojis and non-ASCII characters, take more than one byte each.
+String flags have a default limit of 65KB, which can be increased if your team needs more. Strings are UTF-8 encoded, so certain characters, like emojis and non-ASCII characters, take more than one byte each.
 
 You can use escape sequences in string flag values.
 
@@ -45,6 +45,6 @@ JSON flags allow you to send a map of values. This allows us to include structur
 
 You can write an empty array as `{}` if there is no property value present for a variation.
 
-JSON object and array flags have a size limit of 32KB.
+JSON object and array flags have a default size limit of 250KB, which can be increased if your team needs more.
 
 Eppo will show an error message in the UI if a variation value does not validate as proper JSON.
