@@ -56,7 +56,7 @@ Both assignment dependence and effect interactions require statistical tests in 
 
 ## How Can I Use The Interaction Effect Detection?
 
-To check for either type of interaction, click the breadcrumbs on any metric in your experiment and select "Check for Interaction Effect".
+To check for either type of interaction, click the breadcrumbs on any simple metric in your experiment and select "Check for Interaction Effect".
 
 ![Breadcrumbs](/img/interaction-detection/bread-crumbs.png)
 
