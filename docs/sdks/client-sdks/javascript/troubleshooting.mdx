@@ -5,6 +5,12 @@ sidebar_position: 120
 
 ## Debugging
 
+By default the log level for the SDK is set to `warn`.
+You can change this by calling the `setLogLevel` option on the SDK.
+```ts
+eppoClient.setLogLevel('debug');
+```
+
 You may encounter a situation where a flag assignment produces a value that you did not expect. There are functions [detailed here](/sdks/sdk-features/debugging-flag-assignment) to help you understand how flags are assigned, which will allow you to take corrective action on potential configuration issues.
 
 ## Supporting old browsers
