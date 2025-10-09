@@ -110,7 +110,9 @@ For most companies, the majority of experiments will follow a pattern similar to
 
 ### B2B clustered experiments
 
-B2B companies often have the constraint that experiments must be randomized by company, not by user. Nonetheless, you may want to understand the impact on user-level metrics (engagement, etc.) as well as company-level metrics. In this case you can leverage Eppo's clustered experiment analysis by adding both `company_id` and `user_id` to the assignment SQL definition:
+B2B companies often have the constraint that experiments must be randomized by company, not by user. Nonetheless, you may want to understand the impact on user-level metrics (engagement, etc.) as well as company-level metrics. In this case you can leverage either standard metrics or Eppo's [ratio metrics](/data-management/metrics/ratio-metric/) to have average per user.
+
+Alternativly, you can leverage clustered experiment analysis to focus on the individual user affected by the change:
 
 | Column | Type in Eppo |
 |--------|--------------|
@@ -120,7 +122,7 @@ B2B companies often have the constraint that experiments must be randomized by c
 | `variant` | Variant |
 | `user_id` | Subentity ID |
 
-Here we've specified `company_id` as the randomization unit and `user_id` as the analysis (subentity) unit. Any experiment analysis created using this Assignment SQL Definition can have both user-level and company-level metrics added to it. User-level metrics will analyzed with a method equivalent to [clustered standard errors](https://en.wikipedia.org/wiki/Clustered_standard_errors).
+Here we've specified `company_id` as the randomization unit and `user_id` as the analysis (subentity) unit. Any experiment analysis created using this Assignment SQL Definition can have user-level metrics added to it. Those will analyzed with a method equivalent to [clustered standard errors](https://en.wikipedia.org/wiki/Clustered_standard_errors).
 
 For more details, see the page on [clustered experiments](/experiment-analysis/clustered-analysis/)
 
