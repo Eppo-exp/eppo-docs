@@ -172,6 +172,14 @@ else:
 For full steps to create a bandit including UI steps, see the [bandit quickstart](/bandit-quickstart).
 :::
 
+## Shutdown
+
+Before exiting your application, it is recommended to gracefully shutdown the Eppo client. This ensures that it closes any open resources and shuts down the background thread, preventing any scary (but harmless) stacktraces in your logs.
+
+```python
+eppo_client.get_instance().shutdown()
+```
+
 ## Next Steps
 
 Now that you've seen how to make assignments with the Eppo Python SDK, we recommend familiarizing yourself with:

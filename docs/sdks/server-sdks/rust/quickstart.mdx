@@ -31,7 +31,10 @@ Feature flags are a way to toggle features on and off without needing to deploy 
 let mut client = eppo::ClientConfig::from_api_key("<YOUR_API_KEY>")
     .to_client();
 
-let poller_thread = client.start_poller_thread();
+let poller_thread = client.start_poller_thread().unwrap();
+
+// Optional: wait 5 seconds for the poller to fetch configuration before serving assignments.
+let _ = poller_thread.wait_for_configuration_timeout(Duration::from_secs(5));
 ```
 
 ### Assign a variant
