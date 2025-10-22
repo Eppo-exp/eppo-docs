@@ -7,7 +7,7 @@ sidebar_position: 100
 
 Precomputed assignments is an execution mode that allows you to receive assignments for all flags for a given user.
 
-The computation happens with a remote call to an Eppo Edge Function which is 
+The computation happens with a remote call to an Eppo Edge Function which is
 globally distributed to be as close to the user as possible. Availability is backed by Eppo's CDN.
 
 This mode is best suited for applications that require a smaller response payload,
@@ -47,12 +47,59 @@ const assignmentLogger: IAssignmentLogger = {
 // Initialize the client
 const client = await EppoSdk.precomputedInit({
     apiKey: 'YOUR_SDK_KEY',
-    assignmentLogger: assignmentLogger,
+    assignmentLogger: {
+        logAssignment: (assignmentEvent) => {
+            /* send to warehouse */
+        }
+    },
+    precompute: {
+        subjectKey: 'test-subject',
+        subjectAttributes: { attr1: 'value1' }
+    }
+});
+```
+
+### Contextual Bandits
+
+If you are using [contextual bandits](/contextual-bandits) you need to include the available actions for each bandit in the precomputed configuration.
+You also need to supply a [bandit logger](/bandit-quickstart#2-connect-a-logging-function-to-the-eppo-sdk), which will log assignments to the warehouse for training the bandit.
+
+```javascript
+
+// Include bandit logger and bandit actions in the precomputed initialization
+await EppoSdk.precomputedInit({
+    apiKey: 'YOUR_SDK_KEY',
+    assignmentLogger: {
+        logAssignment: (assignmentEvent) => {
+            /* send to warehouse */
+        }
+    },
+    banditLogger: {
+        logBanditAction: (banditEvent) => {
+            /* send to warehouse */
+        }
+    },
     precompute: {
         subjectKey: 'test-subject',
         subjectAttributes: { attr1: 'value1' },
+        banditActions: {
+            'bandit1-key': {
+                'action1-key': {
+                    numericAttributes: { subjectActionNumericAttr1: 12345 },
+                    categoricalAttributes: { subjectActionCategoricalAttr1: 'value1' }
+                },
+                'action2-key': { numericAttributes: {}, categoricalAttributes: {} },
+                'action3-key': { numericAttributes: {}, categoricalAttributes: {} },
+                'action4-key': { numericAttributes: {}, categoricalAttributes: {} }
+            }
+        }
     }
 });
+
+// Get the bandit action
+const banditResult = EppoSdk.getPrecomputedInstance().getBanditAction('bandit1-key', 'bandit1-default');
+const variant = banditResult.variant; /* will be bandit or control */
+const action = banditResult.action; /* will be "action1-key", "action2-key", "action3-key", or "action4-key" if the bandit was assigned, otherwise null */
 ```
 
 ## Perform evaluation
