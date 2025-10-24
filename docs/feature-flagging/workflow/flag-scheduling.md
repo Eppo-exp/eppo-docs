@@ -8,12 +8,12 @@ In Eppo, you can create a rollout schedule for feature gates and experiment assi
 
 To add a rollout schedule:
 1. In a flag, create a Feature Gate or Experiment Assignment
-2. Under "Traffic Exposure & Weights" choose "Schedule automated rollouts in phases". As a default the flag will rollout to the selected traffic exposure when the flag is enabled.
+2. Under "Traffic Exposure & Weights" choose "Schedule automated rollouts in phases". As a default the flag will roll out to the selected traffic exposure when the flag is enabled.
 ![Rollout options under Traffic Exposure](/img/feature-flagging/rollouts/rollout-percentage.png)
 3. Set the phases of the rollout. Each phase is a set date, time, and traffic percentage. The rollout will be at 0% until Phase 1's scheduled datetime.
 ![Setting the phases of a rollout](/img/feature-flagging/rollouts/rollout-phases.png)
 
-When set, the schedule will be displayed on the Flag detail page along with any action that should be taken. For example, if the flag is disabled, we message that the flag should be enabled prior to rollout.
+When set, the schedule will be displayed on the Flag detail page along with any action that should be taken. For example, if the flag is disabled, we message that the flag should be enabled prior to roll out.
 ![Flag with a rollout scheduled](/img/feature-flagging/rollouts/rollout-flag-details.png)
 
 Hovering over the schedule also provides the details of the schedule at a glance.
@@ -21,3 +21,6 @@ Hovering over the schedule also provides the details of the schedule at a glance
 
 
 Schedules can be edited or removed. To do so, edit the flag and change settings as you like.
+
+Note: Schedules are sent in their entirety to the SDK. This means assignments will change over on the scheduled date and time even if a new configuration is not fetched. 
+(However, this is not the case if precomputed assignments are being used.) 
