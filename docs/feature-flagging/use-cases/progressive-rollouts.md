@@ -16,7 +16,7 @@ In the B2B case it's common to roll out new features by account. This can be don
 
 ### Percentage rollout
 
-For consumer facing companies it's common to rol out new features by population percent. This can be done by starting the `Traffic Exposure` setting on an allocation to a small number, monitoring the feature, then slowly increasing
+For consumer facing companies it's common to roll out new features by population percent. This can be done by starting the `Traffic Exposure` setting on an allocation to a small number, monitoring the feature, then slowly increasing
 that percentage over time:
 
 ![Percentage rollout 1](/img/feature-flagging/percentage-rollout-1.png)
