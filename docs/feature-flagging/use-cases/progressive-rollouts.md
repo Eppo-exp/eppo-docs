@@ -51,6 +51,6 @@ Instead, we recommend that you have a fair split between Control and Treatment, 
 
 ## Scheduled percentage rollout
 
-You can also pre-schedule your percentage exposure roll-outs to automatically progress. Read more about [flag scheduling](/feature-flagging/workflow/flag-scheduling/).
+You can also pre-schedule your percentage exposure roll-outs to automatically progress. Read more about flag scheduling at [Flag scheduling and rollouts](/feature-flagging/workflow/flag-scheduling/).
 
 ![Percentage rollout_experiment_scheduled](/img/feature-flagging/percentage-rollout-experiment-scheduled.png)
