@@ -12,7 +12,7 @@ Targeting rules allow you to define which subjects should belong to your experim
 
 Targeting rules are supported for experiments that use Eppo's Feature Flagging SDK. Navigate to an allocation in a Feature Flag to configure targeting rules. You may target any attribute names that you use in your code, but the same attributes must be passed to the SDK during assignment.
 
-![generating-api-token-1](/img/connecting-data/targeting-rules.png)
+![targeting_rules](/img/connecting-data/targeting-rules.png)
 
 Each rule may have multiple conditions. The rule is only satisfied if all the conditions match. Eppo's randomization SDK will return an assignment if any rules are satisfied, and `null` if no rules are satisfied.
 
@@ -23,6 +23,15 @@ Each rule may have multiple conditions. The rule is only satisfied if all the co
 | greater than (`>`), less than (`<`), greater than or equal to (`>=`), less than or equal to (`<=`) | number, SemVer          | Numeric comparison                                                                                                                                                           |
 | matches regex                                                                              | string                  | Regular expression match                                                                                                                                                     |
 | one of / not one of                                                                        | string, number, boolean | Is one of (or not one of) an array of strings. Non-string inputs (number and boolean) are cast to string before performing the comparison. Comparisons are case-sensitive. |
+
+## Targeting by subject key
+
+You can target individual subjects by matching with the property `id`.
+
+![targeting_rules](/img/connecting-data/targeting-on-id.png)
+
+The list of IDs when using `is one of` or `not one of` is limited to 50 values.
+
 
 ## Special case: Semantic Versioning
 
@@ -36,7 +45,7 @@ For example, `28.5` is not valid, but `28.5.0` is.
 
 1. Create an allocation with your desired mix of rules.
 
-![generating-api-token-1](/img/feature-flagging/semver-targeting.png)
+![semver-targeting](/img/feature-flagging/semver-targeting.png)
 
 2. Use the assignment implementation with the current version.
 
