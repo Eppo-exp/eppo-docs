@@ -12,7 +12,7 @@ Targeting rules allow you to define which subjects should belong to your experim
 
 Targeting rules are supported for experiments that use Eppo's Feature Flagging SDK. Navigate to an allocation in a Feature Flag to configure targeting rules. You may target any attribute names that you use in your code, but the same attributes must be passed to the SDK during assignment.
 
-![targeting_rules](/img/connecting-data/targeting-rules.png)
+![targeting_rules](/img/feature-flagging/targeting-rules.png)
 
 Each rule may have multiple conditions. The rule is only satisfied if all the conditions match. Eppo's randomization SDK will return an assignment if any rules are satisfied, and `null` if no rules are satisfied.
 
@@ -28,7 +28,7 @@ Each rule may have multiple conditions. The rule is only satisfied if all the co
 
 You can target individual subjects by matching with the property `id`.
 
-![targeting_rules](/img/connecting-data/targeting-on-id.png)
+![targeting_rules](/img/feature-flagging/targeting-on-id.png)
 
 The list of IDs when using `is one of` or `not one of` is limited to 50 values.
 
