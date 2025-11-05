@@ -81,7 +81,7 @@ Therefore, the logger should write to a table with the following columns (they c
 | Column                                | Description                                                                                              | Example Data                |
 |---------------------------------------|----------------------------------------------------------------------------------------------------------|-----------------------------|
 | timestamp (TIMESTAMP)                 | Timestamp of the bandit assignment in UTC                                                                | 2024-08-14 12:19:25.959     |
-| key (VARCHAR/STRING)                  | The key (unique identifier) of the bandit                                                                | ad-bandit-1                 |
+| bandit_key (VARCHAR/STRING)                  | The key (unique identifier) of the bandit                                                                | ad-bandit-1                 |
 | subject (VARCHAR/STRING)              | The unique identifier for the subject being assigned                                                     | ed6f85019080                |
 | subject_numeric_attributes (JSON)     | Metadata about numeric attributes of the subject; Mapping of attribute names to their values             | \{"age": 30\}                 |
 | subject_categorical_attributes (JSON) | Metadata about non-numeric attributes of the subject; Mapping of attribute names to their values         | \{"loyalty_tier": "gold"\}    |
