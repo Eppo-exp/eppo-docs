@@ -98,6 +98,15 @@ Supported variables:
 
 -   `{{analysis_start_timestamp}}` - The ‘event data from’ date in the ‘Analysis Set Up’,
 -   `{{analysis_end_timestamp}}` - The ‘event end date’ date in the ‘Analysis Set Up’,
+-   `{{experiment_key}}` - The `Feature Flag Experiment Key` that you set in the `Experiment Setup`,
+-   `{{allocation_key}}` - The `{Feature Flag Experiment Key - Allocation ID}` that you set up in your Eppo feature flag, or the `{{experiment_key}}` value if using external feature flagging solutions
+
+In the SQL IDE in Eppo, these variables will default to:
+
+-   `{{analysis_start_timestamp}}` - Two days before the current date and time 
+-   `{{analysis_end_timestamp}}` - The current date and time
+-   `{{experiment_key}}` - `%`
+-   `{{allocation_key}}` - `%`
 
 #### Example
 
