@@ -492,3 +492,44 @@ export default function Home({
 If your development server is not yet running, run `yarn dev`. You should now see your experiment running with the new server rendered component.
 
 ![Server rendered experiment](/img/guides/nextjs/server-rendered-experiment.png)
+
+## Troubleshooting
+
+### Turbopack bundling issue (Next.js 16.0.2+)
+
+**Problem:**
+
+If you're using Next.js 16.0.2-canary.7 or later (including 16.0.3+) with Turbopack, you may encounter build errors caused by Turbopack over-aggressively bundling the `thread-stream` package. This includes test files, LICENSE, README, and other non-code assets that should not be bundled.
+
+**Error manifestation:**
+
+Build failures with errors like:
+
+```
+Module not found: Can't resolve 'why-is-node-running'
+
+./node_modules/.pnpm/thread-stream@3.1.0/node_modules/thread-stream/test/helper.js:33:15
+```
+
+This occurs because Turbopack is incorrectly bundling test files from the `thread-stream` package, which should never be included in your application bundle.
+
+**Why this happens:**
+
+The `@eppo/node-server-sdk` depends on Pino for logging, which uses dynamic imports and `worker_threads`. A fix for [Next.js issue #84766](https://github.com/vercel/next.js/issues/84766) made Turbopack trace worker threads more aggressively, which inadvertently caused [Next.js issue #86458](https://github.com/vercel/next.js/issues/86458) where test files from `thread-stream` get bundled.
+
+**Solution:**
+
+Add the following to your `next.config.ts` (or `next.config.js`) file to treat Pino and its dependencies as external packages:
+
+```ts
+const nextConfig = {
+  serverExternalPackages: ['pino', 'pino-pretty', 'thread-stream'],
+  // ... other config options
+};
+
+export default nextConfig;
+```
+
+This tells Next.js to treat these packages as external dependencies and not bundle them with Turbopack.
+
+**Note:** Webpack builds are not affected by this issue, as Webpack handles dynamic Pino imports correctly via the `package.json` files field.
