@@ -88,7 +88,13 @@ CUPED can be turned on in the admin panel, and in the overview page of an experi
 To avoid confusion, it is useful to keep in mind that the above refers to the input data. CUPED produces improved results across all metrics.
 
 **Does CUPED apply to all metrics?**
-Yes, our CUPED implementation works for any metric type (standard, ratio, funnel). The only requirement for CUPED is that the experiment has eligible metrics and/or assignment properties configured (see previous question). If so, CUPED is applied across all metrics (even those that are not eligible as input to CUPED).
+Yes, our CUPED implementation works to improve the precision for any metric type (standard, ratio, funnel, percentile).
+However, not every metric is used as covariate, the pre-experiment totals used as input to CUPED:
+- Retention or conversion metrics, and more generally metrics filtered by timeframes are not selected as covariates;
+- Neither are metrics with subject filters, notably time-based metrics that users “age into”;
+- Nor are Threshold metrics.
+We might also exclude metrics based on definitions with large data volume, to avoid querying your data warehouse beyond reason.
+The only requirement for CUPED is that the experiment has eligible metrics and/or assignment properties configured (see previous question). If so, CUPED is applied across all metrics (even those that are not eligible as input to CUPED).
 
 **Why do the point estimates between CUPED and non-CUPED look different?**
 CUPED and non-CUPED estimators are both unbiased (given proper randomization) of the same quantity, so we would expect estimates to be close.
