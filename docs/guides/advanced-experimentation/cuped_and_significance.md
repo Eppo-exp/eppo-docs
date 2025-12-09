@@ -23,7 +23,7 @@ The same thing can happen in the opposite direction: Treatment for the primary m
 
 ## Why is the correction so large?
 
-The larger the imbalance, the larger the correction. With a homogeneous audience of millions of users, there’s little risk to see big differences. However, if you happen to have a handful of users that represent a large part of your activity, they might not split evenly between variances, and larger gaps are possible.
+The larger the imbalance, the larger the correction. With a homogeneous audience of millions of users, there’s little risk to see big differences. However, if you happen to have a handful of users that represent a large part of your activity, they might not split evenly between variants, and larger differences are possible.
 
 There is a limit though: some gaps are too large to be caused by randomness. As we’ll see further down, we flag those cases as suspicious. 
 
