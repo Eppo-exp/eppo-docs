@@ -61,7 +61,7 @@ What are those precautions? When applying the CUPED correction, we assume that y
 
 If we notice larger differences than expected, then we flag this a Diagnostic error, either *Traffic imbalance* by assignment properties or a *Pre-experiment metric imbalance*. Those imbalances should not happen: Control and Treatment should be taken from the same population and split randomly.
 
-If either of those diagnostic warnings or errors appear, we strongly recommend that you investigate that before looking at results; notably, we recommend you address those before looking at CUPED- or non-CUPED-corrected results. Do not hesitate to reach out to support if you are not sure what to do.
+If either of those diagnostic warnings or errors appear, we strongly recommend that you investigate that before looking at results; notably, we recommend you address those before looking at CUPED or non-CUPED-corrected results. Do not hesitate to reach out to support if you are not sure what to do.
 
 ## Common causes for Pre-experiment imbalance
 
