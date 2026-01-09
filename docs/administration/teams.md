@@ -19,6 +19,18 @@ Admins have permission to create, edit, and archive teams. Admins can also assig
 ### Create Teams
 Create teams under the [Teams home](https://eppo.cloud/teams) by selecting an icon and giving the team a name. 
 
+### Lock Teams
+Lock teams to restrict who can add new members. When a team is locked, only Admins and existing members of that team can add new members to it.
+
+![Lock Team Menu](/img/administration/Lock_Team_Menu.png)
+
+With locked teams:
+- Only Admins and members of the same team can add new members
+- Users cannot "request to join" the team through Eppo
+- Users who want to join must ask to be added outside of Eppo (e.g., via Slack or email)
+
+This is useful for maintaining tighter control over team membership for sensitive projects or teams.
+
 ### Archive Teams
 Archive teams by selecting from the more menu. Archiving cannot be undone and will prevent this team from being assigned to future users, experiments, metrics, and feature flags.
 
