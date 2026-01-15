@@ -19,6 +19,12 @@ Don't hesitate to shoot us an email at support@geteppo.com.
 - Learn how to [debug issues](/guides/debugging-metrics) with experiment metrics.
 - Setting up your data warehouse for efficient computation can make a big difference in compute, so we have a guide on [best practices](/data-management/warehouse-best-practices).
 
+## Metadata
+
+- Learn how to [manage metadata fields](/guides/metadata/managing-metadata-fields) to define custom fields for experiments and feature flags.
+- Add and edit [metadata in experiments](/guides/metadata/experiment-metadata) to track custom information and context.
+- Add and edit [metadata in feature flags](/guides/metadata/feature-flag-metadata) and understand how it relates to experiments.
+
 ## Experimentation
 
 - Learn how to set up [assignment logging](/sdks/event-logging/assignment-logging/) with Segment, Rudderstack, mParticle, or Snowplow.
