@@ -1,0 +1,438 @@
+---
+title: Precomputed Assignments
+sidebar_position: 5
+---
+
+import ApiOptionRef from '@site/src/components/ApiOptionRef';
+
+## Overview
+
+Precomputed assignments is an execution mode that allows you to receive assignments for all flags for a given user.
+
+The computation happens with a remote call to an Eppo Edge Function which is
+globally distributed to be as close to the user as possible. Availability is backed by Eppo's CDN.
+
+This mode is best suited for applications that require a smaller response payload,
+more predictable latency, and removal of private targeting rules over the public internet.
+
+The precomputed client is available in Eppo's Android SDK version `4.12.0` and above.
+
+## Advantages
+
+- Private and secure handling of targeting rules.
+- High availability and low latency due to global distribution with the CDN.
+- Instant lookups with zero client-side evaluation time.
+- Automatic caching for offline support.
+
+## Prerequisites
+
+On client initialization, you must have the subject key and all subject attributes available.
+
+## Assignment logging
+
+Using the standard `EppoClient`, flag evaluation and assignments both occur together in the client.
+
+When using `EppoPrecomputedClient`, flag evaluation occurs up front during initialization and assignments occur afterwards.
+
+In both cases, assignment events are only logged by the provided logging callback when `get*Assignment` is invoked.
+
+## Initialize precomputed client
+
+```java
+import cloud.eppo.android.EppoPrecomputedClient;
+import cloud.eppo.api.Attributes;
+import cloud.eppo.api.EppoValue;
+import cloud.eppo.logging.AssignmentLogger;
+import cloud.eppo.logging.Assignment;
+
+public class MyApplication extends Application {
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        // Define the assignment logger
+        AssignmentLogger assignmentLogger = new AssignmentLogger() {
+            @Override
+            public void logAssignment(Assignment assignment) {
+                // Send to your analytics system
+                analytics.track("Eppo Assignment", assignment);
+            }
+        };
+
+        // Define subject attributes (optional)
+        Attributes subjectAttributes = new Attributes();
+        subjectAttributes.put("country", EppoValue.valueOf("US"));
+        subjectAttributes.put("age", EppoValue.valueOf(25));
+
+        // Initialize the precomputed client
+        try {
+            EppoPrecomputedClient client = new EppoPrecomputedClient.Builder(
+                "YOUR_SDK_KEY",
+                getApplication()
+            )
+                .subjectKey("user-123")
+                .subjectAttributes(subjectAttributes)
+                .assignmentLogger(assignmentLogger)
+                .buildAndInit();
+        } catch (Exception e) {
+            Log.e("Eppo", "Failed to initialize precomputed client", e);
+        }
+    }
+}
+```
+
+### Asynchronous initialization
+
+For non-blocking initialization, use `buildAndInitAsync()`:
+
+```java
+new EppoPrecomputedClient.Builder("YOUR_SDK_KEY", getApplication())
+    .subjectKey("user-123")
+    .subjectAttributes(subjectAttributes)
+    .assignmentLogger(assignmentLogger)
+    .buildAndInitAsync()
+    .thenAccept(client -> {
+        // Client is ready
+        Log.d("Eppo", "Precomputed client initialized");
+    })
+    .exceptionally(e -> {
+        Log.e("Eppo", "Failed to initialize", e);
+        return null;
+    });
+```
+
+## Perform evaluation
+
+After the precomputed client is initialized, the client instance can be accessed anywhere in your application.
+
+`get*Assignment` looks up the precomputed assignment and returns it immediately, or returns the default value if the precomputed assignment is missing.
+
+```java
+EppoPrecomputedClient client = EppoPrecomputedClient.getInstance();
+
+// String assignment
+String variant = client.getStringAssignment("flag-key", "default-value");
+
+// Boolean assignment
+boolean isEnabled = client.getBooleanAssignment("feature-flag", false);
+
+// Integer assignment
+int count = client.getIntegerAssignment("max-items", 10);
+
+// Numeric (double) assignment
+double rate = client.getNumericAssignment("conversion-rate", 0.5);
+
+// JSON assignment
+JsonNode config = client.getJSONAssignment("feature-config", defaultJsonNode);
+```
+
+## Contextual Bandits
+
+If you are using [contextual bandits](/contextual-bandits), you need to include the available actions for each bandit in the precomputed configuration. You also need to supply a [bandit logger](/bandit-quickstart#2-connect-a-logging-function-to-the-eppo-sdk), which will log assignments to the warehouse for training the bandit.
+
+```java
+import cloud.eppo.android.EppoPrecomputedClient;
+import cloud.eppo.api.Attributes;
+import cloud.eppo.api.EppoValue;
+import cloud.eppo.logging.BanditLogger;
+import cloud.eppo.logging.BanditAssignment;
+import cloud.eppo.android.dto.BanditResult;
+
+// Define bandit actions with their attributes
+Map<String, Map<String, Attributes>> banditActions = new HashMap<>();
+
+Map<String, Attributes> actionsForBandit = new HashMap<>();
+
+// Action 1 with attributes
+Attributes action1Attrs = new Attributes();
+action1Attrs.put("price", EppoValue.valueOf(9.99));
+action1Attrs.put("category", EppoValue.valueOf("electronics"));
+actionsForBandit.put("action-1", action1Attrs);
+
+// Action 2 with attributes
+Attributes action2Attrs = new Attributes();
+action2Attrs.put("price", EppoValue.valueOf(19.99));
+action2Attrs.put("category", EppoValue.valueOf("clothing"));
+actionsForBandit.put("action-2", action2Attrs);
+
+// Action 3 with no attributes
+actionsForBandit.put("action-3", new Attributes());
+
+banditActions.put("bandit-flag-key", actionsForBandit);
+
+// Initialize with bandit support
+EppoPrecomputedClient client = new EppoPrecomputedClient.Builder(
+    "YOUR_SDK_KEY",
+    getApplication()
+)
+    .subjectKey("user-123")
+    .subjectAttributes(subjectAttributes)
+    .assignmentLogger(assignmentLogger)
+    .banditLogger(new BanditLogger() {
+        @Override
+        public void logBanditAssignment(BanditAssignment banditAssignment) {
+            // Send to your analytics system for bandit training
+            analytics.track("Eppo Bandit Assignment", banditAssignment);
+        }
+    })
+    .banditActions(banditActions)
+    .buildAndInit();
+```
+
+### Querying the bandit for an action
+
+To query the bandit for an action, use the `getBanditAction()` method:
+
+```java
+BanditResult result = client.getBanditAction("bandit-flag-key", "default-variation");
+
+String variation = result.getVariation(); // The assigned variation
+String action = result.getAction();       // The selected action, or null if not a bandit
+```
+
+When `action` is not `null`, the bandit has selected an action for the subject. If `action` is `null`, use your status quo algorithm to select an action.
+
+### Bandit Logger Schema
+
+The SDK will invoke the `logBanditAssignment` function with a `BanditAssignment` object that contains the following fields:
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `featureFlag` | String | The key of the feature flag corresponding to the bandit |
+| `bandit` | String | The key (unique identifier) of the bandit |
+| `subject` | String | An identifier of the subject assigned to the experiment variation |
+| `action` | String | The action assigned by the bandit |
+| `actionProbability` | double | The weight between 0 and 1 the bandit valued the assigned action |
+| `optimalityGap` | double | The difference between the score of the selected action and the highest-scored action |
+| `modelVersion` | String | Unique identifier for the version of the bandit parameters |
+| `subjectNumericAttributes` | Attributes | Numeric attributes of the subject |
+| `subjectCategoricalAttributes` | Attributes | Categorical attributes of the subject |
+| `actionNumericAttributes` | Attributes | Numeric attributes of the assigned action |
+| `actionCategoricalAttributes` | Attributes | Categorical attributes of the assigned action |
+| `metaData` | Map\<String, String\> | Additional metadata such as SDK version |
+
+## Offline initialization
+
+The precomputed client supports offline mode for scenarios where you want to initialize with cached or pre-loaded configuration without making network requests.
+
+```java
+// Initialize in offline mode with cached configuration
+EppoPrecomputedClient client = new EppoPrecomputedClient.Builder(
+    "YOUR_SDK_KEY",
+    getApplication()
+)
+    .subjectKey("user-123")
+    .offlineMode(true)
+    .buildAndInit();
+```
+
+### With initial configuration
+
+You can also provide an initial configuration payload, useful for bootstrapping from server-side precomputation:
+
+```java
+byte[] configurationBytes = // ... configuration from your server
+
+EppoPrecomputedClient client = new EppoPrecomputedClient.Builder(
+    "YOUR_SDK_KEY",
+    getApplication()
+)
+    .subjectKey("user-123")
+    .initialConfiguration(configurationBytes)
+    .offlineMode(true)  // Optional: set to true to prevent network fetch
+    .buildAndInit();
+```
+
+## Polling for updates
+
+The SDK can automatically poll for configuration updates to keep assignments fresh:
+
+```java
+EppoPrecomputedClient client = new EppoPrecomputedClient.Builder(
+    "YOUR_SDK_KEY",
+    getApplication()
+)
+    .subjectKey("user-123")
+    .pollingEnabled(true)
+    .pollingIntervalMs(60000)  // Poll every 60 seconds
+    .pollingJitterMs(6000)     // Add up to 6 seconds of random jitter
+    .buildAndInit();
+```
+
+### Activity lifecycle management
+
+When using polling, tie into your activity's lifecycle to pause and resume polling appropriately:
+
+```java
+public class MainActivity extends AppCompatActivity {
+    @Override
+    protected void onPause() {
+        super.onPause();
+        try {
+            EppoPrecomputedClient.getInstance().pausePolling();
+        } catch (NotInitializedException e) {
+            // Client not initialized
+        }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        try {
+            EppoPrecomputedClient.getInstance().resumePolling();
+        } catch (NotInitializedException e) {
+            // Client not initialized
+        }
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
+            EppoPrecomputedClient.getInstance().stopPolling();
+        } catch (NotInitializedException e) {
+            // Client not initialized
+        }
+    }
+}
+```
+
+## Initialization options
+
+<ApiOptionRef
+  name="subjectKey"
+  type="String"
+  defaultValue="required"
+>
+
+The unique identifier for the subject (user). Required for precomputed assignments.
+</ApiOptionRef>
+
+<ApiOptionRef
+  name="subjectAttributes"
+  type="Attributes"
+  defaultValue="null"
+>
+
+Attributes of the subject used for targeting rules and bandit context.
+</ApiOptionRef>
+
+<ApiOptionRef
+  name="assignmentLogger"
+  type="AssignmentLogger"
+  defaultValue="null"
+>
+
+A callback that sends each assignment to your data warehouse. Required for experiment analysis.
+</ApiOptionRef>
+
+<ApiOptionRef
+  name="banditLogger"
+  type="BanditLogger"
+  defaultValue="null"
+>
+
+A callback that sends bandit assignments to your data warehouse. Required for bandit training.
+</ApiOptionRef>
+
+<ApiOptionRef
+  name="banditActions"
+  type="Map<String, Map<String, Attributes>>"
+  defaultValue="null"
+>
+
+Available actions for each bandit flag, with optional attributes per action.
+</ApiOptionRef>
+
+<ApiOptionRef
+  name="offlineMode"
+  type="boolean"
+  defaultValue="false"
+>
+
+When true, prevents the SDK from making HTTP requests to fetch configurations.
+</ApiOptionRef>
+
+<ApiOptionRef
+  name="initialConfiguration"
+  type="byte[]"
+  defaultValue="null"
+>
+
+Initial configuration payload to use instead of fetching from the server.
+</ApiOptionRef>
+
+<ApiOptionRef
+  name="pollingEnabled"
+  type="boolean"
+  defaultValue="false"
+>
+
+When true, enables automatic polling for configuration updates.
+</ApiOptionRef>
+
+<ApiOptionRef
+  name="pollingIntervalMs"
+  type="long"
+  defaultValue="300000 (5 minutes)"
+>
+
+The interval between polling requests in milliseconds.
+</ApiOptionRef>
+
+<ApiOptionRef
+  name="pollingJitterMs"
+  type="long"
+  defaultValue="10% of pollingIntervalMs"
+>
+
+Random jitter added to polling interval to prevent thundering herd.
+</ApiOptionRef>
+
+<ApiOptionRef
+  name="isGracefulMode"
+  type="boolean"
+  defaultValue="true"
+>
+
+When true, errors return default values instead of throwing exceptions.
+</ApiOptionRef>
+
+<ApiOptionRef
+  name="ignoreCachedConfiguration"
+  type="boolean"
+  defaultValue="false"
+>
+
+When true, ignores any cached configuration and fetches fresh from the server.
+</ApiOptionRef>
+
+<ApiOptionRef
+  name="forceReinitialize"
+  type="boolean"
+  defaultValue="false"
+>
+
+When true, forces reinitialization even if an instance already exists.
+</ApiOptionRef>
+
+## Manual refresh
+
+To manually refresh the precomputed assignments without waiting for the polling interval:
+
+```java
+// Synchronous refresh
+client.fetchPrecomputedFlags();
+
+// Asynchronous refresh
+client.fetchPrecomputedFlagsAsync()
+    .thenRun(() -> Log.d("Eppo", "Configuration refreshed"))
+    .exceptionally(e -> {
+        Log.e("Eppo", "Failed to refresh", e);
+        return null;
+    });
+```
+
+## Debugging
+
+You may encounter a situation where a flag assignment produces a value that you did not expect. There are functions [detailed here](/sdks/sdk-features/debugging-flag-assignment/) to help you understand how flags are assigned, which will allow you to take corrective action on potential configuration issues.
