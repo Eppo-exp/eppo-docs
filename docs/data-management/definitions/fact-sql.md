@@ -96,20 +96,20 @@ If you need to reduce the volume of data the data warehouse needs to process, yo
 
 Supported variables:
 
--   `{{analysis_start_timestamp}}` - For a full update, the ‘event data from’ timestamp in the ‘Analysis Set Up’; for an incremental update, the start timestamp of the tranche;
--   `{{analysis_end_timestamp}}` - For a full update, the ‘event end timestamp’ in the ‘Analysis Set Up’; for an incremental update, the end timestamp of the update (the earliest between now and the end of the experiment);
-- `{{experiment_events_start_timestamp}}` and `{{experiment_events_end_timestamp}}` — If you want to cover whole experiment events, even during an incremental update;
-- `{{assignments_start_timestamp}}` and `{{assignments_end_timestamp}}` - If you want the assignment period only.
-- `{{experiment_key}}` - The `Feature Flag Experiment Key` that you set in the `Experiment Setup`,
-- `{{allocation_key}}` - The `{Feature Flag Experiment Key - Allocation ID}` that you set up in your Eppo feature flag, or the `{{experiment_key}}` value if using external feature flagging solutions
+-   `{{analysis_start_timestamp}}` for a full update, the ‘event data from’ timestamp in the ‘Analysis Set Up’; for an incremental update, the start timestamp of the tranche;
+-   `{{analysis_end_timestamp}}` for a full update, the ‘event end timestamp’ in the ‘Analysis Set Up’; for an incremental update, the end timestamp of the update (the earliest between now and the end of the experiment);
+- `{{experiment_events_start_timestamp}}` and `{{experiment_events_end_timestamp}}` if you want to cover whole experiment events, even during an incremental update;
+- `{{assignments_start_timestamp}}` and `{{assignments_end_timestamp}}` if you want the assignment period only.
+- `{{experiment_key}}` is the `Feature Flag Experiment Key` that you set in the `Experiment Setup`,
+- `{{allocation_key}}` is the `{Feature Flag Experiment Key with Allocation ID}` that you set up in your Eppo feature flag, or the `{{experiment_key}}` value if using external feature flagging solutions
 
-In the SQL IDE in Eppo, these variables will default to:
+In the Fact Definition form (the SQL IDE) in Eppo, these variables will default to:
 
-- `{{analysis_start_timestamp}}` - Two days before the current date and time 
+- `{{analysis_start_timestamp}}` - Two days before the current date and time
 - `{{analysis_end_timestamp}}` - The current date and time
-- `{{experiment_events_start_timestamp}}`, `{{experiment_events_end_timestamp}}` `{{assignments_start_timestamp}}` and `{{assignments_end_timestamp}}` - Behave the same way: two days before the current date and time to now, respectively.
--   `{{experiment_key}}` - `%`, to match all values in a `LIKE {{experiment_key}}` pattern
--   `{{allocation_key}}` - `%`, to match all values in a `LIKE {{allocation_key}}` pattern
+- `{{experiment_events_start_timestamp}}`, `{{experiment_events_end_timestamp}}` `{{assignments_start_timestamp}}` and `{{assignments_end_timestamp}}` behave the same way: two days before the current date and time up to now, respectively.
+-   `{{experiment_key}}` - `%`, to match all values in a `LIKE '{{experiment_key}}'` pattern;
+-   `{{allocation_key}}` - `%`, to match all values in a `LIKE '{{allocation_key}}'` pattern.
 
 #### Example
 
