@@ -14,7 +14,7 @@ With **Bayesian** analysis, the number Eppo shows for lift often does *not* matc
 
 ## The idea in one sentence
 
-Bayesian analysis doesn’t just report “what the data says.” It combines **what the data says** with **what we believed before the experiment** (the *prior*). When the data is limited or suggests an extreme lift, the prior pulls the estimate toward more typical, reasonable values.
+Bayesian analysis doesn’t just report “what the data says.” It combines **what the data says** with **what we believed before the experiment** (the *prior*). When the data is limited or suggests an extreme lift, the prior pulls the estimate toward more reasonable values expected by the prior.
 
 ---
 
@@ -23,7 +23,7 @@ Bayesian analysis doesn’t just report “what the data says.” It combines **
 The formula **(Treatment − Control) / Control** is the *observed* relative difference. It’s what you get when you take the averages (or totals) from your experiment and plug them in. No prior, no correction—just the raw comparison.
 
 - **Frequentist** methods (fixed-sample, sequential) use the data to estimate lift and then build a confidence interval around that estimate. So the *center* of the interval is usually close to that naive lift (possibly adjusted e.g. by CUPED).
-- **Bayesian** methods use the data to *update* a prior distribution for the lift. The reported lift is the center of the *posterior* distribution—i.e., “our best guess for the true lift given the prior and the data.” So the number you see is not necessarily the naive (T−C)/C.
+- **Bayesian** methods use the data to *update* a prior distribution for the lift. The reported lift is the center of the *posterior* distribution—i.e., “our best guess for the true lift given the prior and the data.” So the number you see is not necessarily the simple (T−C)/C.
 
 So: **the naive formula is “lift from the data only.” The Bayesian number is “lift after we’ve combined the data with our prior.”** They match only when the data dominates the prior (e.g. large sample, modest lift).
 
@@ -34,12 +34,12 @@ So: **the naive formula is “lift from the data only.” The Bayesian number is
 Two things drive the difference:
 
 1. **The prior says most lifts are modest.**  
-   In practice, huge relative lifts (e.g. +200%) are rare; most experiments show smaller effects. The Bayesian prior reflects that: it’s centered around zero with a spread that makes very large lifts unlikely unless the data strongly supports them.
+   In practice, huge relative lifts (e.g. +200%) are rare; most changes have smaller effects. The Bayesian prior reflects that: it’s centered around zero with a spread that makes very large lifts unlikely unless the data strongly supports them.
 
 2. **With a small sample, the data is noisy.**  
    A few users can make the *observed* (T−C)/C look huge or tiny by chance. So we don’t want to fully trust that one number. The prior acts like a stabilizer: it pulls the estimate toward more plausible values. With **more** data, the data dominates and the Bayesian lift gets closer to the naive one.
 
-So: **Bayesian lift is “reasonableness-adjusted.”** For small samples and large naive lifts, it will usually be *smaller* (in absolute terms) than (T−C)/C, because the prior pulls toward more typical effects.
+So: **Bayesian lift is “adjusted towards reasonable estimate.”** For small samples and large naive lifts, it will usually be *smaller* (in absolute terms) than (T−C)/C, because the prior pulls toward more typical effects.
 
 ---
 
