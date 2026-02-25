@@ -79,6 +79,11 @@ Task {
 }
 ```
 
+#### Persistent Configuration
+
+The last downloaded configuration is cached on disk so they can provide the same experience until the network becomes available and a more recent configuration can be loaded. This is useful because when the SDK is initialized, a mobile device might not have network access. 
+
+
 #### Initialization with Automatic Configuration Updates (Polling)
 
 The SDK can be configured to automatically poll for configuration updates at regular intervals. This is useful for ensuring your application always has the latest flag configurations.
