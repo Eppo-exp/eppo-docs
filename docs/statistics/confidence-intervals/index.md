@@ -73,7 +73,9 @@ back-of-the-envelope calculations.
 
 If you use [Bayesian analysis](/statistics/confidence-intervals/analysis-methods.md#bayesian-analysis), the estimated lift might be
 _quite_ different from the naive calculation, because the prior can influence
-the estimate a lot, particularly if the sample size is not large.
+the estimate a lot, particularly if the sample size is not large. For an
+accessible explanation with a worked example, see
+[Why Bayesian lift doesn't match (Treatment − Control) / Control](/guides/advanced-experimentation/bayesian-lift-vs-naive).
 
 :::
 

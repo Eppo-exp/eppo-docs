@@ -376,7 +376,8 @@ above is that the center of the confidence interval is _not_ the lift measured
 from the data, even when [CUPED](/statistics/cuped) is disabled.[^cupedlift] Instead, the
 lift measured from the data is used to update our prior, and the resulting
 _posterior distribution_ determines both the center _and_ bounds of the confidence
-interval.
+interval. For an accessible guide with a numerical example, see
+[Why Bayesian lift doesn't match (Treatment − Control) / Control](/guides/advanced-experimentation/bayesian-lift-vs-naive).
 
 :::
 
