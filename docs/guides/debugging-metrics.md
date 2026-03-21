@@ -86,5 +86,5 @@ The Run Log is especially useful for:
 - **Verifying that a fix worked** by confirming subsequent runs completed successfully after a configuration change.
 
 :::tip
-Some pipeline steps may show as `PENDING` or not appear at all if a prerequisite step (such as the primary metric check) has not yet passed. If you see fewer steps than expected, check that the primary metric is configured correctly.
+Some pipeline steps may show as `WAITING_FOR_UPSTREAM` or `UPSTREAM_FAILED` if a prerequisite step has not yet completed or has failed. If you see tasks stuck in these states, check the upstream tasks in the same run for errors.
 :::

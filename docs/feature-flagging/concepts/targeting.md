@@ -34,7 +34,6 @@ The list of IDs when using `is one of` or `not one of` is limited to 50 values.
 
 ## Known limitations
 
-- **No "is null" / "is not null" condition.** You cannot currently target subjects based on the absence of an attribute. As a workaround, set a default value for the attribute in your code before passing it to the SDK (e.g., `"unknown"`) and target on that value.
 - **No array-type attribute support.** Targeting rules evaluate scalar values only. If a subject has an array-valued attribute (e.g., a list of tags), the rule will not match individual elements. Pass the relevant value as a scalar instead.
 
 ## Special case: Semantic Versioning

@@ -104,19 +104,11 @@ class MyAssignmentLogger(AssignmentLogger):
 
 ## Limitations
 
-### Archived holdouts still consume allocation space
+### Archived holdouts and allocation space
 
-When a holdout is archived, the hash-space band it occupied is **not** reclaimed. This means that subjects who were in the holdout group will continue to be excluded from that portion of the hash space. Over time, creating and archiving multiple holdouts can fragment the available allocation space. There is currently no self-service way to reclaim this space — contact Eppo support if allocation band fragmentation becomes an issue.
+When a holdout is archived, its hash-space band is not immediately freed. Eppo keeps a buffer of the two most recently archived holdouts to avoid reassigning subjects to a new holdout too quickly. Older archived holdout bands are gradually reclaimed when new holdouts are created. If you run into allocation space issues after archiving many holdouts, contact Eppo support.
 
-### Holdout percentages compound
+### Start date cannot be changed after creation
 
-When multiple holdouts are active simultaneously, their percentages compound rather than add. For example, two holdouts each set to 10% will hold out approximately 19% of traffic (not 20%), because the second holdout applies to the 90% of traffic not already held out by the first.
-
-### Dates cannot be changed after creation
-
-The start and end dates of a holdout are immutable once the holdout is created. Plan your holdout windows carefully, as modifying them requires creating a new holdout.
-
-### Holdout creation requires Admin role
-
-Only users with the Admin role can create holdouts. Non-admin users with experiment editing permissions can add experiments to existing holdouts but cannot create new ones.
+The start date of a holdout is immutable once created. The end date can be extended or shortened after creation. Plan your holdout start date carefully, as changing it requires creating a new holdout.
 
