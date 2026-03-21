@@ -81,7 +81,7 @@ To access the Run Log, navigate to your experiment and click on the **Run Log** 
 
 The Run Log is especially useful for:
 
-- **Diagnosing "Update failed" errors** when Diagnostics shows all checks as passing — the Run Log reveals which pipeline step actually failed and why.
+- **Diagnosing "Update failed" errors** when Diagnostics shows all checks as passing — the Run Log helps you see the query that failed in the context of its pipeline.
 - **Identifying intermittent failures** such as warehouse timeouts, permission errors, or transient connectivity issues that don't surface in Diagnostics.
 - **Verifying that a fix worked** by confirming subsequent runs completed successfully after a configuration change.
 
