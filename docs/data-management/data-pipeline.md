@@ -38,7 +38,7 @@ Not every data issue requires a full backfill. Use this decision tree to determi
 
 - **Your upstream data was wrong and has now been corrected (e.g., a broken ETL was fixed, late-arriving data has landed):** You likely **do** need a full refresh to recompute metrics from the affected date. Trigger a full refresh from the experiment's results page ("update now" under "results last updated"), or use the API: `POST /api/v1/experiment-results/update/{experiment_id}`. Both endpoints accept a `lookback_date` query parameter (ISO 8601 format, e.g. `?lookback_date=2025-06-01T00:00:00Z`) to recompute results starting from a specific date instead of reprocessing the entire experiment. You can also pass `full_refresh=true` to force a non-incremental refresh.
 
-- **You changed a metric definition or Fact SQL:** New and updated metric definitions are automatically backfilled from the start of the experiment on the next pipeline run. No manual action is needed.
+- **You changed a metric definition or Fact SQL:** New and updated metric definitions are automatically backfilled from the start of the experiment on the next pipeline run (scheduled, triggered via the API, or triggered manually from the UI). No manual action is needed.
 
 - **You're unsure whether data has been corrected upstream:** Before triggering a full refresh, confirm with your data team that the source tables now contain the correct data for the affected period. A full refresh against still-broken data will not help.
 
