@@ -107,7 +107,9 @@ If you have any question about our privacy practices, please reach out.
 
 Eppo creates intermediate tables and views in a dedicated schema (typically `EPPO_OUTPUT`) in your warehouse. Over time — especially in long-running workspaces with many experiments — these can accumulate into thousands of objects. This is expected behavior and does not affect experiment results.
 
-If the number of objects becomes a concern for your data team, coordinate with Eppo support to discuss cleanup options. Do not drop tables from the `EPPO_OUTPUT` schema without guidance, as active experiments may depend on them.
+To manage this, Eppo provides an **automatic warehouse table cleanup** setting. Navigate to **Admin → Pipeline Update Schedules** and enable **"Automatically clean up old warehouse tables"**. You configure a retention period (e.g., 90 days) — Eppo will then drop any `EPPO_OUTPUT` tables that haven't been updated within that window. The cleanup runs on the 1st of every month. By default, tables used by Explore charts and the Sample Size Calculator are preserved; you can opt in to cleaning those up as well with separate toggles.
+
+Do not manually drop tables from the `EPPO_OUTPUT` schema — active experiments may depend on them. Use the built-in cleanup automation instead, which only removes tables outside the retention window.
 
 ## Clustered Analysis Pipeline
 
