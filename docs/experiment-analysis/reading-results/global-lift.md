@@ -16,4 +16,6 @@ If your rollout plan would include additional users from the same audience that 
 
 :::
 
-Global lift and coverage are currently only available for **sum** and **count** aggregation types. For details on how Global Lift is calculated, see [the Statistics section](/statistics/global-lift).
+Global lift and coverage are currently only available for **sum** and **count** aggregation types. Unique entity metrics (e.g., "unique users who purchased") are not supported because they are non-additive — the global unique count is not the sum of per-variant unique counts, which makes the extrapolation used in the Global Lift calculation invalid.
+
+For details on how Global Lift is calculated, see [the Statistics section](/statistics/global-lift).

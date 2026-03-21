@@ -104,6 +104,12 @@ The sequential version of the Minimum Detectable Effect is similar, but scaled b
 If metrics are [winsorized](/guides/advanced-experimentation/running-well-powered-experiments/#handling-outliers-using-winsorization) the sample size computation takes that into account. 
 :::
 
+:::info CUPED++ is not included in sample size estimates
+The Sample Size Calculator does not account for the variance reduction provided by [CUPED++](/statistics/cuped). In practice, CUPED++ can substantially reduce confidence interval widths (often by 30–50%), which means experiments may reach the target precision significantly sooner than the calculator predicts.
+
+Use the Sample Size Calculator as a **conservative upper bound** on required runtime. If your experiment has CUPED++ enabled, you can expect to reach the desired precision earlier than the table suggests. The [Progress Bar](/experiment-analysis/reading-results/progress-bar) on a running experiment reflects actual precision including CUPED++ adjustments.
+:::
+
 :::note
 The sample size calculator also [checks the validity of the normal approximation used](/statistics/confidence-intervals/#estimating-lift) for the MDE calculation.
 :::

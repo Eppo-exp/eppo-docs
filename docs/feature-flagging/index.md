@@ -21,6 +21,10 @@ The following are the central feature flagging concepts in Eppo:
 - [Audiences](/feature-flagging/concepts/audiences)
 - [Mutual exclusion](/feature-flagging/concepts/mutual_exclusion)
 
+:::caution Flag archival is irreversible
+Archiving a feature flag is a **permanent** action — archived flags cannot be unarchived. Additionally, the flag key cannot be reused for a new flag. Before archiving, ensure no running experiments or rollouts depend on the flag. If you need to temporarily disable a flag, turn off all allocations instead.
+:::
+
 ## Use cases
 
 Feature flags are applicable for a number of use cases:

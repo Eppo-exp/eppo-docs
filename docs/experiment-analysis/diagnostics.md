@@ -30,15 +30,7 @@ Validity of experimental results crucially relies on proper randomization of sub
 
 ### Traffic imbalance diagnostic
 
-The traffic imbalance diagnostic runs a test to see whether the randomization works as expected and the number of subjects assigned to each variation is as expected. This indicates that there is likely an issue with the randomization of subjects (e.g. a bug in the randomization code), which can invalidate the results of an experiment.
-
-We run this traffic imbalance test by running a [Pearson’s chi-squared test](https://en.wikipedia.org/wiki/Pearson%27s_chi-squared_test) with $\alpha = 0.001$ on active variations, using the assignment weights for each variant (default is equal split across variations), which we convert to probabilities. This is also known as the sample ratio mismatch test (SRM). We run the test at the more conservative $\alpha = 0.001$ level because this test is not sequentially valid; the more conservative significance level helps us avoid false positives.
-
-Issues with the traffic allocations can come from many sources; here are some common ones we have seen:
-
-- There is an issue with the logging assignments (note this could be introduced through latency)
-- Traffic allocations are updated in the middle of an experiments; in general, try to avoid changing the traffic allocations during an experiment
-- Assignments for one variant (e.g. the control cell) started before assignments to other variants
+Eppo runs a test to check whether the number of subjects assigned to each variation matches the expected split (sample ratio mismatch, or SRM). When it doesn’t, there is likely an issue with randomization or assignment logging, which can invalidate experiment results. For a detailed explanation of the test, common causes, and a step-by-step troubleshooting flow, see [Sample Ratio Mismatch](/statistics/sample-ratio-mismatch).
 
 ![Example diagnostic for a traffic imbalance in the assignment data](/img/experiments/diagnostics/diagnostics_imbalance.png)
 
@@ -72,9 +64,22 @@ Data quality diagnostics check that experiment data matches what we would expect
 
 ### Pre-experiment data diagnostic
 
-Eppo detects when pre-experiment metric averages differ significantly across variations for one or more metrics. Eppo will highlight the top metrics where we see this differentiation.
-This issue is most often driven by the non-random assignment of users into variations within the experiment. Consult with your engineering team to diagnose potential issues with your randomization tool.
+Eppo detects when pre-experiment metric averages differ significantly across variations for one or more metrics. Eppo will highlight the top metrics where we see this differentiation. When the gap is too large to be plausibly due to chance, we flag it so you can investigate before trusting experiment results.
+
+Possible reasons include: incorrectly specified experiment dates; iterating on a feature (e.g. same split after a buggy build) so Treatment had different pre-experiment exposure than Control; gradual roll-out with the experiment start set to full roll-out; or any [traffic imbalance](#traffic-imbalance-diagnostic) cause (assignment logging, latency, one variant starting before others). For a detailed list of causes and a step-by-step diagnostic process, see [CUPED and significance](/guides/advanced-experimentation/cuped_and_significance#common-causes-for-pre-experiment-imbalance).
+
+
 
 :::info
 The pre-experiment data diagnostic is only run when CUPED is enabled. This setting can be changed in the Admin panel across all experiments, or on a per-experiment basis in the Configure tab under Statistical Analysis Plan.
+:::
+
+## Understanding diagnostic queries
+
+Each diagnostic check includes a SQL query that you can copy and run directly in your warehouse to investigate further. However, there is an important caveat:
+
+:::caution Diagnostic queries are approximations
+The SQL queries shown in the diagnostic sidebar are **simplified approximations** of the full experiment pipeline. They do not apply [CUPED++](/statistics/cuped) variance reduction, [winsorization](/statistics/confidence-intervals/#estimating-lift), or mixed-assignment filtering. As a result, running these queries in your warehouse may produce numbers that differ from what Eppo displays on the experiment results page.
+
+This is expected and does not indicate a bug. The diagnostic queries are designed to help you verify that data exists and joins correctly — not to reproduce the final experiment statistics.
 :::

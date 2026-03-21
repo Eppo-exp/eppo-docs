@@ -30,7 +30,23 @@ You can also trigger a refresh in the UI by clicking "refresh experiment results
 
 ![Data pipeline chart](/img/data-management/pipeline/refresh.png)
 
+### When do I need a full refresh or backfill?
 
+Not every data issue requires a full backfill. Use this decision tree to determine the right action:
+
+- **Eppo's pipeline failed (e.g., warehouse timeout, permission error) but your underlying data is correct:** You generally do **not** need a backfill. The incremental lookback window (default 48 hours) will automatically re-process the missed period on the next successful run. Verify the next scheduled run completes successfully.
+
+- **Your upstream data was wrong and has now been corrected (e.g., a broken ETL was fixed, late-arriving data has landed):** You likely **do** need a full refresh to recompute metrics from the affected date. Trigger a full refresh from the experiment's results page ("update now" under "results last updated"), or use the API: `POST /api/v1/experiment-results/update/{experiment_id}`.
+
+- **You changed a metric definition or Fact SQL:** New and updated metric definitions are automatically backfilled from the start of the experiment on the next pipeline run. No manual action is needed.
+
+- **You're unsure whether data has been corrected upstream:** Before triggering a full refresh, confirm with your data team that the source tables now contain the correct data for the affected period. A full refresh against still-broken data will not help.
+
+
+
+### Schedule limitations
+
+Experiment refresh schedules run at fixed intervals (e.g., every 6 hours, every 12 hours, or daily). Per-day-of-week schedules (e.g., "only on weekdays") are not currently supported. To change an experiment's schedule, navigate to the experiment's **Metrics** tab and use the three-dot menu to reassign it to a different schedule.
 
 ### Pipeline steps
 
@@ -90,6 +106,12 @@ As we’ve detailed, Eppo doesn’t export individual data from your warehouse. 
 * **Caching results**: We copy and cache overall results (latest incremental totals, metric patterns) to make our interface snappy. This is any total that you can see on our service: total number of assignments, total number of conversions, total amounts. For ratios, we store the numerator and denominator (for incrementality).
 
 If you have any question about our privacy practices, please reach out.
+
+### Intermediate tables and views
+
+Eppo creates intermediate tables and views in a dedicated schema (typically `EPPO_OUTPUT`) in your warehouse. Over time — especially in long-running workspaces with many experiments — these can accumulate into thousands of objects. This is expected behavior and does not affect experiment results.
+
+If the number of objects becomes a concern for your data team, coordinate with Eppo support to discuss cleanup options. Do not drop tables from the `EPPO_OUTPUT` schema without guidance, as active experiments may depend on them.
 
 ## Clustered Analysis Pipeline
 

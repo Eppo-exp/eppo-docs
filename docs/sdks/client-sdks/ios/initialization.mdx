@@ -83,6 +83,10 @@ Task {
 
 The last downloaded configuration is cached on disk so they can provide the same experience until the network becomes available and a more recent configuration can be loaded. This is useful because when the SDK is initialized, a mobile device might not have network access. 
 
+:::caution Use separate configuration stores per environment
+If your app initializes the SDK in multiple environments (e.g., staging and production) on the same device, each environment must use its own SDK key and configuration store. A single shared configuration cache will be overwritten each time the SDK fetches from a different environment, causing flags to silently flip between staging and production values.
+:::
+
 
 #### Initialization with Automatic Configuration Updates (Polling)
 

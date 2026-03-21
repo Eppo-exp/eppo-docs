@@ -66,6 +66,10 @@ When true, prevents the SDK from making HTTP requests to fetch configurations.
 
 The SDK can cache previously loaded configurations for use in future sessions. This makes the SDK initialize faster and provides fallback values when network requests fail.
 
+:::caution Use separate configuration stores per environment
+If your app initializes the SDK in multiple environments (e.g., staging and production) on the same device, each environment must use its own SDK key and a separate cache location. A single shared cache will be overwritten each time the SDK fetches from a different environment, causing flags to silently flip between staging and production values.
+:::
+
 #### How Configuration Caching Works
 
 The SDK automatically caches configurations on the device. You can also implement your own custom cache by providing a custom storage implementation.

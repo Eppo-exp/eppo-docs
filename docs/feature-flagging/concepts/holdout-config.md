@@ -102,3 +102,21 @@ class MyAssignmentLogger(AssignmentLogger):
 
 > **Note:** Some SDK implementations may nest the holdout information within an `extraLogging` field. If you don't see `holdoutKey` and `holdoutVariation` at the top level of the event, check for them in `event.extraLogging.holdoutKey` and `event.extraLogging.holdoutVariation`.
 
+## Limitations
+
+### Archived holdouts still consume allocation space
+
+When a holdout is archived, the hash-space band it occupied is **not** reclaimed. This means that subjects who were in the holdout group will continue to be excluded from that portion of the hash space. Over time, creating and archiving multiple holdouts can fragment the available allocation space. There is currently no self-service way to reclaim this space — contact Eppo support if allocation band fragmentation becomes an issue.
+
+### Holdout percentages compound
+
+When multiple holdouts are active simultaneously, their percentages compound rather than add. For example, two holdouts each set to 10% will hold out approximately 19% of traffic (not 20%), because the second holdout applies to the 90% of traffic not already held out by the first.
+
+### Dates cannot be changed after creation
+
+The start and end dates of a holdout are immutable once the holdout is created. Plan your holdout windows carefully, as modifying them requires creating a new holdout.
+
+### Holdout creation requires Admin role
+
+Only users with the Admin role can create holdouts. Non-admin users with experiment editing permissions can add experiments to existing holdouts but cannot create new ones.
+

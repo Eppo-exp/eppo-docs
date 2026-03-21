@@ -81,6 +81,20 @@ However, particularly the t-test is susceptible to peeking. If this is a problem
 
 We want to stay away from the fully sequential paradigm when we struggle to find enough power in the first place. We cannot afford the cost in width of the confidence intervals for the added flexibility. Furthermore, it is unlikely we would be able to stop the experiment early anyway.
 
+## Safely ramping traffic
+
+When launching a new experiment, it's common to start with a small percentage of traffic and gradually increase it. There are two ways to do this in Eppo, and it's important to understand the difference:
+
+### Adjusting traffic exposure (safe)
+
+Changing the **traffic exposure** percentage (the share of eligible subjects enrolled in the experiment) is the safe way to ramp up. Subjects not enrolled simply receive the default experience and are excluded from analysis. Increasing exposure from, say, 10% to 50% adds new subjects to the experiment without affecting the assignments of subjects already enrolled. Their variant assignments remain stable because the hash-based bucketing is deterministic.
+
+### Changing variant weights (invalidates the experiment)
+
+Changing the **variant split** (e.g., moving from 50/50 to 80/20 between treatment and control) mid-experiment is a different operation and should be avoided. It can cause subjects to switch between variants, which introduces mixed assignments and undermines the validity of your results. Eppo removes mixed-assignment subjects from the analysis automatically, but this reduces your effective sample size and can bias the remaining population.
+
+If you need to shift variant weights after the experiment has started, the recommended approach is to end the current experiment and start a new one with the desired split.
+
 ## Conclusion
 
 In certain situations, we really need to make the most out of a limited sample size. In this case, remember that it is all about optimizing the signal-to-noise ratio. First and foremost, we should make sure we choose our metrics carefully. With winsorization, CUPED++, and a choice of statistical methodology, Eppo helps you make the most out of our data.

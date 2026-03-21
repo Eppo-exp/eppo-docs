@@ -19,6 +19,17 @@ The object passed into the assignment logger function contains the following fie
 | `featureFlag` (string)    | An Eppo feature flag key                                                                                                 | "recommendation-algo"               |
 | `allocation` (string)     | An Eppo allocation key                                                                                                   | "allocation-17"                     |
 
+:::caution Required fields — omitting these causes silent data loss
+The `experiment`, `subject`, `variation`, and `timestamp` fields are all required for Eppo to correctly join assignments to your experiment analysis. In particular:
+
+- **`experiment`**: If this field is missing or empty, the assignment row will not match any experiment in Eppo and will be silently ignored. This is the most common cause of "no assignment data" when the SDK is otherwise working correctly.
+- **`subject`**: Must match the entity identifier used in your Fact SQL. A mismatch (e.g., logging a cookie ID but defining assignments on a user ID) produces zero metric joins.
+- **`variation`**: Required to determine which variant the subject was assigned to.
+- **`timestamp`**: Required to scope the assignment to the experiment's analysis window.
+
+The `featureFlag` and `allocation` fields are optional but recommended for debugging.
+:::
+
 Eppo expects that the logger function will take this object and write data back to your warehouse in a format that roughly matches the table below. The specific column names do not matter, but these columns are needed to later [define assignments](/data-management/definitions/assignment-sql.md) in your warehouse.
 
 | experiment                          | subject | variation | timestamp                  | subject_attributes    |
