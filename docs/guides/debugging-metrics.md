@@ -72,3 +72,19 @@ Clicking on the diagnostic will open a sidebar with detailed information and tro
 The diagnostics window will contain event volume information if it is available, and SQL snippets for the metric source and the diagnostic query can be copied and executed against your warehouse to help investigate.
 
 The diagnostics query represents the code which was executed against the warehouse to test if the diagnostic should pass or fail. It uses common table expressions (CTEs) to break the problem into chunks which can be tweaked to help you investigate the problem.
+
+## When Diagnostics isn't enough: Run Log
+
+If the Diagnostics tab and Fact SQL inspection don't reveal the issue, the **Run Log** is the next place to look. The Run Log shows every pipeline execution for an experiment, including individual task statuses, durations, and errors.
+
+To access the Run Log, navigate to your experiment and click on the **Run Log** tab.
+
+The Run Log is especially useful for:
+
+- **Diagnosing "Update failed" errors** when Diagnostics shows all checks as passing — the Run Log helps you see the query that failed in the context of its pipeline.
+- **Identifying intermittent failures** such as warehouse timeouts, permission errors, or transient connectivity issues that don't surface in Diagnostics.
+- **Verifying that a fix worked** by confirming subsequent runs completed successfully after a configuration change.
+
+:::tip
+Some pipeline steps may show as `WAITING_FOR_UPSTREAM` or `UPSTREAM_FAILED` if a prerequisite step has not yet completed or has failed. If you see tasks stuck in these states, check the upstream tasks in the same run for errors.
+:::

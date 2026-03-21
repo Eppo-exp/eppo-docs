@@ -123,4 +123,8 @@ When the large experiment shifts the baseline significantly, the smaller experim
 
 4. **When shipping both, think in absolute terms.** If you plan to roll out both experiments to 100% of users, neither relative-lift perspective captures the full picture. Work with your data team to measure the combined outcome directly and compare it against the sum of the individual effects.
 
+:::info Interaction effects are only available for Simple metrics
+Interaction effect analysis is currently limited to **Simple** metric types (sum, count, unique entities, threshold). Ratio metrics and funnel metrics are not supported. If you need to check for interactions on a ratio metric, consider adding the numerator and denominator as separate Simple metrics to your experiment.
+:::
+
 For background on how Eppo detects and surfaces interaction effects, see [Interaction Detection](/statistics/interaction-detection).

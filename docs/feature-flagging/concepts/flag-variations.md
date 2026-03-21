@@ -48,3 +48,7 @@ You can write an empty array as `{}` if there is no property value present for a
 JSON object and array flags have a default size limit of 250KB, which can be increased if your team needs more.
 
 Eppo will show an error message in the UI if a variation value does not validate as proper JSON.
+
+:::caution Integer values in JSON may be returned as floating-point numbers
+Due to how JSON is serialized and deserialized, integer values in JSON variations (e.g., `{"count": 5}`) may be returned as floating-point numbers (e.g., `5.0`) by some SDK language runtimes. If your application uses strict type checking or integer comparison, this can cause silent breakage. To avoid this, either use string values and parse them on the client side, or ensure your application handles both integer and floating-point representations.
+:::

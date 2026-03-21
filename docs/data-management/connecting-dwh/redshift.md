@@ -169,3 +169,14 @@ Now that you have a proper User created for Eppo with adequate privileges, you c
 ### Updating Credentials
 
 Credentials can be updated at any time within the Admin panel of the app.
+
+### Rotating service accounts
+
+When switching to a new service account or database user:
+
+1. **Grant the new user the same permissions** as the existing one — read access to all schemas and tables referenced in your definitions, plus write access to the `eppo_output` schema.
+2. **Update the connection** in the Eppo Admin panel and click "Test Connection" to verify.
+3. **Trigger a test refresh** on one experiment to confirm the pipeline runs end-to-end.
+4. **Revoke old credentials** only after verifying the new account works.
+
+If you see `Object does not exist or not authorized` errors after switching, the most common cause is missing grants on the new user.
