@@ -36,6 +36,10 @@ Furthermore, when hovering over a progress bar, additional information about the
 
 **Note:** We compute the days remaining using a linear interpolation. This interpolation does not take into account that gathering data usually slows down during an experiment, and so the estimate may be optimistic, especially in the early days of an experiment.
 
+:::info Progress bar reflects CUPED++ but the Sample Size Calculator does not
+The progress bar updates using the actual precision of your running experiment, which includes variance reduction from [CUPED++](/statistics/cuped) if enabled. The [Sample Size Calculator](/statistics/sample-size-calculator/usage), however, does not factor in CUPED++. This means the Sample Size Calculator may predict a longer runtime than is actually needed — experiments with CUPED++ enabled often reach 100% progress significantly earlier than pre-experiment estimates suggest.
+:::
+
 ## How to use the progress bar
 
 Traditionally, when using a fixed sample test, we decide up front how long the experiment ought to run and cannot interpret results until we have finished gathering all data. However, the sequential testing approach we use allows for flexibility in deciding when to stop an experiment. Here's some advice on how to get the most out of the progress bar.
@@ -62,7 +66,15 @@ If, at the end of the experiment, the progress bar has not filled up, it might i
 When using either the sequential confidence intervals, or Bayesian methodology, the above still applies.
 But with both of these there is another option: both of these methods[^bayesian-peeking] are always-valid and hence you can confidently stop an experiment any time.
 
-Whenever we detect that a primary metric of one of the variants is statistically significant (the confidence/credible interval does not contain 0%), we mark the experiment is **early stopping eligible\*** and hence **ready for review**. Of course, you might still want to run the experiment for longer, e.g. to obtain more data on secondary metrics. In the following example, the precision target is set to 2%, which has not been reached yet, but the experiment is still eligible for early stopping as we see a statistically significant lift and are using sequential analysis:
+Whenever we detect that a primary metric of one of the variants is statistically significant (the confidence/credible interval does not contain 0%), we mark the experiment as **early stopping eligible\*** and hence **ready for review**. Of course, you might still want to run the experiment for longer, e.g. to obtain more data on secondary metrics.
+
+Specifically, an experiment becomes "ready for review" when **all three** of the following conditions are met:
+
+1. The confidence interval for a primary metric excludes zero (statistical significance).
+2. The minimum sample size requirement is met (if configured).
+3. The minimum experiment runtime is met (if configured).
+
+If any of these conditions is not yet satisfied, the experiment will remain in the "running" state even if one of the other conditions has been met. In the following example, the precision target is set to 2%, which has not been reached yet, but the experiment is still eligible for early stopping as we see a statistically significant lift and are using sequential analysis:
 
 ![Progress bar popover for early stopping](/img/interpreting-experiments/progress-bar-early-stopping.png)
 

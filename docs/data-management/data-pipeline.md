@@ -24,11 +24,23 @@ Note that the y axis shows the compute time accrued by that task type. That is, 
 
 ### Incremental refreshes
 
-Eppo's scheduled jobs will run an incremental refresh that only scans recent data. By default, this lookback window will include data starting 48 hours before the last successful run (to change this time window, reach out to your Eppo contact or email support@geteppo.com). New metrics and metrics/facts with an updated definition will automatically be backfilled from the start of the experiment. Further, if a job fails on a given day, the next scheduled job will automatically go back and re-run metrics for that day.
+Eppo's scheduled jobs will run an incremental refresh that only scans recent data. By default, this lookback window will include data starting 24 hours before the last successful run (to change this time window, reach out to your Eppo contact or email support@geteppo.com). New metrics and metrics/facts with an updated definition will automatically be backfilled from the start of the experiment. Further, if a job fails on a given day, the next scheduled job will automatically go back and re-run metrics for that day.
 
 You can also trigger a refresh in the UI by clicking "refresh experiment results" on the metric scorecard. This will compute new metrics from scratch and update existing metrics based on the incremental logic described above. If you'd instead like to force a full refresh and recompute all metrics from the start of the experiment, click "update now" under "results last updated".
 
 ![Data pipeline chart](/img/data-management/pipeline/refresh.png)
+
+### When do I need a full refresh or backfill?
+
+Not every data issue requires a full backfill. Use this decision tree to determine the right action:
+
+- **Eppo's pipeline failed (e.g., warehouse timeout, permission error) but your underlying data is correct:** You generally do **not** need a backfill. The incremental lookback window (default 24 hours) will automatically re-process the missed period on the next successful run. Verify the next scheduled run completes successfully.
+
+- **Your upstream data was wrong and has now been corrected (e.g., a broken ETL was fixed, late-arriving data has landed):** You likely **do** need a full refresh to recompute metrics from the affected date. Trigger a full refresh from the experiment's results page ("update now" under "results last updated"), or use the API: `POST /api/v1/experiment-results/update/{experiment_id}`. Both endpoints accept a `lookback_date` query parameter (ISO 8601 format, e.g. `?lookback_date=2025-06-01T00:00:00Z`) to recompute results starting from a specific date instead of reprocessing the entire experiment. You can also pass `full_refresh=true` to force a non-incremental refresh.
+
+- **You changed a metric definition or Fact SQL:** New and updated metric definitions are automatically backfilled from the start of the experiment on the next pipeline run (scheduled, triggered via the API, or triggered manually from the UI). No manual action is needed.
+
+- **You're unsure whether data has been corrected upstream:** Before triggering a full refresh, confirm with your data team that the source tables now contain the correct data for the affected period. A full refresh against still-broken data will not help.
 
 
 
@@ -90,6 +102,14 @@ As we’ve detailed, Eppo doesn’t export individual data from your warehouse. 
 * **Caching results**: We copy and cache overall results (latest incremental totals, metric patterns) to make our interface snappy. This is any total that you can see on our service: total number of assignments, total number of conversions, total amounts. For ratios, we store the numerator and denominator (for incrementality).
 
 If you have any question about our privacy practices, please reach out.
+
+### Intermediate tables and views
+
+Eppo creates intermediate tables and views in a dedicated schema (typically `EPPO_OUTPUT`) in your warehouse. Over time — especially in long-running workspaces with many experiments — these can accumulate into thousands of objects. This is expected behavior and does not affect experiment results.
+
+To manage this, Eppo provides an **automatic warehouse table cleanup** setting. Navigate to **Admin → Pipeline Update Schedules** and enable **"Automatically clean up old warehouse tables"**. You configure a retention period (e.g., 90 days) — Eppo will then drop any `EPPO_OUTPUT` tables that haven't been updated within that window. The cleanup runs on the 1st of every month. By default, tables used by Explore charts and the Sample Size Calculator are preserved; you can opt in to cleaning those up as well with separate toggles.
+
+Do not manually drop tables from the `EPPO_OUTPUT` schema — active experiments may depend on them. Use the built-in cleanup automation instead, which only removes tables outside the retention window.
 
 ## Clustered Analysis Pipeline
 

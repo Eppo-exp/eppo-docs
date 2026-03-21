@@ -76,3 +76,14 @@ Now that you have a proper Service Account created for Eppo with adequate privil
 ### Updating Credentials
 
 Credentials can be updated at any time within the Admin panel of the app.
+
+### Rotating service accounts
+
+When switching to a new service account:
+
+1. **Grant the new service account the same IAM roles** as the existing one — at minimum, BigQuery Data Viewer on the datasets referenced in your definitions, plus BigQuery Data Editor on the `eppo_output` dataset.
+2. **Upload the new service account key** in the Eppo Admin panel and click "Test Connection" to verify.
+3. **Trigger a test refresh** on one experiment to confirm the pipeline runs end-to-end.
+4. **Revoke the old service account key** only after verifying the new one works.
+
+If you see permission errors after switching, the most common cause is missing IAM grants on the new service account.

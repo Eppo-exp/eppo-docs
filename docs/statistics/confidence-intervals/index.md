@@ -62,6 +62,10 @@ For any metric where you have elected to use
 to handle outliers, the metric totals displayed in the tooltip when hovering
 over the lift are the _winsorized_ totals, not raw values.
 
+Eppo uses **truncation-based winsorization** (also known as "clipping"): values beyond the chosen percentile threshold are capped to that threshold value, not removed. This preserves the sample size while reducing the influence of extreme outliers.
+
+Note that the [diagnostic queries](/experiment-analysis/diagnostics#understanding-diagnostic-queries) shown in the Diagnostics tab do **not** apply winsorization, so running them in your warehouse will produce different totals than the experiment results page.
+
 :::
 
 The end result of these more sophisticated methods is that we show

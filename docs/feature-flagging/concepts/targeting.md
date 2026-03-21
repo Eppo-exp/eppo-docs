@@ -32,6 +32,9 @@ You can target individual subjects by matching with the property `id`.
 
 The list of IDs when using `is one of` or `not one of` is limited to 50 values.
 
+## Known limitations
+
+- **No array-type attribute support.** Targeting rules evaluate scalar values only. If a subject has an array-valued attribute (e.g., a list of tags), the rule will not match individual elements. Pass the relevant value as a scalar instead.
 
 ## Special case: Semantic Versioning
 

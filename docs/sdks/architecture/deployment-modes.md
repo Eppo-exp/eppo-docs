@@ -290,3 +290,13 @@ Instead, initialize once at the start of the application lifecycle and use the `
 ### Initializing from CDN in a serverless function
 
 Similarly, make sure to follow [the recommendations above](#local-flag-evaluation-initialized-with-pre-fetched-configurations) for serverless architectures. If you instead make a request to Eppo's CDN each time the serverless function is called, you'll introduce unnecessary latency and risk breaching Eppo's CDN limits.
+
+## CDN resilience and caching behavior
+
+Eppo's CDN serves flag configurations with `stale-while-revalidate` caching headers, which means SDKs typically receive a cached response even if the origin is temporarily slow. However, there is an important edge case:
+
+:::info 429 (rate limit) responses are not covered by stale-if-error
+The CDN's `stale-if-error` directive covers 5xx server errors — if the origin returns a 500, the CDN will serve a stale cached copy. However, **429 (Too Many Requests) responses are not covered** by `stale-if-error`. If your application sends too many requests to the CDN (e.g., by re-initializing the SDK on every function invocation), the CDN will return a 429 directly to your application and the SDK will fail to load configuration.
+
+To avoid this, ensure you follow the initialization patterns above and do not make excessive CDN requests.
+:::

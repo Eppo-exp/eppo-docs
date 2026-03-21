@@ -16,4 +16,10 @@ If your rollout plan would include additional users from the same audience that 
 
 :::
 
-Global lift and coverage are currently only available for **sum** and **count** aggregation types. For details on how Global Lift is calculated, see [the Statistics section](/statistics/global-lift).
+Global lift and coverage are available for **sum**, **count**, and **unique entity** (count distinct) aggregation types.
+
+:::info Unique entity metrics and non-additivity
+Unique entity (count distinct) metrics are **non-additive**: a user who converts in both the experiment population and the ineligible population is counted once in the global total, not twice. This could make the extrapolation used in the Global Lift calculation invalid. If you are comfortable making that assumption, Eppo support can activate that option for you.
+:::
+
+For details on how Global Lift is calculated, see [the Statistics section](/statistics/global-lift).

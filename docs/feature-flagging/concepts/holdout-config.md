@@ -102,3 +102,13 @@ class MyAssignmentLogger(AssignmentLogger):
 
 > **Note:** Some SDK implementations may nest the holdout information within an `extraLogging` field. If you don't see `holdoutKey` and `holdoutVariation` at the top level of the event, check for them in `event.extraLogging.holdoutKey` and `event.extraLogging.holdoutVariation`.
 
+## Limitations
+
+### Archived holdouts and allocation space
+
+When a holdout is archived, its hash-space band is not immediately freed. Eppo keeps a buffer of the two most recently archived holdouts to avoid reassigning subjects to a new holdout too quickly. Older archived holdout bands are gradually reclaimed when new holdouts are created. If you run into allocation space issues after archiving many holdouts, contact Eppo support.
+
+### Start date cannot be changed after creation
+
+The start date of a holdout is immutable once created. The end date can be extended or shortened after creation. Plan your holdout start date carefully, as changing it requires creating a new holdout.
+

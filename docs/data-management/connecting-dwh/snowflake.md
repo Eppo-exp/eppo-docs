@@ -148,3 +148,14 @@ MIIFJDBWBg...
 ### Updating Credentials
 
 Credentials can be updated at any time within the Admin panel of the app.
+
+### Rotating service accounts
+
+When switching to a new service account (e.g., rotating credentials or migrating to a different account):
+
+1. **Grant the new service account the same permissions** as the existing one. At minimum, the new account needs read access to all schemas and tables referenced in your Fact SQL and Assignment SQL definitions, plus write access to the `EPPO_OUTPUT` schema (or equivalent).
+2. **Update the connection** in the Eppo Admin panel with the new credentials and click "Test Connection" to verify.
+3. **Trigger a test refresh** on one experiment to confirm the pipeline runs successfully end-to-end with the new account.
+4. **Revoke the old credentials** only after verifying the new account works correctly.
+
+If you see `Object does not exist or not authorized` errors after switching, the most common cause is missing grants on the new service account. Mirror all grants from the old account before removing it.

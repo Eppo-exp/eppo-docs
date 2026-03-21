@@ -23,6 +23,10 @@ Navigate to the Configuration section and click the "Create" button and select "
 ### Parameters
 Parameters are attributes that are changed in different variations you plan to test within the layer. They are also configured in code and can accept the values you provide.
 
+:::caution Parameters cannot be added after an experiment starts
+Once an experiment is running within a layer, the layer's parameter list is locked. You cannot add new parameters to the layer until all experiments in it have concluded. Plan your parameter set before launching any experiments in the layer.
+:::
+
 ![Parameter example](/img/feature-flagging/parameter-example.jpg)
 
 For example, if you want to test the color of a button on the page, you might create a parameter called `button_color` and set it with a default color value. When you create variations, you'll be able to specify a different value for color and test that variation in an experiment.
