@@ -24,7 +24,7 @@ Note that the y axis shows the compute time accrued by that task type. That is, 
 
 ### Incremental refreshes
 
-Eppo's scheduled jobs will run an incremental refresh that only scans recent data. By default, this lookback window will include data starting 48 hours before the last successful run (to change this time window, reach out to your Eppo contact or email support@geteppo.com). New metrics and metrics/facts with an updated definition will automatically be backfilled from the start of the experiment. Further, if a job fails on a given day, the next scheduled job will automatically go back and re-run metrics for that day.
+Eppo's scheduled jobs will run an incremental refresh that only scans recent data. By default, this lookback window will include data starting 24 hours before the last successful run (to change this time window, reach out to your Eppo contact or email support@geteppo.com). New metrics and metrics/facts with an updated definition will automatically be backfilled from the start of the experiment. Further, if a job fails on a given day, the next scheduled job will automatically go back and re-run metrics for that day.
 
 You can also trigger a refresh in the UI by clicking "refresh experiment results" on the metric scorecard. This will compute new metrics from scratch and update existing metrics based on the incremental logic described above. If you'd instead like to force a full refresh and recompute all metrics from the start of the experiment, click "update now" under "results last updated".
 
@@ -34,7 +34,7 @@ You can also trigger a refresh in the UI by clicking "refresh experiment results
 
 Not every data issue requires a full backfill. Use this decision tree to determine the right action:
 
-- **Eppo's pipeline failed (e.g., warehouse timeout, permission error) but your underlying data is correct:** You generally do **not** need a backfill. The incremental lookback window (default 48 hours) will automatically re-process the missed period on the next successful run. Verify the next scheduled run completes successfully.
+- **Eppo's pipeline failed (e.g., warehouse timeout, permission error) but your underlying data is correct:** You generally do **not** need a backfill. The incremental lookback window (default 24 hours) will automatically re-process the missed period on the next successful run. Verify the next scheduled run completes successfully.
 
 - **Your upstream data was wrong and has now been corrected (e.g., a broken ETL was fixed, late-arriving data has landed):** You likely **do** need a full refresh to recompute metrics from the affected date. Trigger a full refresh from the experiment's results page ("update now" under "results last updated"), or use the API: `POST /api/v1/experiment-results/update/{experiment_id}`.
 
