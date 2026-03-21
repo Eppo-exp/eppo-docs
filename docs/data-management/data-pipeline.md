@@ -36,7 +36,7 @@ Not every data issue requires a full backfill. Use this decision tree to determi
 
 - **Eppo's pipeline failed (e.g., warehouse timeout, permission error) but your underlying data is correct:** You generally do **not** need a backfill. The incremental lookback window (default 24 hours) will automatically re-process the missed period on the next successful run. Verify the next scheduled run completes successfully.
 
-- **Your upstream data was wrong and has now been corrected (e.g., a broken ETL was fixed, late-arriving data has landed):** You likely **do** need a full refresh to recompute metrics from the affected date. Trigger a full refresh from the experiment's results page ("update now" under "results last updated"), or use the API: `POST /api/v1/experiment-results/update/{experiment_id}`.
+- **Your upstream data was wrong and has now been corrected (e.g., a broken ETL was fixed, late-arriving data has landed):** You likely **do** need a full refresh to recompute metrics from the affected date. Trigger a full refresh from the experiment's results page ("update now" under "results last updated"), or use the API: `POST /api/v1/experiment-results/update/{experiment_id}`. Both endpoints accept a `lookback_date` query parameter (ISO 8601 format, e.g. `?lookback_date=2025-06-01T00:00:00Z`) to recompute results starting from a specific date instead of reprocessing the entire experiment. You can also pass `full_refresh=true` to force a non-incremental refresh.
 
 - **You changed a metric definition or Fact SQL:** New and updated metric definitions are automatically backfilled from the start of the experiment on the next pipeline run. No manual action is needed.
 
