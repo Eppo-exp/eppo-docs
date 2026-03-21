@@ -77,7 +77,7 @@ The diagnostics query represents the code which was executed against the warehou
 
 If the Diagnostics tab and Fact SQL inspection don't reveal the issue, the **Run Log** is the next place to look. The Run Log shows every pipeline execution for an experiment, including individual task statuses, durations, and errors.
 
-To access the Run Log, navigate to your experiment and click on the **Run Log** tab. Sort by `startedAt` in ascending order to trace the full execution history chronologically — this makes it easier to spot when a specific step first started failing and correlate it with configuration or data changes.
+To access the Run Log, navigate to your experiment and click on the **Run Log** tab.
 
 The Run Log is especially useful for:
 
