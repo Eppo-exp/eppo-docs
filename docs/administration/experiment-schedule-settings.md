@@ -9,10 +9,6 @@ Go to Admin > Settings > Experiment Schedule Settings to set the default schedul
 Custom schedules can be created to fit different experiment needs. Schedules created here can be used for individual experiments as needed. 
 ![Custom Experiment Update Schedule](/img/administration/custom-exp-update-schedule.png)
 
-:::info Schedule limitations
-Schedules run at fixed intervals (e.g., every 6 hours, every 12 hours, or daily). Per-day-of-week schedules (e.g., "only on weekdays") are not currently supported. To reassign an experiment to a different schedule, navigate to the experiment's **Metrics** tab and use the three-dot menu.
-:::
-
 ## Automations
 ### Auto-set an End Date for Indefinite Experiments
 With this enabled, Eppo will automatically set an end date for experiments without a defined end date for the configured time period. You may want to enable this to prevent experiments from running indefinitely and incurring data warehouse costs. This does not apply to Eppo randomized experiments.

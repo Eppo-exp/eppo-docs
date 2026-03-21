@@ -44,10 +44,6 @@ Not every data issue requires a full backfill. Use this decision tree to determi
 
 
 
-### Schedule limitations
-
-Experiment refresh schedules run at fixed intervals (e.g., every 6 hours, every 12 hours, or daily). Per-day-of-week schedules (e.g., "only on weekdays") are not currently supported. To change an experiment's schedule, navigate to the experiment's **Metrics** tab and use the three-dot menu to reassign it to a different schedule.
-
 ### Pipeline steps
 
 #### Assignment summarization
