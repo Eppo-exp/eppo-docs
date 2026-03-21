@@ -9,7 +9,7 @@ Eppo provides the ability to filter an assignment source by an [Entry Point](/st
 :::caution Entry points change when exposure starts, not just who is included
 When you add an entry point filter, the **entry point timestamp replaces the assignment timestamp** as the start of each subject's analysis window. This means metric events are measured relative to when the subject triggered the entry point, not when they were originally assigned.
 
-If you only want to filter which subjects are included (without shifting the analysis window), use an Assignment SQL filter or a targeting rule instead.
+If you only want to filter which subjects are included (without shifting the analysis window), use an Assignment SQL filter or a targeting rule instead, or make sure the entry point and the assignment timestamps match.
 
 The entry point entity must match the assignment entity for the join to work correctly.
 :::
