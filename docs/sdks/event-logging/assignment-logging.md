@@ -27,7 +27,7 @@ The `experiment`, `subject`, `variation`, and `timestamp` fields are all require
 - **`variation`**: Required to determine which variant the subject was assigned to.
 - **`timestamp`**: Required to scope the assignment to the experiment's analysis window.
 
-The `featureFlag` and `allocation` fields are optional but recommended for debugging.
+The `featureFlag` and `allocation` fields are optional but recommended for debugging. When using Eppo's feature flags, both values are included in the `experiment` field automatically.
 :::
 
 Eppo expects that the logger function will take this object and write data back to your warehouse in a format that roughly matches the table below. The specific column names do not matter, but these columns are needed to later [define assignments](/data-management/definitions/assignment-sql.md) in your warehouse.
