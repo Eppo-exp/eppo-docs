@@ -24,7 +24,7 @@ Note that the y axis shows the compute time accrued by that task type. That is, 
 
 ### Incremental refreshes
 
-Eppo's scheduled jobs will run an incremental refresh that only scans recent data. By default, this lookback window will include data starting 24 hours before the last successful run (to change this time window, reach out to your Eppo contact or email support@geteppo.com). New metrics and metrics/facts with an updated definition will automatically be backfilled from the start of the experiment. Further, if a job fails on a given day, the next scheduled job will automatically go back and re-run metrics for that day.
+Eppo's scheduled jobs will run an incremental refresh that only scans recent data. By default, this lookback window covers the **2 days** before the last successful run, snapped to the start of day (to change this time window, reach out to your Eppo contact or email support@geteppo.com). New metrics and metrics/facts with an updated definition will automatically be backfilled from the start of the experiment. Further, if a job fails on a given day, the next scheduled job will automatically go back and re-run metrics for that day.
 
 You can also trigger a refresh in the UI by clicking "refresh experiment results" on the metric scorecard. This will compute new metrics from scratch and update existing metrics based on the incremental logic described above. If you'd instead like to force a full refresh and recompute all metrics from the start of the experiment, click "update now" under "results last updated".
 
@@ -34,7 +34,7 @@ You can also trigger a refresh in the UI by clicking "refresh experiment results
 
 Not every data issue requires a full backfill. Use this decision tree to determine the right action:
 
-- **Eppo's pipeline failed (e.g., warehouse timeout, permission error) but your underlying data is correct:** You generally do **not** need a backfill. The incremental lookback window (default 24 hours) will automatically re-process the missed period on the next successful run. Verify the next scheduled run completes successfully.
+- **Eppo's pipeline failed (e.g., warehouse timeout, permission error) but your underlying data is correct:** You generally do **not** need a backfill. The incremental lookback window (default 2 days) will automatically re-process the missed period on the next successful run. Verify the next scheduled run completes successfully.
 
 - **Your upstream data was wrong and has now been corrected (e.g., a broken ETL was fixed, late-arriving data has landed):** You likely **do** need a full refresh to recompute metrics from the affected date. Trigger a full refresh from the experiment's results page ("update now" under "results last updated"), or use the API: `POST /api/v1/experiment-results/update/{experiment_id}`. Both endpoints accept a `lookback_date` query parameter (ISO 8601 format, e.g. `?lookback_date=2025-06-01T00:00:00Z`) to recompute results starting from a specific date instead of reprocessing the entire experiment. You can also pass `full_refresh=true` to force a non-incremental refresh.
 
@@ -107,7 +107,7 @@ If you have any question about our privacy practices, please reach out.
 
 Eppo creates intermediate tables and views in a dedicated schema (typically `EPPO_OUTPUT`) in your warehouse. Over time — especially in long-running workspaces with many experiments — these can accumulate into thousands of objects. This is expected behavior and does not affect experiment results.
 
-To manage this, Eppo provides an **automatic warehouse table cleanup** setting. Navigate to **Admin → Pipeline Update Schedules** and enable **"Automatically clean up old warehouse tables"**. You configure a retention period (e.g., 90 days) — Eppo will then drop any `EPPO_OUTPUT` tables that haven't been updated within that window. The cleanup runs on the 1st of every month. By default, tables used by Explore charts and the Sample Size Calculator are preserved; you can opt in to cleaning those up as well with separate toggles.
+To manage this, Eppo provides an **automatic warehouse table cleanup** setting. Navigate to **Admin → Settings → Experiment Schedule Settings** and enable **"Automatically clean up old warehouse tables"**. You configure a retention period (e.g., 90 days) — Eppo will then drop any `EPPO_OUTPUT` tables that haven't been updated within that window. The cleanup runs on the 1st of every month. By default, tables used by Explore charts and the Sample Size Calculator are preserved; you can opt in to cleaning those up as well with separate toggles.
 
 Do not manually drop tables from the `EPPO_OUTPUT` schema — active experiments may depend on them. Use the built-in cleanup automation instead, which only removes tables outside the retention window.
 

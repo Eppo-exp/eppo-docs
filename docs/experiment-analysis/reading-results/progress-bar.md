@@ -66,15 +66,15 @@ If, at the end of the experiment, the progress bar has not filled up, it might i
 When using either the sequential confidence intervals, or Bayesian methodology, the above still applies.
 But with both of these there is another option: both of these methods[^bayesian-peeking] are always-valid and hence you can confidently stop an experiment any time.
 
-Whenever we detect that a primary metric of one of the variants is statistically significant (the confidence/credible interval does not contain 0%), we mark the experiment as **early stopping eligible\*** and hence **ready for review**. Of course, you might still want to run the experiment for longer, e.g. to obtain more data on secondary metrics.
+An experiment becomes "ready for review" through any **one** of these independent paths:
 
-Specifically, an experiment becomes "ready for review" when **all three** of the following conditions are met:
+1. **End date reached** — the experiment's end date has passed and the pipeline has completed (status moves to wrap-up).
+2. **Progress reaches 100%** — the precision target has been met (Sequential / Bayesian / Hybrid methods only).
+3. **Early stopping eligible** — the confidence/credible interval for a primary metric excludes zero, i.e., a statistically significant result is detected (Sequential / Bayesian / Hybrid methods only).
 
-1. The confidence interval for a primary metric excludes zero (statistical significance).
-2. The minimum sample size requirement is met (if configured).
-3. The minimum experiment runtime is met (if configured).
+If **minimum requirements** are configured (minimum sample size and/or minimum experiment runtime), they act as a gate: none of the paths above will trigger "ready for review" until those minimums are satisfied. Additionally, if a **traffic imbalance** (SRM) is detected, the experiment will not be marked ready for review regardless of the other conditions.
 
-If any of these conditions is not yet satisfied, the experiment will remain in the "running" state even if one of the other conditions has been met. In the following example, the precision target is set to 2%, which has not been reached yet, but the experiment is still eligible for early stopping as we see a statistically significant lift and are using sequential analysis:
+In the following example, the precision target is set to 2%, which has not been reached yet, but the experiment is still eligible for early stopping as we see a statistically significant lift and are using sequential analysis:
 
 ![Progress bar popover for early stopping](/img/interpreting-experiments/progress-bar-early-stopping.png)
 
