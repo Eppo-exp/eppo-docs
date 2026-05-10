@@ -29,6 +29,12 @@ Values used for the threshold:
 1,500 zeros, then 1, 2, 3, ..., 500
 ```
 
+The 1,500 zeros come from subjects with no matching Fact, subjects with NULL Facts, and subjects with zero revenue:
+
+```text
+300 + 400 + 800 = 1,500
+```
+
 Illustrative 95th percentile threshold: **400**
 
 Use this option when "no activity" is part of the distribution you want the threshold to reflect.
@@ -41,6 +47,12 @@ Values used for the threshold:
 
 ```text
 800 zeros, then 1, 2, 3, ..., 500
+```
+
+The 800 zeros come only from subjects whose observed revenue is actually zero. The 300 subjects with no matching Fact and the 400 subjects with NULL Facts are excluded:
+
+```text
+800
 ```
 
 Illustrative 95th percentile threshold: **435**
