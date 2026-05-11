@@ -21,41 +21,17 @@ If the upper winsorization threshold is the 95th percentile, each option uses a 
 
 ## All assigned subjects
 
-Use every assigned subject, including subjects without a matching Fact. In this example, the subjects with no observed revenue contribute zeros to the threshold calculation.
+Use every assigned subject, including subjects without a matching Fact. In this example, the subjects with no observed revenue contribute as many zeros to the threshold calculation; here, that’s 300 + 400 + 800 = 1,500 zeros from subjects with no matching Fact, subjects with NULL Facts, and subjects with zero revenue.
 
-Values used for the threshold:
-
-```text
-1,500 zeros, then 1, 2, 3, ..., 500
-```
-
-The 1,500 zeros come from subjects with no matching Fact, subjects with NULL Facts, and subjects with zero revenue:
-
-```text
-300 + 400 + 800 = 1,500
-```
-
-Illustrative 95th percentile threshold: **400**
+Values used for the threshold are therefore 1500 zeros and then 1, 2, 3, ..., 500. The 95th percentile of those 2,000 numbers is the 100th largest number or **400**.
 
 Use this option when "no activity" is part of the distribution you want the threshold to reflect.
 
 ## Subjects with non-null Facts
 
-Use subjects whose aggregated Fact value is non-null. Subjects without a matching Fact, or with only NULL Facts, are excluded from the threshold calculation.
+Use subjects whose aggregated Fact value is non-null. Subjects without a matching Fact, or with only NULL Facts, are excluded from the threshold calculation. This means that we will run winsorization on 800 from subjects whose observed revenue is actually zero, and then numbers 1, 2, 3, ..., 500. The 300 subjects with no matching Fact and the 400 subjects with NULL Facts are excluded:
 
-Values used for the threshold:
-
-```text
-800 zeros, then 1, 2, 3, ..., 500
-```
-
-The 800 zeros come only from subjects whose observed revenue is actually zero. The 300 subjects with no matching Fact and the 400 subjects with NULL Facts are excluded:
-
-```text
-800
-```
-
-Illustrative 95th percentile threshold: **435**
+The 95th percentile on those 1,300 subjects is **435**.
 
 Use this option when the threshold should be based only on subjects with observed metric data, while still keeping legitimate zero values.
 
@@ -63,13 +39,7 @@ Use this option when the threshold should be based only on subjects with observe
 
 Use only subjects whose aggregated metric value is greater than 0. Subjects with missing, NULL, or zero values are excluded from the threshold calculation.
 
-Values used for the threshold:
-
-```text
-1, 2, 3, ..., 500
-```
-
-Illustrative 95th percentile threshold: **475**
+The values used to set the threshold are the numbers 1, 2, 3, ..., 500. The 95th percentile threshold is **475**.
 
 Use this option when zero represents non-participation and you want the outlier threshold to be based only on subjects with positive activity.
 
@@ -77,4 +47,4 @@ Use this option when zero represents non-participation and you want the outlier 
 
 The setting changes the percentile threshold used for clipping. After Eppo finds the threshold, the metric still follows its normal null and missing-Fact handling in the experiment results.
 
-For example, if the chosen threshold is 400, subjects with values above 400 are clipped to 400. Subjects excluded from the threshold calculation are not automatically removed from the experiment analysis.
+For example, if the chosen threshold is 400, subjects with values above 400 are clipped to 400. Subjects excluded from the threshold calculation are not removed from the rest of the experiment analysis.
