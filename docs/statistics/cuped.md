@@ -85,16 +85,30 @@ CUPED can be turned on in the admin panel, and in the overview page of an experi
 - Pre-experiment data from _all_ [eligible metrics](/data-management/metrics/simple-metric#metric-aggregation-types) (sum, count, unique entities, and these aggregations for ratio metrics)
 - [Assignment properties](/data-management/definitions/properties#assignment-properties) from the AssignmentSQL used for this experiment. These are interpreted as categorical features. Currently, we include assignment properties that have 100 or fewer values.
 
-To avoid confusion, it is useful to keep in mind that the above refers to the input data. CUPED produces improved results across all metrics.
+To avoid confusion, it is useful to keep in mind that the above refers to the input data. CUPED produces improved results for eligible metrics in the experiment.
 
 **Does CUPED apply to all metrics?**
-Yes, our CUPED implementation works to improve the precision for any metric type (standard, ratio, funnel, percentile).
-However, not every metric is used as covariate, the pre-experiment totals used as input to CUPED:
-- Retention or conversion metrics, and more generally metrics filtered by timeframes are not selected as covariates;
-- Neither are metrics with subject filters, notably time-based metrics that users “age into”;
-- Nor are Threshold metrics.
+
+CUPED fits a separate regression for each eligible metric in the experiment. In that regression, metrics can play two roles:
+
+- **Covariates** are the predictor variables: pre-experiment metric totals and assignment properties. They help predict experiment outcomes and reduce variance.
+- **Outcome metrics** are the experiment metrics whose lift estimates CUPED adjusts.
+
+When we say a metric is "not selected as a covariate," we mean it is not used as a predictor in regressions for other metrics. That is separate from whether CUPED adjusts that metric's own results.
+
+Some metrics are skipped entirely by the CUPED pipeline. For these metrics, CUPED and non-CUPED results are identical:
+
+- Time-windowed metrics with ["only include in calculation after subject reaches end of time range"](/data-management/metrics/simple-metric#time-windows) enabled (metrics that subjects "age into")
+- [Percentile metrics](/data-management/metrics/percentile-metric)
+
+Other metrics can receive CUPED-adjusted results but are not used as covariates:
+
+- Retention or conversion metrics, and more generally metrics filtered by timeframes
+- Threshold metrics
+
 We might also exclude metrics based on definitions with large data volume, to avoid querying your data warehouse beyond reason.
-The only requirement for CUPED is that the experiment has eligible metrics and/or assignment properties configured (see previous question). If so, CUPED is applied across all metrics (even those that are not eligible as input to CUPED).
+
+The only requirement for CUPED to run is that the experiment has eligible metrics and/or assignment properties configured (see previous question). When it runs, it adjusts results for eligible outcome metrics using the available covariates.
 
 **Why do the point estimates between CUPED and non-CUPED look different?**
 CUPED and non-CUPED estimators are both unbiased (given proper randomization) of the same quantity, so we would expect estimates to be close.
