@@ -58,8 +58,8 @@ Numerators and denominators follow a similar schema, with some fields only being
 | `aggregation_timeframe_start_value` <br></br> (optional) | Timeframe units since assignment after which events are included. <br></br><br></br>**Constraint**: Cannot be used with `conversion` operations. Requires `aggregation_timeframe_unit` to be specified. | 2 |
 | `aggregation_timeframe_end_value` <br></br> (optional) | Timeframe units since assignment after which events are excluded. <br></br><br></br>**Constraint**: Cannot be used with `conversion` operations. Requires `aggregation_timeframe_unit` to be specified. | 7 |
 | `aggregation_timeframe_unit` <br></br> (optional) | The time unit to use: `minutes`, `hours`, `days`, or `weeks`. <br></br><br></br>**Constraint**: Required when any timeframe parameters are used. | `days` |
-| `winsorization_lower_percentile` <br></br> (optional) | Percentile at which to clip aggregated metrics. <br></br><br></br>**Constraint**: Only supported for `sum`, `count`, `last_value`, and `first_value` operations. | 0.001 |
-| `winsorization_upper_percentile` <br></br> (optional) | Percentile at which to clip aggregated metrics. <br></br><br></br>**Constraint**: Only supported for `sum`, `count`, `last_value`, and `first_value` operations. | 0.999 |
+| `winsorization_lower_percentile` <br></br> (optional) | Percentile at which to clip aggregated metrics. <br></br><br></br>**Constraint**: Only supported for `sum`, `count`, `count_distinct`, `last_value`, and `first_value` operations. | 0.001 |
+| `winsorization_upper_percentile` <br></br> (optional) | Percentile at which to clip aggregated metrics. <br></br><br></br>**Constraint**: Only supported for `sum`, `count`, `count_distinct`, `last_value`, and `first_value` operations. | 0.999 |
 | `filters` <br></br> (optional) | A list of filters to apply to metric, each containing a fact property, an operation (`equals` or `not_equals`), and a list of values | <pre><code>- fact_property: Source <br></br>  operation: equals <br></br>  values: <br></br>   - organic <br></br>   - search </code></pre>  |
 | `retention_threshold_days` <br></br> (optional, numerators only) | Number of days to use in retention calculation. <br></br><br></br>**Constraint**: Only used with `operation` = `retention`. Cannot be combined with other advanced aggregation parameters. | 7 |
 | `conversion_threshold_days` <br></br> (optional, numerators only) | Number of days to use in conversion calculation. <br></br><br></br>**Constraint**: Only used with `operation` = `conversion`. Cannot be combined with other advanced aggregation parameters or timeframe parameters. | 7 |
@@ -76,19 +76,19 @@ When defining certified metrics, there are several important constraints to be a
 
 Winsorization parameters (`winsorization_lower_percentile` and `winsorization_upper_percentile`) can **only** be used with the following aggregation operations:
 - `sum`
-- `count` 
+- `count`
+- `count_distinct`
 - `last_value`
 - `first_value`
 
 **Cannot be used with:**
-- `count_distinct`
 - `distinct_entity`
 - `threshold`
 - `retention` 
 - `conversion`
 
 :::warning
-Attempting to use winsorization with unsupported operations like `count_distinct` or `threshold` will result in a validation error.
+Attempting to use winsorization with unsupported operations like `threshold` or `conversion` will result in a validation error.
 :::
 
 ### Advanced Aggregation Parameter Constraints
@@ -141,12 +141,12 @@ For ratio metrics, denominator aggregations are limited to:
 
 Here are some examples of **invalid** configurations that will trigger validation errors:
 
-#### ❌ Invalid: Winsorization with count_distinct
+#### ❌ Invalid: Winsorization with threshold
 ```yaml
 numerator:
-  fact_name: User ID
-  operation: count_distinct
-  winsorization_lower_percentile: 0.01  # ERROR: Cannot winsorize count_distinct
+  fact_name: Revenue
+  operation: threshold
+  winsorization_lower_percentile: 0.01  # ERROR: Cannot winsorize threshold metrics
 ```
 
 #### ❌ Invalid: Threshold without threshold_metric_settings
