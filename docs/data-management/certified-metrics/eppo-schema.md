@@ -25,25 +25,32 @@ Certified metric files can define one or more [fact sources](/data-management/de
 | `timestamp_column` | The column that represents the time the fact occurred | `purchase_timestamp` |
 | `entities` | A list of [entities](/data-management/definitions/entities) in the table, each element containing the name of an existing entity created in the Eppo UI and the corresponding column | <pre><code>- entity_name: User <br></br>  column: user_id </code></pre> |
 | `facts` | A list of fact values in the table, their corresponding column, and optionally, a description and desired change (either `increase` or `decrease`) | <pre><code>- name: Purchase Revenue <br></br>  column: purchase_revenue <br></br>  description: ... <br></br>  desired_change: increase </code></pre> |
-| `properties` (optional) | An optional list of [fact properties](/data-management/definitions/properties#metric-properties) in the table, their corresponding column, and an optional description | <pre><code>- name: Purchase Type <br></br>  column: purchase_type <br></br>  description: ... </code></pre> |
+| `properties` (optional) | An optional list of [fact properties](/data-management/definitions/properties#metric-properties) in the table, their corresponding column, an optional description, and an optional `include_experiment_computation` flag | <pre><code>- name: Purchase Type <br></br>  column: purchase_type <br></br>  description: ... <br></br>  include_experiment_computation: true </code></pre> |
 | `reference_url` (optional) | An optional URL to link to in the Eppo UI | `https://github.com/<my_repo>` |
+| `partition_date` (optional) | A date column used to partition the fact source data, which can improve incremental refresh performance on partitioned warehouse tables | `event_date` |
+| `always_full_refresh` (optional) | If `true`, this fact source is always fully refreshed instead of incrementally updated (default is `false`) | `true` or `false` |
+
+The `include_experiment_computation` flag on a fact property controls whether that property is available for breaking out experiment results (default is `false`). See [fact properties](/data-management/definitions/properties#metric-properties) for more detail.
 
 ### Metrics
 
-Each certified metric yaml file can also define one or more metrics (either [simple](/data-management/metrics/simple-metric) or [ratio](/data-management/metrics/ratio-metric)). The metrics schema is shown below:
+Each certified metric yaml file can also define one or more metrics (either [simple](/data-management/metrics/simple-metric), [ratio](/data-management/metrics/ratio-metric), or [percentile](/data-management/metrics/percentile-metric)). The metrics schema is shown below:
 
 | Property |  Description | Example |
 | -------- |  ----------- | ------- |
 | `name` | A name for the metric to show in the Eppo UI. Note that this is the unique identifier for the metric used when syncing metrics | Purchase Revenue |
 | `description` <br></br>(optional) | An optional description for the metric | All non-subscription revenue | 
+| `type` <br></br> (optional) | The kind of metric to calculate, one of `simple`, `ratio`, or `percentile`. If not specified, the type is inferred from the aggregation objects provided (`numerator` only is simple, `numerator` + `denominator` is ratio, `percentile` is percentile). | `percentile` |
 | `entity` | The [entity](/data-management/definitions/entities) that the metric connects to | User | 
 | `numerator` | An aggregation object (see below) to specify how to compute the metric numerator | <pre><code>fact_name: Purchase Revenue <br></br>operation: sum </code></pre> | 
 | `denominator` <br></br> (optional)| An aggregation object (see below) that, if set, will specify the metric as a ratio | <pre><code>fact_name: Purchase Revenue <br></br>operation: count </code></pre>| 
+| `percentile` <br></br> (optional)| A percentile object (see below) that, if set, will specify the metric as a [percentile metric](/data-management/metrics/percentile-metric) | <pre><code>fact_name: Latency <br></br>percentile_value: 0.95 </code></pre>| 
 | `is_guardrail` <br></br> (optional)| Whether the metric should be analyzed for every experiment run on this entity (default is false) | `true` or `false`| 
 | `metric_display_style` <br></br> (optional) | How to display the metric, either `decimal` or `percent` (default is `decimal`) | `decimal`| 
 | `minimum_detectable_effect` <br></br> (optional)| The default [MDE](/statistics/sample-size-calculator/mde#what-is-a-minimum-detectable-effect-mde) for the metric. This is also called precision in the Eppo UI. | `0.02` | 
 | `reference_url` <br></br> (optional)| An optional URL to link to in the Eppo UI | `https://github.com/.../<my_metric>` | 
 | `guardrail_cutoff` <br></br> (optional)| A Guardrail cutoff value for a metric, as a decimal representing a percentage. If a metric is expected to increase, this value should be negative, to warn when the metric is decreasing by more than this value. If a metric is expected to decrease, this value should be positive, to warn when the metric is increasing by more than this value. | `-0.05` | 
+| `desired_change` <br></br> (optional)| The direction of change that is considered good for this metric, either `increase` or `decrease`. If not specified, the desired change is inferred from the facts the metric is based on. | `increase` | 
 
 ### Aggregations
 
@@ -54,12 +61,15 @@ Numerators and denominators follow a similar schema, with some fields only being
 | Property |  Description | Example |
 | -------- |  ----------- | ------- |
 | `fact_name` | The name of a fact as specified in `fact_source`* |  Purchase Revenue |
-| `operation` | The [aggregation method](/data-management/metrics/simple-metric#aggregation-methods) to use. <br></br><br></br>For numerator aggregations options are `sum, count, count_distinct, distinct_entity, threshold, conversion, retention`. <br></br><br></br>For denominator aggregations, valid options are `sum, count, count_distinct, distinct_entity` <br></br><br></br>**Note**: See [Constraints and Limitations](#constraints-and-limitations) for operation-specific parameter restrictions. | `sum` |
+| `operation` | The [aggregation method](/data-management/metrics/simple-metric#aggregation-methods) to use. <br></br><br></br>For numerator aggregations options are `sum, count, count_distinct, distinct_entity, threshold, conversion, retention, last_value, first_value`. <br></br><br></br>For denominator aggregations, valid options are `sum, count, count_distinct, distinct_entity, last_value, first_value`. <br></br><br></br>**Note**: See [Constraints and Limitations](#constraints-and-limitations) for operation-specific parameter restrictions. | `sum` |
 | `aggregation_timeframe_start_value` <br></br> (optional) | Timeframe units since assignment after which events are included. <br></br><br></br>**Constraint**: Cannot be used with `conversion` operations. Requires `aggregation_timeframe_unit` to be specified. | 2 |
 | `aggregation_timeframe_end_value` <br></br> (optional) | Timeframe units since assignment after which events are excluded. <br></br><br></br>**Constraint**: Cannot be used with `conversion` operations. Requires `aggregation_timeframe_unit` to be specified. | 7 |
-| `aggregation_timeframe_unit` <br></br> (optional) | The time unit to use: `minutes`, `hours`, `days`, or `weeks`. <br></br><br></br>**Constraint**: Required when any timeframe parameters are used. | `days` |
+| `aggregation_timeframe_unit` <br></br> (optional) | The time unit to use: `minutes`, `hours`, `days`, `weeks`, or `calendar_days`. <br></br><br></br>**Constraint**: Required when any timeframe parameters are used. | `days` |
 | `winsorization_lower_percentile` <br></br> (optional) | Percentile at which to clip aggregated metrics. <br></br><br></br>**Constraint**: Only supported for `sum`, `count`, `last_value`, and `first_value` operations. | 0.001 |
 | `winsorization_upper_percentile` <br></br> (optional) | Percentile at which to clip aggregated metrics. <br></br><br></br>**Constraint**: Only supported for `sum`, `count`, `last_value`, and `first_value` operations. | 0.999 |
+| `winsor_lower_fixed_value` <br></br> (optional) | A fixed value at which to clip aggregated metrics on the lower end, used instead of `winsorization_lower_percentile`. | 0 |
+| `winsor_upper_fixed_value` <br></br> (optional) | A fixed value at which to clip aggregated metrics on the upper end, used instead of `winsorization_upper_percentile`. | 1000 |
+| `enable_aging_subject_filter` <br></br> (optional) | If `true`, subjects (entities) are excluded from the metric until they have been enrolled long enough to complete the metric's observation window. Useful for metrics, such as those with a timeframe, that are only meaningful after a minimum period has elapsed. | `true` or `false` |
 | `filters` <br></br> (optional) | A list of filters to apply to metric, each containing a fact property, an operation (`equals` or `not_equals`), and a list of values | <pre><code>- fact_property: Source <br></br>  operation: equals <br></br>  values: <br></br>   - organic <br></br>   - search </code></pre>  |
 | `retention_threshold_days` <br></br> (optional, numerators only) | Number of days to use in retention calculation. <br></br><br></br>**Constraint**: Only used with `operation` = `retention`. Cannot be combined with other advanced aggregation parameters. | 7 |
 | `conversion_threshold_days` <br></br> (optional, numerators only) | Number of days to use in conversion calculation. <br></br><br></br>**Constraint**: Only used with `operation` = `conversion`. Cannot be combined with other advanced aggregation parameters or timeframe parameters. | 7 |
@@ -67,6 +77,28 @@ Numerators and denominators follow a similar schema, with some fields only being
 
 
 *Note that `fact_name` can reference facts defined in a different yaml file.
+
+### Percentile
+
+[Percentile metrics](/data-management/metrics/percentile-metric) use a `percentile` object in place of a `numerator`/`denominator`. Setting `percentile` makes the metric a percentile metric.
+
+| Property |  Description | Example |
+| -------- |  ----------- | ------- |
+| `fact_name` | The name of a fact as specified in `fact_source`* | Latency |
+| `percentile_value` | The percentile to calculate, as a decimal between 0 and 1 | `0.95` |
+| `filters` <br></br> (optional) | A list of filters to apply to the metric, each containing a fact property, an operation (`equals` or `not_equals`), and a list of values | <pre><code>- fact_property: Source <br></br>  operation: equals <br></br>  values: <br></br>   - organic </code></pre> |
+
+For example, to define the 95th percentile of request latency:
+
+```yaml
+metrics:
+- name: P95 Latency
+  entity: User
+  type: percentile
+  percentile:
+    fact_name: Latency
+    percentile_value: 0.95
+```
 
 ## Constraints and Limitations
 
