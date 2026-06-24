@@ -70,7 +70,7 @@ You can also install the SDK with NPM or via a script tag. For more information,
 <TabItem value="node" label="Node">
 
 ```bash
-npm install @eppo/node-client-sdk
+npm install @eppo/node-server-sdk
 ```
 
 You can also install the Node SDK with NPM. For more information, see the [Node JS SDK](/sdks/server-sdks/node/intro) documentation.
@@ -129,7 +129,7 @@ If you are using React, we have some [React specific recommendations](/sdks/clie
 <TabItem value="node" label="Node">
 
 ```javascript
-import { init } from "@eppo/node-client-sdk";
+import { init } from "@eppo/node-server-sdk";
 
 await init({
   apiKey: '<SDK_KEY>'
