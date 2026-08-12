@@ -88,7 +88,7 @@ CUPED can be turned on in the admin panel, and in the overview page of an experi
 To avoid confusion, it is useful to keep in mind that the above refers to the input data. CUPED produces improved results across all metrics.
 
 **Does CUPED apply to all metrics?**
-Yes, our CUPED implementation works to improve the precision for any metric type (standard, ratio, funnel, percentile).
+Our CUPED implementation works to improve the precision for standard, ratio, and funnel metrics. Percentile metrics are excluded from CUPED adjustment in Eppo, but CUPED for percentile metrics is supported in [Datadog Experiments](https://docs.datadoghq.com/experiments/statistics/cuped/).
 However, not every metric is used as covariate, the pre-experiment totals used as input to CUPED:
 - Retention or conversion metrics, and more generally metrics filtered by timeframes are not selected as covariates;
 - Neither are metrics with subject filters, notably time-based metrics that users “age into”;
