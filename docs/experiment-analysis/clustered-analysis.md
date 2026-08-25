@@ -20,7 +20,7 @@ When creating an experiment, choose the randomization entity as usual. Then in `
 
 ![Create clustered analysis experiment](/img/experiments/clustered-analysis/clustered-analysis-experiment.png)
 
-Once created and running, there are a few differences on how experiment results are calculated. Notice that assignment numbers will refer to the entity but subentity numbers will also be available. Metrics will be calculated by using the subentity as the denominator.
+Once created and running, there are a few differences on how experiment results are calculated. Notice that assignment numbers will refer to the entity but subentity numbers will also be available. Metrics will be calculated by using the subentity as the denominator. For that, we leverage the Delta method described in [Deng et al.](https://alexdeng.github.io/public/files/kdd2018-dm.pdf) and recommended in Chapter 18 of _Trustworthy Online Controlled Experiments_. 
 
 ![Subentities in experiment results](/img/experiments/clustered-analysis/metrics-with-subentities.png)
 
