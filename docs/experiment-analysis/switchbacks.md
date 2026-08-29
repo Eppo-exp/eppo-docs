@@ -36,10 +36,24 @@ We'll now provide a step-by-step walkthrough for creating Switchback Assignment 
 
 ![Configuring the Switchback assignment SQL](/img/experiments/switchbacks/switchback-assignments.png)
    
-### Updates to FactSQL
-FactSQL that corresponds to metrics you want to monitor also need to be updated with the Switchback entity. On the FactSQL page, click edit and add a new subentity that corresponds to the Switchback entity. 
+### Configure the analysis entity (subentity)
 
-You do not need to make any changes to metrics.
+A Switchback randomizes over the environment (e.g. market or region), but metrics are measured on a per-subject **analysis entity** (e.g. users). Eppo joins each subject's events to the switchback variation they were exposed to, so it needs to know which entity the analysis is run on. This entity is referred to as the **subentity**.
+
+The subentity is configured on the **Assignment SQL**, not on FactSQL:
+
+1. Navigate to Definitions and edit the Assignment SQL for the analysis entity (e.g. the user-level assignment source).
+2. Click **Add Subentities** and select the analysis entity along with the column in the SQL that holds its ID.
+
+:::note
+The **Add Subentities** option is part of Eppo's clustered analysis support and may be gated behind a feature flag for your workspace. If you don't see it, reach out to your Eppo contact to have it enabled.
+:::
+
+### Updates to FactSQL
+
+FactSQL that corresponds to metrics you want to monitor must expose a column for the analysis entity (the subentity), so that fact events can be joined to the switchback assignments. If a Fact SQL definition does not already map that entity, open it, click **Edit**, and add the analysis entity as one of its entities (the same way you would add any other entity to a Fact SQL).
+
+You do not need to make any changes to the metrics themselves — only ensure the underlying Fact SQL surfaces the analysis entity.
 
 ## Create switchback analysis
 
