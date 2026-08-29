@@ -1,5 +1,5 @@
 ---
-sidebar_position: 10
+sidebar_position: 1
 ---
 
 # Running well powered experiments with smaller sample size
@@ -71,6 +71,10 @@ This example focuses on a continuous variable (revenue), but the same concept ap
 
 If we do not have any pre-period data to leverage, for example because we run an experiment on new users, assignment properties can still help you lower the variance in your experiment. Any property added to your assignment definition will also get included in the regression. For instance, if you add the source a user came from, their region, and their device, Eppo's CUPED++ model will use those values to reduce variance. Note that this can help speed up both new user experiments and existing user experiments.
 
+For intuition when presenting CUPED to stakeholders: a **large adjustment** after CUPED is usually not arbitrary—it reflects that control and treatment were far apart on predictable dimensions before the test, and the model is doing the work of separating signal from that imbalance. When audiences are very small (on the order of dozens of subjects per variant), supplement numbers with qualitative conversations.
+
+For a deeper discussion of **which covariates to pass** (assignment properties, geography, time, and other features) and how they help new-user experiments in particular, see [Rich covariates for CUPED++](/guides/advanced-experimentation/running-well-powered-experiments/covariates-for-cuped-plus-plus/).
+
 ## Choosing a statistical paradigm
 
 This leaves one final lever: the statistical methodology we choose to use to analyze the results. In general, [there are no miracles](https://www.geteppo.com/blog/comparing-frequentist-vs-bayesian-approaches) here but certainly the choice will affect results.
@@ -81,6 +85,15 @@ However, particularly the t-test is susceptible to peeking. If this is a problem
 
 We want to stay away from the fully sequential paradigm when we struggle to find enough power in the first place. We cannot afford the cost in width of the confidence intervals for the added flexibility. Furthermore, it is unlikely we would be able to stop the experiment early anyway.
 
+## Beyond variance reduction and statistical methodology
+
+Lowering metric variance (including via winsorization and CUPED++) and picking an analysis paradigm are powerful levers, but they are not the only ones. When power is constrained, also consider:
+
+- **[Runtime, seasonality, and sample size](/guides/advanced-experimentation/running-well-powered-experiments/runtime-seasonality-sample-size/)** — Running longer is often the best response when the observed gap between variants is large relative to noise; longer runs also build baselines you can compare to holidays, campaigns, and external shocks.
+- **[Targeting, dilution, and proximal metrics](/guides/advanced-experimentation/running-well-powered-experiments/design-targeting-dilution-proximal-metrics/)** — Who you measure, how you [filter to true exposure](/guides/advanced-experimentation/entry_points), and whether outcomes are close to the change.
+- **[Rich covariates for CUPED++](/guides/advanced-experimentation/running-well-powered-experiments/covariates-for-cuped-plus-plus/)** — Passing informative assignment and context features into the model beyond pre-period activity alone.
+- **[Ambition, disagreement, and tactical vs. strategic measurement](/guides/advanced-experimentation/running-well-powered-experiments/ambition-tactical-strategic-measurement/)** — Whether the idea is large enough to justify scarce traffic, how to learn from users who did not convert, and when A/B tests should be paired with holdouts or decomposed decisions.
+
 ## Conclusion
 
-In certain situations, we really need to make the most out of a limited sample size. In this case, remember that it is all about optimizing the signal-to-noise ratio. First and foremost, we should make sure we choose our metrics carefully. With winsorization, CUPED++, and a choice of statistical methodology, Eppo helps you make the most out of our data.
+In certain situations, we really need to make the most out of a limited sample size. In this case, remember that it is all about optimizing the signal-to-noise ratio. First and foremost, we should make sure we choose our metrics carefully. With winsorization, CUPED++, and a choice of statistical methodology, Eppo helps you make the most out of our data—and [design choices outside pure variance reduction](/guides/advanced-experimentation/running-well-powered-experiments/runtime-seasonality-sample-size/) matter just as much when samples are small.
