@@ -29,38 +29,54 @@ Like other targeting rules, the `get_*_assignment` function must pass the releva
 
 The SDK evaluates these attributes literally against the dependent-flag rule conditions. The value must match the variation key stored for the selected parent variation.
 
-### String, boolean, numeric, and integer parent flags
+### Use the parent's variation key
 
-For these flag types, the variation key and the assignment return value are the same. You can pass the parent assignment result directly:
+Every variation has a key, a string that is set when the variation is created and never changes afterwards, so assignment logs stay consistent. The key starts out as:
+
+- the value as entered, for String, Numeric, and Integer flags (for example `new-checkout` or `2.50`); a String variation created with an empty value starts with the key `empty-string`;
+- `true` or `false`, for Boolean flags;
+- the slugified variation name, for JSON flags (for example, `Model 1` → `model-1`).
+
+The value an assignment function returns can therefore differ from the key the rule expects:
+
+- The variation's value was edited after it was created. The key keeps its original text: a String variation created as `new-checkout` and later changed to `checkout-v2` still has the key `new-checkout`, and a Numeric variation created as `1.0` and changed to `1.25` still has the key `1.0`.
+- A Numeric value was entered with formatting the SDK doesn't preserve. A variation entered as `2.50` has the key `2.50`, while the SDK returns the number `2.5`.
+- Eppo may append a random suffix to keep variation keys unique within a flag (for example, `1.0-2a09e`).
+- For JSON flags, the assignment function returns the JSON value, never the key.
+
+So for every flag type, pass the parent's `variationKey` from its assignment details as `variation_served`, rather than the assignment result. If the parent wasn't assigned a variation (for example, the flag is disabled), `variationKey` is `None` in Python (`null` in JavaScript); omit both dependency attributes in that case, and the dependent flag keeps evaluating its other rules as usual.
 
 ```python
 import eppo_client
 
 client = eppo_client.get_instance()
 
-new_onboarding_flow_variation = client.get_string_assignment(
+parent = client.get_string_assignment_details(
   "new-onboarding-flow",
   "<SUBJECT-KEY>",
   {}, # optional subject attributes
   "<DEFAULT-VALUE>"
 )
+parent_variation_key = parent.evaluation_details["variationKey"]  # e.g. "new-checkout"
+
+subject_attributes = {}  # optional subject attributes
+if parent_variation_key is not None:
+  subject_attributes["dependent_flag"] = "new-onboarding-flow"
+  subject_attributes["variation_served"] = parent_variation_key
 
 variation = client.get_string_assignment(
   "<FLAG-KEY>",
   "<SUBJECT-KEY>",
-    { 
-      "dependent_flag": "new-onboarding-flow", 
-      "variation_served": new_onboarding_flow_variation
-    }, 
+  subject_attributes,
   "<DEFAULT-VALUE>"
 )
 ```
 
+Use the details function that matches the parent's type (`get_boolean_assignment_details`, `get_numeric_assignment_details`, `get_json_assignment_details`, and so on).
+
 ### JSON parent flags
 
-For JSON flags, the variation **key** is the slugified variation name (for example, `Model 1` → `model-1`). The assignment function returns the **JSON value**, which is not what `variation_served` expects.
-
-Use the parent flag's `variationKey` from assignment details as `variation_served`:
+The same pattern applies; only the details function changes:
 
 ```python
 parent = client.get_json_assignment_details(
@@ -69,14 +85,17 @@ parent = client.get_json_assignment_details(
   {},
   {},  # default JSON value
 )
+parent_variation_key = parent.evaluation_details["variationKey"]  # e.g. "exclude"
+
+subject_attributes = {}
+if parent_variation_key is not None:
+  subject_attributes["dependent_flag"] = "parent-json-flag"
+  subject_attributes["variation_served"] = parent_variation_key
 
 variation = client.get_string_assignment(
   "<DEPENDENT-FLAG-KEY>",
   "<SUBJECT-KEY>",
-  {
-    "dependent_flag": "parent-json-flag",
-    "variation_served": parent.evaluation_details["variationKey"],  # e.g. "exclude"
-  },
+  subject_attributes,
   "<DEFAULT-VALUE>",
 )
 ```
@@ -84,6 +103,10 @@ variation = client.get_string_assignment(
 :::note
 JSON variation keys are derived from the variation name at creation time (lower-cased, spaces replaced with `-`). They do not change if you rename the variation later. See [Debugging Flag Assignment](/sdks/sdk-features/debugging-flag-assignment) for the full `variationKey` / `variationValue` behavior.
 :::
+
+### SDKs without assignment details
+
+Some SDKs don't expose assignment details yet (see [Debugging Flag Assignment](/sdks/sdk-features/debugging-flag-assignment)). With those, mapping the parent's returned value to a variation key in your code is safe only when every returned value identifies exactly one of the parent's variations, and you can tell an actual assignment apart from the default value the SDK returns when nothing was assigned. Different keys can return the same value (Numeric variations created as `1` and `1.0` both return `1`), and the default value can equal a configured variation's value. Otherwise, obtain the parent's variation key through an SDK that exposes assignment details.
 
 ### Existing dependent-flag rules with a JSON parent
 
