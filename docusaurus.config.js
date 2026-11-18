@@ -68,23 +68,6 @@ async function createConfig () {
       require.resolve('./src/rudderstack.config.js')
     ],
 
-    scripts: [
-      {
-        id: "runllm-widget-script",
-        type: "module",
-        src: "https://widget.runllm.com",
-        "runllm-server-address": "https://api.runllm.com",
-        "runllm-assistant-id": "112",
-        "runllm-position": "BOTTOM_RIGHT",
-        "runllm-keyboard-shortcut": "Mod+j",
-        "runllm-preset": "docusaurus",
-        "runllm-name": "Eppo",
-        "runllm-theme-color": "#6C55D4",
-        "runllm-brand-logo": "https://cdn.prod.website-files.com/6171016af5f2c517ec1ac76c/665a6c2d40484c5fa36d55b0_Untitled%20design%20(1).png",
-        async: true,
-      },
-    ],
-
     plugins: [
       [
         '@docusaurus/plugin-google-gtag',
