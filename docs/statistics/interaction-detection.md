@@ -52,7 +52,12 @@ If the call to action and button color experiments were run in real life, we wou
 
 Both assignment dependence and effect interactions require statistical tests in order to differentiate true assignment dependence/effect interaction from statistical noise.  Assignment dependence is tested using a [Chi-Square hypothesis test](https://en.wikipedia.org/wiki/Chi-squared_test#Example_chi-squared_test_for_categorical_data), and effect interaction is tested using Analysis of Variance ([ANOVA](https://en.wikipedia.org/wiki/Analysis_of_variance)).  For each test, Eppo considers a p value smaller than 0.01 to be statistically significant.  When the result is statistically significant, an alert will be raised.
 
+## Eligibility
 
+Interaction effect detection currently supports experiments with **at most three variations, including control**. Both the experiment you are analyzing and any experiment you select for comparison must meet this limit.
+
+* If your experiment has four or more variations, the **Check for Interaction Effect** option is not shown on metric rows in the experiment results table.
+* Comparison experiments with four or more variations appear in the picker but cannot be selected.
 
 ## How Can I Use The Interaction Effect Detection?
 
