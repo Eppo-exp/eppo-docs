@@ -1,0 +1,10 @@
+{
+  "label": "Running well powered experiments",
+  "position": 10,
+  "collapsible": true,
+  "collapsed": false,
+  "link": {
+    "type": "doc",
+    "id": "guides/advanced-experimentation/running-well-powered-experiments/index"
+  }
+}
