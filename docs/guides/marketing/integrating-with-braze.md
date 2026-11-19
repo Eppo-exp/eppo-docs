@@ -123,3 +123,86 @@ Your Assignments table should look like this:
 
 4. Create [Metrics](/data-management/metrics/) from your newly created Braze Fact tables.
 5. When setting up an experiment for analysis, make sure you select the **Combined ID** as the Secondary ID used for Analysis. Consider setting up a [Protocol](/experiment-analysis/configuration/protocols/) for Braze experiments to automate this experiment setup for subsequent experiments.
+
+## Use Eppo Flags to bucket users for Braze campaigns
+
+In addition to analyzing Braze experiments in Eppo, you can also use Eppo's feature flagging to determine user cohorts and send those assignments to Braze for targeted messaging. This approach allows you to leverage Eppo's advanced targeting and assignment logic while using Braze's powerful campaign delivery capabilities. 
+
+Additionally, this integration enables powerful use cases like coordinated product and marketing experiments, dynamic campaign targeting based on product behavior, and consistent user experiences across all touchpoints. Eppo's deterministic bucketing will make sure that users with the same ID will receive the same assignment regardless of if the flag is run for Braze or within your product.
+
+
+### Setting up Eppo Flags for Braze targeting
+
+This integration allows you to:
+- Use Eppo's sophisticated audience targeting to determine which users should receive specific campaigns
+- Send user assignments as [custom attributes](https://www.braze.com/docs/developer_guide/analytics/setting_user_attributes/?sdktab=web) to Braze
+- Create targeted campaigns in Braze based on Eppo flag assignments
+- Maintain consistent user experiences across your product and marketing channels
+
+### Implementation example
+
+Here's a simple example of how to integrate Eppo flag assignments with Braze:
+
+```javascript
+import * as EppoSdk from "@eppo/js-client-sdk";
+import { initialize } from "@braze/web-sdk";
+
+// Initialize Eppo
+const eppoClient = EppoSdk.getInstance();
+
+// Initialize Braze
+initialize("YOUR_BRAZE_API_KEY");
+
+// Function to sync Eppo assignments to Braze
+function syncEppoToBraze(userId) {
+  // Get assignment from Eppo flag
+  const campaignVariant = eppoClient.getAssignment(
+    'email_campaign_targeting', 
+    userId,
+    { 
+      subscription_tier: 'premium',
+      signup_date: '2024-01-15'
+    }
+    'default'
+  );
+  
+  // Send assignment to Braze as custom attribute
+  if (campaignVariant) {
+    braze.getUser().setCustomUserAttribute(
+      'eppo_email_campaign_targeting', 
+      campaignVariant
+    );
+    
+    // Optionally track the assignment event
+    braze.logCustomEvent('eppo_assignment', {
+      flag_key: 'email_campaign_targeting',
+      variation: campaignVariant,
+      timestamp: new Date().toISOString()
+    });
+  }
+}
+
+// Call when user logs in or at key moments
+syncEppoToBraze('user_12345');
+```
+
+### Optional - Using assignments in Braze campaigns
+
+Once Eppo assignments are sent to Braze as custom attributes, you can use them to target campaigns:
+
+1. **Create audience segments** in Braze based on the custom attributes (e.g., `eppo_email_campaign_targeting = 'treatment'`)
+
+2. **Target campaigns** to specific segments based on Eppo flag assignments
+
+3. **Personalize content** using the assignment values in your campaign messaging
+
+
+### Example implementation
+
+For a complete working example of this integration, see the [eppo-braze-flags repository](https://github.com/heathermhargreaves/eppo-braze-flags). This Node.js server demonstrates how to integrate Eppo feature flags with Braze Webhook Campaigns to enable A/B testing of different message variants. This example can be extended for any channel supported in Braze.
+
+The example includes:
+- **Feature Flag Evaluation**: Uses Eppo SDK to evaluate feature flags for users
+- **Braze Integration**: Sends different message variants based on flag assignments  
+- **Event Tracking**: Tracks user events with experiment metadata in Braze
+- **Interactive Demo**: Built-in web interface to test the integration
