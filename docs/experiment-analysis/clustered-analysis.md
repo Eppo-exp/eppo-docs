@@ -4,7 +4,8 @@ Clustered analysis is available in cases where there is a need to compute metric
 
 Common cases include but are not limited to:
 - B2B companies that randomize at the company level, but wants to look at user level metrics
-- Social media companies that randomize at the user level (for a consistent user experience), but want to look at session-level metrics
+- Marketplaces and Social media companies who want to cluster users more likely to interact with each to share common feature
+- Any company that randomize at the user level (for a consistent user experience), but want to look at session-level metrics
 
 Configuring clustered analysis is easy in Eppo. It requires two steps: mapping a new subentity column in the Assignment SQL and choosing clustered analysis as the analysis type when creating an experiment. Metric creation and all other configuration remains the same.
 
