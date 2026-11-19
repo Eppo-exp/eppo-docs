@@ -38,7 +38,7 @@ init({
 
 ### Details on Variation Keys for flag types
 
-Eppo will always log the value of `variationKey` in the Evaluation Details object. The `variationValue` represents the value created for that variation on the flag in it's orginal data type. Eppo logs the `variationKey` as a string to make it easier to send those logs to your data warehouse. Since String flags already log the variation value as a string, the `variationKey` and `variationValue` will be the same.
+Eppo will always log the value of `variationKey` in the Evaluation Details object. The `variationKey` is a string identifier that is fixed when the variation is created, which makes it easy to send those logs to your data warehouse. The `variationValue` is the variation's current value in the flag's declared type. The key is initially derived from the value (or, for JSON flags, from the variation name), but don't assume it equals the returned value.
 
 For example a Boolean flag will have:
 
@@ -53,6 +53,13 @@ and a Numeric flag will have:
 variationKey: '3',
 variationValue: 3
 ```
+
+The `variationKey` and `variationValue` can differ even for String, Numeric, and Integer flags:
+
+- The variation's value was edited after it was created; the key keeps its original text (for example `variationKey: 'new-checkout'`, `variationValue: 'checkout-v2'`).
+- A Numeric value was entered with formatting that isn't preserved (entered as `2.50`: `variationKey: '2.50'`, `variationValue: 2.5`).
+- Eppo may append a random suffix to keep variation keys unique within a flag (for example `variationKey: '1.0-2a09e'`, `variationValue: 1`).
+- A String variation created with an empty value starts with the key `empty-string`.
 
 An exception exists for JSON flags where the `variationKey` will be the variation name given in the flag: 
 
